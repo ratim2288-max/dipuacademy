@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline — No Internet Connection | Dipu's Edu</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            void: '#000000',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    body {
+      background-color: #000000;
+      color: #F8FAFC;
+      font-family: 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 1.5rem;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .metallic-offline {
+      font-size: clamp(4.5rem, 14vw, 9rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      background: linear-gradient(180deg, #FFFFFF 0%, #D1D5DB 45%, #6B7280 85%, #374151 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.9));
+      position: relative;
+      display: inline-block;
+    }
+
+    .btn-home {
+      background-color: #FFFFFF;
+      color: #000000;
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 0.65rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-home:hover {
+      background-color: #E2E8F0;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-explore {
+      background-color: transparent;
+      color: #FFFFFF;
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 0.65rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-explore:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="text-center max-w-lg mx-auto flex flex-col items-center">
+    
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/25 text-rose-400 text-xs font-mono mb-4">
+      <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+      ইন্টারনেট সংযোগ বিচ্ছিন্ন (Offline)
+    </div>
+
+    <!-- 404 / Offline Metallic Header -->
+    <div class="metallic-offline mb-4">
+      404
+    </div>
+
+    <!-- Explanatory Subtitle -->
+    <p class="text-slate-300 text-sm sm:text-base font-normal mb-8 max-w-sm mx-auto leading-relaxed">
+      The page you're looking for might have been moved or doesn't exist.
+    </p>
+
+    <!-- Action Buttons -->
+    <div class="flex items-center justify-center gap-3">
+      <button onclick="window.location.reload()" class="btn-home">
+        <i class="fa-solid fa-rotate-right text-sm"></i>
+        <span>Retry Connection</span>
+      </button>
+
+      <a href="/" class="btn-explore">
+        <i class="fa-regular fa-compass text-sm"></i>
+        <span>Go Home</span>
+      </a>
+    </div>
+
+    <p class="text-xs text-slate-500 mt-6" id="statusNotice">
+      ইন্টারনেট কানেকশন ফিরে আসলে পেজটি স্বয়ংক্রিয়ভাবে রিলোড হবে।
+    </p>
+
+  </main>
+
+  <!-- Auto Reload on Reconnect -->
+  <script>
+    window.addEventListener('online', () => {
+      document.getElementById('statusNotice').textContent = "ইন্টারনেট সংযোগ সফল! পেজে ফিরে যাওয়া হচ্ছে...";
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 800);
+    });
+  </script>
+
+</body>
+</html>

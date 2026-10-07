@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>লগইন করুন — Dipu's Edu</title>
+
+<!-- Fonts & Font Awesome Icons -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="/css/style.css?v=3.6">
+
+<style>
+:root {
+  --bg1: #090A0F;
+  --bg2: #0E1017;
+  --card: #121320;
+  --cardline: rgba(255, 255, 255, 0.08);
+  --navy: #FFFFFF;
+  --text: #E2E8F0;
+  --muted: #94A3B8;
+  --line: rgba(255, 255, 255, 0.12);
+  --g: #FF7A1A;
+  --g2: #E8630A;
+  --coral: #FF7A1A;
+  --amber: #FFB347;
+  --err: #EF4444;
+  --soft: rgba(255, 122, 26, 0.08);
+  --soft2: rgba(255, 179, 71, 0.15);
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+  overflow-x: hidden;
+  font-family: "Inter", "Hind Siliguri", system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  background: 
+    radial-gradient(circle at 15% 90%, rgba(255, 122, 26, 0.08), transparent 45%),
+    radial-gradient(circle at 90% 10%, rgba(255, 179, 71, 0.06), transparent 40%),
+    linear-gradient(160deg, var(--bg1), var(--bg2));
+}
+
+.top-nav-bar {
+  width: 100%;
+  max-width: 1020px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.brand-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #FF7A1A, #FFB347);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #090A0F;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 15px rgba(255, 122, 26, 0.4);
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line);
+  color: #94A3B8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.home-btn:hover {
+  color: #FFFFFF;
+  border-color: var(--g);
+  background: rgba(255, 122, 26, 0.1);
+  transform: translateX(-2px);
+}
+
+/* Top Bar Language Toggle & Helpline */
+.nav-lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  padding: 3px;
+  gap: 2px;
+  user-select: none;
+}
+
+.lang-option {
+  border: 0;
+  background: transparent;
+  color: #94A3B8;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s;
+  line-height: 1.2;
+}
+
+.lang-option.active {
+  background: linear-gradient(135deg, #FF7A1A 0%, #FF9533 100%);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(255, 122, 26, 0.35);
+}
+
+.nav-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  padding: 3px;
+  gap: 2px;
+  user-select: none;
+}
+
+.theme-option {
+  border: 0;
+  background: transparent;
+  color: #94A3B8;
+  font-size: 0.85rem;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.theme-option:hover:not(.active) {
+  color: #FFFFFF;
+}
+
+.theme-option.active {
+  background: linear-gradient(135deg, #FF7A1A 0%, #FF9533 100%);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(255, 122, 26, 0.35);
+}
+
+body.light-theme {
+  --bg: #F8FAFC;
+  --card: #FFFFFF;
+  --line: rgba(15, 23, 42, 0.09);
+  --t: #0F172A;
+  --t-dim: #64748B;
+  background: #F8FAFC;
+  color: #0F172A;
+}
+
+body.light-theme .top-nav-bar {
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+body.light-theme .nav-lang-toggle,
+body.light-theme .nav-theme-toggle {
+  background: #E2E8F0;
+  border-color: #CBD5E1;
+}
+
+body.light-theme .lang-option,
+body.light-theme .theme-option {
+  color: #64748B;
+}
+
+body.light-theme .lang-option.active,
+body.light-theme .theme-option.active {
+  background: linear-gradient(135deg, #FF7A1A 0%, #FF9533 100%);
+  color: #FFFFFF;
+}
+
+body.light-theme .home-btn {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+  color: #334155;
+}
+
+body.light-theme {
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+}
+
+body.light-theme .wrap {
+  background: #FFFFFF !important;
+  border-color: #E2E8F0 !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08), 0 0 30px rgba(255, 122, 26, 0.05) !important;
+}
+
+body.light-theme h1,
+body.light-theme .t,
+body.light-theme .h {
+  color: #0F172A !important;
+}
+
+body.light-theme label.l,
+body.light-theme .sub,
+body.light-theme .foot,
+body.light-theme .row,
+body.light-theme .pre {
+  color: #64748B !important;
+}
+
+body.light-theme .box {
+  background: #F8FAFC !important;
+  border-color: #CBD5E1 !important;
+}
+
+body.light-theme .box:focus-within {
+  background: #FFFFFF !important;
+  border-color: var(--g) !important;
+  box-shadow: 0 0 0 4px rgba(255, 122, 26, 0.15) !important;
+}
+
+body.light-theme input,
+body.light-theme .box input {
+  color: #0F172A !important;
+}
+
+body.light-theme input::placeholder {
+  color: #94A3B8 !important;
+}
+
+body.light-theme .pre {
+  border-right-color: #CBD5E1 !important;
+}
+
+body.light-theme .eye {
+  color: #64748B !important;
+}
+
+/* Standalone Page OTP Inputs */
+body.light-theme .otp input {
+  background: #F8FAFC !important;
+  border: 2px solid #CBD5E1 !important;
+  color: #0F172A !important;
+  font-weight: 800 !important;
+}
+
+body.light-theme .otp input:focus {
+  background: #FFFFFF !important;
+  border-color: var(--g) !important;
+  box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.25) !important;
+  color: #0F172A !important;
+}
+
+body.light-theme .chip {
+  background: #FFF7ED !important;
+  border: 1px dashed var(--g) !important;
+  color: #D97706 !important;
+}
+
+body.light-theme .note {
+  background: #F1F5F9 !important;
+  border-color: #E2E8F0 !important;
+  color: #475569 !important;
+}
+
+body.light-theme .chk .cb {
+  background: #F8FAFC !important;
+  border-color: #CBD5E1 !important;
+}
+
+body.light-theme .chk input:checked + .cb {
+  background: var(--g) !important;
+  border-color: var(--g) !important;
+}
+
+body.light-theme .tab {
+  background: #F1F5F9;
+  color: #64748B;
+  border-color: #E2E8F0;
+}
+
+body.light-theme .tab.on {
+  background: rgba(255, 122, 26, 0.12);
+  color: #EA580C;
+  border-color: var(--g);
+}
+
+body.light-theme .brand-link span {
+  color: #0F172A;
+}
+
+.login-class-selector {
+  margin: 14px 0 16px;
+}
+.login-class-label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.login-class-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.login-class-pill {
+  padding: 5px 11px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--cardline);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.login-class-pill:hover {
+  border-color: var(--g);
+  color: var(--g);
+}
+.login-class-pill.active {
+  background: linear-gradient(135deg, #FF7A1A, #FFB347);
+  color: #090A0F;
+  border-color: transparent;
+  box-shadow: 0 2px 10px rgba(255, 122, 26, 0.35);
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1020px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 50px rgba(255, 122, 26, 0.06);
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 20px;
+  padding: 44px 40px;
+  animation: rise .7s cubic-bezier(.2,.8,.2,1) both;
+  overflow: hidden;
+  position: relative;
+}
+
+@keyframes rise { from { opacity: 0; transform: translateY(24px); } }
+
+.form {
+  align-self: center;
+  max-width: 360px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 0 0 24px;
+  font-size: 2.3rem;
+  line-height: 1.15;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+}
+
+h1 span {
+  display: block;
+  background: linear-gradient(135deg, var(--g) 0%, var(--amber) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+label.l {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 16px 0 8px;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.25s;
+}
+
+.box:focus-within {
+  border-color: var(--g);
+  background: rgba(255, 122, 26, 0.06);
+  box-shadow: 0 0 0 4px rgba(255, 122, 26, 0.15);
+}
+
+.pre {
+  padding: 0 12px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-right: 1px solid var(--line);
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #FFFFFF;
+  padding: 14px 14px;
+  font: inherit;
+  font-size: 0.92rem;
+}
+
+input::placeholder {
+  color: #64748B;
+}
+
+.eye {
+  border: 0;
+  background: none;
+  padding: 0 14px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.eye:hover { opacity: 1; }
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px 0 22px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.chk {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.chk input { display: none; }
+
+.chk .cb {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  display: grid;
+  place-items: center;
+  transition: all 0.2s;
+}
+
+.chk .cb svg {
+  width: 10px;
+  height: 10px;
+  stroke: #fff;
+  stroke-width: 3;
+  fill: none;
+  stroke-dasharray: 16;
+  stroke-dashoffset: 16;
+  transition: stroke-dashoffset 0.25s;
+}
+
+.chk input:checked + .cb {
+  background: var(--g);
+  border-color: var(--g);
+}
+
+.chk input:checked + .cb svg {
+  stroke-dashoffset: 0;
+}
+
+.lk {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--coral);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lk:hover {
+  color: var(--amber);
+  text-decoration: underline;
+}
+
+.lk:disabled {
+  color: var(--muted);
+  cursor: default;
+  text-decoration: none;
+}
+
+.btn {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 14px;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--g) 0%, #FF9533 100%);
+  color: #fff;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(255, 122, 26, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+}
+
+.btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(255, 122, 26, 0.5);
+}
+
+.btn:active { transform: scale(0.98); }
+
+.btn.load {
+  pointer-events: none;
+  color: transparent;
+}
+
+.btn.load::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.rip {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  transform: scale(0);
+  animation: rip 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes rip { to { transform: scale(4); opacity: 0; } }
+
+.foot {
+  text-align: center;
+  margin-top: 22px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.otp {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.otp input {
+  text-align: center;
+  max-width: 48px;
+  padding: 12px 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  transition: all 0.2s;
+  animation: pop 0.4s both;
+}
+
+.otp input:focus {
+  border-color: var(--g);
+  background: rgba(255, 122, 26, 0.1);
+  box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.25);
+  transform: translateY(-3px);
+  outline: none;
+}
+
+@keyframes pop { from { transform: scale(0); } }
+
+.chip {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 14px;
+  border-radius: 99px;
+  border: 1px dashed var(--g);
+  background: rgba(255, 122, 26, 0.08);
+  color: var(--amber);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chip:hover {
+  background: rgba(255, 122, 26, 0.18);
+  color: #FFFFFF;
+}
+
+.msg {
+  min-height: 22px;
+  margin-top: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.msg.err { color: var(--err); }
+.msg.ok { color: #10B981; }
+
+.note {
+  margin-top: 12px;
+  font-size: 0.74rem;
+  color: #64748B;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.step { animation: swap .4s both; }
+@keyframes swap { from { opacity: 0; transform: translateX(14px); } }
+.hide { display: none !important; }
+
+.done { text-align: center; padding: 20px 0; }
+.done .big { font-size: 4rem; display: inline-block; animation: pop 0.6s cubic-bezier(.3,1.6,.5,1) both; }
+.done h1 { font-size: 2rem; margin: 12px 0 6px; }
+.done p { color: var(--muted); margin: 0 0 24px; font-size: 1rem; }
+
+/* Right Stage Illustration */
+.stage {
+  position: relative;
+  min-height: 470px;
+  display: grid;
+  place-items: center;
+}
+
+.stage svg {
+  width: min(100%, 420px);
+  height: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.rings {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.rings i {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid var(--soft2);
+}
+
+.rings i:nth-child(1) { width: 440px; height: 440px; opacity: 0.6; }
+.rings i:nth-child(2) { width: 360px; height: 360px; background: var(--soft); border: 0; opacity: 0.9; }
+.rings i:nth-child(3) { width: 520px; height: 520px; opacity: 0.35; }
+
+.fc {
+  position: absolute;
+  z-index: 2;
+  background: #161726;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65);
+  padding: 12px 14px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  animation: flo 5s ease-in-out infinite;
+}
+
+@keyframes flo { 50% { transform: translateY(-9px); } }
+
+.fc .bar {
+  height: 5px;
+  border-radius: 3px;
+  background: var(--cardline);
+  margin-top: 7px;
+}
+
+.c1 {
+  top: 38px;
+  right: 0;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  animation-delay: -1s;
+}
+
+.c1 b {
+  font-size: 1.5rem;
+  color: var(--g);
+  background: rgba(255, 122, 26, 0.15);
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-weight: 800;
+}
+
+.c2 {
+  top: 170px;
+  left: -4px;
+  width: 170px;
+  animation-delay: -2.5s;
+}
+
+.c2 .t {
+  display: flex;
+  justify-content: space-between;
+  color: #FFFFFF;
+  font-weight: 600;
+  gap: 8px;
+}
+
+.c2 .t u {
+  color: var(--amber);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.c2 .bar.r {
+  background: var(--g);
+}
+
+.c3 {
+  bottom: 16px;
+  left: 90px;
+  right: 60px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  animation-delay: -3.5s;
+}
+
+.c3 .ic {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 122, 26, 0.15);
+  display: grid;
+  place-items: center;
+  font-size: 1.1rem;
+  flex: none;
+}
+
+.c3 .st {
+  color: var(--amber);
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+}
+
+.c3 .bar.t {
+  background: var(--g);
+  width: 60%;
+}
+
+.sm {
+  position: absolute;
+  z-index: 2;
+  left: 56px;
+  top: 290px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #161726;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
+  font-size: 1.15rem;
+  animation: flo 4s -1s ease-in-out infinite;
+}
+
+@media (max-width: 820px) {
+  .wrap { grid-template-columns: 1fr; padding: 32px 22px; }
+  .stage { display: none; }
+  h1 { font-size: 2.1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="top-nav-bar">
+  <a href="/" class="brand-link">
+    <div class="brand-icon"><i class="fas fa-graduation-cap"></i></div>
+    <span>Dipu's <span style="color:var(--g)">Edu</span></span>
+  </a>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <div class="nav-lang-toggle" id="navLangToggle" role="group" aria-label="Language selector">
+      <button type="button" class="lang-option active" data-lang="bn">BN</button>
+      <button type="button" class="lang-option" data-lang="en">EN</button>
+    </div>
+    <div class="nav-theme-toggle" id="navThemeToggle" role="group" aria-label="Theme selector">
+      <button type="button" class="theme-option active" data-theme="dark" title="ডার্ক থিম (Dark Theme)"><i class="fas fa-moon"></i></button>
+      <button type="button" class="theme-option" data-theme="light" title="সাদা থিম (Light Theme)"><i class="fas fa-sun"></i></button>
+    </div>
+    <a href="/" class="home-btn">
+      <i class="fas fa-arrow-left"></i> হোমে ফিরুন
+    </a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="form">
+    <div id="main">
+      <h1>Welcome<span>Back, Student!</span></h1>
+
+      <label class="l" for="num">Mobile number</label>
+      <div class="box">
+        <span class="pre">+880</span>
+        <input id="num" type="tel" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX" autocomplete="tel">
+      </div>
+
+      <!-- Class Selector at Login -->
+      <div class="login-class-selector">
+        <label class="login-class-label">আপনার শ্রেণি / ব্যাচ বেছে নিন:</label>
+        <div class="login-class-pills" id="loginClassPills">
+          <button type="button" class="login-class-pill active" data-class="HSC ২০২৭" onclick="chooseLoginClass(this)">HSC '২৭</button>
+          <button type="button" class="login-class-pill" data-class="HSC ২০২৮" onclick="chooseLoginClass(this)">HSC '২৮</button>
+          <button type="button" class="login-class-pill" data-class="SSC ২০২৭ (ব্যাচ ২৭)" onclick="chooseLoginClass(this)">SSC '২৭ (কমার্স)</button>
+          <button type="button" class="login-class-pill" data-class="SSC ২০২৮ (ব্যাচ ২৮)" onclick="chooseLoginClass(this)">SSC '২৮ (সায়েন্স)</button>
+          <button type="button" class="login-class-pill" data-class="৫ম শ্রেণি" onclick="chooseLoginClass(this)">৫ম শ্রেণি</button>
+          <button type="button" class="login-class-pill" data-class="৭ম শ্রেণি" onclick="chooseLoginClass(this)">৭ম শ্রেণি</button>
+        </div>
+      </div>
+
+      <!-- Password Login Step -->
+      <div id="pwBox" class="step">
+        <label class="l" for="pw">Password</label>
+        <div class="box">
+          <input id="pw" type="password" placeholder="Password" autocomplete="current-password">
+          <button class="eye" id="eye" type="button" aria-label="Show password">👁️</button>
+        </div>
+        <div class="row">
+          <label class="chk">
+            <input type="checkbox" id="rem">
+            <span class="cb">
+              <svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5L13 4.5"/></svg>
+            </span>
+            Remember Me
+          </label>
+          <button class="lk" id="toOtp" type="button">Login with OTP</button>
+        </div>
+        <button class="btn" id="loginPw" type="button">Sign In</button>
+      </div>
+
+      <!-- OTP Login Step -->
+      <div id="otpBox" class="step hide">
+        <div style="height:16px"></div>
+        <button class="btn" id="sendOtp" type="button">Send OTP</button>
+        <div id="otpArea" class="hide">
+          <label class="l">6-digit OTP code</label>
+          <div class="otp" id="boxes"></div>
+          <span class="chip" id="chip">Test OTP: 123456 (tap to fill)</span>
+          <div class="row" style="margin-bottom:16px">
+            <span id="timer"></span>
+            <button class="lk" id="resend" type="button" disabled>Resend OTP</button>
+          </div>
+          <button class="btn" id="verify" type="button">Verify &amp; Sign In</button>
+        </div>
+        <div class="row" style="justify-content:center;margin:16px 0 0">
+          <button class="lk" id="toPw" type="button">Login with Password</button>
+        </div>
+      </div>
+
+      <div class="msg" id="msg" role="alert"></div>
+      <div class="foot">Don't have account? <button class="lk" id="signup" type="button">Sign Up</button></div>
+      <div class="note">Test mode: shob number er OTP 123456. Password na dileo login hobe.</div>
+    </div>
+
+    <!-- Success Screen -->
+    <div id="success" class="done hide">
+      <div class="big">🎉</div>
+      <h1>You're in!</h1>
+      <p id="who"></p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="/dashboard.html" class="btn" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;">
+          <span>প্রোফাইল ও ড্যাশবোর্ডে প্রবেশ করুন</span>
+          <i class="fas fa-arrow-right text-xs"></i>
+        </a>
+        <a href="/" class="btn" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;background: rgba(255,255,255,0.06); border: 1px solid var(--line); color: var(--muted); box-shadow:none;">
+          <span>হোম পেজে যান</span>
+        </a>
+        <button class="btn" id="logout" type="button" style="background: transparent; border: none; color: var(--muted); box-shadow:none; font-size:12px;">
+          লগআউট
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Stage with Custom Obsidian & Neon Orange Student SVG -->
+  <div class="stage" aria-hidden="true">
+    <div class="rings"><i></i><i></i><i></i></div>
+    
+    <div class="fc c1">
+      <b>+10</b>
+      <div style="min-width:110px">
+        <div>New Lessons</div>
+        <div class="bar"></div>
+      </div>
+    </div>
+
+    <div class="fc c2">
+      <div class="t">
+        <span>Dipu Sir</span>
+        <u>Chat Now</u>
+      </div>
+      <div class="bar" style="width:60%"></div>
+      <div class="bar r"></div>
+    </div>
+
+    <div class="sm">😊</div>
+
+    <!-- Website Brand Styled Student SVG -->
+    <svg viewBox="0 0 420 470">
+      <!-- Hair -->
+      <path d="M148 182C138 108 178 86 212 86C252 86 284 112 274 190C272 238 288 272 272 304L148 304C136 262 152 232 148 182Z" fill="#2d1c14"/>
+      <!-- Body Sweater in Obsidian Charcoal -->
+      <path d="M100 470C100 352 140 294 210 294C280 294 320 352 320 470Z" fill="#1C2136"/>
+      <!-- Neck -->
+      <rect x="196" y="222" width="28" height="78" rx="12" fill="#e9b492"/>
+      <path d="M182 294L210 336L238 294Z" fill="#f0bd9c"/>
+      <!-- Collar & Tie in Neon Orange Accent -->
+      <path d="M182 294L210 336L194 346L166 304Z" fill="#FF7A1A"/>
+      <path d="M238 294L210 336L226 346L254 304Z" fill="#FF7A1A"/>
+      <!-- Head / Face -->
+      <ellipse cx="210" cy="172" rx="44" ry="52" fill="#f3c6a6"/>
+      <path d="M164 166C166 118 198 100 218 102C248 104 264 128 258 164C244 132 204 128 164 166Z" fill="#2d1c14"/>
+      <circle cx="193" cy="176" r="3.2" fill="#2b1b14"/>
+      <circle cx="227" cy="176" r="3.2" fill="#2b1b14"/>
+      <path d="M186 166Q193 161 200 165M220 165Q227 161 234 166" stroke="#2b1b14" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <circle cx="183" cy="192" r="6" fill="#ff7a1a" opacity=".4"/>
+      <circle cx="237" cy="192" r="6" fill="#ff7a1a" opacity=".4"/>
+      <path d="M195 196Q210 216 225 196Z" fill="#fff" stroke="#c0505a" stroke-width="2" stroke-linejoin="round"/>
+      <!-- Sleeves -->
+      <path d="M132 328L126 412" stroke="#252B47" stroke-width="36" stroke-linecap="round"/>
+      <path d="M288 328L294 412" stroke="#252B47" stroke-width="36" stroke-linecap="round"/>
+      <path d="M126 414L156 424" stroke="#f0bd9c" stroke-width="24" stroke-linecap="round"/>
+      <path d="M294 414L264 424" stroke="#f0bd9c" stroke-width="24" stroke-linecap="round"/>
+      <!-- Dipu's Edu Signature Orange Branded Book -->
+      <rect x="150" y="372" width="120" height="96" rx="7" fill="#FF7A1A"/>
+      <rect x="150" y="372" width="13" height="96" rx="6" fill="#D95F06"/>
+      <rect x="176" y="392" width="72" height="8" rx="4" fill="#fff" opacity=".95"/>
+      <rect x="176" y="407" width="50" height="6" rx="3" fill="#fff" opacity=".7"/>
+      <circle cx="212" cy="438" r="13" fill="#fff" opacity=".25"/>
+      <path d="M212 430l2.6 5.5 6 .8-4.4 4.1 1.1 5.9-5.3-3-5.3 3 1.1-5.9-4.4-4.1 6-.8z" fill="#fff"/>
+      <circle cx="152" cy="420" r="13" fill="#f0bd9c"/>
+      <circle cx="268" cy="420" r="13" fill="#f0bd9c"/>
+    </svg>
+
+    <div class="fc c3">
+      <div class="ic">📚</div>
+      <div style="flex:1">
+        <div class="st">★★★★★</div>
+        <div class="bar t"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var $ = function(i) { return document.getElementById(i); },
+    re = /^01[3-9]\d{8}$/,
+    otp = '123456',
+    expires = 0,
+    tick = null,
+    tries = 0;
+
+function say(t, c) {
+  $('msg').textContent = t || '';
+  $('msg').className = 'msg ' + (c || '');
+}
+
+function ok() {
+  if (!re.test($('num').value)) {
+    say('সঠিক ১১-সংখ্যার নম্বর দিন (যেমন 017XXXXXXXX)।', 'err');
+    $('num').focus();
+    return false;
+  }
+  return true;
+}
+
+function swap(a, b) {
+  b.classList.add('hide');
+  a.classList.remove('hide');
+  a.style.animation = 'none';
+  void a.offsetWidth;
+  a.style.animation = '';
+}
+
+$('toOtp').onclick = function() {
+  say('');
+  swap($('otpBox'), $('pwBox'));
+};
+
+$('toPw').onclick = function() {
+  say('');
+  clearInterval(tick);
+  $('otpArea').classList.add('hide');
+  $('sendOtp').classList.remove('hide');
+  swap($('pwBox'), $('otpBox'));
+};
+
+$('num').oninput = function() {
+  this.value = this.value.replace(/\D/g, '');
+};
+
+$('eye').onclick = function() {
+  var p = $('pw'), s = p.type === 'password';
+  p.type = s ? 'text' : 'password';
+  this.textContent = s ? '🙈' : '👁️';
+};
+
+$('signup').onclick = function() {
+  say('নতুন রেজিস্ট্রেশন করতে সরাসরি যেকোনো মোবাইল নম্বর দিয়ে ওটিপি দিয়ে প্রবেশ করুন।', 'ok');
+};
+
+document.addEventListener('click', function(e) {
+  var b = e.target.closest && e.target.closest('.btn');
+  if (!b) return;
+  var r = document.createElement('span'),
+      d = Math.max(b.offsetWidth, b.offsetHeight),
+      rc = b.getBoundingClientRect();
+  r.className = 'rip';
+  r.style.cssText = 'width:' + d + 'px;height:' + d + 'px;left:' + (e.clientX - rc.left - d/2) + 'px;top:' + (e.clientY - rc.top - d/2) + 'px';
+  b.appendChild(r);
+  setTimeout(function() { r.remove(); }, 600);
+});
+
+var selectedLoginClass = 'HSC ২০২৭';
+function chooseLoginClass(btn) {
+  document.querySelectorAll('.login-class-pill').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  selectedLoginClass = btn.dataset.class;
+}
+
+function finish(btn) {
+  btn.classList.add('load');
+  var phone = $('num').value.trim();
+  localStorage.setItem('dipu_user_phone', phone);
+  localStorage.setItem('dipu_logged_in', 'true');
+  localStorage.setItem('dipu_user_class', selectedLoginClass);
+
+  var existingProfile = null;
+  try { existingProfile = JSON.parse(localStorage.getItem('dipu_user_profile') || 'null'); } catch(e){}
+  if (!existingProfile) {
+    existingProfile = {
+      fullName: "শিক্ষার্থী",
+      phone: phone,
+      email: "",
+      classLevel: selectedLoginClass,
+      group: selectedLoginClass.includes('ব্যবসায়') || selectedLoginClass.includes('কমার্স') ? "ব্যবসায় শিক্ষা (Commerce)" : (selectedLoginClass.includes('শ্রেণি') ? "সাধারণ শিক্ষা (General)" : "বিজ্ঞান বিভাগ (Science)"),
+      institution: "শিক্ষা প্রতিষ্ঠান",
+      target: selectedLoginClass.includes('HSC') ? "BUET / Engineering" : (selectedLoginClass.includes('SSC') ? "Board Exam GPA 5.0" : "Class Top Rank"),
+      district: "ঢাকা",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150"
+    };
+  } else {
+    existingProfile.classLevel = selectedLoginClass;
+    if (selectedLoginClass.includes('ব্যবসায়') || selectedLoginClass.includes('কমার্স')) {
+      existingProfile.group = "ব্যবসায় শিক্ষা (Commerce)";
+    }
+    if (phone) existingProfile.phone = phone;
+  }
+  localStorage.setItem('dipu_user_profile', JSON.stringify(existingProfile));
+
+  // Immediate sync with Student Track API
+  try {
+    fetch('/api/student/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(existingProfile)
+    }).catch(function(){});
+  } catch(e) {}
+
+  setTimeout(function() {
+    btn.classList.remove('load');
+    clearInterval(tick);
+    $('who').textContent = '+880 ' + phone.slice(1);
+    $('main').classList.add('hide');
+    $('success').classList.remove('hide');
+    setTimeout(function() {
+      window.location.href = '/dashboard.html';
+    }, 1200);
+  }, 700);
+}
+
+$('loginPw').onclick = function() {
+  if (ok()) finish(this);
+};
+
+$('pw').onkeydown = function(e) {
+  if (e.key === 'Enter') $('loginPw').click();
+};
+
+var boxes = $('boxes');
+function fill(t) {
+  for (var k = 0; k < 6; k++) boxes.children[k].value = t[k] || '';
+}
+
+for (var i = 0; i < 6; i++) {
+  (function(i) {
+    var b = document.createElement('input');
+    b.type = 'text';
+    b.inputMode = 'numeric';
+    b.maxLength = 1;
+    b.style.animationDelay = (i * 0.05) + 's';
+    b.oninput = function() {
+      this.value = this.value.replace(/\D/g, '');
+      if (this.value && i < 5) boxes.children[i + 1].focus();
+    };
+    b.onkeydown = function(e) {
+      if (e.key === 'Backspace' && !this.value && i > 0) boxes.children[i - 1].focus();
+    };
+    b.onpaste = function(e) {
+      var t = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6);
+      if (!t) return;
+      e.preventDefault();
+      fill(t);
+      boxes.children[Math.min(t.length, 5)].focus();
+    };
+    boxes.appendChild(b);
+  })(i);
+}
+
+function timer() {
+  var l = 60;
+  $('resend').disabled = true;
+  clearInterval(tick);
+  $('timer').textContent = 'Resend in ' + l + 's';
+  tick = setInterval(function() {
+    l--;
+    $('timer').textContent = 'Resend in ' + l + 's';
+    if (l <= 0) {
+      clearInterval(tick);
+      $('timer').textContent = '';
+      $('resend').disabled = false;
+    }
+  }, 1000);
+}
+
+function send() {
+  if (!ok()) return;
+  expires = Date.now() + 300000;
+  tries = 0;
+  fill('');
+  $('otpArea').classList.remove('hide');
+  $('sendOtp').classList.add('hide');
+  boxes.children[0].focus();
+  timer();
+  say('OTP পাঠানো হয়েছে +880 ' + $('num').value.slice(1) + ' নম্বরে।', 'ok');
+}
+
+$('sendOtp').onclick = send;
+$('resend').onclick = send;
+
+$('chip').onclick = function() {
+  fill(otp);
+  boxes.children[5].focus();
+};
+
+$('verify').onclick = function() {
+  var v = '';
+  for (var k = 0; k < 6; k++) v += boxes.children[k].value;
+  if (v.length < 6) {
+    say('৬ ডিজিটের পুরো কোডটি দিন।', 'err');
+    return;
+  }
+  if (Date.now() > expires) {
+    say('ওটিপির মেয়াদ শেষ হয়ে গেছে। নতুন ওটিপি নিন।', 'err');
+    return;
+  }
+  if (v !== otp) {
+    tries++;
+    if (tries >= 5) {
+      say('অনেকবার ভুল কোড দেওয়া হয়েছে। নতুন ওটিপি নিন।', 'err');
+      expires = 0;
+      return;
+    }
+    say('ভুল ওটিপি কোড। আবার চেষ্টা করুন (' + (5 - tries) + ' বার বাকি)।', 'err');
+    return;
+  }
+  finish(this);
+};
+
+$('logout').onclick = function() {
+  $('success').classList.add('hide');
+  $('main').classList.remove('hide');
+  $('num').value = '';
+  $('pw').value = '';
+  fill('');
+  say('');
+  $('toPw').click();
+};
+
+// Theme Synchronization
+var theme = localStorage.getItem('dipu_theme') || 'dark';
+if (theme === 'light') {
+  document.body.classList.add('light-theme');
+  document.documentElement.classList.add('light-theme');
+}
+document.querySelectorAll('.theme-option').forEach(function(btn) {
+  btn.classList.toggle('active', btn.dataset.theme === theme);
+  btn.onclick = function() {
+    var t = btn.dataset.theme;
+    localStorage.setItem('dipu_theme', t);
+    document.body.classList.toggle('light-theme', t === 'light');
+    document.documentElement.classList.toggle('light-theme', t === 'light');
+    document.querySelectorAll('.theme-option').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.theme === t);
+    });
+  };
+});
+
+// Language Synchronization
+var lang = localStorage.getItem('dipu_lang') || 'bn';
+document.querySelectorAll('.lang-option').forEach(function(btn) {
+  btn.classList.toggle('active', btn.dataset.lang === lang);
+  btn.onclick = function() {
+    var l = btn.dataset.lang;
+    localStorage.setItem('dipu_lang', l);
+    document.querySelectorAll('.lang-option').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.lang === l);
+    });
+  };
+});
+</script>
+<script src="/js/site-animations.js" defer></script>
+</body>
+</html>

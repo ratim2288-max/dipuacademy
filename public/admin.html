@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Dipu's Edu — সুপার অ্যাডমিন প্যানেল</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF7A1A'><path d='M12 2L1 7l11 5 9-4.09V17h2V7L12 2z'/></svg>">
+
+  <!-- Google Fonts & Font Awesome 6.5.1 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Dipu's Edu Luxury Dark Admin Stylesheet -->
+  <link rel="stylesheet" href="/css/admin.css?v=2.5">
+</head>
+<body>
+
+  <!-- ADMIN PASSCODE SECURITY GATE (সম্পূর্ণ নিষিদ্ধ ও পাসকোড লক) -->
+  <div id="adminSecurityGate" style="position: fixed; inset: 0; z-index: 99999; background: #0A0D14; display: flex; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: #111420; border: 1.5px solid rgba(255, 122, 26, 0.4); border-radius: 24px; padding: 2.5rem 2rem; max-width: 440px; width: 100%; box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 35px rgba(255,122,26,0.15); text-align: center; box-sizing: border-box; backdrop-filter: blur(16px);">
+      <div style="width: 60px; height: 60px; border-radius: 16px; background: linear-gradient(135deg, rgba(255,122,26,0.2), rgba(244,63,94,0.2)); border: 1.5px solid rgba(255,122,26,0.5); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; color: #FF7A1A; font-size: 1.6rem; box-shadow: 0 0 25px rgba(255,122,26,0.3);">
+        <i class="fas fa-lock"></i>
+      </div>
+      <h2 style="color: #FFFFFF; font-size: 1.45rem; font-weight: 800; margin: 0 0 0.5rem; letter-spacing: -0.01em;">সুরক্ষিত অ্যাডমিন প্যানেল</h2>
+      <p style="color: #94A3B8; font-size: 0.88rem; line-height: 1.5; margin: 0 0 1.25rem;">
+        এই প্যানেলটিতে প্রবেশাধিকার সংরক্ষিত। অনুমোদিত অ্যাডমিন সিকিউরিটি পাসকোড বা পিন লিখুন।
+      </p>
+      
+      <form id="adminGateForm" onsubmit="handleAdminGateSubmit(event)" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="position: relative;">
+          <input type="password" id="adminGatePin" placeholder="অ্যাডমিন সিকিউরিটি পিন দিন..." required autocomplete="off" style="width: 100%; padding: 13px 44px 13px 16px; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.15); color: #FFFFFF; font-size: 1rem; font-family: inherit; outline: none; box-sizing: border-box; text-align: center; letter-spacing: 2px; transition: border-color 0.2s;">
+          <button type="button" onclick="toggleGatePasswordEye()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #94A3B8; cursor: pointer; font-size: 15px; padding: 4px;" title="পাসওয়ার্ড দেখুন">
+            <i class="fas fa-eye" id="gateEyeIcon"></i>
+          </button>
+        </div>
+        
+        <!-- Quick PIN Helper for Developer/Owner -->
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin: -2px 0 4px;">
+          <span style="font-size: 11px; color: #64748B;">কুইক পিন:</span>
+          <button type="button" onclick="fillAdminPin('dipu2026')" style="font-size: 11px; padding: 3px 8px; border-radius: 6px; background: rgba(255,122,26,0.12); border: 1px solid rgba(255,122,26,0.3); color: #FFB347; cursor: pointer;">dipu2026</button>
+          <button type="button" onclick="fillAdminPin('admin2026')" style="font-size: 11px; padding: 3px 8px; border-radius: 6px; background: rgba(255,122,26,0.12); border: 1px solid rgba(255,122,26,0.3); color: #FFB347; cursor: pointer;">admin2026</button>
+        </div>
+
+        <div id="adminGateError" style="color: #F43F5E; font-size: 0.82rem; font-weight: 600; display: none; margin-top: -4px;"></div>
+        
+        <button type="submit" style="width: 100%; padding: 13px; border-radius: 12px; background: linear-gradient(135deg, #FF7A1A, #FF9533); border: none; color: #0A0A0F; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(255,122,26,0.4);">
+          <i class="fas fa-key" style="margin-right: 6px;"></i> আনলক করুন
+        </button>
+        <a href="/" style="display: inline-block; color: #94A3B8; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-top: 6px; transition: color 0.15s;">
+          <i class="fas fa-arrow-left" style="margin-right: 5px;"></i> মূল ওয়েবসাইটে ফিরে যান
+        </a>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // Check if already authorized in this browser session
+      if (sessionStorage.getItem("dipu_admin_authorized") === "true") {
+        document.addEventListener("DOMContentLoaded", function() {
+          const gate = document.getElementById("adminSecurityGate");
+          if (gate) gate.style.display = "none";
+          const layout = document.querySelector(".admin-layout-container");
+          if (layout) layout.style.display = "grid";
+        });
+      }
+    })();
+
+    function toggleGatePasswordEye() {
+      const pinInput = document.getElementById("adminGatePin");
+      const eye = document.getElementById("gateEyeIcon");
+      if (!pinInput || !eye) return;
+      if (pinInput.type === "password") {
+        pinInput.type = "text";
+        eye.className = "fas fa-eye-slash";
+      } else {
+        pinInput.type = "password";
+        eye.className = "fas fa-eye";
+      }
+    }
+
+    function fillAdminPin(pin) {
+      const pinInput = document.getElementById("adminGatePin");
+      if (pinInput) {
+        pinInput.value = pin;
+        document.getElementById("adminGateForm")?.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+      }
+    }
+
+    function handleAdminGateSubmit(e) {
+      e.preventDefault();
+      const pin = document.getElementById("adminGatePin").value.trim();
+      const err = document.getElementById("adminGateError");
+      // Accepted admin pins
+      if (pin === "dipu2026" || pin === "admin2026" || pin === "dipuedu" || pin === "16910") {
+        sessionStorage.setItem("dipu_admin_authorized", "true");
+        const gate = document.getElementById("adminSecurityGate");
+        if (gate) gate.style.display = "none";
+        const layout = document.querySelector(".admin-layout-container");
+        if (layout) layout.style.display = "grid";
+      } else {
+        if (err) {
+          err.textContent = "❌ ভুল সিকিউরিটি পিন! সঠিক অ্যাডমিন পিন দিন।";
+          err.style.display = "block";
+        }
+        document.getElementById("adminGatePin").value = "";
+      }
+    }
+  </script>
+
+  <!-- ADMIN APP SHELL -->
+  <div class="admin-layout-container" style="display: none;">
+    
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="admin-sidebar-backdrop" id="adminSidebarBackdrop" onclick="toggleMobileSidebar(false)"></div>
+
+    <!-- ============================================================================
+         1. LEFT DARK SIDEBAR
+         ============================================================================ -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      
+      <!-- Brand Header with Mobile Close Button -->
+      <div class="careplus-brand">
+        <div class="careplus-logo-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <div class="careplus-brand-text">
+          <div class="careplus-brand-name">Dipu's <span style="background: linear-gradient(135deg, #FF7A1A, #FFB347); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Edu</span></div>
+          <div class="careplus-brand-sub">অ্যাডমিন কনসোল</div>
+        </div>
+        <button class="mobile-sidebar-close-btn" id="mobileSidebarCloseBtn" aria-label="মেনু বন্ধ করুন" onclick="toggleMobileSidebar(false)">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Active Status Card -->
+      <div class="careplus-agency-card">
+        <div class="careplus-agency-icon">
+          <i class="fas fa-shield-halved"></i>
+        </div>
+        <div class="careplus-agency-info">
+          <div class="careplus-agency-lbl">সিস্টেম স্ট্যাটাস</div>
+          <div class="careplus-agency-title">অ্যাডমিন প্রটেকশন সক্রিয়</div>
+        </div>
+      </div>
+
+      <!-- Sidebar Navigation Menu (6টি বাটন) -->
+      <nav class="careplus-nav">
+        <ul class="careplus-menu-list">
+          
+          <!-- 1. ড্যাশবোর্ড -->
+          <li>
+            <a href="#overview" class="nav-item active" data-tab="overview">
+              <i class="fas fa-table-cells-large nav-icon"></i>
+              <span>ড্যাশবোর্ড</span>
+            </a>
+          </li>
+
+          <!-- 2. কোর্সসমূহ -->
+          <li>
+            <a href="#courses" class="nav-item" data-tab="courses">
+              <i class="fas fa-graduation-cap nav-icon"></i>
+              <span>কোর্সসমূহ</span>
+            </a>
+          </li>
+
+          <!-- 3. শিক্ষার্থী -->
+          <li>
+            <a href="#students" class="nav-item" data-tab="students">
+              <i class="fas fa-users nav-icon"></i>
+              <span>শিক্ষার্থী তালিকা</span>
+            </a>
+          </li>
+
+          <!-- 4. ইউজার ডিটেইলস -->
+          <li>
+            <a href="#user-details" class="nav-item" data-tab="user-details">
+              <i class="fas fa-id-card nav-icon"></i>
+              <span>ইউজার ডিটেইলস</span>
+            </a>
+          </li>
+
+          <!-- 5. রিভিউ ও ফিডব্যাক -->
+          <li>
+            <a href="#reviews" class="nav-item" data-tab="reviews">
+              <i class="fas fa-star nav-icon"></i>
+              <span>রিভিউ ও ফিডব্যাক</span>
+            </a>
+          </li>
+
+          <!-- 6. ওয়েবসাইট সেটিংস -->
+          <li>
+            <a href="#settings" class="nav-item" data-tab="settings">
+              <i class="fas fa-sliders nav-icon"></i>
+              <span>ওয়েবসাইট সেটিংস</span>
+            </a>
+          </li>
+
+          <!-- 7. ফিচার ও টেক্সট এনিমেশন এডিটর -->
+          <li>
+            <a href="#features" class="nav-item" data-tab="features">
+              <i class="fas fa-wand-magic-sparkles nav-icon"></i>
+              <span>ফিচার ও এনিমেশন এডিটর</span>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+
+      <!-- Sidebar Bottom Section -->
+      <div class="careplus-sidebar-bottom">
+        <a href="/" target="_self" class="careplus-field-app-btn">
+          <i class="fas fa-globe"></i>
+          <span>লাইভ ওয়েবসাইট দেখুন</span>
+          <i class="fas fa-arrow-up-right-from-square" style="font-size:10px; margin-left: 4px;"></i>
+        </a>
+
+        <div class="careplus-user-profile">
+          <div class="careplus-user-avatar">
+            <img id="adminUserSidebarAvatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop" alt="Dipu Sir (BUET)">
+          </div>
+          <div class="careplus-user-details">
+            <div class="careplus-user-name">Dipu Sir</div>
+            <div class="careplus-user-role">Super Admin</div>
+          </div>
+          <a href="/" class="careplus-logout-btn" title="লাইভ সাইটে যান">
+            <i class="fas fa-arrow-right-from-bracket"></i>
+          </a>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ============================================================================
+         2. RIGHT MAIN CONTENT AREA
+         ============================================================================ -->
+    <main class="admin-main-content">
+      
+      <!-- Top Navigation Bar -->
+      <!-- Top Navigation Bar -->
+      <header class="careplus-topbar">
+        <div class="careplus-topbar-left">
+          <!-- Mobile Menu Hamburger Button -->
+          <button class="admin-mobile-menu-btn" id="adminMobileMenuBtn" aria-label="মেনু খুলুন" onclick="toggleMobileSidebar(true)">
+            <i class="fas fa-bars"></i>
+          </button>
+
+          <div class="careplus-title-group">
+            <h1 class="careplus-page-title" id="currentBreadcrumb">ড্যাশবোর্ড</h1>
+            <div class="careplus-meta-pills">
+              <span class="careplus-badge-coordinator">Super Admin</span>
+              <span class="careplus-status-connecting">
+                <span class="status-pulse-dot"></span> <span class="status-text-live">সিস্টেম অনলাইন</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Global Quick Search Bar -->
+        <div class="careplus-topbar-search">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="adminGlobalSearchInput" placeholder="শিক্ষার্থী বা কোর্স খুঁজুন..." oninput="handleAdminGlobalSearch(this.value)">
+          <button type="button" class="search-clear-btn" id="adminSearchClearBtn" onclick="clearAdminGlobalSearch()" style="display:none;" title="ক্লিয়ার করুন">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="careplus-topbar-right">
+          <a href="/" target="_self" class="careplus-header-link" title="লাইভ হোমপেজ দেখুন">
+            <i class="fas fa-globe"></i>
+            <span class="topbar-btn-text">লাইভ সাইট</span>
+          </a>
+          
+          <button class="careplus-header-icon-btn" id="notifBellBtn" title="নোটিফিকেশন দেখুন" onclick="toggleNotificationsModal()">
+            <i class="far fa-bell"></i>
+            <span class="careplus-notif-dot">!</span>
+          </button>
+
+          <!-- Notification Dropdown -->
+          <div class="notifications-dropdown" id="notifDropdown">
+            <div class="notif-header">
+              <span class="notif-title"><i class="fas fa-bell mr-1" style="color:var(--accent-orange)"></i> নোটিফিকেশন</span>
+              <span style="font-size: 11px; color: var(--accent-amber); cursor: pointer;" onclick="toggleNotificationsModal()">বন্ধ করুন</span>
+            </div>
+            <div class="notif-item">
+              <i class="fas fa-user-check" style="color:#10B981; margin-top:2px;"></i>
+              <div>
+                <strong>নতুন শিক্ষার্থী নিবন্ধিত</strong>
+                <div style="font-size: 11px; color: var(--text-muted);">তানভির হোসেন (HSC) অ্যাকাউন্ট খুলেছেন।</div>
+              </div>
+            </div>
+            <div class="notif-item">
+              <i class="fas fa-cart-shopping" style="color:var(--accent-orange); margin-top:2px;"></i>
+              <div>
+                <strong>কোর্স এনরোলমেন্ট</strong>
+                <div style="font-size: 11px; color: var(--text-muted);">নুসরাত জাহান 'রসায়ন ১ম পত্র' কোর্স কিনেছেন।</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-careplus-green-cta" onclick="openCourseModal()">
+            <i class="fas fa-plus"></i>
+            <span class="topbar-btn-text">নতুন কোর্স</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Scrollable Main Content -->
+      <div class="content-scroll-area">
+        
+        <!-- ====================================================================
+             VIEW 1: DASHBOARD / OVERVIEW
+             ==================================================================== -->
+        <section id="view-overview" class="admin-view active">
+          
+          <!-- Hero Banner -->
+          <div class="careplus-hero-banner">
+            <div class="careplus-hero-banner-content">
+              <div class="careplus-date-badge">
+                <i class="far fa-calendar-check"></i>
+                <span id="careplusTodayDate">আজ লোড হচ্ছে...</span>
+              </div>
+              <h2 class="careplus-hero-title">Dipu's Edu অ্যাডমিন ড্যাশবোর্ড</h2>
+              <p class="careplus-hero-sub">
+                প্ল্যাটফর্মের সকল কোর্স, শিক্ষার্থী এনরোলমেন্ট, রাজস্ব ও ইউজার অ্যাক্টিভিটি রিয়েল-টাইমে মনিটর করুন।
+              </p>
+            </div>
+            
+            <div class="careplus-hero-banner-actions">
+              <div class="hero-actions-top-row">
+                <button type="button" class="btn-careplus-hero-green" onclick="openCourseModal()">
+                  <i class="fas fa-plus"></i> <span>নতুন কোর্স</span>
+                </button>
+                <button type="button" class="btn-careplus-hero-dark" onclick="document.querySelector('[data-tab=students]').click()">
+                  <i class="fas fa-users"></i> <span>সব শিক্ষার্থী</span>
+                </button>
+              </div>
+              <div class="hero-actions-bottom-row">
+                <button type="button" class="btn-careplus-hero-dark-outline" onclick="document.querySelector('[data-tab=courses]').click()">
+                  <i class="fas fa-graduation-cap"></i> <span>কোর্স পরিচালনা</span>
+                </button>
+                <button type="button" class="btn-careplus-hero-circle" onclick="refreshDashboard()" title="রিফ্রেশ">
+                  <i class="fas fa-rotate"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 Metric Cards -->
+          <div class="careplus-metric-cards-row">
+            <!-- 1. মোট শিক্ষার্থী -->
+            <div class="careplus-stat-card">
+              <div class="careplus-stat-header">
+                <span class="careplus-stat-label">মোট শিক্ষার্থী</span>
+                <div class="careplus-stat-icon-badge badge-lavender">
+                  <i class="fas fa-user-group"></i>
+                </div>
+              </div>
+              <div class="careplus-stat-number" id="pillTotalStudents">—</div>
+              <div class="careplus-stat-subtitle">নিবন্ধিত শিক্ষার্থী</div>
+            </div>
+
+            <!-- 2. কোর্স কিনেছে -->
+            <div class="careplus-stat-card">
+              <div class="careplus-stat-header">
+                <span class="careplus-stat-label">কোর্স এনরোলমেন্ট</span>
+                <div class="careplus-stat-icon-badge badge-mint">
+                  <i class="fas fa-cart-shopping"></i>
+                </div>
+              </div>
+              <div class="careplus-stat-number" id="pillCourseEnrolled">—</div>
+              <div class="careplus-stat-subtitle">মোট কোর্স কিনেছে</div>
+            </div>
+
+            <!-- 3. সক্রিয় কোর্স -->
+            <div class="careplus-stat-card">
+              <div class="careplus-stat-header">
+                <span class="careplus-stat-label">সক্রিয় কোর্স</span>
+                <div class="careplus-stat-icon-badge badge-amber">
+                  <i class="fas fa-graduation-cap"></i>
+                </div>
+              </div>
+              <div class="careplus-stat-number" id="pillActiveCourses">—</div>
+              <div class="careplus-stat-subtitle">প্রকাশিত কোর্স সংখ্যা</div>
+            </div>
+
+            <!-- 4. এইচএসসি শিক্ষার্থী -->
+            <div class="careplus-stat-card">
+              <div class="careplus-stat-header">
+                <span class="careplus-stat-label">HSC শিক্ষার্থী</span>
+                <div class="careplus-stat-icon-badge badge-teal">
+                  <i class="fas fa-book-open-reader"></i>
+                </div>
+              </div>
+              <div class="careplus-stat-number" id="pillHscStudents">—</div>
+              <div class="careplus-stat-subtitle">HSC শ্রেণিতে ভর্তি</div>
+            </div>
+          </div>
+
+          <!-- সাম্প্রতিক শিক্ষার্থী টেবিল -->
+          <div class="careplus-section-card">
+            <div class="careplus-section-header">
+              <div class="careplus-section-header-left">
+                <h3 class="careplus-section-title">সাম্প্রতিক শিক্ষার্থী</h3>
+                <p class="careplus-section-sub">সদ্য নিবন্ধিত শিক্ষার্থীদের তালিকা</p>
+              </div>
+              <div class="careplus-filter-pills">
+                <button class="filter-pill active" onclick="filterOverviewStudents('all', this)">সবাই</button>
+                <button class="filter-pill" onclick="filterOverviewStudents('HSC', this)">HSC</button>
+                <button class="filter-pill" onclick="filterOverviewStudents('SSC', this)">SSC</button>
+                <button class="filter-pill" onclick="filterOverviewStudents('Admission', this)">Admission</button>
+                <button class="filter-link" onclick="document.querySelector('[data-tab=students]').click()">সব দেখুন <i class="fas fa-arrow-up-right-from-square"></i></button>
+              </div>
+            </div>
+
+            <!-- Students Table -->
+            <div class="careplus-table-wrap">
+              <table class="careplus-table">
+                <thead>
+                  <tr>
+                    <th>শিক্ষার্থীর নাম</th>
+                    <th>শ্রেণি</th>
+                    <th>ফোন নম্বর</th>
+                    <th>কোর্স</th>
+                    <th>স্ট্যাটাস</th>
+                  </tr>
+                </thead>
+                <tbody id="studentsTableBody">
+                  <tr>
+                    <td colspan="5" style="text-align:center; padding: 30px; color: var(--text-muted);">
+                      <i class="fas fa-spinner fa-spin mr-2"></i> শিক্ষার্থী তথ্য লোড হচ্ছে...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ====================================================================
+             VIEW 2: COURSES MANAGEMENT — নতুন কোর্স ও এডিট
+             ==================================================================== -->
+        <section id="view-courses" class="admin-view hidden">
+          <div class="view-header-row">
+            <div>
+              <h2 class="view-main-title">কোর্স ম্যানেজমেন্ট — নতুন কোর্স ও এডিট</h2>
+              <p class="view-subtitle">নতুন কোর্স তৈরি, ফি নির্ধারণ, এডিট ও লাইভ ওয়েবসাইটে প্রকাশ করুন।</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span id="adminCourseCountBadge" class="badge-clocked-in" style="padding: 6px 12px; font-size: 12px;">কোর্স লোড হচ্ছে...</span>
+              <button class="btn-careplus-green-cta" onclick="openCourseModal()">
+                <i class="fas fa-plus"></i> <span>নতুন কোর্স যুক্ত করুন</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Courses Grid -->
+          <div class="courses-admin-grid" id="adminCoursesGrid">
+            <!-- Dynamic courses rendered via admin.js -->
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             VIEW 3: STUDENTS — কোনজন কোর্স কিনেছে, কোন ক্লাসে পড়ে
+             ==================================================================== -->
+        <section id="view-students" class="admin-view hidden">
+          <div class="view-header-row">
+            <div>
+              <h2 class="view-main-title">শিক্ষার্থী তালিকা</h2>
+              <p class="view-subtitle">কোনজন কোর্স কিনেছে, কোন শ্রেণিতে পড়ে এবং তাদের সম্পূর্ণ তথ্য।</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span id="studentsTotalBadge" class="badge-clocked-in" style="padding: 6px 12px; font-size: 12px;">লোড হচ্ছে...</span>
+              <button class="btn-careplus-green-cta" onclick="loadAllStudents()">
+                <i class="fas fa-rotate"></i> <span>রিফ্রেশ</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Class-wise Summary Cards -->
+          <div class="careplus-metric-cards-row" style="margin-bottom: 24px;">
+            <div class="careplus-stat-card">
+              <div class="careplus-stat-header">
+                <span class="careplus-stat-label">মোট শিক্ষার্থী</span>
+                <div class="careplus-stat-icon-badge badge-lavender">
+                  <i class="fas fa-users"></i>
+                </div>
+              </div>
+              <div class="careplus-stat-number" id="stTotalAll">—</div>
+              <div class="careplus-stat-subtitle">নিবন্ধিত</div>
+            </div>
+            <div class="careplus-stat-card">
+              <div class="careplus-stat-header">
+                <span class="careplus-stat-label">কোর্স কিনেছে</span>
+                <div class="careplus-stat-icon-badge badge-mint">
+                  <i class="fas fa-cart-shopping"></i>
+                </div>
+              </div>
+              <div class="careplus-stat-number" id="stTotalBuyers">—</div>
+              <div class="careplus-stat-subtitle">পেইড এনরোলমেন্ট</div>
+            </div>
+            <div class="careplus-stat-card">
+              <div class="careplus-stat-header">
+                <span class="careplus-stat-label">HSC শিক্ষার্থী</span>
+                <div class="careplus-stat-icon-badge badge-amber">
+                  <i class="fas fa-book-open-reader"></i>
+                </div>
+              </div>
+              <div class="careplus-stat-number" id="stHscCount">—</div>
+              <div class="careplus-stat-subtitle">HSC শ্রেণিতে</div>
+            </div>
+            <div class="careplus-stat-card">
+              <div class="careplus-stat-header">
+                <span class="careplus-stat-label">SSC শিক্ষার্থী</span>
+                <div class="careplus-stat-icon-badge badge-teal">
+                  <i class="fas fa-user-graduate"></i>
+                </div>
+              </div>
+              <div class="careplus-stat-number" id="stSscCount">—</div>
+              <div class="careplus-stat-subtitle">SSC শ্রেণিতে</div>
+            </div>
+          </div>
+
+          <!-- Filter Bar -->
+          <div class="careplus-section-card">
+            <div class="careplus-section-header">
+              <div class="careplus-section-header-left">
+                <h3 class="careplus-section-title">সকল শিক্ষার্থী</h3>
+                <p class="careplus-section-sub">শ্রেণি ও কোর্স অনুযায়ী ফিল্টার করুন</p>
+              </div>
+              <div class="careplus-filter-pills">
+                <button class="filter-pill active" onclick="filterStudentsView('all', this)">সবাই</button>
+                <button class="filter-pill" onclick="filterStudentsView('HSC', this)">HSC</button>
+                <button class="filter-pill" onclick="filterStudentsView('SSC', this)">SSC</button>
+                <button class="filter-pill" onclick="filterStudentsView('Admission', this)">Admission</button>
+                <button class="filter-pill" onclick="filterStudentsView('paid', this)">কোর্স কিনেছে</button>
+              </div>
+            </div>
+
+            <div class="careplus-table-wrap">
+              <table class="careplus-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>শিক্ষার্থীর নাম</th>
+                    <th>শ্রেণি / ক্লাস</th>
+                    <th>ফোন নম্বর</th>
+                    <th>কোর্স কিনেছে</th>
+                    <th>নিবন্ধনের তারিখ</th>
+                    <th>স্ট্যাটাস</th>
+                  </tr>
+                </thead>
+                <tbody id="allStudentsTableBody">
+                  <tr>
+                    <td colspan="7" style="text-align:center; padding: 40px; color: var(--text-muted);">
+                      <i class="fas fa-spinner fa-spin mr-2"></i> শিক্ষার্থী তথ্য লোড হচ্ছে...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             VIEW 4: USER DETAILS — ফোন নম্বর ও সোশ্যাল তথ্য
+             ==================================================================== -->
+        <section id="view-user-details" class="admin-view hidden">
+          <div class="view-header-row">
+            <div>
+              <h2 class="view-main-title">ইউজার ডিটেইলস</h2>
+              <p class="view-subtitle">শিক্ষার্থীদের ফোন নম্বর, ইমেইল এবং সম্পূর্ণ ব্যক্তিগত তথ্য।</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="position: relative;">
+                <input type="text" id="userSearchInput" class="form-input" placeholder="🔍 নাম বা ফোন দিয়ে খুঁজুন..." style="padding-left: 14px; width: 260px;" oninput="searchUserDetails(this.value)">
+              </div>
+              <button class="btn-careplus-green-cta" onclick="loadAllUserDetails()">
+                <i class="fas fa-rotate"></i> <span>রিফ্রেশ</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="careplus-section-card">
+            <div class="careplus-table-wrap">
+              <table class="careplus-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>পূর্ণ নাম</th>
+                    <th>ফোন নম্বর</th>
+                    <th>ইমেইল</th>
+                    <th>শ্রেণি</th>
+                    <th>কোর্স কেনার সংখ্যা</th>
+                    <th>নিবন্ধন তারিখ</th>
+                  </tr>
+                </thead>
+                <tbody id="userDetailsTableBody">
+                  <tr>
+                    <td colspan="7" style="text-align:center; padding: 40px; color: var(--text-muted);">
+                      <i class="fas fa-spinner fa-spin mr-2"></i> ইউজার তথ্য লোড হচ্ছে...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             VIEW 5: REVIEWS & TESTIMONIALS
+             ==================================================================== -->
+        <section id="view-reviews" class="admin-view hidden">
+          <div class="view-header-row">
+            <div>
+              <h2 class="view-main-title">রিভিউ ও টেস্টিমোনিয়াল ম্যানেজমেন্ট</h2>
+              <p class="view-subtitle">হোমপেজে প্রদর্শিত শিক্ষার্থীদের রিভিউ যোগ করুন, এডিট করুন বা মুছে ফেলুন।</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span id="reviewCountBadge" class="badge-clocked-in" style="padding: 6px 12px; font-size: 12px;">লোড হচ্ছে...</span>
+              <button class="btn-careplus-green-cta" id="refreshReviewsBtn">
+                <i class="fas fa-rotate"></i> <span>রিফ্রেশ</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="reviews-admin-grid">
+            <!-- Add New Review Form -->
+            <div class="review-form-card">
+              <h3 class="panel-title" style="margin-bottom: 16px;"><i class="fas fa-plus-circle text-orange mr-2"></i> নতুন রিভিউ যুক্ত করুন</h3>
+              <form id="addReviewForm">
+                <div class="form-group-mb">
+                  <label class="form-label">শিক্ষার্থীর নাম *</label>
+                  <input type="text" id="newRevName" class="form-input" placeholder="যেমন: তানজির আহমেদ" required>
+                </div>
+
+                <div class="form-group-mb">
+                  <label class="form-label">ব্যাজ / অর্জন / পরিচয়</label>
+                  <input type="text" id="newRevBadge" class="form-input" placeholder="যেমন: 🏆 BUET CSE • HSC '25">
+                </div>
+
+                <div class="form-group-mb">
+                  <label class="form-label">রেটিং (Stars)</label>
+                  <select id="newRevRating" class="form-select">
+                    <option value="5.0" selected>⭐⭐⭐⭐⭐ (5.0 স্টার - চমৎকার)</option>
+                    <option value="4.8">⭐⭐⭐⭐½ (4.8 স্টার)</option>
+                    <option value="4.5">⭐⭐⭐⭐½ (4.5 স্টার)</option>
+                  </select>
+                </div>
+
+                <div class="form-group-mb">
+                  <label class="form-label">শিক্ষার্থীর মতামত / মন্তব্য *</label>
+                  <textarea id="newRevQuote" class="form-textarea" rows="3" placeholder="দীপু স্যারের কনসেপ্টভিত্তিক ক্লাসগুলো অসাধারণ..." required></textarea>
+                </div>
+
+                <div class="form-group-mb">
+                  <label class="form-label">ছবি URL বা প্রিসেট ছবি</label>
+                  <input type="url" id="newRevAvatar" class="form-input" placeholder="https://images.unsplash.com/..." value="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150">
+                  <div class="avatar-picker-row">
+                    <div class="avatar-preview-box">
+                      <img id="formAvatarPreview" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150" alt="Preview">
+                    </div>
+                    <div class="avatar-preset-chips">
+                      <button type="button" class="preset-chip-btn active" data-url="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150" title="Avatar 1">
+                        <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150" alt="1">
+                      </button>
+                      <button type="button" class="preset-chip-btn" data-url="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150" title="Avatar 2">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150" alt="2">
+                      </button>
+                      <button type="button" class="preset-chip-btn" data-url="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150" title="Avatar 3">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150" alt="3">
+                      </button>
+                      <button type="button" class="preset-chip-btn" data-url="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150" title="Avatar 4">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150" alt="4">
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <button type="submit" id="submitReviewBtn" class="btn-primary-gradient" style="width: 100%; justify-content: center; margin-top: 10px;">
+                  <i class="fas fa-paper-plane mr-2"></i> হোমপেজে রিভিউ প্রকাশ করুন
+                </button>
+              </form>
+            </div>
+
+            <!-- Live Preview Card -->
+            <div class="review-live-card">
+              <h3 class="panel-title" style="margin-bottom: 16px;"><i class="fas fa-eye text-orange mr-2"></i> লাইভ প্রিভিউ (ওয়েবসাইটে যেভাবে দেখাবে)</h3>
+              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 122, 26, 0.25); border-radius: 12px; padding: 20px;">
+                <div class="live-review-author-wrap">
+                  <img id="livePreviewImg" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150" class="live-review-img" alt="Avatar">
+                  <div>
+                    <div id="livePreviewName" class="live-review-name">শিক্ষার্থীর নাম</div>
+                    <div id="livePreviewBadge" class="live-review-badge">🏆 BUET CSE • HSC '25</div>
+                  </div>
+                </div>
+                <div id="livePreviewStars" class="live-review-stars">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                  <span style="font-size: 11px; margin-left: 5px; color: var(--text-muted);">(5.0 Rating)</span>
+                </div>
+                <div id="livePreviewQuote" class="live-review-quote">
+                  "দীপু স্যারের কনসেপ্টভিত্তিক ক্লাসগুলো অসাধারণ..."
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- All Reviews Table -->
+          <div class="careplus-section-card">
+            <h3 class="careplus-section-title" style="margin-bottom: 14px;">বর্তমান সক্রিয় রিভিউসমূহ</h3>
+            <div class="careplus-table-wrap">
+              <table class="careplus-table">
+                <thead>
+                  <tr>
+                    <th>ছবি</th>
+                    <th>নাম</th>
+                    <th>পরিচয়/ব্যাজ</th>
+                    <th>রেটিং</th>
+                    <th>মন্তব্য</th>
+                    <th style="text-align: right;">অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="adminReviewsListBody">
+                  <tr>
+                    <td colspan="6" style="text-align:center; padding: 20px; color: var(--text-muted);"><i class="fas fa-spinner fa-spin mr-2"></i> লোড হচ্ছে...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             VIEW 6: WEBSITE SETTINGS (Hero Video, Social Links, Site Stats)
+             ==================================================================== -->
+        <section id="view-settings" class="admin-view hidden">
+          <div class="view-header-row">
+            <div>
+              <h2 class="view-main-title">ওয়েবসাইট সেটিংস ও কন্ট্রোল</h2>
+              <p class="view-subtitle">হোমপেজ ভিডিও লিংক, সোশ্যাল মিডিয়া হ্যান্ডেল ও সাইট মেট্রিক্স পরিবর্তন করুন।</p>
+            </div>
+          </div>
+
+          <!-- 1. Hero Video Manager -->
+          <div class="card-panel" style="margin-bottom: 24px;">
+            <h3 class="panel-title" style="margin-bottom: 14px;"><i class="fas fa-video text-orange mr-2"></i> হোমপেজ হিরো ভিডিও</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+              হোমপেজের মূল ইন্ট্রো / ব্যানার ভিডিওটির YouTube লিংক এখানে পেস্ট করুন:
+            </p>
+            <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px;">
+              <div>
+                <div class="form-group-mb">
+                  <label class="form-label">ভিডিও লিংক (YouTube URL) *</label>
+                  <input type="url" id="adminHeroVideoInput" class="form-input" placeholder="https://www.youtube.com/watch?v=..." value="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                </div>
+                <div class="form-group-mb">
+                  <label class="form-label">ভিডিওর শিরোনাম (ঐচ্ছিক)</label>
+                  <input type="text" id="adminHeroVideoTitle" class="form-input" placeholder="যেমন: কীভাবে দীপু'স এডু প্ল্যাটফর্মে পড়াশোনা করবেন" value="দীপু'স এডু প্ল্যাটফর্ম পরিচিতি">
+                </div>
+                <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                  <button type="button" class="btn-careplus-dark" onclick="setHeroVideoPreset('https://www.youtube.com/watch?v=kJQP7kiw5Fk', 'স্পেশাল গাইডলাইন')">ডেমো ১</button>
+                  <button type="button" class="btn-careplus-dark" onclick="setHeroVideoPreset('https://www.youtube.com/watch?v=dQw4w9WgXcQ', 'কোর্স ট্রেইলার')">ডেমো ২</button>
+                </div>
+                <div style="display:flex; align-items:center; gap: 12px;">
+                  <button type="button" id="saveHeroVideoBtn" class="btn-primary-gradient" onclick="saveHeroVideo()">
+                    <i class="fas fa-floppy-disk mr-1"></i> <span>ভিডিও সেভ করুন</span>
+                  </button>
+                  <span id="heroVideoSaveMsg" style="font-size: 12px; font-weight: 600;"></span>
+                </div>
+              </div>
+              <div>
+                <label class="form-label">লাইভ ভিডিও প্রিভিউ:</label>
+                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; border: 1px solid var(--cp-border-light); background: #000;">
+                  <iframe id="adminHeroVideoPreview" src="" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Social Links Manager -->
+          <div class="card-panel" style="margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h3 class="panel-title"><i class="fas fa-share-nodes text-orange mr-2"></i> সোশ্যাল মিডিয়া লিংক</h3>
+              <button class="btn-careplus-dark" onclick="saveAllSocialLinks()">
+                <i class="fas fa-floppy-disk mr-1"></i> সব লিংক একসাথে সেভ করুন
+              </button>
+            </div>
+
+            <!-- Facebook -->
+            <div class="social-card-item">
+              <div class="social-logo-box" style="background: rgba(24, 119, 242, 0.15); color: #1877F2;">
+                <i class="fab fa-facebook-f"></i>
+              </div>
+              <div>
+                <input type="url" id="socialInputFb" class="form-input" placeholder="https://facebook.com/dipuedu" value="https://facebook.com/dipuedu">
+              </div>
+              <button class="btn-social-save fb" id="btnSaveFb" onclick="saveSocialLinkSingle('fb')">
+                <i class="fas fa-floppy-disk"></i> ফেসবুক সেভ
+              </button>
+            </div>
+
+            <!-- YouTube -->
+            <div class="social-card-item">
+              <div class="social-logo-box" style="background: rgba(255, 0, 0, 0.15); color: #FF0000;">
+                <i class="fab fa-youtube"></i>
+              </div>
+              <div>
+                <input type="url" id="socialInputYt" class="form-input" placeholder="https://youtube.com/@dipuedu" value="https://youtube.com/@dipuedu">
+              </div>
+              <button class="btn-social-save yt" id="btnSaveYt" onclick="saveSocialLinkSingle('yt')">
+                <i class="fas fa-floppy-disk"></i> ইউটিউব সেভ
+              </button>
+            </div>
+
+            <!-- Instagram -->
+            <div class="social-card-item">
+              <div class="social-logo-box" style="background: rgba(225, 48, 108, 0.15); color: #E1306C;">
+                <i class="fab fa-instagram"></i>
+              </div>
+              <div>
+                <input type="url" id="socialInputInsta" class="form-input" placeholder="https://instagram.com/dipuedu" value="https://instagram.com/dipuedu">
+              </div>
+              <button class="btn-social-save insta" id="btnSaveInsta" onclick="saveSocialLinkSingle('insta')">
+                <i class="fas fa-floppy-disk"></i> ইনস্টাগ্রাম সেভ
+              </button>
+            </div>
+
+            <!-- LinkedIn -->
+            <div class="social-card-item">
+              <div class="social-logo-box" style="background: rgba(10, 102, 194, 0.15); color: #0A66C2;">
+                <i class="fab fa-linkedin-in"></i>
+              </div>
+              <div>
+                <input type="url" id="socialInputLinkedin" class="form-input" placeholder="https://linkedin.com/company/dipuedu" value="https://linkedin.com/company/dipuedu">
+              </div>
+              <button class="btn-social-save linkedin" id="btnSaveLinkedin" onclick="saveSocialLinkSingle('linkedin')">
+                <i class="fas fa-floppy-disk"></i> লিঙ্কডইন সেভ
+              </button>
+            </div>
+
+            <!-- TikTok -->
+            <div class="social-card-item">
+              <div class="social-logo-box" style="background: rgba(37, 244, 238, 0.15); color: #25F4EE;">
+                <i class="fab fa-tiktok"></i>
+              </div>
+              <div>
+                <input type="url" id="socialInputTiktok" class="form-input" placeholder="https://tiktok.com/@dipuedu" value="https://tiktok.com/@dipuedu">
+              </div>
+              <button class="btn-social-save tiktok" id="btnSaveTiktok" onclick="saveSocialLinkSingle('tiktok')">
+                <i class="fas fa-floppy-disk"></i> টিকটক সেভ
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. Site Statistics Manager -->
+          <div class="card-panel">
+            <h3 class="panel-title" style="margin-bottom: 14px;"><i class="fas fa-chart-line text-orange mr-2"></i> হোমপেজ স্ট্যাটস ও কাউন্টার</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+              হোমপেজে প্রদর্শিত মোট শিক্ষার্থী ও অন্যান্য কাউন্টারের সংখ্যা বাংলায় ও ইংরেজিতে নিয়ন্ত্রণ করুন:
+            </p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group-mb">
+                <label class="form-label">মোট শিক্ষার্থী (বাংলায়)</label>
+                <input type="text" id="statInputTotalStudentsBn" class="form-input" value="৩০ লক্ষ+">
+              </div>
+              <div class="form-group-mb">
+                <label class="form-label">মোট শিক্ষার্থী (ইংরেজিতে)</label>
+                <input type="text" id="statInputTotalStudentsEn" class="form-input" value="3.0M+">
+              </div>
+              <div class="form-group-mb">
+                <label class="form-label">কোর্স এনরোলমেন্ট (বাংলায়)</label>
+                <input type="text" id="statInputCourseEnrolledBn" class="form-input" value="১,৮০,০০০+">
+              </div>
+              <div class="form-group-mb">
+                <label class="form-label">কোর্স এনরোলমেন্ট (ইংরেজিতে)</label>
+                <input type="text" id="statInputCourseEnrolledEn" class="form-input" value="180K+">
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; margin-top: 10px;">
+              <button type="button" id="saveStatsBtn" class="btn-primary-gradient" onclick="saveSiteStatsFromForm()">
+                <i class="fas fa-floppy-disk mr-1.5"></i> মেট্রিক্স সংরক্ষণ করুন
+              </button>
+              <span id="siteStatsMsg" style="font-size: 12px; font-weight: 600;"></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             VIEW 7: FEATURES & TEXT ANIMATION MANAGER (TypeScript Component Editor)
+             ==================================================================== -->
+        <section id="view-features" class="admin-view hidden">
+          <!-- Header Banner -->
+          <div class="careplus-section-card" style="margin-bottom: 24px; border-radius: 20px; background: linear-gradient(135deg, rgba(255,122,26,0.12), rgba(15,23,42,0.95)); border: 1px solid rgba(255,122,26,0.25);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+              <div>
+                <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px; border-radius: 999px; background: rgba(255,122,26,0.18); color: #FF923C; font-size: 11px; font-weight: 700; margin-bottom: 8px;">
+                  <i class="fas fa-wand-magic-sparkles"></i> TYPESCRIPT REACT COMPONENT
+                </div>
+                <h2 style="font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 6px;">
+                  হোমপেজ ফিচার ও টেক্সট এনিমেশন এডিটর
+                </h2>
+                <p style="font-size: 13px; color: #94A3B8; max-width: 650px; line-height: 1.6;">
+                  হোমপেজের ফিচার সেকশনের প্রতিটি ট্যাব, শিরোনাম, বিবরণ, বুলেট পয়েন্ট, বাটন ও ছবি এখান থেকে সরাসরি এডিট, নতুন ফিচার যোগ এবং রিমুভ করতে পারবেন।
+                </p>
+              </div>
+              <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <button type="button" class="btn-careplus-green-cta" onclick="openNewFeatureModal()" style="border-radius: 999px; padding: 10px 22px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 4px 18px rgba(16,185,129,0.35);">
+                  <i class="fas fa-plus-circle"></i> নতুন ফিচার যোগ করুন
+                </button>
+                <button type="button" class="btn-careplus-hero-dark-outline" onclick="resetFeaturesToDefault()" style="border-radius: 999px; padding: 9px 18px;">
+                  <i class="fas fa-rotate-left mr-1"></i> ডিফল্ট রিসেট
+                </button>
+                <a href="/#features" target="_blank" class="btn-primary-gradient" style="border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; padding: 9px 20px;">
+                  <i class="fas fa-eye"></i> লাইভ ফিচার দেখুন
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature Tab Selector Buttons (Horizontal Scroll/Pill List) -->
+          <div style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+              <div style="font-size: 13px; font-weight: 700; color: #CBD5E1; display: flex; align-items: center; gap: 6px;">
+                <i class="fas fa-layer-group" style="color: #FF7A1A;"></i> 
+                <span>ফিচার তালিকা (<span id="adminFeatCountBadge" style="color: #FF7A1A; font-weight: 800;">৭টি</span>) — নির্বাচন করে এডিট করুন অথবা রিমুভ করুন:</span>
+              </div>
+              <button type="button" class="btn-careplus-hero-dark-outline" onclick="openNewFeatureModal()" style="font-size: 12px; padding: 6px 14px; border-radius: 999px; color: #10B981; border-color: rgba(16,185,129,0.35); background: rgba(16,185,129,0.08); display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+                <i class="fas fa-plus"></i> নতুন ফিচার
+              </button>
+            </div>
+            <div id="adminFeatureTabsList" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+              <!-- Dynamically populated feature tabs with delete buttons -->
+            </div>
+          </div>
+
+          <!-- Edit Grid: Form on Left + Live Animated Preview on Right -->
+          <div style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; align-items: start;">
+            
+            <!-- Edit Form Card -->
+            <div class="careplus-section-card" style="border-radius: 20px; border: 1px solid rgba(255,255,255,0.08);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <span id="adminFeatFormBadgeIcon" style="width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,122,26,0.15); color: #FF7A1A; font-size: 16px;">
+                    <i class="fas fa-video"></i>
+                  </span>
+                  <div>
+                    <h3 id="adminFeatFormHeading" style="font-size: 16px; font-weight: 800; color: #fff;">ফিচার এডিট করুন</h3>
+                    <span id="adminFeatFormSubheading" style="font-size: 12px; color: #94A3B8;">আইডি: live</span>
+                  </div>
+                </div>
+                <span id="adminFeatSaveIndicator" style="font-size: 12px; font-weight: 600;"></span>
+              </div>
+
+              <form id="adminFeatureEditForm" onsubmit="event.preventDefault(); saveCurrentFeature();">
+                <input type="hidden" id="featEditId" value="live">
+
+                <!-- Row 1: Tab Label & Accent Color -->
+                <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 14px; margin-bottom: 14px;">
+                  <div>
+                    <label class="form-label">ট্যাব লেবেল (Tab Name) *</label>
+                    <input type="text" id="featEditTabLabel" class="form-input" style="border-radius: 12px;" required oninput="updateLivePreview()">
+                  </div>
+                  <div>
+                    <label class="form-label">থিম রঙ (Accent Color) *</label>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                      <input type="color" id="featEditColorPicker" style="width: 42px; height: 38px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: transparent; cursor: pointer;" oninput="onColorPickerChange(this.value)">
+                      <input type="text" id="featEditAccentColor" class="form-input" style="border-radius: 12px;" required oninput="onColorTextChange(this.value)">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 2: Badge Text & Icon -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+                  <div>
+                    <label class="form-label">ব্যাজ টেক্সট (Tag Badge)</label>
+                    <input type="text" id="featEditBadge" class="form-input" style="border-radius: 12px;" placeholder="HD 1080P INTERACTIVE" oninput="updateLivePreview()">
+                  </div>
+                  <div>
+                    <label class="form-label">FontAwesome আইকন ক্লাস</label>
+                    <input type="text" id="featEditIcon" class="form-input" style="border-radius: 12px;" placeholder="fas fa-video" oninput="updateLivePreview()">
+                  </div>
+                </div>
+
+                <!-- Row 3: Title -->
+                <div style="margin-bottom: 14px;">
+                  <label class="form-label">ফিচার প্রধান শিরোনাম (Title) *</label>
+                  <input type="text" id="featEditTitle" class="form-input" style="border-radius: 12px;" required oninput="updateLivePreview()">
+                </div>
+
+                <!-- Row 4: Description -->
+                <div style="margin-bottom: 14px;">
+                  <label class="form-label">বিস্তারিত বিবরণ (Description) *</label>
+                  <textarea id="featEditDesc" class="form-input" rows="3" style="border-radius: 12px; resize: vertical;" required oninput="updateLivePreview()"></textarea>
+                </div>
+
+                <!-- Row 5: 3 Bullet Points -->
+                <div style="margin-bottom: 14px;">
+                  <label class="form-label" style="display: flex; justify-content: space-between;">
+                    <span>ফিচার বুলেট পয়েন্টস (সুবিধাসমূহ)</span>
+                    <span style="font-size: 11px; color: #94A3B8;">৩টি গুরুত্বপূর্ণ বুলেট</span>
+                  </label>
+                  <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span style="color: #10B981; font-size: 13px;"><i class="fas fa-check-circle"></i></span>
+                      <input type="text" id="featEditPoint1" class="form-input" style="border-radius: 10px;" placeholder="বুলেট পয়েন্ট ১" oninput="updateLivePreview()">
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span style="color: #10B981; font-size: 13px;"><i class="fas fa-check-circle"></i></span>
+                      <input type="text" id="featEditPoint2" class="form-input" style="border-radius: 10px;" placeholder="বুলেট পয়েন্ট ২" oninput="updateLivePreview()">
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span style="color: #10B981; font-size: 13px;"><i class="fas fa-check-circle"></i></span>
+                      <input type="text" id="featEditPoint3" class="form-input" style="border-radius: 10px;" placeholder="বুলেট পয়েন্ট ৩" oninput="updateLivePreview()">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 6: Image URL and File Upload -->
+                <div style="margin-bottom: 14px;">
+                  <label class="form-label">ফিচার ব্যানার ছবি (Image URL বা সরাসরি আপলোড) *</label>
+                  <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
+                    <input type="text" id="featEditImageUrl" class="form-input" style="border-radius: 12px; flex: 1;" placeholder="/images/student-hero.jpg বা অনলাইন URL" required oninput="updateLivePreview()">
+                    <label class="btn-careplus-hero-dark-outline" style="border-radius: 12px; cursor: pointer; white-space: nowrap; margin: 0; padding: 9px 14px;">
+                      <i class="fas fa-cloud-arrow-up"></i> ছবি আপলোড
+                      <input type="file" id="featEditImageFileInput" accept="image/*" style="display: none;" onchange="handleFeatureImageUpload(this)">
+                    </label>
+                  </div>
+                  <div style="font-size: 11px; color: #94A3B8;">
+                    পরামর্শ: 16:10 বা 16:9 অনুপাতের যেকোনো ছবি দিন অথবা ডিভাইস থেকে সিলেক্ট করুন।
+                  </div>
+                </div>
+
+                <!-- Row 7: CTA Button -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;">
+                  <div>
+                    <label class="form-label">বাটন টেক্সট (CTA Text)</label>
+                    <input type="text" id="featEditBtnText" class="form-input" style="border-radius: 12px;" placeholder="ফ্রি লাইভ ডেমো দেখো →" oninput="updateLivePreview()">
+                  </div>
+                  <div>
+                    <label class="form-label">বাটন লিংক (CTA URL)</label>
+                    <input type="text" id="featEditBtnHref" class="form-input" style="border-radius: 12px;" placeholder="/player বা /courses" oninput="updateLivePreview()">
+                  </div>
+                </div>
+
+                <!-- Submit & Delete Buttons -->
+                <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                  <button type="submit" id="btnSaveFeature" class="btn-primary-gradient" style="border-radius: 999px; padding: 12px 30px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-floppy-disk"></i> এই ফিচার সংরক্ষণ করুন
+                  </button>
+                  <button type="button" id="btnDeleteCurrentFeat" class="btn-careplus-hero-dark-outline" onclick="deleteCurrentFeature()" style="border-radius: 999px; padding: 12px 20px; font-weight: 700; color: #EF4444; border-color: rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.08); display: inline-flex; align-items: center; gap: 8px; cursor: pointer;" title="এই ফিচারটি স্থায়ীভাবে মুছে ফেলুন">
+                    <i class="fas fa-trash-can"></i> ফিচারটি রিমুভ করুন
+                  </button>
+                  <button type="button" class="btn-careplus-hero-dark-outline" onclick="triggerPreviewAnimation()" style="border-radius: 999px; padding: 12px 20px;">
+                    <i class="fas fa-play"></i> এনিমেশন প্লে করুন
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Live Animated Preview Card (Rounded & State of the Art) -->
+            <div class="careplus-section-card" style="border-radius: 20px; position: sticky; top: 90px; border: 1px solid rgba(255,255,255,0.1);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <h4 style="font-size: 14px; font-weight: 700; color: #CBD5E1; display: flex; align-items: center; gap: 6px;">
+                  <i class="fas fa-desktop" style="color: #FF7A1A;"></i> লাইভ এনিমেশন প্রিভিউ
+                </h4>
+                <span id="prevAccentPill" style="font-size: 10px; padding: 3px 10px; border-radius: 999px; font-weight: 700; background: rgba(255,122,26,0.15); color: #FF7A1A;">
+                  LIVE PREVIEW
+                </span>
+              </div>
+
+              <!-- Preview Card Wrapper -->
+              <div id="adminFeatLivePreviewBox" style="background: rgba(10, 15, 29, 0.95); border-radius: 18px; padding: 18px; border: 1px solid rgba(255,122,26,0.25); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: border-color 0.3s, box-shadow 0.3s;">
+                <!-- Preview Badge -->
+                <div style="margin-bottom: 10px;">
+                  <span id="prevBadge" style="display: inline-flex; align-items: center; gap: 5px; padding: 3px 12px; border-radius: 999px; background: rgba(255,122,26,0.15); border: 1px solid rgba(255,122,26,0.3); color: #FF7A1A; font-size: 10px; font-weight: 700; letter-spacing: 1px;">
+                    <i class="fas fa-bolt"></i> <span id="prevBadgeText">HD 1080P INTERACTIVE</span>
+                  </span>
+                </div>
+
+                <!-- Preview Image -->
+                <div style="border-radius: 14px; overflow: hidden; margin-bottom: 14px; aspect-ratio: 16/10; border: 1px solid rgba(255,255,255,0.08); position: relative; background: #0F172A;">
+                  <img id="prevImg" src="/images/student-hero.jpg" alt="Feature Preview" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.src='/images/student-hero.jpg'">
+                </div>
+
+                <!-- Preview Title -->
+                <h4 id="prevTitle" style="font-size: 15px; font-weight: 800; color: #fff; line-height: 1.4; margin-bottom: 8px;">
+                  স্মার্ট হোয়াইটবোর্ডে দেশের সেরা টিচারদের লাইভ ক্লাস
+                </h4>
+
+                <!-- Preview Desc -->
+                <p id="prevDesc" style="font-size: 12px; color: #94A3B8; line-height: 1.6; margin-bottom: 12px;">
+                  বুয়েট ও মেডিকেল ফ্যাকাল্টির শিক্ষকদের সাথে সরাসরি টু-ওয়ে ইন্টারঅ্যাকশন।
+                </p>
+
+                <!-- Preview Bullets -->
+                <ul id="prevBullets" style="list-style: none; padding: 0; margin: 0 0 14px; display: flex; flex-direction: column; gap: 6px;">
+                  <!-- Dynamically populated -->
+                </ul>
+
+                <!-- Preview CTA -->
+                <div>
+                  <span id="prevBtn" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; border-radius: 999px; background: #FF7A1A; color: #0A0D1A; font-weight: 800; font-size: 12px;">
+                    ফ্রি লাইভ ডেমো দেখো →
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+
+    </main>
+
+    <!-- ============================================================================
+         3. MOBILE FLOATING BOTTOM NAVIGATION (স্মার্টফোন ইউজারদের জন্য টাচ বার)
+         ============================================================================ -->
+    <nav class="admin-mobile-bottom-nav" id="adminMobileBottomNav">
+      <a href="#overview" class="mobile-bottom-nav-item active" data-tab="overview">
+        <i class="fas fa-table-cells-large"></i>
+        <span>ড্যাশবোর্ড</span>
+      </a>
+      <a href="#courses" class="mobile-bottom-nav-item" data-tab="courses">
+        <i class="fas fa-graduation-cap"></i>
+        <span>কোর্স</span>
+      </a>
+      <a href="#students" class="mobile-bottom-nav-item" data-tab="students">
+        <i class="fas fa-users"></i>
+        <span>শিক্ষার্থী</span>
+      </a>
+      <a href="#settings" class="mobile-bottom-nav-item" data-tab="settings">
+        <i class="fas fa-sliders"></i>
+        <span>সেটিংস</span>
+      </a>
+      <button type="button" class="mobile-bottom-nav-item" id="mobileBottomMoreBtn" onclick="toggleMobileSidebar(true)">
+        <i class="fas fa-bars-staggered"></i>
+        <span>মেনু</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- ============================================================================
+       MODAL 1: CREATE NEW COURSE
+       ============================================================================ -->
+  <div class="admin-modal-overlay" id="newCourseModal">
+    <div class="admin-modal-box">
+      <div class="admin-modal-header">
+        <h3><i class="fas fa-graduation-cap text-orange mr-2" style="color:var(--accent-orange)"></i> নতুন কোর্স তৈরি ও প্রকাশ করুন</h3>
+        <button class="modal-close-btn" onclick="closeCourseModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="admin-modal-body">
+        <form id="createCourseForm">
+          <div class="form-group-mb">
+            <label class="form-label">কোর্সের পূর্ণ নাম (বাংলা) *</label>
+            <input type="text" id="courseInputTitleBn" class="form-input" placeholder="যেমন: HSC ২০২৬ রসায়ন ১ম পত্র পূর্ণাঙ্গ মাস্টারক্লাস" required>
+          </div>
+
+          <div class="form-group-mb" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label class="form-label">স্লাগ / URL Slug (ইংরেজি) *</label>
+              <input type="text" id="courseInputSlug" class="form-input" placeholder="উদা: hsc-chemistry-1st-paper" required>
+            </div>
+            <div>
+              <label class="form-label">শ্রেণি / বিভাগ *</label>
+              <select id="courseInputLevel" class="form-select">
+                <option value="HSC">এইচ.এস.সি (HSC)</option>
+                <option value="SSC">এস.এস.সি (SSC)</option>
+                <option value="Admission">ভর্তি পরীক্ষা (Admission)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group-mb" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label class="form-label">বিষয় (Subject) *</label>
+              <input type="text" id="courseInputSubject" class="form-input" placeholder="যেমন: রসায়ন বিজ্ঞান" required>
+            </div>
+            <div>
+              <label class="form-label">কোর্সের শিক্ষক *</label>
+              <input type="text" id="courseInputInstructor" class="form-input" placeholder="যেমন: দীপু স্যার (BUET)" value="দীপু স্যার (BUET)" required>
+            </div>
+          </div>
+
+          <div class="form-group-mb" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label class="form-label">নিয়মিত ফি (মূল্য BDT) *</label>
+              <input type="number" id="courseInputPrice" class="form-input" placeholder="1500" required value="1500">
+            </div>
+            <div>
+              <label class="form-label">অফার ফি (ডিসকাউন্ট মূল্য BDT) *</label>
+              <input type="number" id="courseInputDiscountPrice" class="form-input" placeholder="999" required value="999">
+            </div>
+          </div>
+
+          <!-- Course Cover Image & Gallery Upload System -->
+          <div class="form-group-mb">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <label class="form-label" style="margin-bottom: 0;">কোর্সের কাভার ছবি (Gallery / Upload) *</label>
+              <span style="font-size: 11px; color: var(--accent-orange); font-weight: 700;">গ্যালারি থেকে ছবি আপলোড</span>
+            </div>
+
+            <!-- Upload Dropzone -->
+            <input type="file" id="newCourseImageFile" accept="image/*" style="display: none;" onchange="handleCourseFileSelect(event, 'new')">
+            <div class="course-upload-dropzone" id="newCourseDropzone" onclick="triggerCourseImageUpload('new', event)">
+              <div class="upload-icon-circle">
+                <i class="fas fa-images"></i>
+              </div>
+              <div class="upload-title">গ্যালারি / ডিভাইস থেকে ছবি আপলোড করুন</div>
+              <div class="upload-subtitle">ক্লিক করে ছবি সিলেক্ট করুন বা ড্র্যাগ করে ছেড়ে দিন (JPG, PNG, WebP)</div>
+              <div class="upload-actions-bar" onclick="event.stopPropagation()">
+                <button type="button" class="btn-gallery-browse" onclick="triggerCourseImageUpload('new', event)">
+                  <i class="fas fa-folder-open"></i> গ্যালারি ব্রাউজ করুন
+                </button>
+                <button type="button" class="btn-cover-palette" onclick="toggleCourseCoverGallery('new', event)">
+                  <i class="fas fa-palette"></i> কাভার গ্যালারি
+                </button>
+              </div>
+            </div>
+
+            <!-- Live Cover Preview Box -->
+            <div class="course-thumb-preview-box" id="newCourseThumbPreviewBox" style="display: none;">
+              <div class="preview-badge-row">
+                <span class="preview-pill"><i class="fas fa-eye mr-1"></i> কাভার প্রিভিউ</span>
+                <button type="button" class="btn-remove-thumb" onclick="removeCourseThumb('new')" title="ছবি পরিবর্তন করুন">
+                  <i class="fas fa-rotate"></i> পরিবর্তন
+                </button>
+              </div>
+              <img id="newCourseThumbPreviewImg" src="" alt="Course Cover Preview">
+            </div>
+
+            <!-- Hidden input to store chosen image (Data URL or chosen cover) -->
+            <input type="hidden" id="courseInputThumb" value="" required>
+
+            <!-- Curated Academic Covers Gallery Drawer -->
+            <div class="course-presets-drawer" id="newCoursePresetsDrawer" style="display: none;">
+              <div class="presets-drawer-header">
+                <span>📚 তৈরি করা বিষয়ভিত্তিক কাভার পছন্দ করুন:</span>
+                <span class="presets-close" onclick="toggleCourseCoverGallery('new')">&times;</span>
+              </div>
+              <div class="presets-grid" id="newCoursePresetsGrid"></div>
+            </div>
+          </div>
+
+          <!-- Routine Image Banner Uploader & URL Input -->
+          <div class="form-group-mb" style="margin-top: 1.25rem; border-top: 1px dashed rgba(255,255,255,0.12); padding-top: 1.25rem;">
+            <label class="form-label" style="display: flex; align-items: center; justify-content: space-between;">
+              <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 700;">
+                <i class="fas fa-calendar-days text-cyan" style="color: #06B6D4;"></i> 
+                <span>সাপ্তাহিক ক্লাস রুটিন ব্যানার ইমেজ (Routine Image)</span>
+              </span>
+              <span style="font-size: 0.75rem; color: #94A3B8;">(কোর্স পেজে রুটিন টেবিলের জায়গায় এই ইমেজ শো হবে)</span>
+            </label>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+              <input type="text" id="courseInputRoutineImg" class="form-input" placeholder="ইমেজ লিঙ্ক (URL) দিন অথবা ডিভাইস থেকে ছবি আপলোড করুন" oninput="previewRoutineUrl(this.value, 'new')">
+              <label class="btn-gallery-browse" style="cursor: pointer; white-space: nowrap; margin-bottom: 0; display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px;">
+                <i class="fas fa-upload"></i> ছবি আপলোড
+                <input type="file" accept="image/*" style="display: none;" onchange="handleRoutineImageFile(this, 'new')">
+              </label>
+            </div>
+            <!-- Routine Preview Box -->
+            <div id="newRoutinePreviewBox" style="display: none; position: relative; border-radius: 10px; overflow: hidden; max-height: 180px; border: 1px solid rgba(255,255,255,0.15); background: #080B14; margin-top: 8px;">
+              <img id="newRoutinePreviewImg" src="" style="width: 100%; height: 180px; object-fit: cover;">
+              <button type="button" onclick="removeRoutineImg('new')" style="position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer;" title="ছবি মুছুন">
+                <i class="fas fa-times mr-1"></i> মুছুন
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group-mb">
+            <label class="form-label">কোর্সের সংক্ষিপ্ত বিবরণ (Description)</label>
+            <textarea id="courseInputDesc" class="form-textarea" rows="3" placeholder="বোর্ড পরীক্ষা ও এডমিশন স্ট্যান্ডার্ড পূর্ণাঙ্গ প্রস্তুতিমূলক কোর্স...">বোর্ড পরীক্ষা ও বুয়েট/মেডিকেল ভর্তি পরীক্ষার জন্য প্রতিটি কনসেপ্টের সহজ বাংলা ব্যাখ্যা, হ্যান্ডনোট ও আনলিমিটেড চ্যাপ্টার টেস্ট।</textarea>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 1.5rem;">
+            <button type="button" class="btn-careplus-dark" onclick="closeCourseModal()">বাতিল</button>
+            <button type="submit" id="submitCourseBtn" class="btn-careplus-green-cta">
+              <i class="fas fa-check mr-1.5"></i> কোর্স সেভ ও পাবলিশ করুন
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================================
+       MODAL 2: EDIT EXISTING COURSE
+       ============================================================================ -->
+  <div class="admin-modal-overlay" id="editCourseModal">
+    <div class="admin-modal-box">
+      <div class="admin-modal-header">
+        <h3><i class="fas fa-pen-to-square mr-2" style="color:var(--accent-orange)"></i> কোর্স এডিট ও আপডেট করুন</h3>
+        <button class="modal-close-btn" onclick="closeEditCourseModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="admin-modal-body">
+        <form id="editCourseForm">
+          <input type="hidden" id="editCourseId">
+          <div class="form-group-mb">
+            <label class="form-label">কোর্সের পূর্ণ নাম (বাংলা) *</label>
+            <input type="text" id="editCourseTitleBn" class="form-input" required>
+          </div>
+
+          <div class="form-group-mb" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label class="form-label">স্লাগ / URL Slug (ইংরেজি) *</label>
+              <input type="text" id="editCourseSlug" class="form-input" required>
+            </div>
+            <div>
+              <label class="form-label">শ্রেণি / বিভাগ *</label>
+              <select id="editCourseLevel" class="form-select">
+                <option value="HSC">এইচ.এস.সি (HSC)</option>
+                <option value="SSC">এস.এস.সি (SSC)</option>
+                <option value="Admission">ভর্তি পরীক্ষা (Admission)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group-mb" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label class="form-label">বিষয় (Subject) *</label>
+              <input type="text" id="editCourseSubject" class="form-input" required>
+            </div>
+            <div>
+              <label class="form-label">কোর্সের শিক্ষক *</label>
+              <input type="text" id="editCourseInstructor" class="form-input" required>
+            </div>
+          </div>
+
+          <div class="form-group-mb" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label class="form-label">নিয়মিত ফি (মূল্য BDT) *</label>
+              <input type="number" id="editCoursePrice" class="form-input" required>
+            </div>
+            <div>
+              <label class="form-label">অফার ফি (ডিসকাউন্ট মূল্য BDT) *</label>
+              <input type="number" id="editCourseDiscountPrice" class="form-input" required>
+            </div>
+          </div>
+
+          <!-- Course Cover Image & Gallery Upload System (Edit) -->
+          <div class="form-group-mb">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <label class="form-label" style="margin-bottom: 0;">কোর্সের কাভার ছবি (Gallery / Upload) *</label>
+              <span style="font-size: 11px; color: var(--accent-orange); font-weight: 700;">গ্যালারি থেকে ছবি দিন</span>
+            </div>
+
+            <!-- Upload Dropzone -->
+            <input type="file" id="editCourseImageFile" accept="image/*" style="display: none;" onchange="handleCourseFileSelect(event, 'edit')">
+            <div class="course-upload-dropzone" id="editCourseDropzone" onclick="triggerCourseImageUpload('edit', event)">
+              <div class="upload-icon-circle">
+                <i class="fas fa-images"></i>
+              </div>
+              <div class="upload-title">নতুন ছবি দিয়ে পরিবর্তন করতে ক্লিক করুন</div>
+              <div class="upload-subtitle">ডিভাইস গ্যালারি থেকে নতুন ছবি সিলেক্ট করুন</div>
+              <div class="upload-actions-bar" onclick="event.stopPropagation()">
+                <button type="button" class="btn-gallery-browse" onclick="triggerCourseImageUpload('edit', event)">
+                  <i class="fas fa-folder-open"></i> গ্যালারি ব্রাউজ করুন
+                </button>
+                <button type="button" class="btn-cover-palette" onclick="toggleCourseCoverGallery('edit', event)">
+                  <i class="fas fa-palette"></i> কাভার গ্যালারি
+                </button>
+              </div>
+            </div>
+
+            <!-- Live Cover Preview Box -->
+            <div class="course-thumb-preview-box" id="editCourseThumbPreviewBox" style="display: none;">
+              <div class="preview-badge-row">
+                <span class="preview-pill"><i class="fas fa-eye mr-1"></i> বর্তমান কাভার</span>
+                <button type="button" class="btn-remove-thumb" onclick="removeCourseThumb('edit')" title="ছবি পরিবর্তন করুন">
+                  <i class="fas fa-rotate"></i> পরিবর্তন
+                </button>
+              </div>
+              <img id="editCourseThumbPreviewImg" src="" alt="Course Cover Preview">
+            </div>
+
+            <input type="hidden" id="editCourseThumb" value="" required>
+
+            <div class="course-presets-drawer" id="editCoursePresetsDrawer" style="display: none;">
+              <div class="presets-drawer-header">
+                <span>📚 তৈরি করা বিষয়ভিত্তিক কাভার পছন্দ করুন:</span>
+                <span class="presets-close" onclick="toggleCourseCoverGallery('edit')">&times;</span>
+              </div>
+              <div class="presets-grid" id="editCoursePresetsGrid"></div>
+            </div>
+          </div>
+
+          <!-- Routine Image Banner Uploader & URL Input -->
+          <div class="form-group-mb" style="margin-top: 1.25rem; border-top: 1px dashed rgba(255,255,255,0.12); padding-top: 1.25rem;">
+            <label class="form-label" style="display: flex; align-items: center; justify-content: space-between;">
+              <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 700;">
+                <i class="fas fa-calendar-days text-cyan" style="color: #06B6D4;"></i> 
+                <span>সাপ্তাহিক ক্লাস রুটিন ব্যানার ইমেজ (Routine Image)</span>
+              </span>
+              <span style="font-size: 0.75rem; color: #94A3B8;">(কোর্স পেজে রুটিন টেবিলের জায়গায় এই ইমেজ শো হবে)</span>
+            </label>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+              <input type="text" id="editCourseRoutineImg" class="form-input" placeholder="ইমেজ লিঙ্ক (URL) দিন অথবা ডিভাইস থেকে ছবি আপলোড করুন" oninput="previewRoutineUrl(this.value, 'edit')">
+              <label class="btn-gallery-browse" style="cursor: pointer; white-space: nowrap; margin-bottom: 0; display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px;">
+                <i class="fas fa-upload"></i> ছবি আপলোড
+                <input type="file" accept="image/*" style="display: none;" onchange="handleRoutineImageFile(this, 'edit')">
+              </label>
+            </div>
+            <!-- Routine Preview Box -->
+            <div id="editRoutinePreviewBox" style="display: none; position: relative; border-radius: 10px; overflow: hidden; max-height: 180px; border: 1px solid rgba(255,255,255,0.15); background: #080B14; margin-top: 8px;">
+              <img id="editRoutinePreviewImg" src="" style="width: 100%; height: 180px; object-fit: cover;">
+              <button type="button" onclick="removeRoutineImg('edit')" style="position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer;" title="ছবি মুছুন">
+                <i class="fas fa-times mr-1"></i> মুছুন
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group-mb">
+            <label class="form-label">কোর্সের সংক্ষিপ্ত বিবরণ (Description)</label>
+            <textarea id="editCourseDesc" class="form-textarea" rows="3"></textarea>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 1.5rem;">
+            <button type="button" class="btn-careplus-dark" onclick="closeEditCourseModal()">বাতিল</button>
+            <button type="submit" id="submitEditCourseBtn" class="btn-careplus-green-cta">
+              <i class="fas fa-check mr-1.5"></i> পরিবর্তন সংরক্ষণ করুন
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================================
+       MODAL 3: IN-ADMIN QUICK COURSE PREVIEW (Instant View without New Tab)
+       ============================================================================ -->
+  <div class="admin-modal-overlay" id="coursePreviewModal">
+    <div class="admin-modal-box" style="max-width: 600px;">
+      <div class="admin-modal-header">
+        <h3><i class="fas fa-eye text-orange mr-2" style="color:var(--accent-orange)"></i> কোর্সের লাইভ প্রিভিউ</h3>
+        <button class="modal-close-btn" onclick="closeCoursePreviewModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="admin-modal-body" style="padding: 20px;">
+        <div style="border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 122, 26, 0.3); background: #0c0c12; margin-bottom: 18px; max-height: 280px;">
+          <img id="quickPreviewCoverImg" src="" alt="Course Cover" style="width: 100%; height: 260px; object-fit: cover; display: block;" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 600 340\' width=\'600\' height=\'340\'><rect width=\'600\' height=\'340\' fill=\'%231E1B4B\'/><text x=\'40\' y=\'170\' fill=\'%23FFF\' font-family=\'sans-serif\' font-size=\'30\'>Dipu\'s Course</text></svg>';">
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 10px;">
+          <span id="quickPreviewLevelBadge" class="admin-course-badge-pill" style="position: static;">HSC</span>
+          <span id="quickPreviewSubject" style="font-size: 13px; color: var(--accent-orange); font-weight: 700;">পদার্থবিজ্ঞান</span>
+        </div>
+        <h2 id="quickPreviewTitle" style="font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 10px; line-height: 1.4;">কোর্স টাইটেল</h2>
+        <p id="quickPreviewDesc" style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">কোর্স বিবরণ...</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.08);">
+          <div>
+            <span style="font-size: 11px; color: var(--text-muted); display: block;">কোর্স অফার ফি</span>
+            <span id="quickPreviewPrice" style="font-size: 20px; font-weight: 900; color: var(--accent-green);">৳৯৯৯</span>
+            <span id="quickPreviewStrike" style="font-size: 13px; text-decoration: line-through; color: var(--text-muted); margin-left: 6px;">৳১,৫০০</span>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="btn-careplus-dark" onclick="closeCoursePreviewModal()">বন্ধ করুন</button>
+            <a id="quickPreviewFullPageLink" href="/course.html" class="btn-careplus-green-cta">
+              <i class="fas fa-arrow-up-right-from-square mr-1"></i> ফুল পেজে দেখুন
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================================
+       MODAL 4: CREATE NEW FEATURE SHOWCASE ITEM (নতুন ফিচার তৈরি ও যুক্ত করুন)
+       ============================================================================ -->
+  <div class="admin-modal-overlay" id="newFeatureModal">
+    <div class="admin-modal-box" style="max-width: 680px;">
+      <div class="admin-modal-header">
+        <h3><i class="fas fa-wand-magic-sparkles text-orange mr-2" style="color:var(--accent-orange)"></i> নতুন ফিচার আইটেম তৈরি ও যুক্ত করুন</h3>
+        <button class="modal-close-btn" onclick="closeNewFeatureModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="admin-modal-body" style="padding: 24px;">
+        <form id="createFeatureForm" onsubmit="event.preventDefault(); handleCreateNewFeature();">
+          
+          <!-- Row 1: Tab Label & Accent Color -->
+          <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 14px; margin-bottom: 14px;">
+            <div>
+              <label class="form-label">ট্যাব নাম (Tab Label) *</label>
+              <input type="text" id="newFeatTabLabel" class="form-input" style="border-radius: 12px;" placeholder="যেমন: মডেল টেস্ট" required oninput="autoGenerateFeatureId(this.value)">
+            </div>
+            <div>
+              <label class="form-label">থিম কালার (Accent Color) *</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="color" id="newFeatColorPicker" value="#FF7A1A" style="width: 42px; height: 38px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: transparent; cursor: pointer;" oninput="document.getElementById('newFeatAccentColor').value = this.value">
+                <input type="text" id="newFeatAccentColor" class="form-input" style="border-radius: 12px;" value="#FF7A1A" required oninput="if(/^#[0-9A-Fa-f]{6}$/.test(this.value)) document.getElementById('newFeatColorPicker').value = this.value">
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 2: Unique Slug ID & FontAwesome Icon -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div>
+              <label class="form-label">ফিচার আইডি (Slug ID) *</label>
+              <input type="text" id="newFeatId" class="form-input" style="border-radius: 12px;" placeholder="যেমন: mocktest" required>
+            </div>
+            <div>
+              <label class="form-label">FontAwesome আইকন ক্লাস *</label>
+              <input type="text" id="newFeatIcon" class="form-input" style="border-radius: 12px;" placeholder="fas fa-trophy" value="fas fa-star" required>
+            </div>
+          </div>
+
+          <!-- Row 3: Tag Badge & Title -->
+          <div style="display: grid; grid-template-columns: 1fr 1.4fr; gap: 14px; margin-bottom: 14px;">
+            <div>
+              <label class="form-label">ট্যাগ ব্যাজ (Badge Text)</label>
+              <input type="text" id="newFeatBadge" class="form-input" style="border-radius: 12px;" placeholder="উদা: SPECIAL MOCK TEST" value="SPECIAL FEATURE">
+            </div>
+            <div>
+              <label class="form-label">প্রধান শিরোনাম (Title) *</label>
+              <input type="text" id="newFeatTitle" class="form-input" style="border-radius: 12px;" placeholder="যেমন: সেরা প্রস্তুতির জন্য পূর্ণাঙ্গ মডেল টেস্ট" required>
+            </div>
+          </div>
+
+          <!-- Row 4: Description -->
+          <div style="margin-bottom: 14px;">
+            <label class="form-label">বিস্তারিত বিবরণ (Description) *</label>
+            <textarea id="newFeatDesc" class="form-input" rows="3" style="border-radius: 12px; resize: vertical;" placeholder="ফিচারের সুবিধা ও বিস্তারিত বিবরণ লিখুন..." required></textarea>
+          </div>
+
+          <!-- Row 5: 3 Bullet Points -->
+          <div style="margin-bottom: 14px;">
+            <label class="form-label" style="display: flex; justify-content: space-between;">
+              <span>ফিচার বুলেট পয়েন্টস (সুবিধাসমূহ)</span>
+              <span style="font-size: 11px; color: #94A3B8;">৩টি গুরুত্বপূর্ণ বুলেট</span>
+            </label>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color: #10B981; font-size: 13px;"><i class="fas fa-check-circle"></i></span>
+                <input type="text" id="newFeatPoint1" class="form-input" style="border-radius: 10px;" placeholder="বুলেট পয়েন্ট ১ (যেমন: রিয়েলটাইম লিডারবোর্ড ও লাইভ র‍্যাঙ্কিং)" required>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color: #10B981; font-size: 13px;"><i class="fas fa-check-circle"></i></span>
+                <input type="text" id="newFeatPoint2" class="form-input" style="border-radius: 10px;" placeholder="বুলেট পয়েন্ট ২ (যেমন: স্বয়ংক্রিয় নেগেটিভ মার্কিং হিসাব)">
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color: #10B981; font-size: 13px;"><i class="fas fa-check-circle"></i></span>
+                <input type="text" id="newFeatPoint3" class="form-input" style="border-radius: 10px;" placeholder="বুলেট পয়েন্ট ৩ (যেমন: প্রতিটি ভুলের বিস্তারিত সমাধান)">
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 6: Image URL and Device Upload -->
+          <div style="margin-bottom: 14px;">
+            <label class="form-label">ফিচার প্রিভিউ ছবি (URL বা ডিভাইস থেকে আপলোড) *</label>
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
+              <input type="text" id="newFeatImageUrl" class="form-input" style="border-radius: 12px; flex: 1;" placeholder="/images/student-hero.jpg বা অনলাইন URL" value="/images/student-hero.jpg" required>
+              <label class="btn-careplus-hero-dark-outline" style="border-radius: 12px; cursor: pointer; white-space: nowrap; margin: 0; padding: 9px 14px;">
+                <i class="fas fa-cloud-arrow-up"></i> ছবি আপলোড
+                <input type="file" id="newFeatImageFileInput" accept="image/*" style="display: none;" onchange="handleNewFeatureImageUpload(this)">
+              </label>
+            </div>
+            <div style="font-size: 11px; color: #94A3B8;">
+              পরামর্শ: যেকোনো 16:9 বা 16:10 অনুপাতের আকর্ষণীয় ছবি নির্বাচন করুন।
+            </div>
+          </div>
+
+          <!-- Row 7: CTA Button -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;">
+            <div>
+              <label class="form-label">বাটন টেক্সট (CTA Text)</label>
+              <input type="text" id="newFeatBtnText" class="form-input" style="border-radius: 12px;" placeholder="অংশগ্রহণ করো →" value="বিস্তারিত দেখো →">
+            </div>
+            <div>
+              <label class="form-label">বাটন লিংক (CTA URL)</label>
+              <input type="text" id="newFeatBtnHref" class="form-input" style="border-radius: 12px;" placeholder="/exam বা /courses" value="/courses">
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px;">
+            <button type="button" class="btn-careplus-dark" onclick="closeNewFeatureModal()">বাতিল</button>
+            <button type="submit" id="submitNewFeatBtn" class="btn-careplus-green-cta" style="border-radius: 999px; padding: 11px 26px;">
+              <i class="fas fa-plus-circle mr-1.5"></i> নতুন ফিচার যোগ করুন
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Engine -->
+  <script src="/js/admin.js?v=3.0"></script>
+</body>
+</html>

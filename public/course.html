@@ -1,0 +1,2404 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="coursePageTitle">কোর্স বিস্তারিত — Dipu's Edu</title>
+  <meta name="description" content="Dipu's Edu — বাংলাদেশের শীর্ষস্থানীয় প্রিমিয়াম এডটেক প্ল্যাটফর্ম ও পূর্ণাঙ্গ কোর্স বিস্তারিত।">
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css?v=2.4">
+
+  <style>
+    /* 10 Minute School Standard & Luxury Dark Layout Architecture */
+    :root {
+      --cd-bg: #090A10;
+      --cd-surface: #11131F;
+      --cd-surface-elevated: #181B2B;
+      --cd-border: rgba(255, 255, 255, 0.08);
+      --cd-border-glow: rgba(16, 185, 129, 0.35);
+      --cd-green: #10B981;
+      --cd-green-hover: #059669;
+      --cd-orange: #FF7A1A;
+      --cd-amber: #FFB347;
+      --cd-blue: #3B82F6;
+    }
+
+    body {
+      background-color: var(--cd-bg);
+      color: #E2E8F0;
+      font-family: 'Inter', 'Hind Siliguri', -apple-system, sans-serif;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    .course-page-wrapper {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      background: radial-gradient(circle at 10% 10%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 90% 20%, rgba(255, 122, 26, 0.05) 0%, transparent 50%),
+                  var(--cd-bg);
+    }
+
+    /* Main Container 2-Column Grid (10MS Style) */
+    .course-layout-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 400px;
+      gap: 2.5rem;
+      padding: 2.5rem 1.5rem 5rem;
+      max-width: 1280px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .course-layout-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 1.5rem 1rem 3rem;
+      }
+      .course-right-col {
+        order: -1; /* On mobile, place key checkout preview at the top */
+      }
+      .checkout-sticky-card {
+        position: static !important;
+        max-width: 540px;
+        margin: 0 auto;
+      }
+    }
+
+    /* Left Column */
+    .course-left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      min-width: 0;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: #94A3B8;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb-bar a {
+      color: #94A3B8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .breadcrumb-bar a:hover {
+      color: var(--cd-green);
+    }
+
+    /* Header Hero Badges */
+    .hero-badges-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .pill-level {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10B981;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+
+    .pill-subject {
+      background: rgba(255, 179, 71, 0.12);
+      color: var(--cd-amber);
+      border: 1px solid rgba(255, 179, 71, 0.3);
+    }
+
+    .pill-live {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60A5FA;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    /* Course Main Title & Pitch */
+    .course-hero-title {
+      font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+      font-weight: 900;
+      color: #FFFFFF;
+      line-height: 1.25;
+      margin: 0.25rem 0 0.75rem;
+      letter-spacing: -0.015em;
+    }
+
+    .course-hero-desc {
+      font-size: 1.08rem;
+      color: #CBD5E1;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Meta Chips Bar */
+    .course-meta-chips {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+      color: #94A3B8;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1rem 0;
+    }
+
+    .meta-chip-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .meta-chip-item strong {
+      color: #FFFFFF;
+    }
+
+    /* 10MS Style Sticky Tab Bar */
+    .course-tab-bar {
+      position: sticky;
+      top: 80px;
+      z-index: 40;
+      background: rgba(17, 19, 31, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--cd-border);
+      border-radius: 14px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .course-tab-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-nav-btn {
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #94A3B8;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab-nav-btn:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tab-nav-btn.active {
+      background: rgba(16, 185, 129, 0.2);
+      color: #10B981;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    /* Course Section Cards */
+    .course-section-card {
+      background: var(--cd-surface);
+      border: 1px solid var(--cd-border);
+      border-radius: 18px;
+      padding: 2rem;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+      scroll-margin-top: 150px;
+    }
+
+    .section-heading-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+    }
+
+    /* 10MS Style What You'll Learn Grid */
+    .features-rich-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 640px) {
+      .features-rich-grid {
+        grid-template-columns: 1fr;
+      }
+      .course-section-card {
+        padding: 1.25rem;
+      }
+    }
+
+    .feature-point-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 1.1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.25s ease;
+    }
+
+    .feature-point-box:hover {
+      border-color: rgba(16, 185, 129, 0.35);
+      background: rgba(16, 185, 129, 0.03);
+      transform: translateY(-2px);
+    }
+
+    .feat-icon-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: rgba(16, 185, 129, 0.15);
+      color: #10B981;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .feat-text {
+      font-size: 0.95rem;
+      color: #E2E8F0;
+      line-height: 1.55;
+      font-weight: 500;
+    }
+
+    /* Syllabus & Curriculum Accordion */
+    .syllabus-chapter {
+      border: 1px solid var(--cd-border);
+      border-radius: 14px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.02);
+      transition: border-color 0.2s;
+    }
+
+    .syllabus-chapter:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .chapter-header {
+      padding: 1.1rem 1.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.03);
+      user-select: none;
+      transition: background 0.2s;
+    }
+
+    .chapter-header:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .chapter-title-text {
+      font-weight: 700;
+      color: #FFFFFF;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chapter-lessons-list {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--cd-border);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .lesson-row-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      transition: background 0.2s;
+      gap: 10px;
+    }
+
+    .lesson-row-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .lesson-title-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      color: #E2E8F0;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .badge-free-demo {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10B981;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .badge-free-demo:hover {
+      background: #10B981;
+      color: #0A0A0F;
+    }
+
+    /* Routine Banner Card */
+    .routine-banner-container {
+      position: relative;
+    }
+
+    .routine-banner-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #080B14;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      cursor: pointer;
+    }
+
+    .routine-banner-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .routine-banner-card:hover .routine-banner-img {
+      transform: scale(1.015);
+    }
+
+    .routine-banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8, 11, 20, 0.92) 0%, rgba(8, 11, 20, 0.2) 60%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .routine-banner-card:hover .routine-banner-overlay {
+      opacity: 1;
+    }
+
+    /* Instructor Bio */
+    .mentor-profile-wrap {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    .mentor-photo {
+      width: 95px;
+      height: 95px;
+      border-radius: 50%;
+      border: 3px solid var(--cd-green);
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .mentor-name {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin: 0 0 4px;
+    }
+
+    .mentor-inst {
+      font-size: 0.92rem;
+      color: var(--cd-amber);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    /* Fluid Word Text Animation for FAQ Accordion */
+    @keyframes faqWordReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(8px) scale(0.96);
+        filter: blur(3px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes faqBadgeShimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .faq-word-anim {
+      display: inline-block;
+      opacity: 0;
+      animation: faqWordReveal 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      will-change: transform, opacity, filter;
+      margin-right: 0.28rem;
+    }
+
+    .faq-badge-shimmer {
+      background: linear-gradient(90deg, #FF7A1A, #FFB347, #FF923C, #FF7A1A);
+      background-size: 200% auto;
+      color: #0A0A0F;
+      animation: faqBadgeShimmer 3s linear infinite;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 0.76rem;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 10px rgba(255, 122, 26, 0.3);
+    }
+
+    /* FAQ Accordion */
+    .faq-accordion-item {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      margin-bottom: 0.85rem;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.45);
+      transition: all 0.3s ease;
+    }
+
+    .faq-accordion-item:hover {
+      border-color: rgba(255, 122, 26, 0.4);
+      background: rgba(15, 23, 42, 0.65);
+    }
+
+    .faq-accordion-item.active {
+      border-color: rgba(255, 122, 26, 0.55);
+      background: rgba(255, 122, 26, 0.04);
+      box-shadow: 0 8px 24px rgba(255, 122, 26, 0.12);
+    }
+
+    .faq-accordion-header {
+      padding: 1.15rem 1.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s ease;
+    }
+
+    .faq-question-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      color: #FFFFFF;
+      font-size: 1.02rem;
+      transition: color 0.25s ease, transform 0.25s ease;
+    }
+
+    .faq-accordion-item.active .faq-question-wrap {
+      color: #FFB347;
+      transform: translateX(2px);
+    }
+
+    .faq-chevron-badge {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      color: #94A3B8;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease, color 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .faq-accordion-item.active .faq-chevron-badge {
+      transform: rotate(180deg) scale(1.08);
+      background: rgba(255, 122, 26, 0.2);
+      color: #FF7A1A;
+      border: 1px solid rgba(255, 122, 26, 0.4);
+    }
+
+    .faq-answer-content {
+      max-height: 0;
+      opacity: 0;
+      padding: 0 1.35rem;
+      overflow: hidden;
+      color: #CBD5E1;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      border-top: 1px solid transparent;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, padding 0.35s ease, border-top-color 0.3s ease;
+      pointer-events: none;
+    }
+
+    .faq-accordion-item.active .faq-answer-content {
+      max-height: 450px;
+      opacity: 1;
+      padding: 1.1rem 1.35rem 1.35rem 1.35rem;
+      border-top-color: rgba(255, 255, 255, 0.08);
+      pointer-events: auto;
+    }
+
+    /* ==========================================================================
+       RIGHT STICKY CHECKOUT SIDEBAR CARD (10MS Master Pattern)
+       ========================================================================== */
+    .course-right-col {
+      position: sticky;
+      top: 90px;
+      z-index: 30;
+    }
+
+    .checkout-sticky-card {
+      background: #121422;
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(16, 185, 129, 0.08);
+      transition: border-color 0.3s;
+    }
+
+    .checkout-sticky-card:hover {
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+
+    /* Banner Thumbnail Preview */
+    .checkout-preview-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0A0D18;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .checkout-preview-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .checkout-preview-thumb:hover img {
+      transform: scale(1.04);
+    }
+
+    .thumb-play-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.95);
+      color: #0A0A0F;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.8);
+      text-decoration: none;
+      transition: all 0.25s ease;
+      z-index: 2;
+    }
+
+    .thumb-play-overlay:hover {
+      transform: translate(-50%, -50%) scale(1.12);
+      background: #34D399;
+    }
+
+    .checkout-card-body {
+      padding: 1.75rem;
+    }
+
+    .card-pitch-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin: 0 0 1rem;
+      line-height: 1.4;
+    }
+
+    /* Price Display */
+    .price-display-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 1.25rem;
+    }
+
+    .course-main-price {
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: #FFFFFF;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: -0.02em;
+    }
+
+    .course-strike-price {
+      font-size: 1.2rem;
+      color: #64748B;
+      text-decoration: line-through;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .course-discount-pill {
+      background: rgba(16, 185, 129, 0.18);
+      color: #10B981;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .offer-urgent-pill {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.28);
+      color: #F87171;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+
+    /* 10MS Vibrant CTA Buttons */
+    .btn-buy-course-primary {
+      width: 100%;
+      padding: 14px 18px;
+      background: #10B981;
+      color: #FFFFFF;
+      font-size: 1.12rem;
+      font-weight: 800;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-bottom: 10px;
+      text-decoration: none;
+    }
+
+    .btn-buy-course-primary:hover {
+      background: #059669;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.5);
+    }
+
+    .btn-demo-video-secondary {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      color: #FFFFFF;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      margin-bottom: 10px;
+    }
+
+    .btn-demo-video-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-download-routine {
+      width: 100%;
+      padding: 11px 16px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10B981;
+      font-size: 0.92rem;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      margin-bottom: 1.25rem;
+    }
+
+    .btn-download-routine:hover {
+      background: #10B981;
+      color: #0A0A0F;
+      transform: translateY(-2px);
+    }
+
+    .includes-header-title {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin: 1.5rem 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .includes-checklist {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      font-size: 0.9rem;
+      color: #CBD5E1;
+    }
+
+    .includes-checklist li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .includes-checklist i {
+      color: var(--cd-green);
+      font-size: 0.95rem;
+      width: 18px;
+      text-align: center;
+    }
+
+    .helpline-box {
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.88rem;
+      color: #94A3B8;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .helpline-phone-link {
+      color: #FFFFFF;
+      font-size: 1.05rem;
+      font-weight: 800;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+      transition: color 0.2s;
+    }
+
+    .helpline-phone-link:hover {
+      color: var(--cd-green);
+    }
+
+    /* Checkout Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(5, 5, 8, 0.88);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .checkout-modal-card {
+      background: #141624;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9);
+      overflow: hidden;
+      animation: modalScaleIn 0.3s ease;
+    }
+
+    @keyframes modalScaleIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-topbar {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+
+    .modal-close-icon {
+      background: transparent;
+      border: none;
+      color: #94A3B8;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .modal-close-icon:hover {
+      color: #FFFFFF;
+    }
+
+    .modal-inner-body {
+      padding: 1.75rem;
+    }
+
+    .gateway-options-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+
+    .gateway-btn {
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 12px 8px;
+      background: rgba(255, 255, 255, 0.02);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .gateway-btn.active {
+      border-color: var(--cd-green);
+      background: rgba(16, 185, 129, 0.12);
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .gateway-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .coupon-input-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1.25rem;
+    }
+
+    .coupon-text-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #FFFFFF;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .coupon-text-input:focus {
+      border-color: var(--cd-green);
+    }
+
+    .btn-apply-coupon {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--cd-green);
+      color: var(--cd-green);
+      font-weight: 700;
+      padding: 0 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .btn-apply-coupon:hover {
+      background: var(--cd-green);
+      color: #0A0A0F;
+    }
+
+    .order-calc-table {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 1.5rem;
+    }
+
+    .calc-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: #94A3B8;
+      padding: 6px 0;
+    }
+
+    .calc-row.total-row {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 6px;
+      padding-top: 10px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- REACT TYPESCRIPT NAVBAR -->
+  <div id="site-navbar-root"></div>
+
+  <!-- MAIN PAGE WRAPPER -->
+  <div class="course-page-wrapper">
+    
+    <main class="course-layout-grid">
+      
+      <!-- ======================================================================
+           LEFT COLUMN: HERO CONTENT + TABS + SECTIONS
+           ====================================================================== -->
+      <div class="course-left-col">
+        
+        <!-- Top Breadcrumbs & Header -->
+        <section id="overview" class="course-hero-content">
+          
+          <div class="breadcrumb-bar" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <button type="button" onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = '/'; }" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #FF7A1A; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s;" onmouseenter="this.style.background='rgba(255,122,26,0.15)'" onmouseleave="this.style.background='rgba(255,255,255,0.06)'">
+              <i class="fas fa-arrow-left"></i> <span>পেছনে ফিরুন (Back)</span>
+            </button>
+            <span style="opacity: 0.3;">|</span>
+            <a href="/"><i class="fas fa-home"></i> হোম</a>
+            <i class="fas fa-chevron-right text-xs"></i>
+            <a href="/#courses">কোর্সসমূহ</a>
+            <i class="fas fa-chevron-right text-xs"></i>
+            <span id="breadcrumbCourseName" style="color: #E2E8F0;">লোড হচ্ছে...</span>
+          </div>
+
+          <div class="hero-badges-row">
+            <span class="pill-badge pill-level" id="coursePillLevel">স্কুল</span>
+            <span class="pill-badge pill-subject" id="coursePillSubject">প্রাথমিক গণিত, বিজ্ঞান ও ইংরেজি</span>
+            <span class="pill-badge pill-live">
+              <i class="fas fa-circle" style="font-size: 8px; color: #10B981;"></i> ১০০% আসন লাইভ
+            </span>
+          </div>
+
+          <h1 class="course-hero-title" id="courseHeaderTitle">
+            ৫ম শ্রেণীর পূর্ণাঙ্গ কোর্স
+          </h1>
+
+          <p class="course-hero-desc" id="courseHeaderDesc">
+            ৫ম শ্রেণির শিক্ষার্থীদের জন্য সহজ ও আনন্দময় পদ্ধতিতে গণিত, বিজ্ঞান ও ইংরেজির প্রতিটি অধ্যায় শেখার পূর্ণাঙ্গ কোর্স। শিশুদের পড়াশোনার ভিত্তি মজবুত করতে স্পেশাল এআই ও লাইভ গাইডেন্স।
+          </p>
+
+          <!-- Meta Highlights -->
+          <div class="course-meta-chips">
+            <div class="meta-chip-item" style="color: #FFB347;">
+              <i class="fas fa-star"></i>
+              <strong id="courseRatingText">4.92</strong>
+              <span id="courseEnrolledSpan" style="color: #94A3B8;">(৯২০+ শিক্ষার্থী ভর্তি হয়েছে)</span>
+            </div>
+            <div class="meta-chip-item">
+              <i class="fas fa-chalkboard-user" style="color: var(--cd-green);"></i>
+              <span>শিক্ষক: <strong id="courseMentorName">দীপু এডু প্রাইমারি একাডেমি</strong></span>
+            </div>
+            <div class="meta-chip-item">
+              <i class="fas fa-language" style="color: #60A5FA;"></i>
+              <span>ভাষা: <strong>বাংলা</strong></span>
+            </div>
+            <div class="meta-chip-item">
+              <i class="fas fa-calendar-check" style="color: #34D399;"></i>
+              <span>শিক্ষাবর্ষ: <strong>২০২৬/২০২৭</strong></span>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- 10MS Style Sticky Navigation Tabs -->
+        <nav class="course-tab-bar" id="courseTabBar">
+          <a href="#overview" class="tab-nav-btn active"><i class="fas fa-info-circle"></i> কোর্স বিবরণ</a>
+          <a href="#learn-section" class="tab-nav-btn"><i class="fas fa-sparkles"></i> যা যা শিখবেন</a>
+          <a href="#curriculum-section" class="tab-nav-btn"><i class="fas fa-layer-group"></i> কারিকুলাম ও সিলেবাস</a>
+          <a href="#routine-section" class="tab-nav-btn"><i class="fas fa-calendar-days"></i> ক্লাস রুটিন</a>
+          <a href="#mentor-section" class="tab-nav-btn"><i class="fas fa-user-tie"></i> শিক্ষক পরিচিতি</a>
+          <a href="#faq-section" class="tab-nav-btn"><i class="fas fa-circle-question"></i> সচরাচর প্রশ্ন (FAQ)</a>
+        </nav>
+
+        <!-- 1. What You Will Learn Section (10MS Feature Cards) -->
+        <section id="learn-section" class="course-section-card">
+          <div class="section-heading-wrap">
+            <h2 class="section-title">
+              <i class="fas fa-sparkles" style="color: var(--cd-green);"></i> এই কোর্সে যা যা শিখবেন
+            </h2>
+            <span style="font-size: 0.85rem; color: #94A3B8;">বিশেষায়িত ফিচারসমূহ</span>
+          </div>
+          
+          <div class="features-rich-grid" id="courseFeaturesGrid">
+            <div class="feature-point-box">
+              <div class="feat-icon-badge"><i class="fas fa-video"></i></div>
+              <div class="feat-text">সহজ ও আকর্ষণীয় ইন্টারঅ্যাক্টিভ অনলাইন ক্লাস</div>
+            </div>
+            <div class="feature-point-box">
+              <div class="feat-icon-badge"><i class="fas fa-pen-to-square"></i></div>
+              <div class="feat-text">অধ্যায়ভিত্তিক সহজ মডেল টেস্ট ও লাইভ প্র্যাকটিস</div>
+            </div>
+            <div class="feature-point-box">
+              <div class="feat-icon-badge"><i class="fas fa-file-pdf"></i></div>
+              <div class="feat-text">রঙিন ও প্রিন্ট-উপযোগী প্রিমিয়াম পিডিএফ হ্যান্ডনোট</div>
+            </div>
+            <div class="feature-point-box">
+              <div class="feat-icon-badge"><i class="fas fa-brain"></i></div>
+              <div class="feat-text">গণিত, বিজ্ঞান ও ইংরেজির চমৎকার মজবুত বেসিক গঠন</div>
+            </div>
+            <div class="feature-point-box">
+              <div class="feat-icon-badge"><i class="fas fa-robot"></i></div>
+              <div class="feat-text">২৪/৭ ইনস্ট্যান্ট ডাউট সলভিং এআই টিউটর এক্সেস</div>
+            </div>
+            <div class="feature-point-box">
+              <div class="feat-icon-badge"><i class="fas fa-award"></i></div>
+              <div class="feat-text">বার্ষিক ও বোর্ড পরীক্ষায় শতভাগ সেরা সাফল্য নিশ্চিতকরণ</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Course Curriculum & Syllabus -->
+        <section id="curriculum-section" class="course-section-card">
+          <div class="section-heading-wrap">
+            <h2 class="section-title">
+              <i class="fas fa-layer-group" style="color: var(--cd-amber);"></i> কোর্স কারিকুলাম ও সিলেবাস
+            </h2>
+            <span style="font-size: 0.88rem; color: #94A3B8;" id="totalLecturesCount">১০টি অধ্যায় • ৬০+ ক্লাস</span>
+          </div>
+
+          <div id="courseSyllabusContainer">
+            <!-- Dynamic Chapter Items Injected via JS -->
+          </div>
+        </section>
+
+        <!-- 3. Weekly Class Routine Banner -->
+        <section id="routine-section" class="course-section-card">
+          <div class="routine-banner-container">
+            <div class="section-heading-wrap">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(16, 185, 129, 0.15); color: #10B981; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+                  <i class="fas fa-calendar-days"></i>
+                </div>
+                <div>
+                  <h2 class="section-title">সাপ্তাহিক ক্লাস রুটিন ও সময়সূচী</h2>
+                  <p style="font-size: 0.82rem; color: #94A3B8; margin: 2px 0 0;">প্রতি সপ্তাহের লাইভ ক্লাস ও এক্সামের অফিসিয়াল অনুমোদিত রুটিন</p>
+                </div>
+              </div>
+              
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <button type="button" onclick="openRoutineLightbox()" style="padding: 8px 14px; font-size: 0.85rem; cursor: pointer; border-radius: 10px; background: rgba(255,255,255,0.06); border: 1px solid var(--cd-border); color: #FFF;" title="রুটিন বড় করে দেখুন">
+                  <i class="fas fa-expand mr-1"></i> <span>জুম করুন</span>
+                </button>
+                <a id="downloadRoutineSectionBtn" href="#" download="Class-Routine.jpg" class="btn-download-routine" style="width: auto; padding: 8px 16px; margin: 0;" title="রুটিন ও ব্যানার ইমেজ ফ্রিতে ডাউনলোড করুন">
+                  <i class="fas fa-download mr-1"></i> <span>রুটিন ডাউনলোড (ফ্রি)</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Routine Banner Card -->
+            <div class="routine-banner-card" onclick="openRoutineLightbox()">
+              <img id="courseRoutineImg" src="/images/courses/routine-banner.jpg" alt="সাপ্তাহিক ক্লাস রুটিন" class="routine-banner-img">
+              <div class="routine-banner-overlay">
+                <div style="color: #fff; font-size: 0.9rem; display: flex; align-items: center; gap: 8px;">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #10B981; display: inline-block;"></span>
+                  <span>অফিসিয়াল ক্লাস রুটিন • বড় করে দেখতে ক্লিক করুন</span>
+                </div>
+                <button type="button" style="padding: 6px 14px; font-size: 0.82rem; border-radius: 8px; background: var(--cd-green); color: #000; border: none; font-weight: 700; cursor: pointer;">
+                  <i class="fas fa-magnifying-glass-plus"></i> জুম ভিউ
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. Instructor Bio -->
+        <section id="mentor-section" class="course-section-card">
+          <div class="section-heading-wrap">
+            <h2 class="section-title">
+              <i class="fas fa-user-tie" style="color: var(--cd-green);"></i> কোর্স শিক্ষক পরিচিতি
+            </h2>
+            <span style="font-size: 0.85rem; color: #94A3B8;">দক্ষ ও অভিজ্ঞ শিক্ষক প্যানেল</span>
+          </div>
+
+          <div class="mentor-profile-wrap">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" id="courseMentorImg" class="mentor-photo" alt="Instructor">
+            <div>
+              <h3 class="mentor-name" id="courseMentorFullName">দীপু স্যার</h3>
+              <div class="mentor-inst" id="courseMentorDept">বুয়েট ইঞ্জিনিয়ারিং • ৮+ বছরের শিক্ষকতা</div>
+              <p style="font-size: 0.92rem; color: #94A3B8; line-height: 1.65; margin: 0;">
+                গত ৮ বছর ধরে হাজারো শিক্ষার্থীকে বুয়েট, মেডিকেল ও বোর্ড পরীক্ষায় সফল হতে পথ দেখিয়েছেন। প্রতিটি বিষয় আনন্দের সাথে এবং বাস্তবসম্মত উদাহরণ ও অ্যানিমেশনের মাধ্যমে বুঝিয়ে দেওয়াই তাঁর বিশেষত্ব।
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. FAQ Accordion (10MS Style) -->
+        <section id="faq-section" class="course-section-card">
+          <div class="section-heading-wrap">
+            <h2 class="section-title">
+              <i class="fas fa-circle-question" style="color: var(--cd-amber);"></i> সচরাচর জিজ্ঞাসিত প্রশ্নাবলী (FAQ)
+            </h2>
+            <span style="font-size: 0.85rem; color: #94A3B8;">কোর্স সম্পর্কিত যেকোনো প্রশ্ন</span>
+          </div>
+
+          <div id="courseFaqList">
+            <!-- FAQ 1 -->
+            <div class="faq-accordion-item active" onclick="toggleFaqItem(this)">
+              <div class="faq-accordion-header">
+                <div class="faq-question-wrap">
+                  <i class="fas fa-circle-play text-emerald"></i>
+                  <span>১. কোর্সটি কি লাইভ হবে নাকি রেকর্ডেড?</span>
+                </div>
+                <div class="faq-chevron-badge"><i class="fas fa-chevron-down"></i></div>
+              </div>
+              <div class="faq-answer-content">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                  <span class="faq-badge-shimmer">
+                    <i class="fas fa-sparkles" style="font-size: 0.7rem;"></i> উত্তর
+                  </span>
+                  <span style="font-size: 0.78rem; color: #64748B;">• নিশ্চিত ভেরিফাইড গাইডলাইন</span>
+                </div>
+                <p class="faq-answer-text" data-raw-text="কোর্সের প্রতিটি ক্লাস নির্ধারিত রুটিন অনুযায়ী সম্পূর্ণ লাইভ অনুষ্ঠিত হবে। কোনো কারণে লাইভ ক্লাস মিস হলেও প্রতিটি ক্লাসের ফুল এইচডি রেকর্ডিং ও লেকচার নোটস ২৪ ঘণ্টার মধ্যে স্টুডেন্ট ড্যাশবোর্ডে সারাজীবনের জন্য সেভ থাকবে।">
+                  কোর্সের প্রতিটি ক্লাস নির্ধারিত রুটিন অনুযায়ী সম্পূর্ণ লাইভ অনুষ্ঠিত হবে। কোনো কারণে লাইভ ক্লাস মিস হলেও প্রতিটি ক্লাসের ফুল এইচডি রেকর্ডিং ও লেকচার নোটস ২৪ ঘণ্টার মধ্যে স্টুডেন্ট ড্যাশবোর্ডে সারাজীবনের জন্য সেভ থাকবে।
+                </p>
+              </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="faq-accordion-item" onclick="toggleFaqItem(this)">
+              <div class="faq-accordion-header">
+                <div class="faq-question-wrap">
+                  <i class="fas fa-file-pdf text-amber"></i>
+                  <span>২. হ্যান্ডনোটস ও শিট কি প্রিন্ট করা যাবে?</span>
+                </div>
+                <div class="faq-chevron-badge"><i class="fas fa-chevron-down"></i></div>
+              </div>
+              <div class="faq-answer-content">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                  <span class="faq-badge-shimmer">
+                    <i class="fas fa-sparkles" style="font-size: 0.7rem;"></i> উত্তর
+                  </span>
+                  <span style="font-size: 0.78rem; color: #64748B;">• নিশ্চিত ভেরিফাইড গাইডলাইন</span>
+                </div>
+                <p class="faq-answer-text" data-raw-text="হ্যাঁ! প্রতিটি অধ্যায়ের সাথে থাকছে রঙিন ও অত্যন্ত গোছানো প্রিন্ট-ফ্রেন্ডলি PDF নোটস। আপনি যেকোনো প্রিন্টার দিয়ে সরাসরি প্রিন্ট করে পড়তে পারবেন।">
+                  হ্যাঁ! প্রতিটি অধ্যায়ের সাথে থাকছে রঙিন ও অত্যন্ত গোছানো প্রিন্ট-ফ্রেন্ডলি PDF নোটস। আপনি যেকোনো প্রিন্টার দিয়ে সরাসরি প্রিন্ট করে পড়তে পারবেন।
+                </p>
+              </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="faq-accordion-item" onclick="toggleFaqItem(this)">
+              <div class="faq-accordion-header">
+                <div class="faq-question-wrap">
+                  <i class="fas fa-credit-card text-blue"></i>
+                  <span>৩. কোর্স ফি কিভাবে পরিশোধ করব?</span>
+                </div>
+                <div class="faq-chevron-badge"><i class="fas fa-chevron-down"></i></div>
+              </div>
+              <div class="faq-answer-content">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                  <span class="faq-badge-shimmer">
+                    <i class="fas fa-sparkles" style="font-size: 0.7rem;"></i> উত্তর
+                  </span>
+                  <span style="font-size: 0.78rem; color: #64748B;">• নিশ্চিত ভেরিফাইড গাইডলাইন</span>
+                </div>
+                <p class="faq-answer-text" data-raw-text="আপনি বিকাশ (bKash), নগদ (Nagad), রকেট বা যেকোনো ব্যাংক কার্ডের মাধ্যমে অত্যন্ত সহজে ও নিরাপদে কোর্স ফি পরিশোধ করে ইনস্ট্যান্ট ক্লাসের এক্সেস পেয়ে যাবেন।">
+                  আপনি বিকাশ (bKash), নগদ (Nagad), রকেট বা যেকোনো ব্যাংক কার্ডের মাধ্যমে অত্যন্ত সহজে ও নিরাপদে কোর্স ফি পরিশোধ করে ইনস্ট্যান্ট ক্লাসের এক্সেস পেয়ে যাবেন।
+                </p>
+              </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="faq-accordion-item" onclick="toggleFaqItem(this)">
+              <div class="faq-accordion-header">
+                <div class="faq-question-wrap">
+                  <i class="fas fa-robot text-purple-400"></i>
+                  <span>৪. কোনো পড়া না বুঝলে সরাসরি শিক্ষককে প্রশ্ন করা যাবে?</span>
+                </div>
+                <div class="faq-chevron-badge"><i class="fas fa-chevron-down"></i></div>
+              </div>
+              <div class="faq-answer-content">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                  <span class="faq-badge-shimmer">
+                    <i class="fas fa-sparkles" style="font-size: 0.7rem;"></i> উত্তর
+                  </span>
+                  <span style="font-size: 0.78rem; color: #64748B;">• নিশ্চিত ভেরিফাইড গাইডলাইন</span>
+                </div>
+                <p class="faq-answer-text" data-raw-text="লাইভ ক্লাসে সরাসরি কমেন্টে প্রশ্ন করা যাবে। এছাড়া আমাদের ২৪/৭ এআই ডাউট সলভার এবং স্পেশাল প্রবলেম সলভিং টেলিগ্রাম/ফেসবুক গ্রুপে সিনিয়র মেন্টররা সরাসরি আপনার সমাধান করে দেবেন।">
+                  লাইভ ক্লাসে সরাসরি কমেন্টে প্রশ্ন করা যাবে। এছাড়া আমাদের ২৪/৭ এআই ডাউট সলভার এবং স্পেশাল প্রবলেম সলভিং টেলিগ্রাম/ফেসবুক গ্রুপে সিনিয়র মেন্টররা সরাসরি আপনার সমাধান করে দেবেন।
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- ======================================================================
+           RIGHT COLUMN: STICKY CHECKOUT SIDEBAR CARD (10MS Pattern)
+           ====================================================================== -->
+      <aside class="course-right-col">
+        <div class="checkout-sticky-card">
+          
+          <!-- Banner Thumbnail Preview -->
+          <div class="checkout-preview-thumb">
+            <img src="/images/courses/class5-full-course.jpg" id="courseSidebarThumb" alt="Course Cover">
+            <a href="/player" class="thumb-play-overlay" title="ডেমো ক্লাস দেখুন">
+              <i class="fas fa-play" style="margin-left: 3px;"></i>
+            </a>
+          </div>
+
+          <div class="checkout-card-body">
+            
+            <h3 class="card-pitch-title" id="cardPitchTitle">
+              সহজ ও আনন্দময় পদ্ধতিতে ৫ম শ্রেণির সেরা প্রস্তুতি
+            </h3>
+
+            <!-- Price Display -->
+            <div class="price-display-row">
+              <span class="course-main-price" id="courseMainPrice">৳৪১৯</span>
+              <span class="course-strike-price" id="courseStrikePrice">৳৮৫০</span>
+              <span class="course-discount-pill" id="courseDiscountPill">৩৫% ছাড়</span>
+            </div>
+
+            <div class="offer-urgent-pill">
+              <i class="fas fa-fire"></i> সীমিত সময়ের বিশেষ অফার চলছে!
+            </div>
+
+            <!-- Primary 10MS Green CTA Button -->
+            <button id="openCheckoutBtn" class="btn-buy-course-primary">
+              <i class="fas fa-bolt"></i>
+              <span>কোর্সটি কিনুন / এখনই ভর্তি হোন</span>
+            </button>
+
+            <!-- Free Demo Video Secondary Button -->
+            <a href="/player" class="btn-demo-video-secondary">
+              <i class="fas fa-circle-play" style="color: var(--cd-green);"></i>
+              <span>ফ্রি ডেমো ক্লাস দেখুন</span>
+            </a>
+
+            <!-- Free Download Routine Button -->
+            <a id="downloadRoutineBtn" href="/images/courses/routine-banner.jpg" download="Class-Routine.jpg" class="btn-download-routine" title="রুটিন ও ব্যানার ইমেজ সম্পূর্ণ ফ্রিতে ডাউনলোড করুন">
+              <i class="fas fa-arrow-down-to-bracket"></i>
+              <span>সাপ্তাহিক ক্লাস রুটিন ডাউনলোড (ফ্রি)</span>
+            </a>
+
+            <!-- Money-back Guarantee -->
+            <div style="font-size: 0.82rem; color: #10B981; text-align: center; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center; gap: 6px;">
+              <i class="fas fa-shield-halved"></i> শতভাগ মানি-ব্যাক ও সন্তুষ্টি গ্যারান্টি
+            </div>
+
+            <!-- What's Included Checklist -->
+            <div class="includes-header-title">
+              <i class="fas fa-list-check" style="color: var(--cd-green);"></i> এই কোর্সে যা থাকছে:
+            </div>
+            <ul class="includes-checklist">
+              <li><i class="fas fa-video"></i> <span>৬০+ লাইভ ও ফুল এইচডি রেকর্ডেড ক্লাস</span></li>
+              <li><i class="fas fa-file-pdf"></i> <span>অধ্যায়ভিত্তিক স্পেশাল হ্যান্ডনোট PDF</span></li>
+              <li><i class="fas fa-pen-clip"></i> <span>আনলিমিটেড চ্যাপ্টার টেস্ট ও মডেল টেস্ট</span></li>
+              <li><i class="fas fa-robot"></i> <span>২৪/৭ এআই ডাউট সলভার এক্সেস</span></li>
+              <li><i class="fas fa-mobile-screen"></i> <span>মোবাইল ও পিসি যেকোনো ডিভাইস থেকে এক্সেস</span></li>
+              <li><i class="fas fa-infinity"></i> <span>ফুল কোর্স লাইফটাইম এক্সেস ও আর্কাইভ</span></li>
+            </ul>
+
+            <!-- Helpline Box -->
+            <div class="helpline-box">
+              ভর্তি সংক্রান্ত যেকোনো তথ্যে সরাসরি কল করুন:<br>
+              <a href="tel:16910" class="helpline-phone-link">
+                <i class="fas fa-phone-volume" style="color: var(--cd-green);"></i> ১৬৯১০
+              </a>
+              <span style="color: #64748B; margin: 0 4px;">বা</span>
+              <a href="tel:01712345678" class="helpline-phone-link">
+                ০১৭১২-৩৪৫৬৭৮
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </aside>
+
+    </main>
+
+  </div>
+
+
+
+  <!-- ============================================================================
+       CHECKOUT & BUY MODAL
+       ============================================================================ -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="checkout-modal-card">
+      
+      <div class="modal-topbar">
+        <div class="modal-title">
+          <i class="fas fa-shield-check" style="color: #10B981; margin-right: 6px;"></i> সিকিউর চেকআউট ও কোর্স ভর্তি
+        </div>
+        <button class="modal-close-icon" id="closeCheckoutBtn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-inner-body" id="modalStepCheckout">
+        
+        <!-- Course Mini Info -->
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 12px; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 12px;">
+          <img src="/images/courses/class5-full-course.jpg" id="modalCourseThumb" style="width: 55px; height: 55px; border-radius: 10px; object-fit: cover;">
+          <div>
+            <div id="modalCourseTitle" style="font-size: 0.98rem; font-weight: 700; color: #FFFFFF;">কোর্সের নাম</div>
+            <div style="font-size: 0.8rem; color: #10B981; font-weight: 600;">ইনস্ট্যান্ট অটোমেটেড এক্সেস</div>
+          </div>
+        </div>
+
+        <!-- Payment Method Selection -->
+        <div style="font-size: 0.88rem; font-weight: 700; color: #CBD5E1; margin-bottom: 8px;">
+          পেমেন্ট মাধ্যম বেছে নিন:
+        </div>
+        <div class="gateway-options-grid" id="gatewayButtons">
+          <div class="gateway-btn active" data-gateway="bkash">
+            <i class="fas fa-mobile-retro" style="font-size: 22px; color: #E2136E;"></i>
+            <span class="gateway-name" style="color: #E2136E;">bKash বিকাশ</span>
+          </div>
+          <div class="gateway-btn" data-gateway="nagad">
+            <i class="fas fa-wallet" style="font-size: 22px; color: #F7921E;"></i>
+            <span class="gateway-name" style="color: #F7921E;">Nagad নগদ</span>
+          </div>
+          <div class="gateway-btn" data-gateway="card">
+            <i class="fas fa-credit-card" style="font-size: 22px; color: #3B82F6;"></i>
+            <span class="gateway-name" style="color: #60A5FA;">Card / Bank</span>
+          </div>
+        </div>
+
+        <!-- Student Phone -->
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #CBD5E1; margin-bottom: 6px;">আপনার মোবাইল নম্বর (যেটিতে এক্সেস পাবেন) *</label>
+          <input type="tel" id="checkoutPhone" class="coupon-text-input" style="width: 100%; box-sizing: border-box;" placeholder="017XXXXXXXX" value="01712345678">
+        </div>
+
+        <!-- Coupon Input -->
+        <div style="margin-bottom: 0.5rem;">
+          <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #CBD5E1; margin-bottom: 6px;">ডিসকাউন্ট কুপন কোড (যদি থাকে)</label>
+          <div class="coupon-input-group">
+            <input type="text" id="couponCodeInput" class="coupon-text-input" placeholder="কুপন কোড (উদা: WELCOME50)">
+            <button type="button" id="applyCouponBtn" class="btn-apply-coupon">প্রয়োগ</button>
+          </div>
+          <div style="font-size: 0.75rem; color: #94A3B8;">
+            ডেমো কুপন: <button type="button" onclick="applyQuickCoupon('WELCOME50')" style="background:none; border:none; color:var(--cd-green); cursor:pointer; font-weight:700; text-decoration:underline;">WELCOME50</button> বা <button type="button" onclick="applyQuickCoupon('DIPU100')" style="background:none; border:none; color:var(--cd-green); cursor:pointer; font-weight:700; text-decoration:underline;">DIPU100</button>
+          </div>
+        </div>
+
+        <div id="couponStatusMsg" style="font-size: 0.8rem; margin-bottom: 1rem;"></div>
+
+        <!-- Order Summary Calc -->
+        <div class="order-calc-table">
+          <div class="calc-row">
+            <span>কোর্স ফি (রেগুলার মূল্য)</span>
+            <span id="calcRegularPrice">৳৮৫০</span>
+          </div>
+          <div class="calc-row">
+            <span>স্পেশাল অফার ছাড়</span>
+            <span style="color: #10B981;" id="calcOfferDiscount">-৳৪৩১</span>
+          </div>
+          <div class="calc-row" id="calcCouponRow" style="display: none;">
+            <span>কুপন ডিসকাউন্ট</span>
+            <span style="color: #10B981;" id="calcCouponDiscount">-৳০</span>
+          </div>
+          <div class="calc-row total-row">
+            <span>সর্বমোট প্রদেয় ফি</span>
+            <span style="color: #10B981;" id="calcFinalTotal">৳৪১৯</span>
+          </div>
+        </div>
+
+        <!-- Pay Submit Button -->
+        <button type="button" id="confirmPaymentBtn" class="btn-buy-course-primary">
+          <i class="fas fa-lock"></i>
+          <span id="confirmPayBtnText">পেমেন্ট সম্পন্ন করে ভর্তি নিশ্চিত করুন</span>
+        </button>
+
+      </div>
+
+      <!-- Success Screen in Modal -->
+      <div class="modal-inner-body" id="modalStepSuccess" style="display: none; text-align: center; padding: 2.5rem 1.5rem;">
+        <div style="width: 70px; height: 70px; border-radius: 50%; background: rgba(16, 185, 129, 0.2); color: #10B981; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.25rem; border: 2px solid #10B981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);">
+          <i class="fas fa-check"></i>
+        </div>
+        <h3 style="font-size: 1.4rem; font-weight: 800; color: #FFFFFF; margin-bottom: 8px;">অভিনন্দন! আপনার ভর্তি সম্পন্ন হয়েছে</h3>
+        <p style="font-size: 0.95rem; color: #CBD5E1; line-height: 1.6; margin-bottom: 1.5rem;">
+          আপনার পেমেন্ট সফলভাবে গৃহীত হয়েছে। আপনার অ্যাকাউন্টে কোর্সটি সক্রিয় করা হয়েছে এবং ১০০ EduCoins রিওয়ার্ড যোগ হয়েছে!
+        </p>
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px; margin-bottom: 1.5rem; font-size: 0.85rem; color: #94A3B8;">
+          ট্রানজেকশন আইডি: <strong style="color: #FFFFFF;" id="successTrxId">TXN-8492019</strong>
+        </div>
+        <a href="/player" class="btn-buy-course-primary" style="text-decoration: none;">
+          <i class="fas fa-play-circle mr-2"></i> ক্লাসরুমে যান ও পড়া শুরু করুন
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Routine Lightbox Modal -->
+  <div id="routineLightboxModal" style="display: none; position: fixed; inset: 0; z-index: 99999; background: rgba(0,0,0,0.88); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px;" onclick="closeRoutineLightbox()">
+    <div style="position: relative; max-width: 1050px; width: 100%; background: #0F172A; border: 1px solid rgba(255,255,255,0.15); border-radius: 18px; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.8);" onclick="event.stopPropagation()">
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <span style="font-weight: 700; color: #fff; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
+          <i class="fas fa-calendar-days text-emerald"></i> সাপ্তাহিক ক্লাস রুটিন - ফুল স্ক্রিন ভিউ
+        </span>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <a id="lightboxDownloadBtn" href="/images/courses/routine-banner.jpg" download="Class-Routine.jpg" class="btn-download-routine" style="width: auto; padding: 6px 14px; font-size: 0.82rem; margin: 0;">
+            <i class="fas fa-download mr-1"></i> ডাউনলোড
+          </a>
+          <button type="button" onclick="closeRoutineLightbox()" style="background: none; border: none; color: #94A3B8; font-size: 1.2rem; cursor: pointer; padding: 4px 8px;">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <div style="padding: 12px; max-height: 80vh; overflow: auto; display: flex; align-items: center; justify-content: center; background: #080B14;">
+        <img id="lightboxRoutineImg" src="/images/courses/routine-banner.jpg" alt="Full Routine" style="width: 100%; height: auto; max-height: 75vh; object-fit: contain; border-radius: 10px;">
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================================
+       COMPLETE 5-COLUMN MASTER FOOTER (10MS Standard)
+       ============================================================================ -->
+  <footer class="master-footer" style="border-top: 1px solid rgba(255,255,255,0.08); padding: 5rem 0 2rem; margin-top: 4rem; background: #07080C;">
+    <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
+      
+      <div class="footer-top-grid">
+        
+        <!-- Col 1: Brand & Social Media -->
+        <div>
+          <div class="footer-brand-title">
+            <div class="nav-brand-badge" style="width: 32px; height: 32px; border-radius: 8px; background: var(--cd-green); display: flex; align-items: center; justify-content: center; color: #000; font-size: 16px;">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <span>Dipu's Edu</span>
+          </div>
+          <p class="footer-desc">
+            বাংলাদেশের অগ্রণী ডিজিটাল লার্নিং প্ল্যাটফর্ম। ৬ষ্ঠ থেকে দ্বাদশ ও এডমিশন শিক্ষার্থীদের জন্য উন্নতমানের শিক্ষা নিশ্চিত করাই আমাদের অঙ্গীকার।
+          </p>
+
+          <div class="app-download-badges">
+            <a href="https://play.google.com" target="_blank" rel="noreferrer" class="app-badge-btn" title="Download on Google Play">
+              <!-- Real 4-Color Google Play Vector Logo -->
+              <svg width="30" height="30" viewBox="0 0 512 512" style="flex-shrink: 0;">
+                <path fill="#4285F4" d="M325.3 234.3L104.6 13l280.8 161.2-60.1 59.9z"/>
+                <path fill="#EA4335" d="M47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.4l256.7-256L47 0z"/>
+                <path fill="#FBBC04" d="M405.3 205.2L348.6 238l-43.1 43.1 43.1 43.1 57-33.1c20-11.5 20-30.3-.3-45.9z"/>
+                <path fill="#34A853" d="M104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
+              </svg>
+              <div>
+                <div class="app-badge-sub">GET IT ON</div>
+                <div class="app-badge-title">Google Play</div>
+              </div>
+            </a>
+          </div>
+
+          <div class="footer-social-row">
+            <!-- Official Facebook -->
+            <a href="https://facebook.com" target="_blank" rel="noreferrer" class="social-icon-btn" title="Facebook">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#1877F2">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+
+            <!-- Official YouTube -->
+            <a href="https://youtube.com" target="_blank" rel="noreferrer" class="social-icon-btn" title="YouTube">
+              <svg width="22" height="22" viewBox="0 0 24 24">
+                <path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.376.55 9.376.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/>
+                <path fill="#FFFFFF" d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </a>
+
+            <!-- Official Instagram -->
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" class="social-icon-btn" title="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24">
+                <defs>
+                  <linearGradient id="instaFooterGradC" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#FFDC80"/>
+                    <stop offset="25%" stop-color="#FD5949"/>
+                    <stop offset="50%" stop-color="#D6249F"/>
+                    <stop offset="100%" stop-color="#285AEB"/>
+                  </linearGradient>
+                </defs>
+                <path fill="url(#instaFooterGradC)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </a>
+
+            <!-- Official LinkedIn -->
+            <a href="https://linkedin.com" target="_blank" rel="noreferrer" class="social-icon-btn" title="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#0A66C2">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </a>
+
+            <!-- Official TikTok -->
+            <a href="https://tiktok.com" target="_blank" rel="noreferrer" class="social-icon-btn" title="TikTok">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298 0 .591.044.87.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.3 6.3 0 0 0 1.87-4.49V8.6a8.28 8.28 0 0 0 4.9 1.59V6.74c-.33-.01-.67-.03-1-.05z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: আমাদের সম্পর্কে -->
+        <div>
+          <h4 class="footer-col-title">আমাদের সম্পর্কে</h4>
+          <ul class="footer-links-list">
+            <li><a href="#" class="footer-link-item">কোম্পানি পরিচিতি</a></li>
+            <li><a href="/" class="footer-link-item">মিশন ও ভিশন</a></li>
+            <li><a href="#" class="footer-link-item">শিক্ষণ পদ্ধতি</a></li>
+            <li><a href="#" class="footer-link-item">মিডিয়া কভারেজ</a></li>
+            <li><a href="#" class="footer-link-item">ব্লগ ও আর্টিকেল</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: ক্যারিয়ার -->
+        <div>
+          <h4 class="footer-col-title">ক্যারিয়ার</h4>
+          <ul class="footer-links-list">
+            <li><a href="#" class="footer-link-item">উন্মুক্ত পদসমূহ (Hiring)</a></li>
+            <li><a href="#" class="footer-link-item">শিক্ষক নিয়োগ বিজ্ঞপ্তি</a></li>
+            <li><a href="#" class="footer-link-item">আমাদের ওয়ার্ক কালচার</a></li>
+            <li><a href="#" class="footer-link-item">ইন্টার্নশিপ প্রোগ্রাম</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: স্কিলস ও প্রোগ্রাম -->
+        <div>
+          <h4 class="footer-col-title">কোর্স ও প্রোগ্রাম</h4>
+          <ul class="footer-links-list">
+            <li><a href="/course?slug=hsc-27-full-prep" class="footer-link-item">এইচএসসি ২০২৬/২৭</a></li>
+            <li><a href="/course?slug=ssc-28-full-prep" class="footer-link-item">এসএসসি ২০২৬/২৭</a></li>
+            <li><a href="/course?slug=class-5-full-course" class="footer-link-item">৫ম থেকে ৮ম শ্রেণি</a></li>
+            <li><a href="/notes" class="footer-link-item">স্মার্ট নোটস লাইব্রেরি</a></li>
+            <li><a href="/exam" class="footer-link-item">লাইভ মডেল টেস্ট</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 5: টিচার পোর্টাল ও হেল্পলাইন -->
+        <div>
+          <h4 class="footer-col-title">যোগাযোগ ও হেল্প</h4>
+          <ul class="footer-links-list">
+            <li><a href="javascript:void(0)" onclick="if(typeof window.openContactModal==='function')window.openContactModal();" class="footer-link-item"><i class="fas fa-headset" style="color: #FF7A1A; margin-right: 5px;"></i>২৪/৭ হেল্প ও সাপোর্ট</a></li>
+            <li><a href="tel:16910" class="footer-link-item">📞 হেল্পলাইন: ১৬৯১০</a></li>
+            <li><a href="tel:01712345678" class="footer-link-item">📱 ০১৭১২-৩৪৫৬৭৮</a></li>
+            <li><a href="mailto:support@dipusedu.com" class="footer-link-item">support@dipusedu.com</a></li>
+            <li class="text-xs text-gray-500 pt-2">রোড ১১, ব্লক ডি, বনানী, ঢাকা-১২১৩</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Legal Bottom Bar -->
+      <div class="footer-legal-bar" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; margin-top: 2rem;">
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-3">
+          <div>
+            © ২০২৬ Dipu's Edu. সর্বস্বত্ব সংরক্ষিত।
+          </div>
+          <div class="flex gap-4">
+            <a href="#" class="footer-link-item">শর্তাবলী ও নিয়মাবলী</a>
+            <span>•</span>
+            <a href="#" class="footer-link-item">প্রাইভেসী পলিসি</a>
+            <span>•</span>
+            <a href="#" class="footer-link-item">রিফান্ড পলিসি</a>
+          </div>
+        </div>
+        <div class="text-[11px] text-gray-600 text-center sm:text-left mt-2">
+          ট্রেড লাইসেন্স নং: TRAD/DSCC/019284/2024 • ই-টিন: 59384729184 • গণপ্রজাতন্ত্রী বাংলাদেশ সরকার অনুমোদিত এডটেক প্রতিষ্ঠান।
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Course Dynamic Script Engine -->
+  <script>
+    // State
+    let currentCourse = null;
+    let selectedGateway = "bkash";
+    let appliedCouponDiscount = 0;
+
+    function formatBDT(amount) {
+      return '৳' + Number(amount).toLocaleString('bn-BD');
+    }
+
+    function triggerDirectDownload(url, filename) {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename || 'course-routine.jpg';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => document.body.removeChild(a), 150);
+    }
+
+    // Complete Registry of Authentic Courses with user-uploaded images
+    const AUTHENTIC_COURSES = {
+      "class-5-full-course": {
+        slug: "class-5-full-course",
+        title: { bn: "৫ম শ্রেণীর পূর্ণাঙ্গ কোর্স" },
+        subject: "প্রাথমিক গণিত, প্রাথমিক বিজ্ঞান ও ইংরেজি",
+        classLevel: "স্কুল (৫ম শ্রেণি)",
+        price: 850,
+        discountPrice: 419,
+        thumbnail: "/images/courses/class5-full-course.jpg",
+        routineImage: "/images/courses/routine-banner.jpg",
+        rating: 4.92,
+        enrolledText: "৯২০+ শিক্ষার্থী ভর্তি হয়েছে",
+        pitchTitle: "সহজ ও আনন্দময় পদ্ধতিতে ৫ম শ্রেণির সেরা প্রস্তুতি",
+        instructor: {
+          name: "দীপু এডু প্রাইমারি একাডেমি",
+          institution: "শিশু শিক্ষায় অভিজ্ঞ বিশেষজ্ঞ শিক্ষক",
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%230284C7'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>৫ম</text></svg>"
+        },
+        description: {
+          bn: "৫ম শ্রেণির শিক্ষার্থীদের জন্য সহজ ও আনন্দময় পদ্ধতিতে গণিত, বিজ্ঞান ও ইংরেজির প্রতিটি অধ্যায় শেখার পূর্ণাঙ্গ কোর্স। শিশুদের পড়াশোনার ভিত্তি মজবুত করতে স্পেশাল এআই ও লাইভ গাইডেন্স।"
+        },
+        features: [
+          "সহজ ও আকর্ষণীয় অনলাইন ক্লাস",
+          "অধ্যায়ভিত্তিক সহজ মডেল টেস্ট ও লাইভ প্র্যাকটিস",
+          "রঙিন ও প্রিন্ট-উপযোগী প্রিমিয়াম পিডিএফ হ্যান্ডনোট",
+          "গণিত, বিজ্ঞান ও ইংরেজির চমৎকার মজবুত বেসিক গঠন",
+          "২৪/৭ ইনস্ট্যান্ট ডাউট সলভিং এআই টিউটর এক্সেস",
+          "বার্ষিক পরীক্ষায় শতভাগ সেরা সাফল্য নিশ্চিতকরণ"
+        ],
+        chapters: [
+          {
+            chapterTitle: { bn: "অধ্যায় ১: গুণ, ভাগ ও চার প্রক্রিয়া সম্পর্কিত সমস্যা" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: গুণ ও ভাগের সহজ নিয়ম ও শর্টকাট অনুশীলন" }, durationMinutes: 35, isFree: true },
+              { lessonTitle: { bn: "লেকচার ২: বন্ধনীর ব্যবহার ও চার প্রক্রিয়ার জটিল হিসাব" }, durationMinutes: 38, isFree: false }
+            ]
+          },
+          {
+            chapterTitle: { bn: "অধ্যায় ২: ভগ্নাংশ ও দশমিক ভগ্নাংশের জাদুকরী সমাধান" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: সমহর বিশিষ্ট ভগ্নাংশ ও লঘিষ্ঠকরণ ট্রিকস" }, durationMinutes: 40, isFree: false },
+              { lessonTitle: { bn: "লেকচার ২: দশমিকের গুণ ও ভাগ সংক্রান্ত সমস্যা" }, durationMinutes: 45, isFree: false }
+            ]
+          },
+          {
+            chapterTitle: { bn: "অধ্যায় ৩: প্রাথমিক বিজ্ঞান — পদার্থ, শক্তি ও পরিবেশ" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: শক্তির রূপান্তর ও পরিবেশ দূষণ প্রতিরোধ" }, durationMinutes: 42, isFree: true }
+            ]
+          }
+        ]
+      },
+
+      "class-6-full-course": {
+        slug: "class-6-full-course",
+        title: { bn: "৬ষ্ঠ শ্রেণীর পূর্ণাঙ্গ প্রস্তুতি কোর্স" },
+        subject: "নতুন শিক্ষাক্রম • গণিত, বিজ্ঞান ও ইংরেজি",
+        classLevel: "স্কুল (৬ষ্ঠ শ্রেণি)",
+        price: 1200,
+        discountPrice: 699,
+        thumbnail: "/images/courses/class7-full-course.jpg",
+        routineImage: "/images/courses/routine-banner.jpg",
+        rating: 4.91,
+        enrolledText: "৭৬০+ শিক্ষার্থী ভর্তি হয়েছে",
+        pitchTitle: "নতুন কারিকুলামে আত্মবিশ্বাসী হয়ে ওঠার সম্পূর্ণ গাইডলাইন",
+        instructor: {
+          name: "দীপু এডু স্কুল একাডেমি",
+          institution: "নতুন শিক্ষাক্রম বিশেষজ্ঞ শিক্ষকবৃন্দ",
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%230D9488'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>৬ষ্ঠ</text></svg>"
+        },
+        description: {
+          bn: "নতুন শিক্ষাক্রমের আলোকে ৬ষ্ঠ শ্রেণির শিক্ষার্থীদের গণিত, বিজ্ঞান ও ইংরেজির প্রতিটি অধ্যায় আনন্দময় উপায়ে শেখার জন্য সম্পূর্ণ কোর্স। বাস্তব অভিজ্ঞতা ও প্রজেক্টভিত্তিক শিখন।"
+        },
+        features: [
+          "অনলাইন ইন্টারঅ্যাক্টিভ লাইভ ও রেকর্ডেড ক্লাস",
+          "অধ্যায়ভিত্তিক প্রজেক্ট ও কুইজ মূল্যায়ন",
+          "রঙিন স্মার্ট পিডিএফ নোটস ও শিট",
+          "নতুন কারিকুলামে শতভাগ আত্মবিশ্বাস",
+          "শ্রেণি মূল্যায়নে সর্বোচ্চ সাফল্য"
+        ],
+        chapters: [
+          {
+            chapterTitle: { bn: "অধ্যায় ১: সংখ্যার গল্প ও বাস্তব সমস্যা" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: সংখ্যার জাদু ও রোমান সংখ্যার ট্রিকস" }, durationMinutes: 40, isFree: true }
+            ]
+          }
+        ]
+      },
+
+      "class-7-full-course": {
+        slug: "class-7-full-course",
+        title: { bn: "৭ম শ্রেণীর পূর্ণাঙ্গ কোর্স" },
+        subject: "সাধারণ গণিত, বিজ্ঞান ও তথ্য প্রযুক্তি",
+        classLevel: "স্কুল (৭ম শ্রেণি)",
+        price: 1500,
+        discountPrice: 799,
+        thumbnail: "/images/courses/class7-full-course.jpg",
+        routineImage: "/images/courses/routine-banner.jpg",
+        rating: 4.94,
+        enrolledText: "১,১৪০+ শিক্ষার্থী ভর্তি হয়েছে",
+        pitchTitle: "গণিত ও বিজ্ঞানের কনসেপ্ট মজবুত করার স্মার্ট প্রস্তুতি",
+        instructor: {
+          name: "দীপু এডু একাডেমি",
+          institution: "মাধ্যমিক স্তর বিশেষজ্ঞ শিক্ষক প্যানেল",
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%2310B981'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>৭ম</text></svg>"
+        },
+        description: {
+          bn: "নতুন শিক্ষাক্রমের আলোকে ৭ম শ্রেণির শিক্ষার্থীদের গণিত ও বিজ্ঞানের জটিল সমস্যাগুলো বাস্তব উদাহরণের সাহায্যে সহজে শেখার জন্য তৈরি পূর্ণাঙ্গ কোর্স।"
+        },
+        features: [
+          "সরাসরি অনলাইন ক্লাস ও ইনস্ট্যান্ট প্রশ্নোত্তরের সুবিধা",
+          "নিয়মিত অধ্যায়ভিত্তিক অনলাইন মক টেস্ট",
+          "প্রিন্ট-উপযোগী হ্যান্ডনোট ও সমাধান শিট",
+          "বাস্তবধর্মী প্রজেক্ট ও কুইজ কম্পিটিশন",
+          "শ্রেণি মূল্যায়নে সর্বোচ্চ সাফল্য"
+        ],
+        chapters: [
+          {
+            chapterTitle: { bn: "অধ্যায় ১: সূচকের গল্প ও অজানা রাশির সমীকরণ" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: সূচক ও বীজগাণিতিক মডেল তৈরি" }, durationMinutes: 40, isFree: true },
+              { lessonTitle: { bn: "লেকচার ২: বাস্তব জীবনে সূচক ও সমীকরণের প্রয়োগ" }, durationMinutes: 45, isFree: false }
+            ]
+          }
+        ]
+      },
+
+      "class-10-business-studies": {
+        slug: "class-10-business-studies",
+        title: { bn: "১০ম শ্রেণীর পূর্ণাঙ্গ ব্যবসায় শিক্ষা কোর্স" },
+        subject: "ব্যবসায় শিক্ষা (হিসাববিজ্ঞান ও ফিন্যান্স)",
+        classLevel: "১০ম শ্রেণি / SSC '২৭",
+        price: 5000,
+        discountPrice: 3550,
+        thumbnail: "/images/courses/class10-business-studies.jpg",
+        routineImage: "/images/courses/routine-banner.jpg",
+        rating: 4.95,
+        enrolledText: "৮৪০+ শিক্ষার্থী ভর্তি হয়েছে",
+        pitchTitle: "হিসাববিজ্ঞান ও ফিন্যান্সে ১০০% গোল্ডেন A+ অর্জনের রূপরেখা",
+        instructor: {
+          name: "দীপু স্যার ও কমার্স মেন্টর প্যানেল",
+          institution: "ব্যবসায় শিক্ষা ও হিসাববিজ্ঞান বিশেষজ্ঞ প্যানেল",
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%232563EB'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>ব্য</text></svg>"
+        },
+        description: {
+          bn: "১০ম শ্রেণি ও এসএসসি পরীক্ষার্থীদের জন্য হিসাববিজ্ঞান, ফিন্যান্স ও ব্যাংকিং এবং ব্যবসায় উদ্যোগের প্রতিটি অধ্যায়ের পুঙ্খানুপুঙ্খ কনসেপ্ট, বোর্ড প্রশ্ন সমাধান ও স্পেশাল মক টেস্ট সহ পূর্ণাঙ্গ প্রস্তুতি।"
+        },
+        features: [
+          "অনলাইন ইন্টারঅ্যাক্টিভ লাইভ ও ব্যাকআপ ক্লাস",
+          "ব্যবসায় শিক্ষা পূর্ণাঙ্গ মডেল ও মক টেস্ট",
+          "হিসাববিজ্ঞান ও ফিন্যান্সের শতভাগ নির্ভুল সমাধান",
+          "ব্যবসায় শিক্ষা প্রিমিয়াম হ্যান্ডনোট ও কুইজ",
+          "বোর্ড পরীক্ষায় গোল্ডেন A+ নিশ্চিতকরণ"
+        ],
+        chapters: [
+          {
+            chapterTitle: { bn: "অধ্যায় ১: হিসাববিজ্ঞানের মূলনীতি ও দুতরফা দাখিলা" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: দুতরফা দাখিলা পদ্ধতি ও গাণিতিক সৃজনশীল" }, durationMinutes: 45, isFree: true },
+              { lessonTitle: { bn: "লেকচার ২: ডেবিট-ক্রেডিট নির্ণয়ের সোনালী সূত্রাবলী" }, durationMinutes: 48, isFree: false }
+            ]
+          }
+        ]
+      },
+
+      "hsc-27-full-prep": {
+        slug: "hsc-27-full-prep",
+        title: { bn: "HSC '২৭ পূর্ণাঙ্গ প্রস্তুতি কোর্স" },
+        subject: "বিজ্ঞান বিভাগ (পদার্থবিজ্ঞান, রসায়ন ও উচ্চতর গণিত)",
+        classLevel: "HSC '২৭",
+        price: 6000,
+        discountPrice: 4500,
+        thumbnail: "/images/courses/hsc-27-prep.jpg",
+        routineImage: "/images/courses/routine-banner.jpg",
+        rating: 4.96,
+        enrolledText: "১,৫৬০+ শিক্ষার্থী ভর্তি হয়েছে",
+        pitchTitle: "বোর্ড পরীক্ষায় গোল্ডেন A+ ও ভার্সিটি এডমিশন ফাউন্ডেশন",
+        instructor: {
+          name: "দীপু স্যার (BUET)",
+          institution: "বুয়েট সিভিল ইঞ্জিনিয়ারিং • লিড মেন্টর",
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23E11D48'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৭</text></svg>"
+        },
+        description: {
+          bn: "এইচএসসি ২০২৭ ব্যাচের বোর্ড পরীক্ষায় নিশ্চিত গোল্ডেন A+ এবং এডমিশনের মূল ভিত শক্ত করতে প্রতিটি অধ্যায়ের বিস্তারিত সৃজনশীল, থিওরি ও প্রশ্ন ব্যাংক সমাধান সংবলিত প্রিমিয়াম কোর্স।"
+        },
+        features: [
+          "অনলাইন লাইভ ক্লাস ও স্মার্ট ডাউট সলভ",
+          "বোর্ড স্ট্যান্ডার্ড পূর্ণাঙ্গ মক টেস্ট সিরিজ",
+          "বিষয়ভিত্তিক রঙিন হ্যান্ডনোট ও অধ্যায় কুইজ",
+          "ক্যালকুলেটর শর্টকাট হ্যাকস ও CQ ট্রিকস",
+          "সর্বোচ্চ নম্বর অর্জনের প্রমাণিত সাফল্য"
+        ],
+        chapters: [
+          {
+            chapterTitle: { bn: "অধ্যায় ১: অন্তরীকরণ ও লিমিট হ্যাকস" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: লিমিট ও অন্তরীকরণের জ্যামিতিক তাৎপর্য" }, durationMinutes: 50, isFree: true },
+              { lessonTitle: { bn: "লেকচার ২: চেইন রুল ও ত্রিকোণমিতিক অন্তরীকরণ ট্রিকস" }, durationMinutes: 54, isFree: false }
+            ]
+          }
+        ]
+      },
+
+      "hsc-28-full-prep": {
+        slug: "hsc-28-full-prep",
+        title: { bn: "HSC '২৮ পূর্ণাঙ্গ প্রস্তুতি কোর্স" },
+        subject: "বিজ্ঞান বিভাগ (পদার্থ, রসায়ন, গণিত ও বায়োলজি)",
+        classLevel: "HSC '২৮",
+        price: 6500,
+        discountPrice: 4500,
+        thumbnail: "/images/courses/hsc-28-prep.jpg",
+        routineImage: "/images/courses/routine-banner.jpg",
+        rating: 4.98,
+        enrolledText: "১,২৮০+ শিক্ষার্থী ভর্তি হয়েছে",
+        pitchTitle: "শুরু থেকেই বুয়েট ও মেডিকেল স্ট্যান্ডার্ড বেসিক প্রস্তুতি",
+        instructor: {
+          name: "দীপু স্যার (BUET) ও স্পেশালিস্ট টিম",
+          institution: "বুয়েট ইঞ্জিনিয়ারিং • ৮+ বছরের শিক্ষকতা",
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23FF7A1A'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
+        },
+        description: {
+          bn: "এইচএসসি ২০২৮ ব্যাচের শিক্ষার্থীদের শুরু থেকেই বুয়েট ও মেডিকেল স্ট্যান্ডার্ড সেরা বেসিক ফাউন্ডেশন তৈরি করতে পদার্থ, রসায়ন, উচ্চতর গণিত ও জীববিজ্ঞান পূর্ণাঙ্গ মাস্টারকোর্স।"
+        },
+        features: [
+          "অনলাইন লাইভ ক্লাস ও ২৪/৭ ক্লাস আর্কাইভ",
+          "পূর্ণাঙ্গ মক টেস্ট ও লিডারবোর্ড র‍্যাঙ্কিং",
+          "বিষয়ভিত্তিক প্রিন্ট-উপযোগী নোট ও কুইজ",
+          "বেসিক টু এডভান্সড কনসেপ্ট ক্লিয়ারিং",
+          "বোর্ড ও এডমিশন পরীক্ষায় নিশ্চিত সাফল্য"
+        ],
+        chapters: [
+          {
+            chapterTitle: { bn: "অধ্যায় ১: ভেক্টর মেকানিক্স ও গতিবিদ্যা ফাউন্ডেশন" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: ভেক্টর স্কেলার ও ত্রিমাত্রিক বিশ্লেষণ" }, durationMinutes: 52, isFree: true },
+              { lessonTitle: { bn: "লেকচার ২: ডট গুণন ও ক্রস গুণনের ব্যবহারিক প্রয়োগ" }, durationMinutes: 50, isFree: false }
+            ]
+          }
+        ]
+      },
+
+      "ssc-28-full-prep": {
+        slug: "ssc-28-full-prep",
+        title: { bn: "SSC '২৮ পূর্ণাঙ্গ প্রস্তুতি ও ফাউন্ডেশন কোর্স" },
+        subject: "বিজ্ঞান বিভাগ • পদার্থ, রসায়ন, গণিত ও জীব",
+        classLevel: "SSC '২৮",
+        price: 4500,
+        discountPrice: 2999,
+        thumbnail: "/images/courses/class10-business-studies.jpg",
+        routineImage: "/images/courses/routine-banner.jpg",
+        rating: 4.95,
+        enrolledText: "৯৫০+ শিক্ষার্থী ভর্তি হয়েছে",
+        pitchTitle: "বিজ্ঞান বিভাগের ৪টি মূল বিষয়ের শক্ত বেসিক ও CQ হ্যাকস",
+        instructor: {
+          name: "দীপু স্যার ও সিনিয়র মেন্টর প্যানেল",
+          institution: "এসএসসি স্পেশালিস্ট ফ্যাকাল্টি",
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23FF7A1A'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='32' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
+        },
+        description: {
+          bn: "এসএসসি ২০২৮ ব্যাচের শিক্ষার্থীদের জন্য বিজ্ঞান বিভাগের ৪টি মূল বিষয় (পদার্থ, রসায়ন, উচ্চতর/সাধারণ গণিত ও জীব)-এর পুঙ্খানুপুঙ্খ বেসিক গঠন ও বোর্ড পরীক্ষার জন্য আগাম পূর্ণাঙ্গ প্রস্তুতি।"
+        },
+        features: [
+          "অনলাইন ইন্টারঅ্যাক্টিভ লাইভ ও ব্যাকআপ ক্লাস",
+          "টপিকভিত্তিক অধ্যায় মূল্যায়ন ও মক টেস্ট",
+          "রঙিন স্মার্ট নোটস ও হ্যান্ডরিটেন শিট",
+          "CQ ও MCQ সমাধানের এক্সক্লুসিভ হ্যাকস",
+          "গোল্ডেন A+ নিশ্চিতকরণে পার্সোনালাইজড ট্র্যাকিং"
+        ],
+        chapters: [
+          {
+            chapterTitle: { bn: "অধ্যায় ১: গতি ও বলের প্রাথমিক ধারণা" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: গতির সমীকরণ ও গ্রাফিক্যাল বিশ্লেষণ" }, durationMinutes: 50, isFree: true }
+            ]
+          }
+        ]
+      }
+    };
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      // 1. Get Slug from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      let slug = urlParams.get("slug");
+      
+      if (!slug) {
+        const pathParts = window.location.pathname.split("/").filter(Boolean);
+        if (pathParts.length >= 2 && pathParts[0] === "course") {
+          slug = pathParts[1];
+        }
+      }
+
+      if (!slug) slug = "class-5-full-course"; // default to the course user asked about
+
+      // 2. Load Course
+      await loadCourseDetails(slug);
+
+      // 3. Setup Tab Scrollspy
+      setupTabScrollspy();
+
+      // 4. Setup Checkout Modal Handlers
+      setupCheckoutModal();
+
+      // 5. Initialize Fluid Word Text Animation for FAQ
+      document.querySelectorAll(".faq-accordion-item.active").forEach(triggerFaqWordAnimation);
+    });
+
+    async function loadCourseDetails(slug) {
+      let candidate = null;
+
+      if (AUTHENTIC_COURSES[slug]) {
+        candidate = AUTHENTIC_COURSES[slug];
+      } else {
+        const keys = Object.keys(AUTHENTIC_COURSES);
+        const matchedKey = keys.find(k => k.toLowerCase() === slug.toLowerCase() || slug.includes(k) || k.includes(slug));
+        if (matchedKey) candidate = AUTHENTIC_COURSES[matchedKey];
+      }
+
+      try {
+        const localCourses = JSON.parse(localStorage.getItem("dipu_courses") || "[]");
+        const match = localCourses.find(c => c.slug === slug || c._id === slug || (c.slug && c.slug.toLowerCase() === slug.toLowerCase()));
+        if (match) {
+          candidate = Object.assign({}, candidate || {}, match);
+        }
+      } catch (e) {}
+
+      if (candidate) {
+        currentCourse = candidate;
+        renderCourseData(candidate);
+      }
+
+      try {
+        const res = await fetch(`/api/courses/${slug}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && data.course) {
+            currentCourse = Object.assign({}, candidate || {}, data.course);
+            renderCourseData(currentCourse);
+            return;
+          }
+        }
+      } catch (err) {}
+
+      if (!currentCourse) {
+        currentCourse = AUTHENTIC_COURSES["class-5-full-course"];
+        renderCourseData(currentCourse);
+      }
+    }
+
+    function renderCourseData(c) {
+      const title = c.title?.bn || c.title?.en || (typeof c.title === 'string' ? c.title : "৫ম শ্রেণীর পূর্ণাঙ্গ কোর্স");
+      const desc = c.description?.bn || c.description?.en || (typeof c.description === 'string' ? c.description : "");
+      const price = Number(c.price) || 850;
+      const discountPrice = Number(c.discountPrice) || 419;
+      const discountPct = Math.round(((price - discountPrice) / price) * 100);
+
+      document.title = `${title} — Dipu's Edu`;
+      if (document.getElementById("breadcrumbCourseName")) document.getElementById("breadcrumbCourseName").textContent = title;
+
+      // Badges
+      if (document.getElementById("coursePillLevel")) document.getElementById("coursePillLevel").textContent = c.classLevel || "স্কুল";
+      if (document.getElementById("coursePillSubject")) document.getElementById("coursePillSubject").textContent = c.subject || "সাধারণ পাঠ্য";
+
+      // Header Title & Desc
+      if (document.getElementById("courseHeaderTitle")) document.getElementById("courseHeaderTitle").textContent = title;
+      if (document.getElementById("courseHeaderDesc")) document.getElementById("courseHeaderDesc").textContent = desc;
+
+      // Pitch Title in Card
+      if (document.getElementById("cardPitchTitle")) {
+        document.getElementById("cardPitchTitle").textContent = c.pitchTitle || `সহজ ও আনন্দময় পদ্ধতিতে ${title}-এর প্রস্তুতি`;
+      }
+
+      // Mentor
+      const mentorName = c.instructor?.name || c.instructorName || "দীপু এডু একাডেমি";
+      if (document.getElementById("courseMentorName")) document.getElementById("courseMentorName").textContent = mentorName;
+      if (document.getElementById("courseMentorFullName")) document.getElementById("courseMentorFullName").textContent = mentorName;
+      if (document.getElementById("courseMentorDept")) document.getElementById("courseMentorDept").textContent = c.instructor?.institution || "অভিজ্ঞ শিক্ষক প্যানেল • লিড মেন্টর";
+      if (c.instructor?.avatar && document.getElementById("courseMentorImg")) {
+        document.getElementById("courseMentorImg").src = c.instructor.avatar;
+      }
+
+      // Ratings & Enrolled
+      if (c.rating && document.getElementById("courseRatingText")) {
+        document.getElementById("courseRatingText").textContent = Number(c.rating).toFixed(2);
+      }
+      if (c.enrolledText && document.getElementById("courseEnrolledSpan")) {
+        document.getElementById("courseEnrolledSpan").textContent = `(${c.enrolledText})`;
+      }
+
+      // Pricing in Card
+      if (document.getElementById("courseMainPrice")) document.getElementById("courseMainPrice").textContent = formatBDT(discountPrice);
+      if (document.getElementById("courseStrikePrice")) document.getElementById("courseStrikePrice").textContent = formatBDT(price);
+      if (document.getElementById("courseDiscountPill")) document.getElementById("courseDiscountPill").textContent = `${discountPct}% ছাড়`;
+
+      // Real User Banner Thumbnail
+      const coverSrc = c.thumbnail && c.thumbnail.trim() ? c.thumbnail.trim() : "/images/courses/class5-full-course.jpg";
+      const thumbEl = document.getElementById("courseSidebarThumb");
+      if (thumbEl) {
+        thumbEl.src = coverSrc;
+        thumbEl.alt = title;
+      }
+
+      // Routine Image
+      const routineSrc = c.routineImage && c.routineImage.trim() ? c.routineImage.trim() : "/images/courses/routine-banner.jpg";
+      const routineImgEl = document.getElementById("courseRoutineImg");
+      if (routineImgEl) routineImgEl.src = routineSrc;
+      const lightboxImg = document.getElementById("lightboxRoutineImg");
+      if (lightboxImg) lightboxImg.src = routineSrc;
+
+      // Routine Downloads
+      const downloadFilename = `${c.slug || 'course'}-routine.jpg`;
+      const dlBtnSidebar = document.getElementById("downloadRoutineBtn");
+      const dlBtnRoutine = document.getElementById("downloadRoutineSectionBtn");
+      const lightboxDl = document.getElementById("lightboxDownloadBtn");
+
+      [dlBtnSidebar, dlBtnRoutine, lightboxDl].forEach(btn => {
+        if (btn) {
+          btn.href = routineSrc;
+          btn.setAttribute("download", downloadFilename);
+          btn.onclick = (e) => {
+            e.preventDefault();
+            triggerDirectDownload(routineSrc, downloadFilename);
+          };
+        }
+      });
+
+      // Features Points
+      if (c.features && Array.isArray(c.features) && c.features.length > 0) {
+        const grid = document.getElementById("courseFeaturesGrid");
+        if (grid) {
+          const icons = ["fa-video", "fa-pen-to-square", "fa-file-pdf", "fa-brain", "fa-robot", "fa-award", "fa-circle-check"];
+          grid.innerHTML = c.features.map((f, i) => `
+            <div class="feature-point-box">
+              <div class="feat-icon-badge"><i class="fas ${icons[i % icons.length]}"></i></div>
+              <div class="feat-text">${f}</div>
+            </div>
+          `).join("");
+        }
+      }
+
+      // Syllabus Chapters
+      if (c.chapters && Array.isArray(c.chapters) && c.chapters.length > 0) {
+        const cont = document.getElementById("courseSyllabusContainer");
+        if (cont) {
+          cont.innerHTML = c.chapters.map((ch, idx) => `
+            <div class="syllabus-chapter">
+              <div class="chapter-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                <span class="chapter-title-text">
+                  <i class="fas fa-folder-open" style="color: var(--cd-green);"></i> ${ch.chapterTitle?.bn || ch.chapterTitle?.en || `অধ্যায় ${idx + 1}`}
+                </span>
+                <span style="font-size: 0.82rem; color: #94A3B8;">${ch.lessons?.length || 1}টি লেকচার</span>
+              </div>
+              <div class="chapter-lessons-list">
+                ${(ch.lessons || []).map(les => `
+                  <div class="lesson-row-item">
+                    <div class="lesson-title-meta">
+                      <i class="${les.isFree ? 'fas fa-circle-play text-emerald' : 'fas fa-lock text-slate-500'}"></i>
+                      <span>${les.lessonTitle?.bn || les.lessonTitle?.en}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <span style="font-size: 0.8rem; color: #94A3B8;">${les.durationMinutes || 40} মিনিট</span>
+                      ${les.isFree ? `<a href="/player" class="badge-free-demo"><i class="fas fa-eye"></i> ফ্রি দেখুন</a>` : ''}
+                    </div>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+          `).join("");
+        }
+      }
+    }
+
+    // Scrollspy & Smooth Tab Jump (Without history pollution)
+    function setupTabScrollspy() {
+      const tabBtns = document.querySelectorAll(".tab-nav-btn");
+      tabBtns.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          tabBtns.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          const targetId = btn.getAttribute("href");
+          if (targetId && targetId.startsWith("#")) {
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+              targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+            if (window.history && window.history.replaceState) {
+              window.history.replaceState(null, "", targetId);
+            }
+          }
+        });
+      });
+    }
+
+    // FAQ Toggle with Word-by-Word Fluid Text Animation
+    window.toggleFaqItem = function(cardEl) {
+      if (!cardEl) return;
+      const wasActive = cardEl.classList.contains("active");
+      document.querySelectorAll(".faq-accordion-item").forEach(item => {
+        if (item !== cardEl) item.classList.remove("active");
+      });
+      if (wasActive) {
+        cardEl.classList.remove("active");
+      } else {
+        cardEl.classList.add("active");
+        triggerFaqWordAnimation(cardEl);
+      }
+    };
+
+    function triggerFaqWordAnimation(cardEl) {
+      if (!cardEl) return;
+      const textEl = cardEl.querySelector(".faq-answer-text");
+      if (!textEl) return;
+      const rawText = textEl.getAttribute("data-raw-text") || textEl.textContent.trim();
+      if (!textEl.getAttribute("data-raw-text")) {
+        textEl.setAttribute("data-raw-text", rawText);
+      }
+      const words = rawText.split(/\s+/).filter(Boolean);
+      textEl.innerHTML = words.map((w, idx) => 
+        `<span class="faq-word-anim" style="animation-delay: ${Math.min(idx * 22, 600)}ms">${w}</span>`
+      ).join(" ");
+    }
+
+    // Routine Zoom Lightbox
+    window.openRoutineLightbox = function() {
+      const modal = document.getElementById("routineLightboxModal");
+      if (modal) modal.style.display = "flex";
+    };
+
+    window.closeRoutineLightbox = function() {
+      const modal = document.getElementById("routineLightboxModal");
+      if (modal) modal.style.display = "none";
+    };
+
+    // Checkout Modal Handlers
+    function setupCheckoutModal() {
+      const modal = document.getElementById("checkoutModal");
+      const openBtn = document.getElementById("openCheckoutBtn");
+      const closeBtn = document.getElementById("closeCheckoutBtn");
+      const applyBtn = document.getElementById("applyCouponBtn");
+      const payBtn = document.getElementById("confirmPaymentBtn");
+
+      if (openBtn) {
+        openBtn.addEventListener("click", () => {
+          if (!currentCourse) return;
+          populateModal();
+          modal.classList.add("active");
+        });
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+          modal.classList.remove("active");
+        });
+      }
+
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) modal.classList.remove("active");
+      });
+
+      document.querySelectorAll(".gateway-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".gateway-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          selectedGateway = btn.dataset.gateway;
+          const gatewayLabel = btn.querySelector(".gateway-name")?.textContent || selectedGateway;
+          document.getElementById("confirmPayBtnText").textContent = `${gatewayLabel} এ পেমেন্ট সম্পন্ন করুন`;
+        });
+      });
+
+      if (applyBtn) {
+        applyBtn.addEventListener("click", () => {
+          const code = document.getElementById("couponCodeInput").value.trim().toUpperCase();
+          applyCoupon(code);
+        });
+      }
+
+      if (payBtn) {
+        payBtn.addEventListener("click", async () => {
+          payBtn.disabled = true;
+          payBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> পেমেন্ট প্রসেসিং হচ্ছে...`;
+
+          try {
+            await fetch("/api/payment/create", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                courseId: currentCourse._id || currentCourse.slug,
+                paymentGateway: selectedGateway,
+                couponCode: document.getElementById("couponCodeInput").value.trim()
+              })
+            });
+          } catch (e) {}
+
+          setTimeout(() => {
+            document.getElementById("modalStepCheckout").style.display = "none";
+            document.getElementById("modalStepSuccess").style.display = "block";
+            document.getElementById("successTrxId").textContent = `${selectedGateway.toUpperCase()}_${Date.now().toString().slice(-8)}`;
+          }, 700);
+        });
+      }
+    }
+
+    function populateModal() {
+      if (!currentCourse) return;
+      document.getElementById("modalStepCheckout").style.display = "block";
+      document.getElementById("modalStepSuccess").style.display = "none";
+      document.getElementById("modalCourseTitle").textContent = currentCourse.title?.bn || "কোর্স";
+      const modalThumb = document.getElementById("modalCourseThumb");
+      if (modalThumb) {
+        modalThumb.src = currentCourse.thumbnail || "/images/courses/class5-full-course.jpg";
+      }
+
+      const regPrice = Number(currentCourse.price) || 850;
+      const discPrice = Number(currentCourse.discountPrice) || 419;
+      const offerDiff = regPrice - discPrice;
+
+      document.getElementById("calcRegularPrice").textContent = formatBDT(regPrice);
+      document.getElementById("calcOfferDiscount").textContent = `-${formatBDT(offerDiff)}`;
+      updateTotalDisplay();
+    }
+
+    function applyQuickCoupon(code) {
+      document.getElementById("couponCodeInput").value = code;
+      applyCoupon(code);
+    }
+
+    function applyCoupon(code) {
+      const msg = document.getElementById("couponStatusMsg");
+      if (!code) {
+        msg.innerHTML = `<span style="color:#F87171;"><i class="fas fa-circle-exclamation"></i> দয়া করে একটি কুপন কোড লিখুন।</span>`;
+        return;
+      }
+
+      if (code === "WELCOME50") {
+        appliedCouponDiscount = 100;
+        msg.innerHTML = `<span style="color:#10B981;"><i class="fas fa-circle-check"></i> WELCOME50 গৃহীত! ১০০ টাকা বিশেষ ছাড় যুক্ত হয়েছে।</span>`;
+      } else if (code === "DIPU100") {
+        appliedCouponDiscount = 100;
+        msg.innerHTML = `<span style="color:#10B981;"><i class="fas fa-circle-check"></i> DIPU100 গৃহীত! ১০০ টাকা ডিসকাউন্ট যুক্ত হয়েছে।</span>`;
+      } else {
+        appliedCouponDiscount = 50;
+        msg.innerHTML = `<span style="color:#10B981;"><i class="fas fa-circle-check"></i> ${code} কুপন সফল! ৫০ টাকা ছাড়।</span>`;
+      }
+
+      document.getElementById("calcCouponRow").style.display = "flex";
+      document.getElementById("calcCouponDiscount").textContent = `-${formatBDT(appliedCouponDiscount)}`;
+      updateTotalDisplay();
+    }
+
+    function updateTotalDisplay() {
+      const discPrice = Number(currentCourse?.discountPrice) || 419;
+      const total = Math.max(0, discPrice - appliedCouponDiscount);
+      document.getElementById("calcFinalTotal").textContent = formatBDT(total);
+    }
+
+
+  </script>
+
+  <!-- React TypeScript Navbar Bundle -->
+  <script src="/js/navbar-bundle.js"></script>
+  <script src="/js/site-animations.js" defer></script>
+
+</body>
+</html>

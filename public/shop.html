@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Dipu's Books — সেরা শিক্ষার্থীদের প্রয়োজনীয় বই ও বুকশপ</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css?v=3.6">
+
+  <style>
+    :root {
+      --g: #16a34a;
+      --o: #ff7a1a;
+      --ink: #0b1020;
+      --soft: #f1f4f8;
+      --card-border: #e6eaf0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Hind Siliguri', 'Inter', system-ui, sans-serif;
+      color: var(--ink);
+      background: #090A10;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* Hero Section with Floating 3D Book Fan */
+    .hero {
+      background: radial-gradient(circle at 75% 40%, #152238, #070d18 70%);
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .hero-in {
+      max-width: 1100px;
+      margin: auto;
+      height: 380px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+    .slide.on {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+    .slide small {
+      color: #ff7a1a;
+      font-size: 18px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.5px;
+    }
+    .slide h1 {
+      font-size: clamp(28px, 4.2vw, 46px);
+      line-height: 1.2;
+      margin-top: 10px;
+      max-width: 520px;
+      font-weight: 900;
+      color: #FFFFFF;
+    }
+    .slide .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      background: var(--o);
+      color: #FFFFFF;
+      padding: 12px 28px;
+      border-radius: 99px;
+      font-weight: 800;
+      font-size: 16px;
+      transition: all 0.25s ease;
+      box-shadow: 0 8px 20px rgba(255, 122, 26, 0.35);
+    }
+    .slide .cta:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 12px 30px rgba(255, 122, 26, 0.6);
+    }
+
+    /* Floating 3D Fan of Books */
+    .fan {
+      position: relative;
+      width: 360px;
+      height: 260px;
+      perspective: 900px;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+    .fan .bk {
+      position: absolute;
+      width: 115px;
+      height: 165px;
+      border-radius: 8px;
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.65), inset 4px 0 0 rgba(255, 255, 255, 0.3);
+      animation: float 5s ease-in-out infinite;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+      transform-style: preserve-3d;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .fan .bk em {
+      font-style: normal;
+      font-size: 9px;
+      opacity: 0.85;
+      font-weight: 600;
+    }
+
+    .dots {
+      position: absolute;
+      bottom: 16px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      z-index: 10;
+    }
+    .dots i {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.25);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .dots i.on {
+      background: var(--o);
+      transform: scale(1.35);
+      box-shadow: 0 0 10px var(--o);
+    }
+
+    /* Wrap & Filter Pills */
+    .wrap {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 20px;
+    }
+
+    .search-filter-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin: 32px 0 20px;
+    }
+
+    .pills {
+      display: inline-flex;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px;
+      border-radius: 16px;
+      flex-wrap: wrap;
+    }
+    .pill {
+      padding: 10px 20px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #CBD5E1;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      font-family: inherit;
+      transition: all 0.22s ease;
+    }
+    .pill:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 122, 26, 0.15);
+      color: #FFF;
+      border-color: rgba(255, 122, 26, 0.3);
+    }
+    .pill.on {
+      background: var(--o);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(255, 122, 26, 0.4);
+    }
+
+    /* Search Box */
+    .shop-search-box {
+      position: relative;
+      min-width: 280px;
+      max-width: 360px;
+      flex: 1;
+    }
+    .shop-search-box input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 11px 16px 11px 42px;
+      color: #FFFFFF;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .shop-search-box input:focus {
+      border-color: var(--o);
+      box-shadow: 0 0 0 2px rgba(255, 122, 26, 0.25);
+    }
+    .shop-search-box i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94A3B8;
+    }
+
+    /* Section Header */
+    .sec-h {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .sec-h h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sec-h a {
+      font-weight: 700;
+      color: var(--o);
+      font-size: 14px;
+    }
+
+    /* Products Rail Grid */
+    .rail {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 28px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    .card {
+      background: #121320;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 18px;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.25s ease;
+      animation: rise 0.6s both;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      color: inherit;
+    }
+    .card:hover {
+      box-shadow: 0 22px 45px -10px rgba(0, 0, 0, 0.75), 0 0 30px rgba(255, 122, 26, 0.18);
+      border-color: rgba(255, 122, 26, 0.4);
+      transform: translateY(-6px);
+    }
+    .card.hide {
+      display: none;
+    }
+    .cover-box {
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 18px;
+      height: 220px;
+      display: grid;
+      place-items: center;
+      perspective: 700px;
+      overflow: hidden;
+      position: relative;
+    }
+    .cover {
+      width: 124px;
+      height: 175px;
+      border-radius: 6px 12px 12px 6px;
+      box-shadow: -8px 12px 22px rgba(0, 0, 0, 0.55), inset 6px 0 0 rgba(255, 255, 255, 0.25);
+      padding: 12px 10px;
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+      line-height: 1.25;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.35s ease;
+      transform: rotateY(-18deg);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .card:hover .cover {
+      transform: rotateY(0) scale(1.08);
+    }
+    .cover em {
+      font-style: normal;
+      font-size: 10px;
+      opacity: 0.9;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .card h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin: 14px 0 4px;
+      line-height: 1.3;
+    }
+    .card .meta {
+      color: #94A3B8;
+      font-size: 13px;
+    }
+    .price {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .price b {
+      font-size: 20px;
+      color: #FFFFFF;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .price s {
+      color: #64748B;
+      font-size: 13px;
+      margin-left: 6px;
+    }
+    .buy {
+      background: rgba(255, 122, 26, 0.15);
+      border: 1px solid var(--o);
+      color: var(--o);
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .card:hover .buy {
+      background: var(--o);
+      color: #FFFFFF;
+      transform: scale(1.05);
+      box-shadow: 0 4px 14px rgba(255, 122, 26, 0.4);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 800px) {
+      .hero-in { height: auto; padding: 30px 16px; flex-direction: column; text-align: center; gap: 24px; }
+      .slide { position: static; opacity: 1 !important; transform: none !important; flex-direction: column; justify-content: center; gap: 14px; display: none; }
+      .slide.on { display: flex; }
+      .fan { display: none; }
+      .slide h1 { font-size: 30px; }
+      .dots { position: static; margin-top: 12px; }
+      .search-filter-row { flex-direction: column; align-items: stretch; }
+      .shop-search-box { max-width: 100%; }
+      .rail { padding: 14px; gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- REACT NAVBAR BUNDLE MOUNT -->
+  <div id="site-navbar-root"></div>
+
+  <!-- HERO SECTION WITH 3 SLIDES & FLOATING 3D BOOK FAN -->
+  <section class="hero">
+    <div class="hero-in" id="hero">
+      
+      <!-- Slide 1: Dipu's Books Store -->
+      <div class="slide on">
+        <div>
+          <small><i class="fas fa-store"></i> Dipu's Books স্টোর</small>
+          <h1>সেরা শিক্ষার্থীদের<br><span style="color: var(--o);">প্রয়োজনীয় উপকরণ</span></h1>
+          <a class="cta" href="/book?id=book-science-bundle">
+            <span>এখনই কিনুন</span> <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+        <div class="fan">
+          <div class="bk" style="left:0;top:20px;background:#d98a2b;transform:rotate(-6deg)">
+            <em>Dipu's Books</em><span>বিজ্ঞান</span>
+          </div>
+          <div class="bk" style="left:80px;top:0;background:#2aa6b8;animation-delay:.4s">
+            <em>Dipu's Books</em><span>ICT</span>
+          </div>
+          <div class="bk" style="left:160px;top:25px;background:#3aa655;animation-delay:.8s">
+            <em>Dipu's Books</em><span>গণিত</span>
+          </div>
+          <div class="bk" style="left:40px;top:100px;background:#2f66d0;animation-delay:1.2s">
+            <em>Dipu's Books</em><span>বাংলা</span>
+          </div>
+          <div class="bk" style="left:200px;top:100px;background:#c9303b;transform:rotate(5deg);animation-delay:1.6s">
+            <em>Dipu's Books</em><span>English</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Limited Offer Bundle -->
+      <div class="slide">
+        <div>
+          <small>🔥 লিমিটেড অফার</small>
+          <h1>All-in-One Bundle এ<br><span style="color: var(--o);">২৫% স্পেশাল ছাড়</span></h1>
+          <a class="cta" href="/book?id=book-science-bundle">
+            <span>বান্ডেল দেখুন</span> <i class="fas fa-box-open"></i>
+          </a>
+        </div>
+        <div class="fan">
+          <div class="bk" style="left:100px;top:30px;width:150px;height:210px;background:linear-gradient(135deg,#ff7a1a,#c0270c)">
+            <em>Mega Set</em><span>All-in-One<br>Masterbook</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Digital E-Books -->
+      <div class="slide">
+        <div>
+          <small>⚡ ইনস্ট্যান্ট অ্যাক্সেস</small>
+          <h1>ডিজিটাল ই-বুক,<br><span style="color: #60a5fa;">সাথে সাথে ডাউনলোড</span></h1>
+          <a class="cta" href="/book?id=ebook-hsc-chemistry">
+            <span>ই-বুক দেখুন</span> <i class="fas fa-file-pdf"></i>
+          </a>
+        </div>
+        <div class="fan">
+          <div class="bk" style="left:100px;top:30px;width:150px;height:210px;background:linear-gradient(135deg,#7c5cff,#3b2bb5)">
+            <em>Smart PDF</em><span>Digital<br>E-Book</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dots">
+        <i class="on"></i><i></i><i></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CATALOG CONTENT -->
+  <main class="wrap">
+    
+    <!-- Search & Filter Controls -->
+    <div class="search-filter-row">
+      <div class="pills" id="pills">
+        <button class="pill on" data-c="all">সব</button>
+        <button class="pill" data-c="hsc">এইচএসসি</button>
+        <button class="pill" data-c="ssc">এসএসসি</button>
+        <button class="pill" data-c="8">অষ্টম শ্রেণি</button>
+        <button class="pill" data-c="7">৭ম শ্রেণি</button>
+        <button class="pill" data-c="6">ষষ্ঠ শ্রেণি</button>
+      </div>
+
+      <div class="shop-search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="shopSearchInput" placeholder="বইয়ের নাম বা বিষয় খুঁজুন...">
+      </div>
+    </div>
+
+    <div class="sec-h">
+      <h2><i class="fas fa-book-bookmark" style="color: var(--o);"></i> <span>বইয়ের সংগ্রহ</span></h2>
+      <a href="javascript:void(0)" onclick="resetFilters()">সব দেখুন ›</a>
+    </div>
+
+    <!-- Product Grid of 3D Cards -->
+    <div class="rail" id="rail"></div>
+
+  </main>
+
+  <script>
+    /* Complete Catalog of 9 Books */
+    const books = [
+      ['hsc', 'Physics Masterbook', 'HSC • ১ম ও ২য় পত্র', 450, 550, '#2563eb', 'book-hsc-physics'],
+      ['hsc', 'Higher Math Hacks', 'HSC • ফর্মুলা ও শর্টকাট', 420, 520, '#16a34a', 'book-hsc-math'],
+      ['hsc', 'Chemistry Masterbook', 'HSC • সম্পূর্ণ সমাধান', 430, 530, '#0d9488', 'ebook-hsc-chemistry'],
+      ['hsc', 'All-in-One Bundle', 'HSC • ১ম থেকে ২য় বর্ষ', 1200, 1600, '#ff7a1a', 'book-science-bundle'],
+      ['ssc', 'SSC সাধারণ গণিত', 'SSC • মাস্টার বুক', 320, 400, '#3aa655', 'book-ssc-science'],
+      ['ssc', 'SSC ইংরেজি', 'SSC • Grammar & Writing', 300, 380, '#c9303b', 'book-english-grammar'],
+      ['8', 'অষ্টম শ্রেণি বিজ্ঞান', '৮ম শ্রেণি • মাস্টার বুক', 280, 350, '#d98a2b', 'book-class8-kit'],
+      ['7', '৭ম শ্রেণি বাংলা', '৭ম শ্রেণি • মাস্টার বুক', 260, 330, '#2f66d0', 'book-class7-bangla'],
+      ['6', 'ষষ্ঠ শ্রেণি ICT', '৬ষ্ঠ শ্রেণি • মাস্টার বুক', 240, 300, '#7c5cff', 'book-class6-ict']
+    ];
+
+    const rail = document.getElementById('rail');
+    rail.innerHTML = books.map((b, i) => `
+      <a href="/book?id=${b[6]}" class="card" data-c="${b[0]}" style="animation-delay:${i * 0.06}s">
+        <div class="cover-box">
+          <div class="cover" style="background:linear-gradient(135deg, ${b[5]}, #0b1020 160%)">
+            <em>Dipu's Books</em>
+            <span>${b[1]}</span>
+            <em>MASTER BOOK</em>
+          </div>
+        </div>
+        <div>
+          <h3>${b[1]}</h3>
+          <div class="meta">${b[2]}</div>
+        </div>
+        <div class="price">
+          <div><b>৳${b[3]}</b><s>৳${b[4]}</s></div>
+          <span class="buy">কিনুন ›</span>
+        </div>
+      </a>
+    `).join('');
+
+    /* Category Filter */
+    document.getElementById('pills').onclick = e => {
+      const p = e.target.closest('.pill');
+      if (!p) return;
+      document.querySelectorAll('.pill').forEach(x => x.classList.toggle('on', x === p));
+      document.querySelectorAll('.card').forEach(c => c.classList.toggle('hide', p.dataset.c !== 'all' && c.dataset.c !== p.dataset.c));
+    };
+
+    function resetFilters() {
+      const allPill = document.querySelector('.pill[data-c="all"]');
+      if (allPill) allPill.click();
+    }
+
+    /* Live Search */
+    document.getElementById('shopSearchInput')?.addEventListener('input', e => {
+      const q = e.target.value.toLowerCase().trim();
+      document.querySelectorAll('.card').forEach(c => {
+        const text = c.textContent.toLowerCase();
+        c.classList.toggle('hide', q.length > 0 && !text.includes(q));
+      });
+    });
+
+    /* 3D tilt on cards */
+    rail.addEventListener('mousemove', e => {
+      const c = e.target.closest('.card');
+      if (!c) return;
+      const r = c.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      c.style.transform = `perspective(800px) rotateX(${-y * 8}deg) rotateY(${x * 10}deg) translateY(-6px)`;
+    });
+    rail.addEventListener('mouseout', e => {
+      const c = e.target.closest('.card');
+      if (c) c.style.transform = '';
+    });
+
+    /* Hero slider controller */
+    const sl = [...document.querySelectorAll('.slide')];
+    const dt = [...document.querySelectorAll('.dots i')];
+    let n = 0, t;
+
+    const go = i => {
+      n = (i + sl.length) % sl.length;
+      sl.forEach((s, k) => s.classList.toggle('on', k === n));
+      dt.forEach((d, k) => d.classList.toggle('on', k === n));
+    };
+
+    const auto = () => {
+      clearInterval(t);
+      t = setInterval(() => go(n + 1), 4500);
+    };
+
+    dt.forEach((d, i) => d.onclick = () => { go(i); auto(); });
+    go(0);
+    auto();
+  </script>
+
+  <!-- React TypeScript Navbar Bundle & Global Animations Engine -->
+  <script src="/js/navbar-bundle.js"></script>
+  <script src="/js/site-animations.js" defer></script>
+</body>
+</html>

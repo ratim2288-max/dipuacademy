@@ -1,0 +1,213 @@
+/* ==============================================================================
+   OTP Verification DECK — Component Styling (Matching Screenshot Aesthetic)
+   ============================================================================== */
+
+/* Mac Window Bar */
+.mac-window-bar {
+  background: rgba(14, 17, 23, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  position: relative;
+  z-index: 50;
+}
+
+/* Component Badge */
+.component-badge {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: #94A3B8;
+  text-transform: uppercase;
+}
+
+.gradient-deck-text {
+  background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 50%, #EC4899 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Main Floating Glass Deck Card */
+.otp-deck-card {
+  background: rgba(18, 22, 31, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  padding: 2.25rem 2rem;
+  width: 100%;
+  max-width: 440px;
+  position: relative;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(167, 139, 250, 0.12);
+  backdrop-filter: blur(28px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.otp-deck-card:hover {
+  border-color: rgba(167, 139, 250, 0.3);
+  box-shadow: 0 35px 70px rgba(0, 0, 0, 0.9), 0 0 50px rgba(167, 139, 250, 0.2);
+}
+
+.card-handle-pill {
+  width: 40px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  margin: -0.75rem auto 1.5rem auto;
+}
+
+/* 6-Slot Interactive OTP Input Deck */
+.otp-slots-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+}
+
+.otp-slot-box {
+  width: 48px;
+  height: 56px;
+  background: rgba(8, 10, 15, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: #FFFFFF;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: text;
+}
+.otp-slot-box.active {
+  border-color: rgba(96, 165, 250, 0.6);
+  background: rgba(96, 165, 250, 0.08);
+  box-shadow: 0 0 14px rgba(96, 165, 250, 0.25);
+}
+.otp-slot-box.focused {
+  border-color: #A78BFA;
+  box-shadow: 0 0 18px rgba(167, 139, 250, 0.45);
+  transform: scale(1.05);
+}
+
+.hidden-otp-receiver {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: text;
+}
+
+/* Animated Center Glowing Square */
+.loading-square-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.animated-glowing-square {
+  position: relative;
+  width: 76px;
+  height: 76px;
+}
+
+.square-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.bg-rect {
+  fill: rgba(14, 18, 27, 0.8);
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 2;
+}
+
+.glow-rect {
+  fill: transparent;
+  stroke: url(#cyanPurpleGradient);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 60 180;
+  stroke-dashoffset: 0;
+  animation: rotateStroke 2.2s linear infinite;
+  filter: drop-shadow(0 0 8px #22D3EE);
+}
+
+@keyframes rotateStroke {
+  0% {
+    stroke-dashoffset: 0;
+    stroke: #22D3EE;
+  }
+  50% {
+    stroke-dashoffset: -120;
+    stroke: #A78BFA;
+  }
+  100% {
+    stroke-dashoffset: -240;
+    stroke: #22D3EE;
+  }
+}
+
+.pulse-spark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, #22D3EE 0%, rgba(34, 211, 238, 0) 70%);
+  animation: pulseSpark 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseSpark {
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.4; }
+  50% { transform: translate(-50%, -50%) scale(1.6); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.4; }
+}
+
+/* Primary Button */
+.btn-deck-primary {
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
+  color: #FFFFFF;
+  font-weight: 700;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-size: 13px;
+}
+.btn-deck-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.5);
+}
+
+/* Bottom Code Inspector Cards */
+.code-inspector-card {
+  background: rgba(12, 15, 22, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.inspector-header {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+}
+
+.inspector-code {
+  padding: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #94A3B8;
+  overflow-x: auto;
+}
+.inspector-code code {
+  color: #A5B4FC;
+}

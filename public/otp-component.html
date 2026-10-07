@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTP Input Component (React + Motion + TSX) — Dipu's Edu</title>
+  
+  <!-- Tailwind CSS CDN for exact TSX utility class fidelity -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            void: '#08090E',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    body {
+      background-color: #08090E;
+      color: #F8FAFC;
+      font-family: 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .ambient-glow-top {
+      position: fixed;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(255, 122, 26, 0.2) 0%, rgba(255, 179, 71, 0.08) 50%, transparent 70%);
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .grid-bg-overlay {
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.7;
+    }
+    .glass-card-stage {
+      background: rgba(21, 21, 28, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 1.5rem;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 122, 26, 0.15);
+    }
+  </style>
+</head>
+<body class="dark flex flex-col justify-between relative selection:bg-orange-500/30 selection:text-orange-200">
+
+  <div class="ambient-glow-top"></div>
+  <div class="grid-bg-overlay"></div>
+
+  <!-- Top Navigation Bar -->
+  <header class="relative z-20 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl px-6 py-3.5">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="/" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-full transition">
+          <i class="fas fa-arrow-left"></i> Home
+        </a>
+        <div class="flex items-center gap-2 font-bold text-sm text-white">
+          <i class="fas fa-graduation-cap text-orange-400"></i>
+          <span>Dipu's Edu — <span class="text-orange-400">components/ui/otp-input.tsx</span></span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
+        <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          React 19 + Motion
+        </span>
+        <span class="hidden sm:inline-block px-2.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 font-bold">
+          TypeScript (0 Errors)
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Stage -->
+  <main class="relative z-10 max-w-4xl mx-auto w-full px-6 py-12 flex-1 flex flex-col items-center justify-center">
+    
+    <!-- Title & Badge -->
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-400 text-xs font-mono mb-3">
+        <i class="fas fa-sparkles"></i> INTERACTIVE COMPONENT SHOWCASE
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight mb-2">
+        Accessible OTP Input Component
+      </h1>
+      <p class="text-sm text-slate-400 max-w-md mx-auto">
+        Loaded from <code class="text-amber-300 bg-orange-950/40 px-1.5 py-0.5 rounded text-xs font-mono">components/ui/demo.tsx</code> with Spring physics crossfade & character shake animations.
+      </p>
+    </div>
+
+    <!-- Live React Mount Container Card -->
+    <div class="glass-card-stage p-8 sm:p-12 w-full max-w-lg mx-auto text-center relative overflow-hidden">
+      
+      <!-- Top Card Header -->
+      <div class="flex items-center justify-between text-xs text-slate-400 border-b border-white/10 pb-4 mb-6">
+        <span class="font-mono text-slate-400 flex items-center gap-2">
+          <i class="fas fa-shield-halved text-orange-400"></i> Verification Code
+        </span>
+        <span class="font-mono text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 text-[11px]">
+          Target: 204815
+        </span>
+      </div>
+
+      <!-- React Root Mount Target -->
+      <div id="root" class="min-h-[140px] flex items-center justify-center">
+        <!-- React renders OtpInputDemo here -->
+        <div class="text-xs text-slate-500 font-mono animate-pulse">
+          Loading React Motion Component...
+        </div>
+      </div>
+
+      <!-- Hints & Instructions -->
+      <div class="mt-8 pt-6 border-t border-white/10 text-xs text-slate-400 flex flex-col gap-2">
+        <div class="flex items-center justify-center gap-1.5 text-slate-300">
+          <i class="fas fa-keyboard text-orange-400"></i>
+          <span>Type <strong class="text-emerald-400 font-mono">204815</strong> for success, or any random numbers to test error shake.</span>
+        </div>
+        <div class="text-[11px] text-slate-500">
+          Supports paste (<kbd class="bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">Ctrl+V</kbd>), arrow keys, and auto-focus next cell.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Features Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl mt-12">
+      <div class="p-4 rounded-xl bg-slate-900/60 border border-white/5 text-left">
+        <div class="w-8 h-8 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center text-sm mb-2">
+          <i class="fas fa-bezier-curve"></i>
+        </div>
+        <h4 class="text-xs font-bold text-white mb-1">Spring Physics</h4>
+        <p class="text-[11px] text-slate-400 leading-relaxed">
+          Driven by Motion (Stiffness 260, Damping 34) for springy cell focus and exit blurs.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-xl bg-slate-900/60 border border-white/5 text-left">
+        <div class="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-sm mb-2">
+          <i class="fas fa-universal-access"></i>
+        </div>
+        <h4 class="text-xs font-bold text-white mb-1">Full Accessibility</h4>
+        <p class="text-[11px] text-slate-400 leading-relaxed">
+          Screen reader status announcements, ARIA labels per cell, and reduced-motion detection.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-xl bg-slate-900/60 border border-white/5 text-left">
+        <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-sm mb-2">
+          <i class="fas fa-bolt"></i>
+        </div>
+        <h4 class="text-xs font-bold text-white mb-1">Clean TypeScript</h4>
+        <p class="text-[11px] text-slate-400 leading-relaxed">
+          100% type safety with zero lint errors, verified via strict tsc compilation.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="relative z-20 border-t border-white/5 py-4 text-center text-xs text-slate-500">
+    Dipu's Edu Architecture • Live Localhost UI Component Preview
+  </footer>
+
+  <!-- Compiled React Component Bundle (Generated from components/ui/mount.tsx) -->
+  <script src="/js/otp-react-bundle.js"></script>
+</body>
+</html>

@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Depus AI – ৫ থেকে ১২ ক্লাসের সব সমাধান | Class 5–12 Solutions | Dipu's Edu</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a6f76a'><path d='M12 2L1 7l11 5 9-4.09V17h2V7L12 2z'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--ink:#0f110f;--deep:#2f5a2a;--mint:#a6f76a;--pale:#dcfbe9;--text:#0b2b21;--mute:#6b7f77;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box;margin:0}
+body{background:#0f110f;color:#e8ede9;font-family:Inter,"Hind Siliguri",system-ui,sans-serif;line-height:1.5}
+.bn{display:block;font-family:"Hind Siliguri",Inter,sans-serif}
+.en{display:block;font-family:Inter,sans-serif;opacity:.72;font-size:.62em;font-weight:500;margin-top:.15em;line-height:1.25}
+.hero .en,.sol .en{opacity:.6}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--mint);outline-offset:3px}
+
+/* hero */
+.hero{position:relative;min-height:100vh;background:radial-gradient(circle at 4% 0%,rgba(184,234,0,.6),transparent 34%),radial-gradient(circle at 100% 100%,rgba(184,234,0,.35),transparent 34%),#121412;color:#fff;overflow:hidden;text-align:center;padding:0 20px 80px}
+.arc{position:absolute;left:50%;width:150%;aspect-ratio:2/1;transform:translateX(-50%);border:2px solid rgba(166,247,106,.45);border-radius:50%;box-shadow:0 0 60px rgba(166,247,106,.25),inset 0 0 60px rgba(166,247,106,.1);pointer-events:none}
+.arc.a{top:-8%;border-top-color:transparent;border-left-color:transparent;border-right-color:transparent}
+.arc.b{bottom:-52%;border-bottom-color:transparent;border-left-color:transparent;border-right-color:transparent;animation:pulse 5s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 110px rgba(166,247,106,.6),inset 0 0 70px rgba(166,247,106,.25)}}
+
+nav{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:22px 0;gap:12px}
+.logo{font-weight:800;letter-spacing:.02em;font-size:20px;display:flex;align-items:center;gap:6px}.logo i{color:var(--mint);font-style:normal}
+.pill{display:flex;gap:4px;padding:5px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(30,33,30,.85);backdrop-filter:blur(8px)}
+.pill a{padding:7px 14px;border-radius:8px;font-size:13px;color:#cfe;line-height:1.2;text-align:center;transition:background .2s}.pill a:hover{background:rgba(255,255,255,.1)}
+.pill .en{font-size:10px}
+.btn{display:inline-block;background:var(--mint);color:#0b1a06;border-radius:10px;padding:9px 18px;font-weight:700;font-size:14px;line-height:1.2;text-align:center;border:0;cursor:pointer;transition:transform .18s,box-shadow .18s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(166,247,106,.35)}
+.btn .en{font-size:10px;opacity:.8}
+.btn.g{background:linear-gradient(135deg,#1c8a62,var(--mint));color:#02150d}
+.btn.outline{background:rgba(255,255,255,0.06);color:#fff;border:1px solid rgba(255,255,255,0.18)}
+.btn.outline:hover{background:rgba(255,255,255,0.12);box-shadow:none}
+
+.stage{position:relative;z-index:2;width:min(540px,94vw);height:min(450px,78vw);margin:10px auto 0}
+.stage canvas{width:100%;height:100%;display:block}
+.tilt{transform-style:preserve-3d;transition:transform .15s ease-out,background .2s;will-change:transform}
+.cards,.grid{perspective:900px}
+h1{position:relative;z-index:2;font-size:clamp(38px,7.5vw,84px);line-height:1.1;font-weight:700;letter-spacing:-.02em;color:#e6efeb}
+h1 .en{font-size:.62em;opacity:1;margin-top:.1em;font-weight:600}
+@keyframes in{from{filter:blur(14px);opacity:0}to{filter:none;opacity:1}}
+.sub{position:relative;z-index:2;max-width:580px;margin:22px auto 30px;color:#b9cbc3;font-size:17px}
+.sub .en{font-size:14px}
+.cards{position:relative;z-index:2;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:56px}
+.cards div{width:170px;padding:16px 10px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.02));font-size:14px;color:#dff}
+.cards b{display:block;font-size:20px;color:var(--mint)}
+.cards .en{font-size:11px}
+.prel{position:relative;z-index:2;margin-top:70px;color:#9fb5ac;font-size:13px}
+
+/* sections */
+.sec{padding:100px 20px;text-align:center;background:#141614;color:#e8ede9}
+.tag{display:inline-block;border:1px solid #3a4a40;color:var(--mint);border-radius:99px;padding:4px 16px;font-size:12px;font-weight:700;line-height:1.3;margin-bottom:18px}
+.tag .en{font-size:10px}
+h2{font-size:clamp(32px,5.5vw,56px);line-height:1.15;font-weight:700;color:#fff;max-width:820px;margin:0 auto}
+h2 em{font-style:normal;color:var(--mint)}
+h2 .en{color:#fff;opacity:.75;font-size:.58em}
+.lead{max-width:620px;margin:20px auto 0;color:#9aa6a0;font-size:16px}
+.lead .en{font-size:13px}
+
+/* verify dk flow */
+.dk{background:var(--ink);color:#fff;padding:110px 20px 140px;text-align:center}
+.dk h2{color:#fff}.dk h2 .en{color:#fff}
+.cy{display:inline-block;transition:opacity .35s,filter .35s}.cy.sw{opacity:0;filter:blur(8px)}
+.flow{display:flex;justify-content:center;align-items:flex-start;max-width:920px;margin:64px auto 0;flex-wrap:wrap;row-gap:30px}
+.node{width:220px;padding:0 10px;font-size:14px;color:#b9cbc3}
+.node .en{font-size:12px}
+.box{width:68px;height:68px;margin:0 auto 14px;border-radius:18px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);display:grid;place-items:center;color:var(--mint);font-size:28px;font-weight:700;box-shadow:0 0 30px rgba(166,247,106,.15)}
+.ln{flex:0 0 70px;height:1px;background:linear-gradient(90deg,transparent,rgba(166,247,106,.7),transparent);margin-top:34px}
+@media(max-width:760px){.ln{display:none}}
+.node{perspective:600px}.box{animation:sway 5s ease-in-out infinite;transform-style:preserve-3d}
+.node:nth-of-type(3) .box{animation-delay:-1.6s}.node:nth-of-type(5) .box{animation-delay:-3.2s}
+@keyframes sway{0%,100%{transform:rotateY(-28deg) rotateX(12deg)}50%{transform:rotateY(28deg) rotateX(-8deg) translateZ(14px)}}
+
+/* problem */
+#problem{background:#141614;position:relative;border-radius:28px 28px 0 0;margin-top:-28px;z-index:3;border-top:1px solid rgba(255,255,255,.06)}
+.panel{display:grid;grid-template-columns:1fr 1fr;max-width:1080px;margin:56px auto 0;border-radius:26px;overflow:hidden;text-align:left;min-height:340px}
+.pl{background:radial-gradient(circle at 50% 50%,#2f4d25,#111610);display:grid;place-items:center;color:#fff;font-size:30px;font-weight:700;padding:30px;text-align:center;position:relative;overflow:hidden}
+.pl .en{font-size:15px;opacity:.8}
+.fc{position:absolute;width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:20px;font-weight:700;font-style:normal;color:var(--mint);background:rgba(255,255,255,.07);border:1px solid rgba(166,247,106,.35);box-shadow:0 10px 30px rgba(0,0,0,.4);animation:fl 6s ease-in-out infinite;z-index:0}
+.fc1{left:11%;top:15%}.fc2{right:11%;top:25%;animation-delay:-2s}.fc3{left:19%;bottom:15%;animation-delay:-4s}
+.pr{background:rgba(255,255,255,.06);padding:30px;display:flex;flex-direction:column;justify-content:center;gap:14px}
+.pb{display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:18px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));font-size:17px;color:#f1f5f2;line-height:1.3;transition:border-color .25s,box-shadow .25s,transform .25s;position:relative;overflow:hidden;animation:bobc 4.6s ease-in-out infinite}
+.pb:nth-child(2){animation-delay:-1.5s}.pb:nth-child(3){animation-delay:-3s}
+@keyframes bobc{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.pb:hover{border-color:rgba(166,247,106,.5);box-shadow:0 0 30px rgba(166,247,106,.15);transform:translateX(6px)}
+.pb .en{font-size:13px;opacity:.65}
+.ic{flex:0 0 48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:22px;font-weight:700;font-style:normal;color:#ff8a80;background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.4);animation:wig 3.6s ease-in-out infinite;position:relative}
+.pb:nth-child(2) .ic{animation-delay:-1.2s}.pb:nth-child(3) .ic{animation-delay:-2.4s}
+@keyframes wig{0%,84%,100%{transform:rotate(0)}88%{transform:rotate(-12deg)}92%{transform:rotate(10deg)}96%{transform:rotate(-5deg)}}
+
+/* interactive ask section */
+#ask{background:radial-gradient(circle at 100% 0,rgba(184,234,0,.16),transparent 42%),#141614;padding:90px 20px}
+.ask{max-width:820px;margin:44px auto 0;text-align:left;background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:28px;box-shadow:0 30px 60px -30px rgba(0,0,0,.7);backdrop-filter:blur(10px)}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.lab{font-size:13px;color:#9aa6a0;margin-bottom:8px;font-weight:600}.lab .en{font-size:11px}
+.chp{border:1px solid #3a4a40;background:#1b1e1b;color:#d8e2db;border-radius:99px;padding:7px 16px;cursor:pointer;font:inherit;font-size:14px;line-height:1.2;text-align:center;transition:all .2s}
+.chp .en{font-size:10px;margin:0}.chp:hover{background:#26301f;border-color:var(--mint)}
+.chp.on{background:var(--mint);color:#0b1a06;border-color:var(--mint);font-weight:700}
+.ask textarea{width:100%;min-height:120px;border:1px solid #3a4a40;border-radius:14px;padding:16px;font:inherit;font-size:16px;resize:vertical;background:#1b1e1b;color:#f1f5f2;transition:border-color .2s;outline:none}
+.ask textarea:focus{border-color:var(--mint);box-shadow:0 0 0 3px rgba(166,247,106,.2)}
+.bar{display:flex;align-items:center;gap:14px;margin-top:14px;flex-wrap:wrap}
+.bar .btn{padding:12px 26px}.bar .btn:disabled{opacity:.55;cursor:wait}
+#st{font-size:13px;color:#9aa6a0}
+.ans{white-space:pre-wrap;line-height:1.8;font-size:15px;background:#1b1e1b;color:#f1f5f2;border:0 solid #3a4a40;border-radius:14px;max-height:0;overflow:auto;padding:0 18px;margin-top:0;transition:max-height .5s,padding .5s,margin .5s}
+.ans.show{max-height:560px;padding:20px;margin-top:18px;border-width:1px;border-color:rgba(166,247,106,.4);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+
+/* solution band */
+.sol{background:radial-gradient(circle at 0 20%,rgba(184,234,0,.14),transparent 40%),#141614;padding:100px 0 0;text-align:center}
+.band{background:linear-gradient(90deg,#2a4d25,#3f7a35);margin-top:56px;padding:70px 20px;color:#fff;position:relative;overflow:hidden}
+.band::before{content:"";position:absolute;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(166,247,106,.35),transparent 65%);left:4%;top:-35%;animation:drift 9s ease-in-out infinite alternate;pointer-events:none}
+@keyframes drift{to{transform:translate(180px,140px)}}
+.bw{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;text-align:left;position:relative}
+.word{font-size:clamp(34px,6vw,60px);font-weight:700;color:var(--mint);text-align:right;transition:opacity .35s,filter .35s;min-height:1.6em;display:flex;flex-direction:column;justify-content:center;align-items:flex-end}
+.word .en{color:var(--mint);opacity:.8;font-size:.45em}
+.word.sw{opacity:0;filter:blur(8px)}
+.item{display:flex;align-items:center;gap:16px;padding:16px 18px;margin-bottom:12px;border-radius:18px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.2);backdrop-filter:blur(6px);opacity:.6;position:relative;overflow:hidden;transition:all .35s;cursor:pointer;width:100%;border:0;color:inherit;text-align:left}
+.item::before{content:"";position:absolute;left:0;bottom:0;width:0;height:3px;background:var(--mint)}
+.item.on::before{animation:prog 3s linear forwards}
+@keyframes prog{to{width:100%}}
+.item.on{opacity:1;border-color:rgba(166,247,106,.65);background:rgba(166,247,106,.13);box-shadow:0 0 34px rgba(166,247,106,.2);transform:translateX(-8px) scale(1.02)}
+.item:hover{opacity:1}
+.ib{flex:0 0 52px;height:52px;border-radius:14px;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:19px;color:var(--mint);background:rgba(166,247,106,.16);border:1px solid rgba(166,247,106,.4);transition:background .4s,color .4s}
+.item.on .ib{background:var(--mint);color:#0b1a06}
+.it{min-width:0}
+.item strong{font-size:19px;color:var(--mint);font-weight:700;display:block}
+.item span.d{color:#bfe3d1;font-size:14px;display:block}
+
+/* pricing section */
+.pr3{--lime:#a6f76a;position:relative;background:#101311;color:#fff;padding:110px 20px;overflow:hidden;text-align:center}
+.pr3 h2,.pr3 h2 .en{color:#fff}.pr3 .lead{color:#9aa6a0}.pr3 .tag{border-color:#3a4a40;color:var(--lime)}
+.blob{position:absolute;border-radius:50%;filter:blur(30px);pointer-events:none}
+.b1{width:420px;height:420px;left:-150px;top:-130px;background:radial-gradient(circle,#b8ea00,transparent 68%)}
+.b2{width:460px;height:460px;right:-170px;bottom:-170px;background:radial-gradient(circle,#b8ea00,transparent 68%)}
+.ring{position:absolute;border:1px solid rgba(166,247,106,.35);border-radius:50%;width:150px;height:150px;right:6%;bottom:14%;pointer-events:none}
+.x{position:absolute;width:64px;height:64px;pointer-events:none;animation:fl 7s ease-in-out infinite}
+.x::before,.x::after{content:"";position:absolute;background:linear-gradient(135deg,#355230,#1a2818);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.x::before{left:0;right:0;top:22px;height:20px}.x::after{top:0;bottom:0;left:22px;width:20px}
+.x1{left:7%;top:48%}.x2{right:9%;top:22%;width:44px;height:44px;animation-delay:-3s}.x2::before{top:15px;height:14px}.x2::after{left:15px;width:14px}
+@keyframes fl{0%,100%{transform:perspective(500px) rotateX(20deg) rotateY(-30deg) translateY(0)}50%{transform:perspective(500px) rotateX(-20deg) rotateY(40deg) translateY(-18px)}}
+
+.plans{display:flex;justify-content:center;align-items:center;gap:20px;max-width:1000px;margin:56px auto 0;flex-wrap:wrap;position:relative;z-index:2}
+.plan{width:300px;perspective:900px}
+.pc{background:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.1);border-radius:26px;padding:28px;text-align:left;min-height:360px;display:flex;flex-direction:column;transition:transform .15s ease-out;backdrop-filter:blur(10px)}
+.plan.rec .pc{min-height:420px;border-color:rgba(166,247,106,.6);box-shadow:0 0 60px rgba(166,247,106,.25)}
+.nm{color:var(--lime);font-weight:700;font-size:18px}
+.pv{font-size:44px;font-weight:800;margin:8px 0 2px;line-height:1.15}.pv small{font-size:17px;color:#a8b3ad;font-weight:500}
+.pv .en{font-size:14px;font-weight:500;color:#a8b3ad;opacity:1;margin-top:2px}
+.ft{margin:18px 0 22px;padding:0;list-style:none;display:grid;gap:13px;font-size:14px;color:#d3dcd7}
+.ft li{position:relative;padding-left:28px}
+.ft li::before{content:"✓";position:absolute;left:0;top:2px;width:18px;height:18px;border-radius:50%;border:1px solid #6a756f;font-size:10px;display:grid;place-items:center;color:#a8b3ad}
+.ft .en{font-size:12px}
+.ft-t{font-size:14px;color:#fff;font-weight:700}.ft-t .en{font-size:11px;opacity:.6}
+.btn.l{background:var(--lime);color:#0b1a06;margin-top:auto;padding:12px 18px;border-radius:12px;font-weight:800}
+.rb{margin-top:12px;align-self:center;background:rgba(166,247,106,.18);color:var(--lime);border-radius:99px;padding:7px 24px;font-weight:700;font-size:13px;text-align:center;line-height:1.2}
+.rb .en{font-size:10px}
+
+/* premium 5 benefits */
+.prem{position:relative;z-index:2;max-width:980px;margin:56px auto 0;text-align:left}
+.prem .nm{font-size:20px;text-align:center;margin-bottom:22px}.prem .nm .en{font-size:13px;color:#9aa6a0}
+.bens{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.ben{border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px 14px;background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));text-align:center;font-size:14px;color:#e8ede9;line-height:1.35}
+.ben .en{font-size:12px;color:#a8b3ad;opacity:1}
+.ben i{display:grid;place-items:center;width:52px;height:52px;margin:0 auto 14px;border-radius:14px;background:rgba(166,247,106,.14);border:1px solid rgba(166,247,106,.4);color:var(--mint);font-style:normal;font-weight:800;font-size:20px}
+@media(max-width:900px){.bens{grid-template-columns:repeat(2,1fr)}}
+
+.deal{position:relative;z-index:2;max-width:980px;margin:34px auto 0;border-radius:99px;background:linear-gradient(90deg,#2f6a2b,#4c8d3c);display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 16px 14px 34px;text-align:left;font-weight:700;font-size:20px;line-height:1.25}
+.deal .en{font-size:13px;font-weight:500;opacity:.8}
+@media(max-width:760px){.deal{flex-direction:column;border-radius:26px;text-align:center;padding:22px}.x{display:none}}
+
+/* checkout modal view */
+.view{position:fixed;inset:0;z-index:100;background:radial-gradient(circle at 0 0,rgba(184,234,0,.25),transparent 40%),radial-gradient(circle at 100% 100%,rgba(184,234,0,.18),transparent 40%),#0f110f;overflow:auto;color:#fff;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+.view.show{animation:vin .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes vin{from{opacity:0;transform:translateY(28px) scale(.98)}}
+.vw{max-width:980px;margin:0 auto;padding:24px 20px 60px}
+.back{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);color:#fff;border-radius:12px;padding:8px 16px;cursor:pointer;font:inherit;font-size:14px;line-height:1.2;transition:background .2s}
+.back:hover{background:rgba(255,255,255,.14)}
+.vt{color:#fff;font-size:clamp(26px,4vw,40px);margin:20px 0 26px;font-weight:800;text-align:left;max-width:none}.vt .en{color:#fff;font-size:.5em}
+.co{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:start}
+.card{border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:24px;background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));backdrop-filter:blur(8px);text-align:left}
+.fd{display:block;margin-bottom:16px;font-size:14px;color:#dfe7e2}.fd .en{font-size:11px;opacity:.6;margin:0 0 6px}
+.fd input,.fd select{width:100%;background:#1b1e1b;border:1px solid #3a4a40;border-radius:12px;padding:13px 14px;color:#fff;font:inherit;font-size:16px;outline:none}
+.fd input:focus,.fd select:focus{border-color:var(--mint);box-shadow:0 0 0 3px rgba(166,247,106,.18)}
+.er{color:#ff8a80;font-size:12px;display:block;margin-top:5px}
+.pm{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.pmo{border:1px solid #3a4a40;background:#1b1e1b;color:#e8ede9;border-radius:14px;padding:14px;font:inherit;font-weight:700;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:10px}
+.pmo i{width:12px;height:12px;border-radius:50%;background:var(--c)}
+.pmo.on{border-color:var(--mint);background:rgba(166,247,106,.12);box-shadow:0 0 22px rgba(166,247,106,.2)}
+.sum .nm{color:var(--mint);font-weight:700;margin-bottom:8px}.sum .nm .en,.next .nm .en{font-size:12px;color:#9aa6a0}
+.sr{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px;color:#cfd8d3;text-align:left}
+.sr b{color:#fff;text-align:right;font-weight:700}.sr .en{font-size:11px;opacity:.6}.sr b .en{opacity:.6;color:#cfd8d3}
+.tot{font-size:24px;color:var(--mint)!important}.tot .en{font-size:12px}
+.big{width:100%;padding:15px;font-size:16px;margin-top:18px;border-radius:14px;font-weight:800}.big:disabled{opacity:.6;cursor:wait}
+.demo{font-size:12px;color:#8d9a93;margin-top:12px;text-align:center}
+
+/* order confirmed */
+.ok{text-align:center;max-width:640px}
+.tw{position:relative;width:110px;height:110px;margin:30px auto 8px;filter:drop-shadow(0 0 18px rgba(166,247,106,.6))}
+.tw::before,.tw::after{content:"";position:absolute;inset:6px;border-radius:50%;border:1px solid rgba(166,247,106,.6);animation:ping 2.4s ease-out infinite}.tw::after{animation-delay:-1.2s}
+.tick{width:110px;height:110px;display:block;position:relative}
+.tc{fill:rgba(166,247,106,.12);stroke:var(--mint);stroke-width:3;stroke-dasharray:214;stroke-dashoffset:214;animation:dr .8s ease forwards}
+.tp{fill:none;stroke:var(--mint);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:dr .5s ease .7s forwards}
+@keyframes dr{to{stroke-dashoffset:0}}
+.ok .lead{margin:6px auto 26px;color:#b9c6bf}.ok .lead .en{font-size:13px}
+.rec,.next{margin-bottom:16px}
+.rec .sr{animation:fu .5s ease both}
+@keyframes fu{from{opacity:0;transform:translateY(14px)}}
+.stp{display:flex;gap:14px;align-items:center;padding:12px 0;text-align:left;font-size:15px;animation:fu .6s ease both}
+.stp b{flex:0 0 34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--mint);color:#0b1a06;font-weight:800}
+.stp .en{font-size:12px;opacity:.65}
+
+/* confetti */
+.conf{position:fixed;inset:0;pointer-events:none;overflow:hidden;perspective:600px;z-index:101}
+.conf i{position:absolute;top:0;width:8px;height:14px;border-radius:2px;animation:cf var(--t,3.5s) cubic-bezier(.3,.6,.4,1) var(--dl,0s) both}
+@keyframes cf{from{transform:translate3d(0,-10vh,0) rotateX(0) rotateY(0);opacity:1}to{transform:translate3d(var(--dx,0),110vh,0) rotateX(720deg) rotateY(540deg);opacity:.9}}
+
+/* footer */
+footer{background:var(--ink);color:#9fb5ac;text-align:center;padding:60px 20px 40px;font-size:14px;border-top:1px solid rgba(255,255,255,.08)}
+footer .logo{color:#fff;margin-bottom:10px;justify-content:center}
+footer a:hover{color:var(--mint)}
+
+/* scroll animation triggers */
+.w{display:inline-block;opacity:.1;filter:blur(12px);transform:translateY(8px);transition:opacity .5s ease,filter .5s ease,transform .5s ease}
+.w.on{opacity:1;filter:none;transform:none}
+.sd{opacity:0;filter:blur(8px);transform:translate(var(--x,0),var(--y,0));transition:opacity .8s ease,filter .8s ease,transform .9s cubic-bezier(.2,.8,.2,1);transition-delay:var(--td,0s)}
+.sd.in{opacity:1;filter:none;transform:none}
+
+@media(max-width:760px){
+  .pill{display:none}
+  .panel,.bw,.co{grid-template-columns:1fr}
+  .word{text-align:center;align-items:center;min-height:auto}
+  .hero{padding-bottom:50px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .sd{opacity:1;filter:none;transform:none}
+  .w{opacity:1;filter:none;transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="arc a"></div><div class="arc b"></div>
+  <nav class="fi" style="--d:0s">
+    <a class="logo" href="/ai">
+      <i class="fas fa-robot"></i>
+      <span>Depus <i>AI</i></span>
+    </a>
+    <div class="pill">
+      <a href="#home"><span class="bn">হোম</span><span class="en">Home</span></a>
+      <a href="#ask"><span class="bn">লাইভ ডেমো</span><span class="en">Live Demo</span></a>
+      <a href="#how"><span class="bn">কীভাবে কাজ করে</span><span class="en">How it works</span></a>
+      <a href="#pricing"><span class="bn">প্রাইস</span><span class="en">Pricing</span></a>
+      <a href="/" style="color:var(--mint);"><span class="bn">মূল ওয়েবসাইট</span><span class="en">Main Site</span></a>
+    </div>
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <a class="btn outline" href="/"><span class="bn">মূল সাইট</span><span class="en">Back Home</span></a>
+      <a class="btn g" href="#pricing"><span class="bn">শুরু করুন</span><span class="en">Get Started</span></a>
+    </div>
+  </nav>
+
+  <div class="stage fi" id="home" style="--d:.3s"><canvas id="gl" aria-label="3D Depus AI"></canvas></div>
+  <h1 class="wr load"><span class="bn">বিশ্বাস করে শেখো</span><span class="en">Learn it. Solve it. Trust it.</span></h1>
+  <p class="sub wr load" data-delay="1500"><span class="bn">৫ থেকে ১২ ক্লাসের সব বিষয়ের সমাধান, ধাপে ধাপে বাংলা ও ইংরেজিতে।</span><span class="en">Step-by-step solutions for every subject, Class 5 to 12, in Bangla and English.</span></p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2;">
+    <a class="btn g fi" style="--d:2.6s" href="#pricing"><span class="bn">প্রাইস দেখুন</span><span class="en">See pricing</span></a>
+    <a class="btn outline fi" style="--d:2.7s" href="#ask"><span class="bn">ফ্রি ডেমো প্রশ্ন করুন</span><span class="en">Try Free Demo</span></a>
+  </div>
+
+  <div class="cards fi" style="--d:2.9s">
+    <div><b>৫–৮</b><span class="bn">জুনিয়র</span><span class="en">Junior</span></div>
+    <div><b>৯–১০</b><span class="bn">এসএসসি</span><span class="en">SSC</span></div>
+    <div><b>১১–১২</b><span class="bn">এইচএসসি</span><span class="en">HSC</span></div>
+  </div>
+  <p class="prel fi" style="--d:3.2s"><span class="bn">সব বই · সব বিষয় · এক জায়গায়</span><span class="en">All books, all subjects, one place</span></p>
+</header>
+
+<section class="dk" id="verify">
+  <h2><span class="bn">Depus AI <em class="cy" id="cy">সমাধান করে</em></span><span class="en">Depus AI <em class="cy" id="cye">Solves</em></span></h2>
+  <div class="flow">
+    <div class="node sd" style="--x:-140px"><div class="box">?</div><span class="bn">প্রশ্ন দাও</span><span class="en">Ask your question</span></div>
+    <div class="ln"></div>
+    <div class="node sd" style="--y:90px;--td:.15s"><div class="box">∑</div><span class="bn">ধাপে ধাপে সমাধান পাও</span><span class="en">Get a step-by-step answer</span></div>
+    <div class="ln"></div>
+    <div class="node sd" style="--x:140px;--td:.3s"><div class="box">✓</div><span class="bn">কেন হলো সেটা বুঝে নাও</span><span class="en">Understand why it works</span></div>
+  </div>
+</section>
+
+<!-- Interactive Live Demo Section -->
+<section class="sec" id="ask">
+  <div class="tag"><span class="bn">লাইভ ইন্টারেক্টিভ ডেমো</span><span class="en">Live Interactive Demo</span></div>
+  <h2 class="wr"><span class="bn">যেকোনো প্রশ্ন এখনই <em>পরীক্ষা করো</em></span><span class="en">Ask any academic question right now</span></h2>
+  <p class="lead wr"><span class="bn">ক্লাস ও বিষয় বেছে নিয়ে প্রশ্ন লিখুন, Depus AI সাথে সাথে ধাপে ধাপে সমাধান করে বুঝিয়ে দেবে।</span><span class="en">Select your subject, enter your question, and Depus AI will guide you step by step.</span></p>
+  
+  <div class="ask">
+    <div class="lab"><span class="bn">বিষয় নির্বাচন করুন:</span><span class="en">Select Subject:</span></div>
+    <div class="row" id="chp-row">
+      <button type="button" class="chp on" data-sub="math"><span class="bn">গণিত (Maths)</span></button>
+      <button type="button" class="chp" data-sub="physics"><span class="bn">পদার্থবিজ্ঞান (Physics)</span></button>
+      <button type="button" class="chp" data-sub="chemistry"><span class="bn">রসায়ন (Chemistry)</span></button>
+      <button type="button" class="chp" data-sub="biology"><span class="bn">জীববিজ্ঞান (Biology)</span></button>
+      <button type="button" class="chp" data-sub="english"><span class="bn">ইংরেজি (English)</span></button>
+      <button type="button" class="chp" data-sub="ict"><span class="bn">আইসিটি (ICT)</span></button>
+    </div>
+    <textarea id="ai-q-input" placeholder="এখানে আপনার প্রশ্ন বা সমীকরণটি লিখুন... যেমন: ভেক্টর ডট গুণনের ব্যাখ্যা দাও, অথবা 2x + 5 = 15 হলে x এর মান কত?"></textarea>
+    <div class="bar">
+      <button type="button" class="btn g" id="ask-btn"><span class="bn"><i class="fas fa-wand-magic-sparkles" style="margin-right:6px;"></i> সমাধান দিন</span><span class="en">Solve It</span></button>
+      <span id="st"><span class="bn">Depus AI ইনস্ট্যান্ট প্রসেসিং ইঞ্জিন সক্রিয়</span><span class="en">Depus AI active</span></span>
+    </div>
+    <div class="ans" id="ai-ans-box"></div>
+  </div>
+</section>
+
+<section class="sec" id="problem">
+  <div class="tag"><span class="bn">সমস্যা</span><span class="en">The Problem</span></div>
+  <h2 class="wr"><span class="bn">আটকে গেলে সময় নষ্ট, <em>চাপ</em> বাড়ে</span><span class="en">Getting stuck wastes time and adds stress</span></h2>
+  <p class="lead wr"><span class="bn">অঙ্ক মেলে না, বিজ্ঞান বুঝি না, রচনা কীভাবে লিখব ভেবে পাই না। শিক্ষক সবসময় পাশে থাকেন না।</span><span class="en">Maths won't add up, science won't click, essays won't start. A teacher isn't always there.</span></p>
+  <div class="panel">
+    <div class="pl sd" style="--x:-120px"><i class="fc fc1">?</i><i class="fc fc2">∑</i><i class="fc fc3">!</i><div style="position:relative;z-index:1"><span class="bn">সমাধান আটকে আছে</span><span class="en">Stuck on homework</span></div></div>
+    <div class="pr">
+      <div class="pb sd" style="--x:120px;--td:0.10s"><i class="ic">?</i><div><span class="bn">উত্তর পাই, কিন্তু কেন সেটা বুঝি না</span><span class="en">I get the answer but not the why</span></div></div>
+      <div class="pb sd" style="--x:120px;--td:0.25s"><i class="ic">⋯</i><div><span class="bn">গাইড বইয়ে ধাপ বাদ থাকে</span><span class="en">Guide books skip steps</span></div></div>
+      <div class="pb sd" style="--x:120px;--td:0.40s"><i class="ic">☾</i><div><span class="bn">রাতে প্রশ্ন করার কেউ নেই</span><span class="en">No one to ask at night</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sol" id="how">
+  <div class="tag"><span class="bn">সমাধান</span><span class="en">Solutions</span></div>
+  <h2 class="wr"><span class="bn">Depus AI দিয়ে শেখা হয় <em>পরিষ্কার</em></span><span class="en">Learning gets clear with Depus AI</span></h2>
+  <div class="band">
+    <div class="bw">
+      <div class="word" id="word"><span class="bn">ধাপে ধাপে</span><span class="en">Step by step</span></div>
+      <div id="items" class="sd" style="--x:90px">
+        <button class="item on" data-bn="ধাপে ধাপে" data-en="Step by step"><i class="ib">∑</i><div class="it"><strong><span class="bn">গণিত ও বিজ্ঞান</span><span class="en">Maths &amp; Science</span></strong><span class="d"><span class="bn">প্রতিটি লাইনের ব্যাখ্যাসহ সমাধান</span><span class="en">Every line explained</span></span></div></button>
+        <button class="item" data-bn="সহজ ভাষায়" data-en="In simple words"><i class="ib">অA</i><div class="it"><strong><span class="bn">বাংলা ও ইংরেজি</span><span class="en">Bangla &amp; English</span></strong><span class="d"><span class="bn">ব্যাকরণ, রচনা, অনুবাদ ও প্রশ্নোত্তর</span><span class="en">Grammar, essays, translation, Q&amp;A</span></span></div></button>
+        <button class="item" data-bn="যেকোনো সময়" data-en="Any time"><i class="ib">ICT</i><div class="it"><strong><span class="bn">সমাজ, আইসিটি ও ব্যবসায়</span><span class="en">Social, ICT &amp; Commerce</span></strong><span class="d"><span class="bn">দিনে-রাতে, যতবার ইচ্ছা প্রশ্ন করো</span><span class="en">Ask as often as you like</span></span></div></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pr3" id="pricing">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="ring"></div><div class="x x1"></div><div class="x x2"></div>
+  <div class="tag"><span class="bn">প্রাইস</span><span class="en">Pricing</span></div>
+  <h2><span class="bn">আপনার জন্য সেরা প্ল্যান</span><span class="en">The perfect plan for your needs</span></h2>
+  <p class="lead"><span class="bn">স্বচ্ছ দাম, লুকানো খরচ নেই। প্রথম ৭ দিন ফ্রিতে শুরু করুন।</span><span class="en">Clear prices, no hidden costs. Start free for the first 7 days.</span></p>
+  <div class="plans">
+    <div class="plan sd" style="--x:-150px"><div class="pc">
+      <div class="nm"><span class="bn">ফ্রি</span><span class="en">Free</span></div>
+      <div class="pv"><span class="bn">৳০<small>/৭ দিন</small></span><span class="en">Tk 0 / 7 days</span></div>
+      <div class="ft-t"><span class="bn">প্রথম ৭ দিন ফ্রি</span><span class="en">First 7 days free</span></div>
+      <ul class="ft"><li><span class="bn">সব বিষয়ে প্রশ্ন</span><span class="en">Questions in every subject</span></li><li><span class="bn">ধাপে ধাপে সমাধান</span><span class="en">Step-by-step answers</span></li><li><span class="bn">বাংলা ও ইংরেজি</span><span class="en">Bangla & English</span></li></ul>
+      <button class="btn l buy" data-plan="free" type="button"><span class="bn">ফ্রি শুরু করুন</span><span class="en">Start free</span></button>
+    </div></div>
+    <div class="plan sd rec" style="--y:90px;--td:.15s"><div class="pc">
+      <div class="nm"><span class="bn">১৫ দিন</span><span class="en">15 days</span></div>
+      <div class="pv"><span class="bn">৳১৩০<small>/১৫ দিন</small></span><span class="en">Tk 130 / 15 days</span></div>
+      <div class="ft-t"><span class="bn">ফ্রি প্ল্যানের সবকিছু, সাথে:</span><span class="en">Everything in Free, plus:</span></div>
+      <ul class="ft"><li><span class="bn">১৫ দিন ধরে যত খুশি প্রশ্ন</span><span class="en">15 days of unlimited questions</span></li><li><span class="bn">ক্লাস ৫ থেকে ১২ সব বিষয়</span><span class="en">Class 5–12, all subjects</span></li></ul>
+      <button class="btn l buy" data-plan="15" type="button"><span class="bn">কিনুন</span><span class="en">Buy now</span></button>
+      <div class="rb"><span class="bn">প্রস্তাবিত</span><span class="en">Recommended</span></div>
+    </div></div>
+    <div class="plan sd" style="--x:150px;--td:.3s"><div class="pc">
+      <div class="nm"><span class="bn">৩০ দিন</span><span class="en">30 days</span></div>
+      <div class="pv"><span class="bn">৳২৫০<small>/৩০ দিন</small></span><span class="en">Tk 250 / 30 days</span></div>
+      <div class="ft-t"><span class="bn">১৫ দিনের প্ল্যানের সবকিছু, সাথে:</span><span class="en">Everything in 15 days, plus:</span></div>
+      <ul class="ft"><li><span class="bn">পুরো ৩০ দিন, সবচেয়ে সাশ্রয়ী</span><span class="en">Full 30 days, best value</span></li></ul>
+      <button class="btn l buy" data-plan="30" type="button"><span class="bn">কিনুন</span><span class="en">Buy now</span></button>
+    </div></div>
+  </div>
+
+  <div class="prem"><div class="nm"><span class="bn">প্রিমিয়ামের ৫টি সুবিধা</span><span class="en">5 Premium benefits</span></div><div class="bens"><div class="ben sd" style="--x:-120px;--y:0px;--td:0s"><i>∞</i><span class="bn">যত খুশি প্রশ্ন</span><span class="en">Unlimited questions</span></div><div class="ben sd" style="--x:0px;--y:80px;--td:0.1s"><i>∑</i><span class="bn">ধাপে ধাপে বিস্তারিত ব্যাখ্যা</span><span class="en">Detailed step-by-step explanations</span></div><div class="ben sd" style="--x:0px;--y:80px;--td:0.2s"><i>৫–১২</i><span class="bn">ক্লাস ৫ থেকে ১২, সব বিষয়</span><span class="en">Class 5–12, every subject</span></div><div class="ben sd" style="--x:0px;--y:80px;--td:0.3s"><i>অA</i><span class="bn">বাংলা ও ইংরেজি দুই ভাষায় উত্তর</span><span class="en">Answers in Bangla and English</span></div><div class="ben sd" style="--x:120px;--y:0px;--td:0.4s"><i>২৪</i><span class="bn">দিনরাত, পরীক্ষার আগেও পাশে</span><span class="en">Available 24/7, even before exams</span></div></div></div>
+  <div class="deal sd" style="--y:70px"><div><span class="bn">দ্রুত নিন, বিশেষ দামে!</span><span class="en">Grab it fast for a special price</span></div><button class="btn l buy" data-plan="15" type="button" style="margin:0;padding:13px 26px"><span class="bn">এখনই শুরু করুন</span><span class="en">Start now</span></button></div>
+</section>
+
+<footer>
+  <div class="logo">
+    <i class="fas fa-graduation-cap"></i>
+    <span>Dipu's Edu · Depus <i style="color:var(--mint);font-style:normal">AI</i></span>
+  </div>
+  <span class="bn">৫ থেকে ১২ ক্লাসের সব বিষয়ের আধুনিক সমাধান প্ল্যাটফর্ম</span>
+  <span class="en">Every solution for Class 5–12</span>
+  <div style="margin-top:16px;">
+    <a href="/" style="color:var(--mint);font-weight:600;margin:0 10px;">হোমপেজ</a> •
+    <a href="/course" style="color:#cfe;margin:0 10px;">কোর্সসমূহ</a> •
+    <a href="/shop" style="color:#cfe;margin:0 10px;">বুকশপ</a> •
+    <a href="/exam" style="color:#cfe;margin:0 10px;">মডেল টেস্ট</a>
+  </div>
+</footer>
+
+<!-- Interactive Checkout Modal View -->
+<div class="view" id="v-checkout" hidden role="dialog" aria-modal="true" aria-label="Checkout">
+  <div class="vw">
+    <button class="back" id="back" type="button"><span class="bn">← ফিরে যান</span><span class="en">Back</span></button>
+    <h2 class="vt"><span class="bn">অর্ডার সম্পূর্ণ করুন</span><span class="en">Complete your order</span></h2>
+    <div class="co">
+      <div class="card">
+        <label class="fd"><span class="bn">আপনার নাম</span><span class="en">Your name</span><input id="nm" autocomplete="name" placeholder="যেমন: তানভীর হাসান"><small class="er" id="e-nm"></small></label>
+        <label class="fd"><span class="bn">মোবাইল নম্বর</span><span class="en">Mobile number</span><input id="ph" inputmode="tel" autocomplete="tel" placeholder="01XXXXXXXXX"><small class="er" id="e-ph"></small></label>
+        <label class="fd"><span class="bn">ক্লাস</span><span class="en">Class</span><select id="cl"><option>৫ম</option><option>৬ষ্ঠ</option><option>৭ম</option><option>৮ম</option><option selected>৯ম (SSC '28)</option><option>১০ম (SSC '27)</option><option>১১শ (HSC '28)</option><option>১২শ (HSC '27)</option></select></label>
+        <div id="payblk">
+          <div class="fd" style="margin-bottom:10px"><span class="bn">পেমেন্ট পদ্ধতি</span><span class="en">Payment method</span></div>
+          <div class="pm" id="pm">
+            <button type="button" class="pmo on" data-m="bKash" style="--c:#e2136e"><i></i>bKash</button>
+            <button type="button" class="pmo" data-m="Nagad" style="--c:#f6921e"><i></i>Nagad</button>
+            <button type="button" class="pmo" data-m="Rocket" style="--c:#8c3494"><i></i>Rocket</button>
+            <button type="button" class="pmo" data-m="Card" style="--c:#a6f76a"><i></i>Card</button>
+          </div>
+        </div>
+      </div>
+      <aside class="card sum">
+        <div class="nm"><span class="bn">অর্ডার সারসংক্ষেপ</span><span class="en">Order summary</span></div>
+        <div class="sr"><span><span class="bn">প্ল্যান</span><span class="en">Plan</span></span><b id="s-plan"></b></div>
+        <div class="sr"><span><span class="bn">মেয়াদ</span><span class="en">Duration</span></span><b id="s-dur"></b></div>
+        <div class="sr"><span><span class="bn">শুরু</span><span class="en">Starts</span></span><b id="s-st"></b></div>
+        <div class="sr"><span><span class="bn">মেয়াদ শেষ</span><span class="en">Valid until</span></span><b id="s-en"></b></div>
+        <div class="sr"><span><span class="bn">সর্বমোট</span><span class="en">Total</span></span><b class="tot" id="s-tot"></b></div>
+        <button class="btn l big" id="pay" type="button"></button>
+        <p class="demo"><span class="bn">ডেমো মোড: কোনো টাকা কাটা হয় না (ইনস্ট্যান্ট একটিভ)</span><span class="en">Instant activation enabled</span></p>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- Order Confirmation Modal View -->
+<div class="view" id="v-ok" hidden role="dialog" aria-modal="true" aria-label="Order confirmed">
+  <div class="conf" id="conf"></div>
+  <div class="vw ok">
+    <div class="tw"><svg class="tick" viewBox="0 0 80 80"><circle class="tc" cx="40" cy="40" r="34"/><path class="tp" d="M24 41l11 11 21-23"/></svg></div>
+    <h2 class="vt" id="ok-t" style="text-align:center"></h2>
+    <p class="lead" id="ok-s"></p>
+    <div class="card rec" id="rec"></div>
+    <div class="card next">
+      <div class="nm"><span class="bn">এরপর কী হবে</span><span class="en">What happens next</span></div>
+      <div class="stp"><b>1</b><div><span class="bn">আপনার প্ল্যান এখন চালু</span><span class="en">Your plan is active now</span></div></div>
+      <div class="stp"><b>2</b><div><span class="bn">ক্লাস ও বিষয় বেছে প্রশ্ন করুন</span><span class="en">Pick your class and subject, then ask</span></div></div>
+      <div class="stp"><b>3</b><div><span class="bn">ধাপে ধাপে উত্তর পড়ে বুঝে নিন</span><span class="en">Read the step-by-step answer and learn why</span></div></div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;">
+      <a class="btn l big" href="#ask" onclick="hideOkAndScrollAsk()"><span class="bn">এখনই প্রশ্ন সমাধান করুন</span><span class="en">Ask Question Now</span></a>
+      <button class="btn outline big" id="home" type="button"><span class="bn">হোমে ফিরুন</span><span class="en">Back to home</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- Three.js Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<!-- 3D Three.js Visualizer Script -->
+<script>
+(function(){
+  var c=document.getElementById('gl');if(!window.THREE||!c)return;
+  var T=THREE,r;try{r=new T.WebGLRenderer({canvas:c,alpha:true,antialias:true})}catch(e){return}
+  r.setPixelRatio(Math.min(devicePixelRatio||1,2));
+  var s=new T.Scene(),cam=new T.PerspectiveCamera(42,1,.1,100);cam.position.z=11;
+  var LIME=0xa6f76a,i,j;
+  var cv=document.createElement('canvas');cv.width=cv.height=128;
+  var cx=cv.getContext('2d'),gr=cx.createRadialGradient(64,64,0,64,64,64);
+  gr.addColorStop(0,'rgba(215,255,170,1)');gr.addColorStop(.25,'rgba(166,247,106,.45)');gr.addColorStop(1,'rgba(166,247,106,0)');
+  cx.fillStyle=gr;cx.fillRect(0,0,128,128);
+  var gt=new T.CanvasTexture(cv),ADD=T.AdditiveBlending;
+  function sprite(sz,op){var m=new T.Sprite(new T.SpriteMaterial({map:gt,blending:ADD,transparent:true,depthWrite:false,opacity:op==null?1:op}));m.scale.set(sz,sz,1);return m}
+  s.add(new T.AmbientLight(0x88aa77,.6));
+  var l1=new T.PointLight(LIME,2.6,40);s.add(l1);
+  var l2=new T.PointLight(0xffffff,1.1,40);l2.position.set(-6,-3,5);s.add(l2);
+  var root=new T.Group();s.add(root);
+  /* glassy faceted core + glowing heart */
+  var core=new T.Mesh(new T.IcosahedronGeometry(1.35,1),new T.MeshStandardMaterial({color:0x1c2a15,metalness:.7,roughness:.25,flatShading:true,emissive:0x2a4a10,emissiveIntensity:.5,transparent:true,opacity:.62,depthWrite:false}));
+  var wire=new T.LineSegments(new T.EdgesGeometry(new T.IcosahedronGeometry(1.4,1)),new T.LineBasicMaterial({color:LIME,transparent:true,opacity:.8}));
+  var heart=new T.Mesh(new T.SphereGeometry(.42,24,24),new T.MeshBasicMaterial({color:0xe2ffbf}));
+  var glow=sprite(5.2,.9);
+  root.add(core,wire,heart,glow);
+  /* particle shell */
+  var N=1700,pos=new Float32Array(N*3);
+  for(i=0;i<N;i++){var u=Math.random()*2-1,a=Math.random()*6.2832,rd=2.4+Math.pow(Math.random(),2)*1.7,q=Math.sqrt(1-u*u);
+    pos[i*3]=rd*q*Math.cos(a);pos[i*3+1]=rd*u;pos[i*3+2]=rd*q*Math.sin(a)}
+  var pg=new T.BufferGeometry();pg.setAttribute('position',new T.BufferAttribute(pos,3));
+  var pts=new T.Points(pg,new T.PointsMaterial({map:gt,size:.17,transparent:true,opacity:.85,blending:ADD,depthWrite:false}));
+  /* neural network of nodes */
+  var nodes=[],np=[];
+  for(i=0;i<48;i++){var u2=Math.random()*2-1,a2=Math.random()*6.2832,q2=Math.sqrt(1-u2*u2);
+    nodes.push(new T.Vector3(2.6*q2*Math.cos(a2),2.6*u2,2.6*q2*Math.sin(a2)));np.push(nodes[i].x,nodes[i].y,nodes[i].z)}
+  var lp=[];
+  for(i=0;i<48;i++)for(j=i+1;j<48;j++)if(nodes[i].distanceTo(nodes[j])<1.8)lp.push(nodes[i].x,nodes[i].y,nodes[i].z,nodes[j].x,nodes[j].y,nodes[j].z);
+  var lg=new T.BufferGeometry();lg.setAttribute('position',new T.Float32BufferAttribute(lp,3));
+  var net=new T.LineSegments(lg,new T.LineBasicMaterial({color:LIME,transparent:true,opacity:.3,blending:ADD}));
+  var ng=new T.BufferGeometry();ng.setAttribute('position',new T.Float32BufferAttribute(np,3));
+  var nodePts=new T.Points(ng,new T.PointsMaterial({map:gt,size:.45,transparent:true,blending:ADD,depthWrite:false}));
+  var shell=new T.Group();shell.add(pts,net,nodePts);root.add(shell);
+  /* orbit rings with glowing comets */
+  var rings=[],orbs=[];
+  for(i=0;i<3;i++){
+    var rad=3.5+i*.5,g=new T.Group();
+    g.add(new T.Mesh(new T.TorusGeometry(rad,.014,8,160),new T.MeshBasicMaterial({color:LIME,transparent:true,opacity:.5})));
+    var o=new T.Group();o.add(new T.Mesh(new T.SphereGeometry(.09,12,12),new T.MeshBasicMaterial({color:0xffffff})),sprite(.9));
+    g.add(o);g.rotation.set(1.15-i*.75,i*.8,i*.45);root.add(g);rings.push(g);orbs.push({o:o,rad:rad,sp:.7+i*.4,ph:i*2.1});
+  }
+  function size(){var w=c.clientWidth,h=c.clientHeight;r.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}
+  addEventListener('resize',size);size();
+  var mx=0,my=0,tx=0,ty=0,t0=null;
+  addEventListener('mousemove',function(e){mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
+  var calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function frame(ms){
+    var t=ms*.001;if(t0===null)t0=t;
+    var k=calm?1:Math.min(1,(t-t0)/1.8),e=1+2.70158*Math.pow(k-1,3)+1.70158*Math.pow(k-1,2);
+    root.scale.setScalar(Math.max(.001,e));
+    tx+=(mx*1.2-tx)*.05;ty+=(my*.9-ty)*.05;
+    root.rotation.y=t*.25+tx;root.rotation.x=ty+Math.sin(t*.5)*.12;root.position.y=Math.sin(t*1.2)*.12;
+    core.rotation.y=wire.rotation.y=-t*.45;core.rotation.x=wire.rotation.x=t*.2;
+    shell.rotation.y=t*.07;net.rotation.x=Math.sin(t*.3)*.15;
+    var p=1+Math.sin(t*2.2)*.09;heart.scale.setScalar(p);glow.scale.set(5.2*p,5.2*p,1);
+    l1.position.set(Math.cos(t*.8)*6,3,Math.sin(t*.8)*6+2);
+    rings.forEach(function(g,n){g.rotation.z+=.0025*(n+1)});
+    orbs.forEach(function(q){var a=t*q.sp+q.ph;q.o.position.set(Math.cos(a)*q.rad,Math.sin(a)*q.rad,0)});
+    r.render(s,cam);
+    if(!calm)requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+// Cards 3D Tilt Effect
+(function(){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  document.querySelectorAll('.cards div,.grid a').forEach(function(el){
+    el.classList.add('tilt');
+    el.addEventListener('mousemove',function(e){
+      var b=el.getBoundingClientRect(),x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;
+      el.style.transform='rotateY('+(x*22)+'deg) rotateX('+(-y*22)+'deg) translateZ(14px)';
+    });
+    el.addEventListener('mouseleave',function(){el.style.transform=''});
+  });
+})();
+
+// Item selector loop in Solutions section
+(function(){
+  var items=[].slice.call(document.querySelectorAll('.item')),w=document.getElementById('word'),i=0,t;
+  function show(n){
+    i=n;items.forEach(function(e,k){e.classList.toggle('on',k===n)});
+    w.classList.add('sw');
+    setTimeout(function(){
+      w.innerHTML='<span class="bn">'+items[n].dataset.bn+'</span><span class="en">'+items[n].dataset.en+'</span>';
+      w.classList.remove('sw');
+    },300);
+  }
+  function loop(){clearInterval(t);t=setInterval(function(){show((i+1)%items.length)},3000)}
+  items.forEach(function(e,k){e.addEventListener('click',function(){show(k);loop()})});
+  loop();
+})();
+
+// Text animation & Word cycling
+(function(){
+const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function splitWords(node, out) {
+    Array.from(node.childNodes).forEach((child) => {
+        var _a;
+        if (child.nodeType === Node.TEXT_NODE) {
+            const frag = document.createDocumentFragment();
+            ((_a = child.textContent) !== null && _a !== void 0 ? _a : "").split(/(\s+)/).forEach((part) => {
+                if (!part)
+                    return;
+                if (/^\s+$/.test(part)) {
+                    frag.appendChild(document.createTextNode(" "));
+                    return;
+                }
+                const span = document.createElement("span");
+                span.className = "w";
+                span.textContent = part;
+                out.push(span);
+                frag.appendChild(span);
+            });
+            node.replaceChild(frag, child);
+        }
+        else if (child.nodeType === Node.ELEMENT_NODE) {
+            splitWords(child, out);
+        }
+    });
+}
+const reveals = Array.from(document.querySelectorAll(".wr")).map((el) => {
+    var _a;
+    const words = [];
+    splitWords(el, words);
+    return {
+        el,
+        words,
+        load: el.classList.contains("load"),
+        delay: Number((_a = el.dataset.delay) !== null && _a !== void 0 ? _a : 300),
+    };
+});
+reveals
+    .filter((r) => r.load)
+    .forEach((r) => r.words.forEach((w, i) => window.setTimeout(() => w.classList.add("on"), calm ? 0 : r.delay + i * 130)));
+
+function update() {
+    reveals.forEach((r) => {
+        if (r.load)
+            return;
+        const top = r.el.getBoundingClientRect().top;
+        const p = Math.max(0, Math.min(1, (innerHeight * 0.9 - top) / (innerHeight * 0.4)));
+        const n = p * (r.words.length + 1);
+        r.words.forEach((w, i) => w.classList.toggle("on", i < n));
+    });
+}
+if (calm) {
+    reveals.forEach((r) => r.words.forEach((w) => w.classList.add("on")));
+}
+else {
+    addEventListener("scroll", update, { passive: true });
+    addEventListener("resize", update);
+    update();
+    const words = [
+        ["সমাধান করে", "Solves"],
+        ["ব্যাখ্যা করে", "Explains"],
+        ["শেখায়", "Teaches"],
+    ];
+    const bn = document.getElementById("cy");
+    const en = document.getElementById("cye");
+    let k = 0;
+    if (bn && en) {
+        window.setInterval(() => {
+            bn.classList.add("sw");
+            en.classList.add("sw");
+            window.setTimeout(() => {
+                k = (k + 1) % words.length;
+                bn.textContent = words[k][0];
+                en.textContent = words[k][1];
+                bn.classList.remove("sw");
+                en.classList.remove("sw");
+            }, 350);
+        }, 2600);
+    }
+}
+})();
+
+// Scroll 3D Tilt for Problem Panel
+(function(){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  var t3=[].slice.call(document.querySelectorAll('.panel'));
+  function d3(){t3.forEach(function(e){var r=e.getBoundingClientRect(),p=Math.max(0,Math.min(1,(innerHeight*.95-r.top)/(innerHeight*.5)));e.style.transform='perspective(1000px) rotateX('+((1-p)*16)+'deg) translateY('+((1-p)*30)+'px)'})}
+  addEventListener('scroll',d3,{passive:true});d3();
+})();
+
+// IntersectionObserver for elements
+(function(){
+  var els=[].slice.call(document.querySelectorAll('.sd'));
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches||!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(x){
+    if(x.isIntersecting)x.target.classList.add('in');
+    else if(x.boundingClientRect.top>0)x.target.classList.remove('in');
+  })},{threshold:.25});
+  els.forEach(function(e){io.observe(e)});
+})();
+
+// Card mouse tilt in pricing
+(function(){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  [].forEach.call(document.querySelectorAll('.pc'),function(el){
+    el.addEventListener('mousemove',function(e){var b=el.getBoundingClientRect(),x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;el.style.transform='rotateY('+(x*16)+'deg) rotateX('+(-y*16)+'deg) translateZ(12px)'});
+    el.addEventListener('mouseleave',function(){el.style.transform=''});
+  });
+})();
+
+// Interactive Ask Section Logic
+(function(){
+  let activeSub = "math";
+  const chpButtons = document.querySelectorAll(".chp");
+  const qInput = document.getElementById("ai-q-input");
+  const askBtn = document.getElementById("ask-btn");
+  const ansBox = document.getElementById("ai-ans-box");
+  const stText = document.getElementById("st");
+
+  const promptPlaceholders = {
+    math: "যেমন: 2x^2 + 5x - 3 = 0 সমীকরণটি দ্বিঘাত সূত্রে সমাধান করো",
+    physics: "যেমন: একটি গাড়ি স্থির অবস্থান থেকে 2 m/s² ত্বরণে 10s চললে অতিক্রান্ত দূরত্ব কত?",
+    chemistry: "যেমন: জারণ-বিজারণ বিক্রিয়া বলতে কী বোঝায়? উদাহরণসহ ব্যাখ্যা করো",
+    biology: "যেমন: মাইটোসিস ও মিয়োসিস কোষ বিভাজনের মূল পার্থক্যগুলো কী কী?",
+    english: "যেমন: Explain the difference between Present Perfect and Past Indefinite tense",
+    ict: "যেমন: বাইনারি (10110)₂ সংখ্যাটিকে ডেসিমাল সংখ্যায় রূপান্তর করো"
+  };
+
+  chpButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      chpButtons.forEach(b => b.classList.remove("on"));
+      btn.classList.add("on");
+      activeSub = btn.dataset.sub;
+      if (promptPlaceholders[activeSub]) {
+        qInput.placeholder = promptPlaceholders[activeSub];
+      }
+    });
+  });
+
+  const cannedAnswers = {
+    math: `[Depus AI গাণিতিক বিশ্লেষণ]\n\nসমস্যা: ২x² + ৫x - ৩ = ০ সমীকরণটির সমাধান।\n\nধাপ ১: আদর্শ দ্বিঘাত সমীকরণ ax² + bx + c = ০ এর সাথে তুলনা করে পাই:\na = ২, b = ৫, c = -৩\n\nধাপ ২: দ্বিঘাত সূত্র প্রয়োগ:\nx = [-b ± √(b² - 4ac)] / (2a)\n  = [-৫ ± √(৫² - ৪ × ২ × (-৩))] / (২ × ২)\n  = [-৫ ± √(২৫ + ২৪)] / ৪\n  = [-৫ ± √৪৯] / ৪\n  = (-৫ ± ৭) / ৪\n\nধাপ ৩: মূলদ্বয় নির্ণয়:\n১ম মূল: x₁ = (-৫ + ৭) / ৪ = ২/৪ = ১/২ (0.5)\n২য় মূল: x₂ = (-৫ - ৭) / ৪ = -১২/৪ = -৩\n\n✓ চূড়ান্ত উত্তর: x = ১/২ অথবা x = -৩`,
+    physics: `[Depus AI পদার্থবিজ্ঞান সমাধান]\n\nসমস্যা: স্থির অবস্থান থেকে ২ m/s² ত্বরণে ১০ সেকেন্ডে অতিক্রান্ত দূরত্ব।\n\nপ্রদত্ত মান:\n- আদিবেগ, u = ০ m/s (যেহেতু স্থির)\n- ত্বরণ, a = ২ m/s²\n- সময়, t = ১০ s\n- দূরত্ব, s = ?\n\nসূত্র:\ns = ut + ½ at²\n  = (০ × ১০) + ½ × ২ × (১০)²\n  = ০ + ১ × ১০০\n  = ১০০ মিটার\n\n✓ চূড়ান্ত উত্তর: গাড়িটি ১০ সেকেন্ডে ১০০ মিটার দূরত্ব অতিক্রম করবে।`,
+    chemistry: `[Depus AI রসায়ন ধারণা]\n\nজারণ-বিজারণ (Redox Reaction) ব্যাখ্যা:\n\n১. জারণ (Oxidation): যে বিক্রিয়ায় কোনো পরমাণু বা আয়ন ইলেকট্রন বর্জন করে, তাকে জারণ বলে।\nউদাহরণ: Na → Na⁺ + e⁻\n\n২. বিজারণ (Reduction): যে বিক্রিয়ায় কোনো পরমাণু বা আয়ন ইলেকট্রন গ্রহণ করে, তাকে বিজারণ বলে।\nউদাহরণ: Cl + e⁻ → Cl⁻\n\nসারসংক্ষেপ: জারণ ও বিজারণ যুগপৎ ঘটে। যিনি ইলেকট্রন ত্যাগ করেন তিনি বিজারক এবং যিনি গ্রহণ করেন তিনি জারক।`,
+    biology: `[Depus AI জীববিজ্ঞান চার্ট]\n\nমাইটোসিস বনাম মিয়োসিস তুলনামূলক পার্থক্য:\n\n১. সংগঠনের স্থান:\n- মাইটোসিস: দেহকোষে ঘটে।\n- মিয়োসিস: জনন মাতৃকোষে ঘটে।\n\n২. বিভাজনের সংখ্যা:\n- মাইটোসিস: নিউক্লিয়াস ও ক্রোমোজোম একবার বিভক্ত হয়।\n- মিয়োসিস: নিউক্লিয়াস দু'বার কিন্তু ক্রোমোজোম একবার বিভক্ত হয়।\n\n৩. অপত্য কোষ ও ক্রোমোজোম:\n- মাইটোসিস: ২টি ডিপ্লয়েড (2n) সমগুণসম্পন্ন কোষ তৈরি হয়।\n- মিয়োসিস: ৪টি হ্যাপ্লয়েড (n) বৈচিত্র্যময় কোষ তৈরি হয়।`,
+    english: `[Depus AI English Grammar Masterclass]\n\nDifference: Present Perfect vs Past Indefinite:\n\n1. Present Perfect (has/have + V3):\nUsed for an action completed in the past, but whose effect is still present.\nExample: "I have eaten rice." (I am not hungry now).\n\n2. Past Indefinite (V2):\nUsed for an action completed at a specific time in the past with no direct current effect.\nExample: "I ate rice an hour ago."`,
+    ict: `[Depus AI আইসিটি গণনা]\n\nবাইনারি (10110)₂ থেকে ডেসিমাল রূপান্তর:\n\n১ × ২⁴ = ১ × ১৬ = ১৬\n০ × ২³ = ০ × ৮ = ০\n১ × ২² = ১ × ৪ = ৪\n১ × ২¹ = ১ × ২ = ২\n০ × ২⁰ = ০ × ১ = ০\n\nযোগফল: ১৬ + ০ + ৪ + ২ + ০ = ২২\n\n✓ চূড়ান্ত উত্তর: (10110)₂ = (22)₁₀`
+  };
+
+  if (askBtn && qInput && ansBox) {
+    askBtn.addEventListener("click", async () => {
+      const q = qInput.value.trim();
+      if (!q) {
+        alert("দয়া করে আপনার প্রশ্নটি লিখুন!");
+        qInput.focus();
+        return;
+      }
+
+      askBtn.disabled = true;
+      askBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> সমাধান খোঁজা হচ্ছে...`;
+      if (stText) stText.innerHTML = `<span style="color:#a6f76a;">Depus AI চিন্তা করছে...</span>`;
+
+      setTimeout(() => {
+        const fallback = cannedAnswers[activeSub] || cannedAnswers.math;
+        ansBox.textContent = `[প্রশ্ন]: ${q}\n\n${fallback}`;
+        ansBox.classList.add("show");
+        askBtn.disabled = false;
+        askBtn.innerHTML = `<span class="bn"><i class="fas fa-wand-magic-sparkles" style="margin-right:6px;"></i> সমাধান দিন</span><span class="en">Solve It</span>`;
+        if (stText) stText.innerHTML = `<span class="bn" style="color:#a6f76a;">✓ উত্তর তৈরি সম্পন্ন হয়েছে</span>`;
+        ansBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }, 900);
+    });
+  }
+})();
+
+// Pricing Checkout Modal & Order Processing Logic
+(function(){
+  var P={
+    free:{bn:'ফ্রি ট্রায়াল',en:'Free trial',d:7,p:0},
+    '15':{bn:'১৫ দিনের প্ল্যান',en:'15-day plan',d:15,p:130},
+    '30':{bn:'৩০ দিনের প্ল্যান',en:'30-day plan',d:30,p:250}
+  };
+  var cur=P.free,method='bKash';
+  function $(i){return document.getElementById(i)}
+  function bd(n){return String(n).replace(/\d/g,function(d){return '০১২৩৪৫৬৭৮৯'[d]})}
+  function two(a,b){return '<span class="bn">'+a+'</span><span class="en">'+b+'</span>'}
+  function esc(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML}
+  function add(n){var d=new Date();d.setDate(d.getDate()+n);return d}
+  function dt(d,l){try{return d.toLocaleDateString(l,{day:'numeric',month:'long',year:'numeric'})}catch(e){return d.toDateString()}}
+  function dd(d){return two(dt(d,'bn-BD'),dt(d,'en-GB'))}
+  function show(id){var v=$(id);v.hidden=false;v.classList.remove('show');void v.offsetWidth;v.classList.add('show');v.scrollTop=0;document.body.style.overflow='hidden'}
+  function hide(id){$(id).hidden=true;if($('v-checkout').hidden&&$('v-ok').hidden)document.body.style.overflow=''}
+  
+  function open(k){
+    cur=P[k] || P.free;var p=cur;
+    $('s-plan').innerHTML=two(p.bn,p.en);
+    $('s-dur').innerHTML=two(bd(p.d)+' দিন',p.d+' days');
+    $('s-st').innerHTML=dd(new Date());$('s-en').innerHTML=dd(add(p.d));
+    $('s-tot').innerHTML=two('৳'+bd(p.p),'Tk '+p.p);
+    $('pay').innerHTML=p.p?two('৳'+bd(p.p)+' দিয়ে কিনুন','Pay Tk '+p.p):two('ফ্রি শুরু করুন','Start free');
+    $('pay').disabled=false;$('payblk').style.display=p.p?'':'none';
+    $('e-nm').textContent='';$('e-ph').textContent='';
+    show('v-checkout');
+  }
+
+  [].forEach.call(document.querySelectorAll('.buy'),function(b){b.addEventListener('click',function(){open(b.dataset.plan)})});
+  [].forEach.call($('pm').children,function(b){b.addEventListener('click',function(){method=b.dataset.m;[].forEach.call($('pm').children,function(x){x.classList.toggle('on',x===b)})})});
+  $('back').onclick=function(){hide('v-checkout')};
+  addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('v-checkout').hidden)hide('v-checkout')});
+  $('nm').addEventListener('input',function(){$('e-nm').textContent=''});
+  $('ph').addEventListener('input',function(){$('e-ph').textContent=''});
+
+  $('pay').onclick=function(){
+    var name=$('nm').value.trim(),ph=$('ph').value.replace(/[\s-]/g,''),bad=false;
+    if(name.length<2){$('e-nm').textContent='নাম লিখুন / Enter your name';bad=true}
+    if(!/^01[3-9]\d{8}$/.test(ph)){$('e-ph').textContent='সঠিক ১১ সংখ্যার নম্বর দিন / Enter a valid 11-digit number';if(!bad)$('ph').focus();bad=true}
+    if(bad){if($('e-nm').textContent)$('nm').focus();return}
+    var btn=$('pay');btn.disabled=true;btn.innerHTML=two('প্রক্রিয়া হচ্ছে…','Processing…');
+    setTimeout(function(){done(name,ph)},1500);
+  };
+
+  function done(name,ph){
+    var p=cur,id='DP-';for(var i=0;i<6;i++)id+='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random()*32)];
+    $('ok-t').innerHTML=p.p?two('পেমেন্ট সফল হয়েছে!','Payment successful!'):two('ফ্রি ট্রায়াল চালু হয়েছে!','Your free trial has started!');
+    $('ok-s').innerHTML=two('ধন্যবাদ, '+esc(name)+'। আপনার প্ল্যান এখন সক্রিয়।','Thank you, '+esc(name)+'. Your plan is active now.');
+    var rows=[
+      ['অর্ডার নম্বর','Order ID',esc(id)],
+      ['নাম','Name',esc(name)],
+      ['মোবাইল','Mobile',esc(ph)],
+      ['প্ল্যান','Plan',two(p.bn,p.en)],
+      ['পরিশোধ','Paid',two('৳'+bd(p.p),'Tk '+p.p)],
+      ['শুরু','Starts',dd(new Date())],
+      ['মেয়াদ শেষ','Valid until',dd(add(p.d))],
+      ['অবস্থা','Status','<span class="pill">'+two('সক্রিয়','Active')+'</span>']
+    ];
+    if(p.p)rows.splice(5,0,['পদ্ধতি','Method',esc(method)]);
+    $('rec').innerHTML=rows.map(function(r){return '<div class="sr"><span>'+two(r[0],r[1])+'</span><b>'+r[2]+'</b></div>'}).join('');
+    hide('v-checkout');show('v-ok');confetti();
+  }
+
+  function confetti(){
+    var c=$('conf'),cols=['#a6f76a','#ffffff','#d8ff8a','#4c8d3c','#f6e05e'],h='';
+    for(var i=0;i<48;i++)h+='<i style="left:'+(Math.random()*100)+'%;background:'+cols[i%5]+';--t:'+(2.6+Math.random()*2)+'s;--dl:'+(Math.random()*.7)+'s;--dx:'+((Math.random()-.5)*200)+'px"></i>';
+    c.innerHTML=h;
+  }
+
+  $('home').onclick=function(){hide('v-ok');scrollTo(0,0)};
+  window.hideOkAndScrollAsk = function() {
+    hide('v-ok');
+    var askElem = document.getElementById('ask');
+    if (askElem) askElem.scrollIntoView({ behavior: 'smooth' });
+  };
+})();
+</script>
+</body>
+</html>

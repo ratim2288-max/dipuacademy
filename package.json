@@ -1,0 +1,59 @@
+{
+  "name": "dipu-edu",
+  "version": "1.0.0",
+  "description": "Dipu's Edu — 20-Step Enterprise EdTech Architecture & Commercial Learning Platform",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "build:ui": "node build-otp.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/ --ext .js",
+    "test": "jest --detectOpenHandles --forceExit --passWithNoTests"
+  },
+  "keywords": [
+    "edtech",
+    "bangladesh",
+    "bilingual",
+    "gemini-ai",
+    "bkash",
+    "nagad",
+    "bulksmsbd",
+    "anti-piracy",
+    "duolingo-gamification"
+  ],
+  "author": "Dipu & Principal Systems Engineering Architecture Team",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "bcryptjs": "^2.4.3",
+    "clsx": "^2.1.1",
+    "compression": "^1.8.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.3.1",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^1.48.0",
+    "mongoose": "^8.4.1",
+    "morgan": "^1.10.0",
+    "motion": "^12.43.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tailwind-merge": "^3.7.0",
+    "typescript": "^7.0.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.2",
+    "supertest": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title id="pageTitle">বইয়ের বিবরণ — Dipu's Edu Bookshop</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css?v=3.6">
+
+  <style>
+    :root {
+      --cd-bg: #0A0A0F;
+      --cd-card: #121320;
+      --cd-card-hover: #17192A;
+      --cd-border: rgba(255, 255, 255, 0.08);
+      --cd-green: #10B981;
+      --cd-green-hover: #059669;
+      --cd-green-soft: rgba(16, 185, 129, 0.12);
+      --cd-orange: #FF7A1A;
+      --cd-amber: #FFB347;
+      --cd-text: #E2E8F0;
+      --cd-muted: #94A3B8;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px);
+      scroll-behavior: smooth;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--cd-bg);
+      color: var(--cd-text);
+      font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .book-page-wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 5rem;
+    }
+
+    /* 2-Column Responsive Layout (Course Page Style) */
+    .book-layout-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .book-layout-grid {
+        grid-template-columns: 1fr 340px;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .book-layout-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .book-page-wrapper {
+        padding: 1.5rem 1rem 3rem;
+      }
+      .book-right-col {
+        order: -1;
+      }
+      .checkout-sticky-card {
+        position: static !important;
+        max-width: 520px;
+        margin: 0 auto;
+      }
+    }
+
+    .book-left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      min-width: 0;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: #94A3B8;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb-bar a {
+      color: #94A3B8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .breadcrumb-bar a:hover {
+      color: var(--cd-orange);
+    }
+
+    /* Header Hero Badges */
+    .hero-badges-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .pill-level {
+      background: rgba(255, 122, 26, 0.15);
+      color: var(--cd-orange);
+      border: 1px solid rgba(255, 122, 26, 0.35);
+    }
+
+    .pill-subject {
+      background: rgba(255, 179, 71, 0.12);
+      color: var(--cd-amber);
+      border: 1px solid rgba(255, 179, 71, 0.3);
+    }
+
+    .pill-stock {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10B981;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+
+    /* Book Hero Title & Pitch with Vibrant Shimmer & Ambient Glow */
+    .book-hero-title {
+      font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+      font-weight: 900;
+      line-height: 1.25;
+      margin: 0.25rem 0 0.75rem;
+      letter-spacing: -0.015em;
+      background: linear-gradient(
+        115deg,
+        #FFFFFF 0%,
+        #FFFFFF 28%,
+        #FFB347 48%,
+        #FF7A1A 60%,
+        #FFFFFF 78%,
+        #FFFFFF 100%
+      );
+      background-size: 250% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: bookTitleShimmerSweep 6s ease-in-out infinite, bookTitleAmbientGlow 4s ease-in-out infinite alternate;
+      display: inline-block;
+      filter: drop-shadow(0 4px 18px rgba(255, 122, 26, 0.35));
+    }
+
+    @keyframes bookTitleShimmerSweep {
+      0%, 15% { background-position: 200% center; }
+      65%, 100% { background-position: -200% center; }
+    }
+
+    @keyframes bookTitleAmbientGlow {
+      0% { filter: drop-shadow(0 2px 10px rgba(255, 122, 26, 0.2)); }
+      100% { filter: drop-shadow(0 4px 24px rgba(255, 122, 26, 0.55)); }
+    }
+
+    .book-hero-desc {
+      font-size: 1.08rem;
+      color: #CBD5E1;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Meta Chips Bar */
+    .book-meta-chips {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+      color: #94A3B8;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1rem 0;
+    }
+
+    .meta-chip-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Sticky Section Tabs */
+    .book-tabs-nav {
+      position: sticky;
+      top: 75px;
+      z-index: 40;
+      background: rgba(10, 10, 15, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--cd-border);
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 0.5rem 0;
+      margin-top: 0.5rem;
+    }
+
+    .book-tabs-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .book-tab-btn {
+      background: transparent;
+      border: none;
+      color: #94A3B8;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .book-tab-btn:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .book-tab-btn.active {
+      color: #FFFFFF;
+      background: rgba(255, 122, 26, 0.16);
+      border: 1px solid rgba(255, 122, 26, 0.4);
+    }
+
+    /* Section Cards */
+    .content-section-card {
+      background: var(--cd-card);
+      border: 1px solid var(--cd-border);
+      border-radius: 20px;
+      padding: 2.25rem;
+      position: relative;
+    }
+
+    .section-headline {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-headline span {
+      background: linear-gradient(
+        115deg,
+        #FFFFFF 0%,
+        #FFFFFF 30%,
+        #FFB347 50%,
+        #FF7A1A 65%,
+        #FFFFFF 85%,
+        #FFFFFF 100%
+      );
+      background-size: 250% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: bookTitleShimmerSweep 7s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    .chapter-accordion-item:hover .chapter-title span {
+      color: var(--cd-amber);
+      text-shadow: 0 0 12px rgba(255, 179, 71, 0.4);
+      transition: all 0.25s ease;
+    }
+
+    /* Features Grid (6 Highlights) */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .feature-item-box {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      transition: all 0.25s ease;
+    }
+
+    .feature-item-box:hover {
+      background: rgba(255, 122, 26, 0.05);
+      border-color: rgba(255, 122, 26, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .feature-icon-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      background: rgba(255, 122, 26, 0.12);
+      color: var(--cd-orange);
+      border: 1px solid rgba(255, 122, 26, 0.3);
+    }
+
+    /* Index Accordion */
+    .chapter-accordion-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--cd-border);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .chapter-accordion-item:hover {
+      border-color: rgba(255, 122, 26, 0.3);
+    }
+
+    .chapter-header {
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      gap: 12px;
+    }
+
+    .chapter-title {
+      font-weight: 700;
+      color: #FFFFFF;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chapter-body {
+      padding: 0 1.25rem 1.25rem;
+      display: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.92rem;
+      color: #94A3B8;
+      padding-top: 1rem;
+    }
+
+    .chapter-body.active {
+      display: block;
+    }
+
+    /* Author Showcase Card */
+    .author-card {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--cd-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+    }
+
+    .author-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--cd-orange);
+      box-shadow: 0 0 20px rgba(255, 122, 26, 0.3);
+    }
+
+    /* Right Column: Sticky Checkout Card */
+    .book-right-col {
+      position: relative;
+    }
+
+    .checkout-sticky-card {
+      position: sticky;
+      top: 90px;
+      background: var(--cd-card);
+      border: 1px solid rgba(255, 122, 26, 0.35);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 122, 26, 0.15);
+    }
+
+    .checkout-preview-thumb {
+      position: relative;
+      background: #090A10;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      border-bottom: 1px solid var(--cd-border);
+    }
+
+    .checkout-thumb-img {
+      max-width: 240px;
+      width: 100%;
+      height: auto;
+      border-radius: 14px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 122, 26, 0.2);
+      transform: perspective(800px) rotateY(-4deg) rotateX(2deg);
+      transition: transform 0.35s ease;
+    }
+
+    .checkout-thumb-img:hover {
+      transform: perspective(800px) rotateY(0deg) rotateX(0deg) scale(1.03);
+    }
+
+    /* 3D Dynamic Book Cover & Spine */
+    .cover-box-3d {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 18px;
+      height: 250px;
+      display: grid;
+      place-items: center;
+      perspective: 800px;
+      overflow: hidden;
+      width: 100%;
+    }
+    .cover-3d {
+      width: 140px;
+      height: 195px;
+      border-radius: 6px 12px 12px 6px;
+      box-shadow: -10px 14px 28px rgba(0, 0, 0, 0.65), inset 6px 0 0 rgba(255, 255, 255, 0.25);
+      padding: 14px 12px;
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+      line-height: 1.25;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      transform: rotateY(-18deg) rotateX(4deg);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+    }
+    .cover-box-3d:hover .cover-3d {
+      transform: rotateY(0deg) rotateX(0deg) scale(1.08);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 122, 26, 0.3);
+    }
+    .cover-3d em {
+      font-style: normal;
+      font-size: 10px;
+      opacity: 0.9;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* Sample PDF modal tab buttons */
+    .sample-tab-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94A3B8;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+    .sample-tab-btn:hover {
+      color: #FFF;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .sample-tab-btn.active {
+      background: var(--cd-orange);
+      color: #FFF;
+      border-color: var(--cd-orange);
+    }
+
+    .checkout-card-body {
+      padding: 1.75rem;
+    }
+
+    .card-pitch-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.35;
+      margin-bottom: 1rem;
+    }
+
+    .price-display-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 0.75rem;
+    }
+
+    .main-price-val {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #FFFFFF;
+      font-family: 'JetBrains Mono', 'Inter', monospace;
+    }
+
+    .strike-price-val {
+      font-size: 1.15rem;
+      color: #64748B;
+      text-decoration: line-through;
+    }
+
+    .discount-pill-tag {
+      background: rgba(239, 68, 68, 0.18);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #EF4444;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .offer-urgent-pill {
+      background: rgba(255, 122, 26, 0.12);
+      border: 1px solid rgba(255, 122, 26, 0.3);
+      color: var(--cd-orange);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 1.25rem;
+    }
+
+    .btn-order-primary {
+      width: 100%;
+      background: linear-gradient(135deg, #FF7A1A 0%, #EA580C 100%);
+      color: #FFFFFF;
+      border: none;
+      padding: 15px;
+      border-radius: 14px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(255, 122, 26, 0.4);
+      transition: all 0.25s ease;
+      margin-bottom: 0.85rem;
+    }
+
+    .btn-order-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(255, 122, 26, 0.6);
+    }
+
+    .btn-preview-secondary {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #E2E8F0;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      margin-bottom: 1.25rem;
+    }
+
+    .btn-preview-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 122, 26, 0.4);
+      color: #FFFFFF;
+    }
+
+    .includes-checklist {
+      list-style: none;
+      padding: 0;
+      margin: 1.25rem 0;
+      display: grid;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: #CBD5E1;
+      border-top: 1px solid var(--cd-border);
+      border-bottom: 1px solid var(--cd-border);
+      padding: 1rem 0;
+    }
+
+    .includes-checklist li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .includes-checklist li i {
+      color: #10B981;
+      font-size: 0.85rem;
+    }
+
+    .helpline-box {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--cd-border);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #94A3B8;
+    }
+
+    .helpline-phone-link {
+      color: var(--cd-orange);
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+
+    /* Checkout Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 7, 13, 0.88);
+      backdrop-filter: blur(10px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #121422;
+      border: 1px solid rgba(255, 122, 26, 0.35);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9);
+      overflow: hidden;
+      animation: modalScaleIn 0.3s ease;
+    }
+
+    @keyframes modalScaleIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-topbar {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .modal-body {
+      padding: 1.75rem;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .gateway-options-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 1.25rem;
+    }
+
+    .gateway-btn {
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 10px 4px;
+      background: rgba(255, 255, 255, 0.02);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .gateway-btn.active {
+      border-color: var(--cd-orange);
+      background: rgba(255, 122, 26, 0.15);
+      box-shadow: 0 0 15px rgba(255, 122, 26, 0.3);
+    }
+
+    .input-field {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 11px 14px;
+      color: #FFFFFF;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      margin-top: 6px;
+      margin-bottom: 1rem;
+      box-sizing: border-box;
+    }
+
+    .input-field:focus {
+      border-color: var(--cd-orange);
+      box-shadow: 0 0 0 2px rgba(255, 122, 26, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- REACT NAVBAR BUNDLE MOUNT -->
+  <div id="site-navbar-root"></div>
+
+  <!-- MAIN BOOK DETAILS WRAPPER -->
+  <div class="book-page-wrapper">
+    
+    <main class="book-layout-grid">
+      
+      <!-- ======================================================================
+           LEFT COLUMN: HERO CONTENT + TABS + SECTIONS
+           ====================================================================== -->
+      <div class="book-left-col">
+        
+        <!-- Breadcrumbs & Book Header -->
+        <section id="overview" class="book-hero-content">
+          
+          <div class="breadcrumb-bar" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <button type="button" onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = '/shop'; }" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #FF7A1A; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s;" onmouseenter="this.style.background='rgba(255,122,26,0.15)'" onmouseleave="this.style.background='rgba(255,255,255,0.06)'">
+              <i class="fas fa-arrow-left"></i> <span>বুকশপে ফিরুন (Back to Shop)</span>
+            </button>
+            <span style="opacity: 0.3;">|</span>
+            <a href="/"><i class="fas fa-home"></i> হোম</a>
+            <i class="fas fa-chevron-right text-xs"></i>
+            <a href="/shop">বুকশপ</a>
+            <i class="fas fa-chevron-right text-xs"></i>
+            <span id="breadcrumbBookName" style="color: #E2E8F0;">লোড হচ্ছে...</span>
+          </div>
+
+          <div class="hero-badges-row">
+            <span class="pill-badge pill-level" id="bookPillLevel">এইচএসসি</span>
+            <span class="pill-badge pill-subject" id="bookPillSubject">পদার্থবিজ্ঞান ১ম ও ২য় পত্র</span>
+            <span class="pill-badge pill-stock" id="bookPillStock">
+              <i class="fas fa-check-circle"></i> ইন স্টক (রেডি টু শিপ)
+            </span>
+          </div>
+
+          <h1 class="book-hero-title anim-text-shimmer word-reveal" id="bookHeaderTitle">
+            HSC Physics Masterbook (১ম ও ২য় পত্র)
+          </h1>
+
+          <p class="book-hero-desc word-reveal" id="bookHeaderDesc">
+            এইচএসসি পদার্থবিজ্ঞানের প্রতিটি অধ্যায়ের পূর্ণাঙ্গ কনসেপ্ট, গতিবিদ্যা, কাজ-শক্তি, তরঙ্গ, তাপগতিবিদ্যা এবং আলো ও তড়িতের বিগত ১৫ বছরের সকল বোর্ড প্রশ্ন সমাধান ও শর্টকাট ক্যালকুলেটর ট্রিকস।
+          </p>
+
+          <!-- Meta Highlights -->
+          <div class="book-meta-chips">
+            <div class="meta-chip-item" style="color: #FFB347;">
+              <i class="fas fa-star"></i>
+              <strong id="bookRatingText">4.95</strong>
+              <span id="bookReviewsCount" style="color: #94A3B8;">(১,২৪০+ শিক্ষার্থী কিনেছে)</span>
+            </div>
+            <div class="meta-chip-item">
+              <i class="fas fa-file-lines" style="color: #60A5FA;"></i>
+              <span id="bookPagesCount">৪২০ পৃষ্ঠা</span>
+            </div>
+            <div class="meta-chip-item">
+              <i class="fas fa-book-bookmark" style="color: #34D399;"></i>
+              <span id="bookBindingText">হার্ডকভার আর্ট পেপার</span>
+            </div>
+            <div class="meta-chip-item">
+              <i class="fas fa-truck-fast" style="color: #F87171;"></i>
+              <span>সারাদেশে ক্যাশ অন ডেলিভারি</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Sticky Section Navigation Tabs -->
+        <nav class="book-tabs-nav" aria-label="Book Details Tabs">
+          <button class="book-tab-btn active" onclick="scrollToSection('sec-features', this)">
+            <i class="fas fa-sparkles"></i> ১. বিশেষত্ব ও সুবিধা
+          </button>
+          <button class="book-tab-btn" onclick="scrollToSection('sec-index', this)">
+            <i class="fas fa-list-ol"></i> ২. সূচিপত্র ও ডেমো
+          </button>
+          <button class="book-tab-btn" onclick="scrollToSection('sec-author', this)">
+            <i class="fas fa-user-graduate"></i> ৩. লেখক পরিচিতি
+          </button>
+          <button class="book-tab-btn" onclick="scrollToSection('sec-reviews', this)">
+            <i class="fas fa-star"></i> ৪. রিভিউ ও রেটিং
+          </button>
+          <button class="book-tab-btn" onclick="scrollToSection('sec-faq', this)">
+            <i class="fas fa-circle-question"></i> ৫. সাধারণ জিজ্ঞাসা
+          </button>
+        </nav>
+
+        <!-- Section 1: Book Highlights & Features -->
+        <section id="sec-features" class="content-section-card ai-anim-box">
+          <h2 class="section-headline">
+            <i class="fas fa-gem" style="color: var(--cd-orange);"></i>
+            <span class="word-reveal">বইটির বিশেষত্ব ও যা যা থাকছে</span>
+          </h2>
+          <div class="features-grid" id="bookFeaturesGrid">
+            <div class="feature-item-box">
+              <div class="feature-icon-circle"><i class="fas fa-brain"></i></div>
+              <div>
+                <h4 style="color: #FFF; font-size: 1rem; margin-bottom: 4px;">কনসেপ্ট ক্লিয়ারিং থিওরি</h4>
+                <p style="color: #94A3B8; font-size: 0.85rem;">মুখস্থ না করে প্রতিটি সূত্রের উৎপত্তি ও বাস্তব জীবনের প্রয়োগসহ সহজ বিশ্লেষণ।</p>
+              </div>
+            </div>
+            <div class="feature-item-box">
+              <div class="feature-icon-circle"><i class="fas fa-calculator"></i></div>
+              <div>
+                <h4 style="color: #FFF; font-size: 1rem; margin-bottom: 4px;">ক্যালকুলেটর শর্টকাট হ্যাকস</h4>
+                <p style="color: #94A3B8; font-size: 0.85rem;">মাত্র ১০-১৫ সেকেন্ডে জটিল MCQ নির্ভুল সমাধানের সুপার টেকনিক।</p>
+              </div>
+            </div>
+            <div class="feature-item-box">
+              <div class="feature-icon-circle"><i class="fas fa-layer-group"></i></div>
+              <div>
+                <h4 style="color: #FFF; font-size: 1rem; margin-bottom: 4px;">টাইপভিত্তিক CQ & MCQ</h4>
+                <p style="color: #94A3B8; font-size: 0.85rem;">বিগত ১৫ বছরের সকল শিক্ষা বোর্ড ও শীর্ষ কলেজের প্রশ্ন টাইপ ধরে সাজানো।</p>
+              </div>
+            </div>
+            <div class="feature-item-box">
+              <div class="feature-icon-circle"><i class="fas fa-print"></i></div>
+              <div>
+                <h4 style="color: #FFF; font-size: 1rem; margin-bottom: 4px;">প্রিমিয়াম আর্ট পেপার প্রিন্ট</h4>
+                <p style="color: #94A3B8; font-size: 0.85rem;">চোখের আরামদায়ক ৮০ জিএসএম প্রিমিয়াম আর্ট পেপার ও দীর্ঘস্থায়ী হার্ডকভার।</p>
+              </div>
+            </div>
+            <div class="feature-item-box">
+              <div class="feature-icon-circle"><i class="fas fa-truck"></i></div>
+              <div>
+                <h4 style="color: #FFF; font-size: 1rem; margin-bottom: 4px;">ক্যাশ অন ডেলিভারি সুবিধা</h4>
+                <p style="color: #94A3B8; font-size: 0.85rem;">বই হাতে পেয়ে চেক করে মূল্য পরিশোধের সুযোগ। সারাদেশে ২-৩ দিনে পৌঁছে যাবে।</p>
+              </div>
+            </div>
+            <div class="feature-item-box">
+              <div class="feature-icon-circle"><i class="fas fa-gift"></i></div>
+              <div>
+                <h4 style="color: #FFF; font-size: 1rem; margin-bottom: 4px;">ফ্রি ফর্মুলা বুকলেট</h4>
+                <p style="color: #94A3B8; font-size: 0.85rem;">প্রতিটি বইয়ের সাথে থাকছে পকেটে বহনযোগ্য বিশেষ কালারফুল ফর্মুলা শিট।</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: Index / Table of Contents -->
+        <section id="sec-index" class="content-section-card ai-anim-box">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 10px;">
+            <h2 class="section-headline" style="margin-bottom: 0;">
+              <i class="fas fa-book-open" style="color: var(--cd-orange);"></i>
+              <span class="word-reveal">সূচিপত্র ও চ্যাপ্টার তালিকা</span>
+            </h2>
+            <button type="button" class="btn-preview-secondary" onclick="openSamplePdfModal()" style="margin: 0; width: auto; padding: 8px 16px;">
+              <i class="fas fa-file-pdf" style="color: #EF4444;"></i>
+              <span>নমুনা পৃষ্ঠা PDF প্রিভিউ</span>
+            </button>
+          </div>
+          
+          <div id="bookChaptersList">
+            <!-- Dynamically populated chapters -->
+          </div>
+        </section>
+
+        <!-- Section 3: Author Bio -->
+        <section id="sec-author" class="content-section-card ai-anim-box">
+          <h2 class="section-headline">
+            <i class="fas fa-user-tie" style="color: var(--cd-orange);"></i>
+            <span class="word-reveal">লেখক ও মেন্টর পরিচিতি</span>
+          </h2>
+          <div class="author-card">
+            <img src="/images/student-hero.jpg" alt="Author Dipu Sir" class="author-avatar" id="authorAvatarImg">
+            <div>
+              <h3 style="color: #FFF; font-size: 1.25rem; font-weight: 800;" id="authorName">দীপু স্যার ও বুয়েট মেন্টর প্যানেল</h3>
+              <p style="color: var(--cd-orange); font-size: 0.9rem; font-weight: 700; margin: 2px 0 8px;">সিনিয়র ফ্যাকাল্টি ও শিক্ষা গবেষক (BUET CSE)</p>
+              <p style="color: #94A3B8; font-size: 0.9rem; line-height: 1.6;" id="authorBio">
+                বিগত ১০+ বছর ধরে দেশের হাজার হাজার শিক্ষার্থীকে বোর্ড পরীক্ষা ও বিশ্ববিদ্যালয় ভর্তি পরীক্ষায় সফলতার শীর্ষে পৌঁছে দিতে কাজ করে যাচ্ছেন। বাস্তবসম্মত কৌশল ও শর্টকাট উদ্ভাবনে দেশে পথপ্রদর্শক।
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4: Reviews -->
+        <section id="sec-reviews" class="content-section-card ai-anim-box">
+          <h2 class="section-headline">
+            <i class="fas fa-comment-dots" style="color: var(--cd-orange);"></i>
+            <span class="word-reveal">শিক্ষার্থীদের রিভিউ ও মতামত</span>
+          </h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--cd-border); border-radius: 14px; padding: 1.25rem;">
+              <div style="color: #FBBF24; margin-bottom: 6px;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+              <p style="color: #CBD5E1; font-size: 0.9rem; margin-bottom: 10px;">"এই বইটি কেনার পর পদার্থবিজ্ঞানের ভীতি একদম দূর হয়ে গেছে। শর্টকাট টেকনিকগুলো অসাধারণ!"</p>
+              <div style="font-size: 0.82rem; color: #94A3B8;">— তানভীর আহমেদ (নটর ডেম কলেজ, ঢাকা)</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--cd-border); border-radius: 14px; padding: 1.25rem;">
+              <div style="color: #FBBF24; margin-bottom: 6px;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+              <p style="color: #CBD5E1; font-size: 0.9rem; margin-bottom: 10px;">"মাত্র ২ দিনে ক্যাশ অন ডেলিভারিতে সুন্দর প্যাকেজিংয়ে বই পেয়েছি। কাগজের মান ও প্রিন্ট চমৎকার।"</p>
+              <div style="font-size: 0.82rem; color: #94A3B8;">— সাদিয়া আফরিন (রাজশাহী কলেজ)</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5: FAQs -->
+        <section id="sec-faq" class="content-section-card ai-anim-box">
+          <h2 class="section-headline">
+            <i class="fas fa-circle-question" style="color: var(--cd-orange);"></i>
+            <span class="word-reveal">সাধারণ জিজ্ঞাসাসমূহ (FAQ)</span>
+          </h2>
+          <div id="faqListWrap">
+            <div class="chapter-accordion-item">
+              <div class="chapter-header" onclick="toggleChapter(this)">
+                <div class="chapter-title"><i class="fas fa-truck" style="color: var(--cd-orange);"></i> বই ডেলিভারি হতে কত দিন সময় লাগবে?</div>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="chapter-body">
+                ঢাকার ভেতর ২৪ থেকে ৪৮ ঘণ্টা এবং ঢাকার বাইরে জেলা সদরে ২ থেকে ৩ কার্যদিবসের মধ্যে সরাসরি ক্যাশ অন ডেলিভারিতে বই পৌঁছে দেওয়া হবে।
+              </div>
+            </div>
+            <div class="chapter-accordion-item">
+              <div class="chapter-header" onclick="toggleChapter(this)">
+                <div class="chapter-title"><i class="fas fa-money-bill-wave" style="color: var(--cd-green);"></i> বই হাতে পেয়ে কি মূল্য পরিশোধ করা যাবে?</div>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="chapter-body">
+                হ্যাঁ! সম্পূর্ণ ক্যাশ অন ডেলিভারি (Cash on Delivery) সুবিধা রয়েছে। ডেলিভারি ম্যানের কাছ থেকে বই বুঝে পেয়ে তারপর মূল্য পরিশোধ করতে পারবেন।
+              </div>
+            </div>
+            <div class="chapter-accordion-item">
+              <div class="chapter-header" onclick="toggleChapter(this)">
+                <div class="chapter-title"><i class="fas fa-rotate-left" style="color: #60A5FA;"></i> বইয়ে কোনো পৃষ্ঠা বা প্রিন্টিং সমস্যা থাকলে রিটার্ন করা যাবে?</div>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="chapter-body">
+                হ্যাঁ, ১০০% ফ্রি রিপ্লেসমেন্ট গ্যারান্টি রয়েছে। বইয়ের কোনো ডিফেক্ট থাকলে আমাদের হেল্পলাইন নম্বরে যোগাযোগ করলেই সম্পূর্ণ বিনামূল্যে নতুন বই পাঠিয়ে দেওয়া হবে।
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+
+      <!-- ======================================================================
+           RIGHT COLUMN: STICKY CHECKOUT SIDEBAR CARD (10MS / COURSE PATTERN)
+           ====================================================================== -->
+      <aside class="book-right-col">
+        <div class="checkout-sticky-card ai-anim-box">
+          
+          <!-- Book 3D Dynamic Cover Preview -->
+          <div class="checkout-preview-thumb">
+            <div class="cover-box-3d" id="sidebar3dCoverBox">
+              <div class="cover-3d" id="sidebar3dCover" style="background: linear-gradient(135deg, #2563eb, #0b1020 160%);">
+                <em>Dipu's Books</em>
+                <span id="sidebar3dTitle">Physics Masterbook</span>
+                <em>MASTER BOOK</em>
+              </div>
+            </div>
+            <img src="/images/books/hsc-physics-masterbook.jpg" id="bookSidebarThumb" alt="Book Cover" class="checkout-thumb-img" style="display: none;" onerror="this.style.display='none'; document.getElementById('sidebar3dCoverBox').style.display='grid';">
+          </div>
+
+          <div class="checkout-card-body">
+            
+            <h3 class="card-pitch-title" id="bookPitchTitle">
+              এইচএসসি পদার্থবিজ্ঞান সম্পূর্ণ কনসেপ্ট ও বোর্ড হ্যাকস
+            </h3>
+
+            <!-- Price Display Row -->
+            <div class="price-display-row">
+              <span class="main-price-val" id="bookMainPrice">৳৪৫০</span>
+              <span class="strike-price-val" id="bookStrikePrice">৳৫৫০</span>
+              <span class="discount-pill-tag" id="bookDiscountTag">-১৮% ছাড়</span>
+            </div>
+
+            <div class="offer-urgent-pill">
+              <i class="fas fa-fire"></i> সীমিত সময়ের বিশেষ ছাড় চলছে!
+            </div>
+
+            <!-- Primary Order Button -->
+            <button id="openOrderModalBtn" class="btn-order-primary" onclick="openOrderModal()">
+              <i class="fas fa-shopping-bag"></i>
+              <span>বইটি অর্ডার করুন / ক্যাশ অন ডেলিভারি</span>
+            </button>
+
+            <!-- Secondary Free Preview Button -->
+            <button type="button" class="btn-preview-secondary" onclick="openSamplePdfModal()">
+              <i class="fas fa-eye" style="color: var(--cd-orange);"></i>
+              <span>ফ্রি নমুনা পৃষ্ঠা ও সূচিপত্র প্রিভিউ</span>
+            </button>
+
+            <!-- Money-back & Quality Guarantee -->
+            <div style="font-size: 0.82rem; color: #10B981; text-align: center; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center; gap: 6px;">
+              <i class="fas fa-shield-halved"></i> ১০০% অরিজিনাল আর্ট পেপার ও সন্তুষ্টি গ্যারান্টি
+            </div>
+
+            <!-- What's Included Checklist -->
+            <div style="font-size: 0.95rem; font-weight: 800; color: #FFF; margin-bottom: 8px;">
+              <i class="fas fa-list-check" style="color: var(--cd-orange);"></i> এই বইটির সাথে যা থাকছে:
+            </div>
+            <ul class="includes-checklist">
+              <li><i class="fas fa-truck-fast"></i> <span>সারাদেশে ক্যাশ অন ডেলিভারি সুবিধা</span></li>
+              <li><i class="fas fa-file-shield"></i> <span>প্রিমিয়াম ৮০ জিএসএম আর্ট পেপার প্রিন্ট</span></li>
+              <li><i class="fas fa-calculator"></i> <span>দীপু স্যারের স্পেশাল ক্যালকুলেটর হ্যাকস শিট</span></li>
+              <li><i class="fas fa-bookmark"></i> <span>ফ্রি কালারফুল বুকমার্ক ও স্টাডি ট্র্যাকার</span></li>
+              <li><i class="fas fa-mobile-screen"></i> <span>ডিজিটাল কিউআর কোড স্ক্যান করে ভিডিও সল্যুশন</span></li>
+            </ul>
+
+            <!-- Helpline Box -->
+            <div class="helpline-box">
+              অর্ডার সংক্রান্ত যেকোনো তথ্যে সরাসরি কল করুন:<br>
+              <a href="tel:16910" class="helpline-phone-link">
+                <i class="fas fa-phone-volume"></i> ১৬৯১০
+              </a>
+              <span style="color: #64748B; margin: 0 4px;">বা</span>
+              <a href="tel:01712345678" class="helpline-phone-link">
+                ০১৭১২-৩৪৫৬৭৮
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </aside>
+
+    </main>
+
+  </div>
+
+
+  <!-- ============================================================================
+       CHECKOUT / ORDER MODAL (BKASH, NAGAD, COD)
+       ============================================================================ -->
+  <div class="modal-overlay" id="orderModal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-topbar">
+        <h3 style="color: #FFF; font-size: 1.15rem; font-weight: 800;" id="modalOrderHeading">অর্ডার সম্পন্ন করুন</h3>
+        <button type="button" onclick="closeOrderModal()" style="background: none; border: none; color: #94A3B8; font-size: 1.25rem; cursor: pointer;">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        
+        <!-- Step 1: Form & Options -->
+        <div id="orderStepForm">
+          
+          <div style="display: flex; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--cd-border); border-radius: 12px; padding: 12px; margin-bottom: 1.25rem; align-items: center;">
+            <div id="modalThumbCover" style="width: 55px; height: 75px; border-radius: 6px; background: linear-gradient(135deg, #2563eb, #0b1020); color: #fff; font-size: 8px; font-weight: 800; display: flex; flex-direction: column; justify-content: space-between; padding: 6px; box-shadow: -2px 4px 8px rgba(0,0,0,0.5); flex-shrink: 0;">
+              <span>Dipu's</span>
+              <span id="modalThumbTitle" style="font-size: 9px; line-height: 1.1;">Physics Masterbook</span>
+              <span style="font-size: 6px; opacity: 0.8;">MASTER BOOK</span>
+            </div>
+            <div>
+              <h4 id="modalBookTitleText" style="color: #FFF; font-size: 0.98rem; font-weight: 700; margin-bottom: 4px;">Physics Masterbook</h4>
+              <div style="color: var(--cd-orange); font-weight: 800; font-size: 1.15rem;" id="modalBookPriceText">৳৪৫০</div>
+            </div>
+          </div>
+
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #CBD5E1; margin-bottom: 6px;">পেমেন্ট মেথড নির্বাচন করুন:</label>
+          <div class="gateway-options-grid">
+            <div class="gateway-btn active" onclick="selectGateway('cod', this)">
+              <i class="fas fa-hand-holding-dollar" style="color: var(--cd-orange); font-size: 1.2rem;"></i>
+              <span style="font-size: 0.75rem; font-weight: 700; color: #FFF;">ক্যাশ অন ডেলিভারি</span>
+            </div>
+            <div class="gateway-btn" onclick="selectGateway('bkash', this)">
+              <span style="color: #E2136E; font-weight: 900; font-size: 1rem;">bKash</span>
+              <span style="font-size: 0.72rem; color: #94A3B8;">বিকাশ</span>
+            </div>
+            <div class="gateway-btn" onclick="selectGateway('nagad', this)">
+              <span style="color: #F7941D; font-weight: 900; font-size: 1rem;">Nagad</span>
+              <span style="font-size: 0.72rem; color: #94A3B8;">নগদ</span>
+            </div>
+            <div class="gateway-btn" onclick="selectGateway('rocket', this)">
+              <span style="color: #8C3494; font-weight: 900; font-size: 1rem;">Rocket</span>
+              <span style="font-size: 0.72rem; color: #94A3B8;">রকেট</span>
+            </div>
+          </div>
+
+          <form id="bookOrderForm" onsubmit="handleOrderSubmit(event)">
+            <div>
+              <label style="font-size: 0.82rem; color: #94A3B8;">আপনার পূর্ণ নাম:</label>
+              <input type="text" id="orderCustName" class="input-field" placeholder="যেমন: মো: রাহাত ইসলাম" required>
+            </div>
+
+            <div>
+              <label style="font-size: 0.82rem; color: #94A3B8;">মোবাইল নম্বর (ডেলিভারির জন্য সক্রিয়):</label>
+              <input type="tel" id="orderCustPhone" class="input-field" placeholder="017XXXXXXXX" required>
+            </div>
+
+            <div>
+              <label style="font-size: 0.82rem; color: #94A3B8;">সম্পূর্ণ ডেলিভারি ঠিকানা (বাসা/রোড/উপজেলা/জেলা):</label>
+              <textarea id="orderCustAddress" class="input-field" rows="2" style="resize: vertical;" placeholder="যেমন: বাসা ১২, রোড ৪, সেক্টর ৭, উত্তরা, ঢাকা" required></textarea>
+            </div>
+
+            <!-- Total Summary Table -->
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--cd-border); border-radius: 10px; padding: 12px 14px; margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.88rem; color: #94A3B8; margin-bottom: 6px;">
+                <span>বইয়ের মূল্য:</span>
+                <span id="modalCalcBookPrice" style="color: #FFF;">৳৪৫০</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.88rem; color: #94A3B8; margin-bottom: 6px;">
+                <span>হোম ডেলিভারি চার্জ:</span>
+                <span style="color: #10B981; font-weight: 700;">ফ্রি (অফার চলছে)</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 800; color: #FFF; border-top: 1px dashed var(--cd-border); padding-top: 8px;">
+                <span>সর্বমোট প্রদেয়:</span>
+                <span id="modalCalcTotal" style="color: var(--cd-orange);">৳৪৫০</span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-order-primary" style="margin-bottom: 0;">
+              <i class="fas fa-check-circle"></i>
+              <span id="submitOrderBtnText">অর্ডার নিশ্চিত করুন (ক্যাশ অন ডেলিভারি)</span>
+            </button>
+          </form>
+
+        </div>
+
+        <!-- Step 2: Order Success Confirmation -->
+        <div id="orderStepSuccess" style="display: none; text-align: center; padding: 1rem 0;">
+          <div style="width: 70px; height: 70px; border-radius: 50%; background: rgba(16, 185, 129, 0.2); color: #10B981; font-size: 2.2rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; border: 2px solid #10B981; box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);">
+            <i class="fas fa-check"></i>
+          </div>
+          <h3 style="color: #FFF; font-size: 1.4rem; font-weight: 800; margin-bottom: 8px;">অর্ডার সফলভাবে গৃহীত হয়েছে!</h3>
+          <p style="color: #94A3B8; font-size: 0.92rem; line-height: 1.6; margin-bottom: 1.5rem;">
+            ধন্যবাদ! আপনার অর্ডারটি নিশ্চিত করা হয়েছে। খুব শীঘ্রই আমাদের কাস্টমার সাপোর্ট টিম থেকে আপনার নম্বরে ফোন করে কনফার্ম করা হবে।
+          </p>
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--cd-border); border-radius: 12px; padding: 14px; text-align: left; margin-bottom: 1.5rem;">
+            <div style="font-size: 0.85rem; color: #94A3B8;">অর্ডার আইডি: <strong id="succOrderId" style="color: var(--cd-orange);">DE-98421</strong></div>
+            <div style="font-size: 0.85rem; color: #94A3B8; margin-top: 4px;">বই: <strong id="succBookName" style="color: #FFF;">Physics Masterbook</strong></div>
+            <div style="font-size: 0.85rem; color: #94A3B8; margin-top: 4px;">প্রদেয় মূল্য: <strong id="succTotalPay" style="color: #10B981;">৳৪৫০ (ক্যাশ অন ডেলিভারি)</strong></div>
+          </div>
+          <button type="button" class="btn-order-primary" onclick="closeOrderModal()">
+            <span>ধন্যবাদ, সম্পন্ন হয়েছে</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================================
+       SAMPLE PAGES & DEMO PDF PREVIEW MODAL
+       ============================================================================ -->
+  <div class="modal-overlay" id="samplePdfModal" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width: 720px;">
+      <div class="modal-topbar">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-book-open" style="color: var(--cd-orange); font-size: 1.3rem;"></i>
+          <div>
+            <h3 style="color: #FFF; font-size: 1.1rem; font-weight: 800;" id="sampleModalTitle">বইয়ের ডেমো ও নমুনা পাতা প্রিভিউ</h3>
+            <span style="font-size: 0.78rem; color: #10B981;">১০০% ফ্রি স্যাম্পল ভিউয়ার</span>
+          </div>
+        </div>
+        <button type="button" onclick="closeSamplePdfModal()" style="background: none; border: none; color: #94A3B8; font-size: 1.25rem; cursor: pointer;">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body" style="padding: 1.5rem;">
+        <div style="display: flex; gap: 8px; margin-bottom: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px; overflow-x: auto;">
+          <button type="button" class="sample-tab-btn active" onclick="switchSampleTab(1, this)">সূচিপত্র ডেমো</button>
+          <button type="button" class="sample-tab-btn" onclick="switchSampleTab(2, this)">কনসেপ্ট ও শর্টকাট ট্রিকস</button>
+          <button type="button" class="sample-tab-btn" onclick="switchSampleTab(3, this)">বোর্ড CQ সমাধান নমুনা</button>
+        </div>
+
+        <div id="sampleTabContent" style="background: #090A10; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1.5rem; min-height: 240px; color: #CBD5E1; font-size: 0.92rem; line-height: 1.7;">
+          <!-- Dynamically populated from JavaScript -->
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; gap: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 12px;">
+          <span style="font-size: 0.85rem; color: #94A3B8;">
+            <i class="fas fa-truck-fast" style="color: var(--cd-orange);"></i> ক্যাশ অন ডেলিভারিতে সম্পূর্ণ বইটি সংগ্রহ করুন
+          </span>
+          <button type="button" class="btn-order-primary" onclick="closeSamplePdfModal(); openOrderModal();" style="width: auto; padding: 10px 24px; margin-bottom: 0;">
+            <i class="fas fa-shopping-bag"></i> এখনই সম্পূর্ণ বইটি কিনুন
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================================
+       MASTER BOOKS CATALOG & PAGE CONTROLLER
+       ============================================================================ -->
+  <script>
+    const BOOKS_CATALOG = [
+      {
+        id: "book-hsc-physics",
+        slug: "hsc-physics-masterbook",
+        title: "Physics Masterbook",
+        category: "hsc",
+        classBadge: "এইচএসসি (১ম ও ২য় পত্র)",
+        subject: "পদার্থবিজ্ঞান ১ম ও ২য় পত্র",
+        author: "দীপু স্যার ও বুয়েট মেন্টর প্যানেল",
+        rating: 4.95,
+        ratingCount: 1240,
+        price: 550,
+        discountPrice: 450,
+        color: "#2563eb",
+        image: "/images/books/hsc-physics-masterbook.jpg",
+        description: "এইচএসসি পদার্থবিজ্ঞানের প্রতিটি অধ্যায়ের পূর্ণাঙ্গ কনসেপ্ট, গতিবিদ্যা, কাজ-শক্তি, তরঙ্গ, তাপগতিবিদ্যা এবং আলো ও তড়িতের বিগত ১৫ বছরের সকল বোর্ড প্রশ্ন সমাধান ও ক্যালকুলেটর শর্টকাট ট্রিকস।",
+        pages: 420,
+        binding: "হার্ডকভার প্রিমিয়াম আর্ট পেপার",
+        stockStatus: "ইন স্টক (রেডি টু শিপ)",
+        chapters: [
+          { title: "১. ভৌতজগৎ, পরিমাপ ও ভেক্টর অ্যানালাইসিস", pages: "৪৫ পৃষ্ঠা", desc: "ভেক্টর ডট ও ক্রস গুণনের শর্টকাট, নদী-নৌকা ও বৃষ্টির অংকের ভিজ্যুয়াল কনসেপ্ট ক্লিয়ারিং ট্রিকস।" },
+          { title: "২. গতিবিদ্যা ও নিউটোনিয়ান বলবিদ্যা", pages: "৬৫ পৃষ্ঠা", desc: "প্রক্ষেপক, ঘর্ষণ, কৌণিক গতি, রকেট ও ভরবেগের নিত্যতা সূত্রের সম্পূর্ণ টাইপভিত্তিক CQ বিশ্লেষণ।" },
+          { title: "৩. কাজ, শক্তি ও ক্ষমতা এবং মহাকর্ষ", pages: "৫৫ পৃষ্ঠা", desc: "কুয়া ও স্প্রিংয়ের কাজ, অভিকর্ষজ ত্বরণ পরিবর্তন ও কৃত্রিম উপগ্রহের গতির ১০০% নির্ভুল ব্যাখ্যা।" },
+          { title: "৪. তাপগতিবিদ্যা ও স্থির তড়িৎ", pages: "৬৫ পৃষ্ঠা", desc: "কার্নো ইঞ্জিন, এন্ট্রপি ও কুলম্বের সূত্রের সাথে ক্যালকুলেটর ট্রিকস দিয়ে ১০ সেকেন্ডে MCQ সল্ভ।" },
+          { title: "৫. আলো ও আধুনিক পদার্থবিজ্ঞান", pages: "৭০ পৃষ্ঠা", desc: "ব্যতিচার, অপবর্তন ও ফটোতড়িৎ ক্রিয়ার গাণিতিক সমাধান ও বিগত বছরের শীর্ষ কলেজ প্রশ্ন।" }
+        ]
+      },
+      {
+        id: "book-hsc-math",
+        slug: "higher-math-hacks",
+        title: "Higher Math Hacks",
+        category: "hsc",
+        classBadge: "এইচএসসি (১ম ও ২য় পত্র)",
+        subject: "উচ্চতর গণিত ১ম ও ২য় পত্র",
+        author: "দীপু স্যার ও বুয়েট গণিত গবেষকবৃন্দ",
+        rating: 4.92,
+        ratingCount: 980,
+        price: 520,
+        discountPrice: 420,
+        color: "#16a34a",
+        image: "/images/books/higher-math-masterbook.jpg",
+        description: "ক্যালকুলাস (লিমিট, অন্তরীকরণ ও যোগজীকরণ), ত্রিকোণমিতি, বিন্যাস-সমাবেশ ও কনিক্সের জটিল সমস্যা মাত্র ১০-১৫ সেকেন্ডে সমাধানের শর্টকাট হ্যাকস ও বোর্ড মাস্টার বুক।",
+        pages: 380,
+        binding: "হার্ডকভার অফসেট পেপার",
+        stockStatus: "ইন স্টক",
+        chapters: [
+          { title: "১. ম্যাট্রিক্স ও নির্ণায়ক হ্যাকস", pages: "৩৫ পৃষ্ঠা", desc: "ক্রেমারের নিয়ম ও বিপরীত ম্যাট্রিক্স নির্ণয়ের ক্যালকুলেটর শর্টকাট ও বোর্ড CQ সমাধান।" },
+          { title: "২. সরলরেখা ও বৃত্তের সমীকরণ বিশ্লেষণ", pages: "৫৫ পৃষ্ঠা", desc: "দূরত্ব, ঢাল ও স্পর্শক সংক্রান্ত জটিল সমস্যা মাত্র ১ লাইনে বের করার স্পেশাল ফর্মুলা।" },
+          { title: "৩. লিমিট ও অন্তরীকরণ (Differentiation)", pages: "৭০ পৃষ্ঠা", desc: "L'Hopital রুল ও ক্যালকুলেটরের d/dx ফাংশন দিয়ে ১০ সেকেন্ডে প্রতিটি MCQ সল্ভ।" },
+          { title: "৪. যোগজীকরণ (Integration & Area)", pages: "৭৫ পৃষ্ঠা", desc: "আংশিক ভগ্নাংশ ও ক্ষেত্রফল নির্ণয়ের জাদু টেকনিক যা প্রতি পরীক্ষায় কমন পড়ে।" },
+          { title: "৫. বিন্যাস, সমাবেশ ও সম্ভাব্যতা", pages: "৪৫ পৃষ্ঠা", desc: "বাস্তব জীবনের উদাহরণের সাহায্যে সহজে কনসেপ্ট ক্লিয়ারিং।" }
+        ]
+      },
+      {
+        id: "ebook-hsc-chemistry",
+        slug: "chemistry-masterbook",
+        title: "Chemistry Masterbook",
+        category: "hsc",
+        classBadge: "এইচএসসি (১ম ও ২য় পত্র)",
+        subject: "রসায়ন ১ম ও ২য় পত্র",
+        author: "দীপু স্যার ও ডুয়েট কেমিস্ট্রি প্যানেল",
+        rating: 4.89,
+        ratingCount: 860,
+        price: 530,
+        discountPrice: 430,
+        color: "#0d9488",
+        image: "/images/books/masterbook-bundle.jpg",
+        description: "গুণগত রসায়ন, পর্যায়বৃত্ত ধর্ম, রাসায়নিক পরিবর্তন এবং সম্পূর্ণ জৈব রসায়নের সকল বিক্রিয়া চার্ট ও মেকানিজমের সহজে মনে রাখার সেরা কালারফুল মাস্টারবুক।",
+        pages: 350,
+        binding: "হার্ডকভার প্রিমিয়াম প্রিন্ট + ফ্রি ই-বুক",
+        stockStatus: "ইন স্টক",
+        chapters: [
+          { title: "১. গুণগত রসায়ন ও দ্রাব্যতা নীতি", pages: "৪০ পৃষ্ঠা", desc: "কোয়ান্টাম সংখ্যা ও Ksp-Kip সংক্রান্ত সকল ম্যাথমেটিক্যাল টাইপ।" },
+          { title: "২. পর্যায়বৃত্ত ধর্ম ও রাসায়নিক বন্ধন", pages: "৫০ পৃষ্ঠা", desc: "সংকরায়ন (Hybridization) ও ফাজানের নীতির রঙ-বেরঙের ইনফোগ্রাফিক।" },
+          { title: "৩. সম্পূর্ণ জৈব রসায়ন বিক্রিয়া চার্ট (Organic Roadmap)", pages: "৮০ পৃষ্ঠা", desc: "রূপান্তর (Conversions), শনাক্তকারী পরীক্ষা ও মেকানিজমের সহজে মনে রাখার ছক।" }
+        ]
+      },
+      {
+        id: "book-science-bundle",
+        slug: "all-in-one-bundle",
+        title: "All-in-One Bundle",
+        category: "hsc",
+        classBadge: "এইচএসসি বিজ্ঞান মেগা সেট",
+        subject: "বিজ্ঞান ৩টি বই কম্বো (পদার্থ + গণিত + রসায়ন)",
+        author: "Dipu's Books সিনিয়র ফ্যাকাল্টি প্যানেল",
+        rating: 4.98,
+        ratingCount: 2450,
+        price: 1600,
+        discountPrice: 1200,
+        color: "#ff7a1a",
+        image: "/images/books/masterbook-bundle.jpg",
+        description: "এইচএসসি শিক্ষার্থীদের জন্য পদার্থবিজ্ঞান, উচ্চতর গণিত এবং রসায়নের ৩টি পূর্ণাঙ্গ মাস্টারবুকের এক্সক্লুসিভ বান্ডেল প্যাক! একসাথে সকল বইয়ে ২৫% স্পেশাল ছাড় ও ফ্রি হোম ডেলিভারি।",
+        pages: 1150,
+        binding: "৩টি লাক্সারি হার্ডকভার বই বক্স সেট",
+        stockStatus: "ইন স্টক (ফ্রি হোম ডেলিভারি)",
+        chapters: [
+          { title: "১. পদার্থবিজ্ঞান ১ম ও ২য় পত্র (কমপ্লিট থিওরি ও হ্যাকস)", pages: "৪২০ পৃষ্ঠা", desc: "ভেক্টর, গতিবিদ্যা, কাজ-ক্ষমতা-শক্তি, মহাকর্ষ, তরঙ্গ, তাপগতিবিদ্যা, স্থির তড়িৎ ও আধুনিক পদার্থবিজ্ঞান।" },
+          { title: "২. উচ্চতর গণিত ১ম ও ২য় পত্র (ক্যালকুলাস & শর্টকাট)", pages: "৩৮০ পৃষ্ঠা", desc: "ম্যাট্রিক্স, সরলরেখা, বৃত্ত, ত্রিকোণমিতি, ডিফারেন্সিয়েশন ও ইন্টিগ্রেশনের ১০ সেকেন্ড ক্যালকুলেটর শর্টকাট।" },
+          { title: "৩. রসায়ন ১ম ও ২য় পত্র (জৈব যৌগ ও সমীকরণ ব্যাংক)", pages: "৩৫০ পৃষ্ঠা", desc: "গুণগত রসায়ন, পর্যায়বৃত্ত ধর্ম, জৈব যৌগের সকল বিক্রিয়া চার্ট ও পরিবেশ রসায়নের সুপার নোটস।" }
+        ]
+      },
+      {
+        id: "book-ssc-science",
+        slug: "ssc-general-math",
+        title: "SSC সাধারণ গণিত",
+        category: "ssc",
+        classBadge: "এসএসসি (৯ম ও ১০ম শ্রেণি)",
+        subject: "সাধারণ গণিত ও বোর্ড CQ সমাধান",
+        author: "দীপু স্যার ও নটর ডেম ফ্যাকাল্টি প্যানেল",
+        rating: 4.90,
+        ratingCount: 910,
+        price: 400,
+        discountPrice: 320,
+        color: "#3aa655",
+        image: "/images/books/higher-math-masterbook.jpg",
+        description: "এসএসসি সাধারণ গণিতের বীজগণিত, জ্যামিতি, ত্রিকোণমিতি ও পরিমিতির প্রতিটি অধ্যায়ের টাইপভিত্তিক সৃজনশীল (CQ) সমাধান ও শতভাগ কমন উপযোগী সাজেশন।",
+        pages: 320,
+        binding: "উন্নত আর্ট পেপারব্যাক",
+        stockStatus: "ইন স্টক",
+        chapters: [
+          { title: "১. বাস্তব সংখ্যা, সেট ও ফাংশন", pages: "৩৫ পৃষ্ঠা", desc: "বাস্তব সংখ্যার শ্রেণিবিভাগ এবং সেটের বোর্ড CQ সমাধান।" },
+          { title: "২. বীজগাণিতিক রাশি ও সমীকরণ", pages: "৫৫ পৃষ্ঠা", desc: "উৎপাদকে বিশ্লেষণ ও দ্বিঘাত সমীকরণের শর্টকাট।" },
+          { title: "৩. জ্যামিতি ও বৃত্ত সংক্রান্ত উপপাদ্য", pages: "৬৫ পৃষ্ঠা", desc: "বৃত্তের স্পর্শক ও সম্পাদ্য অঙ্কনের নির্ভুল নিয়ম।" },
+          { title: "৪. ত্রিকোণমিতিক অনুপাত ও পরিমিতি", pages: "৬০ পৃষ্ঠা", desc: "দূরত্ব-উচ্চতা এবং বিভিন্ন ত্রিমাত্রিক বস্তুর ক্ষেত্রফল ও আয়তন নির্ণয়।" }
+        ]
+      },
+      {
+        id: "book-english-grammar",
+        slug: "ssc-english",
+        title: "SSC ইংরেজি",
+        category: "ssc",
+        classBadge: "এসএসসি (Grammar & Writing)",
+        subject: "English Grammar & Academic Writing",
+        author: "ঢাকা বিশ্ববিদ্যালয় আইবিএ মেন্টরস",
+        rating: 4.88,
+        ratingCount: 780,
+        price: 380,
+        discountPrice: 300,
+        color: "#c9303b",
+        image: "/images/books/hsc-physics-masterbook.jpg",
+        description: "এসএসসি ইংরেজি ১ম ও ২য় পত্রের রাইটিং পার্ট ফুল মার্কস ফর্মুলা, গ্রামারের কঠিন নিয়মসমূহের শর্টকাট টেকনিক এবং শীর্ষ স্কুলের মডেল টেস্ট সমাধান।",
+        pages: 310,
+        binding: "হার্ডকভার পকেট এডিশন",
+        stockStatus: "ইন স্টক",
+        chapters: [
+          { title: "১. রাইটিং পার্ট ফুল মার্কস ফর্মুলা", pages: "৭০ পৃষ্ঠা", desc: "প্যারাগ্রাফ, ফরমাল লেটার, ইমেইল ও গ্রাফ চার্ট লেখার সেরা ফ্রেমওয়ার্ক।" },
+          { title: "২. গ্রামার রুলস ও বোর্ড কোয়েশ্চেন সমাধান", pages: "১২০ পৃষ্ঠা", desc: "রাইট ফর্ম অফ ভার্বস, কমপ্লিটিং সেন্টেন্স ও প্রিপজিশন ট্রিকস।" },
+          { title: "৩. শীর্ষ স্কুলের মডেল টেস্ট পেপার সল্যুশন", pages: "৮০ পৃষ্ঠা", desc: "পরীক্ষার চূড়ান্ত প্রস্তুতির জন্য ব্যাখ্যাসহ মডেল সমাধান।" }
+        ]
+      },
+      {
+        id: "book-class8-kit",
+        slug: "class8-science",
+        title: "অষ্টম শ্রেণি বিজ্ঞান",
+        category: "8",
+        classBadge: "৮ম শ্রেণি (নতুন কারিকুলাম)",
+        subject: "বিজ্ঞান অনুসন্ধানমূলক পাঠ ও অনুশীলন",
+        author: "Dipu's Books জুনিয়র সায়েন্স টিম",
+        rating: 4.87,
+        ratingCount: 620,
+        price: 350,
+        discountPrice: 280,
+        color: "#d98a2b",
+        image: "/images/books/higher-math-masterbook.jpg",
+        description: "নতুন শিক্ষাক্রম অনুযায়ী ৮ম শ্রেণির বিজ্ঞান অনুসন্ধানী ও অনুশীলন পাঠের প্রতিটি অভিজ্ঞতার চিত্রভিত্তিক বিশ্লেষণ, প্রজেক্ট সমাধান ও অধ্যায়ভিত্তিক মূল্যায়ন।",
+        pages: 280,
+        binding: "অফসেট পেপারব্যাক কালার প্রিন্ট",
+        stockStatus: "ইন স্টক",
+        chapters: [
+          { title: "১. গতির নিয়ম ও মহাকর্ষীয় বল", pages: "৪৫ পৃষ্ঠা", desc: "নিউটনের ৩টি গতিসূত্র ও মহাকর্ষ বলের বাস্তব প্রয়োগ।" },
+          { title: "২. শক্তির রূপান্তর ও কাজ", pages: "৪০ পৃষ্ঠা", desc: "গতিশক্তি, বিভবশক্তি এবং শক্তির সংরক্ষণশীলতা নীতি।" },
+          { title: "৩. পরমাণুর গঠন ও রাসায়নিক বিক্রিয়া", pages: "৫৫ পৃষ্ঠা", desc: "ইলেকট্রন বিন্যাস, যোজনী এবং যৌগ গঠনের সহজ উপায়।" }
+        ]
+      },
+      {
+        id: "book-class7-bangla",
+        slug: "class7-bangla",
+        title: "৭ম শ্রেণি বাংলা",
+        category: "7",
+        classBadge: "৭ম শ্রেণি (নতুন কারিকুলাম)",
+        subject: "বাংলা ভাষা ও সাহিত্য পূর্ণাঙ্গ সহায়িকা",
+        author: "Dipu's Books বাংলা সাহিত্য পরিষদ",
+        rating: 4.86,
+        ratingCount: 540,
+        price: 330,
+        discountPrice: 260,
+        color: "#2f66d0",
+        image: "/images/books/hsc-physics-masterbook.jpg",
+        description: "নতুন কারিকুলাম অনুযায়ী ৭ম শ্রেণির বাংলা বইয়ের প্রমিত ভাষা, শব্দের উৎস, ব্যাকরণ অনুশীলন এবং সাহিত্য রচনার সকল একক ও দলগত কাজের নির্ভুল সমাধান।",
+        pages: 260,
+        binding: "উন্নত অফসেট পেপারব্যাক",
+        stockStatus: "ইন স্টক",
+        chapters: [
+          { title: "১. প্রমিত ভাষার ব্যবহার ও মর্যাদা অনুযায়ী কথা বলা", pages: "৪০ পৃষ্ঠা", desc: "দৈনন্দিন জীবনে প্রমিত বাংলা উচ্চারণের নিয়ম।" },
+          { title: "২. শব্দের বর্গ ও ব্যাকরণের নিয়মের সহজ ছক", pages: "৪৫ পৃষ্ঠা", desc: "বিশেষ্য, সর্বনাম, বিশেষণ, ক্রিয়া ও অব্যয়ের সঠিক প্রয়োগ।" },
+          { title: "৩. সাহিত্য অংশ: কবিতা, গল্প ও নাটকের মূলভাব", pages: "৫০ পৃষ্ঠা", desc: "গল্প-কবিতার অন্তর্নিহিত অর্থ ও সৃজনশীল প্রশ্নের উত্তর।" }
+        ]
+      },
+      {
+        id: "book-class6-ict",
+        slug: "class6-ict",
+        title: "ষষ্ঠ শ্রেণি ICT",
+        category: "6",
+        classBadge: "৬ষ্ঠ শ্রেণি (নতুন কারিকুলাম)",
+        subject: "তথ্য ও যোগাযোগ প্রযুক্তি ও ডিজিটাল প্রযুক্তি",
+        author: "দীপু স্যার ও আইসিটি ল্যাব রিসার্চ টিম",
+        rating: 4.90,
+        ratingCount: 680,
+        price: 300,
+        discountPrice: 240,
+        color: "#7c5cff",
+        image: "/images/books/masterbook-bundle.jpg",
+        description: "নতুন কারিকুলামের ষষ্ঠ শ্রেণির ডিজিটাল প্রযুক্তি ও আইসিটির বাস্তবভিত্তিক কম্পিউটার ব্যবহার, নিরাপদ ইন্টারনেট, ওয়ার্ড প্রসেসিং ও প্রজেক্টের কালারফুল সহায়িকা।",
+        pages: 240,
+        binding: "কালারফুল আর্ট পেপার বাইন্ডিং",
+        stockStatus: "ইন স্টক",
+        chapters: [
+          { title: "১. ডিজিটাল প্রযুক্তির পরিচিতি ও ইনপুট-আউটপুট", pages: "৩৫ পৃষ্ঠা", desc: "কম্পিউটার ও ডিজিটাল যন্ত্রপাতির কার্যপদ্ধতি।" },
+          { title: "২. তথ্য ব্যবহারের সঠিক নিয়ম ও সাইবার নিরাপত্তা", pages: "৪০ পৃষ্ঠা", desc: "ইন্টারনেটে পাসওয়ার্ড সুরক্ষা ও নিরাপদ থাকার নিয়ম।" },
+          { title: "৩. হাতে-কলমে ডকুমেন্ট তৈরি ও টাইপিং ট্রিকস", pages: "৪৫ পৃষ্ঠা", desc: "বাংলা ও ইংরেজি টাইপিংয়ের সহজ ও দ্রুত কৌশল।" }
+        ]
+      }
+    ];
+
+    let currentBook = null;
+    let selectedGateway = "cod";
+
+    // Initialize Page & Load Book Data
+    function initBookPage() {
+      const urlParams = new URLSearchParams(window.location.search);
+      let bookId = urlParams.get("id") || urlParams.get("slug");
+      
+      if (!bookId) {
+        const parts = window.location.pathname.split("/").filter(Boolean);
+        if (parts.length > 1 && parts[0] === "book") {
+          bookId = parts[1];
+        }
+      }
+
+      currentBook = BOOKS_CATALOG.find(b => b.id === bookId || b.slug === bookId) || BOOKS_CATALOG[0];
+
+      // Update Page Metadata
+      document.title = `${currentBook.title} — Dipu's Books`;
+      document.getElementById("breadcrumbBookName").textContent = currentBook.title;
+
+      // Update Badges
+      document.getElementById("bookPillLevel").textContent = currentBook.classBadge || "বই";
+      document.getElementById("bookPillSubject").textContent = currentBook.subject;
+      document.getElementById("bookPillStock").innerHTML = `<i class="fas fa-check-circle"></i> ${currentBook.stockStatus}`;
+
+      // Hero Texts
+      document.getElementById("bookHeaderTitle").textContent = currentBook.title;
+      document.getElementById("bookHeaderDesc").textContent = currentBook.description;
+      document.getElementById("bookRatingText").textContent = currentBook.rating;
+      document.getElementById("bookReviewsCount").textContent = `(${currentBook.ratingCount.toLocaleString()} শিক্ষার্থী কিনেছে)`;
+      document.getElementById("bookPagesCount").textContent = `${currentBook.pages} পৃষ্ঠা`;
+      document.getElementById("bookBindingText").textContent = currentBook.binding;
+
+      // Update 3D Cover in Sticky Sidebar
+      const coverEl = document.getElementById("sidebar3dCover");
+      if (coverEl) {
+        coverEl.style.background = `linear-gradient(135deg, ${currentBook.color || '#2563eb'}, #0b1020 160%)`;
+        document.getElementById("sidebar3dTitle").textContent = currentBook.title;
+      }
+      
+      document.getElementById("bookPitchTitle").textContent = `${currentBook.title} — ${currentBook.subject}`;
+      document.getElementById("bookMainPrice").textContent = `৳${currentBook.discountPrice}`;
+      document.getElementById("bookStrikePrice").textContent = `৳${currentBook.price}`;
+      const discPct = Math.round(((currentBook.price - currentBook.discountPrice) / currentBook.price) * 100);
+      document.getElementById("bookDiscountTag").textContent = `-${discPct}% ছাড়`;
+
+      // Author Info
+      document.getElementById("authorName").textContent = currentBook.author;
+
+      // Render Chapters Accordion
+      renderChapters(currentBook.chapters || []);
+
+    }
+
+    function renderChapters(chapters) {
+      const container = document.getElementById("bookChaptersList");
+      if (!container) return;
+
+      if (!chapters || chapters.length === 0) {
+        container.innerHTML = `
+          <div style="color: #94A3B8; padding: 1.5rem; text-align: center;">
+            <i class="fas fa-book-open" style="font-size: 2rem; color: var(--cd-orange); margin-bottom: 8px; display: block;"></i>
+            পূর্ণাঙ্গ সূচিপত্র ও বিস্তারিত নোটস বইয়ের সাথে সংযুক্ত থাকবে।
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = chapters.map((ch, idx) => `
+        <div class="chapter-accordion-item">
+          <div class="chapter-header" onclick="toggleChapter(this)">
+            <div class="chapter-title">
+              <i class="fas fa-folder-closed" style="color: var(--cd-orange);"></i>
+              <span>${ch.title}</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 0.8rem; color: #64748B; background: rgba(255,255,255,0.04); padding: 2px 8px; border-radius: 4px;">${ch.pages}</span>
+              <i class="fas fa-chevron-down" style="color: #94A3B8; font-size: 0.85rem;"></i>
+            </div>
+          </div>
+          <div class="chapter-body ${idx === 0 ? 'active' : ''}">
+            <p style="margin-bottom: 10px;">${ch.desc}</p>
+            <button type="button" onclick="openSamplePdfModal()" style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 6px; background: rgba(255,122,26,0.12); border: 1px solid rgba(255,122,26,0.3); color: var(--cd-orange); font-size: 0.82rem; font-weight: 700; cursor: pointer;">
+              <i class="fas fa-file-pdf"></i> ডেমো প্রিভিউ দেখুন
+            </button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function toggleChapter(headerEl) {
+      const bodyEl = headerEl.nextElementSibling;
+      const icon = headerEl.querySelector(".fa-chevron-down");
+      if (bodyEl) {
+        bodyEl.classList.toggle("active");
+        if (icon) {
+          icon.style.transform = bodyEl.classList.contains("active") ? "rotate(180deg)" : "rotate(0deg)";
+        }
+      }
+    }
+
+    function scrollToSection(id, btnEl) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      document.querySelectorAll(".book-tab-btn").forEach(b => b.classList.remove("active"));
+      if (btnEl) btnEl.classList.add("active");
+    }
+
+    // Modal Controller
+    function openOrderModal() {
+      if (!currentBook) return;
+      document.getElementById("orderStepForm").style.display = "block";
+      document.getElementById("orderStepSuccess").style.display = "none";
+      
+      const modalCover = document.getElementById("modalThumbCover");
+      if (modalCover) {
+        modalCover.style.background = `linear-gradient(135deg, ${currentBook.color || '#2563eb'}, #0b1020)`;
+        document.getElementById("modalThumbTitle").textContent = currentBook.title;
+      }
+      
+      document.getElementById("modalBookTitleText").textContent = currentBook.title;
+      document.getElementById("modalBookPriceText").textContent = `৳${currentBook.discountPrice}`;
+      document.getElementById("modalCalcBookPrice").textContent = `৳${currentBook.discountPrice}`;
+      document.getElementById("modalCalcTotal").textContent = `৳${currentBook.discountPrice}`;
+
+      const overlay = document.getElementById("orderModal");
+      if (overlay) overlay.classList.add("active");
+    }
+
+    function closeOrderModal() {
+      const overlay = document.getElementById("orderModal");
+      if (overlay) overlay.classList.remove("active");
+    }
+
+    function selectGateway(gw, btnEl) {
+      selectedGateway = gw;
+      document.querySelectorAll(".gateway-btn").forEach(b => b.classList.remove("active"));
+      if (btnEl) btnEl.classList.add("active");
+
+      const submitBtn = document.getElementById("submitOrderBtnText");
+      if (gw === "cod") {
+        submitBtn.textContent = "অর্ডার নিশ্চিত করুন (ক্যাশ অন ডেলিভারি)";
+      } else {
+        submitBtn.textContent = `${gw.toUpperCase()} পেমেন্টে অর্ডার করুন`;
+      }
+    }
+
+    function handleOrderSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById("orderCustName").value.trim();
+      const phone = document.getElementById("orderCustPhone").value.trim();
+      const address = document.getElementById("orderCustAddress").value.trim();
+
+      if (!name || !phone || !address) {
+        alert("দয়া করে আপনার নাম, মোবাইল নম্বর এবং সম্পূর্ণ ডেলিভারি ঠিকানা পূরণ করুন।");
+        return;
+      }
+
+      const randomId = "DE-" + Math.floor(10000 + Math.random() * 90000);
+      document.getElementById("succOrderId").textContent = randomId;
+      document.getElementById("succBookName").textContent = currentBook.title;
+      document.getElementById("succTotalPay").textContent = `৳${currentBook.discountPrice} (${selectedGateway.toUpperCase()})`;
+
+      document.getElementById("orderStepForm").style.display = "none";
+      document.getElementById("orderStepSuccess").style.display = "block";
+    }
+
+    // Sample PDF / Demo Modal Controllers
+    function openSamplePdfModal() {
+      if (!currentBook) return;
+      document.getElementById("sampleModalTitle").textContent = `${currentBook.title} — নমুনা পৃষ্ঠা ডেমো`;
+      switchSampleTab(1);
+      const modal = document.getElementById("samplePdfModal");
+      if (modal) modal.classList.add("active");
+    }
+    window.openSamplePdf = openSamplePdfModal;
+
+    function closeSamplePdfModal() {
+      const modal = document.getElementById("samplePdfModal");
+      if (modal) modal.classList.remove("active");
+    }
+
+    function switchSampleTab(tabNum, btnEl) {
+      if (btnEl) {
+        document.querySelectorAll(".sample-tab-btn").forEach(b => b.classList.remove("active"));
+        btnEl.classList.add("active");
+      }
+      const contentEl = document.getElementById("sampleTabContent");
+      if (!contentEl || !currentBook) return;
+
+      if (tabNum === 1) {
+        const chList = (currentBook.chapters || []).map((ch, i) => `
+          <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border-radius: 8px; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.06);">
+            <div>
+              <strong style="color: #FFF;">${ch.title}</strong>
+              <div style="font-size: 0.82rem; color: #94A3B8; margin-top: 3px;">${ch.desc}</div>
+            </div>
+            <span style="color: var(--cd-orange); font-weight: 700; font-size: 0.85rem; white-space: nowrap; margin-left: 10px;">${ch.pages}</span>
+          </div>
+        `).join("");
+        contentEl.innerHTML = `
+          <div style="margin-bottom: 12px; font-weight: 800; color: var(--cd-orange);"><i class="fas fa-list-ol"></i> পূর্ণাঙ্গ অধ্যায় ও বিষয়ভিত্তিক পৃষ্ঠা সূচি:</div>
+          ${chList}
+          <div style="margin-top: 14px; font-size: 0.85rem; color: #94A3B8; background: rgba(255,122,26,0.08); padding: 10px; border-radius: 8px;">
+            <i class="fas fa-circle-info" style="color: var(--cd-orange);"></i> বইয়ের প্রতিটি অধ্যায়ে রয়েছে বোর্ড স্ট্যান্ডার্ড CQ, MCQ ও ক্যালকুলেটর শর্টকাট।
+          </div>
+        `;
+      } else if (tabNum === 2) {
+        contentEl.innerHTML = `
+          <div style="margin-bottom: 12px; font-weight: 800; color: #10B981;"><i class="fas fa-lightbulb"></i> নমুনা কনসেপ্ট ও ক্যালকুলেটর শর্টকাট হ্যাকস:</div>
+          <div style="background: rgba(16, 185, 129, 0.05); border: 1px dashed rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 14px; margin-bottom: 12px;">
+            <strong style="color: #FFF;">[টপিক: স্পেশাল ট্রিকস ও দ্রুত সমাধান পদ্ধতি]</strong>
+            <p style="margin-top: 6px; font-size: 0.9rem; color: #CBD5E1;">
+              বোর্ড পরীক্ষায় বারবার আসা জটিল গাণিতিক সমস্যার জন্য চিরাচরিত ২ পৃষ্ঠার ব্যাখ্যার বদলে মাত্র ২ লাইনে সমাধান করার বিশেষ মেথড সংবলিত।
+            </p>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); border-radius: 8px; padding: 12px; font-size: 0.88rem; color: #94A3B8;">
+            ✅ <strong>ক্যালকুলেটর শর্টকাট:</strong> fx-991EX / CW মডেল দিয়ে ৫ থেকে ১০ সেকেন্ডে অপশন টেস্ট ও নির্ভুল মান বের করার নিয়ম।
+          </div>
+        `;
+      } else {
+        contentEl.innerHTML = `
+          <div style="margin-bottom: 12px; font-weight: 800; color: #60A5FA;"><i class="fas fa-clipboard-check"></i> বোর্ড স্ট্যান্ডার্ড নমুনা CQ প্রশ্ন ও নির্ভুল সমাধান:</div>
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px;">
+            <div style="font-weight: 700; color: #FFF; margin-bottom: 6px;">[নমুনা উদ্দীপক ও প্রশ্ন (গ ও ঘ নম্বর)]</div>
+            <p style="font-size: 0.88rem; color: #CBD5E1; margin-bottom: 8px;">
+              প্রশ্ন: একটি বস্তুর উপর প্রযুক্ত বল ও স্মরণের সম্পর্কের গ্রাফ হতে সর্বোচ্চ গতিশক্তি এবং কৃতকাজের পরিমাণ নির্ণয় করো।
+            </p>
+            <div style="border-left: 3px solid var(--cd-orange); padding-left: 10px; font-size: 0.88rem; color: #94A3B8;">
+              <strong>সমাধান টিপস:</strong> ক্ষেত্রফল নির্ণয় পদ্ধতি প্রয়োগ করে সরাসরি W = Area(F-s Graph) সমীকরণে ১ মিনিটে নির্ভুল উত্তর বের করুন।
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Close modals on click outside
+    document.getElementById("orderModal")?.addEventListener("click", function(e) {
+      if (e.target === this) closeOrderModal();
+    });
+    document.getElementById("samplePdfModal")?.addEventListener("click", function(e) {
+      if (e.target === this) closeSamplePdfModal();
+    });
+
+    document.addEventListener("DOMContentLoaded", initBookPage);
+  </script>
+
+  <!-- React TypeScript Navbar Bundle & Global Animations Engine -->
+  <script src="/js/navbar-bundle.js"></script>
+  <script src="/js/site-animations.js" defer></script>
+</body>
+</html>
