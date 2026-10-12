@@ -18,6 +18,19 @@
   <!-- Font Awesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+  <script>
+    (function() {
+      try {
+        var loggedIn = localStorage.getItem('dipu_logged_in') === 'true' ||
+                       (localStorage.getItem('dipu_auth_token') && localStorage.getItem('dipu_auth_token') !== 'null') ||
+                       (localStorage.getItem('dipu_user_phone') && localStorage.getItem('dipu_user_phone') !== 'null');
+        if (!loggedIn) {
+          window.location.replace('/login.html?redirect=' + encodeURIComponent(window.location.pathname));
+        }
+      } catch(e) {}
+    })();
+  </script>
+
   <style>
     :root {
       --bg-page: #F8FAFC;

@@ -1350,26 +1350,28 @@ export const Navbar: React.FC = () => {
               <span>{lang === "en" ? "Contact" : "যোগাযোগ"}</span>
             </button>
 
-            {/* My Courses Navigation Link */}
-            <a
-              href="/user/courses"
-              className="dipu-nav-link"
-              style={{
-                textDecoration: "none",
-                color: textColor,
-                fontSize: "0.95rem",
-                fontWeight: 700,
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "7px",
-                padding: "6px 10px",
-                borderRadius: "8px",
-              }}
-              title="আমার কোর্সসমূহ"
-            >
-              <i className="fas fa-graduation-cap" style={{ fontSize: "0.92rem", color: "#10B981" }} />
-              <span>{lang === "en" ? "My Courses" : "আমার কোর্স"}</span>
-            </a>
+            {/* My Courses Navigation Link - Only shown when logged in */}
+            {isLoggedIn && (
+              <a
+                href="/user/courses"
+                className="dipu-nav-link"
+                style={{
+                  textDecoration: "none",
+                  color: textColor,
+                  fontSize: "0.95rem",
+                  fontWeight: 700,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "7px",
+                  padding: "6px 10px",
+                  borderRadius: "8px",
+                }}
+                title="আমার কোর্সসমূহ"
+              >
+                <i className="fas fa-graduation-cap" style={{ fontSize: "0.92rem", color: "#10B981" }} />
+                <span>{lang === "en" ? "My Courses" : "আমার কোর্স"}</span>
+              </a>
+            )}
 
           </nav>
 
@@ -1621,48 +1623,50 @@ export const Navbar: React.FC = () => {
           >
             {/* Drawer Category Links */}
             <div style={{ display: "flex", flexDirection: "column", gap: "10px", flex: 1 }}>
-              {/* My Courses Shortcut */}
-              <a
-                href="/user/courses"
-                onClick={() => setIsMobileOpen(false)}
-                style={{
-                  borderRadius: "14px",
-                  background: isLight
-                    ? "linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(0, 194, 255, 0.08))"
-                    : "linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(0, 194, 255, 0.12))",
-                  border: isLight ? "1.5px solid rgba(16, 185, 129, 0.4)" : "1.5px solid rgba(16, 185, 129, 0.5)",
-                  padding: "12px 14px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  textDecoration: "none",
-                  boxShadow: "0 2px 10px rgba(16, 185, 129, 0.1)",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                  <div
-                    style={{
-                      width: "36px",
-                      height: "36px",
-                      borderRadius: "10px",
-                      background: "linear-gradient(135deg, #10B981, #00C2FF)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#FFFFFF",
-                      fontSize: "1rem",
-                      boxShadow: "0 2px 8px rgba(16, 185, 129, 0.35)",
-                    }}
-                  >
-                    <i className="fas fa-graduation-cap" />
+              {/* My Courses Shortcut - Only shown when logged in */}
+              {isLoggedIn && (
+                <a
+                  href="/user/courses"
+                  onClick={() => setIsMobileOpen(false)}
+                  style={{
+                    borderRadius: "14px",
+                    background: isLight
+                      ? "linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(0, 194, 255, 0.08))"
+                      : "linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(0, 194, 255, 0.12))",
+                    border: isLight ? "1.5px solid rgba(16, 185, 129, 0.4)" : "1.5px solid rgba(16, 185, 129, 0.5)",
+                    padding: "12px 14px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    textDecoration: "none",
+                    boxShadow: "0 2px 10px rgba(16, 185, 129, 0.1)",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <div
+                      style={{
+                        width: "36px",
+                        height: "36px",
+                        borderRadius: "10px",
+                        background: "linear-gradient(135deg, #10B981, #00C2FF)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#FFFFFF",
+                        fontSize: "1rem",
+                        boxShadow: "0 2px 8px rgba(16, 185, 129, 0.35)",
+                      }}
+                    >
+                      <i className="fas fa-graduation-cap" />
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 800, fontSize: "0.95rem", color: "#10B981" }}>আমার কোর্সসমূহ</div>
+                      <div style={{ fontSize: "0.72rem", color: isLight ? "#64748B" : "#94A3B8" }}>চলমান ক্লাস ও ভিডিও লেকচার</div>
+                    </div>
                   </div>
-                  <div>
-                    <div style={{ fontWeight: 800, fontSize: "0.95rem", color: "#10B981" }}>আমার কোর্সসমূহ</div>
-                    <div style={{ fontSize: "0.72rem", color: isLight ? "#64748B" : "#94A3B8" }}>চলমান ক্লাস ও ভিডিও লেকচার</div>
-                  </div>
-                </div>
-                <i className="fas fa-arrow-right" style={{ color: "#10B981", fontSize: "0.85rem" }} />
-              </a>
+                  <i className="fas fa-arrow-right" style={{ color: "#10B981", fontSize: "0.85rem" }} />
+                </a>
+              )}
 
               {/* If NOT logged in, show School, SSC, HSC in drawer */}
               {!isLoggedIn && (
