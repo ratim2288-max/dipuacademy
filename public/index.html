@@ -4,12 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>Dipu's Edu — একাডেমিক থেকে এডমিশন, দেশ সেরা অনলাইন লার্নিং প্ল্যাটফর্ম</title>
+  <title>Dipu Academy — একাডেমিক থেকে এডমিশন, দেশ সেরা অনলাইন লার্নিং প্ল্যাটফর্ম</title>
   
   <meta name="description" content="৬ষ্ঠ শ্রেণি থেকে এইচএসসি ও এডমিশন পর্যন্ত সম্পূর্ণ প্রস্তুতি এক প্ল্যাটফর্মে। অ্যানিমেটেড লেকচার, লাইভ ক্লাস, স্মার্ট নোটস ও এআই টিউটর।">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF7A1A'><path d='M12 2L1 7l11 5 9-4.09V17h2V7L12 2z'/></svg>">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/dipu-logo.png?v=5">
+  <link rel="shortcut icon" href="/favicon.ico?v=5">
+  <link rel="apple-touch-icon" href="/images/dipu-logo.png?v=5">
 
   <!-- Google Fonts: Hind Siliguri, Inter, Poppins, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,6 +27,10 @@
   <script>
     (function() {
       try {
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
         var theme = localStorage.getItem('dipu_theme') || 'dark';
         if (theme === 'light') {
           document.documentElement.classList.add('light-theme');
@@ -51,8 +57,19 @@
   <!-- ============================================================================
        1. HERO SECTION (TypeScript React Component)
        ============================================================================ -->
-  <section class="hero-section" id="hero" style="padding: 0;">
-    <div id="home-hero-root"></div>
+  <section class="hero-section" id="hero" style="padding: 0; min-height: 92vh; display: flex; flex-direction: column; justify-content: flex-start; position: relative;">
+    <div id="home-hero-root">
+      <div style="position: relative; padding: 3.5rem 1rem 4rem; text-align: center; max-width: 1140px; margin: 0 auto; display: flex; flex-direction: column; align-items: center;">
+
+        <h1 class="hero-main-title" style="font-size: clamp(2.1rem, 4.8vw, 3.6rem); font-weight: 800; line-height: 1.28; color: #FFFFFF; margin: 0.2rem 0 1.5rem; letter-spacing: -0.02em;">
+          <span style="display: block; color: #FFFFFF; margin-bottom: 8px;">একাডেমিক থেকে এডমিশন —</span>
+          <span class="hero-gradient-text" style="display: inline-block; background: linear-gradient(135deg, #0084FF 0%, #00C2FF 50%, #0070F3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: #00C2FF;">প্রস্তুতি নাও দেশ সেরা শিক্ষক ও প্রযুক্তির সাথে।</span>
+        </h1>
+        <p style="font-size: clamp(1rem, 1.8vw, 1.15rem); line-height: 1.7; color: #CBD5E1; max-width: 780px; margin: 0 auto 2.2rem;">
+          ৬ষ্ঠ শ্রেণি থেকে দ্বাদশ ও এডমিশন পর্যন্ত সম্পূর্ণ ডিজিটাল অ্যাকাডেমিক প্ল্যাটফর্ম। অভিজ্ঞ মেন্টরদের লাইভ ক্লাস, অ্যানিমেটেড কনসেপ্ট ও ইন্টারেক্টিভ নোটস।
+        </p>
+      </div>
+    </div>
   </section>
 
   <!-- ============================================================================
@@ -92,8 +109,8 @@
         <!-- Brand & Badges -->
         <div>
           <div class="footer-brand-title">
-            <div class="nav-brand-badge"><i class="fas fa-graduation-cap"></i></div>
-            <span>Dipu's Edu</span>
+            <img src="/images/dipu-logo.png" alt="Dipu Academy Logo" style="width: 36px; height: 36px; border-radius: 10px; object-fit: cover; box-shadow: 0 4px 14px rgba(0, 194, 255, 0.4); border: 1.5px solid rgba(0, 194, 255, 0.3);">
+            <span>Dipu Academy</span>
           </div>
           <p class="footer-desc" data-i18n-key="footer_desc">
             বাংলাদেশের অগ্রণী ডিজিটাল লার্নিং প্ল্যাটফর্ম। ৬ষ্ঠ থেকে দ্বাদশ ও এডমিশন শিক্ষার্থীদের জন্য উন্নতমানের শিক্ষা নিশ্চিত করাই আমাদের অঙ্গীকার।
@@ -194,7 +211,7 @@
             <li><a href="#courses" class="footer-link-item">এইচএসসি ২০২৬/২৭</a></li>
             <li><a href="#courses" class="footer-link-item">এসএসসি ২০২৬/২৭</a></li>
             <li><a href="#courses" class="footer-link-item">ভিডিও ও লেকচার ক্লাস</a></li>
-            <li><a href="/exam" class="footer-link-item">লাইভ মডেল টেস্ট</a></li>
+            <li><a href="#features" class="footer-link-item">ফিচার ও সুবিধাসমূহ</a></li>
           </ul>
         </div>
 
@@ -216,7 +233,7 @@
       <div class="footer-legal-bar">
         <div class="flex flex-col sm:flex-row justify-between items-center gap-3">
           <div data-i18n-key="footer_copyright">
-            © ২০২৬ Dipu's Edu. সর্বস্বত্ব সংরক্ষিত।
+            © ২০২৬ Dipu Academy. সর্বস্বত্ব সংরক্ষিত।
           </div>
           <div class="flex gap-4">
             <a href="#" class="footer-link-item">শর্তাবলী ও নিয়মাবলী</a>
@@ -244,5 +261,13 @@
   <script src="/js/trust-testimonials-bundle.js"></script>
   <script src="/js/app.js"></script>
   <script src="/js/site-animations.js" defer></script>
+  <script>
+    // Smoothly reveal footer only after interactive bundles mount
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        document.body.classList.add('site-mounted');
+      }, 150);
+    });
+  </script>
 </body>
 </html>

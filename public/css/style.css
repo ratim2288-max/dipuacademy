@@ -12,13 +12,13 @@
   --bg-card: #15151C;
   --bg-card-hover: #1A1A24;
   
-  /* Orange / Amber Accents */
-  --accent-orange: #FF7A1A;
-  --accent-amber: #FFB347;
-  --accent-gradient: linear-gradient(135deg, #FF7A1A 0%, #FFB347 100%);
-  --accent-gradient-hover: linear-gradient(135deg, #FF8A33 0%, #FFC066 100%);
-  --accent-glow: rgba(255, 122, 26, 0.35);
-  --accent-glow-subtle: rgba(255, 122, 26, 0.15);
+  /* Electric Blue & Cyan Accents (Matching Dipu Academy Official Logo) */
+  --accent-orange: #0084FF;
+  --accent-amber: #00C2FF;
+  --accent-gradient: linear-gradient(135deg, #0070F3 0%, #00C2FF 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #005BD2 0%, #00A8E0 100%);
+  --accent-glow: rgba(0, 132, 255, 0.4);
+  --accent-glow-subtle: rgba(0, 194, 255, 0.2);
   
   /* Borders & Surfaces */
   --border-subtle: rgba(255, 255, 255, 0.08);
@@ -3472,12 +3472,22 @@ h2:hover, .section-title:hover {
   100% { transform: rotate(1turn); }
 }
 
-/* --- 3. SCROLL-TRIGGERED ENTRANCE REVEAL (TEXT & BOXES SLIDING FROM SIDES) --- */
+/* --- 3. SCROLL-TRIGGERED ENTRANCE REVEAL (SHIKHO-STYLE OUTSIDE-TO-INSIDE GLIDE) --- */
 
-.reveal-init,
-.reveal-up {
+.reveal-init {
   opacity: 0;
-  transform: translateY(35px) scale(0.97);
+  transform: translateY(-24px) scale(0.97);
+  filter: blur(3px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+/* Box sliding in from the Left (বাহির থেকে একপাশ দিয়ে আসবে) */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-70px) scale(0.95);
   filter: blur(4px);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
@@ -3485,25 +3495,36 @@ h2:hover, .section-title:hover {
   will-change: opacity, transform, filter;
 }
 
-/* Box sliding in from the Left side */
-.reveal-left {
+/* Box sliding in from the Right (বাহির থেকে পরের পাশ দিয়ে আসবে) */
+.reveal-right {
   opacity: 0;
-  transform: translateX(-55px) scale(0.97);
+  transform: translateX(70px) scale(0.95);
   filter: blur(4px);
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform, filter;
 }
 
-/* Box sliding in from the Right side */
-.reveal-right {
+/* Box sliding up from Bottom (বাহির থেকে নিচ থেকে উঠে এসে বসবে) */
+.reveal-up {
   opacity: 0;
-  transform: translateX(55px) scale(0.97);
+  transform: translateY(60px) scale(0.95);
   filter: blur(4px);
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+/* Scale & Pop from Center (ছোট থেকে বড় হয়ে বসবে) */
+.reveal-pop {
+  opacity: 0;
+  transform: scale(0.92);
+  filter: blur(4px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.75s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform, filter;
 }
 
@@ -3514,32 +3535,55 @@ h2:hover, .section-title:hover {
   filter: blur(0) !important;
 }
 
-/* Automatic Stagger for Sibling Boxes in Grids */
-.reveal-stagger > *:nth-child(1) { transition-delay: 0.04s; }
-.reveal-stagger > *:nth-child(2) { transition-delay: 0.12s; }
-.reveal-stagger > *:nth-child(3) { transition-delay: 0.20s; }
-.reveal-stagger > *:nth-child(4) { transition-delay: 0.28s; }
-.reveal-stagger > *:nth-child(5) { transition-delay: 0.36s; }
-.reveal-stagger > *:nth-child(6) { transition-delay: 0.44s; }
-.reveal-stagger > *:nth-child(7) { transition-delay: 0.52s; }
-.reveal-stagger > *:nth-child(8) { transition-delay: 0.60s; }
+/* Once the entrance animation finishes, release transform lock so hover and 3D tilts work smoothly */
+.reveal-visible.reveal-settled {
+  transform: none !important;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s ease,
+              border-color 0.28s ease,
+              opacity 0.28s ease !important;
+}
 
-/* --- 4. WORD-BY-WORD CASCADING TEXT REVEAL ANIMATION --- */
+/* Footer Entrance Protection: Never flash at top on page load */
+.master-footer {
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+.site-mounted .master-footer,
+.master-footer.footer-visible {
+  opacity: 1 !important;
+}
+
+/* Automatic Stagger for Sibling Boxes in Grids & Rails */
+.reveal-stagger > *:nth-child(1)  { transition-delay: 0.04s; }
+.reveal-stagger > *:nth-child(2)  { transition-delay: 0.10s; }
+.reveal-stagger > *:nth-child(3)  { transition-delay: 0.16s; }
+.reveal-stagger > *:nth-child(4)  { transition-delay: 0.22s; }
+.reveal-stagger > *:nth-child(5)  { transition-delay: 0.28s; }
+.reveal-stagger > *:nth-child(6)  { transition-delay: 0.34s; }
+.reveal-stagger > *:nth-child(7)  { transition-delay: 0.40s; }
+.reveal-stagger > *:nth-child(8)  { transition-delay: 0.46s; }
+.reveal-stagger > *:nth-child(9)  { transition-delay: 0.52s; }
+.reveal-stagger > *:nth-child(10) { transition-delay: 0.58s; }
+.reveal-stagger > *:nth-child(11) { transition-delay: 0.64s; }
+.reveal-stagger > *:nth-child(12) { transition-delay: 0.70s; }
+
+/* --- 4. WORD-BY-WORD CASCADING TEXT REVEAL ANIMATION (TOP-DOWN) --- */
 
 /* Container: hides overflow while words animate in */
 .word-reveal {
   display: inline;
 }
 
-/* Each word span starts hidden */
+/* Each word span starts hidden and glides from the top */
 .word-reveal .wr-word {
   display: inline-block;
   opacity: 0;
-  transform: translateY(18px) scale(0.92);
-  filter: blur(6px);
-  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(-16px) scale(0.96);
+  filter: blur(4px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform, filter;
   margin-right: 0.22em; /* natural word spacing */
 }

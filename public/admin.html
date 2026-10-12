@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>Dipu's Edu — সুপার অ্যাডমিন প্যানেল</title>
+  <title>Dipu Academy — সুপার অ্যাডমিন প্যানেল</title>
   
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF7A1A'><path d='M12 2L1 7l11 5 9-4.09V17h2V7L12 2z'/></svg>">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/dipu-logo.png?v=5">
+  <link rel="shortcut icon" href="/favicon.ico?v=5">
+  <link rel="apple-touch-icon" href="/images/dipu-logo.png?v=5">
 
   <!-- Google Fonts & Font Awesome 6.5.1 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,19 +23,27 @@
 <body>
 
   <!-- ADMIN PASSCODE SECURITY GATE (সম্পূর্ণ নিষিদ্ধ ও পাসকোড লক) -->
-  <div id="adminSecurityGate" style="position: fixed; inset: 0; z-index: 99999; background: #0A0D14; display: flex; align-items: center; justify-content: center; padding: 20px;">
-    <div style="background: #111420; border: 1.5px solid rgba(255, 122, 26, 0.4); border-radius: 24px; padding: 2.5rem 2rem; max-width: 440px; width: 100%; box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 35px rgba(255,122,26,0.15); text-align: center; box-sizing: border-box; backdrop-filter: blur(16px);">
-      <div style="width: 60px; height: 60px; border-radius: 16px; background: linear-gradient(135deg, rgba(255,122,26,0.2), rgba(244,63,94,0.2)); border: 1.5px solid rgba(255,122,26,0.5); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; color: #FF7A1A; font-size: 1.6rem; box-shadow: 0 0 25px rgba(255,122,26,0.3);">
-        <i class="fas fa-lock"></i>
+  <div id="adminSecurityGate" style="position: fixed; inset: 0; z-index: 99999; background: #050B17; display: flex; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: #09142B; border: 1.5px solid rgba(0, 194, 255, 0.4); border-radius: 24px; padding: 2.5rem 2rem; max-width: 440px; width: 100%; box-shadow: 0 25px 60px rgba(0,0,0,0.85), 0 0 35px rgba(0,194,255,0.2); text-align: center; box-sizing: border-box; backdrop-filter: blur(16px);">
+      
+      <!-- Official Dipu Academy Logo Matching Display -->
+      <div style="margin-bottom: 1.2rem;">
+        <img src="/images/dipu-logo.png" alt="Dipu Academy Logo" style="width: 72px; height: 72px; border-radius: 18px; object-fit: cover; box-shadow: 0 8px 24px rgba(0,194,255,0.45); border: 2px solid rgba(0,194,255,0.4); margin: 0 auto; display: block;">
       </div>
-      <h2 style="color: #FFFFFF; font-size: 1.45rem; font-weight: 800; margin: 0 0 0.5rem; letter-spacing: -0.01em;">সুরক্ষিত অ্যাডমিন প্যানেল</h2>
-      <p style="color: #94A3B8; font-size: 0.88rem; line-height: 1.5; margin: 0 0 1.25rem;">
-        এই প্যানেলটিতে প্রবেশাধিকার সংরক্ষিত। অনুমোদিত অ্যাডমিন সিকিউরিটি পাসকোড বা পিন লিখুন।
+
+      <h2 style="color: #FFFFFF; font-size: 1.5rem; font-weight: 800; margin: 0 0 0.35rem; letter-spacing: -0.01em;">
+        Dipu <span style="background: linear-gradient(135deg, #0084FF, #00C2FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Academy</span>
+      </h2>
+      <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px; border-radius: 999px; background: rgba(0,194,255,0.12); border: 1px solid rgba(0,194,255,0.3); color: #00C2FF; font-size: 11px; font-weight: 700; margin-bottom: 0.85rem;">
+        <i class="fas fa-shield-halved"></i> সুপার অ্যাডমিন কনসোল
+      </div>
+      <p style="color: #94A3B8; font-size: 0.86rem; line-height: 1.5; margin: 0 0 1.25rem;">
+        লোগো ও সিকিউরিটি ভেরিফিকেশন। অনুমোদিত অ্যাডমিন পাসকোড বা পিন দিন।
       </p>
       
       <form id="adminGateForm" onsubmit="handleAdminGateSubmit(event)" style="display: flex; flex-direction: column; gap: 12px;">
         <div style="position: relative;">
-          <input type="password" id="adminGatePin" placeholder="অ্যাডমিন সিকিউরিটি পিন দিন..." required autocomplete="off" style="width: 100%; padding: 13px 44px 13px 16px; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.15); color: #FFFFFF; font-size: 1rem; font-family: inherit; outline: none; box-sizing: border-box; text-align: center; letter-spacing: 2px; transition: border-color 0.2s;">
+          <input type="password" id="adminGatePin" placeholder="অ্যাডমিন সিকিউরিটি পিন দিন..." required autocomplete="off" style="width: 100%; padding: 13px 44px 13px 16px; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(0,194,255,0.3); color: #FFFFFF; font-size: 1rem; font-family: inherit; outline: none; box-sizing: border-box; text-align: center; letter-spacing: 2px; transition: border-color 0.2s;">
           <button type="button" onclick="toggleGatePasswordEye()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #94A3B8; cursor: pointer; font-size: 15px; padding: 4px;" title="পাসওয়ার্ড দেখুন">
             <i class="fas fa-eye" id="gateEyeIcon"></i>
           </button>
@@ -42,13 +52,13 @@
         <!-- Quick PIN Helper for Developer/Owner -->
         <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin: -2px 0 4px;">
           <span style="font-size: 11px; color: #64748B;">কুইক পিন:</span>
-          <button type="button" onclick="fillAdminPin('dipu2026')" style="font-size: 11px; padding: 3px 8px; border-radius: 6px; background: rgba(255,122,26,0.12); border: 1px solid rgba(255,122,26,0.3); color: #FFB347; cursor: pointer;">dipu2026</button>
-          <button type="button" onclick="fillAdminPin('admin2026')" style="font-size: 11px; padding: 3px 8px; border-radius: 6px; background: rgba(255,122,26,0.12); border: 1px solid rgba(255,122,26,0.3); color: #FFB347; cursor: pointer;">admin2026</button>
+          <button type="button" onclick="fillAdminPin('dipu2026')" style="font-size: 11px; padding: 3px 10px; border-radius: 6px; background: rgba(0,194,255,0.15); border: 1px solid rgba(0,194,255,0.35); color: #00C2FF; font-weight: 700; cursor: pointer;">dipu2026</button>
+          <button type="button" onclick="fillAdminPin('admin2026')" style="font-size: 11px; padding: 3px 10px; border-radius: 6px; background: rgba(0,194,255,0.15); border: 1px solid rgba(0,194,255,0.35); color: #00C2FF; font-weight: 700; cursor: pointer;">admin2026</button>
         </div>
 
         <div id="adminGateError" style="color: #F43F5E; font-size: 0.82rem; font-weight: 600; display: none; margin-top: -4px;"></div>
         
-        <button type="submit" style="width: 100%; padding: 13px; border-radius: 12px; background: linear-gradient(135deg, #FF7A1A, #FF9533); border: none; color: #0A0A0F; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(255,122,26,0.4);">
+        <button type="submit" style="width: 100%; padding: 13px; border-radius: 12px; background: linear-gradient(135deg, #0084FF, #00C2FF); border: none; color: #050B17; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(0,194,255,0.4);">
           <i class="fas fa-key" style="margin-right: 6px;"></i> আনলক করুন
         </button>
         <a href="/" style="display: inline-block; color: #94A3B8; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-top: 6px; transition: color 0.15s;">
@@ -126,26 +136,26 @@
       
       <!-- Brand Header with Mobile Close Button -->
       <div class="careplus-brand">
-        <div class="careplus-logo-icon">
-          <i class="fas fa-graduation-cap"></i>
-        </div>
-        <div class="careplus-brand-text">
-          <div class="careplus-brand-name">Dipu's <span style="background: linear-gradient(135deg, #FF7A1A, #FFB347); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Edu</span></div>
-          <div class="careplus-brand-sub">অ্যাডমিন কনসোল</div>
-        </div>
+        <a href="/" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+          <img src="/images/dipu-logo.png" alt="Dipu Academy Logo" style="width:44px;height:44px;border-radius:12px;object-fit:cover;box-shadow:0 4px 16px rgba(0,194,255,0.45);border:1.5px solid rgba(0,194,255,0.35);flex-shrink:0;">
+          <div class="careplus-brand-text">
+            <div class="careplus-brand-name">Dipu <span style="background: linear-gradient(135deg, #0084FF, #00C2FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Academy</span></div>
+            <div class="careplus-brand-sub" style="color: #94A3B8; font-size: 10px; font-weight: 600; letter-spacing: 0.3px;">Learn • Grow • Build Your Future</div>
+          </div>
+        </a>
         <button class="mobile-sidebar-close-btn" id="mobileSidebarCloseBtn" aria-label="মেনু বন্ধ করুন" onclick="toggleMobileSidebar(false)">
           <i class="fas fa-times"></i>
         </button>
       </div>
 
       <!-- Active Status Card -->
-      <div class="careplus-agency-card">
-        <div class="careplus-agency-icon">
+      <div class="careplus-agency-card" style="background: rgba(0, 194, 255, 0.06); border: 1px solid rgba(0, 194, 255, 0.2); border-radius: 12px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem;">
+        <div class="careplus-agency-icon" style="width: 32px; height: 32px; border-radius: 9px; background: rgba(0, 194, 255, 0.18); color: #00C2FF; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; box-shadow: 0 0 12px rgba(0,194,255,0.25);">
           <i class="fas fa-shield-halved"></i>
         </div>
         <div class="careplus-agency-info">
-          <div class="careplus-agency-lbl">সিস্টেম স্ট্যাটাস</div>
-          <div class="careplus-agency-title">অ্যাডমিন প্রটেকশন সক্রিয়</div>
+          <div class="careplus-agency-lbl" style="font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.6px; color: #94A3B8; font-weight: 700;">ব্র্যান্ড ও সিস্টেম স্ট্যাটাস</div>
+          <div class="careplus-agency-title" style="font-size: 12px; font-weight: 700; color: #00C2FF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">অ্যাডমিন প্রটেকশন সক্রিয়</div>
         </div>
       </div>
 
@@ -209,6 +219,14 @@
             </a>
           </li>
 
+          <!-- 8. ইউজার ড্যাশবোর্ড মিডিয়া ও লোগো কন্ট্রোলার -->
+          <li>
+            <a href="#user-dashboard" class="nav-item" data-tab="user-dashboard">
+              <i class="fas fa-palette nav-icon"></i>
+              <span>ড্যাশবোর্ড মিডিয়া ও লোগো</span>
+            </a>
+          </li>
+
         </ul>
       </nav>
 
@@ -245,18 +263,16 @@
       <!-- Top Navigation Bar -->
       <header class="careplus-topbar">
         <div class="careplus-topbar-left">
-          <!-- Mobile Menu Hamburger Button -->
-          <button class="admin-mobile-menu-btn" id="adminMobileMenuBtn" aria-label="মেনু খুলুন" onclick="toggleMobileSidebar(true)">
-            <i class="fas fa-bars"></i>
-          </button>
-
-          <div class="careplus-title-group">
-            <h1 class="careplus-page-title" id="currentBreadcrumb">ড্যাশবোর্ড</h1>
-            <div class="careplus-meta-pills">
-              <span class="careplus-badge-coordinator">Super Admin</span>
-              <span class="careplus-status-connecting">
-                <span class="status-pulse-dot"></span> <span class="status-text-live">সিস্টেম অনলাইন</span>
-              </span>
+          <div class="careplus-title-group" style="display: flex; align-items: center; gap: 12px;">
+            <img src="/images/dipu-logo.png" alt="Dipu Academy" style="width: 38px; height: 38px; border-radius: 10px; border: 1.5px solid rgba(0,194,255,0.35); box-shadow: 0 4px 14px rgba(0,194,255,0.3); object-fit: cover; flex-shrink: 0;">
+            <div>
+              <h1 class="careplus-page-title" id="currentBreadcrumb" style="margin: 0; line-height: 1.2;">ড্যাশবোর্ড</h1>
+              <div class="careplus-meta-pills" style="margin-top: 3px;">
+                <span class="careplus-badge-coordinator" style="background: linear-gradient(135deg, #0084FF, #00C2FF); color: #050B17; font-weight: 800; font-size: 10.5px; padding: 2px 8px; border-radius: 999px;">Dipu Academy</span>
+                <span class="careplus-status-connecting">
+                  <span class="status-pulse-dot" style="background: #10B981;"></span> <span class="status-text-live" style="color: #10B981; font-weight: 700;">সিস্টেম অনলাইন</span>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -307,6 +323,11 @@
             <i class="fas fa-plus"></i>
             <span class="topbar-btn-text">নতুন কোর্স</span>
           </button>
+
+          <!-- Mobile 3-Dots Menu Button (উপরে ৩ ডট মেনু) -->
+          <button class="admin-mobile-3dots-btn" id="adminMobileMenuBtn" aria-label="মেনু খুলুন" onclick="toggleMobileSidebar()" title="মেনু খুলুন">
+            <i class="fas fa-ellipsis-vertical"></i>
+          </button>
         </div>
       </header>
 
@@ -325,7 +346,7 @@
                 <i class="far fa-calendar-check"></i>
                 <span id="careplusTodayDate">আজ লোড হচ্ছে...</span>
               </div>
-              <h2 class="careplus-hero-title">Dipu's Edu অ্যাডমিন ড্যাশবোর্ড</h2>
+              <h2 class="careplus-hero-title">Dipu Academy অ্যাডমিন ড্যাশবোর্ড</h2>
               <p class="careplus-hero-sub">
                 প্ল্যাটফর্মের সকল কোর্স, শিক্ষার্থী এনরোলমেন্ট, রাজস্ব ও ইউজার অ্যাক্টিভিটি রিয়েল-টাইমে মনিটর করুন।
               </p>
@@ -1116,35 +1137,303 @@
           </div>
         </section>
 
+        <!-- ====================================================================
+             VIEW 8: USER DASHBOARD MEDIA & LOGO CONTROLLER
+             ==================================================================== -->
+        <section id="view-user-dashboard" class="admin-view hidden">
+          <!-- Header Banner -->
+          <div class="careplus-section-card" style="margin-bottom: 24px; border-radius: 20px; background: linear-gradient(135deg, rgba(0, 194, 255, 0.12), rgba(8, 16, 34, 0.95)); border: 1px solid rgba(0, 194, 255, 0.3); padding: 22px 26px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+              <div>
+                <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px; border-radius: 999px; background: rgba(0, 194, 255, 0.16); color: #00C2FF; font-size: 11px; font-weight: 700; margin-bottom: 8px;">
+                  <i class="fas fa-palette"></i> ইউজার ড্যাশবোর্ড কন্ট্রোলার
+                </div>
+                <h2 style="font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 6px;">
+                  ড্যাশবোর্ড মিডিয়া, ব্যানার ও সকল লোগো ম্যানেজার
+                </h2>
+                <p style="font-size: 13px; color: #94A3B8; max-width: 650px; line-height: 1.6;">
+                  ইউজার ড্যাশবোর্ডের মূল ব্র্যান্ড লোগো, হিরো ব্যানার, ৬টি বিষয় (নাম, কালার ও লোগো/আইকন), স্টাডি গ্রুপ এবং সাইডবার প্রমো কার্ড সরাসরি এখান থেকেই এডিট বা নতুন আইটেম যোগ করুন।
+                </p>
+              </div>
+              <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <button type="button" class="btn-careplus-green-cta" onclick="saveUserDashboardConfig()" style="border-radius: 999px; padding: 10px 24px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 4px 18px rgba(0, 194, 255, 0.35); background: linear-gradient(135deg, #0084FF, #00C2FF); border: none; color: #050B17;">
+                  <i class="fas fa-floppy-disk"></i> ড্যাশবোর্ড আপডেট সেভ করুন
+                </button>
+                <a href="/dashboard.html" target="_blank" class="btn-careplus-hero-dark-outline" style="border-radius: 999px; padding: 9px 18px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                  <i class="fas fa-arrow-up-right-from-square"></i> লাইভ ড্যাশবোর্ড দেখুন
+                </a>
+                <button type="button" class="btn-careplus-hero-dark-outline" onclick="resetUserDashboardConfigToDefault()" style="border-radius: 999px; padding: 9px 16px;" title="ডিফল্ট কনফিগারেশন ফিরিয়ে আনুন">
+                  <i class="fas fa-rotate-left"></i> রিস্টোর
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2 Columns Grid for Logo & Hero -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 20px; margin-bottom: 24px;">
+            
+            <!-- CARD 1: Brand Logo & Header -->
+            <div class="careplus-section-card" style="border-radius: 16px; background: rgba(13, 27, 54, 0.85); border: 1px solid rgba(0, 194, 255, 0.2); padding: 20px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(0,194,255,0.15); display: flex; align-items: center; justify-content: center; color: #00C2FF; font-size: 16px;">
+                    <i class="fas fa-certificate"></i>
+                  </div>
+                  <div>
+                    <h3 style="font-size: 16px; font-weight: 700; color: #fff; margin: 0;">ব্র্যান্ড লোগো ও হেডার পরিচিতি</h3>
+                    <p style="font-size: 11px; color: #94A3B8; margin: 0;">ইউজার ড্যাশবোর্ডের শীর্ষ লোগো ও নাম</p>
+                  </div>
+                </div>
+                <span class="careplus-pill-badge" style="background: rgba(0,194,255,0.15); color: #00C2FF; font-size: 10px; padding: 3px 8px; border-radius: 6px;">HEADER LOGO</span>
+              </div>
+
+              <!-- Live Logo Preview Box -->
+              <div style="background: #081022; border: 1px solid rgba(0,194,255,0.25); border-radius: 12px; padding: 14px; margin-bottom: 16px; display: flex; align-items: center; gap: 14px;">
+                <img id="dashLogoPreview" src="/images/dipu-logo.png" alt="Brand Logo Preview" style="width: 52px; height: 52px; border-radius: 12px; object-fit: cover; border: 1.5px solid rgba(0,194,255,0.4); box-shadow: 0 4px 14px rgba(0,194,255,0.3); flex-shrink: 0;">
+                <div>
+                  <div style="font-size: 16px; font-weight: 800; color: #fff;">
+                    <span id="dashBrandNamePreview">Dipu</span> <span id="dashBrandAccentPreview" style="color: #00C2FF;">Academy</span>
+                  </div>
+                  <div id="dashTaglinePreview" style="font-size: 11px; color: #94A3B8; margin-top: 2px;">Learn • Grow • Build Your Future</div>
+                  <div style="font-size: 10px; color: #00C2FF; margin-top: 4px;"><i class="fas fa-check-circle"></i> লাইভ প্রিভিউ</div>
+                </div>
+              </div>
+
+              <!-- Logo Image Upload & URL -->
+              <div style="margin-bottom: 14px;">
+                <label class="form-label" style="display: flex; justify-content: space-between;">
+                  <span>লোগো ছবি (URL বা ডিভাইস থেকে ফাইল) *</span>
+                  <span style="font-size: 11px; color: #00C2FF;">PNG, JPG, WebP</span>
+                </label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="text" id="dashLogoUrl" class="form-input" placeholder="/images/dipu-logo.png বা ইমেজ লিংক" oninput="updateLogoLivePreview()">
+                  <label class="btn-careplus-hero-dark-outline" style="border-radius: 10px; cursor: pointer; white-space: nowrap; margin: 0; padding: 8px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
+                    <i class="fas fa-cloud-arrow-up"></i> আপলোড
+                    <input type="file" id="dashLogoFileInput" accept="image/*" style="display: none;" onchange="handleLogoFileUpload(this)">
+                  </label>
+                </div>
+              </div>
+
+              <!-- Brand Name & Accent -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+                <div>
+                  <label class="form-label">ব্র্যান্ডের প্রথম অংশ *</label>
+                  <input type="text" id="dashBrandName" class="form-input" placeholder="Dipu" oninput="updateLogoLivePreview()">
+                </div>
+                <div>
+                  <label class="form-label">হাইলাইট অংশ (Accent) *</label>
+                  <input type="text" id="dashBrandAccent" class="form-input" placeholder="Academy" oninput="updateLogoLivePreview()">
+                </div>
+              </div>
+
+              <!-- Tagline -->
+              <div style="margin-bottom: 6px;">
+                <label class="form-label">ট্যাগলাইন (Tagline)</label>
+                <input type="text" id="dashBrandTagline" class="form-input" placeholder="Learn • Grow • Build Your Future" oninput="updateLogoLivePreview()">
+              </div>
+            </div>
+
+            <!-- CARD 2: Dashboard Hero Banner -->
+            <div class="careplus-section-card" style="border-radius: 16px; background: rgba(13, 27, 54, 0.85); border: 1px solid rgba(0, 194, 255, 0.2); padding: 20px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(0,194,255,0.15); display: flex; align-items: center; justify-content: center; color: #00C2FF; font-size: 16px;">
+                    <i class="fas fa-image"></i>
+                  </div>
+                  <div>
+                    <h3 style="font-size: 16px; font-weight: 700; color: #fff; margin: 0;">ড্যাশবোর্ড হিরো ব্যানার ও টেক্সট</h3>
+                    <p style="font-size: 11px; color: #94A3B8; margin: 0;">ওয়েলকাম কার্ডের ছবি ও প্রধান মেসেজ</p>
+                  </div>
+                </div>
+                <span class="careplus-pill-badge" style="background: rgba(0,194,255,0.15); color: #00C2FF; font-size: 10px; padding: 3px 8px; border-radius: 6px;">HERO CARD</span>
+              </div>
+
+              <!-- Live Hero Banner Preview Box -->
+              <div style="background: #081022; border: 1px solid rgba(0,194,255,0.25); border-radius: 12px; overflow: hidden; margin-bottom: 16px;">
+                <div style="position: relative; height: 110px; width: 100%;">
+                  <img id="dashHeroPreviewImg" src="/images/dashboard-hero.jpg" alt="Hero Banner Preview" style="width: 100%; height: 100%; object-fit: cover;">
+                  <div style="position: absolute; inset: 0; background: linear-gradient(to right, rgba(8,16,34,0.92) 0%, rgba(8,16,34,0.4) 100%); display: flex; flex-direction: column; justify-content: center; padding: 0 16px;">
+                    <div id="dashHeroPreviewTitle" style="font-size: 14px; font-weight: 800; color: #fff;">আজকের শেখা, আগামীর সফলতা।</div>
+                    <div id="dashHeroPreviewSubtitle" style="font-size: 11px; color: #94A3B8; margin-top: 4px;">Dipu Academy - তোমার স্বপ্ন পূরণের জন্য সঠিক শিক্ষা, সঠিক পথে।</div>
+                    <div style="margin-top: 8px;">
+                      <span id="dashHeroPreviewCta" style="background: linear-gradient(135deg, #0084FF, #00C2FF); color: #050B17; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 6px;">এখনই পড়া শুরু করুন →</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hero Image Upload & URL -->
+              <div style="margin-bottom: 14px;">
+                <label class="form-label" style="display: flex; justify-content: space-between;">
+                  <span>হিরো ব্যানার ছবি (URL বা ডিভাইস থেকে ফাইল) *</span>
+                  <span style="font-size: 11px; color: #00C2FF;">16:9 বা 4:3 অনুপাত</span>
+                </label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="text" id="dashHeroUrl" class="form-input" placeholder="/images/dashboard-hero.jpg বা অনলাইন URL" oninput="updateHeroLivePreview()">
+                  <label class="btn-careplus-hero-dark-outline" style="border-radius: 10px; cursor: pointer; white-space: nowrap; margin: 0; padding: 8px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
+                    <i class="fas fa-cloud-arrow-up"></i> আপলোড
+                    <input type="file" id="dashHeroFileInput" accept="image/*" style="display: none;" onchange="handleHeroFileUpload(this)">
+                  </label>
+                </div>
+              </div>
+
+              <!-- Hero Title & Subtitle -->
+              <div style="margin-bottom: 12px;">
+                <label class="form-label">হিরো প্রধান শিরোনাম (Title) *</label>
+                <input type="text" id="dashHeroTitle" class="form-input" placeholder="আজকের শেখা, আগামীর সফলতা।" oninput="updateHeroLivePreview()">
+              </div>
+
+              <div style="margin-bottom: 12px;">
+                <label class="form-label">হিরো সাবটাইটেল / বিবরণ *</label>
+                <input type="text" id="dashHeroSubtitle" class="form-input" placeholder="Dipu Academy - তোমার স্বপ্ন পূরণের জন্য..." oninput="updateHeroLivePreview()">
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px;">
+                <div>
+                  <label class="form-label">বাটন টেক্সট (CTA)</label>
+                  <input type="text" id="dashHeroCtaText" class="form-input" placeholder="এখনই পড়া শুরু করুন →" oninput="updateHeroLivePreview()">
+                </div>
+                <div>
+                  <label class="form-label">বাটন টার্গেট লিংক</label>
+                  <input type="text" id="dashHeroCtaLink" class="form-input" placeholder="#video-classes">
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- CARD 3: Subjects & Subject Logos Controller -->
+          <div class="careplus-section-card" style="border-radius: 16px; background: rgba(13, 27, 54, 0.85); border: 1px solid rgba(0, 194, 255, 0.2); padding: 22px; margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(0,194,255,0.15); display: flex; align-items: center; justify-content: center; color: #00C2FF; font-size: 16px;">
+                    <i class="fas fa-layer-group"></i>
+                  </div>
+                  <div>
+                    <h3 style="font-size: 17px; font-weight: 700; color: #fff; margin: 0;">বিষয়সমূহ ও লোগো/আইকন কন্ট্রোলার</h3>
+                    <p style="font-size: 12px; color: #94A3B8; margin: 0;">ড্যাশবোর্ডে প্রদর্শিত সকল বিষয়ের নাম, বিবরণ, থিম কালার এবং নিজস্ব লোগো/আইকন এডিট বা নতুন যোগ করুন</p>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn-careplus-green-cta" onclick="openSubjectModal()" style="border-radius: 999px; padding: 8px 18px; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; background: linear-gradient(135deg, #0084FF, #00C2FF); border: none; color: #050B17;">
+                <i class="fas fa-plus"></i> নতুন বিষয় যোগ করুন
+              </button>
+            </div>
+
+            <!-- Subjects Dynamic Cards Grid -->
+            <div id="adminSubjectsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px;">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- 2 Columns Grid for Study Groups & Sidebar Promo -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 20px; margin-bottom: 24px;">
+
+            <!-- CARD 4: Study Groups & Logos Controller -->
+            <div class="careplus-section-card" style="border-radius: 16px; background: rgba(13, 27, 54, 0.85); border: 1px solid rgba(0, 194, 255, 0.2); padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(0,194,255,0.15); display: flex; align-items: center; justify-content: center; color: #00C2FF; font-size: 16px;">
+                    <i class="fas fa-users-viewfinder"></i>
+                  </div>
+                  <div>
+                    <h3 style="font-size: 16px; font-weight: 700; color: #fff; margin: 0;">স্টাডি গ্রুপ ও লোগো কন্ট্রোলার</h3>
+                    <p style="font-size: 11px; color: #94A3B8; margin: 0;">কমিউনিটি স্টাডি গ্রুপের নাম, সদস্য ও লোগো</p>
+                  </div>
+                </div>
+                <button type="button" class="btn-careplus-hero-dark-outline" onclick="openGroupModal()" style="border-radius: 999px; padding: 6px 14px; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+                  <i class="fas fa-plus"></i> নতুন গ্রুপ
+                </button>
+              </div>
+
+              <!-- Study Groups Dynamic List -->
+              <div id="adminGroupsList" style="display: flex; flex-direction: column; gap: 12px;">
+                <!-- Rendered via JS -->
+              </div>
+            </div>
+
+            <!-- CARD 5: Sidebar Promo Card & Books Artwork -->
+            <div class="careplus-section-card" style="border-radius: 16px; background: rgba(13, 27, 54, 0.85); border: 1px solid rgba(0, 194, 255, 0.2); padding: 20px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(0,194,255,0.15); display: flex; align-items: center; justify-content: center; color: #00C2FF; font-size: 16px;">
+                    <i class="fas fa-book-bookmark"></i>
+                  </div>
+                  <div>
+                    <h3 style="font-size: 16px; font-weight: 700; color: #fff; margin: 0;">সাইডবার প্রমো কার্ড ও 3D আর্টওয়ার্ক</h3>
+                    <p style="font-size: 11px; color: #94A3B8; margin: 0;">ড্যাশবোর্ড সাইডবারের মোটিভেশনাল বক্স</p>
+                  </div>
+                </div>
+                <span class="careplus-pill-badge" style="background: rgba(0,194,255,0.15); color: #00C2FF; font-size: 10px; padding: 3px 8px; border-radius: 6px;">SIDEBAR PROMO</span>
+              </div>
+
+              <!-- Live Sidebar Promo Preview Box -->
+              <div style="background: linear-gradient(145deg, #0D1B36, #060E22); border: 1px solid rgba(0,194,255,0.25); border-radius: 14px; padding: 16px; margin-bottom: 16px; display: flex; gap: 14px; align-items: center;">
+                <img id="dashPromoPreviewImg" src="/images/sidebar-books.jpg" alt="Promo 3D Artwork" style="width: 80px; height: 80px; border-radius: 10px; object-fit: cover; border: 1px solid rgba(0,194,255,0.3); flex-shrink: 0;">
+                <div>
+                  <div id="dashPromoPreviewTitle" style="font-size: 14px; font-weight: 800; color: #fff; line-height: 1.3;">চলো, আজকে আরো একটু শিখি!</div>
+                  <div id="dashPromoPreviewSubtitle" style="font-size: 11px; color: #94A3B8; margin-top: 3px;">তোমার স্বপ্ন তোমার হাতেই</div>
+                  <div id="dashPromoPreviewBadge" style="display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 700; color: #00C2FF; background: rgba(0,194,255,0.15); padding: 2px 8px; border-radius: 4px;">Dipu Academy 💙</div>
+                </div>
+              </div>
+
+              <!-- Promo Artwork Image Upload & URL -->
+              <div style="margin-bottom: 12px;">
+                <label class="form-label" style="display: flex; justify-content: space-between;">
+                  <span>প্রমো ছবি (URL বা ডিভাইস থেকে ফাইল) *</span>
+                  <span style="font-size: 11px; color: #00C2FF;">বই/আর্টওয়ার্ক</span>
+                </label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="text" id="dashPromoUrl" class="form-input" placeholder="/images/sidebar-books.jpg বা অনলাইন URL" oninput="updatePromoLivePreview()">
+                  <label class="btn-careplus-hero-dark-outline" style="border-radius: 10px; cursor: pointer; white-space: nowrap; margin: 0; padding: 8px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
+                    <i class="fas fa-cloud-arrow-up"></i> আপলোড
+                    <input type="file" id="dashPromoFileInput" accept="image/*" style="display: none;" onchange="handlePromoFileUpload(this)">
+                  </label>
+                </div>
+              </div>
+
+              <div style="margin-bottom: 12px;">
+                <label class="form-label">প্রমো শিরোনাম (Title)</label>
+                <input type="text" id="dashPromoTitle" class="form-input" placeholder="চলো, আজকে আরো একটু শিখি!" oninput="updatePromoLivePreview()">
+              </div>
+
+              <div style="margin-bottom: 12px;">
+                <label class="form-label">প্রমো সাবটাইটেল (Subtitle)</label>
+                <input type="text" id="dashPromoSubtitle" class="form-input" placeholder="তোমার স্বপ্ন তোমার হাতেই" oninput="updatePromoLivePreview()">
+              </div>
+
+              <div style="margin-bottom: 6px;">
+                <label class="form-label">ব্র্যান্ড ব্যাজ (Badge Text)</label>
+                <input type="text" id="dashPromoBadge" class="form-input" placeholder="Dipu Academy 💙" oninput="updatePromoLivePreview()">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Sticky Action Bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; background: rgba(8, 16, 34, 0.95); border: 1px solid rgba(0, 194, 255, 0.35); border-radius: 16px; padding: 16px 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: #00C2FF; box-shadow: 0 0 10px #00C2FF;"></span>
+              <span style="font-size: 13px; font-weight: 600; color: #CBD5E1;">সেভ বাটনে চাপলে রিয়েলটাইমে ইউজার ড্যাশবোর্ডে সকল লোগো ও টেক্সট আপডেট হয়ে যাবে।</span>
+            </div>
+            <div style="display: flex; gap: 12px;">
+              <button type="button" class="btn-careplus-hero-dark-outline" onclick="resetUserDashboardConfigToDefault()" style="border-radius: 999px; padding: 10px 20px;">
+                <i class="fas fa-rotate-left mr-1"></i> ডিফল্ট করুন
+              </button>
+              <button type="button" class="btn-careplus-green-cta" onclick="saveUserDashboardConfig()" style="border-radius: 999px; padding: 10px 28px; font-weight: 800; background: linear-gradient(135deg, #0084FF, #00C2FF); border: none; color: #050B17; box-shadow: 0 4px 20px rgba(0, 194, 255, 0.4);">
+                <i class="fas fa-floppy-disk mr-1.5"></i> ড্যাশবোর্ড আপডেট সেভ করুন
+              </button>
+            </div>
+          </div>
+
+        </section>
+
       </div>
 
     </main>
 
-    <!-- ============================================================================
-         3. MOBILE FLOATING BOTTOM NAVIGATION (স্মার্টফোন ইউজারদের জন্য টাচ বার)
-         ============================================================================ -->
-    <nav class="admin-mobile-bottom-nav" id="adminMobileBottomNav">
-      <a href="#overview" class="mobile-bottom-nav-item active" data-tab="overview">
-        <i class="fas fa-table-cells-large"></i>
-        <span>ড্যাশবোর্ড</span>
-      </a>
-      <a href="#courses" class="mobile-bottom-nav-item" data-tab="courses">
-        <i class="fas fa-graduation-cap"></i>
-        <span>কোর্স</span>
-      </a>
-      <a href="#students" class="mobile-bottom-nav-item" data-tab="students">
-        <i class="fas fa-users"></i>
-        <span>শিক্ষার্থী</span>
-      </a>
-      <a href="#settings" class="mobile-bottom-nav-item" data-tab="settings">
-        <i class="fas fa-sliders"></i>
-        <span>সেটিংস</span>
-      </a>
-      <button type="button" class="mobile-bottom-nav-item" id="mobileBottomMoreBtn" onclick="toggleMobileSidebar(true)">
-        <i class="fas fa-bars-staggered"></i>
-        <span>মেনু</span>
-      </button>
-    </nav>
+    <!-- Mobile Floating Bottom Navigation removed per user instruction (নিচে কোনো বার থাকবে না) -->
 
   </div>
 
@@ -1588,6 +1877,173 @@
             <button type="button" class="btn-careplus-dark" onclick="closeNewFeatureModal()">বাতিল</button>
             <button type="submit" id="submitNewFeatBtn" class="btn-careplus-green-cta" style="border-radius: 999px; padding: 11px 26px;">
               <i class="fas fa-plus-circle mr-1.5"></i> নতুন ফিচার যোগ করুন
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  <!-- ============================================================================
+       MODAL: SUBJECT EDIT / CREATE MODAL
+       ============================================================================ -->
+  <div class="admin-modal-overlay" id="subjectModal" style="display: none;">
+    <div class="admin-modal-box" style="max-width: 520px;">
+      <div class="admin-modal-header">
+        <h3 id="subjectModalTitle"><i class="fas fa-layer-group text-cyan mr-2" style="color: #00C2FF;"></i> বিষয় এডিট বা নতুন যোগ করুন</h3>
+        <button type="button" class="modal-close-btn" onclick="closeSubjectModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="admin-modal-body" style="padding: 22px;">
+        <form id="subjectForm" onsubmit="event.preventDefault(); handleSaveSubject();">
+          <input type="hidden" id="modalSubjectId" value="">
+          
+          <div style="margin-bottom: 14px;">
+            <label class="form-label">বিষয়ের নাম (Subject Name) *</label>
+            <input type="text" id="modalSubjectName" class="form-input" placeholder="যেমন: রসায়ন বিজ্ঞান" required oninput="updateModalSubjectPreview()">
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <label class="form-label">সংক্ষিপ্ত বিবরণ (Description) *</label>
+            <input type="text" id="modalSubjectDesc" class="form-input" placeholder="যেমন: গুণগত রসায়ন, পর্যায়বৃত্ত ধর্ম" required oninput="updateModalSubjectPreview()">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div>
+              <label class="form-label">কার্ডের থিম কালার *</label>
+              <select id="modalSubjectColor" class="form-select" onchange="updateModalSubjectPreview()">
+                <option value="da-sub-blue">নীল (Blue)</option>
+                <option value="da-sub-green">সবুজ (Green)</option>
+                <option value="da-sub-purple">বেগুনি (Purple)</option>
+                <option value="da-sub-pink">গোলাপি (Pink)</option>
+                <option value="da-sub-amber">হলুদ/কমলা (Amber)</option>
+                <option value="da-sub-teal">টিয়াল (Teal)</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">আইকন / লোগো টাইপ *</label>
+              <select id="modalSubjectIconType" class="form-select" onchange="handleSubjectIconTypeChange()">
+                <option value="icon">FontAwesome আইকন</option>
+                <option value="letter">একক অক্ষর (Letter)</option>
+                <option value="image">লোগো ছবি (Image / Upload)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Icon / Letter / Image Input -->
+          <div id="modalSubjectIconInputWrap" style="margin-bottom: 16px;">
+            <label class="form-label" id="modalSubjectIconLabel">FontAwesome ক্লাস বা অক্ষর *</label>
+            <input type="text" id="modalSubjectIconVal" class="form-input" placeholder="fas fa-flask" value="fas fa-flask" oninput="updateModalSubjectPreview()">
+          </div>
+
+          <div id="modalSubjectImageInputWrap" style="margin-bottom: 16px; display: none;">
+            <label class="form-label" style="display: flex; justify-content: space-between;">
+              <span>লোগো ইমেজ (URL বা ফাইল আপলোড) *</span>
+              <span style="font-size: 11px; color: #00C2FF;">PNG / JPG / SVG</span>
+            </label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="modalSubjectImageUrl" class="form-input" placeholder="/images/subjects/icon.png" oninput="updateModalSubjectPreview()">
+              <label class="btn-careplus-hero-dark-outline" style="border-radius: 10px; cursor: pointer; white-space: nowrap; margin: 0; padding: 8px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
+                <i class="fas fa-cloud-arrow-up"></i> ফাইল
+                <input type="file" id="modalSubjectImageFile" accept="image/*" style="display: none;" onchange="handleSubjectImageUpload(this)">
+              </label>
+            </div>
+          </div>
+
+          <!-- Subject Preview Box -->
+          <div style="background: #081022; border: 1px solid rgba(0,194,255,0.25); border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div id="modalSubjectPreviewIconBox" class="da-subject-icon-box da-sub-blue" style="width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff;">
+                <i class="fas fa-flask"></i>
+              </div>
+              <div>
+                <div id="modalSubjectPreviewName" style="font-size: 14px; font-weight: 700; color: #fff;">রসায়ন বিজ্ঞান</div>
+                <div id="modalSubjectPreviewDesc" style="font-size: 11px; color: #94A3B8;">গুণগত রসায়ন, পর্যায়বৃত্ত ধর্ম</div>
+              </div>
+            </div>
+            <span style="font-size: 10px; color: #00C2FF; font-weight: 700;">প্রিভিউ</span>
+          </div>
+
+          <!-- Actions -->
+          <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px;">
+            <button type="button" class="btn-careplus-dark" onclick="closeSubjectModal()">বাতিল</button>
+            <button type="submit" class="btn-careplus-green-cta" style="border-radius: 999px; padding: 10px 24px; font-weight: 700; background: linear-gradient(135deg, #0084FF, #00C2FF); border: none; color: #050B17;">
+              <i class="fas fa-check mr-1"></i> সেভ করুন
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================================
+       MODAL: STUDY GROUP EDIT / CREATE MODAL
+       ============================================================================ -->
+  <div class="admin-modal-overlay" id="groupModal" style="display: none;">
+    <div class="admin-modal-box" style="max-width: 480px;">
+      <div class="admin-modal-header">
+        <h3 id="groupModalTitle"><i class="fas fa-users-viewfinder text-cyan mr-2" style="color: #00C2FF;"></i> স্টাডি গ্রুপ এডিট বা নতুন যোগ করুন</h3>
+        <button type="button" class="modal-close-btn" onclick="closeGroupModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="admin-modal-body" style="padding: 22px;">
+        <form id="groupForm" onsubmit="event.preventDefault(); handleSaveGroup();">
+          <input type="hidden" id="modalGroupId" value="">
+
+          <div style="margin-bottom: 14px;">
+            <label class="form-label">গ্রুপের নাম (Group Title) *</label>
+            <input type="text" id="modalGroupTitle" class="form-input" placeholder="যেমন: HSC 2026 - Science Batch" required oninput="updateModalGroupPreview()">
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <label class="form-label">সদস্য সংখ্যা টেক্সট (Members Text) *</label>
+            <input type="text" id="modalGroupMembers" class="form-input" placeholder="যেমন: 15.2k সদস্য" required oninput="updateModalGroupPreview()">
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <label class="form-label">কার্ডের থিম কালার *</label>
+            <select id="modalGroupColor" class="form-select" onchange="updateModalGroupPreview()">
+              <option value="da-grp-blue">নীল (Blue)</option>
+              <option value="da-grp-green">সবুজ (Green)</option>
+              <option value="da-grp-purple">বেগুনি (Purple)</option>
+              <option value="da-grp-teal">টিয়াল (Teal)</option>
+            </select>
+          </div>
+
+          <!-- Group Logo / Icon input -->
+          <div style="margin-bottom: 16px;">
+            <label class="form-label" style="display: flex; justify-content: space-between;">
+              <span>গ্রুপ লোগো (FontAwesome আইকন বা ইমেজ ফাইল)</span>
+              <span style="font-size: 11px; color: #00C2FF;">আপলোড অপশন</span>
+            </label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="modalGroupIcon" class="form-input" placeholder="fas fa-users বা ইমেজ URL" value="fas fa-users" oninput="updateModalGroupPreview()">
+              <label class="btn-careplus-hero-dark-outline" style="border-radius: 10px; cursor: pointer; white-space: nowrap; margin: 0; padding: 8px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
+                <i class="fas fa-cloud-arrow-up"></i> লোগো
+                <input type="file" id="modalGroupImageFile" accept="image/*" style="display: none;" onchange="handleGroupImageUpload(this)">
+              </label>
+            </div>
+          </div>
+
+          <!-- Group Preview Box -->
+          <div style="background: #081022; border: 1px solid rgba(0,194,255,0.25); border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div id="modalGroupPreviewCircle" style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; background: rgba(0,194,255,0.2); border: 1px solid rgba(0,194,255,0.4);">
+                <i class="fas fa-users"></i>
+              </div>
+              <div>
+                <div id="modalGroupPreviewTitle" style="font-size: 14px; font-weight: 700; color: #fff;">HSC 2026 - Science Batch</div>
+                <div id="modalGroupPreviewMembers" style="font-size: 11px; color: #94A3B8;">15.2k সদস্য</div>
+              </div>
+            </div>
+            <span style="font-size: 10px; color: #00C2FF; font-weight: 700;">প্রিভিউ</span>
+          </div>
+
+          <!-- Actions -->
+          <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px;">
+            <button type="button" class="btn-careplus-dark" onclick="closeGroupModal()">বাতিল</button>
+            <button type="submit" class="btn-careplus-green-cta" style="border-radius: 999px; padding: 10px 24px; font-weight: 700; background: linear-gradient(135deg, #0084FF, #00C2FF); border: none; color: #050B17;">
+              <i class="fas fa-check mr-1"></i> সেভ করুন
             </button>
           </div>
         </form>

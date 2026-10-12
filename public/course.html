@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="coursePageTitle">কোর্স বিস্তারিত — Dipu's Edu</title>
-  <meta name="description" content="Dipu's Edu — বাংলাদেশের শীর্ষস্থানীয় প্রিমিয়াম এডটেক প্ল্যাটফর্ম ও পূর্ণাঙ্গ কোর্স বিস্তারিত।">
+  <title id="coursePageTitle">কোর্স বিস্তারিত — Dipu Academy</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/dipu-logo.png?v=5">
+  <link rel="shortcut icon" href="/favicon.ico?v=5">
+  <link rel="apple-touch-icon" href="/images/dipu-logo.png?v=5">
   
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1042,6 +1044,68 @@
       font-weight: 800;
       color: #FFFFFF;
     }
+
+    /* ==========================================================================
+       MOBILE & TABLET RESPONSIVE SYSTEM
+       ========================================================================== */
+    @media (max-width: 768px) {
+      .course-layout-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+        padding: 1.25rem 1rem 5rem !important;
+      }
+      .course-tabs-nav {
+        display: flex !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        gap: 8px !important;
+        padding-bottom: 8px !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+      .course-tabs-nav::-webkit-scrollbar {
+        height: 3px !important;
+      }
+      .course-tab-btn {
+        flex-shrink: 0 !important;
+        padding: 8px 14px !important;
+        font-size: 0.85rem !important;
+      }
+      .mentor-profile-wrap {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem !important;
+      }
+      .course-right-col {
+        position: static !important;
+        margin-top: 1.5rem !important;
+      }
+      .course-hero-title {
+        font-size: 1.65rem !important;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .course-layout-grid {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+        padding: 1.75rem 1.25rem 5rem !important;
+      }
+      .course-tabs-nav {
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        gap: 8px !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+      .course-tab-btn {
+        flex-shrink: 0 !important;
+      }
+      .course-right-col {
+        position: static !important;
+        max-width: 580px !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1062,24 +1126,19 @@
         <!-- Top Breadcrumbs & Header -->
         <section id="overview" class="course-hero-content">
           
-          <div class="breadcrumb-bar" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-            <button type="button" onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = '/'; }" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #FF7A1A; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s;" onmouseenter="this.style.background='rgba(255,122,26,0.15)'" onmouseleave="this.style.background='rgba(255,255,255,0.06)'">
-              <i class="fas fa-arrow-left"></i> <span>পেছনে ফিরুন (Back)</span>
+          <!-- Back Button Only (No text, icon only) -->
+          <div style="margin-bottom: 1.25rem;">
+            <button
+              type="button"
+              onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = '/'; }"
+              aria-label="পেছনে যান"
+              title="পেছনে যান"
+              style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(0, 194, 255, 0.3); color: #00C2FF; font-size: 17px; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px);"
+              onmouseenter="this.style.background='rgba(0, 194, 255, 0.15)'; this.style.borderColor='#00C2FF'; this.style.transform='translateX(-3px) scale(1.05)'; this.style.boxShadow='0 6px 20px rgba(0, 194, 255, 0.35)';"
+              onmouseleave="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(0, 194, 255, 0.3)'; this.style.transform='translateX(0) scale(1)'; this.style.boxShadow='0 4px 16px rgba(0, 0, 0, 0.4)';"
+            >
+              <i class="fas fa-arrow-left"></i>
             </button>
-            <span style="opacity: 0.3;">|</span>
-            <a href="/"><i class="fas fa-home"></i> হোম</a>
-            <i class="fas fa-chevron-right text-xs"></i>
-            <a href="/#courses">কোর্সসমূহ</a>
-            <i class="fas fa-chevron-right text-xs"></i>
-            <span id="breadcrumbCourseName" style="color: #E2E8F0;">লোড হচ্ছে...</span>
-          </div>
-
-          <div class="hero-badges-row">
-            <span class="pill-badge pill-level" id="coursePillLevel">স্কুল</span>
-            <span class="pill-badge pill-subject" id="coursePillSubject">প্রাথমিক গণিত, বিজ্ঞান ও ইংরেজি</span>
-            <span class="pill-badge pill-live">
-              <i class="fas fa-circle" style="font-size: 8px; color: #10B981;"></i> ১০০% আসন লাইভ
-            </span>
           </div>
 
           <h1 class="course-hero-title" id="courseHeaderTitle">
@@ -1573,10 +1632,8 @@
         <!-- Col 1: Brand & Social Media -->
         <div>
           <div class="footer-brand-title">
-            <div class="nav-brand-badge" style="width: 32px; height: 32px; border-radius: 8px; background: var(--cd-green); display: flex; align-items: center; justify-content: center; color: #000; font-size: 16px;">
-              <i class="fas fa-graduation-cap"></i>
-            </div>
-            <span>Dipu's Edu</span>
+            <img src="/images/dipu-logo.png" alt="Dipu Academy Logo" style="width: 36px; height: 36px; border-radius: 10px; object-fit: cover; box-shadow: 0 4px 14px rgba(0, 194, 255, 0.4); border: 1.5px solid rgba(0, 194, 255, 0.3);">
+            <span>Dipu Academy</span>
           </div>
           <p class="footer-desc">
             বাংলাদেশের অগ্রণী ডিজিটাল লার্নিং প্ল্যাটফর্ম। ৬ষ্ঠ থেকে দ্বাদশ ও এডমিশন শিক্ষার্থীদের জন্য উন্নতমানের শিক্ষা নিশ্চিত করাই আমাদের অঙ্গীকার।
@@ -1676,7 +1733,7 @@
             <li><a href="/course?slug=ssc-28-full-prep" class="footer-link-item">এসএসসি ২০২৬/২৭</a></li>
             <li><a href="/course?slug=class-5-full-course" class="footer-link-item">৫ম থেকে ৮ম শ্রেণি</a></li>
             <li><a href="/notes" class="footer-link-item">স্মার্ট নোটস লাইব্রেরি</a></li>
-            <li><a href="/exam" class="footer-link-item">লাইভ মডেল টেস্ট</a></li>
+            <li><a href="/book" class="footer-link-item">বুকশপ ও গাইড</a></li>
           </ul>
         </div>
 
@@ -1698,7 +1755,7 @@
       <div class="footer-legal-bar" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; margin-top: 2rem;">
         <div class="flex flex-col sm:flex-row justify-between items-center gap-3">
           <div>
-            © ২০২৬ Dipu's Edu. সর্বস্বত্ব সংরক্ষিত।
+            © ২০২৬ Dipu Academy. সর্বস্বত্ব সংরক্ষিত।
           </div>
           <div class="flex gap-4">
             <a href="#" class="footer-link-item">শর্তাবলী ও নিয়মাবলী</a>
@@ -2093,7 +2150,7 @@
       const discountPrice = Number(c.discountPrice) || 419;
       const discountPct = Math.round(((price - discountPrice) / price) * 100);
 
-      document.title = `${title} — Dipu's Edu`;
+      document.title = `${title} — Dipu Academy`;
       if (document.getElementById("breadcrumbCourseName")) document.getElementById("breadcrumbCourseName").textContent = title;
 
       // Badges

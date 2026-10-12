@@ -291,18 +291,7 @@ export const CourseExplorer: React.FC = () => {
     <div style={{ maxWidth: "1140px", margin: "0 auto", padding: "3rem 1rem 4rem" }}>
       {/* Section Header with Bengali Text Animation */}
       <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-        <div
-          style={{
-            fontSize: "0.82rem",
-            fontWeight: 800,
-            color: "#FF7A1A",
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            marginBottom: "0.5rem",
-          }}
-        >
-          WATCH & LEARN ON-DEMAND
-        </div>
+
 
         <h2
           style={{
@@ -519,6 +508,7 @@ export const CourseExplorer: React.FC = () => {
             <a
               key={course.id}
               href={`/course.html?slug=${course.slug}`}
+              className="course-card da-course-card"
               style={{
                 textDecoration: "none",
                 display: "flex",
@@ -529,13 +519,11 @@ export const CourseExplorer: React.FC = () => {
                 border: "1px solid rgba(255, 255, 255, 0.08)",
                 boxShadow: "0 10px 30px rgba(0, 0, 0, 0.4)",
                 transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-                animation: `courseCardReveal 0.45s cubic-bezier(0.16, 1, 0.3, 1) both`,
-                animationDelay: `${idx * 40}ms`,
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-6px)";
-                e.currentTarget.style.borderColor = "rgba(255, 122, 26, 0.45)";
-                e.currentTarget.style.boxShadow = "0 16px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 122, 26, 0.15)";
+                e.currentTarget.style.borderColor = "rgba(0, 194, 255, 0.5)";
+                e.currentTarget.style.boxShadow = "0 16px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 194, 255, 0.2)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";

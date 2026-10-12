@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initSocialLinksManagement();
   initSiteStatsManagement();
   initFeaturesManagement();
+  initUserDashboardManagement();
   initKeyboardShortcuts();
 });
 
@@ -135,6 +136,7 @@ function initTabRouting() {
     if (targetTab === "user-details") loadAllUserDetails();
     if (targetTab === "reviews" && window.loadReviews) window.loadReviews();
     if (targetTab === "features" && window.loadFeaturesInAdmin) window.loadFeaturesInAdmin();
+    if (targetTab === "user-dashboard" && window.loadUserDashboardConfig) window.loadUserDashboardConfig();
   }
 
   // Sidebar link clicks
@@ -342,42 +344,42 @@ function initCoursesManagement() {
       title: "পদার্থবিজ্ঞান ১ম ও ২য় পত্র",
       icon: "⚛️",
       gradient: "linear-gradient(135deg, #1E1B4B 0%, #065F46 100%)",
-      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_ph' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231E1B4B'/><stop offset='100%25' stop-color='%230F172A'/></linearGradient><linearGradient id='acc_ph' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%23FF7A1A'/><stop offset='100%25' stop-color='%23FFB347'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_ph)'/><circle cx='490' cy='90' r='130' fill='%23818CF8' opacity='0.12'/><text x='40' y='70' fill='%23FF7A1A' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU&#39;S EDU • HSC 2026/2027</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>পদার্থবিজ্ঞান ১ম পত্র</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>থিওরি, অ্যানিমেশন ও গাণিতিক সমাধান</text><rect x='40' y='210' width='150' height='36' rx='18' fill='url(%23acc_ph)'/><text x='115' y='234' fill='%230A0A0F' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>🔥 ফুল সিলেবাস</text><text x='480' y='260' font-size='110' opacity='0.9'>⚛️</text></svg>"
+      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_ph' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231E1B4B'/><stop offset='100%25' stop-color='%230F172A'/></linearGradient><linearGradient id='acc_ph' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%230084FF'/><stop offset='100%25' stop-color='%2300C2FF'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_ph)'/><circle cx='490' cy='90' r='130' fill='%2300C2FF' opacity='0.15'/><text x='40' y='70' fill='%2300C2FF' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU ACADEMY • HSC 2026/2027</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>পদার্থবিজ্ঞান ১ম পত্র</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>থিওরি, অ্যানিমেশন ও গাণিতিক সমাধান</text><rect x='40' y='210' width='150' height='36' rx='18' fill='url(%23acc_ph)'/><text x='115' y='234' fill='%23050B17' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>🔥 ফুল সিলেবাস</text><text x='480' y='260' font-size='110' opacity='0.9'>⚛️</text></svg>"
     },
     {
       id: "chemistry",
       title: "রসায়ন ১ম ও ২য় পত্র",
       icon: "🧪",
       gradient: "linear-gradient(135deg, #064E3B 0%, #022c22 100%)",
-      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_ch' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23064E3B'/><stop offset='100%25' stop-color='%23022c22'/></linearGradient><linearGradient id='acc_ch' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%2310B981'/><stop offset='100%25' stop-color='%2334D399'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_ch)'/><circle cx='500' cy='80' r='140' fill='%2310B981' opacity='0.1'/><text x='40' y='70' fill='%2310B981' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU&#39;S EDU • HSC 2026</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>রসায়ন ১ম পত্র</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>মাস্টারক্লাস — থিওরি ও সৃজনশীল</text><rect x='40' y='210' width='140' height='36' rx='18' fill='url(%23acc_ch)'/><text x='110' y='234' fill='%23022c22' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>★ A+ মিশন</text><text x='480' y='260' font-size='110' opacity='0.9'>🧪</text></svg>"
+      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_ch' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23064E3B'/><stop offset='100%25' stop-color='%23022c22'/></linearGradient><linearGradient id='acc_ch' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%2310B981'/><stop offset='100%25' stop-color='%2334D399'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_ch)'/><circle cx='500' cy='80' r='140' fill='%2310B981' opacity='0.1'/><text x='40' y='70' fill='%2310B981' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU ACADEMY • HSC 2026</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>রসায়ন ১ম পত্র</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>মাস্টারক্লাস — থিওরি ও সৃজনশীল</text><rect x='40' y='210' width='140' height='36' rx='18' fill='url(%23acc_ch)'/><text x='110' y='234' fill='%23022c22' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>★ A+ মিশন</text><text x='480' y='260' font-size='110' opacity='0.9'>🧪</text></svg>"
     },
     {
       id: "math",
       title: "উচ্চতর গণিত ও এডমিশন",
       icon: "📐",
       gradient: "linear-gradient(135deg, #311042 0%, #111827 100%)",
-      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_mt' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23311042'/><stop offset='100%25' stop-color='%23111827'/></linearGradient><linearGradient id='acc_mt' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%23EC4899'/><stop offset='100%25' stop-color='%23F43F5E'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_mt)'/><circle cx='480' cy='100' r='140' fill='%23EC4899' opacity='0.12'/><text x='40' y='70' fill='%23F472B6' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU&#39;S EDU • ADMISSION 2026</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>উচ্চতর গণিত ও এডমিশন</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>BUET ও ভার্সিটি স্পেশাল ক্র্যাশ কোর্স</text><rect x='40' y='210' width='160' height='36' rx='18' fill='url(%23acc_mt)'/><text x='120' y='234' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>🏛️ BUET টপার ব্যাচ</text><text x='480' y='260' font-size='110' opacity='0.9'>📐</text></svg>"
+      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_mt' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23311042'/><stop offset='100%25' stop-color='%23111827'/></linearGradient><linearGradient id='acc_mt' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%23EC4899'/><stop offset='100%25' stop-color='%23F43F5E'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_mt)'/><circle cx='480' cy='100' r='140' fill='%23EC4899' opacity='0.12'/><text x='40' y='70' fill='%23F472B6' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU ACADEMY • ADMISSION 2026</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>উচ্চতর গণিত ও এডমিশন</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>BUET ও ভার্সিটি স্পেশাল ক্র্যাশ কোর্স</text><rect x='40' y='210' width='160' height='36' rx='18' fill='url(%23acc_mt)'/><text x='120' y='234' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>🏛️ BUET টপার ব্যাচ</text><text x='480' y='260' font-size='110' opacity='0.9'>📐</text></svg>"
     },
     {
       id: "biology",
       title: "জীববিজ্ঞান (Biology)",
       icon: "🧬",
       gradient: "linear-gradient(135deg, #064E3B 0%, #042F2E 100%)",
-      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_bi' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23064E3B'/><stop offset='100%25' stop-color='%23042F2E'/></linearGradient><linearGradient id='acc_bi' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%2314B8A6'/><stop offset='100%25' stop-color='%232DD4BF'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_bi)'/><circle cx='490' cy='100' r='130' fill='%232DD4BF' opacity='0.1'/><text x='40' y='70' fill='%232DD4BF' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU&#39;S EDU • MEDICAL SPECIAL</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>জীববিজ্ঞান ১ম ও ২য় পত্র</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>মেডিকেল স্ট্যান্ডার্ড ডায়াগ্রাম ও ব্যাখ্যা</text><rect x='40' y='210' width='160' height='36' rx='18' fill='url(%23acc_bi)'/><text x='120' y='234' fill='%23042F2E' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>🩺 মেডিকেল প্রস্তুতি</text><text x='480' y='260' font-size='110' opacity='0.9'>🧬</text></svg>"
+      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_bi' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23064E3B'/><stop offset='100%25' stop-color='%23042F2E'/></linearGradient><linearGradient id='acc_bi' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%2314B8A6'/><stop offset='100%25' stop-color='%232DD4BF'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_bi)'/><circle cx='490' cy='100' r='130' fill='%232DD4BF' opacity='0.1'/><text x='40' y='70' fill='%232DD4BF' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU ACADEMY • MEDICAL SPECIAL</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>জীববিজ্ঞান ১ম ও ২য় পত্র</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>মেডিকেল স্ট্যান্ডার্ড ডায়াগ্রাম ও ব্যাখ্যা</text><rect x='40' y='210' width='160' height='36' rx='18' fill='url(%23acc_bi)'/><text x='120' y='234' fill='%23042F2E' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>🩺 মেডিকেল প্রস্তুতি</text><text x='480' y='260' font-size='110' opacity='0.9'>🧬</text></svg>"
     },
     {
       id: "ssc",
       title: "SSC '27 ও '28 ব্যাচ",
       icon: "🎯",
       gradient: "linear-gradient(135deg, #431407 0%, #1C1917 100%)",
-      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_sc' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23431407'/><stop offset='100%25' stop-color='%231C1917'/></linearGradient><linearGradient id='acc_sc' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%23F97316'/><stop offset='100%25' stop-color='%23FBBF24'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_sc)'/><circle cx='490' cy='90' r='130' fill='%23F97316' opacity='0.12'/><text x='40' y='70' fill='%23FB923C' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU&#39;S EDU • SSC 2027 &amp; 2028</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>SSC সাধারণ বিজ্ঞান ও গণিত</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>ব্যাচ '২৭ ও '২৮ সম্পূর্ণ একাডেমি কোর্স</text><rect x='40' y='210' width='160' height='36' rx='18' fill='url(%23acc_sc)'/><text x='120' y='234' fill='%23431407' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>🎯 গোল্ডেন A+ মিশন</text><text x='480' y='260' font-size='110' opacity='0.9'>🎯</text></svg>"
+      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_sc' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23431407'/><stop offset='100%25' stop-color='%231C1917'/></linearGradient><linearGradient id='acc_sc' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%230084FF'/><stop offset='100%25' stop-color='%2300C2FF'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_sc)'/><circle cx='490' cy='90' r='130' fill='%2300C2FF' opacity='0.15'/><text x='40' y='70' fill='%2300C2FF' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU ACADEMY • SSC 2027 &amp; 2028</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>SSC সাধারণ বিজ্ঞান ও গণিত</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>ব্যাচ '২৭ ও '২৮ সম্পূর্ণ একাডেমি কোর্স</text><rect x='40' y='210' width='160' height='36' rx='18' fill='url(%23acc_sc)'/><text x='120' y='234' fill='%23050B17' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>🎯 গোল্ডেন A+ মিশন</text><text x='480' y='260' font-size='110' opacity='0.9'>🎯</text></svg>"
     },
     {
       id: "school",
       title: "স্কুল (শ্রেণি ৫-৮)",
       icon: "🏫",
       gradient: "linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%)",
-      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_sk' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231E3A8A'/><stop offset='100%25' stop-color='%230F172A'/></linearGradient><linearGradient id='acc_sk' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%2338BDF8'/><stop offset='100%25' stop-color='%23818CF8'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_sk)'/><circle cx='490' cy='90' r='130' fill='%2338BDF8' opacity='0.12'/><text x='40' y='70' fill='%2338BDF8' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU&#39;S EDU • SCHOOL (CLASS 5-8)</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>স্কুল গণিত ও বিজ্ঞান ফাউন্ডেশন</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>৫ম থেকে ৮ম শ্রেণি বেসিক ও কুইজ</text><rect x='40' y='210' width='160' height='36' rx='18' fill='url(%23acc_sk)'/><text x='120' y='234' fill='%230F172A' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>🏫 ক্লাস টপার ব্যাচ</text><text x='480' y='260' font-size='110' opacity='0.9'>🏫</text></svg>"
+      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_sk' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231E3A8A'/><stop offset='100%25' stop-color='%230F172A'/></linearGradient><linearGradient id='acc_sk' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%2338BDF8'/><stop offset='100%25' stop-color='%23818CF8'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_sk)'/><circle cx='490' cy='90' r='130' fill='%2338BDF8' opacity='0.12'/><text x='40' y='70' fill='%2338BDF8' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU ACADEMY • SCHOOL (CLASS 5-8)</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>স্কুল গণিত ও বিজ্ঞান ফাউন্ডেশন</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>৫ম থেকে ৮ম শ্রেণি বেসিক ও কুইজ</text><rect x='40' y='210' width='160' height='36' rx='18' fill='url(%23acc_sk)'/><text x='120' y='234' fill='%230F172A' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>🏫 ক্লাস টপার ব্যাচ</text><text x='480' y='260' font-size='110' opacity='0.9'>🏫</text></svg>"
     }
   ];
 
@@ -2354,3 +2356,695 @@ async function handleCreateNewFeature() {
   selectAdminFeature(id);
   showAdminToast(`✨ '${tabLabel}' নতুন ফিচারটি সফলভাবে যুক্ত করা হয়েছে!`);
 }
+
+// ==============================================================================
+// 17. User Dashboard Media, Logo & Content Manager
+// ==============================================================================
+
+const DEFAULT_DASHBOARD_CONFIG = {
+  logo: {
+    image: "/images/dipu-logo.png",
+    name: "Dipu",
+    accent: "Academy",
+    tagline: "Learn • Grow • Build Your Future"
+  },
+  hero: {
+    title: "আজকের শেখা, আগামীর সফলতা।",
+    subtitle: "Dipu Academy - তোমার স্বপ্ন পূরণের জন্য সঠিক শিক্ষা, সঠিক পথে।",
+    image: "/images/dashboard-hero.jpg",
+    ctaText: "এখনই পড়া শুরু করুন →",
+    ctaLink: "#video-classes"
+  },
+  subjects: [
+    { id: "bangla", name: "বাংলা", desc: "ভাষা, সাহিত্য, রচনা", colorClass: "da-sub-blue", icon: "fas fa-book-open" },
+    { id: "english", name: "ইংরেজি", desc: "Reading, Grammar, Writing", colorClass: "da-sub-green", icon: "A", isLetter: true },
+    { id: "math", name: "গণিত", desc: "বীজগণিত, জ্যামিতি, সংখ্যা", colorClass: "da-sub-purple", icon: "fas fa-calculator" },
+    { id: "science", name: "বিজ্ঞান", desc: "পদার্থ, রসায়ন, জীববিজ্ঞান", colorClass: "da-sub-pink", icon: "fas fa-flask" },
+    { id: "history", name: "ইতিহাস", desc: "বাংলাদেশ ও বিশ্ব", colorClass: "da-sub-amber", icon: "fas fa-landmark" },
+    { id: "geography", name: "ভূগোল", desc: "ভৌগোলিক জ্ঞান, পরিবেশ", colorClass: "da-sub-teal", icon: "fas fa-earth-americas" }
+  ],
+  groups: [
+    { id: "g1", title: "Class 10 - Batch 2026", members: "12.5k সদস্য", colorClass: "da-grp-blue", icon: "fas fa-users" },
+    { id: "g2", title: "SSC Preparation", members: "8.2k সদস্য", colorClass: "da-grp-green", icon: "fas fa-users" },
+    { id: "g3", title: "Dipu Academy Community", members: "5.6k সদস্য", colorClass: "da-grp-purple", icon: "fas fa-users" },
+    { id: "g4", title: "Study Support", members: "3.4k সদস্য", colorClass: "da-grp-teal", icon: "fas fa-users" }
+  ],
+  promo: {
+    image: "/images/sidebar-books.jpg",
+    title: "চলো, আজকে আরো একটু শিখি!",
+    subtitle: "তোমার স্বপ্ন তোমার হাতেই",
+    badge: "Dipu Academy 💙"
+  }
+};
+
+let currentDashboardConfig = JSON.parse(JSON.stringify(DEFAULT_DASHBOARD_CONFIG));
+
+function initUserDashboardManagement() {
+  loadUserDashboardConfig();
+}
+
+window.loadUserDashboardConfig = async function() {
+  try {
+    const res = await fetch("/api/admin/dashboard-config");
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && data.config) {
+        currentDashboardConfig = {
+          ...DEFAULT_DASHBOARD_CONFIG,
+          ...data.config,
+          logo: { ...DEFAULT_DASHBOARD_CONFIG.logo, ...(data.config.logo || {}) },
+          hero: { ...DEFAULT_DASHBOARD_CONFIG.hero, ...(data.config.hero || {}) },
+          promo: { ...DEFAULT_DASHBOARD_CONFIG.promo, ...(data.config.promo || {}) },
+          subjects: Array.isArray(data.config.subjects) && data.config.subjects.length > 0 ? data.config.subjects : DEFAULT_DASHBOARD_CONFIG.subjects,
+          groups: Array.isArray(data.config.groups) && data.config.groups.length > 0 ? data.config.groups : DEFAULT_DASHBOARD_CONFIG.groups,
+        };
+      }
+    } else {
+      const local = localStorage.getItem("dipu_dashboard_config");
+      if (local) {
+        const parsed = JSON.parse(local);
+        currentDashboardConfig = { ...DEFAULT_DASHBOARD_CONFIG, ...parsed };
+      }
+    }
+  } catch (err) {
+    const local = localStorage.getItem("dipu_dashboard_config");
+    if (local) {
+      try {
+        const parsed = JSON.parse(local);
+        currentDashboardConfig = { ...DEFAULT_DASHBOARD_CONFIG, ...parsed };
+      } catch (e) {}
+    }
+  }
+
+  populateDashboardForm();
+};
+
+function populateDashboardForm() {
+  // Logo fields
+  const logo = currentDashboardConfig.logo || DEFAULT_DASHBOARD_CONFIG.logo;
+  const logoUrlInput = document.getElementById("dashLogoUrl");
+  const brandNameInput = document.getElementById("dashBrandName");
+  const brandAccentInput = document.getElementById("dashBrandAccent");
+  const taglineInput = document.getElementById("dashBrandTagline");
+
+  if (logoUrlInput) logoUrlInput.value = logo.image || "/images/dipu-logo.png";
+  if (brandNameInput) brandNameInput.value = logo.name || "Dipu";
+  if (brandAccentInput) brandAccentInput.value = logo.accent || "Academy";
+  if (taglineInput) taglineInput.value = logo.tagline || "Learn • Grow • Build Your Future";
+  updateLogoLivePreview();
+
+  // Hero fields
+  const hero = currentDashboardConfig.hero || DEFAULT_DASHBOARD_CONFIG.hero;
+  const heroUrlInput = document.getElementById("dashHeroUrl");
+  const heroTitleInput = document.getElementById("dashHeroTitle");
+  const heroSubtitleInput = document.getElementById("dashHeroSubtitle");
+  const heroCtaTextInput = document.getElementById("dashHeroCtaText");
+  const heroCtaLinkInput = document.getElementById("dashHeroCtaLink");
+
+  if (heroUrlInput) heroUrlInput.value = hero.image || "/images/dashboard-hero.jpg";
+  if (heroTitleInput) heroTitleInput.value = hero.title || "আজকের শেখা, আগামীর সফলতা।";
+  if (heroSubtitleInput) heroSubtitleInput.value = hero.subtitle || "Dipu Academy - তোমার স্বপ্ন পূরণের জন্য সঠিক শিক্ষা, সঠিক পথে।";
+  if (heroCtaTextInput) heroCtaTextInput.value = hero.ctaText || "এখনই পড়া শুরু করুন →";
+  if (heroCtaLinkInput) heroCtaLinkInput.value = hero.ctaLink || "#video-classes";
+  updateHeroLivePreview();
+
+  // Promo fields
+  const promo = currentDashboardConfig.promo || DEFAULT_DASHBOARD_CONFIG.promo;
+  const promoUrlInput = document.getElementById("dashPromoUrl");
+  const promoTitleInput = document.getElementById("dashPromoTitle");
+  const promoSubtitleInput = document.getElementById("dashPromoSubtitle");
+  const promoBadgeInput = document.getElementById("dashPromoBadge");
+
+  if (promoUrlInput) promoUrlInput.value = promo.image || "/images/sidebar-books.jpg";
+  if (promoTitleInput) promoTitleInput.value = promo.title || "চলো, আজকে আরো একটু শিখি!";
+  if (promoSubtitleInput) promoSubtitleInput.value = promo.subtitle || "তোমার স্বপ্ন তোমার হাতেই";
+  if (promoBadgeInput) promoBadgeInput.value = promo.badge || "Dipu Academy 💙";
+  updatePromoLivePreview();
+
+  // Subjects & Groups render
+  renderAdminSubjects();
+  renderAdminGroups();
+}
+
+window.updateLogoLivePreview = function() {
+  const imgUrl = document.getElementById("dashLogoUrl")?.value.trim() || "/images/dipu-logo.png";
+  const name = document.getElementById("dashBrandName")?.value.trim() || "Dipu";
+  const accent = document.getElementById("dashBrandAccent")?.value.trim() || "Academy";
+  const tagline = document.getElementById("dashBrandTagline")?.value.trim() || "Learn • Grow • Build Your Future";
+
+  const prevImg = document.getElementById("dashLogoPreview");
+  const prevName = document.getElementById("dashBrandNamePreview");
+  const prevAccent = document.getElementById("dashBrandAccentPreview");
+  const prevTagline = document.getElementById("dashTaglinePreview");
+
+  if (prevImg) prevImg.src = imgUrl;
+  if (prevName) prevName.textContent = name;
+  if (prevAccent) prevAccent.textContent = accent;
+  if (prevTagline) prevTagline.textContent = tagline;
+};
+
+window.updateHeroLivePreview = function() {
+  const imgUrl = document.getElementById("dashHeroUrl")?.value.trim() || "/images/dashboard-hero.jpg";
+  const title = document.getElementById("dashHeroTitle")?.value.trim() || "আজকের শেখা, আগামীর সফলতা।";
+  const subtitle = document.getElementById("dashHeroSubtitle")?.value.trim() || "Dipu Academy - তোমার স্বপ্ন পূরণের জন্য...";
+  const ctaText = document.getElementById("dashHeroCtaText")?.value.trim() || "এখনই পড়া শুরু করুন →";
+
+  const prevImg = document.getElementById("dashHeroPreviewImg");
+  const prevTitle = document.getElementById("dashHeroPreviewTitle");
+  const prevSubtitle = document.getElementById("dashHeroPreviewSubtitle");
+  const prevCta = document.getElementById("dashHeroPreviewCta");
+
+  if (prevImg) prevImg.src = imgUrl;
+  if (prevTitle) prevTitle.textContent = title;
+  if (prevSubtitle) prevSubtitle.textContent = subtitle;
+  if (prevCta) prevCta.textContent = ctaText;
+};
+
+window.updatePromoLivePreview = function() {
+  const imgUrl = document.getElementById("dashPromoUrl")?.value.trim() || "/images/sidebar-books.jpg";
+  const title = document.getElementById("dashPromoTitle")?.value.trim() || "চলো, আজকে আরো একটু শিখি!";
+  const subtitle = document.getElementById("dashPromoSubtitle")?.value.trim() || "তোমার স্বপ্ন তোমার হাতেই";
+  const badge = document.getElementById("dashPromoBadge")?.value.trim() || "Dipu Academy 💙";
+
+  const prevImg = document.getElementById("dashPromoPreviewImg");
+  const prevTitle = document.getElementById("dashPromoPreviewTitle");
+  const prevSubtitle = document.getElementById("dashPromoPreviewSubtitle");
+  const prevBadge = document.getElementById("dashPromoPreviewBadge");
+
+  if (prevImg) prevImg.src = imgUrl;
+  if (prevTitle) prevTitle.textContent = title;
+  if (prevSubtitle) prevSubtitle.textContent = subtitle;
+  if (prevBadge) prevBadge.textContent = badge;
+};
+
+window.handleLogoFileUpload = function(input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const urlInput = document.getElementById("dashLogoUrl");
+    if (urlInput) urlInput.value = e.target.result;
+    updateLogoLivePreview();
+    showAdminToast("✨ নতুন ব্র্যান্ড লোগো ইমেজ সিলেক্ট হয়েছে!");
+  };
+  reader.readAsDataURL(file);
+};
+
+window.handleHeroFileUpload = function(input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const urlInput = document.getElementById("dashHeroUrl");
+    if (urlInput) urlInput.value = e.target.result;
+    updateHeroLivePreview();
+    showAdminToast("✨ নতুন ড্যাশবোর্ড হিরো ব্যানার সিলেক্ট হয়েছে!");
+  };
+  reader.readAsDataURL(file);
+};
+
+window.handlePromoFileUpload = function(input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const urlInput = document.getElementById("dashPromoUrl");
+    if (urlInput) urlInput.value = e.target.result;
+    updatePromoLivePreview();
+    showAdminToast("✨ নতুন সাইডবার প্রমো আর্টওয়ার্ক সিলেক্ট হয়েছে!");
+  };
+  reader.readAsDataURL(file);
+};
+
+// ─── Subjects Management ──────────────────────────────────────────────────────
+
+function renderAdminSubjects() {
+  const container = document.getElementById("adminSubjectsGrid");
+  if (!container) return;
+
+  const subjects = currentDashboardConfig.subjects || [];
+  if (subjects.length === 0) {
+    container.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 30px; color: #94A3B8; background: #081022; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.1);">
+        <i class="fas fa-layer-group" style="font-size: 28px; color: #00C2FF; margin-bottom: 8px;"></i>
+        <div>কোনো বিষয় যুক্ত করা হয়নি। 'নতুন বিষয় যোগ করুন' বাটনে ক্লিক করুন।</div>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = subjects.map((sub) => {
+    let iconHtml = "";
+    if (sub.icon && (sub.icon.startsWith("data:") || sub.icon.startsWith("/") || sub.icon.startsWith("http"))) {
+      iconHtml = `<img src="${sub.icon}" alt="${sub.name}" style="width: 28px; height: 28px; object-fit: contain; border-radius: 6px;">`;
+    } else if (sub.isLetter) {
+      iconHtml = `<span style="font-weight: 800; font-size: 18px;">${sub.icon || "A"}</span>`;
+    } else {
+      iconHtml = `<i class="${sub.icon || 'fas fa-book-open'}"></i>`;
+    }
+
+    return `
+      <div style="background: #081022; border: 1px solid rgba(0,194,255,0.22); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; transition: all 0.25s ease;">
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+          <div class="da-subject-icon-box ${sub.colorClass || 'da-sub-blue'}" style="width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #fff; flex-shrink: 0; box-shadow: 0 4px 14px rgba(0,0,0,0.4);">
+            ${iconHtml}
+          </div>
+          <div style="flex: 1; overflow: hidden;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px;">
+              <h4 style="font-size: 15px; font-weight: 800; color: #fff; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${sub.name}</h4>
+              <span style="font-size: 10px; font-weight: 700; color: #00C2FF; background: rgba(0,194,255,0.12); padding: 2px 7px; border-radius: 6px; flex-shrink: 0;">${sub.id}</span>
+            </div>
+            <p style="font-size: 11.5px; color: #94A3B8; margin: 4px 0 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${sub.desc || ''}</p>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: #00C2FF;"></span>
+            <span style="font-size: 11px; color: #64748B;">${sub.colorClass || 'da-sub-blue'}</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button type="button" onclick="openSubjectModal('${sub.id}')" style="background: rgba(0,194,255,0.12); border: 1px solid rgba(0,194,255,0.3); color: #00C2FF; border-radius: 8px; padding: 4px 10px; font-size: 11.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" title="এডিট করুন">
+              <i class="fas fa-pen-to-square"></i> এডিট
+            </button>
+            <button type="button" onclick="deleteSubject('${sub.id}')" style="background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #EF4444; border-radius: 8px; padding: 4px 10px; font-size: 11.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" title="মুছে ফেলুন">
+              <i class="fas fa-trash-can"></i> মুছুন
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+window.openSubjectModal = function(subjectId) {
+  const modal = document.getElementById("subjectModal");
+  if (!modal) return;
+
+  const titleEl = document.getElementById("subjectModalTitle");
+  const idInput = document.getElementById("modalSubjectId");
+  const nameInput = document.getElementById("modalSubjectName");
+  const descInput = document.getElementById("modalSubjectDesc");
+  const colorSelect = document.getElementById("modalSubjectColor");
+  const iconTypeSelect = document.getElementById("modalSubjectIconType");
+  const iconValInput = document.getElementById("modalSubjectIconVal");
+  const imageUrlInput = document.getElementById("modalSubjectImageUrl");
+
+  if (subjectId) {
+    const sub = currentDashboardConfig.subjects.find(s => s.id === subjectId);
+    if (!sub) return;
+    if (titleEl) titleEl.innerHTML = `<i class="fas fa-pen-to-square text-cyan mr-2" style="color: #00C2FF;"></i> '${sub.name}' বিষয় এডিট করুন`;
+    if (idInput) idInput.value = sub.id;
+    if (nameInput) nameInput.value = sub.name;
+    if (descInput) descInput.value = sub.desc;
+    if (colorSelect) colorSelect.value = sub.colorClass || "da-sub-blue";
+
+    if (sub.icon && (sub.icon.startsWith("data:") || sub.icon.startsWith("/") || sub.icon.startsWith("http"))) {
+      if (iconTypeSelect) iconTypeSelect.value = "image";
+      if (imageUrlInput) imageUrlInput.value = sub.icon;
+    } else if (sub.isLetter) {
+      if (iconTypeSelect) iconTypeSelect.value = "letter";
+      if (iconValInput) iconValInput.value = sub.icon || "A";
+    } else {
+      if (iconTypeSelect) iconTypeSelect.value = "icon";
+      if (iconValInput) iconValInput.value = sub.icon || "fas fa-book-open";
+    }
+  } else {
+    if (titleEl) titleEl.innerHTML = `<i class="fas fa-plus-circle text-cyan mr-2" style="color: #00C2FF;"></i> নতুন বিষয় যোগ করুন`;
+    if (idInput) idInput.value = "";
+    if (nameInput) nameInput.value = "";
+    if (descInput) descInput.value = "";
+    if (colorSelect) colorSelect.value = "da-sub-blue";
+    if (iconTypeSelect) iconTypeSelect.value = "icon";
+    if (iconValInput) iconValInput.value = "fas fa-atom";
+    if (imageUrlInput) imageUrlInput.value = "";
+  }
+
+  handleSubjectIconTypeChange();
+  updateModalSubjectPreview();
+  modal.style.display = "flex";
+};
+
+window.closeSubjectModal = function() {
+  const modal = document.getElementById("subjectModal");
+  if (modal) modal.style.display = "none";
+};
+
+window.handleSubjectIconTypeChange = function() {
+  const type = document.getElementById("modalSubjectIconType")?.value || "icon";
+  const iconWrap = document.getElementById("modalSubjectIconInputWrap");
+  const imgWrap = document.getElementById("modalSubjectImageInputWrap");
+  const iconLabel = document.getElementById("modalSubjectIconLabel");
+  const iconVal = document.getElementById("modalSubjectIconVal");
+
+  if (type === "image") {
+    if (iconWrap) iconWrap.style.display = "none";
+    if (imgWrap) imgWrap.style.display = "block";
+  } else {
+    if (imgWrap) imgWrap.style.display = "none";
+    if (iconWrap) iconWrap.style.display = "block";
+    if (iconLabel) {
+      iconLabel.textContent = type === "letter" ? "একটি একক বর্ণ বা অক্ষর (Letter) *" : "FontAwesome আইকন ক্লাস (যেমন: fas fa-flask) *";
+    }
+    if (type === "letter" && (!iconVal.value || iconVal.value.includes(" "))) {
+      iconVal.value = "ক";
+    }
+  }
+  updateModalSubjectPreview();
+};
+
+window.updateModalSubjectPreview = function() {
+  const name = document.getElementById("modalSubjectName")?.value.trim() || "বিষয়ের নাম";
+  const desc = document.getElementById("modalSubjectDesc")?.value.trim() || "সংক্ষিপ্ত বিবরণ";
+  const color = document.getElementById("modalSubjectColor")?.value || "da-sub-blue";
+  const type = document.getElementById("modalSubjectIconType")?.value || "icon";
+  const iconVal = document.getElementById("modalSubjectIconVal")?.value.trim() || "fas fa-book-open";
+  const imgUrl = document.getElementById("modalSubjectImageUrl")?.value.trim() || "";
+
+  const prevIconBox = document.getElementById("modalSubjectPreviewIconBox");
+  const prevName = document.getElementById("modalSubjectPreviewName");
+  const prevDesc = document.getElementById("modalSubjectPreviewDesc");
+
+  if (prevName) prevName.textContent = name;
+  if (prevDesc) prevDesc.textContent = desc;
+
+  if (prevIconBox) {
+    prevIconBox.className = `da-subject-icon-box ${color}`;
+    if (type === "image" && imgUrl) {
+      prevIconBox.innerHTML = `<img src="${imgUrl}" alt="icon" style="width: 24px; height: 24px; object-fit: contain; border-radius: 4px;">`;
+    } else if (type === "letter") {
+      prevIconBox.innerHTML = `<span style="font-weight: 800; font-size: 18px;">${iconVal || 'A'}</span>`;
+    } else {
+      prevIconBox.innerHTML = `<i class="${iconVal || 'fas fa-book-open'}"></i>`;
+    }
+  }
+};
+
+window.handleSubjectImageUpload = function(input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const urlInput = document.getElementById("modalSubjectImageUrl");
+    if (urlInput) urlInput.value = e.target.result;
+    updateModalSubjectPreview();
+    showAdminToast("✨ বিষয় লোগো ইমেজ লোড হয়েছে!");
+  };
+  reader.readAsDataURL(file);
+};
+
+window.handleSaveSubject = function() {
+  const idInput = document.getElementById("modalSubjectId");
+  const name = document.getElementById("modalSubjectName")?.value.trim();
+  const desc = document.getElementById("modalSubjectDesc")?.value.trim();
+  const color = document.getElementById("modalSubjectColor")?.value || "da-sub-blue";
+  const type = document.getElementById("modalSubjectIconType")?.value || "icon";
+  const iconVal = document.getElementById("modalSubjectIconVal")?.value.trim();
+  const imgUrl = document.getElementById("modalSubjectImageUrl")?.value.trim();
+
+  if (!name || !desc) {
+    showAdminToast("⚠️ অনুগ্রহ করে বিষয় এর নাম ও বিবরণ পূরণ করুন!");
+    return;
+  }
+
+  let finalIcon = "fas fa-book-open";
+  let isLetter = false;
+
+  if (type === "image") {
+    finalIcon = imgUrl || "/images/dipu-logo.png";
+  } else if (type === "letter") {
+    finalIcon = iconVal || "A";
+    isLetter = true;
+  } else {
+    finalIcon = iconVal || "fas fa-book-open";
+  }
+
+  const existingId = idInput?.value.trim();
+  if (existingId) {
+    const idx = currentDashboardConfig.subjects.findIndex(s => s.id === existingId);
+    if (idx !== -1) {
+      currentDashboardConfig.subjects[idx] = {
+        ...currentDashboardConfig.subjects[idx],
+        name,
+        desc,
+        colorClass: color,
+        icon: finalIcon,
+        isLetter
+      };
+      showAdminToast(`✨ '${name}' বিষয়টি সফলভাবে আপডেট হয়েছে!`);
+    }
+  } else {
+    const newId = "sub_" + Date.now().toString(36);
+    currentDashboardConfig.subjects.push({
+      id: newId,
+      name,
+      desc,
+      colorClass: color,
+      icon: finalIcon,
+      isLetter
+    });
+    showAdminToast(`✨ নতুন বিষয় '${name}' সফলভাবে যুক্ত হয়েছে!`);
+  }
+
+  closeSubjectModal();
+  renderAdminSubjects();
+};
+
+window.deleteSubject = function(id) {
+  const sub = currentDashboardConfig.subjects.find(s => s.id === id);
+  const name = sub ? sub.name : id;
+  if (!confirm(`আপনি কি নিশ্চিত যে '${name}' বিষয়টি তালিকা থেকে মুছে ফেলতে চান?`)) return;
+
+  currentDashboardConfig.subjects = currentDashboardConfig.subjects.filter(s => s.id !== id);
+  renderAdminSubjects();
+  showAdminToast(`🗑️ '${name}' বিষয়টি মুছে ফেলা হয়েছে!`);
+};
+
+// ─── Study Groups Management ──────────────────────────────────────────────────
+
+function renderAdminGroups() {
+  const container = document.getElementById("adminGroupsList");
+  if (!container) return;
+
+  const groups = currentDashboardConfig.groups || [];
+  if (groups.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 24px; color: #94A3B8; background: #081022; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.1);">
+        <i class="fas fa-users" style="font-size: 24px; color: #00C2FF; margin-bottom: 6px;"></i>
+        <div>কোনো স্টাডি গ্রুপ যুক্ত করা হয়নি।</div>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = groups.map(grp => {
+    let iconHtml = "";
+    if (grp.icon && (grp.icon.startsWith("data:") || grp.icon.startsWith("/") || grp.icon.startsWith("http"))) {
+      iconHtml = `<img src="${grp.icon}" alt="${grp.title}" style="width: 24px; height: 24px; object-fit: cover; border-radius: 50%;">`;
+    } else {
+      iconHtml = `<i class="${grp.icon || 'fas fa-users'}"></i>`;
+    }
+
+    return `
+      <div style="background: #081022; border: 1px solid rgba(0,194,255,0.22); border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 12px; overflow: hidden;">
+          <div class="da-group-icon-circle ${grp.colorClass || 'da-grp-blue'}" style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; flex-shrink: 0; background: rgba(0,194,255,0.18); border: 1px solid rgba(0,194,255,0.35);">
+            ${iconHtml}
+          </div>
+          <div style="overflow: hidden;">
+            <h4 style="font-size: 14px; font-weight: 700; color: #fff; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${grp.title}</h4>
+            <div style="font-size: 11px; color: #94A3B8; margin-top: 2px;">${grp.members}</div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 6px; flex-shrink: 0;">
+          <button type="button" onclick="openGroupModal('${grp.id}')" style="background: rgba(0,194,255,0.12); border: 1px solid rgba(0,194,255,0.3); color: #00C2FF; border-radius: 6px; padding: 4px 8px; font-size: 11px; font-weight: 700; cursor: pointer;" title="এডিট">
+            <i class="fas fa-pen-to-square"></i>
+          </button>
+          <button type="button" onclick="deleteGroup('${grp.id}')" style="background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #EF4444; border-radius: 6px; padding: 4px 8px; font-size: 11px; font-weight: 700; cursor: pointer;" title="মুছুন">
+            <i class="fas fa-trash-can"></i>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+window.openGroupModal = function(groupId) {
+  const modal = document.getElementById("groupModal");
+  if (!modal) return;
+
+  const titleEl = document.getElementById("groupModalTitle");
+  const idInput = document.getElementById("modalGroupId");
+  const titleInput = document.getElementById("modalGroupTitle");
+  const membersInput = document.getElementById("modalGroupMembers");
+  const colorSelect = document.getElementById("modalGroupColor");
+  const iconInput = document.getElementById("modalGroupIcon");
+
+  if (groupId) {
+    const grp = currentDashboardConfig.groups.find(g => g.id === groupId);
+    if (!grp) return;
+    if (titleEl) titleEl.innerHTML = `<i class="fas fa-pen-to-square text-cyan mr-2" style="color: #00C2FF;"></i> '${grp.title}' গ্রুপ এডিট করুন`;
+    if (idInput) idInput.value = grp.id;
+    if (titleInput) titleInput.value = grp.title;
+    if (membersInput) membersInput.value = grp.members;
+    if (colorSelect) colorSelect.value = grp.colorClass || "da-grp-blue";
+    if (iconInput) iconInput.value = grp.icon || "fas fa-users";
+  } else {
+    if (titleEl) titleEl.innerHTML = `<i class="fas fa-plus-circle text-cyan mr-2" style="color: #00C2FF;"></i> নতুন স্টাডি গ্রুপ যোগ করুন`;
+    if (idInput) idInput.value = "";
+    if (titleInput) titleInput.value = "";
+    if (membersInput) membersInput.value = "10.0k সদস্য";
+    if (colorSelect) colorSelect.value = "da-grp-blue";
+    if (iconInput) iconInput.value = "fas fa-users";
+  }
+
+  updateModalGroupPreview();
+  modal.style.display = "flex";
+};
+
+window.closeGroupModal = function() {
+  const modal = document.getElementById("groupModal");
+  if (modal) modal.style.display = "none";
+};
+
+window.updateModalGroupPreview = function() {
+  const title = document.getElementById("modalGroupTitle")?.value.trim() || "গ্রুপের নাম";
+  const members = document.getElementById("modalGroupMembers")?.value.trim() || "১০k সদস্য";
+  const icon = document.getElementById("modalGroupIcon")?.value.trim() || "fas fa-users";
+
+  const prevTitle = document.getElementById("modalGroupPreviewTitle");
+  const prevMembers = document.getElementById("modalGroupPreviewMembers");
+  const prevCircle = document.getElementById("modalGroupPreviewCircle");
+
+  if (prevTitle) prevTitle.textContent = title;
+  if (prevMembers) prevMembers.textContent = members;
+  if (prevCircle) {
+    if (icon.startsWith("data:") || icon.startsWith("/") || icon.startsWith("http")) {
+      prevCircle.innerHTML = `<img src="${icon}" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover;">`;
+    } else {
+      prevCircle.innerHTML = `<i class="${icon}"></i>`;
+    }
+  }
+};
+
+window.handleGroupImageUpload = function(input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const iconInput = document.getElementById("modalGroupIcon");
+    if (iconInput) iconInput.value = e.target.result;
+    updateModalGroupPreview();
+    showAdminToast("✨ গ্রুপ লোগো ইমেজ সিলেক্ট হয়েছে!");
+  };
+  reader.readAsDataURL(file);
+};
+
+window.handleSaveGroup = function() {
+  const idInput = document.getElementById("modalGroupId");
+  const title = document.getElementById("modalGroupTitle")?.value.trim();
+  const members = document.getElementById("modalGroupMembers")?.value.trim();
+  const color = document.getElementById("modalGroupColor")?.value || "da-grp-blue";
+  const icon = document.getElementById("modalGroupIcon")?.value.trim() || "fas fa-users";
+
+  if (!title || !members) {
+    showAdminToast("⚠️ অনুগ্রহ করে গ্রুপের নাম ও সদস্য সংখ্যা পূরণ করুন!");
+    return;
+  }
+
+  const existingId = idInput?.value.trim();
+  if (existingId) {
+    const idx = currentDashboardConfig.groups.findIndex(g => g.id === existingId);
+    if (idx !== -1) {
+      currentDashboardConfig.groups[idx] = {
+        ...currentDashboardConfig.groups[idx],
+        title,
+        members,
+        colorClass: color,
+        icon
+      };
+      showAdminToast(`✨ '${title}' গ্রুপটি সফলভাবে আপডেট হয়েছে!`);
+    }
+  } else {
+    const newId = "grp_" + Date.now().toString(36);
+    currentDashboardConfig.groups.push({
+      id: newId,
+      title,
+      members,
+      colorClass: color,
+      icon
+    });
+    showAdminToast(`✨ নতুন গ্রুপ '${title}' সফলভাবে যুক্ত হয়েছে!`);
+  }
+
+  closeGroupModal();
+  renderAdminGroups();
+};
+
+window.deleteGroup = function(id) {
+  const grp = currentDashboardConfig.groups.find(g => g.id === id);
+  const title = grp ? grp.title : id;
+  if (!confirm(`আপনি কি নিশ্চিত যে '${title}' গ্রুপটি মুছে ফেলতে চান?`)) return;
+
+  currentDashboardConfig.groups = currentDashboardConfig.groups.filter(g => g.id !== id);
+  renderAdminGroups();
+  showAdminToast(`🗑️ '${title}' গ্রুপটি মুছে ফেলা হয়েছে!`);
+};
+
+// ─── Global Save & Reset Handlers ─────────────────────────────────────────────
+
+window.saveUserDashboardConfig = async function() {
+  currentDashboardConfig.logo = {
+    image: document.getElementById("dashLogoUrl")?.value.trim() || "/images/dipu-logo.png",
+    name: document.getElementById("dashBrandName")?.value.trim() || "Dipu",
+    accent: document.getElementById("dashBrandAccent")?.value.trim() || "Academy",
+    tagline: document.getElementById("dashBrandTagline")?.value.trim() || "Learn • Grow • Build Your Future",
+  };
+
+  currentDashboardConfig.hero = {
+    image: document.getElementById("dashHeroUrl")?.value.trim() || "/images/dashboard-hero.jpg",
+    title: document.getElementById("dashHeroTitle")?.value.trim() || "আজকের শেখা, আগামীর সফলতা।",
+    subtitle: document.getElementById("dashHeroSubtitle")?.value.trim() || "Dipu Academy - তোমার স্বপ্ন পূরণের জন্য সঠিক শিক্ষা, সঠিক পথে।",
+    ctaText: document.getElementById("dashHeroCtaText")?.value.trim() || "এখনই পড়া শুরু করুন →",
+    ctaLink: document.getElementById("dashHeroCtaLink")?.value.trim() || "#video-classes",
+  };
+
+  currentDashboardConfig.promo = {
+    image: document.getElementById("dashPromoUrl")?.value.trim() || "/images/sidebar-books.jpg",
+    title: document.getElementById("dashPromoTitle")?.value.trim() || "চলো, আজকে আরো একটু শিখি!",
+    subtitle: document.getElementById("dashPromoSubtitle")?.value.trim() || "তোমার স্বপ্ন তোমার হাতেই",
+    badge: document.getElementById("dashPromoBadge")?.value.trim() || "Dipu Academy 💙",
+  };
+
+  try {
+    localStorage.setItem("dipu_dashboard_config", JSON.stringify(currentDashboardConfig));
+  } catch (e) {
+    console.warn("LocalStorage save warning:", e);
+  }
+
+  try {
+    const res = await fetch("/api/admin/dashboard-config", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(currentDashboardConfig)
+    });
+    if (res.ok) {
+      showAdminToast("💾 ইউজার ড্যাশবোর্ডের সকল লোগো, ব্যানার ও কন্টেন্ট সফলভাবে সংরক্ষিত হয়েছে!");
+    } else {
+      showAdminToast("💾 লোকাল স্টোরেজে সংরক্ষিত হয়েছে!");
+    }
+  } catch (err) {
+    showAdminToast("💾 লোকাল স্টোরেজে সংরক্ষিত হয়েছে!");
+  }
+};
+
+window.resetUserDashboardConfigToDefault = async function() {
+  if (!confirm("আপনি কি নিশ্চিত যে সকল ড্যাশবোর্ড লোগো ও মিডিয়া ডিফল্ট সেটিংসে ফিরিয়ে আনতে চান?")) return;
+
+  currentDashboardConfig = JSON.parse(JSON.stringify(DEFAULT_DASHBOARD_CONFIG));
+  populateDashboardForm();
+  await window.saveUserDashboardConfig();
+  showAdminToast("🔄 ইউজার ড্যাশবোর্ড ডিফল্ট কনফিগারেশনে ফিরিয়ে আনা হয়েছে!");
+};
+

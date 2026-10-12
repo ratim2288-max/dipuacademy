@@ -90,9 +90,14 @@ const server = http.createServer((req, res) => {
   if (reqPath === '/' || reqPath === '') reqPath = '/index.html';
   else if (reqPath === '/admin' || reqPath === '/admin/') reqPath = '/admin.html';
   else if (reqPath === '/login' || reqPath === '/login/') reqPath = '/login.html';
-  else if (reqPath === '/exam' || reqPath === '/exam/') reqPath = '/exam.html';
+  else if (reqPath === '/exam' || reqPath === '/exam/' || reqPath === '/exam.html') {
+    res.writeHead(302, { Location: '/' });
+    res.end();
+    return;
+  }
   else if (reqPath === '/player' || reqPath === '/player/') reqPath = '/player.html';
-  else if (reqPath === '/dashboard' || reqPath === '/dashboard/' || reqPath === '/profile') reqPath = '/dashboard.html';
+  else if (reqPath === '/dashboard' || reqPath === '/dashboard/') reqPath = '/dashboard.html';
+  else if (reqPath === '/profile' || reqPath === '/profile/') reqPath = '/profile.html';
   else if (reqPath === '/otp' || reqPath === '/otp/' || reqPath === '/otp-deck') reqPath = '/otp-component.html';
 
   const filePath = path.join(PUBLIC_DIR, reqPath);
@@ -125,7 +130,7 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, () => {
   console.log(`================================================================`);
-  console.log(`🚀 Dipu's Edu Server is LIVE at: http://localhost:${PORT}`);
+  console.log(`🚀 Dipu Academy Server is LIVE at: http://localhost:${PORT}`);
   console.log(`🔐 OTP Verification DECK: http://localhost:${PORT}/login.html`);
   console.log(`================================================================`);
 });

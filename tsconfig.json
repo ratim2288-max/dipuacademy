@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": true,
+    "allowJs": false,
+    "checkJs": false,
     "skipLibCheck": true,
     "strict": false,
     "noEmit": true,
@@ -17,5 +18,5 @@
     }
   },
   "include": ["components/**/*", "lib/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "public", "src"]
 }

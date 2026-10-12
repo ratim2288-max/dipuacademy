@@ -209,7 +209,7 @@ async function getBalance() {
  * @returns {string}
  */
 function formatOtpMessage(otp) {
-  return `Dipu's Edu: আপনার ভেরিফিকেশন কোড হলো ${otp}। এটি ৩ মিনিটের জন্য বৈধ। কাউকে শেয়ার করবেন না।`;
+  return `Dipu Academy: আপনার ভেরিফিকেশন কোড হলো ${otp}। এটি ৩ মিনিটের জন্য বৈধ। কাউকে শেয়ার করবেন না।`;
 }
 
 module.exports = {

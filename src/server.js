@@ -183,7 +183,7 @@ app.delete('/api/features/:id', (req, res) => {
 app.get('/api/health', (req, res) => {
   return res.status(200).json({
     status: 'online',
-    platform: "Dipu's Edu — Enterprise EdTech Architecture",
+    platform: "Dipu Academy — Enterprise EdTech Architecture",
     version: '8.0.0',
     timestamp: new Date().toISOString(),
     securityTiersActive: 10,
@@ -202,8 +202,7 @@ app.get('/api/health', (req, res) => {
 // HTML page routes
 app.get('/course', (req, res) => res.sendFile(path.join(__dirname, '../public/course.html')));
 app.get('/course/:slug', (req, res) => res.sendFile(path.join(__dirname, '../public/course.html')));
-app.get('/exam', (req, res) => res.sendFile(path.join(__dirname, '../public/exam.html')));
-app.get('/exam/:slug', (req, res) => res.sendFile(path.join(__dirname, '../public/exam.html')));
+app.get(['/exam', '/exam/:slug', '/exam.html'], (req, res) => res.redirect('/'));
 app.get('/login', (req, res) => res.sendFile(path.join(__dirname, '../public/login.html')));
 app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, '../public/dashboard.html')));
 app.get('/profile', (req, res) => res.sendFile(path.join(__dirname, '../public/dashboard.html')));
@@ -254,7 +253,7 @@ app.use((err, req, res, next) => {
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`================================================================`);
-    console.log(`🚀 Dipu's Edu Core Server running on: http://localhost:${PORT}`);
+    console.log(`🚀 Dipu Academy Core Server running on: http://localhost:${PORT}`);
     console.log(`🛡️  10-Tier Bulletproof Security Suite: ACTIVATED`);
     console.log(`🌐 Bilingual Native Interface (BN / EN): READY`);
     console.log(`📝 MCQ Exam Engine: ONLINE`);

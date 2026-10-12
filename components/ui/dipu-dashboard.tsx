@@ -1,0 +1,2249 @@
+"use client";
+
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { createRoot } from "react-dom/client";
+
+// ─── Keyframe Style Injection for Smooth Tab Transitions ─────────────────────
+const injectDashboardKeyframes = () => {
+  if (typeof document === "undefined") return;
+  const id = "da-dynamic-tab-keyframes";
+  if (document.getElementById(id)) return;
+  const style = document.createElement("style");
+  style.id = id;
+  style.textContent = `
+    @keyframes daTabFade {
+      0% { opacity: 0; transform: translateY(8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .da-tab-pane {
+      animation: daTabFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .da-nav-item.active a {
+      background: linear-gradient(135deg, rgba(0, 194, 255, 0.22) 0%, rgba(0, 132, 255, 0.12) 100%) !important;
+      color: #00C2FF !important;
+      border: 1px solid rgba(0, 194, 255, 0.45) !important;
+      box-shadow: 0 4px 18px rgba(0, 194, 255, 0.25) !important;
+    }
+    .da-nav-item.active a i {
+      color: #00C2FF !important;
+      transform: scale(1.1);
+    }
+    .da-interactive-card {
+      transition: all 0.25s ease;
+    }
+    .da-interactive-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0, 194, 255, 0.4) !important;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 194, 255, 0.15) !important;
+    }
+  `;
+  document.head.appendChild(style);
+};
+
+// ─── Interfaces ───────────────────────────────────────────────────────────────
+
+interface LogoConfig {
+  image: string;
+  name: string;
+  accent: string;
+  tagline: string;
+}
+
+interface HeroConfig {
+  title: string;
+  subtitle: string;
+  image: string;
+  ctaText: string;
+  ctaLink: string;
+}
+
+interface PromoConfig {
+  image: string;
+  title: string;
+  subtitle: string;
+  badge: string;
+}
+
+interface SubjectItem {
+  id: string;
+  name: string;
+  desc: string;
+  colorClass: string;
+  icon: string;
+  isLetter?: boolean;
+}
+
+interface GroupItem {
+  id: string;
+  title: string;
+  members: string;
+  colorClass: string;
+  icon?: string;
+}
+
+interface CourseItem {
+  id: string;
+  title: string;
+  subject: string;
+  mentor: string;
+  totalLessons: number;
+  completedLessons: number;
+  progress: number;
+  tag: string;
+  tagColor: string;
+  nextClass: string;
+  image: string;
+}
+
+interface NoteItem {
+  id: string;
+  title: string;
+  subject: string;
+  pages: number;
+  size: string;
+  color: string;
+}
+
+interface BookItem {
+  id: string;
+  title: string;
+  author: string;
+  price: number;
+  originalPrice: number;
+  badge: string;
+  image: string;
+}
+
+// ─── Main TypeScript React Component: DipuDashboardApp ────────────────────────
+
+export const DipuDashboardApp: React.FC = () => {
+  // Reactive States
+  const [activeTab, setActiveTab] = useState<string>("dashboard");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [userName, setUserName] = useState<string>("ratim");
+  const [userTarget, setUserTarget] = useState<string>("SSC 2026");
+  const [userGroup, setUserGroup] = useState<string>("বিজ্ঞান বিভাগ (Science)");
+  const [notificationsOpen, setNotificationsOpen] = useState<boolean>(false);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState<boolean>(false);
+  const [profileModalOpen, setProfileModalOpen] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Video Classes Tab State
+  const [currentVideoId, setCurrentVideoId] = useState<string>("gzhi2X6tpmg");
+  const [currentVideoTitle, setCurrentVideoTitle] = useState<string>(
+    "গণিতে ৭টি অধ্যায় করলেই A+ কনফার্ম || টেস্ট ও বার্ষিক পরীক্ষা"
+  );
+
+  // Group discussion state
+  const [forumPosts, setForumPosts] = useState<Array<{ id: string; author: string; text: string; time: string }>>([
+    {
+      id: "p1",
+      author: "তানভীর হাসান",
+      text: "ভেক্টর ত্রিমাত্রিক স্থানাঙ্কের ডট ও ক্রস গুণনের ফর্মুলা শিটটা খুবই সহায়ক ছিল!",
+      time: "১০ মিনিট আগে",
+    },
+    {
+      id: "p2",
+      author: "নাফিসা বিনতে আহমেদ",
+      text: "রসায়ন ২য় পত্রের জৈব যৌগের রূপান্তরের ওপর কি আগামীকাল স্পেশাল লাইভ ক্লাস হবে?",
+      time: "২৫ মিনিট আগে",
+    },
+  ]);
+  const [newPostInput, setNewPostInput] = useState<string>("");
+
+  // Settings form states
+  const [editName, setEditName] = useState<string>("ratim");
+  const [editTarget, setEditTarget] = useState<string>("SSC 2026");
+  const [editGroup, setEditGroup] = useState<string>("বিজ্ঞান বিভাগ (Science)");
+  const [editTheme, setEditTheme] = useState<string>("dark");
+  const [editLang, setEditLang] = useState<string>("bn");
+
+  // Dynamic Media & Dashboard Config States
+  const [logoConfig, setLogoConfig] = useState<LogoConfig>({
+    image: "/images/dipu-logo.png",
+    name: "Dipu",
+    accent: "Academy",
+    tagline: "Learn • Grow • Build Your Future",
+  });
+
+  const [heroConfig, setHeroConfig] = useState<HeroConfig>({
+    title: "আজকের শেখা, আগামীর সফলতা।",
+    subtitle: "Dipu Academy - তোমার স্বপ্ন পূরণের জন্য সঠিক শিক্ষা, সঠিক পথে।",
+    image: "/images/dashboard-hero.jpg",
+    ctaText: "এখনই পড়া শুরু করুন →",
+    ctaLink: "#video-classes",
+  });
+
+  const [promoConfig, setPromoConfig] = useState<PromoConfig>({
+    image: "/images/sidebar-books.jpg",
+    title: "চলো, আজকে আরো একটু শিখি!",
+    subtitle: "তোমার স্বপ্ন তোমার হাতেই",
+    badge: "Dipu Academy 💙",
+  });
+
+  // Subjects Dynamic Data
+  const [subjects, setSubjects] = useState<SubjectItem[]>([
+    { id: "bangla", name: "বাংলা", desc: "ভাষা, সাহিত্য, রচনা", colorClass: "da-sub-blue", icon: "fas fa-book-open" },
+    { id: "english", name: "ইংরেজি", desc: "Reading, Grammar, Writing", colorClass: "da-sub-green", icon: "A", isLetter: true },
+    { id: "math", name: "গণিত", desc: "বীজগণিত, জ্যামিতি, সংখ্যা", colorClass: "da-sub-purple", icon: "fas fa-calculator" },
+    { id: "science", name: "বিজ্ঞান", desc: "পদার্থ, রসায়ন, জীববিজ্ঞান", colorClass: "da-sub-pink", icon: "fas fa-flask" },
+    { id: "history", name: "ইতিহাস", desc: "বাংলাদেশ ও বিশ্ব", colorClass: "da-sub-amber", icon: "fas fa-landmark" },
+    { id: "geography", name: "ভূগোল", desc: "ভৌগোলিক জ্ঞান, পরিবেশ", colorClass: "da-sub-teal", icon: "fas fa-earth-americas" },
+  ]);
+
+  // Groups Dynamic Data
+  const [groups, setGroups] = useState<GroupItem[]>([
+    { id: "g1", title: "Class 10 - Batch 2026", members: "12.5k সদস্য", colorClass: "da-grp-blue", icon: "fas fa-users" },
+    { id: "g2", title: "SSC Preparation", members: "8.2k সদস্য", colorClass: "da-grp-green", icon: "fas fa-users" },
+    { id: "g3", title: "Dipu Academy Community", members: "5.6k সদস্য", colorClass: "da-grp-purple", icon: "fas fa-users" },
+    { id: "g4", title: "Study Support", members: "3.4k সদস্য", colorClass: "da-grp-teal", icon: "fas fa-users" },
+  ]);
+
+  // Sync with LocalStorage & Backend Config on Mount
+  useEffect(() => {
+    injectDashboardKeyframes();
+    try {
+      const storedName = localStorage.getItem("da_user_name") || "ratim";
+      const storedTarget = localStorage.getItem("da_user_target") || "SSC 2026";
+      const storedGroup = localStorage.getItem("da_user_group") || "বিজ্ঞান বিভাগ (Science)";
+      const storedTheme = localStorage.getItem("dipu_theme") || "dark";
+      const storedLang = localStorage.getItem("dipu_lang") || "bn";
+      setUserName(storedName);
+      setUserTarget(storedTarget);
+      setUserGroup(storedGroup);
+      setEditName(storedName);
+      setEditTarget(storedTarget);
+      setEditGroup(storedGroup);
+      setEditTheme(storedTheme);
+      setEditLang(storedLang);
+
+      // Load cached dashboard config
+      const cachedConfig = localStorage.getItem("dipu_dashboard_config");
+      if (cachedConfig) {
+        const parsed = JSON.parse(cachedConfig);
+        if (parsed.logo) setLogoConfig(parsed.logo);
+        if (parsed.hero) setHeroConfig(parsed.hero);
+        if (parsed.promo) setPromoConfig(parsed.promo);
+        if (Array.isArray(parsed.subjects) && parsed.subjects.length > 0) setSubjects(parsed.subjects);
+        if (Array.isArray(parsed.groups) && parsed.groups.length > 0) setGroups(parsed.groups);
+      }
+    } catch (e) {
+      console.warn("LocalStorage access error:", e);
+    }
+
+    // Fetch latest dashboard media config from server
+    fetch("/api/admin/dashboard-config")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && data.success && data.config) {
+          const cfg = data.config;
+          if (cfg.logo) setLogoConfig(cfg.logo);
+          if (cfg.hero) setHeroConfig(cfg.hero);
+          if (cfg.promo) setPromoConfig(cfg.promo);
+          if (Array.isArray(cfg.subjects) && cfg.subjects.length > 0) setSubjects(cfg.subjects);
+          if (Array.isArray(cfg.groups) && cfg.groups.length > 0) setGroups(cfg.groups);
+          try {
+            localStorage.setItem("dipu_dashboard_config", JSON.stringify(cfg));
+          } catch (err) {}
+        }
+      })
+      .catch(() => {});
+
+    // Live sync across tabs / admin updates
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "dipu_dashboard_config" && e.newValue) {
+        try {
+          const cfg = JSON.parse(e.newValue);
+          if (cfg.logo) setLogoConfig(cfg.logo);
+          if (cfg.hero) setHeroConfig(cfg.hero);
+          if (cfg.promo) setPromoConfig(cfg.promo);
+          if (Array.isArray(cfg.subjects) && cfg.subjects.length > 0) setSubjects(cfg.subjects);
+          if (Array.isArray(cfg.groups) && cfg.groups.length > 0) setGroups(cfg.groups);
+        } catch (err) {}
+      }
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  // Toast Timer
+  useEffect(() => {
+    if (!toastMessage) return;
+    const timer = setTimeout(() => {
+      setToastMessage(null);
+    }, 3500);
+    return () => clearTimeout(timer);
+  }, [toastMessage]);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+  };
+
+  const handleProfileSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    const finalName = editName.trim() || "ratim";
+    setUserName(finalName);
+    setUserTarget(editTarget);
+    setUserGroup(editGroup);
+    try {
+      localStorage.setItem("da_user_name", finalName);
+      localStorage.setItem("da_user_target", editTarget);
+      localStorage.setItem("da_user_group", editGroup);
+      localStorage.setItem("dipu_theme", editTheme);
+      localStorage.setItem("dipu_lang", editLang);
+    } catch (err) {}
+    setProfileModalOpen(false);
+    showToast("✅ সেটিংস সফলভাবে সংরক্ষিত হয়েছে!");
+  };
+
+  const handleAddForumPost = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newPostInput.trim()) return;
+    const newPost = {
+      id: "post-" + Date.now(),
+      author: userName || "ratim",
+      text: newPostInput.trim(),
+      time: "এইমাত্র",
+    };
+    setForumPosts([newPost, ...forumPosts]);
+    setNewPostInput("");
+    showToast("🚀 আপনার প্রশ্নটি সফলভাবে গ্রুপে পোস্ট হয়েছে!");
+  };
+
+  // Enrolled Courses Data
+  const enrolledCourses: CourseItem[] = [
+    {
+      id: "c1",
+      title: "HSC '২৭ পূর্ণাঙ্গ পদার্থবিজ্ঞান ১ম পত্র",
+      subject: "পদার্থবিজ্ঞান • ভেক্টর ও গতিবিদ্যা",
+      mentor: "দীপু স্যার (BUET)",
+      totalLessons: 28,
+      completedLessons: 18,
+      progress: 65,
+      tag: "HSC '২৭",
+      tagColor: "#EF4444",
+      nextClass: "ভেক্টর ত্রিমাত্রিক স্থানাঙ্ক ও ডট গুণন",
+      image: "/images/courses/hsc-27-prep.jpg",
+    },
+    {
+      id: "c2",
+      title: "উচ্চতর গণিত ১ম পত্র — পূর্ণাঙ্গ ক্যালকুলাস",
+      subject: "উচ্চতর গণিত • অন্তরীকরণ ও সমাকলন",
+      mentor: "দীপু স্যার ও ম্যাথ টিম",
+      totalLessons: 30,
+      completedLessons: 24,
+      progress: 80,
+      tag: "ক্যালকুলাস স্পেশাল",
+      tagColor: "#8B5CF6",
+      nextClass: "অনির্দিষ্ট যোগজীকরণ ও ক্ষেত্রফল নির্ণয়",
+      image: "/images/courses/hsc-28-prep.jpg",
+    },
+    {
+      id: "c3",
+      title: "এসএসসি রসায়ন পূর্ণাঙ্গ বোর্ড প্রস্তুতি",
+      subject: "রসায়ন • গুণগত রসায়ন ও পর্যায়বৃত্ত ধর্ম",
+      mentor: "ড. শরিফুল ইসলাম (DMC)",
+      totalLessons: 26,
+      completedLessons: 12,
+      progress: 46,
+      tag: "SSC '২৬",
+      tagColor: "#10B981",
+      nextClass: "পর্যায় সারণির মৌলসমূহের ধর্ম",
+      image: "/images/courses/class10-business-studies.jpg",
+    },
+    {
+      id: "c4",
+      title: "জীববিজ্ঞান ১ম পত্র — কোষ ও জিনতত্ত্ব",
+      subject: "জীববিজ্ঞান • মাইটোসিস ও মিয়োসিস",
+      mentor: "ডা. ফারহানা সুলতানা",
+      totalLessons: 22,
+      completedLessons: 20,
+      progress: 90,
+      tag: "মেডিকেল ফাউন্ডেশন",
+      tagColor: "#00C2FF",
+      nextClass: "ডিএনএ অনুলিপন ও প্রোটিন সংশ্লেষণ",
+      image: "/images/courses/class7-full-course.jpg",
+    },
+    {
+      id: "c5",
+      title: "English Grammar Formula & Composition",
+      subject: "ইংরেজি ১ম ও ২য় পত্র",
+      mentor: "ফারহান আহমেদ (DU)",
+      totalLessons: 20,
+      completedLessons: 10,
+      progress: 50,
+      tag: "এইচএসসি ও এসএসসি",
+      tagColor: "#F59E0B",
+      nextClass: "Right Forms of Verbs Masterclass",
+      image: "/images/courses/class5-full-course.jpg",
+    },
+    {
+      id: "c6",
+      title: "আইসিটি — সি প্রোগ্রামিং ও এইচটিএমএল কোডিং",
+      subject: "তথ্য ও যোগাযোগ প্রযুক্তি",
+      mentor: "দীপু স্যার",
+      totalLessons: 18,
+      completedLessons: 6,
+      progress: 33,
+      tag: "আইসিটি",
+      tagColor: "#EC4899",
+      nextClass: "লুপ, অ্যারে ও ফাংশন প্রোগ্রামিং",
+      image: "/images/courses/hsc-27-prep.jpg",
+    },
+  ];
+
+  // Notes Library Data
+  const notesList: NoteItem[] = [
+    {
+      id: "n1",
+      title: "ভেক্টর ও ত্রিমাত্রিক স্থানাঙ্ক পূর্ণাঙ্গ ফর্মুলা শিট",
+      subject: "পদার্থবিজ্ঞান ১ম পত্র",
+      pages: 34,
+      size: "4.2 MB",
+      color: "#00C2FF",
+    },
+    {
+      id: "n2",
+      title: "ক্যালকুলাস ডিফারেন্সিয়েশন ও ইন্টিগ্রেশন চার্ট",
+      subject: "উচ্চতর গণিত ১ম পত্র",
+      pages: 28,
+      size: "3.8 MB",
+      color: "#8B5CF6",
+    },
+    {
+      id: "n3",
+      title: "গুণগত রসায়ন ও পর্যায়বৃত্ত ধর্ম হাইলাইটেড নোটস",
+      subject: "রসায়ন ১ম পত্র",
+      pages: 26,
+      size: "3.5 MB",
+      color: "#10B981",
+    },
+    {
+      id: "n4",
+      title: "জীববিজ্ঞান চিত্র ও গুরুত্বপূর্ণ বৈজ্ঞানিক নাম সংকলন",
+      subject: "জীববিজ্ঞান",
+      pages: 22,
+      size: "2.9 MB",
+      color: "#EC4899",
+    },
+    {
+      id: "n5",
+      title: "English Grammar Golden Rules & Shortcuts",
+      subject: "ইংরেজি ১ম ও ২য় পত্র",
+      pages: 30,
+      size: "3.1 MB",
+      color: "#F59E0B",
+    },
+    {
+      id: "n6",
+      title: "আইসিটি সি প্রোগ্রামিং ও কোডিং চিটশিট",
+      subject: "তথ্য ও যোগাযোগ প্রযুক্তি",
+      pages: 24,
+      size: "2.7 MB",
+      color: "#06B6D4",
+    },
+  ];
+
+  // Bookshop Data
+  const booksList: BookItem[] = [
+    {
+      id: "b1",
+      title: "HSC ফিজিক্স প্লাস হ্যান্ডবুক ২০২৬/২৭",
+      author: "দীপু আহমেদ (BUET)",
+      price: 350,
+      originalPrice: 450,
+      badge: "২৫% ছাড় • বেস্টসেলার",
+      image: "/images/sidebar-books.jpg",
+    },
+    {
+      id: "b2",
+      title: "উচ্চতর গণিত শর্টকাট হ্যাকস ও প্রশ্নব্যাংক",
+      author: "বুয়েট ও ঢাবি রিসার্চ প্যানেল",
+      price: 320,
+      originalPrice: 420,
+      badge: "২৪% ছাড়",
+      image: "/images/sidebar-books.jpg",
+    },
+    {
+      id: "b3",
+      title: "কেমিস্ট্রি রিঅ্যাকশন এনসাইক্লোপিডিয়া",
+      author: "ড. শরিফুল ইসলাম",
+      price: 290,
+      originalPrice: 380,
+      badge: "২৪% ছাড়",
+      image: "/images/sidebar-books.jpg",
+    },
+    {
+      id: "b4",
+      title: "এসএসসি গণিত টপ স্কুল টেস্ট পেপার সলভার",
+      author: "দীপু একাডেমি ফ্যাকাল্টি",
+      price: 280,
+      originalPrice: 350,
+      badge: "২০% ছাড়",
+      image: "/images/sidebar-books.jpg",
+    },
+  ];
+
+  // Video Playlist
+  const videoPlaylist = [
+    {
+      id: "gzhi2X6tpmg",
+      title: "গণিতে ৭টি অধ্যায় করলেই A+ কনফার্ম || টেস্ট ও বার্ষিক পরীক্ষা",
+      subject: "সাধারণ গণিত",
+      duration: "৪৫ মিনিট",
+      mentor: "Rifat Academy x Dipu Academy",
+    },
+    {
+      id: "vid2",
+      title: "পদার্থবিজ্ঞান ১ম পত্র: ভেক্টর ডট ও ক্রস গুণনের শর্টকাট টেকনিক",
+      subject: "পদার্থবিজ্ঞান",
+      duration: "৩৮ মিনিট",
+      mentor: "দীপু স্যার (BUET)",
+    },
+    {
+      id: "vid3",
+      title: "উচ্চতর গণিত: লিমিট ও অন্তরীকরণের সুপার ট্রিকস",
+      subject: "উচ্চতর গণিত",
+      duration: "৪২ মিনিট",
+      mentor: "দীপু স্যার",
+    },
+    {
+      id: "vid4",
+      title: "রসায়ন: পর্যায় সারণি ও ইলেকট্রন বিন্যাস মনে রাখার ট্রিকস",
+      subject: "রসায়ন",
+      duration: "৩৫ মিনিট",
+      mentor: "ড. শরিফুল ইসলাম",
+    },
+    {
+      id: "vid5",
+      title: "জীববিজ্ঞান: মাইটোসিস ও মিয়োসিস কোষ বিভাজন সহজ চিত্র ব্যাখ্যা",
+      subject: "জীববিজ্ঞান",
+      duration: "৪০ মিনিট",
+      mentor: "ডা. ফারহানা সুলতানা",
+    },
+    {
+      id: "vid6",
+      title: "English: Right Forms of Verbs Masterclass & Board Solving",
+      subject: "ইংরেজি",
+      duration: "৩৩ মিনিট",
+      mentor: "ফারহান আহমেদ",
+    },
+  ];
+
+  // Filtered lists based on search
+  const filteredSubjects = subjects.filter(
+    (s) => s.name.toLowerCase().includes(searchQuery.toLowerCase()) || s.desc.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  const filteredGroups = groups.filter(
+    (g) => g.title.toLowerCase().includes(searchQuery.toLowerCase()) || g.members.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const firstLetter = (userName.charAt(0) || "R").toUpperCase();
+
+  return (
+    <div className="da-app-wrapper">
+      {/* ─── 1. TOPBAR HEADER ─── */}
+      <header className="da-topbar">
+        <div className="da-topbar-left">
+          {/* Mobile Menu Toggle Button */}
+          <button
+            type="button"
+            className="da-menu-btn"
+            onClick={() => setMobileDrawerOpen(true)}
+            title="মেনু খুলুন"
+          >
+            <i className="fas fa-bars" />
+          </button>
+
+          {/* Official Brand Logo */}
+          <a
+            href="#dashboard"
+            onClick={(e) => {
+              e.preventDefault();
+              setActiveTab("dashboard");
+            }}
+            className="da-brand"
+            title="Dipu Academy Dashboard"
+          >
+            <img src={logoConfig.image || "/images/dipu-logo.png"} alt={logoConfig.name || "Dipu Academy Logo"} className="da-brand-logo-img" />
+            <div className="da-brand-text">
+              <div className="da-brand-title">
+                {logoConfig.name || "Dipu"} <span className="da-title-accent">{logoConfig.accent || "Academy"}</span>
+              </div>
+              <div className="da-brand-tagline">{logoConfig.tagline || "Learn • Grow • Build Your Future"}</div>
+            </div>
+          </a>
+        </div>
+
+        {/* Search Input */}
+        <div className="da-search-wrap">
+          <i className="fas fa-magnifying-glass da-search-icon" />
+          <input
+            type="text"
+            className="da-search-input"
+            placeholder="কোনো কিছু খুঁজুন..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
+        {/* Right Actions */}
+        <div className="da-topbar-actions">
+          {/* Notification Bell */}
+          <div
+            className="da-bell-btn"
+            onClick={() => setNotificationsOpen(!notificationsOpen)}
+            title="নোটিফিকেশন"
+          >
+            <i className="far fa-bell" />
+            <span className="da-bell-badge">2</span>
+          </div>
+
+          {/* Dropdown */}
+          {notificationsOpen && (
+            <div
+              style={{
+                position: "absolute",
+                top: "74px",
+                right: "70px",
+                width: "290px",
+                background: "#0A1530",
+                border: "1px solid rgba(0,194,255,0.25)",
+                borderRadius: "14px",
+                boxShadow: "0 15px 35px rgba(0,0,0,0.6)",
+                padding: "16px",
+                zIndex: 1000,
+              }}
+            >
+              <div
+                style={{
+                  fontWeight: 800,
+                  fontSize: "13px",
+                  marginBottom: "8px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  color: "#FFFFFF",
+                }}
+              >
+                <span>🔔 নোটিফিকেশন</span>
+                <span
+                  style={{ fontSize: "11px", color: "#00C2FF", cursor: "pointer" }}
+                  onClick={() => setNotificationsOpen(false)}
+                >
+                  বন্ধ
+                </span>
+              </div>
+              <div style={{ fontSize: "12px", color: "#94A3B8", padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                🔥 <strong>স্বাগতম, {userName}!</strong> আজকের পড়ালেখা চালিয়ে যান।
+              </div>
+              <div style={{ fontSize: "12px", color: "#94A3B8", padding: "8px 0" }}>
+                🎉 <strong>নতুন ক্লাস:</strong> গণিতের সৃজনশীল সমাধান ক্লাস যুক্ত হয়েছে।
+              </div>
+            </div>
+          )}
+
+          {/* User Avatar linking to settings tab */}
+          <a
+            href="#settings"
+            onClick={(e) => {
+              e.preventDefault();
+              setActiveTab("settings");
+            }}
+            className="da-user-menu"
+            title="সেটিংস ও প্রোফাইল"
+          >
+            <div className="da-avatar">{firstLetter}</div>
+            <i className="fas fa-chevron-down da-chevron" />
+          </a>
+        </div>
+      </header>
+
+      {/* ─── MOBILE SLIDE-OUT DRAWER ─── */}
+      <div
+        className={`da-drawer-overlay ${mobileDrawerOpen ? "active" : ""}`}
+        onClick={() => setMobileDrawerOpen(false)}
+      />
+      <aside className={`da-mobile-drawer ${mobileDrawerOpen ? "open" : ""}`}>
+        <div className="da-drawer-header">
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <img src={logoConfig.image || "/images/dipu-logo.png"} alt={logoConfig.name || "Dipu Academy"} style={{ width: "34px", height: "34px", borderRadius: "8px", objectFit: "cover" }} />
+            <span style={{ fontSize: "16px", fontWeight: 800, color: "#FFFFFF" }}>
+              {logoConfig.name || "Dipu"} <span style={{ color: "#00C2FF" }}>{logoConfig.accent || "Academy"}</span>
+            </span>
+          </div>
+          <button type="button" className="da-drawer-close-btn" onClick={() => setMobileDrawerOpen(false)}>
+            <i className="fas fa-times" />
+          </button>
+        </div>
+
+        <ul className="da-nav-menu">
+          <li className={`da-nav-item ${activeTab === "dashboard" ? "active" : ""}`}>
+            <a
+              href="#dashboard"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveTab("dashboard");
+                setMobileDrawerOpen(false);
+              }}
+            >
+              <i className="fas fa-house" />
+              <span>ড্যাশবোর্ড</span>
+            </a>
+          </li>
+          <li className={`da-nav-item ${activeTab === "my-courses" ? "active" : ""}`}>
+            <a
+              href="#my-courses"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveTab("my-courses");
+                setMobileDrawerOpen(false);
+              }}
+            >
+              <i className="fas fa-book-open" />
+              <span>আমার কোর্স</span>
+            </a>
+          </li>
+          <li className={`da-nav-item ${activeTab === "video-classes" ? "active" : ""}`}>
+            <a
+              href="#video-classes"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveTab("video-classes");
+                setMobileDrawerOpen(false);
+              }}
+            >
+              <i className="fas fa-circle-play" />
+              <span>ভিডিও ক্লাস</span>
+            </a>
+          </li>
+          <li className={`da-nav-item ${activeTab === "notes" ? "active" : ""}`}>
+            <a
+              href="#notes"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveTab("notes");
+                setMobileDrawerOpen(false);
+              }}
+            >
+              <i className="far fa-file-lines" />
+              <span>নোটস & রিসোর্স</span>
+            </a>
+          </li>
+          <li className={`da-nav-item ${activeTab === "bookshop" ? "active" : ""}`}>
+            <a
+              href="#bookshop"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveTab("bookshop");
+                setMobileDrawerOpen(false);
+              }}
+            >
+              <i className="fas fa-book" />
+              <span>বুকশপ</span>
+            </a>
+          </li>
+          <li className={`da-nav-item ${activeTab === "groups" ? "active" : ""}`}>
+            <a
+              href="#groups"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveTab("groups");
+                setMobileDrawerOpen(false);
+              }}
+            >
+              <i className="fas fa-user-group" />
+              <span>গ্রুপ</span>
+            </a>
+          </li>
+          <li className={`da-nav-item ${activeTab === "performance" ? "active" : ""}`}>
+            <a
+              href="#performance"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveTab("performance");
+                setMobileDrawerOpen(false);
+              }}
+            >
+              <i className="fas fa-chart-simple" />
+              <span>পারফরম্যান্স</span>
+            </a>
+          </li>
+          <li className={`da-nav-item ${activeTab === "settings" ? "active" : ""}`}>
+            <a
+              href="#settings"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveTab("settings");
+                setMobileDrawerOpen(false);
+              }}
+            >
+              <i className="fas fa-gear" />
+              <span>সেটিংস</span>
+            </a>
+          </li>
+
+        </ul>
+
+        {/* Promo card in mobile drawer */}
+        <div className="da-sidebar-promo" style={{ marginTop: "auto" }}>
+          <div className="da-sidebar-promo-cap">
+            <i className="fas fa-graduation-cap" />
+          </div>
+          <h4 className="da-sidebar-promo-title">{promoConfig.title || "চলো, আজকে আরো শিখি!"}</h4>
+          <p className="da-sidebar-promo-subtitle">{promoConfig.subtitle || "তোমার স্বপ্ন তোমার হাতেই"}</p>
+          <div className="da-logo-mini-divider">
+            <i className="fas fa-graduation-cap" />
+          </div>
+          <div className="da-sidebar-promo-badge">
+            {promoConfig.badge || "Dipu Academy 💙"}
+          </div>
+        </div>
+      </aside>
+
+      {/* ─── 2. THREE COLUMN LAYOUT ─── */}
+      <div className="da-dashboard-layout">
+        {/* DESKTOP LEFT SIDEBAR */}
+        <aside className="da-left-sidebar">
+          <ul className="da-nav-menu">
+            <li className={`da-nav-item ${activeTab === "dashboard" ? "active" : ""}`}>
+              <a
+                href="#dashboard"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab("dashboard");
+                }}
+              >
+                <i className="fas fa-house" />
+                <span>ড্যাশবোর্ড</span>
+              </a>
+            </li>
+            <li className={`da-nav-item ${activeTab === "my-courses" ? "active" : ""}`}>
+              <a
+                href="#my-courses"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab("my-courses");
+                }}
+              >
+                <i className="fas fa-book-open" />
+                <span>আমার কোর্স</span>
+              </a>
+            </li>
+            <li className={`da-nav-item ${activeTab === "video-classes" ? "active" : ""}`}>
+              <a
+                href="#video-classes"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab("video-classes");
+                }}
+              >
+                <i className="fas fa-circle-play" />
+                <span>ভিডিও ক্লাস</span>
+              </a>
+            </li>
+            <li className={`da-nav-item ${activeTab === "notes" ? "active" : ""}`}>
+              <a
+                href="#notes"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab("notes");
+                }}
+              >
+                <i className="far fa-file-lines" />
+                <span>নোটস & রিসোর্স</span>
+              </a>
+            </li>
+            <li className={`da-nav-item ${activeTab === "bookshop" ? "active" : ""}`}>
+              <a
+                href="#bookshop"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab("bookshop");
+                }}
+              >
+                <i className="fas fa-book" />
+                <span>বুকশপ</span>
+              </a>
+            </li>
+            <li className={`da-nav-item ${activeTab === "groups" ? "active" : ""}`}>
+              <a
+                href="#groups"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab("groups");
+                }}
+              >
+                <i className="fas fa-user-group" />
+                <span>গ্রুপ</span>
+              </a>
+            </li>
+            <li className={`da-nav-item ${activeTab === "performance" ? "active" : ""}`}>
+              <a
+                href="#performance"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab("performance");
+                }}
+              >
+                <i className="fas fa-chart-simple" />
+                <span>পারফরম্যান্স</span>
+              </a>
+            </li>
+            <li className={`da-nav-item ${activeTab === "settings" ? "active" : ""}`}>
+              <a
+                href="#settings"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab("settings");
+                }}
+              >
+                <i className="fas fa-gear" />
+                <span>সেটিংস</span>
+              </a>
+            </li>
+
+          </ul>
+
+          {/* Bottom Promo Card */}
+          <div className="da-sidebar-promo">
+            <div className="da-sidebar-promo-cap">
+              <i className="fas fa-graduation-cap" />
+            </div>
+            <h4 className="da-sidebar-promo-title" style={{ whiteSpace: "pre-line" }}>
+              {promoConfig.title || "চলো, আজকে আরো একটু শিখি!"}
+            </h4>
+            <p className="da-sidebar-promo-subtitle">{promoConfig.subtitle || "তোমার স্বপ্ন তোমার হাতেই"}</p>
+            <div className="da-logo-mini-divider">
+              <i className="fas fa-graduation-cap" />
+            </div>
+            <div className="da-sidebar-promo-badge">
+              {promoConfig.badge || "Dipu Academy 💙"}
+            </div>
+            <div className="da-sidebar-promo-books">
+              <img src={promoConfig.image || "/images/sidebar-books.jpg"} alt="3D Books Study" />
+            </div>
+          </div>
+        </aside>
+
+        {/* CENTER MAIN WORKSPACE */}
+        <main className="da-main-content">
+          {/* ──────────────────────────────────────────────────────────────────
+              TAB 1: ড্যাশবোর্ড (MAIN DEFAULT OVERVIEW)
+              ────────────────────────────────────────────────────────────────── */}
+          {activeTab === "dashboard" && (
+            <div className="da-tab-pane">
+              {/* HERO BANNER CARD */}
+              <section className="da-hero-card">
+                <div className="da-hero-content">
+                  <h2 className="da-hero-greeting">
+                    স্বাগতম, <span>{userName}</span>!
+                  </h2>
+                  <h3 className="da-hero-subtitle">{heroConfig.title || "আজকের শেখা, আগামীর সফলতা।"}</h3>
+                  <p className="da-hero-desc">{heroConfig.subtitle || "Dipu Academy - তোমার স্বপ্ন পূরণের জন্য সঠিক শিক্ষা, সঠিক পথে।"}</p>
+                  <button
+                    type="button"
+                    className="da-hero-btn"
+                    onClick={() => {
+                      if (heroConfig.ctaLink?.startsWith("#")) {
+                        setActiveTab(heroConfig.ctaLink.replace("#", "") || "video-classes");
+                      } else {
+                        window.location.href = heroConfig.ctaLink || "#video-classes";
+                      }
+                    }}
+                  >
+                    <span>{heroConfig.ctaText || "এখনই পড়া শুরু করুন"}</span>
+                    <i className="fas fa-arrow-right" />
+                  </button>
+                </div>
+                <div className="da-hero-illustration">
+                  <img src={heroConfig.image || "/images/dashboard-hero.jpg"} alt="Student Studying with Laptop" />
+                </div>
+              </section>
+
+              {/* 4 STATS METRIC CARDS ROW */}
+              <section className="da-stats-grid">
+                {/* Card 1: মোট কোর্স */}
+                <div className="da-stat-card">
+                  <div className="da-stat-main">
+                    <div className="da-stat-icon-wrap da-icon-blue">
+                      <i className="fas fa-book-open" />
+                    </div>
+                    <div className="da-stat-info">
+                      <div className="da-stat-number">{enrolledCourses.length}</div>
+                      <div className="da-stat-label">মোট কোর্স</div>
+                    </div>
+                  </div>
+                  <div
+                    className="da-stat-arrow da-arrow-blue"
+                    onClick={() => setActiveTab("my-courses")}
+                    title="আমার কোর্স দেখুন"
+                  >
+                    <i className="fas fa-chevron-right" />
+                  </div>
+                </div>
+
+                {/* Card 2: সম্পন্ন ভিডিও */}
+                <div className="da-stat-card">
+                  <div className="da-stat-main">
+                    <div className="da-stat-icon-wrap da-icon-green">
+                      <i className="fas fa-circle-play" />
+                    </div>
+                    <div className="da-stat-info">
+                      <div className="da-stat-number">8</div>
+                      <div className="da-stat-label">সম্পন্ন ভিডিও</div>
+                    </div>
+                  </div>
+                  <div
+                    className="da-stat-arrow da-arrow-green"
+                    onClick={() => setActiveTab("video-classes")}
+                    title="ভিডিও ক্লাস দেখুন"
+                  >
+                    <i className="fas fa-chevron-right" />
+                  </div>
+                </div>
+
+                {/* Card 3: নোটস/রিসোর্স */}
+                <div className="da-stat-card">
+                  <div className="da-stat-main">
+                    <div className="da-stat-icon-wrap da-icon-purple">
+                      <i className="far fa-file-lines" />
+                    </div>
+                    <div className="da-stat-info">
+                      <div className="da-stat-number">{notesList.length}</div>
+                      <div className="da-stat-label">নোটস/রিসোর্স</div>
+                    </div>
+                  </div>
+                  <div
+                    className="da-stat-arrow da-arrow-purple"
+                    onClick={() => setActiveTab("notes")}
+                    title="নোটস দেখুন"
+                  >
+                    <i className="fas fa-chevron-right" />
+                  </div>
+                </div>
+
+                {/* Card 4: অগ্রগতি */}
+                <div className="da-stat-card">
+                  <div className="da-stat-main">
+                    <div className="da-stat-icon-wrap da-icon-orange">
+                      <i className="fas fa-chart-simple" />
+                    </div>
+                    <div className="da-stat-info">
+                      <div className="da-stat-number">75%</div>
+                      <div className="da-stat-label">অগ্রগতি</div>
+                    </div>
+                  </div>
+                  <div
+                    className="da-stat-arrow da-arrow-orange"
+                    onClick={() => setActiveTab("performance")}
+                    title="পারফরম্যান্স দেখুন"
+                  >
+                    <i className="fas fa-chevron-right" />
+                  </div>
+                </div>
+              </section>
+
+              {/* SUBJECT CARDS: বিষয় সমূহ */}
+              <section className="da-section" id="subjectsSection">
+                <div className="da-section-header">
+                  <div className="da-section-title">
+                    <i className="fas fa-book-open" style={{ color: "#00C2FF" }} />
+                    <span>বিষয় সমূহ</span>
+                  </div>
+                  <a
+                    href="#video-classes"
+                    className="da-section-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveTab("video-classes");
+                    }}
+                  >
+                    <span>সব দেখুন</span>
+                    <i className="fas fa-arrow-right" />
+                  </a>
+                </div>
+
+                <div className="da-subjects-grid">
+                  {filteredSubjects.map((sub) => (
+                    <div
+                      key={sub.id}
+                      className="da-subject-card"
+                      onClick={() => {
+                        showToast(`📘 ${sub.name} ক্লাসরুমে প্রবেশ করছেন...`);
+                        setActiveTab("video-classes");
+                      }}
+                    >
+                      <div className="da-subject-left">
+                        <div className={`da-subject-icon-box ${sub.colorClass || 'da-sub-blue'}`}>
+                          {sub.icon && (sub.icon.startsWith("data:") || sub.icon.startsWith("/") || sub.icon.startsWith("http")) ? (
+                            <img src={sub.icon} alt={sub.name} style={{ width: "24px", height: "24px", objectFit: "contain", borderRadius: "6px" }} />
+                          ) : sub.isLetter ? (
+                            <span className="da-sub-letter">{sub.icon}</span>
+                          ) : (
+                            <i className={sub.icon || "fas fa-book-open"} />
+                          )}
+                        </div>
+                        <div className="da-subject-info">
+                          <h4 className="da-subject-name">{sub.name}</h4>
+                          <p className="da-subject-desc">{sub.desc}</p>
+                        </div>
+                      </div>
+                      <div className="da-subject-arrow">
+                        <i className="fas fa-chevron-right" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* COMMUNITY GROUPS: গ্রুপ */}
+              <section className="da-section" id="groupsSection">
+                <div className="da-section-header">
+                  <div className="da-section-title">
+                    <i className="fas fa-user-group" style={{ color: "#00C2FF" }} />
+                    <span>গ্রুপ</span>
+                  </div>
+                  <a
+                    href="#groups"
+                    className="da-section-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveTab("groups");
+                    }}
+                  >
+                    <span>সব দেখুন</span>
+                    <i className="fas fa-arrow-right" />
+                  </a>
+                </div>
+
+                <div className="da-groups-grid">
+                  {filteredGroups.map((grp) => (
+                    <div
+                      key={grp.id}
+                      className="da-group-card"
+                      onClick={() => setActiveTab("groups")}
+                    >
+                      <div className="da-group-left">
+                        <div className={`da-group-icon-circle ${grp.colorClass || 'da-grp-blue'}`}>
+                          {grp.icon && (grp.icon.startsWith("data:") || grp.icon.startsWith("/") || grp.icon.startsWith("http")) ? (
+                            <img src={grp.icon} alt={grp.title} style={{ width: "22px", height: "22px", objectFit: "cover", borderRadius: "50%" }} />
+                          ) : (
+                            <i className={grp.icon || "fas fa-users"} />
+                          )}
+                        </div>
+                        <div className="da-group-info">
+                          <h4 className="da-group-title">{grp.title}</h4>
+                          <p className="da-group-members">{grp.members}</p>
+                        </div>
+                      </div>
+                      <div className="da-group-arrow">
+                        <i className="fas fa-chevron-right" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </div>
+          )}
+
+          {/* ──────────────────────────────────────────────────────────────────
+              TAB 2: আমার কোর্স (MY ENROLLED COURSES)
+              ────────────────────────────────────────────────────────────────── */}
+          {activeTab === "my-courses" && (
+            <div className="da-tab-pane">
+              <div style={{ marginBottom: "24px" }}>
+                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
+                  <i className="fas fa-book-open" style={{ color: "#00C2FF" }} />
+                  <span>আমার কোর্সসমূহ ({enrolledCourses.length})</span>
+                </h2>
+                <p style={{ fontSize: "14px", color: "#94A3B8", margin: 0 }}>
+                  আপনার মোট {enrolledCourses.length}টি সক্রিয় কোর্সের অগ্রগতি এবং ধারাবাহিক পড়ালেখা চালিয়ে যান।
+                </p>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: "18px", marginBottom: "2rem" }}>
+                {enrolledCourses.map((c) => (
+                  <div
+                    key={c.id}
+                    className="da-interactive-card"
+                    style={{
+                      background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
+                      border: "1px solid rgba(0, 194, 255, 0.2)",
+                      borderRadius: "18px",
+                      overflow: "hidden",
+                      display: "flex",
+                      flexDirection: "column",
+                      boxShadow: "0 10px 25px rgba(0,0,0,0.5)",
+                    }}
+                  >
+                    <div style={{ position: "relative", width: "100%", height: "140px", overflow: "hidden" }}>
+                      <img src={c.image} alt={c.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      <span
+                        style={{
+                          position: "absolute",
+                          top: "10px",
+                          left: "10px",
+                          background: c.tagColor,
+                          color: "#FFF",
+                          fontSize: "11px",
+                          fontWeight: 800,
+                          padding: "4px 10px",
+                          borderRadius: "999px",
+                          boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+                        }}
+                      >
+                        {c.tag}
+                      </span>
+                    </div>
+
+                    <div style={{ padding: "16px", display: "flex", flexDirection: "column", flexGrow: 1 }}>
+                      <div style={{ fontSize: "12px", color: "#00C2FF", fontWeight: 700, marginBottom: "4px" }}>
+                        {c.subject}
+                      </div>
+                      <h4 style={{ fontSize: "15px", fontWeight: 800, color: "#FFFFFF", lineHeight: 1.35, marginBottom: "8px" }}>
+                        {c.title}
+                      </h4>
+                      <div style={{ fontSize: "12px", color: "#94A3B8", marginBottom: "12px" }}>
+                        <i className="fas fa-chalkboard-user" style={{ marginRight: "6px", color: "#F59E0B" }} />
+                        {c.mentor}
+                      </div>
+
+                      {/* Progress bar */}
+                      <div style={{ marginTop: "auto", marginBottom: "14px" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", color: "#CBD5E1", marginBottom: "6px", fontWeight: 600 }}>
+                          <span>অগ্রগতি: {c.completedLessons}/{c.totalLessons} ক্লাস</span>
+                          <span style={{ color: "#00C2FF", fontWeight: 800 }}>{c.progress}%</span>
+                        </div>
+                        <div style={{ width: "100%", height: "6px", background: "rgba(255,255,255,0.08)", borderRadius: "999px", overflow: "hidden" }}>
+                          <div style={{ width: `${c.progress}%`, height: "100%", background: "linear-gradient(90deg, #0084FF, #00C2FF)", borderRadius: "999px" }} />
+                        </div>
+                      </div>
+
+                      <div style={{ display: "flex", gap: "8px" }}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCurrentVideoTitle(c.nextClass);
+                            setActiveTab("video-classes");
+                            showToast(`🎬 ${c.nextClass} ক্লাসে স্বাগতম!`);
+                          }}
+                          style={{
+                            flex: 1,
+                            padding: "9px 12px",
+                            borderRadius: "10px",
+                            background: "linear-gradient(135deg, #0070F3 0%, #00C2FF 100%)",
+                            color: "#FFFFFF",
+                            border: 0,
+                            fontWeight: 800,
+                            fontSize: "12px",
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: "6px",
+                          }}
+                        >
+                          <i className="fas fa-play" style={{ fontSize: "10px" }} />
+                          <span>পড়া শুরু করুন</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setActiveTab("notes")}
+                          style={{
+                            padding: "9px 12px",
+                            borderRadius: "10px",
+                            background: "rgba(255,255,255,0.06)",
+                            border: "1px solid rgba(255,255,255,0.15)",
+                            color: "#CBD5E1",
+                            fontWeight: 700,
+                            fontSize: "12px",
+                            cursor: "pointer",
+                          }}
+                          title="কোর্স নোটস"
+                        >
+                          <i className="far fa-file-lines" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ──────────────────────────────────────────────────────────────────
+              TAB 3: ভিডিও ক্লাস (INTERACTIVE VIDEO CLASSROOM & PLAYLIST)
+              ────────────────────────────────────────────────────────────────── */}
+          {activeTab === "video-classes" && (
+            <div className="da-tab-pane">
+              <div style={{ marginBottom: "20px" }}>
+                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
+                  <i className="fas fa-circle-play" style={{ color: "#10B981" }} />
+                  <span>ভিডিও ক্লাসরুম ও লেকচার</span>
+                </h2>
+                <p style={{ fontSize: "14px", color: "#94A3B8", margin: 0 }}>
+                  বিষয়ভিত্তিক ফুল এইচডি ভিডিও লেকচার ও লাইভ ক্লাস রেকর্ডিং সরাসরি এই পেজেই প্লে করুন।
+                </p>
+              </div>
+
+              {/* Main Active Player Card */}
+              <div
+                style={{
+                  background: "#07080D",
+                  borderRadius: "20px",
+                  overflow: "hidden",
+                  border: "1.5px solid rgba(0, 194, 255, 0.4)",
+                  boxShadow: "0 20px 50px rgba(0,0,0,0.8), 0 0 35px rgba(0, 194, 255, 0.2)",
+                  marginBottom: "24px",
+                }}
+              >
+                {/* 16:9 Video Box */}
+                <div style={{ position: "relative", width: "100%", paddingTop: "56.25%" }}>
+                  <iframe
+                    src={`https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0&modestbranding=1`}
+                    title={currentVideoTitle}
+                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+
+                <div style={{ padding: "18px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px", background: "#091228" }}>
+                  <div>
+                    <span style={{ display: "inline-block", background: "rgba(16, 185, 129, 0.15)", color: "#10B981", fontSize: "11px", fontWeight: 800, padding: "3px 10px", borderRadius: "999px", marginBottom: "6px" }}>
+                      🔴 এখন চলছে (Now Playing)
+                    </span>
+                    <h3 style={{ fontSize: "17px", fontWeight: 800, color: "#FFFFFF", margin: 0 }}>
+                      {currentVideoTitle}
+                    </h3>
+                  </div>
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab("notes")}
+                      style={{
+                        padding: "8px 16px",
+                        borderRadius: "10px",
+                        background: "rgba(0, 194, 255, 0.15)",
+                        border: "1px solid rgba(0, 194, 255, 0.4)",
+                        color: "#00C2FF",
+                        fontWeight: 700,
+                        fontSize: "12px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                      }}
+                    >
+                      <i className="far fa-file-lines" />
+                      <span>এই ক্লাসের নোটস</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Lecture Playlist Grid */}
+              <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#FFFFFF", marginBottom: "14px", display: "flex", alignItems: "center", gap: "8px" }}>
+                <i className="fas fa-list-check" style={{ color: "#00C2FF" }} />
+                <span>পরবর্তী ক্লাসসমূহ (Playlist)</span>
+              </h3>
+
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "12px", marginBottom: "2rem" }}>
+                {videoPlaylist.map((item, idx) => (
+                  <div
+                    key={item.id}
+                    className="da-interactive-card"
+                    onClick={() => {
+                      setCurrentVideoTitle(item.title);
+                      showToast(`🎬 লোড হচ্ছে: ${item.title}`);
+                    }}
+                    style={{
+                      background: currentVideoTitle === item.title ? "rgba(0, 194, 255, 0.12)" : "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
+                      border: currentVideoTitle === item.title ? "1.5px solid #00C2FF" : "1px solid rgba(255,255,255,0.08)",
+                      borderRadius: "14px",
+                      padding: "14px",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "36px",
+                        height: "36px",
+                        borderRadius: "10px",
+                        background: currentVideoTitle === item.title ? "#00C2FF" : "rgba(255,255,255,0.06)",
+                        color: currentVideoTitle === item.title ? "#000" : "#00C2FF",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "13px",
+                        fontWeight: 800,
+                        flexShrink: 0,
+                      }}
+                    >
+                      {idx + 1}
+                    </div>
+                    <div style={{ flexGrow: 1, overflow: "hidden" }}>
+                      <div style={{ fontSize: "11px", color: "#F59E0B", fontWeight: 700, marginBottom: "2px" }}>
+                        {item.subject} • {item.duration}
+                      </div>
+                      <div style={{ fontSize: "13px", color: "#FFFFFF", fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                        {item.title}
+                      </div>
+                      <div style={{ fontSize: "11px", color: "#94A3B8" }}>{item.mentor}</div>
+                    </div>
+                    <i className="fas fa-play" style={{ color: "#00C2FF", fontSize: "11px" }} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ──────────────────────────────────────────────────────────────────
+              TAB 4: নোটস & রিসোর্স (NOTES & RESOURCES LIBRARY)
+              ────────────────────────────────────────────────────────────────── */}
+          {activeTab === "notes" && (
+            <div className="da-tab-pane">
+              <div style={{ marginBottom: "24px" }}>
+                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
+                  <i className="far fa-file-lines" style={{ color: "#8B5CF6" }} />
+                  <span>স্মার্ট হ্যান্ডনোটস ও রিভিশন শিট</span>
+                </h2>
+                <p style={{ fontSize: "14px", color: "#94A3B8", margin: 0 }}>
+                  অভিজ্ঞ মেন্টরদের হাতে লেখা অধ্যায়ভিত্তিক পূর্ণাঙ্গ নোটস ও রিভিশন শিট সংগ্রহ করুন।
+                </p>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: "16px", marginBottom: "2rem" }}>
+                {notesList.map((n) => (
+                  <div
+                    key={n.id}
+                    className="da-interactive-card"
+                    style={{
+                      background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
+                      border: "1px solid rgba(139, 92, 246, 0.25)",
+                      borderRadius: "16px",
+                      padding: "18px",
+                      display: "flex",
+                      flexDirection: "column",
+                      boxShadow: "0 10px 25px rgba(0,0,0,0.5)",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+                      <div
+                        style={{
+                          width: "44px",
+                          height: "44px",
+                          borderRadius: "12px",
+                          background: `${n.color}15`,
+                          border: `1.5px solid ${n.color}40`,
+                          color: n.color,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: "18px",
+                        }}
+                      >
+                        <i className="far fa-file-pdf" />
+                      </div>
+                      <div>
+                        <span style={{ fontSize: "11px", color: n.color, fontWeight: 800, textTransform: "uppercase" }}>
+                          {n.subject}
+                        </span>
+                        <div style={{ fontSize: "11px", color: "#94A3B8" }}>
+                          {n.pages} পৃষ্ঠা • {n.size}
+                        </div>
+                      </div>
+                    </div>
+
+                    <h4 style={{ fontSize: "14px", fontWeight: 800, color: "#FFFFFF", lineHeight: 1.4, marginBottom: "16px", flexGrow: 1 }}>
+                      {n.title}
+                    </h4>
+
+                    <div style={{ display: "flex", gap: "8px", marginTop: "auto" }}>
+                      <button
+                        type="button"
+                        onClick={() => showToast(`📖 '${n.title}' প্রিভিউ লোড হচ্ছে...`)}
+                        style={{
+                          flex: 1,
+                          padding: "8px 12px",
+                          borderRadius: "10px",
+                          background: "rgba(255,255,255,0.06)",
+                          border: "1px solid rgba(255,255,255,0.15)",
+                          color: "#FFFFFF",
+                          fontWeight: 700,
+                          fontSize: "12px",
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "6px",
+                        }}
+                      >
+                        <i className="far fa-eye" />
+                        <span>পড়ুন</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => showToast(`📥 '${n.title}' ডাউনলোড শুরু হয়েছে!`)}
+                        style={{
+                          flex: 1,
+                          padding: "8px 12px",
+                          borderRadius: "10px",
+                          background: "linear-gradient(135deg, #0070F3 0%, #00C2FF 100%)",
+                          color: "#FFFFFF",
+                          border: 0,
+                          fontWeight: 800,
+                          fontSize: "12px",
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "6px",
+                        }}
+                      >
+                        <i className="fas fa-download" />
+                        <span>ডাউনলোড</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ──────────────────────────────────────────────────────────────────
+              TAB 5: বুকশপ (BOOKSTORE & STUDY GUIDES)
+              ────────────────────────────────────────────────────────────────── */}
+          {activeTab === "bookshop" && (
+            <div className="da-tab-pane">
+              <div style={{ marginBottom: "24px" }}>
+                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
+                  <i className="fas fa-book" style={{ color: "#F59E0B" }} />
+                  <span>বুকশপ ও একাডেমি হ্যান্ডবুক</span>
+                </h2>
+                <p style={{ fontSize: "14px", color: "#94A3B8", margin: 0 }}>
+                  পরীক্ষার চূড়ান্ত প্রস্তুতির জন্য প্রিন্টেড প্র্যাকটিস বুক, টেস্ট পেপার সলভার ও হ্যান্ডবুক সরাসরি অর্ডার করুন।
+                </p>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "18px", marginBottom: "2rem" }}>
+                {booksList.map((b) => (
+                  <div
+                    key={b.id}
+                    className="da-interactive-card"
+                    style={{
+                      background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
+                      border: "1px solid rgba(245, 158, 11, 0.25)",
+                      borderRadius: "18px",
+                      overflow: "hidden",
+                      display: "flex",
+                      flexDirection: "column",
+                      boxShadow: "0 10px 25px rgba(0,0,0,0.5)",
+                    }}
+                  >
+                    <div style={{ position: "relative", width: "100%", height: "150px", overflow: "hidden" }}>
+                      <img src={b.image} alt={b.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      <span
+                        style={{
+                          position: "absolute",
+                          top: "10px",
+                          left: "10px",
+                          background: "#F59E0B",
+                          color: "#000",
+                          fontSize: "11px",
+                          fontWeight: 800,
+                          padding: "4px 10px",
+                          borderRadius: "999px",
+                        }}
+                      >
+                        {b.badge}
+                      </span>
+                    </div>
+
+                    <div style={{ padding: "16px", display: "flex", flexDirection: "column", flexGrow: 1 }}>
+                      <h4 style={{ fontSize: "15px", fontWeight: 800, color: "#FFFFFF", marginBottom: "6px", lineHeight: 1.35 }}>
+                        {b.title}
+                      </h4>
+                      <p style={{ fontSize: "12px", color: "#94A3B8", margin: "0 0 14px" }}>
+                        লেখক: {b.author}
+                      </p>
+
+                      <div style={{ marginTop: "auto", display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+                        <div>
+                          <span style={{ fontSize: "18px", fontWeight: 800, color: "#00C2FF" }}>৳{b.price}</span>
+                          <span style={{ fontSize: "12px", color: "#64748B", textDecoration: "line-through", marginLeft: "6px" }}>৳{b.originalPrice}</span>
+                        </div>
+                        <span style={{ fontSize: "11px", color: "#10B981", fontWeight: 700 }}>হোম ডেলিভারি উপলব্ধ</span>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => showToast(`🛒 '${b.title}' বইয়ের অর্ডার কার্টে যোগ হয়েছে!`)}
+                        style={{
+                          width: "100%",
+                          padding: "10px",
+                          borderRadius: "10px",
+                          background: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)",
+                          color: "#000000",
+                          border: 0,
+                          fontWeight: 800,
+                          fontSize: "13px",
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        <i className="fas fa-cart-shopping" />
+                        <span>অর্ডার করুন (Order Now)</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ──────────────────────────────────────────────────────────────────
+              TAB 6: গ্রুপ (STUDY GROUPS & COMMUNITY FORUM)
+              ────────────────────────────────────────────────────────────────── */}
+          {activeTab === "groups" && (
+            <div className="da-tab-pane">
+              <div style={{ marginBottom: "20px" }}>
+                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
+                  <i className="fas fa-user-group" style={{ color: "#00C2FF" }} />
+                  <span>শিক্ষার্থী কমিউনিটি ও স্টাডি গ্রুপ</span>
+                </h2>
+                <p style={{ fontSize: "14px", color: "#94A3B8", margin: 0 }}>
+                  সহপাঠীদের সাথে আলোচনা ও মেন্টরদের কাছ থেকে দ্রুত ডাউট সলভ নেওয়ার উন্মুক্ত প্ল্যাটফর্ম।
+                </p>
+              </div>
+
+              {/* Ask Question Card */}
+              <div
+                style={{
+                  background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
+                  border: "1.5px solid rgba(0, 194, 255, 0.35)",
+                  borderRadius: "18px",
+                  padding: "18px",
+                  marginBottom: "24px",
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+                }}
+              >
+                <h4 style={{ fontSize: "15px", fontWeight: 800, color: "#FFFFFF", marginBottom: "10px", display: "flex", alignItems: "center", gap: "8px" }}>
+                  <i className="fas fa-pen-to-square" style={{ color: "#00C2FF" }} />
+                  <span>পড়ালেখা নিয়ে যেকোনো প্রশ্ন জিজ্ঞাসা করুন</span>
+                </h4>
+                <form onSubmit={handleAddForumPost}>
+                  <textarea
+                    rows={3}
+                    placeholder="আপনার প্রশ্ন বা সমস্যা বিস্তারিত এখানে লিখুন..."
+                    value={newPostInput}
+                    onChange={(e) => setNewPostInput(e.target.value)}
+                    style={{
+                      width: "100%",
+                      boxSizing: "border-box",
+                      background: "rgba(5, 11, 23, 0.8)",
+                      border: "1px solid rgba(255, 255, 255, 0.15)",
+                      borderRadius: "12px",
+                      padding: "12px",
+                      color: "#FFFFFF",
+                      fontSize: "13px",
+                      outline: "none",
+                      resize: "vertical",
+                      marginBottom: "12px",
+                    }}
+                  />
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div style={{ fontSize: "12px", color: "#94A3B8" }}>
+                      পোস্টকারী: <strong style={{ color: "#00C2FF" }}>{userName}</strong>
+                    </div>
+                    <button
+                      type="submit"
+                      style={{
+                        padding: "8px 20px",
+                        borderRadius: "999px",
+                        background: "linear-gradient(135deg, #0070F3 0%, #00C2FF 100%)",
+                        color: "#FFFFFF",
+                        border: 0,
+                        fontWeight: 800,
+                        fontSize: "13px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                      }}
+                    >
+                      <i className="fas fa-paper-plane" />
+                      <span>পোস্ট করুন</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              {/* Discussion Feed */}
+              <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#FFFFFF", marginBottom: "14px", display: "flex", alignItems: "center", gap: "8px" }}>
+                <i className="fas fa-comments" style={{ color: "#00C2FF" }} />
+                <span>সাম্প্রতিক আলোচনা ও প্রশ্নোত্তর</span>
+              </h3>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "2rem" }}>
+                {forumPosts.map((post) => (
+                  <div
+                    key={post.id}
+                    style={{
+                      background: "rgba(10, 21, 48, 0.6)",
+                      border: "1px solid rgba(255, 255, 255, 0.08)",
+                      borderRadius: "14px",
+                      padding: "16px",
+                    }}
+                  >
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <div
+                          style={{
+                            width: "30px",
+                            height: "30px",
+                            borderRadius: "50%",
+                            background: "linear-gradient(135deg, #0070F3, #00C2FF)",
+                            color: "#FFF",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontWeight: 800,
+                            fontSize: "12px",
+                          }}
+                        >
+                          {post.author.charAt(0)}
+                        </div>
+                        <span style={{ fontSize: "13px", fontWeight: 800, color: "#FFFFFF" }}>{post.author}</span>
+                      </div>
+                      <span style={{ fontSize: "11px", color: "#64748B" }}>{post.time}</span>
+                    </div>
+                    <p style={{ fontSize: "13px", color: "#CBD5E1", lineHeight: 1.5, margin: "0 0 10px" }}>
+                      {post.text}
+                    </p>
+                    <div style={{ display: "flex", gap: "16px", fontSize: "12px", color: "#00C2FF" }}>
+                      <span style={{ cursor: "pointer" }} onClick={() => showToast("👍 লাইক যুক্ত হয়েছে!")}>
+                        <i className="far fa-thumbs-up" style={{ marginRight: "4px" }} /> সহমত
+                      </span>
+                      <span style={{ cursor: "pointer" }} onClick={() => showToast("💬 উত্তর লেখার অপশন সক্রিয়!")}>
+                        <i className="far fa-comment-dots" style={{ marginRight: "4px" }} /> উত্তর দিন
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ──────────────────────────────────────────────────────────────────
+              TAB 7: পারফরম্যান্স (PERFORMANCE & ANALYTICS)
+              ────────────────────────────────────────────────────────────────── */}
+          {activeTab === "performance" && (
+            <div className="da-tab-pane">
+              <div style={{ marginBottom: "24px" }}>
+                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
+                  <i className="fas fa-chart-simple" style={{ color: "#F97316" }} />
+                  <span>শিক্ষার্থী পারফরম্যান্স ও অগ্রগতি বিশ্লেষণ</span>
+                </h2>
+                <p style={{ fontSize: "14px", color: "#94A3B8", margin: 0 }}>
+                  আপনার সামগ্রিক অগ্রগতি, সাপ্তাহিক পড়ার সময় এবং কুইজ নির্ভুলতার লাইভ রিপোর্ট।
+                </p>
+              </div>
+
+              {/* 4 Performance Metric Cards */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: "14px", marginBottom: "24px" }}>
+                <div style={{ background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)", border: "1px solid rgba(0, 194, 255, 0.2)", borderRadius: "16px", padding: "18px" }}>
+                  <div style={{ fontSize: "12px", color: "#00C2FF", fontWeight: 700, marginBottom: "6px" }}>🏆 সার্বিক অগ্রগতি</div>
+                  <div style={{ fontSize: "28px", fontWeight: 900, color: "#FFFFFF", marginBottom: "4px" }}>৭৫%</div>
+                  <div style={{ fontSize: "11px", color: "#10B981" }}>সিলেবাসের শীর্ষ ২৫% শিক্ষার্থীর মধ্যে</div>
+                </div>
+                <div style={{ background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)", border: "1px solid rgba(249, 115, 22, 0.2)", borderRadius: "16px", padding: "18px" }}>
+                  <div style={{ fontSize: "12px", color: "#F97316", fontWeight: 700, marginBottom: "6px" }}>🔥 ডেইলি লার্নিং স্ট্রিক</div>
+                  <div style={{ fontSize: "28px", fontWeight: 900, color: "#FFFFFF", marginBottom: "4px" }}>৭ দিন</div>
+                  <div style={{ fontSize: "11px", color: "#94A3B8" }}>সর্বোচ্চ রেকর্ড: ২১ দিন</div>
+                </div>
+                <div style={{ background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)", border: "1px solid rgba(245, 158, 11, 0.2)", borderRadius: "16px", padding: "18px" }}>
+                  <div style={{ fontSize: "12px", color: "#F59E0B", fontWeight: 700, marginBottom: "6px" }}>🪙 অর্জিত EduCoins</div>
+                  <div style={{ fontSize: "28px", fontWeight: 900, color: "#FFFFFF", marginBottom: "4px" }}>২৫০</div>
+                  <div style={{ fontSize: "11px", color: "#F59E0B" }}>রিওয়ার্ড শপে ব্যবহারের উপযোগী</div>
+                </div>
+                <div style={{ background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)", border: "1px solid rgba(16, 185, 129, 0.2)", borderRadius: "16px", padding: "18px" }}>
+                  <div style={{ fontSize: "12px", color: "#10B981", fontWeight: 700, marginBottom: "6px" }}>🎯 প্র্যাকটিস নির্ভুলতা</div>
+                  <div style={{ fontSize: "28px", fontWeight: 900, color: "#FFFFFF", marginBottom: "4px" }}>৯২%</div>
+                  <div style={{ fontSize: "11px", color: "#10B981" }}>বিগত ১৪টি কুইজে উচ্চ স্কোর</div>
+                </div>
+              </div>
+
+              {/* Weekly Study Hours Chart */}
+              <div
+                style={{
+                  background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
+                  border: "1px solid rgba(255, 255, 255, 0.1)",
+                  borderRadius: "18px",
+                  padding: "20px",
+                  marginBottom: "24px",
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "18px" }}>
+                  <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#FFFFFF", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+                    <i className="fas fa-chart-line" style={{ color: "#00C2FF" }} />
+                    <span>সাপ্তাহিক পড়ার সময় (ঘণ্টা)</span>
+                  </h4>
+                  <span style={{ fontSize: "12px", color: "#00C2FF", fontWeight: 700 }}>মোট: ২৪.৫ ঘণ্টা</span>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "10px", height: "140px", padding: "0 10px 10px" }}>
+                  {[
+                    { day: "শনি", hours: "২.৫", height: "50%" },
+                    { day: "রবি", hours: "৩.০", height: "60%" },
+                    { day: "সোম", hours: "৪.০", height: "80%" },
+                    { day: "মঙ্গল", hours: "২.০", height: "40%" },
+                    { day: "বুধ", hours: "৩.৫", height: "70%" },
+                    { day: "বৃহঃ", hours: "৪.৫", height: "90%" },
+                    { day: "শুক্র", hours: "৫.০", height: "100%" },
+                  ].map((bar, i) => (
+                    <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: 1, height: "100%", justifyContent: "flex-end" }}>
+                      <span style={{ fontSize: "10px", color: "#94A3B8", marginBottom: "4px" }}>{bar.hours}h</span>
+                      <div
+                        style={{
+                          width: "100%",
+                          maxWidth: "32px",
+                          height: bar.height,
+                          background: i === 6 ? "linear-gradient(180deg, #00C2FF, #0070F3)" : "rgba(0, 194, 255, 0.35)",
+                          borderRadius: "6px 6px 0 0",
+                          transition: "height 0.5s ease",
+                        }}
+                      />
+                      <span style={{ fontSize: "11px", color: "#CBD5E1", marginTop: "6px", fontWeight: 700 }}>{bar.day}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ──────────────────────────────────────────────────────────────────
+              TAB 8: সেটিংস (PROFILE & ACCOUNT SETTINGS)
+              ────────────────────────────────────────────────────────────────── */}
+          {activeTab === "settings" && (
+            <div className="da-tab-pane">
+              <div style={{ marginBottom: "24px" }}>
+                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
+                  <i className="fas fa-gear" style={{ color: "#00C2FF" }} />
+                  <span>প্রোফাইল ও অ্যাকাউন্ট সেটিংস</span>
+                </h2>
+                <p style={{ fontSize: "14px", color: "#94A3B8", margin: 0 }}>
+                  আপনার ব্যক্তিগত তথ্য, টার্গেট ব্যাচ ও অ্যাকাউন্টের সেটিংস পরিবর্তন করুন।
+                </p>
+              </div>
+
+              <div
+                style={{
+                  background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
+                  border: "1.5px solid rgba(0, 194, 255, 0.3)",
+                  borderRadius: "20px",
+                  padding: "24px",
+                  boxShadow: "0 15px 35px rgba(0,0,0,0.6)",
+                  maxWidth: "680px",
+                  marginBottom: "2rem",
+                }}
+              >
+                <form onSubmit={handleProfileSave}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "20px", paddingBottom: "18px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                    <div
+                      style={{
+                        width: "60px",
+                        height: "60px",
+                        borderRadius: "50%",
+                        background: "linear-gradient(135deg, #0084FF, #00C2FF)",
+                        color: "#FFF",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "24px",
+                        fontWeight: 900,
+                        boxShadow: "0 8px 20px rgba(0, 194, 255, 0.4)",
+                      }}
+                    >
+                      {firstLetter}
+                    </div>
+                    <div>
+                      <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 4px" }}>{userName}</h3>
+                      <p style={{ fontSize: "12px", color: "#10B981", margin: 0, fontWeight: 700 }}>
+                        <i className="fas fa-circle-check" style={{ marginRight: "4px" }} /> ভেরিফাইড শিক্ষার্থী অ্যাকাউন্ট
+                      </p>
+                    </div>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "14px" }}>
+                    <div>
+                      <label style={{ display: "block", fontSize: "12px", color: "#94A3B8", fontWeight: 700, marginBottom: "6px" }}>
+                        শিক্ষার্থীর নাম
+                      </label>
+                      <input
+                        type="text"
+                        value={editName}
+                        onChange={(e) => setEditName(e.target.value)}
+                        style={{
+                          width: "100%",
+                          boxSizing: "border-box",
+                          background: "#050B17",
+                          border: "1px solid rgba(255,255,255,0.15)",
+                          borderRadius: "10px",
+                          padding: "10px 14px",
+                          color: "#FFF",
+                          fontSize: "13px",
+                          outline: "none",
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: "12px", color: "#94A3B8", fontWeight: 700, marginBottom: "6px" }}>
+                        ফোন নম্বর (রেজিস্টার্ড)
+                      </label>
+                      <input
+                        type="text"
+                        value="01712345678"
+                        disabled
+                        style={{
+                          width: "100%",
+                          boxSizing: "border-box",
+                          background: "rgba(255,255,255,0.04)",
+                          border: "1px solid rgba(255,255,255,0.1)",
+                          borderRadius: "10px",
+                          padding: "10px 14px",
+                          color: "#64748B",
+                          fontSize: "13px",
+                          outline: "none",
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "18px" }}>
+                    <div>
+                      <label style={{ display: "block", fontSize: "12px", color: "#94A3B8", fontWeight: 700, marginBottom: "6px" }}>
+                        টার্গেট ব্যাচ / শ্রেণি
+                      </label>
+                      <select
+                        value={editTarget}
+                        onChange={(e) => setEditTarget(e.target.value)}
+                        style={{
+                          width: "100%",
+                          boxSizing: "border-box",
+                          background: "#050B17",
+                          border: "1px solid rgba(255,255,255,0.15)",
+                          borderRadius: "10px",
+                          padding: "10px 14px",
+                          color: "#FFF",
+                          fontSize: "13px",
+                          outline: "none",
+                        }}
+                      >
+                        <option value="SSC 2026">SSC 2026</option>
+                        <option value="HSC 2026">HSC 2026</option>
+                        <option value="HSC 2027">HSC 2027</option>
+                        <option value="BUET Admission">BUET Admission</option>
+                        <option value="Medical Admission">Medical Admission</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: "12px", color: "#94A3B8", fontWeight: 700, marginBottom: "6px" }}>
+                        শিক্ষা বিভাগ
+                      </label>
+                      <select
+                        value={editGroup}
+                        onChange={(e) => setEditGroup(e.target.value)}
+                        style={{
+                          width: "100%",
+                          boxSizing: "border-box",
+                          background: "#050B17",
+                          border: "1px solid rgba(255,255,255,0.15)",
+                          borderRadius: "10px",
+                          padding: "10px 14px",
+                          color: "#FFF",
+                          fontSize: "13px",
+                          outline: "none",
+                        }}
+                      >
+                        <option value="বিজ্ঞান বিভাগ (Science)">বিজ্ঞান বিভাগ (Science)</option>
+                        <option value="ব্যবসায় শিক্ষা (Commerce)">ব্যবসায় শিক্ষা (Commerce)</option>
+                        <option value="মানবিক বিভাগ (Humanities)">মানবিক বিভাগ (Humanities)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    style={{
+                      width: "100%",
+                      padding: "12px",
+                      borderRadius: "12px",
+                      background: "linear-gradient(135deg, #0070F3 0%, #00C2FF 100%)",
+                      color: "#FFFFFF",
+                      border: 0,
+                      fontWeight: 800,
+                      fontSize: "14px",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "8px",
+                      boxShadow: "0 8px 24px rgba(0, 194, 255, 0.35)",
+                    }}
+                  >
+                    <i className="fas fa-floppy-disk" />
+                    <span>সেটিংস সংরক্ষণ করুন (Save Settings)</span>
+                  </button>
+                </form>
+
+
+              </div>
+            </div>
+          )}
+
+          {/* MOBILE ONLY: PROFILE & QUICK ACCESS FLOW */}
+          <div className="da-mobile-right-flow">
+            <div className="da-user-card">
+              <div className="da-user-card-top">
+                <div className="da-right-avatar">{firstLetter}</div>
+                <div className="da-user-meta">
+                  <h3 className="da-user-name">{userName}</h3>
+                  <div className="da-user-status">
+                    <span className="da-status-dot" />
+                    <span>Student</span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className="da-btn-edit"
+                  onClick={() => setActiveTab("settings")}
+                  title="সেটিংস"
+                  style={{ background: "transparent", border: 0, cursor: "pointer", color: "#00C2FF" }}
+                >
+                  <i className="fas fa-pen" />
+                </button>
+              </div>
+
+              <div className="da-target-section">
+                <div className="da-target-header">
+                  <div className="da-target-title-wrap">
+                    <i className="fas fa-bullseye da-target-icon" />
+                    <span className="da-target-label">তোমার লক্ষ্য</span>
+                  </div>
+                </div>
+                <div className="da-target-batch">{userTarget}</div>
+
+                <div className="da-progress-wrap">
+                  <div className="da-progress-bar">
+                    <div className="da-progress-fill" style={{ width: "75%" }} />
+                  </div>
+                  <span className="da-progress-value">75%</span>
+                </div>
+              </div>
+
+              <div className="da-quote-card">
+                <div className="da-quote-rocket">
+                  <i className="fas fa-rocket" />
+                </div>
+                <p className="da-quote-text">
+                  &ldquo;ধীরে চল, কিন্তু থমকে না, একদিন তুমি সফল হবেই।&rdquo;
+                </p>
+              </div>
+            </div>
+
+            <div className="da-quick-access-card">
+              <div className="da-quick-title">
+                <i className="fas fa-thumbtack da-pin-icon" />
+                <span>দ্রুত অ্যাক্সেস</span>
+              </div>
+              <ul className="da-quick-list">
+                <li className="da-quick-item" onClick={() => setActiveTab("my-courses")}>
+                  <div className="da-quick-left">
+                    <i className="fas fa-book-open da-quick-icon da-q-blue" />
+                    <span>আমার কোর্স</span>
+                  </div>
+                  <i className="fas fa-chevron-right da-quick-chevron" />
+                </li>
+                <li className="da-quick-item" onClick={() => setActiveTab("video-classes")}>
+                  <div className="da-quick-left">
+                    <i className="fas fa-circle-play da-quick-icon da-q-green" />
+                    <span>ভিডিও ক্লাস</span>
+                  </div>
+                  <i className="fas fa-chevron-right da-quick-chevron" />
+                </li>
+                <li className="da-quick-item" onClick={() => setActiveTab("notes")}>
+                  <div className="da-quick-left">
+                    <i className="fas fa-download da-quick-icon da-q-teal" />
+                    <span>নোটস ডাউনলোড</span>
+                  </div>
+                  <i className="fas fa-chevron-right da-quick-chevron" />
+                </li>
+                <li className="da-quick-item" onClick={() => setActiveTab("settings")}>
+                  <div className="da-quick-left">
+                    <i className="fas fa-user-gear da-quick-icon da-q-slate" />
+                    <span>প্রোফাইল সেটিংস</span>
+                  </div>
+                  <i className="fas fa-chevron-right da-quick-chevron" />
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* FOOTER */}
+          <footer className="da-footer">
+            <div className="da-footer-left">
+              <span className="da-footer-brand-span">Dipu Academy</span> &nbsp;|&nbsp; Learn &bull; Grow &bull; Build Your Future
+            </div>
+            <div className="da-footer-right">&copy; 2026 Dipu Academy. All rights reserved.</div>
+          </footer>
+        </main>
+
+        {/* DESKTOP RIGHT SIDEBAR */}
+        <aside className="da-right-sidebar">
+          {/* Profile & Target Card */}
+          <div className="da-user-card">
+            <div className="da-user-card-top">
+              <div className="da-right-avatar">{firstLetter}</div>
+              <div className="da-user-meta">
+                <h3 className="da-user-name">{userName}</h3>
+                <div className="da-user-status">
+                  <span className="da-status-dot" />
+                  <span>Student</span>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="da-btn-edit"
+                onClick={() => setActiveTab("settings")}
+                title="সেটিংস এ যান"
+                style={{ background: "transparent", border: 0, cursor: "pointer", color: "#00C2FF" }}
+              >
+                <i className="fas fa-pen" />
+              </button>
+            </div>
+
+            <div className="da-target-section">
+              <div className="da-target-header">
+                <div className="da-target-title-wrap">
+                  <i className="fas fa-bullseye da-target-icon" />
+                  <span className="da-target-label">তোমার লক্ষ্য</span>
+                </div>
+              </div>
+              <div className="da-target-batch">{userTarget}</div>
+
+              <div className="da-progress-wrap">
+                <div className="da-progress-bar">
+                  <div className="da-progress-fill" style={{ width: "75%" }} />
+                </div>
+                <span className="da-progress-value">75%</span>
+              </div>
+            </div>
+
+            <div className="da-quote-card">
+              <div className="da-quote-rocket">
+                <i className="fas fa-rocket" />
+              </div>
+              <p className="da-quote-text">
+                &ldquo;ধীরে চল, কিন্তু থমকে না, একদিন তুমি সফল হবেই।&rdquo;
+              </p>
+            </div>
+          </div>
+
+          {/* Quick Access Card */}
+          <div className="da-quick-access-card">
+            <div className="da-quick-title">
+              <i className="fas fa-thumbtack da-pin-icon" />
+              <span>দ্রুত অ্যাক্সেস</span>
+            </div>
+
+            <ul className="da-quick-list">
+              <li className="da-quick-item" onClick={() => setActiveTab("my-courses")}>
+                <div className="da-quick-left">
+                  <i className="fas fa-book-open da-quick-icon da-q-blue" />
+                  <span>আমার কোর্স</span>
+                </div>
+                <i className="fas fa-chevron-right da-quick-chevron" />
+              </li>
+              <li className="da-quick-item" onClick={() => setActiveTab("video-classes")}>
+                <div className="da-quick-left">
+                  <i className="fas fa-circle-play da-quick-icon da-q-green" />
+                  <span>ভিডিও ক্লাস</span>
+                </div>
+                <i className="fas fa-chevron-right da-quick-chevron" />
+              </li>
+              <li className="da-quick-item" onClick={() => setActiveTab("notes")}>
+                <div className="da-quick-left">
+                  <i className="fas fa-download da-quick-icon da-q-teal" />
+                  <span>নোটস ডাউনলোড</span>
+                </div>
+                <i className="fas fa-chevron-right da-quick-chevron" />
+              </li>
+              <li className="da-quick-item" onClick={() => setActiveTab("bookshop")}>
+                <div className="da-quick-left">
+                  <i className="fas fa-book da-quick-icon da-q-purple" />
+                  <span>বুকশপ ও গাইড</span>
+                </div>
+                <i className="fas fa-chevron-right da-quick-chevron" />
+              </li>
+              <li className="da-quick-item" onClick={() => setActiveTab("settings")}>
+                <div className="da-quick-left">
+                  <i className="fas fa-gear da-quick-icon da-q-slate" />
+                  <span>সেটিংস</span>
+                </div>
+                <i className="fas fa-chevron-right da-quick-chevron" />
+              </li>
+            </ul>
+          </div>
+
+          {/* Promo Card */}
+          <div className="da-promo-banner-card">
+            <div className="da-promo-banner-tag">স্পেশাল অফার</div>
+            <h4 className="da-promo-banner-title">HSC '২৭ পূর্ণাঙ্গ ব্যাচে ৩০% ছাড়!</h4>
+            <p className="da-promo-banner-sub">দেশসেরা শিক্ষকদের সাথে তোমার বোর্ড ও এডমিশন প্রস্তুতি শুরু করো।</p>
+            <button
+              type="button"
+              className="da-promo-banner-btn"
+              onClick={() => {
+                setActiveTab("my-courses");
+                showToast("🚀 অফার কোর্সে স্বাগতম!");
+              }}
+            >
+              <span>বিস্তারিত দেখুন</span>
+              <i className="fas fa-arrow-right" />
+            </button>
+          </div>
+        </aside>
+      </div>
+
+      {/* ─── 4. FLOATING TOAST NOTIFICATION ─── */}
+      {toastMessage && (
+        <div className="da-toast-notice">
+          <span>{toastMessage}</span>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ─── Auto Mount ───────────────────────────────────────────────────────────────
+function mountDipuDashboard() {
+  const rootElem = document.getElementById("dipu-dashboard-root");
+  if (!rootElem) return;
+  const root = createRoot(rootElem);
+  root.render(<DipuDashboardApp />);
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", mountDipuDashboard);
+} else {
+  mountDipuDashboard();
+}

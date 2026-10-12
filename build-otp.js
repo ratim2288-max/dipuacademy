@@ -98,6 +98,28 @@ async function build() {
       },
     });
     console.log('✅ Player Suite TypeScript bundle created at public/js/player-suite-bundle.js');
+
+    await esbuild.build({
+      entryPoints: ['components/ui/dipu-dashboard.tsx'],
+      bundle: true,
+      outfile: 'public/js/dipu-dashboard-bundle.js',
+      minify: true,
+      define: {
+        'process.env.NODE_ENV': '"production"',
+      },
+    });
+    console.log('✅ Dipu Dashboard TypeScript bundle created at public/js/dipu-dashboard-bundle.js');
+
+    await esbuild.build({
+      entryPoints: ['components/ui/dipu-profile.tsx'],
+      bundle: true,
+      outfile: 'public/js/dipu-profile-bundle.js',
+      minify: true,
+      define: {
+        'process.env.NODE_ENV': '"production"',
+      },
+    });
+    console.log('✅ Dipu Profile TypeScript bundle created at public/js/dipu-profile-bundle.js');
   } catch (err) {
     console.error('Build failed:', err);
     process.exit(1);

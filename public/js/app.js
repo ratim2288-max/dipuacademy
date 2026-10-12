@@ -222,7 +222,7 @@ const I18N_TRANSLATIONS = {
     footer_col2: "ক্যারিয়ার",
     footer_col3: "স্কিলস ও প্রোগ্রাম",
     footer_col4: "টিচার পোর্টাল ও হেল্প",
-    footer_copyright: "© ২০২৬ Dipu's Edu. সর্বস্বত্ব সংরক্ষিত।"
+    footer_copyright: "© ২০২৬ Dipu Academy. সর্বস্বত্ব সংরক্ষিত।"
   },
   en: {
     nav_home: "Home",
@@ -272,12 +272,12 @@ const I18N_TRANSLATIONS = {
     course_btn_details: "Details & Enroll",
     reviews_heading: "Student Success Stories",
     reviews_subtext: "Hear directly from the students who achieved their dreams with our platform.",
-    footer_desc: "Dipu's Edu is Bangladesh's premier AI-powered digital learning platform, ensuring high quality education for Class 6 to 12 and Admission aspirants.",
+    footer_desc: "Dipu Academy is Bangladesh's premier AI-powered digital learning platform, ensuring high quality education for Class 6 to 12 and Admission aspirants.",
     footer_col1: "About Us",
     footer_col2: "Careers",
     footer_col3: "Skills & Programs",
     footer_col4: "Teacher Portal & Support",
-    footer_copyright: "© 2026 Dipu's Edu. All Rights Reserved."
+    footer_copyright: "© 2026 Dipu Academy. All Rights Reserved."
   }
 };
 

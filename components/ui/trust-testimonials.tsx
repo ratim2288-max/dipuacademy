@@ -63,7 +63,7 @@ export const TRUST_FEATURES: TrustFeature[] = [
     title: "সেরা কন্টেন্ট",
     description: "বুয়েট ও ঢাকা মেডিকেলের অভিজ্ঞ শিক্ষক দ্বারা তৈরি প্রতিটি লেকচার ও রিভিশন ম্যাটেরিয়াল।",
     icon: "fas fa-award",
-    accentColor: "#FF7A1A",
+    accentColor: "#00C2FF",
   },
   {
     id: "notes",
@@ -94,7 +94,7 @@ export const TRUST_FEATURES_EN: TrustFeature[] = [
     title: "Top-Tier Content",
     description: "Every lecture and revision material is prepared by BUET and DMC alumni mentors.",
     icon: "fas fa-award",
-    accentColor: "#FF7A1A",
+    accentColor: "#00C2FF",
   },
   {
     id: "notes",
@@ -297,18 +297,7 @@ export const TrustAndTestimonialsSuite: React.FC = () => {
         >
           {/* Left Column: Heading & 4 Rounded Cards */}
           <div>
-            <div
-              style={{
-                fontSize: "0.82rem",
-                fontWeight: 800,
-                color: "#FF7A1A",
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                marginBottom: "0.5rem",
-              }}
-            >
-              UNCOMPROMISING QUALITY
-            </div>
+
 
             <h2
               style={{
@@ -353,6 +342,7 @@ export const TrustAndTestimonialsSuite: React.FC = () => {
               {trustFeatures.map((feat) => (
                 <div
                   key={feat.id}
+                  className="trust-feature-card stat-card"
                   style={{
                     background: "rgba(25, 28, 38, 0.75)",
                     border: "1px solid rgba(255, 255, 255, 0.08)",
@@ -418,6 +408,7 @@ export const TrustAndTestimonialsSuite: React.FC = () => {
 
           {/* Right Column: Visual Showcase Card with Rounded 24px Border */}
           <div
+            className="trust-visual-card stat-card"
             style={{
               position: "relative",
               borderRadius: "24px",
@@ -498,19 +489,6 @@ export const TrustAndTestimonialsSuite: React.FC = () => {
         onMouseLeave={() => setIsPaused(false)}
       >
         <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-          <div
-            style={{
-              fontSize: "0.82rem",
-              fontWeight: 800,
-              color: "#FF7A1A",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              marginBottom: "0.5rem",
-            }}
-          >
-            REAL VOICES, REAL RESULTS
-          </div>
-
           <h2
             style={{
               fontSize: "clamp(1.75rem, 3.2vw, 2.35rem)",
@@ -571,7 +549,7 @@ export const TrustAndTestimonialsSuite: React.FC = () => {
               transition: "all 0.2s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#FF7A1A";
+              e.currentTarget.style.background = "#00C2FF";
               e.currentTarget.style.transform = "scale(1.1)";
             }}
             onMouseLeave={(e) => {
@@ -585,6 +563,7 @@ export const TrustAndTestimonialsSuite: React.FC = () => {
           {/* Testimonial Spotlight Slide with Rounded 24px Border */}
           <div
             key={currentReview.id}
+            className="testimonial-spotlight review-card"
             style={{
               width: "100%",
               maxWidth: "960px",
@@ -592,7 +571,7 @@ export const TrustAndTestimonialsSuite: React.FC = () => {
               borderRadius: "24px",
               border: "1.5px solid rgba(255, 255, 255, 0.1)",
               padding: "36px",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(255, 122, 26, 0.12)",
+              boxShadow: "0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(0, 194, 255, 0.12)",
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
               gap: "32px",
@@ -625,8 +604,8 @@ export const TrustAndTestimonialsSuite: React.FC = () => {
                     height: "100%",
                     borderRadius: "50%",
                     objectFit: "cover",
-                    border: "3px solid #FF7A1A",
-                    boxShadow: "0 0 25px rgba(255, 122, 26, 0.4)",
+                    border: "3px solid #00C2FF",
+                    boxShadow: "0 0 25px rgba(0, 194, 255, 0.4)",
                   }}
                 />
                 <span
@@ -667,11 +646,11 @@ export const TrustAndTestimonialsSuite: React.FC = () => {
                 style={{
                   fontSize: "0.85rem",
                   fontWeight: 700,
-                  color: "#FFB347",
-                  background: "rgba(255, 122, 26, 0.12)",
+                  color: "#0084FF",
+                  background: "rgba(0, 194, 255, 0.12)",
                   padding: "5px 14px",
                   borderRadius: "999px",
-                  border: "1px solid rgba(255, 122, 26, 0.3)",
+                  border: "1px solid rgba(0, 194, 255, 0.3)",
                 }}
               >
                 {currentReview.badge}
@@ -717,7 +696,7 @@ export const TrustAndTestimonialsSuite: React.FC = () => {
                     top: "-10px",
                     left: "-8px",
                     fontSize: "2.5rem",
-                    color: "rgba(255, 122, 26, 0.1)",
+                    color: "rgba(0, 194, 255, 0.1)",
                     pointerEvents: "none",
                   }}
                 />
@@ -736,44 +715,7 @@ export const TrustAndTestimonialsSuite: React.FC = () => {
                 </p>
               </div>
 
-              {/* Rounded Meta Badges */}
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    padding: "6px 14px",
-                    borderRadius: "999px",
-                    background: "rgba(255, 255, 255, 0.06)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    color: "#CBD5E1",
-                    fontSize: "0.8rem",
-                    fontWeight: 600,
-                  }}
-                >
-                  <i className="fas fa-graduation-cap" style={{ color: "#FF7A1A" }} />
-                  <span>{currentReview.tag1}</span>
-                </span>
 
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    padding: "6px 14px",
-                    borderRadius: "999px",
-                    background: "rgba(16, 185, 129, 0.1)",
-                    border: "1px solid rgba(16, 185, 129, 0.25)",
-                    color: "#10B981",
-                    fontSize: "0.8rem",
-                    fontWeight: 600,
-                  }}
-                >
-                  <i className="fas fa-shield-alt" />
-                  <span>{currentReview.tag2}</span>
-                </span>
-              </div>
             </div>
           </div>
 
@@ -799,7 +741,7 @@ export const TrustAndTestimonialsSuite: React.FC = () => {
               transition: "all 0.2s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#FF7A1A";
+              e.currentTarget.style.background = "#00C2FF";
               e.currentTarget.style.transform = "scale(1.1)";
             }}
             onMouseLeave={(e) => {
@@ -830,7 +772,7 @@ export const TrustAndTestimonialsSuite: React.FC = () => {
                 width: activeReviewIdx === idx ? "28px" : "10px",
                 height: "10px",
                 borderRadius: "999px",
-                background: activeReviewIdx === idx ? "#FF7A1A" : "rgba(255, 255, 255, 0.2)",
+                background: activeReviewIdx === idx ? "#00C2FF" : "rgba(255, 255, 255, 0.2)",
                 border: "none",
                 cursor: "pointer",
                 transition: "all 0.25s ease",

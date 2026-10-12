@@ -34,7 +34,7 @@ export const DEFAULT_FEATURES: FeatureItem[] = [
     btnText: "ফ্রি লাইভ ডেমো দেখো →",
     btnHref: "/player",
     imageUrl: "/images/student-hero.jpg",
-    accentColor: "#FF7A1A",
+    accentColor: "#00C2FF",
   },
   {
     id: "animated",
@@ -66,7 +66,7 @@ export const DEFAULT_FEATURES: FeatureItem[] = [
       "প্রতিটি ভুলের বিস্তারিত ব্যাখ্যাসহ সমাধান",
     ],
     btnText: "ফ্রি প্র্যাকটিস শুরু করো →",
-    btnHref: "/exam",
+    btnHref: "#courses",
     imageUrl: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?q=80&w=900&auto=format&fit=crop",
     accentColor: "#10B981",
   },
@@ -82,8 +82,8 @@ export const DEFAULT_FEATURES: FeatureItem[] = [
       "সাপ্তাহিক চ্যাম্পিয়নকে বিশেষ পুরস্কার",
       "পরীক্ষার আগের দিনের স্পেশাল মক টেস্ট ব্যাটেল",
     ],
-    btnText: "লাইভ টেস্টে যোগ দাও →",
-    btnHref: "/exam",
+    btnText: "কোর্সসমূহে যোগ দাও →",
+    btnHref: "#courses",
     imageUrl: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=900&auto=format&fit=crop",
     accentColor: "#F59E0B",
   },
@@ -156,7 +156,7 @@ export const DEFAULT_FEATURES_EN: FeatureItem[] = [
     btnText: "Watch Free Live Demo →",
     btnHref: "/player",
     imageUrl: "/images/student-hero.jpg",
-    accentColor: "#FF7A1A",
+    accentColor: "#00C2FF",
   },
   {
     id: "animated",
@@ -188,7 +188,7 @@ export const DEFAULT_FEATURES_EN: FeatureItem[] = [
       "Step-by-step explanations and shortcut techniques for every question"
     ],
     btnText: "Start Free Practice →",
-    btnHref: "/exam",
+    btnHref: "#courses",
     imageUrl: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?q=80&w=900&auto=format&fit=crop",
     accentColor: "#10B981",
   },
@@ -204,8 +204,8 @@ export const DEFAULT_FEATURES_EN: FeatureItem[] = [
       "Instant nationwide rank leaderboard and percentile breakdown",
       "Special prize badges and EduCoins for top weekly achievers"
     ],
-    btnText: "Join Live Test →",
-    btnHref: "/exam",
+    btnText: "Explore Courses →",
+    btnHref: "#courses",
     imageUrl: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=900&auto=format&fit=crop",
     accentColor: "#F59E0B",
   },
@@ -319,8 +319,8 @@ function injectKeyframes() {
       100% { transform: scale(1); opacity: 1; }
     }
     @keyframes dipuBoxActivePulse {
-      0%, 100% { box-shadow: 0 4px 20px rgba(255,122,26,0.22); }
-      50% { box-shadow: 0 6px 26px rgba(255,122,26,0.45); }
+      0%, 100% { box-shadow: 0 4px 20px rgba(0, 194, 255,0.22); }
+      50% { box-shadow: 0 6px 26px rgba(0, 194, 255,0.45); }
     }
   `;
   document.head.appendChild(s);
@@ -694,7 +694,7 @@ const ResultShowcase: React.FC<{ item: FeatureItem; animKey: string }> = ({ item
               gap: "10px",
               padding: "12px 28px",
               borderRadius: "999px",
-              background: `linear-gradient(135deg, ${item.accentColor}, #EA580C)`,
+              background: `linear-gradient(135deg, ${item.accentColor}, #0056D2)`,
               color: "#FFFFFF",
               fontWeight: 800,
               fontSize: "0.9rem",
@@ -965,7 +965,7 @@ const MobileFeatureCard: React.FC<{ item: FeatureItem; index: number }> = ({ ite
           width: "100%",
           padding: "13px 20px",
           borderRadius: "999px",
-          background: `linear-gradient(135deg, ${item.accentColor}, #EA580C)`,
+          background: `linear-gradient(135deg, ${item.accentColor}, #0056D2)`,
           color: "#FFFFFF",
           fontWeight: 800,
           fontSize: "0.9rem",
@@ -1064,23 +1064,7 @@ export const FeaturesSection: React.FC<{
     <div style={{ width: "100%" }}>
       {/* Header */}
       <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-        <div
-          style={{
-            display: "inline-block",
-            padding: "5px 18px",
-            borderRadius: "999px",
-            background: "rgba(255,122,26,0.12)",
-            border: "1px solid rgba(255,122,26,0.25)",
-            color: "#FF923C",
-            fontSize: "0.75rem",
-            fontWeight: 800,
-            letterSpacing: "1.5px",
-            marginBottom: "0.8rem",
-            animation: "dipuFadeUp 0.4s ease both",
-          }}
-        >
-          ALL-IN-ONE EDTECH ECOSYSTEM
-        </div>
+
 
         <AnimatedText
           tag="h2"

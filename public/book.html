@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title id="pageTitle">বইয়ের বিবরণ — Dipu's Edu Bookshop</title>
+  <title id="pageTitle">বইয়ের বিবরণ — Dipu Academy Bookshop</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/dipu-logo.png?v=5">
+  <link rel="shortcut icon" href="/favicon.ico?v=5">
+  <link rel="apple-touch-icon" href="/images/dipu-logo.png?v=5">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,8 +23,8 @@
       --cd-green: #10B981;
       --cd-green-hover: #059669;
       --cd-green-soft: rgba(16, 185, 129, 0.12);
-      --cd-orange: #FF7A1A;
-      --cd-amber: #FFB347;
+      --cd-orange: #00C2FF;
+      --cd-amber: #38BDF8;
       --cd-text: #E2E8F0;
       --cd-muted: #94A3B8;
       box-sizing: border-box;
@@ -43,9 +46,20 @@
     body {
       background-color: var(--cd-bg);
       color: var(--cd-text);
-      font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Hind Siliguri', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       line-height: 1.6;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      letter-spacing: normal;
+    }
+
+    /* Bengali Typography Ligature Stabilization */
+    h1, h2, h3, h4, h5, h6, .card-pitch-title, .section-headline, .chapter-title, .top-book-title {
+      font-family: 'Hind Siliguri', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      letter-spacing: normal !important;
+      text-rendering: optimizeLegibility;
     }
 
     .book-page-wrapper {
@@ -92,6 +106,82 @@
       flex-direction: column;
       gap: 2rem;
       min-width: 0;
+    }
+
+    /* Clean Back Button (Icon Only, No Text) */
+    .btn-back-clean {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #FFFFFF;
+      font-size: 18px;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+    }
+    .btn-back-clean:hover {
+      background: #FF7A1A;
+      color: #FFFFFF;
+      border-color: #FF7A1A;
+      transform: translateX(-4px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(255, 122, 26, 0.5);
+    }
+
+    /* Top Nav Row with Clean Back Button & Dynamic Book/E-Book Title */
+    .top-nav-book-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .top-book-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .top-book-type-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 14px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: rgba(255, 122, 26, 0.15);
+      border: 1px solid rgba(255, 122, 26, 0.35);
+      color: #FF7A1A;
+      letter-spacing: normal !important;
+      white-space: nowrap;
+    }
+
+    .top-book-type-badge.is-ebook {
+      background: rgba(124, 92, 255, 0.18);
+      border-color: rgba(124, 92, 255, 0.45);
+      color: #A78BFA;
+    }
+
+    .top-book-title {
+      font-size: clamp(1.4rem, 2.6vw, 2.1rem);
+      font-weight: 700 !important;
+      color: #FFFFFF !important;
+      margin: 0;
+      line-height: 1.3;
+      letter-spacing: normal !important;
+      -webkit-background-clip: border-box !important;
+      background-clip: border-box !important;
+      -webkit-text-fill-color: initial !important;
+      filter: none !important;
+      transform: none !important;
+      text-shadow: none !important;
     }
 
     /* Breadcrumbs */
@@ -270,30 +360,32 @@
 
     .section-headline {
       font-size: 1.45rem;
-      font-weight: 800;
-      color: #FFFFFF;
+      font-weight: 700 !important;
+      color: #FFFFFF !important;
       margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
       gap: 12px;
+      letter-spacing: normal !important;
+      filter: none !important;
+      transform: none !important;
+    }
+
+    .section-headline:hover {
+      letter-spacing: normal !important;
     }
 
     .section-headline span {
-      background: linear-gradient(
-        115deg,
-        #FFFFFF 0%,
-        #FFFFFF 30%,
-        #FFB347 50%,
-        #FF7A1A 65%,
-        #FFFFFF 85%,
-        #FFFFFF 100%
-      );
-      background-size: 250% 100%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: bookTitleShimmerSweep 7s ease-in-out infinite;
+      color: #FFFFFF !important;
+      font-weight: 700 !important;
+      letter-spacing: normal !important;
       display: inline-block;
+      -webkit-text-fill-color: initial !important;
+      -webkit-background-clip: border-box !important;
+      background-clip: border-box !important;
+      filter: none !important;
+      transform: none !important;
+      text-shadow: none !important;
     }
 
     .chapter-accordion-item:hover .chapter-title span {
@@ -512,11 +604,17 @@
     }
 
     .card-pitch-title {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: #FFFFFF;
+      font-size: 1.25rem;
+      font-weight: 700 !important;
+      color: #FFFFFF !important;
       line-height: 1.35;
       margin-bottom: 1rem;
+      letter-spacing: normal !important;
+      -webkit-text-fill-color: initial !important;
+      -webkit-background-clip: border-box !important;
+      background-clip: border-box !important;
+      filter: none !important;
+      transform: none !important;
     }
 
     .price-display-row {
@@ -745,7 +843,71 @@
 
     .input-field:focus {
       border-color: var(--cd-orange);
-      box-shadow: 0 0 0 2px rgba(255, 122, 26, 0.2);
+      box-shadow: 0 0 0 2px rgba(0, 194, 255, 0.25);
+    }
+
+    /* ==========================================================================
+       MOBILE & TABLET RESPONSIVE SYSTEM
+       ========================================================================== */
+    @media (max-width: 768px) {
+      .book-page-wrapper {
+        padding: 1.25rem 1rem 5rem !important;
+      }
+      .book-layout-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+      }
+      .book-tabs-nav {
+        display: flex !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        gap: 8px !important;
+        padding-bottom: 8px !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+      .book-tabs-nav::-webkit-scrollbar {
+        height: 3px !important;
+      }
+      .book-tab-btn {
+        flex-shrink: 0 !important;
+        padding: 8px 14px !important;
+        font-size: 0.85rem !important;
+      }
+      .book-right-col {
+        position: static !important;
+        margin-top: 1.5rem !important;
+      }
+      .book-hero-title {
+        font-size: 1.65rem !important;
+      }
+      .checkout-sticky-card {
+        max-width: 100% !important;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .book-page-wrapper {
+        padding: 1.75rem 1.25rem 5rem !important;
+      }
+      .book-layout-grid {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+      }
+      .book-tabs-nav {
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        gap: 8px !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+      .book-tab-btn {
+        flex-shrink: 0 !important;
+      }
+      .book-right-col {
+        position: static !important;
+        max-width: 580px !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+      }
     }
   </style>
 </head>
@@ -764,83 +926,22 @@
            ====================================================================== -->
       <div class="book-left-col">
         
-        <!-- Breadcrumbs & Book Header -->
-        <section id="overview" class="book-hero-content">
-          
-          <div class="breadcrumb-bar" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-            <button type="button" onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = '/shop'; }" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #FF7A1A; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s;" onmouseenter="this.style.background='rgba(255,122,26,0.15)'" onmouseleave="this.style.background='rgba(255,255,255,0.06)'">
-              <i class="fas fa-arrow-left"></i> <span>বুকশপে ফিরুন (Back to Shop)</span>
-            </button>
-            <span style="opacity: 0.3;">|</span>
-            <a href="/"><i class="fas fa-home"></i> হোম</a>
-            <i class="fas fa-chevron-right text-xs"></i>
-            <a href="/shop">বুকশপ</a>
-            <i class="fas fa-chevron-right text-xs"></i>
-            <span id="breadcrumbBookName" style="color: #E2E8F0;">লোড হচ্ছে...</span>
+        <!-- Back Button & Dynamic Book/E-Book Title -->
+        <div class="top-nav-book-row">
+          <a href="/shop" class="btn-back-clean" aria-label="বুকশপে ফিরে যান" title="বুকশপে ফিরে যান">
+            <i class="fas fa-arrow-left"></i>
+          </a>
+          <div class="top-book-info">
+            <span class="top-book-type-badge" id="topBookTypeBadge">বই</span>
+            <h1 class="top-book-title no-reveal no-shimmer" id="topBookTitle">বইয়ের নাম</h1>
           </div>
-
-          <div class="hero-badges-row">
-            <span class="pill-badge pill-level" id="bookPillLevel">এইচএসসি</span>
-            <span class="pill-badge pill-subject" id="bookPillSubject">পদার্থবিজ্ঞান ১ম ও ২য় পত্র</span>
-            <span class="pill-badge pill-stock" id="bookPillStock">
-              <i class="fas fa-check-circle"></i> ইন স্টক (রেডি টু শিপ)
-            </span>
-          </div>
-
-          <h1 class="book-hero-title anim-text-shimmer word-reveal" id="bookHeaderTitle">
-            HSC Physics Masterbook (১ম ও ২য় পত্র)
-          </h1>
-
-          <p class="book-hero-desc word-reveal" id="bookHeaderDesc">
-            এইচএসসি পদার্থবিজ্ঞানের প্রতিটি অধ্যায়ের পূর্ণাঙ্গ কনসেপ্ট, গতিবিদ্যা, কাজ-শক্তি, তরঙ্গ, তাপগতিবিদ্যা এবং আলো ও তড়িতের বিগত ১৫ বছরের সকল বোর্ড প্রশ্ন সমাধান ও শর্টকাট ক্যালকুলেটর ট্রিকস।
-          </p>
-
-          <!-- Meta Highlights -->
-          <div class="book-meta-chips">
-            <div class="meta-chip-item" style="color: #FFB347;">
-              <i class="fas fa-star"></i>
-              <strong id="bookRatingText">4.95</strong>
-              <span id="bookReviewsCount" style="color: #94A3B8;">(১,২৪০+ শিক্ষার্থী কিনেছে)</span>
-            </div>
-            <div class="meta-chip-item">
-              <i class="fas fa-file-lines" style="color: #60A5FA;"></i>
-              <span id="bookPagesCount">৪২০ পৃষ্ঠা</span>
-            </div>
-            <div class="meta-chip-item">
-              <i class="fas fa-book-bookmark" style="color: #34D399;"></i>
-              <span id="bookBindingText">হার্ডকভার আর্ট পেপার</span>
-            </div>
-            <div class="meta-chip-item">
-              <i class="fas fa-truck-fast" style="color: #F87171;"></i>
-              <span>সারাদেশে ক্যাশ অন ডেলিভারি</span>
-            </div>
-          </div>
-        </section>
-
-        <!-- Sticky Section Navigation Tabs -->
-        <nav class="book-tabs-nav" aria-label="Book Details Tabs">
-          <button class="book-tab-btn active" onclick="scrollToSection('sec-features', this)">
-            <i class="fas fa-sparkles"></i> ১. বিশেষত্ব ও সুবিধা
-          </button>
-          <button class="book-tab-btn" onclick="scrollToSection('sec-index', this)">
-            <i class="fas fa-list-ol"></i> ২. সূচিপত্র ও ডেমো
-          </button>
-          <button class="book-tab-btn" onclick="scrollToSection('sec-author', this)">
-            <i class="fas fa-user-graduate"></i> ৩. লেখক পরিচিতি
-          </button>
-          <button class="book-tab-btn" onclick="scrollToSection('sec-reviews', this)">
-            <i class="fas fa-star"></i> ৪. রিভিউ ও রেটিং
-          </button>
-          <button class="book-tab-btn" onclick="scrollToSection('sec-faq', this)">
-            <i class="fas fa-circle-question"></i> ৫. সাধারণ জিজ্ঞাসা
-          </button>
-        </nav>
+        </div>
 
         <!-- Section 1: Book Highlights & Features -->
         <section id="sec-features" class="content-section-card ai-anim-box">
-          <h2 class="section-headline">
+          <h2 class="section-headline no-reveal no-shimmer">
             <i class="fas fa-gem" style="color: var(--cd-orange);"></i>
-            <span class="word-reveal">বইটির বিশেষত্ব ও যা যা থাকছে</span>
+            <span>বইটির বিশেষত্ব ও যা যা থাকছে</span>
           </h2>
           <div class="features-grid" id="bookFeaturesGrid">
             <div class="feature-item-box">
@@ -888,34 +989,18 @@
           </div>
         </section>
 
-        <!-- Section 2: Index / Table of Contents -->
-        <section id="sec-index" class="content-section-card ai-anim-box">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 10px;">
-            <h2 class="section-headline" style="margin-bottom: 0;">
-              <i class="fas fa-book-open" style="color: var(--cd-orange);"></i>
-              <span class="word-reveal">সূচিপত্র ও চ্যাপ্টার তালিকা</span>
-            </h2>
-            <button type="button" class="btn-preview-secondary" onclick="openSamplePdfModal()" style="margin: 0; width: auto; padding: 8px 16px;">
-              <i class="fas fa-file-pdf" style="color: #EF4444;"></i>
-              <span>নমুনা পৃষ্ঠা PDF প্রিভিউ</span>
-            </button>
-          </div>
-          
-          <div id="bookChaptersList">
-            <!-- Dynamically populated chapters -->
-          </div>
-        </section>
+
 
         <!-- Section 3: Author Bio -->
         <section id="sec-author" class="content-section-card ai-anim-box">
-          <h2 class="section-headline">
+          <h2 class="section-headline no-reveal no-shimmer">
             <i class="fas fa-user-tie" style="color: var(--cd-orange);"></i>
-            <span class="word-reveal">লেখক ও মেন্টর পরিচিতি</span>
+            <span>লেখক ও মেন্টর পরিচিতি</span>
           </h2>
           <div class="author-card">
             <img src="/images/student-hero.jpg" alt="Author Dipu Sir" class="author-avatar" id="authorAvatarImg">
             <div>
-              <h3 style="color: #FFF; font-size: 1.25rem; font-weight: 800;" id="authorName">দীপু স্যার ও বুয়েট মেন্টর প্যানেল</h3>
+              <h3 style="color: #FFF; font-size: 1.25rem; font-weight: 700;" id="authorName">দীপু স্যার ও বুয়েট মেন্টর প্যানেল</h3>
               <p style="color: var(--cd-orange); font-size: 0.9rem; font-weight: 700; margin: 2px 0 8px;">সিনিয়র ফ্যাকাল্টি ও শিক্ষা গবেষক (BUET CSE)</p>
               <p style="color: #94A3B8; font-size: 0.9rem; line-height: 1.6;" id="authorBio">
                 বিগত ১০+ বছর ধরে দেশের হাজার হাজার শিক্ষার্থীকে বোর্ড পরীক্ষা ও বিশ্ববিদ্যালয় ভর্তি পরীক্ষায় সফলতার শীর্ষে পৌঁছে দিতে কাজ করে যাচ্ছেন। বাস্তবসম্মত কৌশল ও শর্টকাট উদ্ভাবনে দেশে পথপ্রদর্শক।
@@ -924,31 +1009,13 @@
           </div>
         </section>
 
-        <!-- Section 4: Reviews -->
-        <section id="sec-reviews" class="content-section-card ai-anim-box">
-          <h2 class="section-headline">
-            <i class="fas fa-comment-dots" style="color: var(--cd-orange);"></i>
-            <span class="word-reveal">শিক্ষার্থীদের রিভিউ ও মতামত</span>
-          </h2>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
-            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--cd-border); border-radius: 14px; padding: 1.25rem;">
-              <div style="color: #FBBF24; margin-bottom: 6px;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-              <p style="color: #CBD5E1; font-size: 0.9rem; margin-bottom: 10px;">"এই বইটি কেনার পর পদার্থবিজ্ঞানের ভীতি একদম দূর হয়ে গেছে। শর্টকাট টেকনিকগুলো অসাধারণ!"</p>
-              <div style="font-size: 0.82rem; color: #94A3B8;">— তানভীর আহমেদ (নটর ডেম কলেজ, ঢাকা)</div>
-            </div>
-            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--cd-border); border-radius: 14px; padding: 1.25rem;">
-              <div style="color: #FBBF24; margin-bottom: 6px;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-              <p style="color: #CBD5E1; font-size: 0.9rem; margin-bottom: 10px;">"মাত্র ২ দিনে ক্যাশ অন ডেলিভারিতে সুন্দর প্যাকেজিংয়ে বই পেয়েছি। কাগজের মান ও প্রিন্ট চমৎকার।"</p>
-              <div style="font-size: 0.82rem; color: #94A3B8;">— সাদিয়া আফরিন (রাজশাহী কলেজ)</div>
-            </div>
-          </div>
-        </section>
+
 
         <!-- Section 5: FAQs -->
         <section id="sec-faq" class="content-section-card ai-anim-box">
-          <h2 class="section-headline">
+          <h2 class="section-headline no-reveal no-shimmer">
             <i class="fas fa-circle-question" style="color: var(--cd-orange);"></i>
-            <span class="word-reveal">সাধারণ জিজ্ঞাসাসমূহ (FAQ)</span>
+            <span>সাধারণ জিজ্ঞাসাসমূহ (FAQ)</span>
           </h2>
           <div id="faqListWrap">
             <div class="chapter-accordion-item">
@@ -1004,8 +1071,8 @@
 
           <div class="checkout-card-body">
             
-            <h3 class="card-pitch-title" id="bookPitchTitle">
-              এইচএসসি পদার্থবিজ্ঞান সম্পূর্ণ কনসেপ্ট ও বোর্ড হ্যাকস
+            <h3 class="card-pitch-title no-reveal no-shimmer" id="bookPitchTitle">
+              বইয়ের নাম
             </h3>
 
             <!-- Price Display Row -->
@@ -1031,22 +1098,7 @@
               <span>ফ্রি নমুনা পৃষ্ঠা ও সূচিপত্র প্রিভিউ</span>
             </button>
 
-            <!-- Money-back & Quality Guarantee -->
-            <div style="font-size: 0.82rem; color: #10B981; text-align: center; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center; gap: 6px;">
-              <i class="fas fa-shield-halved"></i> ১০০% অরিজিনাল আর্ট পেপার ও সন্তুষ্টি গ্যারান্টি
-            </div>
 
-            <!-- What's Included Checklist -->
-            <div style="font-size: 0.95rem; font-weight: 800; color: #FFF; margin-bottom: 8px;">
-              <i class="fas fa-list-check" style="color: var(--cd-orange);"></i> এই বইটির সাথে যা থাকছে:
-            </div>
-            <ul class="includes-checklist">
-              <li><i class="fas fa-truck-fast"></i> <span>সারাদেশে ক্যাশ অন ডেলিভারি সুবিধা</span></li>
-              <li><i class="fas fa-file-shield"></i> <span>প্রিমিয়াম ৮০ জিএসএম আর্ট পেপার প্রিন্ট</span></li>
-              <li><i class="fas fa-calculator"></i> <span>দীপু স্যারের স্পেশাল ক্যালকুলেটর হ্যাকস শিট</span></li>
-              <li><i class="fas fa-bookmark"></i> <span>ফ্রি কালারফুল বুকমার্ক ও স্টাডি ট্র্যাকার</span></li>
-              <li><i class="fas fa-mobile-screen"></i> <span>ডিজিটাল কিউআর কোড স্ক্যান করে ভিডিও সল্যুশন</span></li>
-            </ul>
 
             <!-- Helpline Box -->
             <div class="helpline-box">
@@ -1087,6 +1139,7 @@
         <div id="orderStepForm">
           
           <div style="display: flex; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--cd-border); border-radius: 12px; padding: 12px; margin-bottom: 1.25rem; align-items: center;">
+            <img id="modalThumbImg" src="" alt="Book Cover" style="width: 55px; height: 75px; object-fit: cover; border-radius: 6px; box-shadow: -2px 4px 8px rgba(0,0,0,0.5); flex-shrink: 0; display: none;">
             <div id="modalThumbCover" style="width: 55px; height: 75px; border-radius: 6px; background: linear-gradient(135deg, #2563eb, #0b1020); color: #fff; font-size: 8px; font-weight: 800; display: flex; flex-direction: column; justify-content: space-between; padding: 6px; box-shadow: -2px 4px 8px rgba(0,0,0,0.5); flex-shrink: 0;">
               <span>Dipu's</span>
               <span id="modalThumbTitle" style="font-size: 9px; line-height: 1.1;">Physics Masterbook</span>
@@ -1228,6 +1281,214 @@
        ============================================================================ -->
   <script>
     const BOOKS_CATALOG = [
+      {
+        id: "book-ssc-bangla",
+        slug: "ssc-bangla-masterbook",
+        title: "বাংলা মাস্টারবুক",
+        category: "ssc",
+        classBadge: "এসএসসি (৯ম ও ১০ম শ্রেণি)",
+        subject: "বাংলা ১ম ও ২য় পত্র পূর্ণাঙ্গ সহায়িকা",
+        author: "দীপু স্যার ও বাংলা একাডেমি গবেষক পরিষদ",
+        rating: 4.8,
+        ratingCount: 204,
+        price: 420,
+        discountPrice: 330,
+        color: "#c9303b",
+        image: "/images/books/book-ssc-bangla.jpg",
+        description: "এসএসসি বাংলা ১ম পত্রের সকল গদ্য ও পদ্যের লাইনভিত্তিক বিশ্লেষণ, মূলভাব, সৃজনশীল প্রশ্নের (CQ) নির্ভুল সমাধান এবং বাংলা ২য় পত্রের পূর্ণাঙ্গ ব্যাকরণ ও নির্মিতি অংশের সেরা মাস্টার গাইড।",
+        pages: 340,
+        binding: "উন্নত আর্ট পেপারব্যাক",
+        stockStatus: "ইন স্টক (রেডি টু শিপ)",
+        chapters: [
+          { title: "১. বাংলা ১ম পত্র: গুরুত্বপূর্ণ গদ্য ও ভাবার্থ বিশ্লেষণ", pages: "৬৫ পৃষ্ঠা", desc: "শোভা, বই পড়া, মানুষ মুহাম্মদ (স.) সহ সকল গদ্যের অনুধাবনমূলক প্রশ্ন ও CQ টেকনিক।" },
+          { title: "২. কবিতা ও পদ্যের চরণভিত্তিক ব্যাখ্যা ও CQ প্রশ্ন", pages: "৭০ পৃষ্ঠা", desc: "কপোতাক্ষ নদ, জীবন-সংগীত, জুতা আবিষ্কার কবিতার অন্তর্নিহিত ভাবার্থ ও বোর্ড সমাধান।" },
+          { title: "৩. বাংলা ২য় পত্র: ধ্বনিতত্ত্ব, ণ-ত্ব ও ষ-ত্ব বিধান, সন্ধি", pages: "৬০ পৃষ্ঠা", desc: "সহজ ছক ও শর্টকাট নিয়মে বাংলা ব্যাকরণের জটিল বিষয়গুলো মনে রাখার কৌশল।" },
+          { title: "৪. সমাস, উপসর্গ ও শব্দ গঠনের সহজ নিয়ম", pages: "৬৫ পৃষ্ঠা", desc: "ব্যাসবাক্যসহ সমাস নির্ণয় ও প্রত্যয় যোগে শব্দ গঠনের শতভাগ কার্যকরী নিয়ম।" },
+          { title: "৫. নির্মিতি অংশ: অনুচ্ছেদ, সারাংশ ও ভাবসম্প্রসারণ", pages: "৮০ পৃষ্ঠা", desc: "পরীক্ষায় পূর্ণ নম্বর পাওয়ার স্ট্যান্ডার্ড ফরম্যাট ও শীর্ষ স্কুলের মডেল উত্তর।" }
+        ]
+      },
+      {
+        id: "book-hsc-biology",
+        slug: "hsc-biology-masterbook",
+        title: "জীববিজ্ঞান Masterbook",
+        category: "hsc",
+        classBadge: "এইচএসসি (১ম ও ২য় পত্র)",
+        subject: "জীববিজ্ঞান ১ম ও ২য় পত্র",
+        author: "দীপু স্যার ও ডিএমসি মেডিকেল মেন্টর প্যানেল",
+        rating: 4.9,
+        ratingCount: 185,
+        price: 570,
+        discountPrice: 460,
+        color: "#059669",
+        image: "/images/books/book-hsc-biology.jpg",
+        description: "এইচএসসি জীববিজ্ঞান ১ম (উদ্ভিদবিজ্ঞান) ও ২য় পত্র (প্রাণিবিজ্ঞান) এর প্রতিটি অধ্যায়ের রঙিন চিত্রসহ সহজ বিশ্লেষণ, বিগত ১৫ বছরের বোর্ড ও মেডিকেল ভর্তি পরীক্ষার প্রশ্নব্যাংক এবং নেমোনিক ট্রিকস।",
+        pages: 410,
+        binding: "হার্ডকভার প্রিমিয়াম কালার প্রিন্ট",
+        stockStatus: "ইন স্টক (রেডি টু শিপ)",
+        chapters: [
+          { title: "১. কোষ ও এর গঠন এবং কোষ বিভাজন", pages: "৫৫ পৃষ্ঠা", desc: "ডিএনএ রেপ্লিকেশন, প্রোটিন সংশ্লেষণ ও মায়োসিসের চিত্রভিত্তিক সহজ ব্যাখ্যা।" },
+          { title: "২. উদ্ভিদের শারীরতত্ত্ব ও প্রস্বেদন-সালোকসংশ্লেষণ", pages: "৬৫ পৃষ্ঠা", desc: "C3-C4 চক্র ও গ্লাইকোলাইসিসের সহজে মনে রাখার ফ্লোচার্ট।" },
+          { title: "৩. মানব শারীরতত্ত্ব: রক্ত ও সংবহনতন্ত্র", pages: "৭০ পৃষ্ঠা", desc: "হৃদপিণ্ডের কার্যপদ্ধতি ও রক্ত সঞ্চালনের নিখুঁত ভিজ্যুয়াল বিশ্লেষণ।" },
+          { title: "৪. পরিপাক ও শোষণ এবং শ্বসনতন্ত্র", pages: "৬০ পৃষ্ঠা", desc: "এনজাইমের কার্যপ্রণালী ও গ্যাসীয় বিনিময়ের পূর্ণাঙ্গ CQ গাইড।" },
+          { title: "৫. জিনতত্ত্ব ও বিবর্তন এবং মেডিকেল প্রশ্নব্যাংক", pages: "৮০ পৃষ্ঠা", desc: "মেন্ডেলের সূত্রের ব্যতিক্রম ও বিগত মেডিকেল পরীক্ষার প্রশ্ন সমাধান।" }
+        ]
+      },
+      {
+        id: "book-hsc-english",
+        slug: "hsc-english-masterbook",
+        title: "English Masterbook",
+        category: "hsc",
+        classBadge: "এইচএসসি (১ম ও ২য় পত্র)",
+        subject: "HSC English 1st & 2nd Paper",
+        author: "ঢাকা বিশ্ববিদ্যালয় আইবিএ ও ইংরেজি গবেষকবৃন্দ",
+        rating: 4.8,
+        ratingCount: 162,
+        price: 540,
+        discountPrice: 440,
+        color: "#2563eb",
+        image: "/images/books/book-hsc-english.jpg",
+        description: "HSC English 1st & 2nd Paper এর পূর্ণাঙ্গ মাস্টার সল্যুশন। সিন প্যাসেজ, সামারি, ফ্লো-চার্ট, গ্রামার রুলসের শর্টকাট এবং লিখিত অংশের জন্য শতভাগ কমন উপযোগী হ্যান্ডনোটস।",
+        pages: 390,
+        binding: "হার্ডকভার প্রিমিয়াম অফসেট পেপার",
+        stockStatus: "ইন স্টক (রেডি টু শিপ)",
+        chapters: [
+          { title: "1. Flow Chart, Summary & Theme Writing Mastery", pages: "৭০ পৃষ্ঠা", desc: "প্যাসেজ পড়ে সহজে পূর্ণ নম্বর পাওয়ার প্র্যাকটিক্যাল টেকনিক।" },
+          { title: "2. Modifiers, Connectors & Preposition Hacks", pages: "৮৫ পৃষ্ঠা", desc: "নিয়ম মুখস্থ না করেই উদাহরণের সাহায্যে গ্রামার সমাধান।" },
+          { title: "3. Right Forms of Verbs & Transformation Rules", pages: "৭৫ পৃষ্ঠা", desc: "বোর্ড স্ট্যান্ডার্ড সকল প্যাটার্ন ও কমন পড়ার নিশ্চয়তা।" },
+          { title: "4. Formal Letters, Reports & Paragraph Writing", pages: "৮০ পৃষ্ঠা", desc: "রাইটিং পার্টে সর্বোচ্চ নম্বর পাওয়ার এক্সক্লুসিভ টেমপ্লেট।" },
+          { title: "5. Top College Model Tests & Board Solution", pages: "৮০ পৃষ্ঠা", desc: "বিগত ১০ বছরের বোর্ড এবং শীর্ষ নটর ডেম, রাজউক কলেজের প্রশ্ন সমাধান।" }
+        ]
+      },
+      {
+        id: "book-ssc-physics",
+        slug: "ssc-physics-guide",
+        title: "পদার্থবিজ্ঞান Physics Guide",
+        category: "ssc",
+        classBadge: "এসএসসি (৯ম ও ১০ম শ্রেণি)",
+        subject: "পদার্থবিজ্ঞান টাইপভিত্তিক CQ & MCQ সমাধান",
+        author: "দীপু স্যার ও বুয়েট পদার্থবিজ্ঞান টিম",
+        rating: 4.7,
+        ratingCount: 178,
+        price: 430,
+        discountPrice: 340,
+        color: "#0891b2",
+        image: "/images/books/book-ssc-physics.jpg",
+        description: "এসএসসি পদার্থবিজ্ঞানের গতি, বল, কাজ-শক্তি, পদার্থের অবস্থা, শব্দ-তরঙ্গ, আলো ও চলবিদ্যুতের প্রতিটি অধ্যায়ের টাইপভিত্তিক গাণিতিক সমস্যা, কনসেপ্ট ক্লিয়ারিং ও বোর্ড CQ সমাধান।",
+        pages: 350,
+        binding: "উন্নত আর্ট পেপারব্যাক",
+        stockStatus: "ইন স্টক (রেডি টু শিপ)",
+        chapters: [
+          { title: "১. ভৌত রাশি, পরিমাপ ও গতিবিদ্যা", pages: "৬০ পৃষ্ঠা", desc: "গতির সমীকরণ ও গ্রাফ বিশ্লেষণের সহজ টেকনিক।" },
+          { title: "২. বল ও নিউটনের গতিসূত্র এবং কাজ-ক্ষমতা-শক্তি", pages: "৬৫ পৃষ্ঠা", desc: "ভরবেগের নিত্যতা ও শক্তির সংরক্ষণশীলতার CQ সমাধান।" },
+          { title: "৩. পদার্থের অবস্থা ও চাপ এবং শব্দ-তরঙ্গ", pages: "৬০ পৃষ্ঠা", desc: "প্যাসকেলের সূত্র, প্লবতা ও প্রতিধ্বনির গাণিতিক সমস্যা।" },
+          { title: "৪. আলোর প্রতিফলন ও প্রতিসরণের চিত্রভিত্তিক সমাধান", pages: "৭৫ পৃষ্ঠা", desc: "দর্পণ ও লেন্সের প্রতিবিম্ব গঠনের সহজ অঙ্কন পদ্ধতি।" },
+          { title: "৫. স্থির তড়িৎ ও চলবিদ্যুতের সার্কিট বিশ্লেষণ", pages: "৯০ পৃষ্ঠা", desc: "তুল্যরোধ, তড়িৎ ক্ষমতা ও বর্তনীর ম্যাথ মাত্র ৩ লাইনে সল্ভ।" }
+        ]
+      },
+      {
+        id: "book-class9-math",
+        slug: "class9-math-masterbook",
+        title: "গণিত মাস্টারবুক",
+        category: "9",
+        classBadge: "নবম শ্রেণি (নতুন কারিকুলাম)",
+        subject: "গণিত অনুসন্ধানমূলক সমাধান ও অনুশীলন",
+        author: "দীপু স্যার ও গণিত অলিম্পিয়াড ট্রেইনার প্যানেল",
+        rating: 4.8,
+        ratingCount: 143,
+        price: 380,
+        discountPrice: 300,
+        color: "#16a34a",
+        image: "/images/books/book-class9-math.jpg",
+        description: "নতুন কারিকুলাম অনুযায়ী ৯ম শ্রেণির গণিতের প্রাত্যহিক জীবনের সেট, অনুক্রম ও ধারা, লগারিদম, প্রকৃতিতে জ্যামিতিক প্যাটার্ন এবং বাস্তব জীবনের অনুসন্ধানমূলক গাণিতিক সমস্যার পূর্ণাঙ্গ সমাধান।",
+        pages: 320,
+        binding: "অফসেট পেপারব্যাক কালার প্রিন্ট",
+        stockStatus: "ইন স্টক (রেডি টু শিপ)",
+        chapters: [
+          { title: "১. প্রাত্যহিক জীবনে সেট ও ভেনচিত্রের বাস্তব ব্যবহার", pages: "৫৫ পৃষ্ঠা", desc: "বাস্তব সমস্যার মাধ্যমে সেটের অপারেশন ও ভেনচিত্র সমাধান।" },
+          { title: "২. অনুক্রম ও ধারা (সমান্তর ও গুণোত্তর বিশ্লেষণ)", pages: "৬৫ পৃষ্ঠা", desc: "প্যাটার্ন শনাক্তকরণ ও বাস্তব জীবনের ধারা সম্পর্কিত ম্যাথ।" },
+          { title: "৩. লগারিদমের ধারণা ও বাস্তব জীবনের প্রয়োগ", pages: "৬০ পৃষ্ঠা", desc: "সূচকীয় মডেল ও লগারিদমের সূত্রের সহজ বিশ্লেষণ।" },
+          { title: "৪. প্রকৃতিতে জ্যামিতিক প্যাটার্ন ও কোণ পরিমাপ", pages: "৭০ পৃষ্ঠা", desc: "ত্রিভুজ ও বহুভুজের উপপাদ্য এবং ব্যবহারিক প্রজেক্ট।" },
+          { title: "৫. পরিমাপে ত্রিকোণমিতি ও সম্ভাব্যতার ধারণা", pages: "৭০ পৃষ্ঠা", desc: "উচ্চতা-দূরত্ব পরিমাপ ও বাস্তব সম্ভাবনার গণনা।" }
+        ]
+      },
+      {
+        id: "book-english-mastery-1st",
+        slug: "english-mastery-1st",
+        title: "Dipu's English Mastery 1st Paper",
+        category: "ssc",
+        classBadge: "এসএসসি (Class 9 & 10 • 2026 & Beyond)",
+        subject: "English 1st Paper Complete Guideline",
+        author: "Dipu Sir (Founder, Dipu Academy)",
+        rating: 4.9,
+        ratingCount: 267,
+        price: 480,
+        discountPrice: 380,
+        color: "#d97706",
+        image: "/images/books/english-mastery-1st.jpg",
+        description: "২০২৬ ও পরবর্তী এসএসসি পরীক্ষার্থীদের জন্য সম্পূর্ণ নতুন প্রশ্নকাঠামোয় তৈরি ইংরেজি ১ম পত্রের কম্প্রিহেনশন, সামারি, ম্যাচিং, রি-অ্যারেঞ্জ এবং রাইটিং পার্টের শতভাগ কমন উপযোগী মাস্টার গাইড।",
+        pages: 360,
+        binding: "প্রিমিয়াম হার্ডকভার গোল্ডেন ফয়েল",
+        stockStatus: "ইন স্টক (রেডি টু শিপ)",
+        chapters: [
+          { title: "Unit 1: Reading Comprehension Mastery & MCQ Hacks", pages: "৭০ পৃষ্ঠা", desc: "প্যাসেজ পড়ে সময় বাঁচিয়ে নির্ভুল উত্তর বের করার পদ্ধতি।" },
+          { title: "Unit 2: Information Transfer & Summary Writing Rules", pages: "৬০ পৃষ্ঠা", desc: "৫ এ ৫ পাওয়ার সুনির্দিষ্ট নিয়ম ও প্র্যাকটিস সেট।" },
+          { title: "Unit 3: Re-arranging Sentences & Cloze Test with Clues", pages: "৭৫ পৃষ্ঠা", desc: "কমন স্টোরি ও হিস্টোরিক্যাল প্যাসেজের রি-অ্যারেঞ্জ ট্রিকস।" },
+          { title: "Unit 4: Guided Writing (Paragraphs, Stories & Letters)", pages: "৮৫ পৃষ্ঠা", desc: "টপ গ্রেড পেতে মানসম্মত ভোকাবুলারি ও স্ট্রাকচার সমৃদ্ধ ফরম্যাট।" },
+          { title: "Unit 5: 2026 Model Test & Top Cadet College Papers", pages: "৭০ পৃষ্ঠা", desc: "ক্যাডেট কলেজ ও সেরা স্কুলের এক্সক্লুসিভ প্রশ্ন সমাধান।" }
+        ]
+      },
+      {
+        id: "book-english-mastery-2nd",
+        slug: "english-mastery-2nd",
+        title: "Dipu's English Mastery 2nd Paper",
+        category: "ssc",
+        classBadge: "এসএসসি (Class 9 & 10 • 2026 & Beyond)",
+        subject: "English 2nd Paper Grammar & Composition",
+        author: "Dipu Sir (Founder, Dipu Academy)",
+        rating: 4.9,
+        ratingCount: 241,
+        price: 480,
+        discountPrice: 380,
+        color: "#b45309",
+        image: "/images/books/english-mastery-2nd.jpg",
+        description: "ইংরেজি ২য় পত্রের গ্রামারের প্রতিটি আইটেমের (Fill in the blanks, Right form of verbs, Narration, Transformation, Connectors, Punctuation) জাদুকরী শর্টকাট ও Composition ১০০% নিশ্চিত করার বই।",
+        pages: 370,
+        binding: "প্রিমিয়াম হার্ডকভার গোল্ডেন ফয়েল",
+        stockStatus: "ইন স্টক (রেডি টু শিপ)",
+        chapters: [
+          { title: "Chapter 1: Right Forms of Verbs & Subject-Verb Agreement", pages: "৭৫ পৃষ্ঠা", desc: "সবচেয়ে বেশি ভুল হওয়া ২০টি ব্যতিক্রমী নিয়মের সহজ ব্যাখ্যা।" },
+          { title: "Chapter 2: Direct & Indirect Narration Shortcut Rules", pages: "৭০ পৃষ্ঠা", desc: "প্যাসেজ ন্যারেশনের জটিল পরিবর্তনগুলো মাত্র ৩টি ধাপে সমাধান।" },
+          { title: "Chapter 3: Sentence Transformation (Voice, Degree, Structure)", pages: "৮০ পৃষ্ঠা", desc: "সিম্পল, কমপ্লেক্স ও কম্পাউন্ডের জাদুকরী কনভার্সন টেবিল।" },
+          { title: "Chapter 4: Sentence Connectors, Tag Questions & Punctuations", pages: "৬৫ পৃষ্ঠা", desc: "ফুল মার্কস পাওয়ার নিখুঁত প্র্যাকটিস শিট।" },
+          { title: "Chapter 5: Composition & Formal Letter Writing Templates", pages: "৮০ পৃষ্ঠা", desc: "যে কোনো বিষয়ের উপর চমৎকার প্যারাগ্রাফ ও লেটার লেখার কৌশল।" }
+        ]
+      },
+      {
+        id: "ebook-hsc-physics-pdf",
+        slug: "hsc-physics-pdf-ebook",
+        title: "পদার্থবিজ্ঞান PDF E-Book",
+        category: "ebook",
+        classBadge: "এইচএসসি ডিজিটাল ই-বুক (PDF)",
+        subject: "পদার্থবিজ্ঞান ১ম ও ২য় পত্র ইনস্ট্যান্ট ডাউনলোড",
+        author: "দীপু স্যার",
+        rating: 4.9,
+        ratingCount: 312,
+        price: 350,
+        discountPrice: 199,
+        color: "#7c5cff",
+        image: "/images/books/ebook-hsc-physics.jpg",
+        description: "এইচএসসি পদার্থবিজ্ঞান ১ম ও ২য় পত্রের কমপ্লিট ডিজিটাল ই-বুক। মোবাইল, ট্যাব বা ল্যাপটপে পড়ার উপযোগী হাই-রেজোলিউশন কালারফুল PDF, ক্যালকুলেটর শর্টকাট, ভিডিও কিউআর কোড ও সার্চেবল ইনডেক্স।",
+        pages: 450,
+        binding: "ডিজিটাল ইন্টারেক্টিভ PDF (অর্ডার করলেই সাথে সাথে ডাউনলোড)",
+        stockStatus: "ইন স্টক (ইনস্ট্যান্ট ডাউনলোড)",
+        chapters: [
+          { title: "১. ১ম পত্র: ভেক্টর, গতিবিদ্যা ও নিউটোনিয়ান বলবিদ্যা", pages: "৮৫ পৃষ্ঠা", desc: "ক্লিয়ার কনসেপ্ট, শর্টকাট নোট ও বিগত বোর্ড CQ সমাধান।" },
+          { title: "২. ১ম পত্র: কাজ-শক্তি-ক্ষমতা, মহাকর্ষ ও পর্যায়বৃত্ত গতি", pages: "৯০ পৃষ্ঠা", desc: "চিত্রসহ সহজ ব্যাখ্যা ও ক্যালকুলেটর হ্যাকস শিট।" },
+          { title: "৩. ২য় পত্র: তাপগতিবিদ্যা ও স্থির তড়িৎ ফর্মুলা ব্যাংক", pages: "৯৫ পৃষ্ঠা", desc: "সকল সমীকরণের সামারি ও বোর্ড MCQ কুইক ট্রিকস।" },
+          { title: "৪. ২য় পত্র: চলবিদ্যুৎ ও আলো (প্রতিফলন ও প্রতিসরণ)", pages: "১০০ পৃষ্ঠা", desc: "সার্কিট ও অপটিক্স গাণিতিক সমস্যা সমাধান।" },
+          { title: "৫. ২য় পত্র: আধুনিক পদার্থবিজ্ঞান ও ইলেকট্রনিক্স", pages: "৮০ পৃষ্ঠা", desc: "কোয়ান্টাম তত্ত্ব, সেমিকন্ডাক্টর ও লজিক গেটের পূর্ণাঙ্গ গাইড।" }
+        ]
+      },
       {
         id: "book-hsc-physics",
         slug: "hsc-physics-masterbook",
@@ -1469,30 +1730,72 @@
       currentBook = BOOKS_CATALOG.find(b => b.id === bookId || b.slug === bookId) || BOOKS_CATALOG[0];
 
       // Update Page Metadata
-      document.title = `${currentBook.title} — Dipu's Books`;
-      document.getElementById("breadcrumbBookName").textContent = currentBook.title;
+      document.title = `${currentBook.title} — Dipu Academy`;
+      const bcEl = document.getElementById("breadcrumbBookName");
+      if (bcEl) bcEl.textContent = currentBook.title;
 
-      // Update Badges
-      document.getElementById("bookPillLevel").textContent = currentBook.classBadge || "বই";
-      document.getElementById("bookPillSubject").textContent = currentBook.subject;
-      document.getElementById("bookPillStock").innerHTML = `<i class="fas fa-check-circle"></i> ${currentBook.stockStatus}`;
+      // Update Badges (if present)
+      const pillLvl = document.getElementById("bookPillLevel");
+      if (pillLvl) pillLvl.textContent = currentBook.classBadge || "বই";
+      const pillSub = document.getElementById("bookPillSubject");
+      if (pillSub) pillSub.textContent = currentBook.subject;
+      const pillStk = document.getElementById("bookPillStock");
+      if (pillStk) pillStk.innerHTML = `<i class="fas fa-check-circle"></i> ${currentBook.stockStatus}`;
 
-      // Hero Texts
-      document.getElementById("bookHeaderTitle").textContent = currentBook.title;
-      document.getElementById("bookHeaderDesc").textContent = currentBook.description;
-      document.getElementById("bookRatingText").textContent = currentBook.rating;
-      document.getElementById("bookReviewsCount").textContent = `(${currentBook.ratingCount.toLocaleString()} শিক্ষার্থী কিনেছে)`;
-      document.getElementById("bookPagesCount").textContent = `${currentBook.pages} পৃষ্ঠা`;
-      document.getElementById("bookBindingText").textContent = currentBook.binding;
+      // Hero Texts (if present)
+      const hTitle = document.getElementById("bookHeaderTitle");
+      if (hTitle) hTitle.textContent = currentBook.title;
+      const hDesc = document.getElementById("bookHeaderDesc");
+      if (hDesc) hDesc.textContent = currentBook.description;
+      const rText = document.getElementById("bookRatingText");
+      if (rText) rText.textContent = currentBook.rating;
+      const rCount = document.getElementById("bookReviewsCount");
+      if (rCount) rCount.textContent = `(${currentBook.ratingCount.toLocaleString()} শিক্ষার্থী কিনেছে)`;
+      const pCount = document.getElementById("bookPagesCount");
+      if (pCount) pCount.textContent = `${currentBook.pages} পৃষ্ঠা`;
+      const bText = document.getElementById("bookBindingText");
+      if (bText) bText.textContent = currentBook.binding;
 
-      // Update 3D Cover in Sticky Sidebar
+      // Update 3D Cover / Image in Sticky Sidebar
+      const thumbImg = document.getElementById("bookSidebarThumb");
+      const coverBox = document.getElementById("sidebar3dCoverBox");
       const coverEl = document.getElementById("sidebar3dCover");
-      if (coverEl) {
-        coverEl.style.background = `linear-gradient(135deg, ${currentBook.color || '#2563eb'}, #0b1020 160%)`;
-        document.getElementById("sidebar3dTitle").textContent = currentBook.title;
+
+      if (currentBook.image) {
+        if (thumbImg) {
+          thumbImg.src = currentBook.image;
+          thumbImg.alt = currentBook.title;
+          thumbImg.style.display = "inline-block";
+        }
+        if (coverBox) coverBox.style.display = "none";
+      } else {
+        if (thumbImg) thumbImg.style.display = "none";
+        if (coverBox) coverBox.style.display = "grid";
+        if (coverEl) {
+          coverEl.style.background = `linear-gradient(135deg, ${currentBook.color || '#2563eb'}, #0b1020 160%)`;
+          document.getElementById("sidebar3dTitle").textContent = currentBook.title;
+        }
       }
-      
-      document.getElementById("bookPitchTitle").textContent = `${currentBook.title} — ${currentBook.subject}`;
+
+      // Top Row Title & Badge (Book & eBook Name)
+      const topTitle = document.getElementById("topBookTitle");
+      if (topTitle) topTitle.textContent = currentBook.title;
+
+      const topBadge = document.getElementById("topBookTypeBadge");
+      if (topBadge) {
+        const isEbook = currentBook.category === "ebook" || currentBook.id.startsWith("ebook");
+        if (isEbook) {
+          topBadge.textContent = "📱 ই-বুক PDF";
+          topBadge.classList.add("is-ebook");
+        } else {
+          topBadge.textContent = "📚 বই";
+          topBadge.classList.remove("is-ebook");
+        }
+      }
+
+      // Box Pitch Title (Only Name, as requested)
+      const pitchTitle = document.getElementById("bookPitchTitle");
+      if (pitchTitle) pitchTitle.textContent = currentBook.title;
       document.getElementById("bookMainPrice").textContent = `৳${currentBook.discountPrice}`;
       document.getElementById("bookStrikePrice").textContent = `৳${currentBook.price}`;
       const discPct = Math.round(((currentBook.price - currentBook.discountPrice) / currentBook.price) * 100);
@@ -1500,6 +1803,16 @@
 
       // Author Info
       document.getElementById("authorName").textContent = currentBook.author;
+
+      // Update Order Button label for eBooks vs Hardcover
+      const orderBtn = document.getElementById("openOrderModalBtn");
+      if (orderBtn) {
+        if (currentBook.category === "ebook" || currentBook.id.startsWith("ebook")) {
+          orderBtn.innerHTML = `<i class="fas fa-download"></i> <span>ই-বুকটি কিনুন ও ডাউনলোড করুন</span>`;
+        } else {
+          orderBtn.innerHTML = `<i class="fas fa-shopping-bag"></i> <span>বইটি অর্ডার করুন / ক্যাশ অন ডেলিভারি</span>`;
+        }
+      }
 
       // Render Chapters Accordion
       renderChapters(currentBook.chapters || []);
@@ -1569,9 +1882,19 @@
       document.getElementById("orderStepSuccess").style.display = "none";
       
       const modalCover = document.getElementById("modalThumbCover");
-      if (modalCover) {
-        modalCover.style.background = `linear-gradient(135deg, ${currentBook.color || '#2563eb'}, #0b1020)`;
-        document.getElementById("modalThumbTitle").textContent = currentBook.title;
+      const modalImg = document.getElementById("modalThumbImg");
+      if (currentBook.image && modalImg) {
+        modalImg.src = currentBook.image;
+        modalImg.alt = currentBook.title;
+        modalImg.style.display = "block";
+        if (modalCover) modalCover.style.display = "none";
+      } else {
+        if (modalImg) modalImg.style.display = "none";
+        if (modalCover) {
+          modalCover.style.display = "flex";
+          modalCover.style.background = `linear-gradient(135deg, ${currentBook.color || '#2563eb'}, #0b1020)`;
+          document.getElementById("modalThumbTitle").textContent = currentBook.title;
+        }
       }
       
       document.getElementById("modalBookTitleText").textContent = currentBook.title;

@@ -69,7 +69,7 @@ export const DEFAULT_DOUBTS: DoubtMessage[] = [
     timestamp: "১০ মিনিট আগে",
     hasAnswer: true,
     mentorName: "দীপু স্যার",
-    mentorRole: "BUET EEE • Dipu's Edu Lead",
+    mentorRole: "BUET EEE • Dipu Academy Lead",
     answer: "যখন অন্তর্ভুক্ত কোণ θ = ১২০° হয়, তখন R = 2P cos(120°/2) = 2P × (1/2) = P। অর্থাৎ লব্ধির মান যেকোনো একটি ভেক্টরের সমান হবে।",
   },
   {
@@ -79,7 +79,7 @@ export const DEFAULT_DOUBTS: DoubtMessage[] = [
     timestamp: "২৫ মিনিট আগে",
     hasAnswer: true,
     mentorName: "দীপু স্যার",
-    mentorRole: "BUET EEE • Dipu's Edu Lead",
+    mentorRole: "BUET EEE • Dipu Academy Lead",
     answer: "নদীর প্রস্থ বরাবর সোজা (θ = ৯০°) কোণে নৌকা চালাতে হবে। তখন প্রয়োজনীয় সময় t = d / v_b (যেখানে v_b নৌকার বেগ)।",
   },
 ];

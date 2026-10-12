@@ -34,19 +34,19 @@ function injectNavbarStyles() {
       100% { transform: translateX(0); }
     }
     @keyframes pulseRing {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.4); }
-      50% { box-shadow: 0 0 0 6px rgba(255, 107, 0, 0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0, 194, 255, 0.4); }
+      50% { box-shadow: 0 0 0 6px rgba(0, 194, 255, 0); }
     }
     @keyframes pulseOnline {
       0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.8); }
       50% { transform: scale(1.18); opacity: 0.95; box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
     }
     .dipu-nav-dropdown-item:hover {
-      background: rgba(255, 107, 0, 0.08) !important;
+      background: rgba(0, 194, 255, 0.08) !important;
       transform: translateX(4px);
     }
     .dipu-nav-link:hover {
-      color: #FF7A1A !important;
+      color: #00C2FF !important;
     }
     .dipu-drawer-card {
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
@@ -58,7 +58,7 @@ function injectNavbarStyles() {
       width: 4px;
     }
     .dipu-drawer-scroll::-webkit-scrollbar-thumb {
-      background: rgba(255, 107, 0, 0.25);
+      background: rgba(0, 194, 255, 0.25);
       border-radius: 9999px;
     }
     @media (max-width: 991px) {
@@ -123,7 +123,7 @@ export const Navbar: React.FC = () => {
   const [aiMessages, setAiMessages] = React.useState<Array<{ role: "user" | "ai"; text: string }>>([
     {
       role: "ai",
-      text: "স্বাগতম! আমি Dipu's Edu AI স্মার্ট একাডেমিক টিউটর। তোমার পদার্থবিজ্ঞান, রসায়ন, গণিত বা যেকোনো বিষয়ের কনসেপ্ট বা সমস্যার প্রশ্ন লিখো।",
+      text: "স্বাগতম! আমি Dipu Academy AI স্মার্ট একাডেমিক টিউটর। তোমার পদার্থবিজ্ঞান, রসায়ন, গণিত বা যেকোনো বিষয়ের কনসেপ্ট বা সমস্যার প্রশ্ন লিখো।",
     },
   ]);
 
@@ -339,24 +339,19 @@ export const Navbar: React.FC = () => {
               fontFamily: "'Inter', 'Hind Siliguri', sans-serif",
             }}
           >
-            <div
+            <img
+              src="/images/dipu-logo.png"
+              alt="Dipu Academy Logo"
               style={{
-                width: "40px",
-                height: "40px",
+                width: "42px",
+                height: "42px",
                 borderRadius: "11px",
-                background: "linear-gradient(135deg, #FF6B00 0%, #FF9500 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "#FFFFFF",
-                fontSize: "1.18rem",
-                boxShadow: "0 4px 16px rgba(255, 107, 0, 0.4)",
+                objectFit: "cover",
+                boxShadow: "0 4px 16px rgba(0, 194, 255, 0.4)",
+                border: "1.5px solid rgba(0, 194, 255, 0.25)",
                 flexShrink: 0,
-                transition: "transform 0.2s ease",
               }}
-            >
-              <i className="fas fa-graduation-cap" />
-            </div>
+            />
             <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
               <span
                 style={{
@@ -366,11 +361,11 @@ export const Navbar: React.FC = () => {
                   letterSpacing: "-0.01em",
                 }}
               >
-                Dipu's
+                Dipu
               </span>
               <span
                 style={{
-                  background: "linear-gradient(135deg, #FF6B00 0%, #FFA726 100%)",
+                  background: "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   fontWeight: 800,
@@ -378,7 +373,7 @@ export const Navbar: React.FC = () => {
                   letterSpacing: "-0.01em",
                 }}
               >
-                Edu
+                Academy
               </span>
             </div>
           </a>
@@ -393,7 +388,7 @@ export const Navbar: React.FC = () => {
                 style={{
                   background: "none",
                   border: "none",
-                  color: activeDropdown === "school" ? "#FF7A1A" : textColor,
+                  color: activeDropdown === "school" ? "#00C2FF" : textColor,
                   cursor: "pointer",
                   padding: "4px 8px",
                   borderRadius: "8px",
@@ -573,7 +568,7 @@ export const Navbar: React.FC = () => {
                       padding: "8px 12px",
                       borderRadius: "8px",
                       textDecoration: "none",
-                      color: "#FF7A1A",
+                      color: "#00C2FF",
                       fontSize: "0.9rem",
                       fontWeight: 700,
                       transition: "all 0.15s",
@@ -594,7 +589,7 @@ export const Navbar: React.FC = () => {
                 style={{
                   background: "none",
                   border: "none",
-                  color: activeDropdown === "ssc" ? "#FF7A1A" : textColor,
+                  color: activeDropdown === "ssc" ? "#00C2FF" : textColor,
                   fontSize: "0.95rem",
                   fontWeight: 600,
                   display: "flex",
@@ -661,8 +656,8 @@ export const Navbar: React.FC = () => {
                       style={{
                         padding: "2px 8px",
                         borderRadius: "6px",
-                        background: "rgba(255, 122, 26, 0.15)",
-                        color: "#FF7A1A",
+                        background: "rgba(0, 194, 255, 0.15)",
+                        color: "#00C2FF",
                         fontSize: "0.75rem",
                         fontWeight: 700,
                       }}
@@ -697,8 +692,8 @@ export const Navbar: React.FC = () => {
                       style={{
                         padding: "2px 8px",
                         borderRadius: "6px",
-                        background: "rgba(255, 122, 26, 0.15)",
-                        color: "#FF7A1A",
+                        background: "rgba(0, 194, 255, 0.15)",
+                        color: "#00C2FF",
                         fontSize: "0.75rem",
                         fontWeight: 700,
                       }}
@@ -725,7 +720,7 @@ export const Navbar: React.FC = () => {
                       padding: "8px 12px",
                       borderRadius: "8px",
                       textDecoration: "none",
-                      color: "#FF7A1A",
+                      color: "#00C2FF",
                       fontSize: "0.9rem",
                       fontWeight: 700,
                       transition: "all 0.15s",
@@ -746,7 +741,7 @@ export const Navbar: React.FC = () => {
                 style={{
                   background: "none",
                   border: "none",
-                  color: activeDropdown === "hsc" ? "#FF7A1A" : textColor,
+                  color: activeDropdown === "hsc" ? "#00C2FF" : textColor,
                   fontSize: "0.95rem",
                   fontWeight: 600,
                   display: "flex",
@@ -877,7 +872,7 @@ export const Navbar: React.FC = () => {
                       padding: "8px 12px",
                       borderRadius: "8px",
                       textDecoration: "none",
-                      color: "#FF7A1A",
+                      color: "#00C2FF",
                       fontSize: "0.9rem",
                       fontWeight: 700,
                       transition: "all 0.15s",
@@ -898,7 +893,7 @@ export const Navbar: React.FC = () => {
                   style={{
                     background: "none",
                     border: "none",
-                    color: activeDropdown === "shop" ? "#FF7A1A" : textColor,
+                    color: activeDropdown === "shop" ? "#00C2FF" : textColor,
                     fontSize: "0.95rem",
                     fontWeight: 600,
                     display: "flex",
@@ -911,9 +906,9 @@ export const Navbar: React.FC = () => {
                     transition: "color 0.15s",
                   }}
                   className="dipu-nav-link"
-                  title="Dipu's Edu বুকস্টোর ও শপ"
+                  title="Dipu Academy বুকস্টোর ও শপ"
                 >
-                  <i className="fas fa-store" style={{ fontSize: "0.85rem", color: "#FF7A1A" }} />
+                  <i className="fas fa-store" style={{ fontSize: "0.85rem", color: "#00C2FF" }} />
                   <span>Shop</span>
                 </a>
                 <button
@@ -922,7 +917,7 @@ export const Navbar: React.FC = () => {
                   style={{
                     background: "none",
                     border: "none",
-                    color: activeDropdown === "shop" ? "#FF7A1A" : textColor,
+                    color: activeDropdown === "shop" ? "#00C2FF" : textColor,
                     cursor: "pointer",
                     padding: "6px 8px 6px 2px",
                     borderRadius: "0 8px 8px 0",
@@ -963,8 +958,8 @@ export const Navbar: React.FC = () => {
                     href="/shop"
                     onClick={() => setActiveDropdown(null)}
                     style={{
-                      background: "linear-gradient(135deg, rgba(255, 122, 26, 0.12), rgba(255, 179, 71, 0.06))",
-                      border: "1px solid rgba(255, 122, 26, 0.25)",
+                      background: "linear-gradient(135deg, rgba(0, 194, 255, 0.12), rgba(255, 179, 71, 0.06))",
+                      border: "1px solid rgba(0, 194, 255, 0.25)",
                       borderRadius: "10px",
                       padding: "10px 14px",
                       marginBottom: "10px",
@@ -979,7 +974,7 @@ export const Navbar: React.FC = () => {
                         width: "32px",
                         height: "32px",
                         borderRadius: "8px",
-                        background: "linear-gradient(135deg, #FF7A1A, #FFB347)",
+                        background: "linear-gradient(135deg, #00C2FF, #0084FF)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -991,7 +986,7 @@ export const Navbar: React.FC = () => {
                       <i className="fas fa-store" />
                     </div>
                     <div>
-                      <div style={{ fontWeight: 800, fontSize: "0.9rem", color: "#FF7A1A" }}>Dipu's Edu Shop</div>
+                      <div style={{ fontWeight: 800, fontSize: "0.9rem", color: "#00C2FF" }}>Dipu Academy Shop</div>
                       <div style={{ fontSize: "0.72rem", color: isLight ? "#64748B" : "#94A3B8" }}>
                         {lang === "en" ? "Books, E-Books & Kits" : "বই, হ্যান্ডনোট ও স্টাডি কিট"}
                       </div>
@@ -1020,11 +1015,11 @@ export const Navbar: React.FC = () => {
                         width: "28px",
                         height: "28px",
                         borderRadius: "7px",
-                        background: "rgba(255, 122, 26, 0.12)",
+                        background: "rgba(0, 194, 255, 0.12)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        color: "#FF7A1A",
+                        color: "#00C2FF",
                         fontSize: "0.8rem",
                         flexShrink: 0,
                       }}
@@ -1097,12 +1092,12 @@ export const Navbar: React.FC = () => {
                       padding: "9px 12px",
                       borderRadius: "10px",
                       textDecoration: "none",
-                      background: "linear-gradient(135deg, #FF7A1A, #FF9533)",
+                      background: "linear-gradient(135deg, #00C2FF, #00C2FF)",
                       color: "#FFFFFF",
                       fontSize: "0.85rem",
                       fontWeight: 700,
                       transition: "all 0.15s",
-                      boxShadow: "0 4px 14px rgba(255, 122, 26, 0.35)",
+                      boxShadow: "0 4px 14px rgba(0, 194, 255, 0.35)",
                     }}
                     onClick={() => setActiveDropdown(null)}
                   >
@@ -1122,28 +1117,28 @@ export const Navbar: React.FC = () => {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
-                background: "linear-gradient(135deg, rgba(255, 122, 26, 0.14), rgba(168, 85, 247, 0.18))",
-                border: "1.5px solid rgba(255, 122, 26, 0.4)",
-                color: isLight ? "#D97706" : "#FFB347",
+                background: "linear-gradient(135deg, rgba(0, 194, 255, 0.14), rgba(168, 85, 247, 0.18))",
+                border: "1.5px solid rgba(0, 194, 255, 0.4)",
+                color: isLight ? "#D97706" : "#0084FF",
                 padding: "4px 14px",
                 borderRadius: "9999px",
                 cursor: "pointer",
                 textDecoration: "none",
                 transition: "all 0.2s ease",
-                boxShadow: "0 2px 10px rgba(255, 122, 26, 0.18)",
+                boxShadow: "0 2px 10px rgba(0, 194, 255, 0.18)",
               }}
               className="dipu-nav-link"
               title="Depus AI ৫ থেকে ১২ ক্লাসের সমাধান ও স্টাডি টিউটর"
             >
-              <i className="fas fa-wand-magic-sparkles" style={{ color: "#FF7A1A", fontSize: "0.9rem" }} />
+              <i className="fas fa-wand-magic-sparkles" style={{ color: "#00C2FF", fontSize: "0.9rem" }} />
               <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", lineHeight: 1.1 }}>
-                <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#FFB347" }}>dipusedo</span>
-                <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#FFB347" }}>ai</span>
+                <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#0084FF" }}>dipusedo</span>
+                <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#0084FF" }}>ai</span>
               </div>
               <span
                 style={{
                   fontSize: "0.65rem",
-                  background: "linear-gradient(135deg, #FF7A1A, #EA580C)",
+                  background: "linear-gradient(135deg, #00C2FF, #0056D2)",
                   color: "#FFFFFF",
                   padding: "1px 6px",
                   borderRadius: "9999px",
@@ -1208,14 +1203,14 @@ export const Navbar: React.FC = () => {
                 onClick={() => applyLanguage("bn")}
                 style={{
                   border: "none",
-                  background: lang === "bn" ? "linear-gradient(135deg, #FF6B00 0%, #FF9500 100%)" : "transparent",
+                  background: lang === "bn" ? "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)" : "transparent",
                   color: lang === "bn" ? "#FFFFFF" : isLight ? "#64748B" : "#94A3B8",
                   fontWeight: lang === "bn" ? 700 : 600,
                   fontSize: "0.8rem",
                   padding: "4px 11px",
                   borderRadius: "9999px",
                   cursor: "pointer",
-                  boxShadow: lang === "bn" ? "0 2px 8px rgba(255, 107, 0, 0.45)" : "none",
+                  boxShadow: lang === "bn" ? "0 2px 8px rgba(0, 194, 255, 0.45)" : "none",
                   transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
                   lineHeight: 1.2,
                 }}
@@ -1228,14 +1223,14 @@ export const Navbar: React.FC = () => {
                 onClick={() => applyLanguage("en")}
                 style={{
                   border: "none",
-                  background: lang === "en" ? "linear-gradient(135deg, #FF6B00 0%, #FF9500 100%)" : "transparent",
+                  background: lang === "en" ? "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)" : "transparent",
                   color: lang === "en" ? "#FFFFFF" : isLight ? "#64748B" : "#94A3B8",
                   fontWeight: lang === "en" ? 700 : 600,
                   fontSize: "0.8rem",
                   padding: "4px 11px",
                   borderRadius: "9999px",
                   cursor: "pointer",
-                  boxShadow: lang === "en" ? "0 2px 8px rgba(255, 107, 0, 0.45)" : "none",
+                  boxShadow: lang === "en" ? "0 2px 8px rgba(0, 194, 255, 0.45)" : "none",
                   transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
                   lineHeight: 1.2,
                 }}
@@ -1244,77 +1239,7 @@ export const Navbar: React.FC = () => {
               </button>
             </div>
 
-            {/* 2. Theme Capsule (🌙 Dark / ☀️ Light) ────────────────────────── */}
-            <div
-              role="group"
-              aria-label="Theme selector"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                background: isLight ? "rgba(241, 245, 249, 0.9)" : "rgba(255, 255, 255, 0.07)",
-                border: isLight ? "1px solid rgba(203, 213, 225, 0.85)" : "1px solid rgba(255, 255, 255, 0.12)",
-                borderRadius: "9999px",
-                padding: "3px",
-                gap: "2px",
-                userSelect: "none",
-                backdropFilter: "blur(12px)",
-                WebkitBackdropFilter: "blur(12px)",
-                boxShadow: isLight ? "inset 0 1px 2px rgba(0,0,0,0.03)" : "inset 0 1px 2px rgba(0,0,0,0.3)",
-                transition: "all 0.2s ease",
-              }}
-            >
-              {/* Moon Button (Dark Mode) */}
-              <button
-                type="button"
-                id="themeBtnDark"
-                onClick={() => applyTheme("dark")}
-                title="ডার্ক মোড (Dark Theme)"
-                style={{
-                  border: "none",
-                  background: theme === "dark" ? "linear-gradient(135deg, #FF6B00 0%, #FF9500 100%)" : "transparent",
-                  color: theme === "dark" ? "#FFFFFF" : isLight ? "#64748B" : "#94A3B8",
-                  width: "28px",
-                  height: "28px",
-                  borderRadius: "50%",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  fontSize: "0.85rem",
-                  boxShadow: theme === "dark" ? "0 2px 10px rgba(255, 107, 0, 0.5)" : "none",
-                  transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
-                  padding: 0,
-                }}
-              >
-                <i className="fas fa-moon" />
-              </button>
 
-              {/* Sun Button (Light Mode) */}
-              <button
-                type="button"
-                id="themeBtnLight"
-                onClick={() => applyTheme("light")}
-                title="সাদা থিম (Light Theme)"
-                style={{
-                  border: "none",
-                  background: theme === "light" ? "linear-gradient(135deg, #FF6B00 0%, #FF9500 100%)" : "transparent",
-                  color: theme === "light" ? "#FFFFFF" : isLight ? "#64748B" : "#94A3B8",
-                  width: "28px",
-                  height: "28px",
-                  borderRadius: "50%",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  fontSize: "0.88rem",
-                  boxShadow: theme === "light" ? "0 2px 10px rgba(255, 107, 0, 0.5)" : "none",
-                  transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
-                  padding: 0,
-                }}
-              >
-                <i className="fas fa-sun" />
-              </button>
-            </div>
 
             {/* 3. Profile Avatar Button */}
             <a
@@ -1333,8 +1258,8 @@ export const Navbar: React.FC = () => {
                 maxHeight: "38px",
                 borderRadius: "50%",
                 padding: "2px",
-                background: "linear-gradient(135deg, #FF6B00, #FFB347)",
-                boxShadow: "0 2px 12px rgba(255, 107, 0, 0.4)",
+                background: "linear-gradient(135deg, #0084FF, #0084FF)",
+                boxShadow: "0 2px 12px rgba(0, 194, 255, 0.4)",
                 cursor: "pointer",
                 textDecoration: "none",
                 flexShrink: 0,
@@ -1387,16 +1312,16 @@ export const Navbar: React.FC = () => {
               aria-label={isMobileOpen ? "Close menu" : "Open menu"}
               style={{
                 border: isMobileOpen
-                  ? "1.5px solid #FF7A1A"
+                  ? "1.5px solid #00C2FF"
                   : isLight
                   ? "1px solid rgba(0,0,0,0.08)"
                   : "1px solid rgba(255,255,255,0.12)",
                 background: isMobileOpen
-                  ? "linear-gradient(135deg, rgba(255, 107, 0, 0.18), rgba(255, 149, 0, 0.12))"
+                  ? "linear-gradient(135deg, rgba(0, 194, 255, 0.18), rgba(255, 149, 0, 0.12))"
                   : isLight
                   ? "rgba(0,0,0,0.05)"
                   : "rgba(255,255,255,0.08)",
-                color: isMobileOpen ? "#FF7A1A" : textColor,
+                color: isMobileOpen ? "#00C2FF" : textColor,
                 fontSize: "1.1rem",
                 width: "38px",
                 height: "38px",
@@ -1405,7 +1330,7 @@ export const Navbar: React.FC = () => {
                 justifyContent: "center",
                 cursor: "pointer",
                 transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
-                boxShadow: isMobileOpen ? "0 2px 10px rgba(255, 107, 0, 0.35)" : "none",
+                boxShadow: isMobileOpen ? "0 2px 10px rgba(0, 194, 255, 0.35)" : "none",
               }}
             >
               <i className={isMobileOpen ? "fas fa-times" : "fas fa-bars"} />
@@ -1662,10 +1587,10 @@ export const Navbar: React.FC = () => {
                 style={{
                   borderRadius: "14px",
                   background: mobileOpenDropdown === "ssc"
-                    ? isLight ? "rgba(255, 107, 0, 0.08)" : "rgba(255, 107, 0, 0.12)"
+                    ? isLight ? "rgba(0, 194, 255, 0.08)" : "rgba(0, 194, 255, 0.12)"
                     : isLight ? "#F8FAFC" : "rgba(255, 255, 255, 0.03)",
                   border: mobileOpenDropdown === "ssc"
-                    ? "1px solid rgba(255, 107, 0, 0.35)"
+                    ? "1px solid rgba(0, 194, 255, 0.35)"
                     : isLight ? "1px solid #E2E8F0" : "1px solid rgba(255, 255, 255, 0.06)",
                   overflow: "hidden",
                 }}
@@ -1691,13 +1616,13 @@ export const Navbar: React.FC = () => {
                         width: "34px",
                         height: "34px",
                         borderRadius: "10px",
-                        background: "linear-gradient(135deg, #FF6B00 0%, #FF9500 100%)",
+                        background: "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         color: "#FFFFFF",
                         fontSize: "0.95rem",
-                        boxShadow: "0 2px 8px rgba(255, 107, 0, 0.3)",
+                        boxShadow: "0 2px 8px rgba(0, 194, 255, 0.3)",
                         flexShrink: 0,
                       }}
                     >
@@ -1717,7 +1642,7 @@ export const Navbar: React.FC = () => {
                       width: "26px",
                       height: "26px",
                       borderRadius: "8px",
-                      background: mobileOpenDropdown === "ssc" ? "#FF6B00" : isLight ? "rgba(0,0,0,0.04)" : "rgba(255, 255, 255, 0.06)",
+                      background: mobileOpenDropdown === "ssc" ? "#0084FF" : isLight ? "rgba(0,0,0,0.04)" : "rgba(255, 255, 255, 0.06)",
                       color: mobileOpenDropdown === "ssc" ? "#FFFFFF" : isLight ? "#64748B" : "#94A3B8",
                       display: "flex",
                       alignItems: "center",
@@ -1737,7 +1662,7 @@ export const Navbar: React.FC = () => {
                       flexDirection: "column",
                       gap: "6px",
                       padding: "8px 12px 12px",
-                      borderTop: isLight ? "1px solid rgba(255, 107, 0, 0.15)" : "1px solid rgba(255, 107, 0, 0.2)",
+                      borderTop: isLight ? "1px solid rgba(0, 194, 255, 0.15)" : "1px solid rgba(0, 194, 255, 0.2)",
                     }}
                   >
                     <a
@@ -1762,7 +1687,7 @@ export const Navbar: React.FC = () => {
                       }}
                     >
                       <span>SSC '২৭ ব্যাচ</span>
-                      <span style={{ fontSize: "0.72rem", color: "#FF6B00", fontWeight: 700, background: "rgba(255, 107, 0, 0.12)", padding: "2px 8px", borderRadius: "9999px" }}>২০২৭</span>
+                      <span style={{ fontSize: "0.72rem", color: "#0084FF", fontWeight: 700, background: "rgba(0, 194, 255, 0.12)", padding: "2px 8px", borderRadius: "9999px" }}>২০২৭</span>
                     </a>
                     <a
                       href="#courses"
@@ -1786,7 +1711,7 @@ export const Navbar: React.FC = () => {
                       }}
                     >
                       <span>SSC '২৮ ব্যাচ</span>
-                      <span style={{ fontSize: "0.72rem", color: "#FF6B00", fontWeight: 700, background: "rgba(255, 107, 0, 0.12)", padding: "2px 8px", borderRadius: "9999px" }}>২০২৮</span>
+                      <span style={{ fontSize: "0.72rem", color: "#0084FF", fontWeight: 700, background: "rgba(0, 194, 255, 0.12)", padding: "2px 8px", borderRadius: "9999px" }}>২০২৮</span>
                     </a>
                     <a
                       href="#courses"
@@ -1802,13 +1727,13 @@ export const Navbar: React.FC = () => {
                         fontWeight: 700,
                         padding: "8px 12px",
                         borderRadius: "9px",
-                        background: "linear-gradient(135deg, #FF6B00 0%, #FF9500 100%)",
+                        background: "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         gap: "6px",
                         marginTop: "2px",
-                        boxShadow: "0 2px 8px rgba(255, 107, 0, 0.3)",
+                        boxShadow: "0 2px 8px rgba(0, 194, 255, 0.3)",
                       }}
                     >
                       <span>সকল এসএসসি কোর্স দেখুন</span>
@@ -2029,7 +1954,7 @@ export const Navbar: React.FC = () => {
                     </div>
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <span style={{ fontWeight: 700, fontSize: "0.92rem", color: textColor }}>
-                        Dipu's Edu Shop
+                        Dipu Academy Shop
                       </span>
                       <span style={{ fontSize: "0.72rem", color: isLight ? "#64748B" : "#94A3B8" }}>
                         বই, হ্যান্ডনোট ও স্টাডি কিট
@@ -2082,10 +2007,10 @@ export const Navbar: React.FC = () => {
                       }}
                     >
                       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <i className="fas fa-book" style={{ color: "#FF7A1A", fontSize: "0.85rem" }} />
+                        <i className="fas fa-book" style={{ color: "#00C2FF", fontSize: "0.85rem" }} />
                         <span>HSC ও SSC প্রিন্টেড বই</span>
                       </div>
-                      <span style={{ fontSize: "0.72rem", color: "#FF7A1A", fontWeight: 700, background: "rgba(255, 122, 26, 0.12)", padding: "2px 8px", borderRadius: "9999px" }}>ডেলিভারি</span>
+                      <span style={{ fontSize: "0.72rem", color: "#00C2FF", fontWeight: 700, background: "rgba(0, 194, 255, 0.12)", padding: "2px 8px", borderRadius: "9999px" }}>ডেলিভারি</span>
                     </a>
                     <a
                       href="/shop?category=ebook"
@@ -2147,18 +2072,18 @@ export const Navbar: React.FC = () => {
                   alignItems: "center",
                   justifyContent: "space-between",
                   background: isLight
-                    ? "linear-gradient(135deg, rgba(255, 107, 0, 0.08) 0%, rgba(147, 51, 234, 0.08) 100%)"
-                    : "linear-gradient(135deg, rgba(255, 107, 0, 0.14) 0%, rgba(147, 51, 234, 0.16) 50%, rgba(59, 130, 246, 0.1) 100%)",
+                    ? "linear-gradient(135deg, rgba(0, 194, 255, 0.08) 0%, rgba(147, 51, 234, 0.08) 100%)"
+                    : "linear-gradient(135deg, rgba(0, 194, 255, 0.14) 0%, rgba(147, 51, 234, 0.16) 50%, rgba(59, 130, 246, 0.1) 100%)",
                   border: isLight
-                    ? "1.5px solid rgba(255, 107, 0, 0.3)"
-                    : "1.5px solid rgba(255, 107, 0, 0.4)",
+                    ? "1.5px solid rgba(0, 194, 255, 0.3)"
+                    : "1.5px solid rgba(0, 194, 255, 0.4)",
                   borderRadius: "14px",
                   padding: "10px 12px",
                   cursor: "pointer",
                   textAlign: "left",
                   textDecoration: "none",
                   boxSizing: "border-box",
-                  boxShadow: "0 4px 16px rgba(255, 107, 0, 0.15)",
+                  boxShadow: "0 4px 16px rgba(0, 194, 255, 0.15)",
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -2167,13 +2092,13 @@ export const Navbar: React.FC = () => {
                       width: "34px",
                       height: "34px",
                       borderRadius: "10px",
-                      background: "linear-gradient(135deg, #FF6B00 0%, #9333EA 100%)",
+                      background: "linear-gradient(135deg, #0084FF 0%, #9333EA 100%)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       color: "#FFFFFF",
                       fontSize: "0.95rem",
-                      boxShadow: "0 2px 10px rgba(255, 107, 0, 0.35)",
+                      boxShadow: "0 2px 10px rgba(0, 194, 255, 0.35)",
                       flexShrink: 0,
                     }}
                   >
@@ -2184,7 +2109,7 @@ export const Navbar: React.FC = () => {
                       style={{
                         fontWeight: 800,
                         fontSize: "0.95rem",
-                        background: "linear-gradient(135deg, #FF6B00 0%, #FFA726 100%)",
+                        background: "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
                       }}
@@ -2201,17 +2126,17 @@ export const Navbar: React.FC = () => {
                     style={{
                       fontSize: "0.68rem",
                       fontWeight: 800,
-                      background: "linear-gradient(135deg, #FF6B00, #9333EA)",
+                      background: "linear-gradient(135deg, #0084FF, #9333EA)",
                       color: "#FFFFFF",
                       padding: "2px 8px",
                       borderRadius: "9999px",
-                      boxShadow: "0 2px 6px rgba(255, 107, 0, 0.35)",
+                      boxShadow: "0 2px 6px rgba(0, 194, 255, 0.35)",
                       letterSpacing: "0.5px",
                     }}
                   >
                     AI
                   </span>
-                  <i className="fas fa-chevron-right" style={{ fontSize: "0.75rem", color: "#FF7A1A" }} />
+                  <i className="fas fa-chevron-right" style={{ fontSize: "0.75rem", color: "#00C2FF" }} />
                 </div>
               </a>
 
@@ -2308,14 +2233,14 @@ export const Navbar: React.FC = () => {
                     onClick={() => applyLanguage("bn")}
                     style={{
                       border: "none",
-                      background: lang === "bn" ? "linear-gradient(135deg, #FF6B00 0%, #FF9500 100%)" : "transparent",
+                      background: lang === "bn" ? "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)" : "transparent",
                       color: lang === "bn" ? "#FFFFFF" : isLight ? "#64748B" : "#94A3B8",
                       fontWeight: 700,
                       fontSize: "0.78rem",
                       padding: "4px 10px",
                       borderRadius: "9999px",
                       cursor: "pointer",
-                      boxShadow: lang === "bn" ? "0 2px 8px rgba(255, 107, 0, 0.4)" : "none",
+                      boxShadow: lang === "bn" ? "0 2px 8px rgba(0, 194, 255, 0.4)" : "none",
                       transition: "all 0.18s ease",
                     }}
                   >
@@ -2326,14 +2251,14 @@ export const Navbar: React.FC = () => {
                     onClick={() => applyLanguage("en")}
                     style={{
                       border: "none",
-                      background: lang === "en" ? "linear-gradient(135deg, #FF6B00 0%, #FF9500 100%)" : "transparent",
+                      background: lang === "en" ? "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)" : "transparent",
                       color: lang === "en" ? "#FFFFFF" : isLight ? "#64748B" : "#94A3B8",
                       fontWeight: 700,
                       fontSize: "0.78rem",
                       padding: "4px 10px",
                       borderRadius: "9999px",
                       cursor: "pointer",
-                      boxShadow: lang === "en" ? "0 2px 8px rgba(255, 107, 0, 0.4)" : "none",
+                      boxShadow: lang === "en" ? "0 2px 8px rgba(0, 194, 255, 0.4)" : "none",
                       transition: "all 0.18s ease",
                     }}
                   >
@@ -2361,7 +2286,7 @@ export const Navbar: React.FC = () => {
                     onClick={() => applyTheme("dark")}
                     style={{
                       border: "none",
-                      background: theme === "dark" ? "linear-gradient(135deg, #FF6B00 0%, #FF9500 100%)" : "transparent",
+                      background: theme === "dark" ? "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)" : "transparent",
                       color: theme === "dark" ? "#FFFFFF" : isLight ? "#64748B" : "#94A3B8",
                       width: "28px",
                       height: "28px",
@@ -2371,7 +2296,7 @@ export const Navbar: React.FC = () => {
                       justifyContent: "center",
                       cursor: "pointer",
                       fontSize: "0.82rem",
-                      boxShadow: theme === "dark" ? "0 2px 8px rgba(255, 107, 0, 0.4)" : "none",
+                      boxShadow: theme === "dark" ? "0 2px 8px rgba(0, 194, 255, 0.4)" : "none",
                       transition: "all 0.18s ease",
                     }}
                   >
@@ -2382,7 +2307,7 @@ export const Navbar: React.FC = () => {
                     onClick={() => applyTheme("light")}
                     style={{
                       border: "none",
-                      background: theme === "light" ? "linear-gradient(135deg, #FF6B00 0%, #FF9500 100%)" : "transparent",
+                      background: theme === "light" ? "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)" : "transparent",
                       color: theme === "light" ? "#FFFFFF" : isLight ? "#64748B" : "#94A3B8",
                       width: "28px",
                       height: "28px",
@@ -2392,7 +2317,7 @@ export const Navbar: React.FC = () => {
                       justifyContent: "center",
                       cursor: "pointer",
                       fontSize: "0.85rem",
-                      boxShadow: theme === "light" ? "0 2px 8px rgba(255, 107, 0, 0.4)" : "none",
+                      boxShadow: theme === "light" ? "0 2px 8px rgba(0, 194, 255, 0.4)" : "none",
                       transition: "all 0.18s ease",
                     }}
                   >
@@ -2411,8 +2336,8 @@ export const Navbar: React.FC = () => {
                   gap: "10px",
                   padding: "12px 18px",
                   borderRadius: "14px",
-                  background: "linear-gradient(135deg, #FF6B00 0%, #FF9500 100%)",
-                  boxShadow: "0 6px 20px rgba(255, 107, 0, 0.4)",
+                  background: "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)",
+                  boxShadow: "0 6px 20px rgba(0, 194, 255, 0.4)",
                   color: "#FFFFFF",
                   textDecoration: "none",
                   fontWeight: 700,
@@ -2460,7 +2385,7 @@ export const Navbar: React.FC = () => {
           <div
             style={{
               background: isLight ? "#FFFFFF" : "#131722",
-              border: isLight ? "1px solid #E2E8F0" : "1px solid rgba(255, 122, 26, 0.25)",
+              border: isLight ? "1px solid #E2E8F0" : "1px solid rgba(0, 194, 255, 0.25)",
               borderRadius: "20px",
               width: "100%",
               maxWidth: "540px",
@@ -2477,7 +2402,7 @@ export const Navbar: React.FC = () => {
                 justifyContent: "space-between",
                 padding: "16px 20px",
                 borderBottom: isLight ? "1px solid #E2E8F0" : "1px solid rgba(255, 255, 255, 0.08)",
-                background: "linear-gradient(135deg, rgba(255, 122, 26, 0.12), rgba(168, 85, 247, 0.1))",
+                background: "linear-gradient(135deg, rgba(0, 194, 255, 0.12), rgba(168, 85, 247, 0.1))",
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -2486,7 +2411,7 @@ export const Navbar: React.FC = () => {
                     width: "36px",
                     height: "36px",
                     borderRadius: "10px",
-                    background: "linear-gradient(135deg, #FF7A1A, #EA580C)",
+                    background: "linear-gradient(135deg, #00C2FF, #0056D2)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -2499,7 +2424,7 @@ export const Navbar: React.FC = () => {
                 <div>
                   <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                     <h3 style={{ margin: 0, fontSize: "16px", fontWeight: 800, color: textColor }}>
-                      Dipu's Edu AI
+                      Dipu Academy AI
                     </h3>
                     <span
                       style={{
@@ -2545,7 +2470,7 @@ export const Navbar: React.FC = () => {
                         width: "28px",
                         height: "28px",
                         borderRadius: "50%",
-                        background: "linear-gradient(135deg, #FF7A1A, #FFB347)",
+                        background: "linear-gradient(135deg, #00C2FF, #0084FF)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -2565,7 +2490,7 @@ export const Navbar: React.FC = () => {
                       fontSize: "0.88rem",
                       lineHeight: "1.5",
                       background: msg.role === "user"
-                        ? "linear-gradient(135deg, #FF7A1A, #EA580C)"
+                        ? "linear-gradient(135deg, #00C2FF, #0056D2)"
                         : isLight
                         ? "#F1F5F9"
                         : "rgba(255, 255, 255, 0.05)",
@@ -2578,9 +2503,9 @@ export const Navbar: React.FC = () => {
                 </div>
               ))}
               {aiLoading && (
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "#FF7A1A", fontSize: "0.85rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "#00C2FF", fontSize: "0.85rem" }}>
                   <i className="fas fa-spinner fa-spin" />
-                  <span>Dipu's Edu AI উত্তর তৈরি করছে...</span>
+                  <span>Dipu Academy AI উত্তর তৈরি করছে...</span>
                 </div>
               )}
             </div>
@@ -2662,7 +2587,7 @@ export const Navbar: React.FC = () => {
                 type="submit"
                 disabled={aiLoading}
                 style={{
-                  background: "linear-gradient(135deg, #FF7A1A, #EA580C)",
+                  background: "linear-gradient(135deg, #00C2FF, #0056D2)",
                   border: "none",
                   color: "#FFFFFF",
                   padding: "10px 18px",
@@ -2720,7 +2645,7 @@ export const Navbar: React.FC = () => {
                 justifyContent: "space-between",
                 padding: "18px 22px",
                 borderBottom: isLight ? "1px solid #E2E8F0" : "1px solid rgba(255, 255, 255, 0.08)",
-                background: "linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(255, 122, 26, 0.08))",
+                background: "linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(0, 194, 255, 0.08))",
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -2744,7 +2669,7 @@ export const Navbar: React.FC = () => {
                     যোগাযোগ ও হেল্পলাইন
                   </h3>
                   <span style={{ fontSize: "11px", color: isLight ? "#64748B" : "#94A3B8" }}>
-                    Dipu's Edu ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র
+                    Dipu Academy ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র
                   </span>
                 </div>
               </div>
@@ -2835,7 +2760,7 @@ export const Navbar: React.FC = () => {
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                  <div style={{ width: "36px", height: "36px", borderRadius: "8px", background: "rgba(255, 122, 26, 0.15)", color: "#FF7A1A", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem" }}>
+                  <div style={{ width: "36px", height: "36px", borderRadius: "8px", background: "rgba(0, 194, 255, 0.15)", color: "#00C2FF", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem" }}>
                     <i className="fas fa-envelope" />
                   </div>
                   <div>
@@ -2843,7 +2768,7 @@ export const Navbar: React.FC = () => {
                     <div style={{ fontSize: "14px", fontWeight: 700, color: textColor }}>support@dipuedu.com</div>
                   </div>
                 </div>
-                <span style={{ fontSize: "12px", fontWeight: 700, color: "#FF7A1A", background: "rgba(255, 122, 26, 0.12)", padding: "4px 10px", borderRadius: "9999px" }}>
+                <span style={{ fontSize: "12px", fontWeight: 700, color: "#00C2FF", background: "rgba(0, 194, 255, 0.12)", padding: "4px 10px", borderRadius: "9999px" }}>
                   ইমেইল →
                 </span>
               </a>
@@ -2862,7 +2787,7 @@ export const Navbar: React.FC = () => {
                   gap: "8px",
                 }}
               >
-                <i className="fas fa-location-dot" style={{ color: "var(--dash-amber, #FFB347)" }} />
+                <i className="fas fa-location-dot" style={{ color: "var(--dash-amber, #0084FF)" }} />
                 <span>প্রধান কার্যালয়: শান্তি নগর, ঢাকা-১২১৭, বাংলাদেশ। (প্রতিদিন সকাল ৯টা - রাত ১১টা)</span>
               </div>
             </div>

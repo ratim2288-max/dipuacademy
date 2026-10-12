@@ -46,7 +46,7 @@
       "প্রতিটি ভুলের বিস্তারিত ব্যাখ্যাসহ সমাধান"
     ],
     "btnText": "ফ্রি প্র্যাকটিস শুরু করো →",
-    "btnHref": "/exam",
+    "btnHref": "#courses",
     "imageUrl": "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?q=80&w=900&auto=format&fit=crop",
     "accentColor": "#10B981"
   },
@@ -62,8 +62,8 @@
       "সাপ্তাহিক চ্যাম্পিয়নকে বিশেষ পুরস্কার",
       "পরীক্ষার আগের দিনের স্পেশাল মক টেস্ট ব্যাটেল"
     ],
-    "btnText": "লাইভ টেস্টে যোগ দাও →",
-    "btnHref": "/exam",
+    "btnText": "কোর্সসমূহে যোগ দাও →",
+    "btnHref": "#courses",
     "imageUrl": "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=900&auto=format&fit=crop",
     "accentColor": "#F59E0B"
   },

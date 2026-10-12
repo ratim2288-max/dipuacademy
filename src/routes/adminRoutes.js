@@ -539,7 +539,7 @@ let FEATURES_CONFIG = [
       "প্রতিটি ভুলের বিস্তারিত ব্যাখ্যাসহ সমাধান",
     ],
     btnText: "ফ্রি প্র্যাকটিস শুরু করো →",
-    btnHref: "/exam",
+    btnHref: "#courses",
     imageUrl: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?q=80&w=900&auto=format&fit=crop",
     accentColor: "#10B981",
   },
@@ -555,8 +555,8 @@ let FEATURES_CONFIG = [
       "সাপ্তাহিক চ্যাম্পিয়নকে বিশেষ পুরস্কার",
       "পরীক্ষার আগের দিনের স্পেশাল মক টেস্ট ব্যাটেল",
     ],
-    btnText: "লাইভ টেস্টে যোগ দাও →",
-    btnHref: "/exam",
+    btnText: "কোর্সসমূহে যোগ দাও →",
+    btnHref: "#courses",
     imageUrl: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=900&auto=format&fit=crop",
     accentColor: "#F59E0B",
   },
@@ -724,11 +724,103 @@ router.delete('/features/:id', (req, res) => {
   }
 });
 
+const DASHBOARD_CONFIG_FILE = path.join(__dirname, '../config/dashboard-config.json');
+
+function loadDashboardConfigFromFile() {
+  try {
+    if (fs.existsSync(DASHBOARD_CONFIG_FILE)) {
+      const data = fs.readFileSync(DASHBOARD_CONFIG_FILE, 'utf8');
+      return JSON.parse(data);
+    }
+  } catch (e) {
+    console.error('Failed to read dashboard-config.json:', e.message);
+  }
+  return null;
+}
+
+function saveDashboardConfigToFile(cfg) {
+  try {
+    fs.writeFileSync(DASHBOARD_CONFIG_FILE, JSON.stringify(cfg, null, 2), 'utf8');
+  } catch (e) {
+    console.error('Failed to persist dashboard-config.json:', e.message);
+  }
+}
+
+let DASHBOARD_CONFIG = loadDashboardConfigFromFile() || {
+  logo: {
+    image: "/images/dipu-logo.png",
+    name: "Dipu",
+    accent: "Academy",
+    tagline: "Learn • Grow • Build Your Future"
+  },
+  hero: {
+    title: "আজকের শেখা, আগামীর সফলতা।",
+    subtitle: "Dipu Academy - তোমার স্বপ্ন পূরণের জন্য সঠিক শিক্ষা, সঠিক পথ।",
+    image: "/images/dashboard-hero.jpg",
+    ctaText: "এখনই পড়া শুরু করুন →",
+    ctaLink: "#my-courses"
+  },
+  subjects: [
+    { id: "bangla", name: "বাংলা", desc: "ভাষা, সাহিত্য, রচনা", colorClass: "da-sub-blue", icon: "fas fa-book-open" },
+    { id: "english", name: "ইংরেজি", desc: "Reading, Grammar, Writing", colorClass: "da-sub-green", icon: "A", isLetter: true },
+    { id: "math", name: "গণিত", desc: "বীজগণিত, জ্যামিতি, সংখ্যা", colorClass: "da-sub-purple", icon: "fas fa-calculator" },
+    { id: "science", name: "বিজ্ঞান", desc: "পদার্থ, রসায়ন, জীববিজ্ঞান", colorClass: "da-sub-pink", icon: "fas fa-flask" },
+    { id: "history", name: "ইতিহাস", desc: "বাংলাদেশ ও বিশ্ব", colorClass: "da-sub-amber", icon: "fas fa-landmark" },
+    { id: "geography", name: "ভূগোল", desc: "ভৌগোলিক জ্ঞান, পরিবেশ", colorClass: "da-sub-teal", icon: "fas fa-earth-americas" }
+  ],
+  groups: [
+    { id: "g1", title: "Class 10 - Batch 2026", members: "12.5k সদস্য", colorClass: "da-grp-blue" },
+    { id: "g2", title: "SSC Preparation", members: "8.2k সদস্য", colorClass: "da-grp-green" },
+    { id: "g3", title: "Dipu Academy Community", members: "5.6k সদস্য", colorClass: "da-grp-purple" },
+    { id: "g4", title: "Study Support", members: "3.4k সদস্য", colorClass: "da-grp-teal" }
+  ],
+  promo: {
+    image: "/images/sidebar-books.jpg",
+    title: "চলো, আজকে আরো একটু শিখি!",
+    subtitle: "তোমার স্বপ্ন তোমার হাতেই",
+    badge: "Dipu Academy 💙"
+  }
+};
+
+// GET /api/admin/dashboard-config
+router.get('/dashboard-config', (req, res) => {
+  return res.status(200).json({ success: true, config: DASHBOARD_CONFIG });
+});
+
+// POST /api/admin/dashboard-config
+router.post('/dashboard-config', (req, res) => {
+  try {
+    const updated = req.body;
+    if (!updated || typeof updated !== 'object') {
+      return res.status(400).json({ success: false, message: 'সঠিক কনফিগারেশন ডেটা প্রদান করুন।' });
+    }
+    DASHBOARD_CONFIG = {
+      ...DASHBOARD_CONFIG,
+      ...updated,
+      logo: { ...DASHBOARD_CONFIG.logo, ...(updated.logo || {}) },
+      hero: { ...DASHBOARD_CONFIG.hero, ...(updated.hero || {}) },
+      promo: { ...DASHBOARD_CONFIG.promo, ...(updated.promo || {}) },
+      subjects: Array.isArray(updated.subjects) ? updated.subjects : DASHBOARD_CONFIG.subjects,
+      groups: Array.isArray(updated.groups) ? updated.groups : DASHBOARD_CONFIG.groups,
+    };
+    saveDashboardConfigToFile(DASHBOARD_CONFIG);
+    return res.status(200).json({
+      success: true,
+      message: 'ইউজার ড্যাশবোর্ড কনফিগারেশন সফলভাবে সংরক্ষিত হয়েছে!',
+      config: DASHBOARD_CONFIG
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'কনফিগারেশন সংরক্ষণ ব্যর্থ হয়েছে।', error: err.message });
+  }
+});
+
 router.IN_MEMORY_REVIEWS = IN_MEMORY_REVIEWS;
 router.HERO_VIDEO_CONFIG = HERO_VIDEO_CONFIG;
 router.SOCIAL_LINKS_CONFIG = SOCIAL_LINKS_CONFIG;
 router.SITE_STATS_CONFIG = SITE_STATS_CONFIG;
 router.FEATURES_CONFIG = FEATURES_CONFIG;
+router.DASHBOARD_CONFIG = DASHBOARD_CONFIG;
 router.saveFeaturesToFile = saveFeaturesToFile;
+router.saveDashboardConfigToFile = saveDashboardConfigToFile;
 module.exports = router;
 

@@ -1,0 +1,92 @@
+{
+  "logo": {
+    "image": "/images/dipu-logo.png",
+    "name": "Dipu",
+    "accent": "Academy",
+    "tagline": "Learn • Grow • Build Your Future"
+  },
+  "hero": {
+    "title": "আজকের শেখা, আগামীর সফলতা।",
+    "subtitle": "Dipu Academy - তোমার স্বপ্ন পূরণের জন্য সঠিক শিক্ষা, সঠিক পথ।",
+    "image": "/images/dashboard-hero.jpg",
+    "ctaText": "এখনই পড়া শুরু করুন →",
+    "ctaLink": "#my-courses"
+  },
+  "subjects": [
+    {
+      "id": "bangla",
+      "name": "বাংলা",
+      "desc": "ভাষা, সাহিত্য, রচনা",
+      "colorClass": "da-sub-blue",
+      "icon": "fas fa-book-open"
+    },
+    {
+      "id": "english",
+      "name": "ইংরেজি",
+      "desc": "Reading, Grammar, Writing",
+      "colorClass": "da-sub-green",
+      "icon": "A",
+      "isLetter": true
+    },
+    {
+      "id": "math",
+      "name": "গণিত",
+      "desc": "বীজগণিত, জ্যামিতি, সংখ্যা",
+      "colorClass": "da-sub-purple",
+      "icon": "fas fa-calculator"
+    },
+    {
+      "id": "science",
+      "name": "বিজ্ঞান",
+      "desc": "পদার্থ, রসায়ন, জীববিজ্ঞান",
+      "colorClass": "da-sub-pink",
+      "icon": "fas fa-flask"
+    },
+    {
+      "id": "history",
+      "name": "ইতিহাস",
+      "desc": "বাংলাদেশ ও বিশ্ব",
+      "colorClass": "da-sub-amber",
+      "icon": "fas fa-landmark"
+    },
+    {
+      "id": "geography",
+      "name": "ভূগোল",
+      "desc": "ভৌগোলিক জ্ঞান, পরিবেশ",
+      "colorClass": "da-sub-teal",
+      "icon": "fas fa-earth-americas"
+    }
+  ],
+  "groups": [
+    {
+      "id": "g1",
+      "title": "Class 10 - Batch 2026",
+      "members": "12.5k সদস্য",
+      "colorClass": "da-grp-blue"
+    },
+    {
+      "id": "g2",
+      "title": "SSC Preparation",
+      "members": "8.2k সদস্য",
+      "colorClass": "da-grp-green"
+    },
+    {
+      "id": "g3",
+      "title": "Dipu Academy Community",
+      "members": "5.6k সদস্য",
+      "colorClass": "da-grp-purple"
+    },
+    {
+      "id": "g4",
+      "title": "Study Support",
+      "members": "3.4k সদস্য",
+      "colorClass": "da-grp-teal"
+    }
+  ],
+  "promo": {
+    "image": "/images/sidebar-books.jpg",
+    "title": "চলো, আজকে আরো একটু শিখি!",
+    "subtitle": "তোমার স্বপ্ন তোমার হাতেই",
+    "badge": "Dipu Academy 💙"
+  }
+}

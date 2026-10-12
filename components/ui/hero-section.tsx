@@ -10,13 +10,24 @@ function injectHeroKeyframes() {
   const style = document.createElement("style");
   style.id = id;
   style.textContent = `
-    @keyframes heroWordFadeIn {
-      0% { opacity: 0; transform: translateY(12px); }
-      100% { opacity: 1; transform: translateY(0); }
+    /* Normal smooth fade for texts - no falling down */
+    @keyframes heroNormalFade {
+      0% { opacity: 0; transform: scale(0.985); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    /* Side entrance from left (একপাশ) */
+    @keyframes heroSlideLeft {
+      0% { opacity: 0; transform: translateX(-35px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+    /* Side entrance from right (পরের পাশ) */
+    @keyframes heroSlideRight {
+      0% { opacity: 0; transform: translateX(35px); }
+      100% { opacity: 1; transform: translateX(0); }
     }
     @keyframes heroTextFloat {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
+      50% { transform: translateY(-3px); }
     }
     @keyframes heroGradientShimmer {
       0% { background-position: 0% 50%; }
@@ -25,15 +36,27 @@ function injectHeroKeyframes() {
     }
     @keyframes heroFloatBadge {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
+      50% { transform: translateY(-3px); }
     }
     @keyframes heroPulseGlow {
-      0%, 100% { box-shadow: 0 0 15px rgba(255, 122, 26, 0.25); }
-      50% { box-shadow: 0 0 25px rgba(255, 122, 26, 0.55); }
+      0%, 100% { box-shadow: 0 0 15px rgba(0, 194, 255, 0.25); }
+      50% { box-shadow: 0 0 25px rgba(0, 194, 255, 0.55); }
     }
     @keyframes heroStatCounter {
-      from { opacity: 0; transform: scale(0.9); }
+      from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes heroPulsePlay {
+      0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(255, 0, 0, 0.55), 0 0 35px rgba(255, 0, 0, 0.35); }
+      50% { transform: scale(1.06); box-shadow: 0 15px 40px rgba(255, 0, 0, 0.75), 0 0 45px rgba(255, 0, 0, 0.55); }
+    }
+    .hero-thumb-box-clickable:hover .hero-thumb-img {
+      transform: scale(1.035) !important;
+      filter: brightness(1.05);
+    }
+    .hero-thumb-box-clickable:hover .hero-play-btn-pulse {
+      transform: scale(1.12) !important;
+      box-shadow: 0 16px 45px rgba(255, 0, 0, 0.8), 0 0 50px rgba(255, 0, 0, 0.6) !important;
     }
   `;
   document.head.appendChild(style);
@@ -59,7 +82,7 @@ export const AnimatedText: React.FC<{
           style={{
             display: "inline-block",
             marginRight: "0.28em",
-            animation: `heroWordFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both`,
+            animation: `heroNormalFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) both`,
             animationDelay: `${idx * delayPerWord}ms`,
           }}
         >
@@ -113,7 +136,7 @@ export const DEFAULT_HERO_CONTENT: HeroContent = {
       number: "৩০ লক্ষ+",
       label: "সক্রিয় শিক্ষার্থী",
       icon: "fas fa-users",
-      color: "#FF7A1A",
+      color: "#00C2FF",
     },
     {
       id: "mentors",
@@ -159,7 +182,7 @@ export const DEFAULT_HERO_CONTENT_EN: HeroContent = {
       number: "3M+",
       label: "Active Learners",
       icon: "fas fa-users",
-      color: "#FF7A1A",
+      color: "#00C2FF",
     },
     {
       id: "mentors",
@@ -240,7 +263,7 @@ export const HeroSection: React.FC = () => {
           transform: "translateX(-50%)",
           width: "700px",
           height: "400px",
-          background: "radial-gradient(circle, rgba(255, 122, 26, 0.12) 0%, rgba(139, 92, 246, 0.05) 50%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(0, 194, 255, 0.12) 0%, rgba(139, 92, 246, 0.05) 50%, transparent 70%)",
           filter: "blur(60px)",
           pointerEvents: "none",
           zIndex: 0,
@@ -259,6 +282,8 @@ export const HeroSection: React.FC = () => {
           textAlign: "center",
         }}
       >
+
+
         {/* Dynamic Animated Headline */}
         <h1
           className="hero-main-title no-reveal no-shimmer"
@@ -267,19 +292,19 @@ export const HeroSection: React.FC = () => {
             fontWeight: 800,
             lineHeight: 1.28,
             color: "#FFFFFF",
-            margin: "0.5rem 0 1.5rem",
+            margin: "0.2rem 0 1.5rem",
             maxWidth: "980px",
             letterSpacing: "-0.02em",
             textAlign: "center",
           }}
         >
-          {/* Main White Title with Animated Floating Entrance */}
+          {/* Main White Title with Normal Smooth Entrance */}
           <span
             style={{
               display: "block",
               color: "#FFFFFF",
               marginBottom: "8px",
-              animation: "heroWordFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both",
+              animation: "heroNormalFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) both",
             }}
           >
             {content.headlineMain || "একাডেমিক থেকে এডমিশন —"}
@@ -290,15 +315,15 @@ export const HeroSection: React.FC = () => {
             className="hero-gradient-text"
             style={{
               display: "inline-block",
-              background: "linear-gradient(135deg, #FFB347 0%, #FF7A1A 50%, #FF5500 100%)",
+              background: "linear-gradient(135deg, #0084FF 0%, #00C2FF 50%, #0070F3 100%)",
               backgroundSize: "200% auto",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              color: "#FF7A1A",
+              color: "#00C2FF",
               animation:
-                "heroWordFadeIn 0.8s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both, heroTextFloat 4s ease-in-out 0.8s infinite, heroGradientShimmer 5s ease infinite",
-              filter: "drop-shadow(0 4px 20px rgba(255, 122, 26, 0.4))",
+                "heroNormalFade 0.65s 0.08s cubic-bezier(0.16, 1, 0.3, 1) both, heroTextFloat 4s ease-in-out 0.8s infinite, heroGradientShimmer 5s ease infinite",
+              filter: "drop-shadow(0 4px 20px rgba(0, 194, 255, 0.4))",
             }}
           >
             {content.headlineGradient || "প্রস্তুতি নাও দেশ সেরা শিক্ষক ও প্রযুক্তির সাথে।"}
@@ -313,13 +338,13 @@ export const HeroSection: React.FC = () => {
             color: "#CBD5E1",
             maxWidth: "780px",
             margin: "0 0 2.2rem",
-            animation: "heroWordFadeIn 0.8s 0.25s cubic-bezier(0.16, 1, 0.3, 1) both",
+            animation: "heroNormalFade 0.65s 0.14s cubic-bezier(0.16, 1, 0.3, 1) both",
           }}
         >
           {content.subtext}
         </p>
 
-        {/* Rounded CTA Button Group */}
+        {/* Rounded CTA Button Group (Side Entrances) */}
         <div
           style={{
             display: "flex",
@@ -330,6 +355,7 @@ export const HeroSection: React.FC = () => {
             marginBottom: "3.2rem",
           }}
         >
+          {/* Primary CTA (Slides in from Left) */}
           <a
             href={content.primaryCtaLink}
             onClick={(e) => {
@@ -350,29 +376,39 @@ export const HeroSection: React.FC = () => {
               gap: "10px",
               padding: "14px 34px",
               borderRadius: "999px",
-              background: "linear-gradient(135deg, #FF7A1A 0%, #FF5500 100%)",
+              background: "linear-gradient(135deg, #00C2FF 0%, #0070F3 100%)",
               color: "#FFFFFF",
               fontSize: "1rem",
               fontWeight: 800,
               textDecoration: "none",
-              boxShadow: "0 8px 30px rgba(255, 122, 26, 0.4)",
+              boxShadow: "0 8px 30px rgba(0, 194, 255, 0.4)",
               transition: "all 0.25s ease",
+              animation: "heroSlideLeft 0.6s 0.18s cubic-bezier(0.16, 1, 0.3, 1) both",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-2px) scale(1.03)";
-              e.currentTarget.style.boxShadow = "0 12px 35px rgba(255, 122, 26, 0.6)";
+              e.currentTarget.style.boxShadow = "0 12px 35px rgba(0, 194, 255, 0.6)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0) scale(1)";
-              e.currentTarget.style.boxShadow = "0 8px 30px rgba(255, 122, 26, 0.4)";
+              e.currentTarget.style.boxShadow = "0 8px 30px rgba(0, 194, 255, 0.4)";
             }}
           >
             <span>{content.primaryCtaText}</span>
             <i className="fas fa-arrow-right" style={{ fontSize: "12px" }} />
           </a>
 
+          {/* Secondary CTA (Slides in from Right) */}
           <a
-            href={content.secondaryCtaLink}
+            href="javascript:void(0)"
+            onClick={(e) => {
+              e.preventDefault();
+              setIsVideoPlaying(true);
+              const videoElem = document.querySelector(".hero-video-box");
+              if (videoElem) {
+                videoElem.scrollIntoView({ behavior: "smooth", block: "center" });
+              }
+            }}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -385,8 +421,10 @@ export const HeroSection: React.FC = () => {
               fontSize: "1rem",
               fontWeight: 700,
               textDecoration: "none",
+              cursor: "pointer",
               transition: "all 0.25s ease",
               backdropFilter: "blur(10px)",
+              animation: "heroSlideRight 0.6s 0.22s cubic-bezier(0.16, 1, 0.3, 1) both",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "rgba(255, 255, 255, 0.12)";
@@ -399,12 +437,12 @@ export const HeroSection: React.FC = () => {
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
-            <i className="fas fa-play" style={{ color: "#FF7A1A", fontSize: "0.85rem" }} />
+            <i className="fas fa-play" style={{ color: "#00C2FF", fontSize: "0.85rem" }} />
             <span>{content.secondaryCtaText}</span>
           </a>
         </div>
 
-        {/* 4 Rounded Stat Cards with Smooth Hover Effects */}
+        {/* 4 Rounded Stat Cards: Alternating Left and Right sides */}
         <div
           style={{
             display: "grid",
@@ -415,89 +453,102 @@ export const HeroSection: React.FC = () => {
             marginBottom: "3.5rem",
           }}
         >
-          {content.stats.map((stat) => (
-            <div
-              key={stat.id}
-              style={{
-                background: "linear-gradient(145deg, rgba(25, 28, 38, 0.85) 0%, rgba(15, 17, 23, 0.95) 100%)",
-                border: "1px solid rgba(255, 255, 255, 0.08)",
-                borderRadius: "20px",
-                padding: "20px 18px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                textAlign: "center",
-                position: "relative",
-                overflow: "hidden",
-                transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-                backdropFilter: "blur(12px)",
-                boxShadow: "0 10px 25px rgba(0, 0, 0, 0.3)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-5px)";
-                e.currentTarget.style.borderColor = `${stat.color}66`;
-                e.currentTarget.style.boxShadow = `0 14px 30px rgba(0, 0, 0, 0.5), 0 0 20px ${stat.color}25`;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.08)";
-                e.currentTarget.style.boxShadow = "0 10px 25px rgba(0, 0, 0, 0.3)";
-              }}
-            >
-              {/* Rounded Icon Dot */}
+          {content.stats.map((stat, idx) => {
+            const isEven = idx % 2 === 0;
+            const anim = isEven ? "heroSlideLeft" : "heroSlideRight";
+            const delay = `${0.22 + idx * 0.08}s`;
+
+            return (
               <div
+                key={stat.id}
+                className="hero-stat-box stat-card"
                 style={{
-                  width: "42px",
-                  height: "42px",
-                  borderRadius: "50%",
-                  background: `${stat.color}18`,
-                  border: `1.5px solid ${stat.color}44`,
+                  background: "linear-gradient(145deg, rgba(25, 28, 38, 0.85) 0%, rgba(15, 17, 23, 0.95) 100%)",
+                  border: "1px solid rgba(255, 255, 255, 0.08)",
+                  borderRadius: "20px",
+                  padding: "20px 18px",
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
-                  justifyContent: "center",
-                  color: stat.color,
-                  fontSize: "1.1rem",
-                  marginBottom: "12px",
+                  textAlign: "center",
+                  position: "relative",
+                  overflow: "hidden",
+                  transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+                  backdropFilter: "blur(12px)",
+                  boxShadow: "0 10px 25px rgba(0, 0, 0, 0.3)",
+                  animation: `${anim} 0.65s ${delay} cubic-bezier(0.16, 1, 0.3, 1) both`,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-5px)";
+                  e.currentTarget.style.borderColor = `${stat.color}66`;
+                  e.currentTarget.style.boxShadow = `0 14px 30px rgba(0, 0, 0, 0.5), 0 0 20px ${stat.color}25`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.08)";
+                  e.currentTarget.style.boxShadow = "0 10px 25px rgba(0, 0, 0, 0.3)";
                 }}
               >
-                <i className={stat.icon} />
-              </div>
+                {/* Rounded Icon Dot */}
+                <div
+                  style={{
+                    width: "42px",
+                    height: "42px",
+                    borderRadius: "50%",
+                    background: `${stat.color}18`,
+                    border: `1.5px solid ${stat.color}44`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: stat.color,
+                    fontSize: "1.1rem",
+                    marginBottom: "12px",
+                  }}
+                >
+                  <i className={stat.icon} />
+                </div>
 
-              <div
-                style={{
-                  fontSize: "1.75rem",
-                  fontWeight: 800,
-                  color: "#FFFFFF",
-                  fontFamily: "'Outfit', 'Segoe UI', sans-serif",
-                  lineHeight: 1.15,
-                  marginBottom: "6px",
-                  letterSpacing: "-0.01em",
-                }}
-              >
-                {stat.number}
-              </div>
+                <div
+                  style={{
+                    fontSize: "1.75rem",
+                    fontWeight: 800,
+                    color: "#FFFFFF",
+                    fontFamily: "'Outfit', 'Segoe UI', sans-serif",
+                    lineHeight: 1.15,
+                    marginBottom: "6px",
+                    letterSpacing: "-0.01em",
+                  }}
+                >
+                  {stat.number}
+                </div>
 
-              <div
-                style={{
-                  fontSize: "0.85rem",
-                  color: "#94A3B8",
-                  fontWeight: 600,
-                }}
-              >
-                {stat.label}
+                <div
+                  style={{
+                    fontSize: "0.85rem",
+                    color: "#94A3B8",
+                    fontWeight: 600,
+                  }}
+                >
+                  {stat.label}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        {/* Featured Video Player Mockup with Rounded 24px Border */}
+        {/* =========================================================================
+            FEATURED VIDEO (2-Box Flow: Box 1 Thumbnail Card -> Box 2 Active Video Player)
+            ========================================================================= */}
         <div
+          className="hero-video-box interactive-box"
           style={{
             width: "100%",
             maxWidth: "960px",
             position: "relative",
+            animation: "heroSlideRight 0.7s 0.32s cubic-bezier(0.16, 1, 0.3, 1) both",
           }}
         >
+          {/* Outer Card Shell with 16:9 Aspect Ratio */}
           <div
             style={{
               position: "relative",
@@ -506,22 +557,384 @@ export const HeroSection: React.FC = () => {
               borderRadius: "24px",
               overflow: "hidden",
               background: "#07080D",
-              boxShadow: "0 25px 70px rgba(0,0,0,0.85), 0 0 35px rgba(255, 122, 26, 0.15)",
-              border: "1.5px solid rgba(255, 255, 255, 0.12)",
+              boxShadow: isVideoPlaying
+                ? "0 25px 75px rgba(0,0,0,0.95), 0 0 45px rgba(0, 194, 255, 0.28)"
+                : "0 25px 70px rgba(0,0,0,0.85), 0 0 35px rgba(0, 194, 255, 0.16)",
+              border: isVideoPlaying
+                ? "1.5px solid rgba(0, 194, 255, 0.5)"
+                : "1.5px solid rgba(255, 255, 255, 0.14)",
+              transition: "all 0.35s ease",
             }}
           >
-            <div style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
-              <iframe
-                src={`https://www.youtube.com/embed/${content.videoYoutubeId}?rel=0&modestbranding=1&autoplay=${
-                  isVideoPlaying ? "1" : "0"
-                }`}
-                title={content.videoTitle}
-                style={{ width: "100%", height: "100%", border: 0 }}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              />
-            </div>
+            {!isVideoPlaying ? (
+              /* ===================================================================
+                 BOX 1: THUMBNAIL / PREVIEW BOX (চাপ দিলে Box 2 তে ভিডিও চালু হবে)
+                 =================================================================== */
+              <div
+                onClick={() => setIsVideoPlaying(true)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setIsVideoPlaying(true);
+                  }
+                }}
+                title="চাপ দিয়ে সম্পূর্ণ ফ্রি ক্লাসটি দেখুন"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  cursor: "pointer",
+                  userSelect: "none",
+                  overflow: "hidden",
+                }}
+                className="hero-thumb-box-clickable"
+              >
+                {/* Background Thumbnail Image (Saved high-res copy with CDN fallback) */}
+                <img
+                  src="/images/hero-video-thumb.jpg"
+                  alt={content.videoTitle}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${content.videoYoutubeId}/maxresdefault.jpg`;
+                  }}
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    objectPosition: "center",
+                    transform: "scale(1.01)",
+                    transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease",
+                  }}
+                  className="hero-thumb-img"
+                />
+
+                {/* Dark Cinematic Vignette & Gradient Overlays */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background:
+                      "linear-gradient(180deg, rgba(7, 8, 13, 0.78) 0%, rgba(7, 8, 13, 0.1) 32%, rgba(7, 8, 13, 0.22) 65%, rgba(7, 8, 13, 0.9) 100%)",
+                    transition: "opacity 0.3s ease",
+                  }}
+                />
+
+                {/* TOP HEADER: Channel Logo + Video Title */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "14px",
+                    left: "16px",
+                    right: "16px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    zIndex: 2,
+                    textShadow: "0 2px 8px rgba(0,0,0,0.85)",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "38px",
+                      height: "38px",
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                      border: "1.5px solid rgba(255, 255, 255, 0.3)",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.6)",
+                      flexShrink: 0,
+                      background: "#111420",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <img
+                      src="/images/dipu-logo.png"
+                      alt="Dipu Academy"
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                  </div>
+                  <div style={{ textAlign: "left", overflow: "hidden" }}>
+                    <div
+                      style={{
+                        color: "#FFFFFF",
+                        fontSize: "clamp(0.85rem, 1.4vw, 1.05rem)",
+                        fontWeight: 700,
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        lineHeight: 1.3,
+                      }}
+                    >
+                      গণিতে ৭টি অধ্যায় করলেই A+ কনফার্ম || টেস্ট ও বার্ষিক পরীক্ষা || SSC-2027/28 🔥
+                    </div>
+                    <div
+                      style={{
+                        color: "rgba(255, 255, 255, 0.75)",
+                        fontSize: "12px",
+                        fontWeight: 500,
+                      }}
+                    >
+                      Rifat Academy • Dipu Academy এক্সক্লুসিভ স্পেশাল ক্লাস
+                    </div>
+                  </div>
+                </div>
+
+                {/* CENTER: YouTube-Style Red Play Button + Floating "চাপ দিন" Callout */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "14px",
+                    zIndex: 3,
+                  }}
+                >
+                  {/* YouTube Red Play Button */}
+                  <div
+                    className="hero-play-btn-pulse"
+                    style={{
+                      width: "74px",
+                      height: "50px",
+                      borderRadius: "14px",
+                      background: "linear-gradient(135deg, #FF0000 0%, #CC0000 100%)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      boxShadow: "0 10px 30px rgba(255, 0, 0, 0.55), 0 0 35px rgba(255, 0, 0, 0.35)",
+                      transition: "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease",
+                      animation: "heroPulsePlay 2.5s infinite ease-in-out",
+                    }}
+                  >
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="#FFFFFF"
+                      style={{ marginLeft: "3px" }}
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+
+                  {/* Pulsing Interactive Glow Pill */}
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      padding: "8px 20px",
+                      borderRadius: "999px",
+                      background: "rgba(10, 13, 20, 0.88)",
+                      border: "1.5px solid rgba(0, 194, 255, 0.55)",
+                      color: "#FFFFFF",
+                      fontSize: "0.85rem",
+                      fontWeight: 700,
+                      backdropFilter: "blur(12px)",
+                      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 194, 255, 0.3)",
+                      transition: "all 0.25s ease",
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: "8px",
+                        height: "8px",
+                        borderRadius: "50%",
+                        background: "#00C2FF",
+                        boxShadow: "0 0 10px #00C2FF",
+                        display: "inline-block",
+                      }}
+                    />
+                    <span>চাপ দিন — সম্পূর্ণ ক্লাসটি দেখুন</span>
+                  </div>
+                </div>
+
+                {/* BOTTOM BAR: YouTube-style footer controls */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "14px",
+                    left: "18px",
+                    right: "18px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    zIndex: 2,
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <div
+                      style={{
+                        width: "32px",
+                        height: "32px",
+                        borderRadius: "50%",
+                        background: "rgba(0, 0, 0, 0.6)",
+                        backdropFilter: "blur(6px)",
+                        border: "1px solid rgba(255, 255, 255, 0.15)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#FFFFFF",
+                        fontSize: "12px",
+                      }}
+                    >
+                      <i className="fas fa-share-nodes" />
+                    </div>
+                    <div
+                      style={{
+                        width: "32px",
+                        height: "32px",
+                        borderRadius: "50%",
+                        background: "rgba(0, 0, 0, 0.6)",
+                        backdropFilter: "blur(6px)",
+                        border: "1px solid rgba(255, 255, 255, 0.15)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#FFFFFF",
+                        fontSize: "12px",
+                      }}
+                    >
+                      <i className="far fa-clock" />
+                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      padding: "6px 14px",
+                      borderRadius: "6px",
+                      background: "rgba(0, 0, 0, 0.7)",
+                      border: "1px solid rgba(255, 255, 255, 0.12)",
+                      color: "#FFFFFF",
+                      fontSize: "11px",
+                      fontWeight: 600,
+                      backdropFilter: "blur(6px)",
+                    }}
+                  >
+                    <span>Watch on</span>
+                    <i className="fab fa-youtube" style={{ color: "#FF0000", fontSize: "14px" }} />
+                    <span style={{ fontWeight: 800 }}>YouTube</span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              /* ===================================================================
+                 BOX 2: ACTIVE LIVE VIDEO PLAYER (চাপ দেওয়ার পর ভিডিও চলবে)
+                 =================================================================== */
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  animation: "heroNormalFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) both",
+                }}
+              >
+                {/* Floating Top Controls inside Box 2 */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "14px",
+                    left: "14px",
+                    right: "14px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    zIndex: 10,
+                    pointerEvents: "auto",
+                  }}
+                >
+                  {/* Status Indicator */}
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      padding: "6px 14px",
+                      borderRadius: "999px",
+                      background: "rgba(7, 8, 13, 0.88)",
+                      border: "1px solid rgba(0, 194, 255, 0.45)",
+                      color: "#00C2FF",
+                      fontSize: "11px",
+                      fontWeight: 800,
+                      fontFamily: "'JetBrains Mono', monospace",
+                      backdropFilter: "blur(12px)",
+                      boxShadow: "0 6px 18px rgba(0,0,0,0.6)",
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: "8px",
+                        height: "8px",
+                        borderRadius: "50%",
+                        background: "#EF4444",
+                        animation: "heroPulseGlow 1.5s infinite",
+                        display: "inline-block",
+                      }}
+                    />
+                    <span>ভিডিও ক্লাস সক্রিয় (Active Video)</span>
+                  </div>
+
+                  {/* Return to Box 1 (Thumbnail) button */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsVideoPlaying(false);
+                    }}
+                    title="থাম্বনেইলে ফিরে যান"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      padding: "7px 16px",
+                      borderRadius: "999px",
+                      background: "rgba(7, 8, 13, 0.88)",
+                      border: "1px solid rgba(255, 255, 255, 0.25)",
+                      color: "#FFFFFF",
+                      fontSize: "12px",
+                      fontWeight: 700,
+                      cursor: "pointer",
+                      backdropFilter: "blur(12px)",
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.7)",
+                      transition: "all 0.2s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "rgba(239, 68, 68, 0.9)";
+                      e.currentTarget.style.borderColor = "rgba(239, 68, 68, 1)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "rgba(7, 8, 13, 0.88)";
+                      e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.25)";
+                    }}
+                  >
+                    <i className="fas fa-arrow-left" style={{ fontSize: "11px" }} />
+                    <span>থাম্বনেইলে ফিরুন</span>
+                  </button>
+                </div>
+
+                {/* The Active YouTube Embed iframe with Autoplay */}
+                <iframe
+                  src={`https://www.youtube.com/embed/${content.videoYoutubeId}?autoplay=1&rel=0&modestbranding=1`}
+                  title={content.videoTitle}
+                  style={{ width: "100%", height: "100%", border: 0 }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

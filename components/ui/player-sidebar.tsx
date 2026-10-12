@@ -51,7 +51,7 @@ export const DEFAULT_COURSES: CourseProgressItem[] = [
     id: "c1",
     title: "১০ম শ্রেণীর পূর্ণাঙ্গ ব্যবসায় শিক্ষা কোর্স",
     progressPercent: 76,
-    statusColor: "#FF7A1A",
+    statusColor: "#00C2FF",
     href: "/player.html",
     isActive: true,
   },
@@ -156,12 +156,27 @@ export const PlayerSidebar: React.FC<PlayerSidebarProps> = ({
     <>
       <aside className="dash-sidebar" id="dashSidebar" aria-label="Student LMS Navigation Sidebar">
         {/* 1. Brand Logo - Links to Home */}
-        <a href="/" className="dash-brand" style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }} title="হোমপেজে ফিরে যান">
-          <div className="dash-brand-icon">
-            <i className="fas fa-graduation-cap" />
-          </div>
-          <div className="dash-brand-name">
-            Dipu's <span>Edu</span>
+        <a href="/" className="dash-brand" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", color: "inherit", cursor: "pointer", padding: "14px 16px" }} title="হোমপেজে ফিরে যান">
+          <img
+            src="/images/dipu-logo.png"
+            alt="Dipu Academy Logo"
+            style={{
+              width: "36px",
+              height: "36px",
+              borderRadius: "10px",
+              objectFit: "cover",
+              boxShadow: "0 4px 14px rgba(0, 194, 255, 0.4)",
+              border: "1.5px solid rgba(0, 194, 255, 0.25)",
+              flexShrink: 0,
+            }}
+          />
+          <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
+            <span style={{ color: "#FFFFFF", fontWeight: 800, fontSize: "1.05rem", letterSpacing: "-0.01em" }}>
+              Dipu
+            </span>
+            <span style={{ background: "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontWeight: 800, fontSize: "1.05rem", letterSpacing: "-0.01em" }}>
+              Academy
+            </span>
           </div>
         </a>
 
@@ -260,7 +275,7 @@ export const PlayerSidebar: React.FC<PlayerSidebarProps> = ({
                         <span
                           className="dash-submenu-dot"
                           style={{
-                            background: course.statusColor || "#FF7A1A",
+                            background: course.statusColor || "#00C2FF",
                           }}
                         />
                         <span>
@@ -295,16 +310,6 @@ export const PlayerSidebar: React.FC<PlayerSidebarProps> = ({
               </a>
             </li>
 
-            {/* Item 5: পরীক্ষা ও কুইজ */}
-            <li>
-              <a
-                href="/exam.html"
-                className={`dash-nav-item ${activeItem === "exams" ? "active" : ""}`}
-              >
-                <i className="fas fa-file-pen dash-nav-icon" />
-                <span>পরীক্ষা ও কুইজ</span>
-              </a>
-            </li>
 
             {/* Item 6: প্রোফাইল সেটিংস (Opens Profile & Settings Modal) */}
             <li>
@@ -339,7 +344,7 @@ export const PlayerSidebar: React.FC<PlayerSidebarProps> = ({
               fontSize: "11px",
               fontWeight: 700,
               textTransform: "uppercase",
-              color: "var(--lms-amber, #FF7A1A)",
+              color: "var(--lms-amber, #00C2FF)",
               letterSpacing: "0.5px",
             }}
           >
@@ -447,7 +452,7 @@ export const PlayerSidebar: React.FC<PlayerSidebarProps> = ({
                     width: "36px",
                     height: "36px",
                     borderRadius: "10px",
-                    background: "rgba(255, 122, 26, 0.15)",
+                    background: "rgba(0, 194, 255, 0.15)",
                     color: "var(--lms-orange)",
                     display: "flex",
                     alignItems: "center",
@@ -575,7 +580,7 @@ export const PlayerSidebar: React.FC<PlayerSidebarProps> = ({
                           : "1px solid rgba(255, 255, 255, 0.1)",
                       background:
                         tempTheme === "light"
-                          ? "rgba(255, 122, 26, 0.15)"
+                          ? "rgba(0, 194, 255, 0.15)"
                           : "rgba(255, 255, 255, 0.03)",
                       color: tempTheme === "light" ? "#FFFFFF" : "var(--lms-text-muted)",
                       display: "flex",
@@ -604,7 +609,7 @@ export const PlayerSidebar: React.FC<PlayerSidebarProps> = ({
                           : "1px solid rgba(255, 255, 255, 0.1)",
                       background:
                         tempTheme === "dark"
-                          ? "rgba(255, 122, 26, 0.15)"
+                          ? "rgba(0, 194, 255, 0.15)"
                           : "rgba(255, 255, 255, 0.03)",
                       color: tempTheme === "dark" ? "#FFFFFF" : "var(--lms-text-muted)",
                       display: "flex",
@@ -633,7 +638,7 @@ export const PlayerSidebar: React.FC<PlayerSidebarProps> = ({
                           : "1px solid rgba(255, 255, 255, 0.1)",
                       background:
                         tempTheme === "system"
-                          ? "rgba(255, 122, 26, 0.15)"
+                          ? "rgba(0, 194, 255, 0.15)"
                           : "rgba(255, 255, 255, 0.03)",
                       color: tempTheme === "system" ? "#FFFFFF" : "var(--lms-text-muted)",
                       display: "flex",
