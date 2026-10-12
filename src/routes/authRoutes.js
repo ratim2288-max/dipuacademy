@@ -401,7 +401,7 @@ router.post('/complete-onboarding', async (req, res) => {
   }
 });
 
-// POST /api/auth/login-password — Login using Phone and Password
+// POST /api/auth/login-password — Login using Phone and Password (with auto-registration for new users)
 router.post('/login-password', async (req, res) => {
   try {
     const { phone, password } = req.body;
@@ -409,7 +409,14 @@ router.post('/login-password', async (req, res) => {
       return res.status(400).json({ success: false, message: 'মোবাইল নম্বর এবং পাসওয়ার্ড উভয়ই প্রয়োজন।' });
     }
 
+    const phoneRegex = /^01[3-9]\d{8}$/;
+    if (!phoneRegex.test(phone)) {
+      return res.status(400).json({ success: false, message: 'সঠিক ১১-সংখ্যার বাংলাদেশি মোবাইল নম্বর দিন (যেমন: 01XXXXXXXXX)' });
+    }
+
     let user = null;
+    let isNewUser = false;
+
     if (mongoose.connection.readyState === 1) {
       try {
         user = await User.findOne({ phone });
@@ -421,17 +428,69 @@ router.post('/login-password', async (req, res) => {
       user = IN_MEMORY_USERS.get(phone);
     }
 
+    const salt = await bcrypt.genSalt(10);
+
+    // If user does not exist, AUTO-CREATE account so user is never blocked with "account not found"
     if (!user) {
-      return res.status(404).json({ success: false, message: 'এই নম্বরে কোনো অ্যাকাউন্ট পাওয়া যায়নি। অনুগ্রহ করে ওটিপি দিয়ে লগইন করুন।' });
-    }
+      const hashedPassword = await bcrypt.hash(password, salt);
+      const newSessionToken = uuidv4();
+      isNewUser = true;
 
-    if (!user.password) {
-      return res.status(400).json({ success: false, message: 'এই অ্যাকাউন্টে এখনও পাসওয়ার্ড সেট করা হয়নি। অনুগ্রহ করে ওটিপি দিয়ে প্রবেশ করে পাসওয়ার্ড সেট করুন।' });
-    }
+      if (mongoose.connection.readyState === 1) {
+        try {
+          user = await User.create({
+            phone,
+            password: hashedPassword,
+            name: 'নতুন শিক্ষার্থী',
+            role: 'student',
+            activeSessionToken: newSessionToken,
+            streakDays: 1,
+            eduCoins: 50,
+          });
+        } catch (dbErr) {
+          console.warn('[User create DB error, using in-memory fallback]:', dbErr.message);
+          user = null;
+        }
+      }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ success: false, message: 'ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন অথবা ওটিপি ব্যবহার করুন।' });
+      if (!user) {
+        const newId = `user_${Date.now()}`;
+        user = {
+          _id: newId,
+          phone,
+          password: hashedPassword,
+          name: 'নতুন শিক্ষার্থী',
+          role: 'student',
+          institution: 'শিক্ষা প্রতিষ্ঠান',
+          classLevel: 'HSC',
+          streakDays: 1,
+          eduCoins: 50,
+          enrolledCourses: [],
+          activeSessionToken: newSessionToken,
+          lastActiveDate: new Date(),
+          preferredLanguage: 'bn',
+          save: async function() { return this; }
+        };
+        IN_MEMORY_USERS.set(phone, user);
+        IN_MEMORY_USERS.set(newId, user);
+      }
+    } else {
+      // User already exists
+      if (!user.password) {
+        // User originally signed up via OTP; set their password now
+        user.password = await bcrypt.hash(password, salt);
+        if (typeof user.save === 'function') {
+          await user.save().catch(() => {});
+        }
+      } else {
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+          return res.status(400).json({
+            success: false,
+            message: 'ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন অথবা ওটিপি (OTP: 123456) দিয়ে সরাসরি লগইন করুন।'
+          });
+        }
+      }
     }
 
     const newSessionToken = uuidv4();
@@ -457,7 +516,8 @@ router.post('/login-password', async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: 'Login successful.',
+      message: isNewUser ? 'অ্যাকাউন্ট তৈরি ও লগইন সফল হয়েছে!' : 'লগইন সফল হয়েছে!',
+      isNewUser,
       isOnboarded: !!user.isOnboarded,
       sessionToken: token,
       user: {
