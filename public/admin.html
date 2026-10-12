@@ -109,6 +109,7 @@
       // Accepted admin pins
       if (pin === "dipu2026" || pin === "admin2026" || pin === "dipuedu" || pin === "16910") {
         sessionStorage.setItem("dipu_admin_authorized", "true");
+        localStorage.setItem("adminToken", "dipu_admin_super_token_2026");
         const gate = document.getElementById("adminSecurityGate");
         if (gate) gate.style.display = "none";
         const layout = document.querySelector(".admin-layout-container");
@@ -179,7 +180,16 @@
             </a>
           </li>
 
-          <!-- 3. শিক্ষার্থী -->
+          <!-- 3. POS কাউন্টার (কোর্স বিক্রয়) -->
+          <li>
+            <a href="#pos" class="nav-item" data-tab="pos" style="position: relative;">
+              <i class="fas fa-cash-register nav-icon" style="color: #00C2FF;"></i>
+              <span>POS সেল কাউন্টার</span>
+              <span style="font-size: 9.5px; background: rgba(0, 194, 255, 0.2); color: #00C2FF; border: 1px solid rgba(0, 194, 255, 0.4); padding: 1px 6px; border-radius: 999px; font-weight: 800; margin-left: auto;">POS</span>
+            </a>
+          </li>
+
+          <!-- 4. শিক্ষার্থী -->
           <li>
             <a href="#students" class="nav-item" data-tab="students">
               <i class="fas fa-users nav-icon"></i>
@@ -497,7 +507,301 @@
         </section>
 
         <!-- ====================================================================
-             VIEW 3: STUDENTS — কোনজন কোর্স কিনেছে, কোন ক্লাসে পড়ে
+             VIEW: POS (POINT OF SALE) — কোর্স বিক্রয় ও কাউন্টার ক্যাশ এনরোলমেন্ট
+             ==================================================================== -->
+        <section id="view-pos" class="admin-view hidden">
+          <div class="view-header-row">
+            <div>
+              <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: rgba(0, 194, 255, 0.12); border: 1px solid rgba(0, 194, 255, 0.35); color: #00C2FF; font-size: 11px; font-weight: 800; margin-bottom: 6px;">
+                <i class="fas fa-cash-register"></i> DIPU ACADEMY POS TERMINAL
+              </div>
+              <h2 class="view-main-title">POS সেল কাউন্টার — সরাসরি কোর্স বিক্রয় ও সক্রিয়করণ</h2>
+              <p class="view-subtitle">কাউন্টারে বা সরাসরি শিক্ষার্থীকে যেকোনো কোর্সে ভর্তি করান, ক্যাশ বা ডিজিটাল পেমেন্ট গ্রহণ করুন ও প্রিন্ট রসিদ দিন।</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span id="posSalesCountBadge" class="badge-clocked-in" style="padding: 6px 12px; font-size: 12px;">লোড হচ্ছে...</span>
+              <button class="btn-careplus-green-cta" onclick="loadPosData()">
+                <i class="fas fa-rotate"></i> <span>রিফ্রেশ</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- POS Metric Cards Row -->
+          <div class="careplus-metric-cards-row" style="margin-bottom: 24px;">
+            <div class="careplus-stat-card">
+              <div class="careplus-stat-header">
+                <span class="careplus-stat-label">মোট কোর্স বিক্রয়</span>
+                <div class="careplus-stat-icon-badge badge-lavender">
+                  <i class="fas fa-cart-shopping"></i>
+                </div>
+              </div>
+              <div class="careplus-stat-number" id="posTotalSalesCount">০টি</div>
+              <div class="careplus-stat-subtitle">অনলাইন ও কাউন্টার মিলিয়ে</div>
+            </div>
+
+            <div class="careplus-stat-card">
+              <div class="careplus-stat-header">
+                <span class="careplus-stat-label">মোট রাজস্ব সংগ্রহ</span>
+                <div class="careplus-stat-icon-badge badge-mint">
+                  <i class="fas fa-bangladeshi-taka-sign"></i>
+                </div>
+              </div>
+              <div class="careplus-stat-number" id="posTotalRevenueBDT">৳০</div>
+              <div class="careplus-stat-subtitle">সর্বমোট পরিশোধিত ফি</div>
+            </div>
+
+            <div class="careplus-stat-card">
+              <div class="careplus-stat-header">
+                <span class="careplus-stat-label">ক্যাশ কাউন্টার সংগ্রহ</span>
+                <div class="careplus-stat-icon-badge badge-amber">
+                  <i class="fas fa-money-bill-wave"></i>
+                </div>
+              </div>
+              <div class="careplus-stat-number" id="posCashRevenueBDT">৳০</div>
+              <div class="careplus-stat-subtitle">সরাসরি ক্যাশ পেমেন্ট</div>
+            </div>
+
+            <div class="careplus-stat-card">
+              <div class="careplus-stat-header">
+                <span class="careplus-stat-label">bKash ও অনলাইন</span>
+                <div class="careplus-stat-icon-badge badge-teal">
+                  <i class="fas fa-mobile-screen-button"></i>
+                </div>
+              </div>
+              <div class="careplus-stat-number" id="posDigitalRevenueBDT">৳০</div>
+              <div class="careplus-stat-subtitle">বিকাশ / নগদ / ডিজিটাল</div>
+            </div>
+          </div>
+
+          <!-- POS Main Workspace: Left Terminal Form, Right Invoice Slip -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; margin-bottom: 30px;">
+            
+            <!-- Left: POS Form Card -->
+            <div class="careplus-section-card" style="padding: 24px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                <div>
+                  <h3 style="margin: 0; font-size: 1.1rem; color: #FFFFFF; font-weight: 800;">
+                    <i class="fas fa-bolt" style="color: #00C2FF; margin-right: 8px;"></i>নতুন বিক্রয় টার্মিনাল
+                  </h3>
+                  <div style="font-size: 12px; color: #94A3B8; margin-top: 3px;">শিক্ষার্থীর তথ্য দিন এবং এক ক্লিকে কোর্স আনলক করুন</div>
+                </div>
+                <span style="font-size: 11px; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); padding: 3px 8px; border-radius: 6px; font-weight: 700;">
+                  ইনস্ট্যান্ট অ্যাক্টিভেশন
+                </span>
+              </div>
+
+              <form id="posSaleForm" onsubmit="handlePosSaleSubmit(event)">
+                
+                <!-- 1. Student Phone & Search -->
+                <div style="margin-bottom: 14px;">
+                  <label style="display: block; font-size: 12.5px; font-weight: 700; color: #E2E8F0; margin-bottom: 6px;">
+                    শিক্ষার্থীর ফোন নম্বর * <span style="font-size: 11px; color: #64748B; font-weight: 400;">(অটো ডাটাবেজ ম্যাচ)</span>
+                  </label>
+                  <div style="position: relative;">
+                    <input type="tel" id="posPhone" class="form-input" placeholder="017XXXXXXXX" required style="width: 100%; box-sizing: border-box; padding-left: 36px;" oninput="handlePosPhoneInput(this.value)">
+                    <i class="fas fa-phone" style="position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: #64748B; font-size: 13px;"></i>
+                  </div>
+                  <div id="posUserMatchNotice" style="display: none; font-size: 11.5px; color: #10B981; margin-top: 4px; font-weight: 600;">
+                    <i class="fas fa-check-circle"></i> বিদ্যমান অ্যাকাউন্ট পাওয়া গেছে
+                  </div>
+                </div>
+
+                <!-- 2. Student Name & Class -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+                  <div>
+                    <label style="display: block; font-size: 12.5px; font-weight: 700; color: #E2E8F0; margin-bottom: 6px;">শিক্ষার্থীর নাম</label>
+                    <input type="text" id="posName" class="form-input" placeholder="যেমন: তানজির আহমেদ" style="width: 100%; box-sizing: border-box;">
+                  </div>
+                  <div>
+                    <label style="display: block; font-size: 12.5px; font-weight: 700; color: #E2E8F0; margin-bottom: 6px;">শ্রেণি / ব্যাচ</label>
+                    <select id="posClass" class="form-select" style="width: 100%; box-sizing: border-box;">
+                      <option value="HSC" selected>HSC (একাদশ-দ্বাদশ)</option>
+                      <option value="SSC">SSC (নবম-দশম)</option>
+                      <option value="Admission">Admission (এডমিশন)</option>
+                      <option value="Class 8">৮ম শ্রেণি</option>
+                      <option value="Class 7">৭ম শ্রেণি</option>
+                      <option value="Class 6">৬ষ্ঠ শ্রেণি</option>
+                      <option value="Class 5">৫ম শ্রেণি</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- 3. Course Selection -->
+                <div style="margin-bottom: 14px;">
+                  <label style="display: block; font-size: 12.5px; font-weight: 700; color: #E2E8F0; margin-bottom: 6px;">
+                    কোর্স নির্বাচন করুন *
+                  </label>
+                  <select id="posCourseSelect" class="form-select" required style="width: 100%; box-sizing: border-box;" onchange="handlePosCourseChange(this.value)">
+                    <option value="">-- কোর্স বাছাই করুন --</option>
+                  </select>
+                </div>
+
+                <!-- 4. Price & Discount Calc Row -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+                  <div>
+                    <label style="display: block; font-size: 11.5px; font-weight: 700; color: #94A3B8; margin-bottom: 4px;">মূল কোর্স ফি (৳)</label>
+                    <input type="number" id="posRegularFee" class="form-input" readonly value="850" style="width: 100%; box-sizing: border-box; background: rgba(255,255,255,0.03); color: #94A3B8;">
+                  </div>
+                  <div>
+                    <label style="display: block; font-size: 11.5px; font-weight: 700; color: #94A3B8; margin-bottom: 4px;">ডিসকাউন্ট ছাড় (৳)</label>
+                    <input type="number" id="posDiscount" class="form-input" value="0" min="0" style="width: 100%; box-sizing: border-box; color: #10B981; font-weight: 700;" oninput="calcPosTotal()">
+                  </div>
+                  <div>
+                    <label style="display: block; font-size: 11.5px; font-weight: 700; color: #00C2FF; margin-bottom: 4px;">পরিশোধিত ফি (৳) *</label>
+                    <input type="number" id="posFinalAmount" class="form-input" value="850" min="0" required style="width: 100%; box-sizing: border-box; color: #00C2FF; font-weight: 800; font-size: 1.05rem;">
+                  </div>
+                </div>
+
+                <!-- 5. Payment Gateway & Memo -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px;">
+                  <div>
+                    <label style="display: block; font-size: 12.5px; font-weight: 700; color: #E2E8F0; margin-bottom: 6px;">পেমেন্ট মেথড *</label>
+                    <select id="posPaymentMethod" class="form-select" style="width: 100%; box-sizing: border-box;">
+                      <option value="cash" selected>💵 ক্যাশ (সরাসরি কাউন্টার)</option>
+                      <option value="bkash">📱 বিকাশ (bKash)</option>
+                      <option value="nagad">📲 নগদ (Nagad)</option>
+                      <option value="rocket">🏦 রকেট (Rocket)</option>
+                      <option value="manual">📝 ব্যাংক / অন্যান্য</option>
+                      <option value="free_grant">🎁 ১০০% ফ্রি স্কলারশিপ</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style="display: block; font-size: 12.5px; font-weight: 700; color: #E2E8F0; margin-bottom: 6px;">মেমো / Trx ID</label>
+                    <input type="text" id="posMemo" class="form-input" placeholder="স্বয়ংক্রিয় তৈরি হবে" style="width: 100%; box-sizing: border-box;">
+                  </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="posSubmitBtn" style="width: 100%; padding: 14px; border-radius: 12px; background: linear-gradient(135deg, #0084FF, #00C2FF); border: none; color: #050B17; font-weight: 800; font-size: 1rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(0,194,255,0.4); display: flex; align-items: center; justify-content: center; gap: 8px;">
+                  <i class="fas fa-check-circle"></i>
+                  <span>বিক্রয় সম্পন্ন ও কোর্স এক্সেস আনলক করুন</span>
+                </button>
+              </form>
+            </div>
+
+            <!-- Right: POS Invoice & Print Slip -->
+            <div class="careplus-section-card" style="padding: 24px; display: flex; flex-direction: column;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                <div>
+                  <h3 style="margin: 0; font-size: 1.1rem; color: #FFFFFF; font-weight: 800;">
+                    <i class="fas fa-receipt" style="color: #10B981; margin-right: 8px;"></i>ডিজিটাল ইনভয়েস স্লিপ
+                  </h3>
+                  <div style="font-size: 12px; color: #94A3B8; margin-top: 3px;">অফিসিয়াল ক্যাশ মেমো ও প্রিন্ট কপি</div>
+                </div>
+                <button type="button" onclick="printPosInvoice()" style="background: rgba(0,194,255,0.15); border: 1px solid rgba(0,194,255,0.4); color: #00C2FF; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                  <i class="fas fa-print"></i> <span>প্রিন্ট করুন</span>
+                </button>
+              </div>
+
+              <!-- Printable Slip Area -->
+              <div id="posInvoicePrintArea" style="background: #030814; border: 1.5px dashed rgba(0, 194, 255, 0.35); border-radius: 16px; padding: 22px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; font-family: 'Hind Siliguri', sans-serif;">
+                
+                <div>
+                  <!-- Header -->
+                  <div style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; margin-bottom: 14px;">
+                    <div style="font-size: 1.15rem; font-weight: 800; color: #FFFFFF;">
+                      DIPU <span style="color: #00C2FF;">ACADEMY</span>
+                    </div>
+                    <div style="font-size: 11px; color: #94A3B8;">অফিসিয়াল বিক্রয় রসিদ ও শিক্ষার্থী ভর্তি মেমো</div>
+                    <div style="font-size: 10.5px; color: #64748B; margin-top: 2px;">peace • knowledge • excellence</div>
+                  </div>
+
+                  <!-- Invoice Meta -->
+                  <div style="display: flex; justify-content: space-between; font-size: 12px; color: #CBD5E1; margin-bottom: 8px;">
+                    <span>ইনভয়েস নং:</span>
+                    <strong style="color: #00C2FF; font-family: monospace;" id="invNumber">POS-DEMO-001</strong>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; font-size: 12px; color: #CBD5E1; margin-bottom: 8px;">
+                    <span>তারিখ ও সময়:</span>
+                    <span id="invDate" style="color: #94A3B8;">—</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; font-size: 12px; color: #CBD5E1; margin-bottom: 8px;">
+                    <span>শিক্ষার্থীর নাম:</span>
+                    <strong id="invStudentName" style="color: #FFFFFF;">—</strong>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; font-size: 12px; color: #CBD5E1; margin-bottom: 8px;">
+                    <span>মোবাইল নম্বর:</span>
+                    <span id="invStudentPhone" style="font-family: monospace; color: #F59E0B;">—</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; font-size: 12px; color: #CBD5E1; margin-bottom: 14px;">
+                    <span>শ্রেণি / ক্লাস:</span>
+                    <span id="invStudentClass" style="color: #94A3B8;">HSC</span>
+                  </div>
+
+                  <!-- Course Item Box -->
+                  <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 12px; margin-bottom: 14px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                      <span style="font-weight: 700; color: #FFFFFF; font-size: 13px;" id="invCourseTitle">কোর্স নির্বাচন করুন</span>
+                      <strong style="color: #10B981; font-size: 14px;" id="invAmount">৳০</strong>
+                    </div>
+                    <div style="font-size: 11px; color: #94A3B8; display: flex; justify-content: space-between;">
+                      <span>স্ট্যাটাস: <span style="color:#10B981; font-weight:700;">✓ এক্সেস সক্রিয়</span></span>
+                      <span>পেমেন্ট: <span id="invMethod" style="color:#00C2FF; font-weight:700;">ক্যাশ</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Footer with Seal -->
+                <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; display: flex; align-items: center; justify-content: space-between;">
+                  <div>
+                    <div style="font-size: 10px; color: #64748B;">ভর্তি সম্পন্নকারী:</div>
+                    <div style="font-size: 11.5px; font-weight: 700; color: #00C2FF;">সুপার অ্যাডমিন কনসোল</div>
+                  </div>
+                  <div style="padding: 4px 10px; border-radius: 8px; border: 1.5px solid #10B981; color: #10B981; font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">
+                    PAID • ভেরিফাইড
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom: Recent POS Sales History Table -->
+          <div class="careplus-section-card">
+            <div class="careplus-section-header">
+              <div class="careplus-section-header-left">
+                <h3 class="careplus-section-title">সাম্প্রতিক বিক্রয় ও এনরোলমেন্ট ইতিহাস</h3>
+                <p class="careplus-section-sub">কাউন্টার ও অনলাইন সকল ট্রানজেকশনের লাইভ ডাটাবেজ রেকর্ড</p>
+              </div>
+              <div class="careplus-filter-pills">
+                <button class="filter-pill active" onclick="filterPosSales('all', this)">সব বিক্রয়</button>
+                <button class="filter-pill" onclick="filterPosSales('cash', this)">ক্যাশ কাউন্টার</button>
+                <button class="filter-pill" onclick="filterPosSales('bkash', this)">বিকাশ</button>
+                <button class="filter-pill" onclick="filterPosSales('nagad', this)">নগদ</button>
+              </div>
+            </div>
+
+            <div class="careplus-table-wrap">
+              <table class="careplus-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>ইনভয়েস / TrxID</th>
+                    <th>শিক্ষার্থীর নাম</th>
+                    <th>ফোন নম্বর</th>
+                    <th>শ্রেণি</th>
+                    <th>কোর্স</th>
+                    <th>পরিশোধিত ফি</th>
+                    <th>পেমেন্ট মাধ্যম</th>
+                    <th>তারিখ</th>
+                    <th>অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="posSalesTableBody">
+                  <tr>
+                    <td colspan="10" style="text-align:center; padding: 30px; color: var(--text-muted);">
+                      <i class="fas fa-spinner fa-spin mr-2"></i> বিক্রয় রেকর্ড লোড হচ্ছে...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             VIEW 4: STUDENTS — কোনজন কোর্স কিনেছে, কোন ক্লাসে পড়ে
              ==================================================================== -->
         <section id="view-students" class="admin-view hidden">
           <div class="view-header-row">

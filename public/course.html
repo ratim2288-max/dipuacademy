@@ -1126,19 +1126,23 @@
         <!-- Top Breadcrumbs & Header -->
         <section id="overview" class="course-hero-content">
           
-          <!-- Back Button Only (No text, icon only) -->
-          <div style="margin-bottom: 1.25rem;">
+          <!-- Prominent Back Button -->
+          <div style="margin-bottom: 1.25rem; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
             <button
               type="button"
-              onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = '/'; }"
+              onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = '/#courses'; }"
               aria-label="পেছনে যান"
               title="পেছনে যান"
-              style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(0, 194, 255, 0.3); color: #00C2FF; font-size: 17px; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px);"
-              onmouseenter="this.style.background='rgba(0, 194, 255, 0.15)'; this.style.borderColor='#00C2FF'; this.style.transform='translateX(-3px) scale(1.05)'; this.style.boxShadow='0 6px 20px rgba(0, 194, 255, 0.35)';"
-              onmouseleave="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(0, 194, 255, 0.3)'; this.style.transform='translateX(0) scale(1)'; this.style.boxShadow='0 4px 16px rgba(0, 0, 0, 0.4)';"
+              style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 9999px; background: rgba(255, 255, 255, 0.06); border: 1.5px solid rgba(0, 194, 255, 0.35); color: #00C2FF; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px);"
+              onmouseenter="this.style.background='rgba(0, 194, 255, 0.18)'; this.style.borderColor='#00C2FF'; this.style.transform='translateX(-3px)'; this.style.boxShadow='0 6px 20px rgba(0, 194, 255, 0.35)';"
+              onmouseleave="this.style.background='rgba(255, 255, 255, 0.06)'; this.style.borderColor='rgba(0, 194, 255, 0.35)'; this.style.transform='translateX(0)'; this.style.boxShadow='0 4px 16px rgba(0, 0, 0, 0.4)';"
             >
               <i class="fas fa-arrow-left"></i>
+              <span>পেছনে যান (সকল কোর্স)</span>
             </button>
+            <a href="/my-courses.html" style="display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 9999px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #10B981; font-size: 13.5px; font-weight: 700; text-decoration: none; transition: all 0.2s ease;">
+              <i class="fas fa-graduation-cap"></i> <span>আমার কোর্সসমূহ</span>
+            </a>
           </div>
 
           <h1 class="course-hero-title" id="courseHeaderTitle">
@@ -1531,10 +1535,20 @@
           </div>
         </div>
 
-        <!-- Student Phone -->
-        <div style="margin-bottom: 1rem;">
-          <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #CBD5E1; margin-bottom: 6px;">আপনার মোবাইল নম্বর (যেটিতে এক্সেস পাবেন) *</label>
-          <input type="tel" id="checkoutPhone" class="coupon-text-input" style="width: 100%; box-sizing: border-box;" placeholder="017XXXXXXXX">
+        <!-- Active Account Link Card (নম্বর দিতে হবে না, অ্যাকাউন্ট থেকে সরাসরি ক্রয় হবে) -->
+        <div style="margin-bottom: 1rem; padding: 12px 14px; background: rgba(0, 194, 255, 0.08); border: 1.5px solid rgba(0, 194, 255, 0.3); border-radius: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #0084FF, #00C2FF); color: #050B17; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0;" id="checkoutUserAvatar">
+              <i class="fas fa-user-check"></i>
+            </div>
+            <div>
+              <div style="font-size: 0.88rem; font-weight: 700; color: #FFFFFF;" id="checkoutAccountName">আমার অ্যাকাউন্ট</div>
+              <div style="font-size: 0.8rem; font-weight: 600; color: #00C2FF;" id="checkoutAccountPhone">লগইন করা মোবাইল নম্বর</div>
+            </div>
+          </div>
+          <span style="font-size: 11px; font-weight: 800; background: rgba(16, 185, 129, 0.18); border: 1px solid rgba(16, 185, 129, 0.4); color: #10B981; padding: 4px 10px; border-radius: 999px; white-space: nowrap;">
+            <i class="fas fa-check-circle mr-1"></i> এই অ্যাকাউন্টে ক্রয় হবে
+          </span>
         </div>
 
         <!-- Coupon Input -->
@@ -2104,6 +2118,30 @@
 
       if (!slug) slug = "class-5-full-course"; // default to the course user asked about
 
+      // Automatic Redirect: If student already purchased this course, take them to Course Home
+      try {
+        const enrolledSlugs = JSON.parse(localStorage.getItem('da_enrolled_courses') || '[]');
+        if (enrolledSlugs.includes(slug)) {
+          window.location.replace(`/course-home.html?course=${encodeURIComponent(slug)}`);
+          return;
+        }
+        const studentPhone = localStorage.getItem('da_user_phone') || localStorage.getItem('user_phone') || localStorage.getItem('dipu_user_phone');
+        if (studentPhone) {
+          fetch(`/api/courses/${encodeURIComponent(slug)}/access-status?phone=${encodeURIComponent(studentPhone)}`)
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.success && data.enrolled) {
+                if (!enrolledSlugs.includes(slug)) {
+                  enrolledSlugs.push(slug);
+                  localStorage.setItem('da_enrolled_courses', JSON.stringify(enrolledSlugs));
+                }
+                window.location.replace(`/course-home.html?course=${encodeURIComponent(slug)}`);
+              }
+            })
+            .catch(() => {});
+        }
+      } catch (e) {}
+
       // 2. Load Course
       await loadCourseDetails(slug);
 
@@ -2392,22 +2430,58 @@
           payBtn.disabled = true;
           payBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> পেমেন্ট প্রসেসিং হচ্ছে...`;
 
+          const token = localStorage.getItem('da_token') || localStorage.getItem('auth_token');
+          const studentPhone = localStorage.getItem('da_user_phone') || localStorage.getItem('user_phone') || '01712345678';
+          const studentName = localStorage.getItem('da_user_name') || localStorage.getItem('user_name') || 'Student';
+          const genTrx = `${selectedGateway.toUpperCase()}_${Date.now().toString().slice(-8)}`;
+          const cSlug = currentCourse.slug || currentCourse._id || 'course-enrolled';
+
           try {
-            await fetch("/api/payment/create", {
+            const enrollRes = await fetch("/api/payment/enroll", {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              headers: {
+                "Content-Type": "application/json",
+                ...(token ? { "Authorization": `Bearer ${token}` } : {})
+              },
               body: JSON.stringify({
-                courseId: currentCourse._id || currentCourse.slug,
+                courseId: currentCourse._id || cSlug,
+                courseSlug: cSlug,
+                studentPhone,
+                studentName,
                 paymentGateway: selectedGateway,
-                couponCode: document.getElementById("couponCodeInput").value.trim()
+                amount: Math.max(0, (Number(currentCourse.discountPrice) || Number(currentCourse.price) || 850) - appliedCouponDiscount),
+                trxID: genTrx
               })
             });
-          } catch (e) {}
+            const data = await enrollRes.json();
+            console.log('[Enrollment Synced to DB]', data);
+
+            // Store enrolled course slug locally for immediate UI reflect
+            try {
+              const enrolled = JSON.parse(localStorage.getItem('da_enrolled_courses') || '[]');
+              if (!enrolled.includes(cSlug)) {
+                enrolled.push(cSlug);
+                localStorage.setItem('da_enrolled_courses', JSON.stringify(enrolled));
+              }
+            } catch (e) {}
+          } catch (e) {
+            console.warn('[Enrollment API Note]', e);
+          }
 
           setTimeout(() => {
             document.getElementById("modalStepCheckout").style.display = "none";
             document.getElementById("modalStepSuccess").style.display = "block";
-            document.getElementById("successTrxId").textContent = `${selectedGateway.toUpperCase()}_${Date.now().toString().slice(-8)}`;
+            document.getElementById("successTrxId").textContent = genTrx;
+
+            const successBtn = document.querySelector("#modalStepSuccess a.btn-buy-course-primary");
+            if (successBtn) {
+              successBtn.href = `/course-home.html?course=${encodeURIComponent(cSlug)}&justEnrolled=1`;
+              successBtn.innerHTML = `<span>কোর্স হোমে প্রবেশ করুন</span> <i class="fas fa-arrow-right"></i>`;
+            }
+            // Auto redirect after 1.8 seconds to Course Home
+            setTimeout(() => {
+              window.location.href = `/course-home.html?course=${encodeURIComponent(cSlug)}&justEnrolled=1`;
+            }, 1800);
           }, 700);
         });
       }
@@ -2426,6 +2500,20 @@
       const regPrice = Number(currentCourse.price) || 850;
       const discPrice = Number(currentCourse.discountPrice) || 419;
       const offerDiff = regPrice - discPrice;
+
+      // Populate active student account badge
+      let activePhone = localStorage.getItem('da_user_phone') || localStorage.getItem('user_phone') || '';
+      let activeName = localStorage.getItem('da_user_name') || localStorage.getItem('user_name') || '';
+      try {
+        const prof = JSON.parse(localStorage.getItem('dipu_user_profile') || '{}');
+        if (prof.phone) activePhone = prof.phone;
+        if (prof.name) activeName = prof.name;
+      } catch (e) {}
+
+      const phoneEl = document.getElementById("checkoutAccountPhone");
+      const nameEl = document.getElementById("checkoutAccountName");
+      if (phoneEl) phoneEl.textContent = activePhone || "017XXXXXXXX (বর্তমান অ্যাকাউন্ট)";
+      if (nameEl) nameEl.textContent = activeName || "শিক্ষার্থী অ্যাকাউন্ট";
 
       document.getElementById("calcRegularPrice").textContent = formatBDT(regPrice);
       document.getElementById("calcOfferDiscount").textContent = `-${formatBDT(offerDiff)}`;

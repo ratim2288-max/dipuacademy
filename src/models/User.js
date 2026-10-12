@@ -46,8 +46,12 @@ const userSchema = new mongoose.Schema({
     default: null,
   },
   enrolledCourses: [{
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.Mixed,
     ref: 'Course',
+  }],
+  enrolledCourseSlugs: [{
+    type: String,
+    index: true,
   }],
   activeSessionToken: {
     type: String,

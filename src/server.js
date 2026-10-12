@@ -273,6 +273,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // HTML page routes
+app.get(['/course-home', '/course-home.html', '/course-overview'], (req, res) => res.sendFile(path.join(__dirname, '../public/course-home.html')));
 app.get(['/my-courses', '/my-courses.html', '/user/courses', '/user/courses/'], (req, res) => res.sendFile(path.join(__dirname, '../public/my-courses.html')));
 app.get('/course', (req, res) => res.sendFile(path.join(__dirname, '../public/course.html')));
 app.get('/course/:slug', (req, res) => res.sendFile(path.join(__dirname, '../public/course.html')));

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Enrollment = require('../models/Enrollment');
 const courseRoutes = require('./courseRoutes');
 
 // In-memory cache of student profiles for instant zero-latency tracking
@@ -849,6 +850,142 @@ router.get('/my-courses', (req, res) => {
     count: courses.length,
     courses: courses
   });
+});
+
+// ==============================================================================
+// 5. GET /api/student/enrolled-courses — Get student's purchased courses from DB
+// ==============================================================================
+router.get('/enrolled-courses', async (req, res) => {
+  try {
+    const Enrollment = require('../models/Enrollment');
+    const User = require('../models/User');
+
+    let user = null;
+    try {
+      const authHeader = req.headers.authorization;
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        const jwt = require('jsonwebtoken');
+        const token = authHeader.split(' ')[1];
+        const secret = process.env.JWT_SECRET || 'dipu_edu_default_jwt_secret_dev';
+        const decoded = jwt.verify(token, secret);
+        if (decoded && decoded.id) {
+          user = await User.findById(decoded.id);
+        }
+      }
+    } catch (e) {}
+
+    const phone = (user && user.phone) || req.query.phone;
+
+    if (!user && !phone) {
+      return res.status(200).json({
+        success: true,
+        enrolledCourses: [],
+        count: 0,
+        message: 'No authenticated user session.'
+      });
+    }
+
+    const enrollments = await Enrollment.find({
+      $or: [
+        ...(user ? [{ userId: user._id }] : []),
+        ...(phone ? [{ userPhone: phone }] : [])
+      ],
+      status: 'completed'
+    }).sort({ enrolledAt: -1 });
+
+    return res.status(200).json({
+      success: true,
+      count: enrollments.length,
+      enrolledCourses: enrollments.map(e => ({
+        id: e._id,
+        courseId: e.courseId,
+        courseSlug: e.courseSlug,
+        courseTitle: e.courseTitle,
+        classLevel: e.classLevel,
+        amount: e.amount,
+        paymentMethod: e.paymentMethod,
+        trxID: e.trxID,
+        progress: e.progress || 0,
+        completedLessons: e.completedLessons || [],
+        enrolledAt: e.enrolledAt,
+        status: e.status
+      }))
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to fetch enrolled courses.', error: error.message });
+  }
+});
+
+// ==============================================================================
+// 6. POST /api/student/mark-lesson-complete — Track completed lesson in DB
+// ==============================================================================
+router.post('/mark-lesson-complete', async (req, res) => {
+  try {
+    const { courseSlug, lessonId, studentPhone, totalLessons = 10 } = req.body;
+    const Enrollment = require('../models/Enrollment');
+    const User = require('../models/User');
+
+    let user = null;
+    try {
+      const authHeader = req.headers.authorization;
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        const jwt = require('jsonwebtoken');
+        const token = authHeader.split(' ')[1];
+        const secret = process.env.JWT_SECRET || 'dipu_edu_default_jwt_secret_dev';
+        const decoded = jwt.verify(token, secret);
+        if (decoded && decoded.id) {
+          user = await User.findById(decoded.id);
+        }
+      }
+    } catch (e) {}
+
+    const phone = (user && user.phone) || studentPhone;
+
+    if (!lessonId) {
+      return res.status(400).json({ success: false, message: 'Lesson ID is required.' });
+    }
+
+    let enrollment = null;
+    if (user || phone) {
+      enrollment = await Enrollment.findOne({
+        $or: [
+          ...(user ? [{ userId: user._id }] : []),
+          ...(phone ? [{ userPhone: phone }] : [])
+        ],
+        ...(courseSlug ? {
+          $or: [
+            { courseSlug },
+            { courseId: courseSlug }
+          ]
+        } : {}),
+        status: 'completed'
+      });
+    }
+
+    if (enrollment) {
+      if (!enrollment.completedLessons.includes(lessonId)) {
+        enrollment.completedLessons.push(lessonId);
+        const count = enrollment.completedLessons.length;
+        enrollment.progress = Math.min(100, Math.round((count / Math.max(1, totalLessons)) * 100));
+        await enrollment.save();
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: 'ক্লাস সম্পন্ন হয়েছে এবং ডেটাবেসে অগ্রগতি সংরক্ষিত হয়েছে!',
+        completedLessons: enrollment.completedLessons,
+        progress: enrollment.progress
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'ক্লাস অগ্রগতি সংরক্ষিত হয়েছে (গেস্ট মোড)।',
+      lessonId
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to update lesson progress.', error: error.message });
+  }
 });
 
 // Export definitions and router

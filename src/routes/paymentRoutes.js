@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const crypto = require('crypto');
 const User = require('../models/User');
 const Course = require('../models/Course');
+const Enrollment = require('../models/Enrollment');
 const { verifyAuth } = require('../middleware/auth');
 
 // ==============================================================================
@@ -217,8 +219,143 @@ const handleCallback = async (req, res) => {
   }
 };
 
-router.post('/webhook', handleCallback);
-router.post('/bkash/callback', handleCallback);
+// POST /api/payment/enroll — Direct Course Enrollment & Database Tracking
+router.post('/enroll', async (req, res) => {
+  try {
+    const { courseId, courseSlug, studentPhone, paymentGateway, amount: customAmount, trxID } = req.body;
+    let user = null;
+
+    // 1. Resolve student from JWT token if available
+    try {
+      const authHeader = req.headers.authorization;
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        const jwt = require('jsonwebtoken');
+        const token = authHeader.split(' ')[1];
+        const secret = process.env.JWT_SECRET || 'dipu_edu_default_jwt_secret_dev';
+        const decoded = jwt.verify(token, secret);
+        if (decoded && decoded.id) {
+          user = await User.findById(decoded.id);
+        }
+      }
+    } catch (e) {}
+
+    // 2. Resolve student from phone if not found via token
+    const phone = (user && user.phone) || studentPhone || req.body.phone || '01712345678';
+    if (!user) {
+      user = await User.findOne({ phone });
+      if (!user) {
+        user = await User.create({
+          phone,
+          name: req.body.studentName || 'Student',
+          role: 'student',
+          eduCoins: 100,
+        });
+      }
+    }
+
+    // 3. Resolve course from MongoDB
+    const targetIdOrSlug = courseSlug || courseId;
+    let course = null;
+    if (targetIdOrSlug) {
+      course = await Course.findOne({
+        $or: [
+          { slug: targetIdOrSlug.toString().toLowerCase() },
+          ...(mongoose.Types.ObjectId.isValid(targetIdOrSlug) ? [{ _id: targetIdOrSlug }] : [])
+        ]
+      });
+    }
+
+    const cSlug = course ? course.slug : (courseSlug || courseId || 'course-enrolled');
+    const cId = course ? course._id : (courseId || cSlug);
+    const cTitle = course ? (course.title?.bn || course.title?.en || course.title) : 'কোর্স';
+    const cLevel = course ? course.classLevel : 'HSC';
+    const finalAmount = Number(customAmount) || (course ? (course.discountPrice || course.price) : 999);
+    const finalTrxId = trxID || `TXN_${Date.now()}_${Math.floor(1000 + Math.random() * 9000)}`;
+    const gateway = paymentGateway || 'bkash';
+
+    // 4. Update User record in MongoDB
+    if (!user.enrolledCourses) user.enrolledCourses = [];
+    if (!user.enrolledCourseSlugs) user.enrolledCourseSlugs = [];
+
+    const alreadyInUser = user.enrolledCourseSlugs.includes(cSlug) || 
+      user.enrolledCourses.some(c => c && c.toString() === cId.toString());
+
+    if (!alreadyInUser) {
+      user.enrolledCourses.push(cId);
+      user.enrolledCourseSlugs.push(cSlug);
+      user.eduCoins = (user.eduCoins || 0) + 100;
+      await user.save();
+    }
+
+    // 5. Create or Update Enrollment in MongoDB
+    let enrollment = await Enrollment.findOne({
+      $and: [
+        { $or: [{ userId: user._id }, { userPhone: user.phone }] },
+        { $or: [{ courseId: cId }, { courseSlug: cSlug }] }
+      ]
+    });
+
+    if (enrollment) {
+      enrollment.status = 'completed';
+      enrollment.trxID = finalTrxId;
+      enrollment.paymentMethod = gateway;
+      enrollment.amount = finalAmount;
+      await enrollment.save();
+    } else {
+      enrollment = await Enrollment.create({
+        userId: user._id,
+        userPhone: user.phone,
+        courseId: cId,
+        courseSlug: cSlug,
+        courseTitle: cTitle,
+        classLevel: cLevel,
+        amount: finalAmount,
+        paymentMethod: gateway,
+        trxID: finalTrxId,
+        status: 'completed',
+        accessibleLessons: ['*'], // Full course access unlocked
+        completedLessons: [],
+        progress: 0,
+        enrolledAt: new Date()
+      });
+    }
+
+    // Increment course enrolled count if Course exists
+    if (course) {
+      course.enrolledStudentsCount = (course.enrolledStudentsCount || 0) + 1;
+      await course.save().catch(() => {});
+    }
+
+    console.log(`[DB Enrollment Tracked] User ${user.phone} (${user._id}) successfully bought and enrolled in course "${cSlug}"! Trx: ${finalTrxId}`);
+
+    return res.status(200).json({
+      success: true,
+      message: 'কোর্সটি সফলভাবে কেনা হয়েছে এবং ডেটাবেসে রেজিস্টার করা হয়েছে!',
+      enrollment: {
+        id: enrollment._id,
+        userId: user._id,
+        userPhone: user.phone,
+        courseId: cId,
+        courseSlug: cSlug,
+        courseTitle: cTitle,
+        amount: finalAmount,
+        paymentMethod: gateway,
+        trxID: finalTrxId,
+        status: 'completed',
+        enrolledAt: enrollment.enrolledAt,
+      },
+      user: {
+        phone: user.phone,
+        name: user.name,
+        enrolledCourses: user.enrolledCourses,
+        enrolledCourseSlugs: user.enrolledCourseSlugs
+      }
+    });
+  } catch (error) {
+    console.error('[Enrollment Error]', error);
+    return res.status(500).json({ success: false, message: 'কোর্স এনরোলমেন্ট সংরক্ষণ করতে সমস্যা হয়েছে।', error: error.message });
+  }
+});
 
 module.exports = router;
 

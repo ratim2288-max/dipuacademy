@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>কোর্স ওভারভিউ ও সিলেবাস — Dipu Academy</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/dipu-logo.png?v=5">
+  <link rel="shortcut icon" href="/favicon.ico?v=5">
+  <link rel="apple-touch-icon" href="/images/dipu-logo.png?v=5">
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Dipu Academy — কোর্স ওভারভিউ, চ্যাপ্টার সিলেবাস, লেকচার কাউন্ট, লিড মেন্টর পরিচিতি ও ক্লাসরুম প্লেয়ার অ্যাক্সেস।">
+  <meta name="theme-color" content="#090A10">
+
+  <!-- Google Fonts: Hind Siliguri & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Page Stylesheets -->
+  <link rel="stylesheet" href="/css/course-home.css?v=2.0">
+</head>
+<body class="course-home-body">
+
+  <!-- =========================================================================
+       1. TOP BRAND HEADER / NAVBAR
+       ========================================================================= -->
+  <header class="ch-header-bar">
+    <div class="ch-header-inner">
+      
+      <!-- Brand Logo -->
+      <a href="/" class="ch-brand-group" title="Dipu Academy Home">
+        <img src="/images/dipu-logo.png" alt="Dipu Academy Logo" class="ch-brand-logo">
+        <div class="ch-brand-title">
+          <span>Dipu</span>
+          <span>Academy</span>
+        </div>
+      </a>
+
+      <!-- Header Action Controls -->
+      <div class="ch-header-actions">
+        <!-- Theme Toggle -->
+        <button type="button" class="ch-icon-btn" id="themeToggleBtn" title="থিম পরিবর্তন (Light / Dark)" onclick="toggleTheme()">
+          <i class="fas fa-sun" id="themeIcon"></i>
+        </button>
+
+        <!-- Back to My Courses Button -->
+        <a href="/my-courses.html" class="ch-btn-ghost" title="আমার কোর্সসমূহে ফিরুন">
+          <i class="fas fa-arrow-left"></i>
+          <span>আমার কোর্সসমূহ</span>
+        </a>
+
+        <!-- User Profile Pill -->
+        <a href="/dashboard.html" class="ch-icon-btn" title="শিক্ষার্থী প্রোফাইল">
+          <i class="fas fa-user-graduate"></i>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       2. MAIN PAGE CONTENT: COURSE HOME / OVERVIEW
+       ========================================================================= -->
+  <main class="ch-main-container">
+
+    <!-- Top Back Button & Breadcrumbs Row -->
+    <div class="ch-top-nav-row" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 1.5rem;">
+      <nav class="ch-breadcrumbs" aria-label="Breadcrumb" style="margin-bottom: 0;">
+        <a href="/"><i class="fas fa-home" style="margin-right: 4px;"></i>হোম</a>
+        <i class="fas fa-chevron-right" style="font-size: 0.65rem;"></i>
+        <a href="/my-courses.html">আমার কোর্সসমূহ</a>
+        <i class="fas fa-chevron-right" style="font-size: 0.65rem;"></i>
+        <span class="active" id="bcCourseTitle">কোর্স ওভারভিউ</span>
+      </nav>
+
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <button type="button" class="ch-page-back-btn" onclick="if(window.history.length > 1){window.history.back();}else{window.location.href='/my-courses.html';}" title="পেছনে ফিরে যান">
+          <i class="fas fa-arrow-left"></i>
+          <span>পেছনে যান</span>
+        </button>
+        <a href="/my-courses.html" class="ch-page-back-btn" title="আমার সকল কোর্স দেখুন">
+          <i class="fas fa-th-large"></i>
+          <span>আমার কোর্সসমূহ</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────────────────────────────────────
+         CARD 1: কোর্স প্রোগ্রেস 🎉 (Exact Match to Image 3)
+         ───────────────────────────────────────────────────────────────────────── -->
+    <section class="ch-progress-card ch-fade-in-up">
+      <div class="ch-progress-card-grid">
+        
+        <!-- Left: Progress Information & Action Button -->
+        <div class="ch-progress-info">
+          
+          <div class="ch-progress-title-row">
+            <h1 class="ch-progress-title">
+              <span class="ch-shimmer-headline">কোর্স প্রোগ্রেস</span> 🎉
+            </h1>
+          </div>
+
+          <p class="ch-progress-subtitle">
+            <i class="fas fa-circle-check"></i>
+            <span>আপনি সফলভাবে কোর্সটিতে এনরোল হয়েছেন</span>
+          </p>
+
+          <!-- Progress Bar with Milestone Knob -->
+          <div class="ch-progress-bar-wrapper">
+            <div class="ch-progress-track">
+              <div class="ch-progress-fill" id="courseProgressFill" style="width: 0%;">
+                <div class="ch-progress-knob" id="courseProgressKnob" title="সার্টিফিকেট মাইলস্টোন">
+                  <i class="fas fa-award"></i>
+                </div>
+              </div>
+            </div>
+            <div class="ch-progress-labels">
+              <span>শুরু হয়েছে</span>
+              <span id="courseProgressPct" style="color: var(--ch-green); font-weight: 700;">০% সম্পন্ন</span>
+              <span>সার্টিফিকেট 🏆</span>
+            </div>
+          </div>
+
+          <!-- Primary CTA Button: "▶ কোর্স শুরু করুন" -->
+          <a href="/player.html?course=graphic-design-photoshop" id="startCourseBtn" class="ch-btn-start-course ch-btn-pulse">
+            <i class="fas fa-play" style="font-size: 0.85rem;"></i>
+            <span>কোর্স শুরু করুন</span>
+          </a>
+
+        </div>
+
+        <!-- Right: Course Thumbnail Banner -->
+        <div class="ch-progress-thumb-col">
+          <div class="ch-course-thumb-box">
+            <span class="ch-thumb-overlay-badge" id="thumbCategoryBadge">স্কিলস</span>
+            <img src="/images/courses/graphic-design-photoshop.jpg" id="courseBannerThumb" alt="Course Banner" onerror="this.src='/images/courses/routine-banner.jpg'">
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────────────────
+         CARD 2: কোর্স সিলেবাস (Exact Match to Image 3)
+         ───────────────────────────────────────────────────────────────────────── -->
+    <section class="ch-section-card ch-fade-in-up" style="animation-delay: 100ms;">
+      <div class="ch-section-header">
+        <h2 class="ch-section-title">
+          <i class="fas fa-book-open" style="color: var(--ch-green); font-size: 1.15rem;"></i>
+          <span>কোর্স সিলেবাস</span>
+        </h2>
+        <span class="ch-section-count-badge" id="syllabusTotalCount">
+          মোট ৩৮টি লেকচার ও রিসোর্স
+        </span>
+      </div>
+
+      <!-- Syllabus Accordion Items -->
+      <div class="ch-accordion-list" id="syllabusAccordionContainer">
+        <!-- Rendered dynamically by course-home.js -->
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────────────────
+         CARD 3: কোর্স ইন্সট্রাক্টর (Exact Match to Image 4)
+         ───────────────────────────────────────────────────────────────────────── -->
+    <section class="ch-section-card ch-fade-in-up" style="animation-delay: 200ms;">
+      <div class="ch-section-header">
+        <h2 class="ch-section-title">
+          <i class="fas fa-chalkboard-user" style="color: var(--ch-blue); font-size: 1.15rem;"></i>
+          <span>কোর্স ইন্সট্রাক্টর</span>
+        </h2>
+      </div>
+
+      <div class="ch-instructor-box">
+        <!-- Avatar with Verified Checkmark -->
+        <div class="ch-instructor-avatar-wrap">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop" id="mentorAvatar" alt="Instructor" class="ch-instructor-avatar" onerror="this.src='/images/dipu-logo.png'">
+          <div class="ch-instructor-verified" title="ভেরিফাইড লিড মেন্টর">
+            <i class="fas fa-check"></i>
+          </div>
+        </div>
+
+        <!-- Instructor Info with Animated Bio -->
+        <div class="ch-instructor-info">
+          <h3 class="ch-instructor-name" id="mentorName">Sadman Sadik</h3>
+          <p class="ch-instructor-bio" id="mentorBio">
+            Educational Content Creator; Digital Media Strategist; Author.
+          </p>
+          <div class="ch-instructor-stats-row">
+            <span class="ch-stat-pill"><i class="fas fa-users" style="color: var(--ch-cyan);"></i> <span id="statStudents">১০+ লক্ষ শিক্ষার্থী</span></span>
+            <span class="ch-stat-pill"><i class="fas fa-video" style="color: var(--ch-green);"></i> <span id="statLessons">৩৮টি লেকচার</span></span>
+            <span class="ch-stat-pill"><i class="fas fa-star" style="color: var(--ch-amber);"></i> <span id="statRating">৪.৯২ ★</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────────────────
+         CARD 4: কোর্সটি করে যা শিখবেন (Exact Match to Image 4)
+         ───────────────────────────────────────────────────────────────────────── -->
+    <section class="ch-section-card ch-fade-in-up" style="animation-delay: 300ms;">
+      <div class="ch-section-header">
+        <h2 class="ch-section-title">
+          <i class="fas fa-graduation-cap" style="color: var(--ch-purple); font-size: 1.15rem;"></i>
+          <span>কোর্সটি করে যা শিখবেন</span>
+        </h2>
+      </div>
+
+      <!-- Outcomes 2-Column Grid -->
+      <div class="ch-learn-grid" id="outcomesGrid">
+        <!-- Rendered dynamically by course-home.js -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       3. SITE FOOTER
+       ========================================================================= -->
+  <footer class="ch-footer">
+    <div class="ch-footer-inner">
+      <div>© 2026 Dipu Academy. সর্বস্বত্ব সংরক্ষিত। হটলাইন: <strong>16910</strong></div>
+      <div class="ch-footer-links">
+        <a href="/my-courses.html">আমার কোর্সসমূহ</a>
+        <a href="/#courses">নতুন কোর্স</a>
+        <a href="/dashboard.html">লার্নিং ড্যাশবোর্ড</a>
+        <a href="tel:16910">সহায়তা কেন্দ্র</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/course-home.js?v=2.0"></script>
+</body>
+</html>

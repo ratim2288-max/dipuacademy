@@ -1,0 +1,879 @@
+/* ==============================================================================
+   Dipu Academy — Course Home / Overview Page Stylesheet
+   Matches 10 Minute School Course Overview Architecture (Reference: Image 3 & 4)
+   Features:
+   - 10MS Luxury Dark & Clean Crisp Light Mode
+   - Shimmer Text Animation, Text Reveal, Badge Counting
+   - Accordion Syllabus with lesson counts (৮টি ভিডিও, ২১টি ভিডিও)
+   - Mentor Card (Sadman Sadik / Dipu Sir) & Outcomes Grid
+   ============================================================================== */
+
+:root {
+  --ch-bg: #090A10;
+  --ch-surface: #11131F;
+  --ch-surface-elevated: #181B2B;
+  --ch-border: rgba(255, 255, 255, 0.08);
+  --ch-border-hover: rgba(0, 194, 255, 0.35);
+  --ch-text-primary: #FFFFFF;
+  --ch-text-secondary: #94A3B8;
+  --ch-text-muted: #64748B;
+
+  --ch-green: #10B981;
+  --ch-green-hover: #059669;
+  --ch-green-light: rgba(16, 185, 129, 0.12);
+  --ch-green-glow: rgba(16, 185, 129, 0.35);
+
+  --ch-blue: #0084FF;
+  --ch-cyan: #00C2FF;
+  --ch-amber: #F59E0B;
+  --ch-purple: #8B5CF6;
+  --ch-red: #EF4444;
+
+  --ch-progress-track: rgba(255, 255, 255, 0.12);
+  --ch-progress-fill: #10B981;
+}
+
+/* Light Theme Variables (Exact 1:1 match to Image 3 & 4 light look) */
+body.light-theme {
+  --ch-bg: #F8FAFC;
+  --ch-surface: #FFFFFF;
+  --ch-surface-elevated: #F1F5F9;
+  --ch-border: #E2E8F0;
+  --ch-border-hover: #CBD5E1;
+  --ch-text-primary: #0F172A;
+  --ch-text-secondary: #475569;
+  --ch-text-muted: #64748B;
+
+  --ch-progress-track: #E2E8F0;
+  --ch-progress-fill: #10B981;
+  --ch-green-light: rgba(16, 185, 129, 0.1);
+  --ch-green-glow: rgba(16, 185, 129, 0.2);
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body.course-home-body {
+  background-color: var(--ch-bg);
+  color: var(--ch-text-primary);
+  font-family: 'Hind Siliguri', 'Inter', -apple-system, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==============================================================================
+   TEXT ANIMATIONS & SHIMMER EFFECTS ("agolo taxt animison hobe")
+   ============================================================================== */
+
+@keyframes chShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes chPulseGlow {
+  0%, 100% {
+    box-shadow: 0 4px 14px var(--ch-green-glow), 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  50% {
+    box-shadow: 0 6px 22px rgba(16, 185, 129, 0.5), 0 0 0 6px rgba(16, 185, 129, 0.15);
+  }
+}
+
+@keyframes chBadgeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes chFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes chWordReveal {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+/* Reusable Animation Classes */
+.ch-shimmer-headline {
+  background: linear-gradient(90deg, #10B981 0%, #00C2FF 35%, #8B5CF6 70%, #10B981 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: chShimmer 7s ease infinite;
+  display: inline-block;
+}
+
+.ch-badge-animated {
+  animation: chBadgeFloat 3s ease-in-out infinite;
+}
+
+.ch-btn-pulse {
+  animation: chPulseGlow 2.5s infinite;
+}
+
+.ch-fade-in-up {
+  animation: chFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.ch-word-span {
+  display: inline-block;
+  opacity: 0;
+  animation: chWordReveal 0.45s ease forwards;
+}
+
+/* ==============================================================================
+   HEADER BAR & BREADCRUMBS
+   ============================================================================== */
+
+.ch-header-bar {
+  background-color: var(--ch-surface);
+  border-bottom: 1px solid var(--ch-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.25s ease;
+}
+
+.ch-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ch-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.ch-brand-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  object-fit: cover;
+}
+
+.ch-brand-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+.ch-brand-title span:first-child {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--ch-text-primary);
+}
+.ch-brand-title span:last-child {
+  font-weight: 800;
+  font-size: 1.05rem;
+  background: linear-gradient(135deg, #0084FF 0%, #00C2FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ch-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ch-icon-btn {
+  background: rgba(148, 163, 184, 0.1);
+  border: 1px solid var(--ch-border);
+  color: var(--ch-text-secondary);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+.ch-icon-btn:hover {
+  color: var(--ch-text-primary);
+  border-color: var(--ch-green);
+  transform: translateY(-1px);
+}
+
+.ch-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ch-text-secondary);
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid var(--ch-border);
+  transition: all 0.2s ease;
+}
+.ch-btn-ghost:hover {
+  color: var(--ch-green);
+  border-color: var(--ch-green);
+  background: var(--ch-green-light);
+}
+
+.ch-page-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--ch-border);
+  color: var(--ch-text-secondary);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ch-page-back-btn:hover {
+  background: rgba(0, 194, 255, 0.15);
+  border-color: var(--ch-cyan);
+  color: #FFFFFF;
+  transform: translateX(-2px);
+  box-shadow: 0 4px 14px rgba(0, 194, 255, 0.25);
+}
+body.light-theme .ch-page-back-btn {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+  color: #334155;
+}
+body.light-theme .ch-page-back-btn:hover {
+  background: #E2E8F0;
+  border-color: var(--ch-green);
+  color: var(--ch-green);
+}
+
+/* ==============================================================================
+   MAIN CONTAINER
+   ============================================================================== */
+
+.ch-main-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 4rem;
+  flex: 1;
+}
+
+/* Breadcrumbs */
+.ch-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: var(--ch-text-secondary);
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.ch-breadcrumbs a {
+  color: var(--ch-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.ch-breadcrumbs a:hover {
+  color: var(--ch-green);
+}
+.ch-breadcrumbs span.active {
+  color: var(--ch-text-primary);
+  font-weight: 600;
+}
+
+/* ==============================================================================
+   CARD 1: COURSE PROGRESS BANNER (Exact Match to Image 3)
+   ============================================================================== */
+
+.ch-progress-card {
+  background: var(--ch-surface);
+  border: 1px solid var(--ch-border);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+body.light-theme .ch-progress-card {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+}
+
+.ch-progress-card-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) 340px;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .ch-progress-card-grid {
+    grid-template-columns: 1fr;
+  }
+  .ch-progress-thumb-col {
+    order: -1;
+  }
+}
+
+.ch-progress-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ch-progress-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ch-progress-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--ch-text-primary);
+  line-height: 1.25;
+}
+
+.ch-progress-subtitle {
+  font-size: 1rem;
+  color: var(--ch-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ch-progress-subtitle i {
+  color: var(--ch-green);
+}
+
+/* Progress Bar with Milestone Knob & % */
+.ch-progress-bar-wrapper {
+  margin: 0.5rem 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ch-progress-track {
+  width: 100%;
+  height: 8px;
+  background-color: var(--ch-progress-track);
+  border-radius: 9999px;
+  position: relative;
+}
+
+.ch-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10B981 0%, #00C2FF 100%);
+  border-radius: 9999px;
+  position: relative;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ch-progress-knob {
+  position: absolute;
+  right: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ch-surface);
+  border: 3px solid var(--ch-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  color: var(--ch-green);
+  font-size: 10px;
+}
+
+.ch-progress-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  color: var(--ch-text-secondary);
+  font-weight: 600;
+}
+
+/* Big Green Action Button: "▶ কোর্স শুরু করুন" */
+.ch-btn-start-course {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--ch-green);
+  color: #FFFFFF;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  width: fit-content;
+  box-shadow: 0 4px 14px var(--ch-green-glow);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ch-btn-start-course:hover {
+  background-color: var(--ch-green-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+}
+
+/* Right-side Course Banner Thumbnail */
+.ch-progress-thumb-col {
+  position: relative;
+}
+
+.ch-course-thumb-box {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  background-color: #0E1322;
+  aspect-ratio: 16 / 9;
+}
+
+.ch-course-thumb-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.ch-course-thumb-box:hover img {
+  transform: scale(1.04);
+}
+
+.ch-thumb-overlay-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ==============================================================================
+   CARD 2: COURSE SYLLABUS ACCORDION (Exact Match to Image 3)
+   ============================================================================== */
+
+.ch-section-card {
+  background: var(--ch-surface);
+  border: 1px solid var(--ch-border);
+  border-radius: 16px;
+  padding: 1.75rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: all 0.25s ease;
+}
+
+.ch-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--ch-border);
+}
+
+.ch-section-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--ch-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ch-section-count-badge {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ch-green);
+  background: var(--ch-green-light);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+/* Accordion Items */
+.ch-accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ch-accordion-item {
+  border: 1px solid var(--ch-border);
+  border-radius: 12px;
+  background: var(--ch-surface-elevated);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.ch-accordion-item:hover {
+  border-color: var(--ch-border-hover);
+}
+
+.ch-accordion-item.active {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.ch-accordion-trigger {
+  width: 100%;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  font-family: inherit;
+  transition: background-color 0.2s;
+}
+
+.ch-accordion-trigger:hover {
+  background: rgba(148, 163, 184, 0.05);
+}
+
+.ch-accordion-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ch-accordion-heading {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ch-text-primary);
+  line-height: 1.35;
+}
+
+.ch-accordion-meta {
+  font-size: 0.85rem;
+  color: var(--ch-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ch-video-count-pill {
+  color: var(--ch-green);
+  font-weight: 700;
+  background: var(--ch-green-light);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.ch-chevron-icon {
+  font-size: 0.95rem;
+  color: var(--ch-text-secondary);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.ch-accordion-item.active .ch-chevron-icon {
+  transform: rotate(180deg);
+  color: var(--ch-green);
+}
+
+.ch-accordion-content {
+  display: none;
+  padding: 0.75rem 1.25rem 1.25rem;
+  border-top: 1px solid var(--ch-border);
+  background: var(--ch-surface);
+}
+
+.ch-accordion-item.active .ch-accordion-content {
+  display: block;
+  animation: chFadeUp 0.35s ease;
+}
+
+/* Lessons list inside accordion */
+.ch-lessons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ch-lesson-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--ch-surface-elevated);
+  border: 1px solid var(--ch-border);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+  gap: 12px;
+}
+
+.ch-lesson-row:hover {
+  border-color: var(--ch-green);
+  transform: translateX(4px);
+  background: var(--ch-green-light);
+}
+
+.ch-lesson-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.ch-lesson-play-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--ch-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.ch-lesson-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ch-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ch-lesson-duration {
+  font-size: 0.8rem;
+  color: var(--ch-text-secondary);
+  white-space: nowrap;
+}
+
+/* ==============================================================================
+   CARD 3: COURSE INSTRUCTOR (Exact Match to Image 4)
+   ============================================================================== */
+
+.ch-instructor-box {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+}
+
+@media (max-width: 600px) {
+  .ch-instructor-box {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.ch-instructor-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.ch-instructor-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--ch-green);
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
+}
+
+.ch-instructor-verified {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background: var(--ch-green);
+  color: #FFFFFF;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  border: 2px solid var(--ch-surface);
+}
+
+.ch-instructor-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ch-instructor-name {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--ch-text-primary);
+}
+
+.ch-instructor-bio {
+  font-size: 0.95rem;
+  color: var(--ch-text-secondary);
+  line-height: 1.5;
+}
+
+.ch-instructor-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.ch-stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ch-text-secondary);
+  background: rgba(148, 163, 184, 0.1);
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+
+/* ==============================================================================
+   CARD 4: WHAT YOU WILL LEARN (Exact Match to Image 4)
+   ============================================================================== */
+
+.ch-learn-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  padding: 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+  .ch-learn-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ch-learn-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 1rem 1.15rem;
+  border-radius: 12px;
+  background: var(--ch-surface-elevated);
+  border: 1px solid var(--ch-border);
+  transition: all 0.25s ease;
+}
+
+.ch-learn-item:hover {
+  border-color: var(--ch-green);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.ch-learn-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--ch-green-light);
+  color: var(--ch-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ch-learn-text {
+  font-size: 0.92rem;
+  color: var(--ch-text-primary);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* ==============================================================================
+   FOOTER
+   ============================================================================== */
+
+.ch-footer {
+  background-color: var(--ch-surface);
+  border-top: 1px solid var(--ch-border);
+  padding: 2.5rem 1.25rem 2rem;
+  margin-top: auto;
+}
+
+.ch-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.88rem;
+  color: var(--ch-text-secondary);
+}
+
+.ch-footer-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.ch-footer-links a {
+  color: var(--ch-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.ch-footer-links a:hover {
+  color: var(--ch-green);
+}

@@ -755,11 +755,163 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// GET /api/courses/:courseId/access-status — Check whether user has bought/enrolled in this course
+router.get('/:courseId/access-status', async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const { lessonId, phone: queryPhone } = req.query;
+
+    const User = require('../models/User');
+    const Enrollment = require('../models/Enrollment');
+
+    // 1. Resolve user from token, cookie, or query
+    let user = null;
+    try {
+      const authHeader = req.headers.authorization;
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        const jwt = require('jsonwebtoken');
+        const token = authHeader.split(' ')[1];
+        const secret = process.env.JWT_SECRET || 'dipu_edu_default_jwt_secret_dev';
+        const decoded = jwt.verify(token, secret);
+        if (decoded && decoded.id) {
+          user = await User.findById(decoded.id);
+        } else if (decoded && decoded.phone) {
+          user = await User.findOne({ phone: decoded.phone });
+        }
+      }
+    } catch (e) {}
+
+    const phone = (user && user.phone) || queryPhone;
+    if (!user && phone) {
+      user = await User.findOne({ phone });
+    }
+
+    // 2. Resolve course from MongoDB or IN_MEMORY
+    let course = null;
+    if (mongoose.connection.readyState === 1) {
+      course = await Course.findOne({
+        $or: [
+          { slug: courseId.toLowerCase() },
+          ...(mongoose.Types.ObjectId.isValid(courseId) ? [{ _id: courseId }] : [])
+        ]
+      });
+    }
+
+    if (!course) {
+      course = IN_MEMORY_COURSES.find(c => c.slug === courseId || c._id === courseId);
+    }
+
+    // Identify free preview lessons
+    const freeLessons = [];
+    if (course && course.chapters) {
+      course.chapters.forEach(ch => {
+        (ch.lessons || []).forEach(l => {
+          if (l.isFree) {
+            freeLessons.push(l._id ? l._id.toString() : (l.lessonTitle?.en || 'free'));
+          }
+        });
+      });
+    }
+    // Default preview lessons if not explicitly listed
+    if (freeLessons.length === 0) {
+      freeLessons.push('les_1_1', 'gd_1_1', 'free-preview');
+    }
+
+    // 3. Admin has unrestricted bypass access
+    if (user && (user.role === 'admin' || user.role === 'super_admin')) {
+      return res.status(200).json({
+        success: true,
+        enrolled: true,
+        role: user.role,
+        isFree: true,
+        status: 'admin_unrestricted',
+        course: course ? {
+          id: course._id,
+          slug: course.slug,
+          title: course.title?.bn || course.title?.en,
+        } : null,
+        freeLessons
+      });
+    }
+
+    // 4. Query MongoDB Enrollment collection
+    let isEnrolled = false;
+    let enrollmentDoc = null;
+
+    if (user || phone) {
+      const cSlug = course ? course.slug : courseId;
+      const cId = course ? course._id : courseId;
+
+      enrollmentDoc = await Enrollment.findOne({
+        $and: [
+          {
+            $or: [
+              ...(user ? [{ userId: user._id }] : []),
+              ...(phone ? [{ userPhone: phone }] : [])
+            ]
+          },
+          {
+            $or: [
+              { courseSlug: cSlug },
+              { courseId: cId },
+              { courseId: courseId },
+              { courseSlug: courseId }
+            ]
+          }
+        ],
+        status: 'completed'
+      });
+
+      if (enrollmentDoc) {
+        isEnrolled = true;
+      } else if (user) {
+        if (user.enrolledCourseSlugs && user.enrolledCourseSlugs.includes(cSlug)) {
+          isEnrolled = true;
+        } else if (user.enrolledCourses && user.enrolledCourses.some(c => c && c.toString() === cId.toString())) {
+          isEnrolled = true;
+        }
+      }
+    }
+
+    return res.status(200).json({
+      success: true,
+      enrolled: isEnrolled,
+      status: isEnrolled ? 'active_enrolled' : 'not_enrolled',
+      message: isEnrolled 
+        ? 'কোর্সটিতে আপনার সক্রিয় অ্যাক্সেস রয়েছে।' 
+        : 'এই কোর্সের ক্লাসগুলো দেখতে কোর্সটি আগে এনরোল করতে হবে।',
+      enrollment: enrollmentDoc ? {
+        id: enrollmentDoc._id,
+        enrolledAt: enrollmentDoc.enrolledAt,
+        amount: enrollmentDoc.amount,
+        progress: enrollmentDoc.progress || 0,
+        completedLessons: enrollmentDoc.completedLessons || [],
+        paymentMethod: enrollmentDoc.paymentMethod,
+        trxID: enrollmentDoc.trxID
+      } : null,
+      course: course ? {
+        id: course._id,
+        slug: course.slug,
+        title: course.title?.bn || course.title?.en,
+        price: course.price,
+        discountPrice: course.discountPrice,
+      } : null,
+      freeLessons
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to verify course access.', error: error.message });
+  }
+});
+
 // GET /stream/token/:lessonId & /token/:lessonId (Tier 4: Tokenized Video Streaming Proxy)
-router.get(['/stream/token/:lessonId', '/token/:lessonId'], (req, res) => {
+router.get(['/stream/token/:lessonId', '/token/:lessonId'], async (req, res) => {
   const { lessonId } = req.params;
+  const { course: courseParam } = req.query;
+
+  const User = require('../models/User');
+  const Enrollment = require('../models/Enrollment');
   
-  // Optional auth verification
+  // 1. Auth verification
   let user = null;
   let sessionToken = 'demo-session-token-' + Date.now();
   
@@ -770,22 +922,63 @@ router.get(['/stream/token/:lessonId', '/token/:lessonId'], (req, res) => {
       const token = authHeader.split(' ')[1];
       const secret = process.env.JWT_SECRET || 'dipu_edu_default_jwt_secret_dev';
       const decoded = jwt.verify(token, secret);
-      user = {
-        phone: decoded.phone || '',
-        userId: decoded.id ? decoded.id.toString().slice(-6) : '',
-      };
-      sessionToken = decoded.sessionToken || sessionToken;
+      if (decoded && decoded.id) {
+        user = await User.findById(decoded.id);
+      }
+      sessionToken = (decoded && decoded.sessionToken) || sessionToken;
     }
-  } catch (e) {
-    // Fall back to guest session
+  } catch (e) {}
+
+  // 2. Check if this is a free lesson (e.g., lesson 1 / demo preview)
+  const isFreeLesson = lessonId === 'les_1_1' || lessonId === 'gd_1_1' || lessonId.includes('free');
+
+  // 3. If lesson is NOT free, enforce MongoDB database purchase/enrollment check
+  if (!isFreeLesson) {
+    const isAdmin = user && (user.role === 'admin' || user.role === 'super_admin');
+    let hasPaidEnrollment = false;
+
+    if (isAdmin) {
+      hasPaidEnrollment = true;
+    } else if (user) {
+      const enrollment = await Enrollment.findOne({
+        $or: [
+          { userId: user._id },
+          { userPhone: user.phone }
+        ],
+        ...(courseParam ? {
+          $or: [
+            { courseSlug: courseParam },
+            { courseId: courseParam }
+          ]
+        } : {}),
+        status: 'completed'
+      });
+
+      if (enrollment) {
+        hasPaidEnrollment = true;
+      } else if (courseParam && user.enrolledCourseSlugs && user.enrolledCourseSlugs.includes(courseParam)) {
+        hasPaidEnrollment = true;
+      }
+    }
+
+    if (!hasPaidEnrollment) {
+      console.warn(`[Access Denied] Unenrolled user tried to access paid lesson ${lessonId}`);
+      return res.status(403).json({
+        success: false,
+        enrolled: false,
+        paywallLocked: true,
+        message: 'লক করা ক্লাস! এই ক্লাসটি দেখতে হলে আপনাকে অবশ্যই কোর্সটি এনরোল করতে হবে।',
+        lessonId,
+      });
+    }
   }
 
   // Forensic Watermark Payload (student phone & ID)
   const watermarkPayload = {
-    phone: user ? user.phone : '',
-    userId: user ? user.userId : '',
+    phone: user ? user.phone : '01712-345678',
+    userId: user ? user._id.toString().slice(-6) : 'DEMO',
     timestamp: Date.now(),
-    studentName: user ? 'Student' : '',
+    studentName: user ? user.name : 'Student',
   };
 
   return res.status(200).json({

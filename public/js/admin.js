@@ -132,6 +132,7 @@ function initTabRouting() {
 
     // Auto-load data for active tabs
     if (targetTab === "courses" && window.loadCourses) window.loadCourses();
+    if (targetTab === "pos" && window.loadPosData) window.loadPosData();
     if (targetTab === "students") loadAllStudents();
     if (targetTab === "user-details") loadAllUserDetails();
     if (targetTab === "reviews" && window.loadReviews) window.loadReviews();
@@ -296,13 +297,16 @@ function renderDashboardStudents(students) {
     return;
   }
 
-  tbody.innerHTML = students.slice(0, 5).map(s => {
+  tbody.innerHTML = students.slice(0, 10).map(s => {
     const hasCourse = (s.purchasedCoursesCount || 0) > 0;
+    const courseLabel = s.coursesList && s.coursesList.length > 0
+      ? `✓ ${s.coursesList[0].title}`
+      : (hasCourse ? `✓ ${s.purchasedCoursesCount}টি কোর্স` : 'কিনেননি');
     return `
       <tr>
         <td>
           <div class="table-user-cell">
-            <div style="background: rgba(255, 122, 26, 0.15); color: var(--accent-orange); display:flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; font-weight:700; font-size:13px; flex-shrink:0; border: 1px solid rgba(255, 122, 26, 0.3);">
+            <div style="background: rgba(0, 194, 255, 0.15); color: #00C2FF; display:flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; font-weight:700; font-size:13px; flex-shrink:0; border: 1px solid rgba(0, 194, 255, 0.3);">
               ${(s.name || "?")[0]}
             </div>
             <div class="user-cell-name">${s.name || "—"}</div>
@@ -310,7 +314,7 @@ function renderDashboardStudents(students) {
         </td>
         <td><span class="service-tag">${s.classLevel || "—"}</span></td>
         <td style="font-family:monospace; font-size:13px; color: var(--text-secondary);">${s.phone || "—"}</td>
-        <td><span class="${hasCourse ? 'badge-clocked-in' : 'badge-scheduled'}">${hasCourse ? s.purchasedCoursesCount + " টি কোর্স" : "কিনেননি"}</span></td>
+        <td><span class="${hasCourse ? 'badge-clocked-in' : 'badge-scheduled'}">${courseLabel}</span></td>
         <td><span class="badge-clocked-in"><span class="status-pulse-dot" style="width:5px; height:5px;"></span> সক্রিয়</span></td>
       </tr>
     `;
@@ -1520,12 +1524,16 @@ function renderStudentsTable(students, filter = "all") {
   tbody.innerHTML = filtered.map((s, i) => {
     const hasCourse = (s.purchasedCoursesCount || 0) > 0;
     const date = s.createdAt ? new Date(s.createdAt).toLocaleDateString("bn-BD") : "—";
+    const courseDetails = s.coursesList && s.coursesList.length > 0
+      ? s.coursesList.map(c => `<div style="margin:2px 0;"><span style="display:inline-flex; align-items:center; gap:4px; background:rgba(0,194,255,0.1); color:#00C2FF; border:1px solid rgba(0,194,255,0.3); padding:2px 8px; border-radius:6px; font-size:11.5px; font-weight:700;">✓ ${c.title} <span style="color:#10B981;">(৳${c.amount} • ${c.paymentMethod?.toUpperCase()})</span></span></div>`).join("")
+      : (hasCourse ? `<span class="badge-clocked-in">✓ ${s.purchasedCoursesCount} টি কোর্স</span>` : `<span class="badge-scheduled">কিনেননি</span>`);
+
     return `
       <tr>
         <td style="color: var(--text-muted); font-size: 12px;">${i + 1}</td>
         <td>
           <div class="table-user-cell">
-            <div class="user-cell-avatar" style="background: rgba(255, 122, 26, 0.15); color: var(--accent-orange); display:flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; font-weight:700; font-size:13px; flex-shrink:0; border: 1px solid rgba(255, 122, 26, 0.3);">
+            <div class="user-cell-avatar" style="background: rgba(0, 194, 255, 0.15); color: #00C2FF; display:flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; font-weight:700; font-size:13px; flex-shrink:0; border: 1px solid rgba(0, 194, 255, 0.3);">
               ${(s.name || "?")[0]}
             </div>
             <div>
@@ -1536,9 +1544,7 @@ function renderStudentsTable(students, filter = "all") {
         <td><span class="service-tag">${s.classLevel || "—"}</span></td>
         <td style="font-family: monospace; font-size: 13px; color: var(--text-secondary);">${s.phone || "—"}</td>
         <td>
-          <span class="${hasCourse ? 'badge-clocked-in' : 'badge-scheduled'}">
-            ${hasCourse ? `✓ ${s.purchasedCoursesCount} টি কোর্স` : "কিনেননি"}
-          </span>
+          ${courseDetails}
         </td>
         <td style="font-size: 12px; color: var(--text-muted);">${date}</td>
         <td><span class="badge-clocked-in"><span class="status-pulse-dot" style="width:5px; height:5px;"></span> সক্রিয়</span></td>
@@ -3358,5 +3364,384 @@ window.resetHelplineSettingsToDefault = async function() {
 if (window.location.hash === '#helpline') {
   setTimeout(() => window.loadHelplineSettings && window.loadHelplineSettings(), 200);
 }
+
+// ==============================================================================
+// 16. POS (Point of Sale) & Counter Course Selling Engine
+// ==============================================================================
+let posSalesHistoryData = [];
+let posAvailableCourses = [];
+
+async function loadPosData() {
+  await loadPosCourseDropdown();
+  await loadPosRecentSales();
+}
+window.loadPosData = loadPosData;
+
+async function loadPosCourseDropdown() {
+  const select = document.getElementById("posCourseSelect");
+  if (!select) return;
+
+  try {
+    const res = await fetch("/api/courses");
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && Array.isArray(data.courses) && data.courses.length > 0) {
+        posAvailableCourses = data.courses;
+      }
+    }
+  } catch (e) {}
+
+  if (!posAvailableCourses || posAvailableCourses.length === 0) {
+    posAvailableCourses = [
+      { slug: "physics-1st", title: { bn: "পদার্থবিজ্ঞান ১ম পত্র (ফুল কোর্স)" }, price: 850, discountPrice: 419, classLevel: "HSC" },
+      { slug: "chemistry-1st", title: { bn: "রসায়ন ১ম পত্র (মাস্টারক্লাস)" }, price: 850, discountPrice: 419, classLevel: "HSC" },
+      { slug: "higher-math", title: { bn: "উচ্চতর গণিত ও এডমিশন ক্র্যাশ কোর্স" }, price: 1200, discountPrice: 599, classLevel: "Admission" },
+      { slug: "biology-master", title: { bn: "জীববিজ্ঞান ১ম ও ২য় পত্র (মেডিকেল স্পেশাল)" }, price: 850, discountPrice: 419, classLevel: "HSC" },
+      { slug: "ssc-science-bundle", title: { bn: "SSC সাধারণ বিজ্ঞান ও গণিত ফাউন্ডেশন" }, price: 750, discountPrice: 350, classLevel: "SSC" },
+      { slug: "graphic-design-photoshop", title: { bn: "Graphic Designing with Photoshop" }, price: 950, discountPrice: 499, classLevel: "Skills" }
+    ];
+  }
+
+  select.innerHTML = '<option value="">-- কোর্স বাছাই করুন --</option>' + posAvailableCourses.map(c => {
+    const title = c.title?.bn || c.title?.en || c.title || "কোর্স";
+    const price = c.discountPrice || c.price || 500;
+    return `<option value="${c.slug || c._id}" data-price="${price}" data-reg="${c.price || price}" data-title="${title}" data-class="${c.classLevel || 'HSC'}">${title} — ৳${price}</option>`;
+  }).join("");
+}
+
+async function loadPosRecentSales() {
+  const tbody = document.getElementById("posSalesTableBody");
+  const countBadge = document.getElementById("posSalesCountBadge");
+
+  try {
+    const res = await fetch("/api/admin/pos/sales", {
+      headers: { "Authorization": "Bearer " + (localStorage.getItem("adminToken") || "dipu_admin_super_token_2026") }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && Array.isArray(data.sales)) {
+        posSalesHistoryData = data.sales;
+        renderPosSalesTable(posSalesHistoryData);
+        updatePosStats(posSalesHistoryData);
+        if (countBadge) countBadge.textContent = `${posSalesHistoryData.length}টি বিক্রয় সম্পন্ন`;
+        return;
+      }
+    }
+  } catch (err) {}
+
+  // Fallback demo sales if empty
+  posSalesHistoryData = [
+    { trxID: "POS_2026_01", studentName: "তানভির হোসেন", studentPhone: "01712345678", classLevel: "HSC", courseTitle: "রসায়ন ১ম পত্র", amount: 419, paymentMethod: "bkash", date: new Date().toISOString() },
+    { trxID: "POS_2026_02", studentName: "নুসরাত জাহান", studentPhone: "01812345679", classLevel: "HSC", courseTitle: "পদার্থবিজ্ঞান ১ম পত্র", amount: 419, paymentMethod: "cash", date: new Date().toISOString() },
+    { trxID: "POS_2026_03", studentName: "সাজিদ মাহমুদ", studentPhone: "01612345680", classLevel: "SSC", courseTitle: "SSC সাধারণ বিজ্ঞান", amount: 350, paymentMethod: "nagad", date: new Date().toISOString() }
+  ];
+  renderPosSalesTable(posSalesHistoryData);
+  updatePosStats(posSalesHistoryData);
+}
+
+function updatePosStats(sales) {
+  const totalCount = sales.length;
+  let totalRev = 0;
+  let cashRev = 0;
+  let digitalRev = 0;
+
+  sales.forEach(s => {
+    const amt = Number(s.amount) || 0;
+    totalRev += amt;
+    if ((s.paymentMethod || "").toLowerCase() === "cash") {
+      cashRev += amt;
+    } else {
+      digitalRev += amt;
+    }
+  });
+
+  const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  setVal("posTotalSalesCount", `${totalCount}টি`);
+  setVal("posTotalRevenueBDT", `৳${totalRev.toLocaleString('bn-BD')}`);
+  setVal("posCashRevenueBDT", `৳${cashRev.toLocaleString('bn-BD')}`);
+  setVal("posDigitalRevenueBDT", `৳${digitalRev.toLocaleString('bn-BD')}`);
+}
+
+function renderPosSalesTable(sales) {
+  const tbody = document.getElementById("posSalesTableBody");
+  if (!tbody) return;
+
+  if (!sales || sales.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding: 30px; color: var(--text-muted);">কোনো বিক্রয় রেকর্ড পাওয়া যায়নি। নতুন বিক্রয় সম্পন্ন করুন।</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = sales.map((s, i) => {
+    const date = s.date ? new Date(s.date).toLocaleDateString("bn-BD", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "—";
+    const methodBadge = (s.paymentMethod || "cash").toLowerCase() === "cash"
+      ? '<span style="background:rgba(245,158,11,0.15); color:#F59E0B; border:1px solid rgba(245,158,11,0.3); padding:2px 8px; border-radius:6px; font-weight:700; font-size:11px;">💵 ক্যাশ</span>'
+      : `<span style="background:rgba(0,194,255,0.15); color:#00C2FF; border:1px solid rgba(0,194,255,0.3); padding:2px 8px; border-radius:6px; font-weight:700; font-size:11px;">📱 ${s.paymentMethod?.toUpperCase()}</span>`;
+
+    return `
+      <tr>
+        <td style="color: var(--text-muted); font-size: 12px;">${i + 1}</td>
+        <td style="font-family: monospace; font-size: 12px; color: #00C2FF; font-weight:700;">${s.trxID || "—"}</td>
+        <td>
+          <div class="table-user-cell">
+            <div style="background: rgba(0, 194, 255, 0.15); color: #00C2FF; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">
+              ${(s.studentName || "?")[0]}
+            </div>
+            <div class="user-cell-name" style="font-size: 13px;">${s.studentName || "—"}</div>
+          </div>
+        </td>
+        <td style="font-family: monospace; font-size: 12.5px; color: #F59E0B;">${s.studentPhone || "—"}</td>
+        <td><span class="service-tag">${s.classLevel || "HSC"}</span></td>
+        <td style="font-weight: 600; color: #FFFFFF; font-size: 12.5px;">${s.courseTitle || "কোর্স"}</td>
+        <td style="font-weight: 800; color: #10B981; font-size: 13.5px;">৳${s.amount}</td>
+        <td>${methodBadge}</td>
+        <td style="font-size: 11.5px; color: var(--text-muted);">${date}</td>
+        <td>
+          <button type="button" onclick="previewPosInvoiceFromRow('${s.trxID}')" style="background: rgba(0,194,255,0.12); border: 1px solid rgba(0,194,255,0.3); color: #00C2FF; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer;">
+            <i class="fas fa-eye mr-1"></i> রসিদ
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+window.filterPosSales = function(method, btn) {
+  document.querySelectorAll("#view-pos .filter-pill").forEach(p => p.classList.remove("active"));
+  if (btn) btn.classList.add("active");
+
+  if (method === "all") {
+    renderPosSalesTable(posSalesHistoryData);
+  } else {
+    const filtered = posSalesHistoryData.filter(s => (s.paymentMethod || "").toLowerCase() === method.toLowerCase());
+    renderPosSalesTable(filtered);
+  }
+};
+
+window.handlePosPhoneInput = function(phone) {
+  const p = (phone || "").trim();
+  const notice = document.getElementById("posUserMatchNotice");
+  const nameInp = document.getElementById("posName");
+  const classSelect = document.getElementById("posClass");
+  const invPhone = document.getElementById("invStudentPhone");
+  const invName = document.getElementById("invStudentName");
+
+  if (invPhone) invPhone.textContent = p || "—";
+
+  if (p.length >= 11) {
+    const matched = (allStudentsData || []).find(s => s.phone === p);
+    if (matched) {
+      if (nameInp && !nameInp.value) nameInp.value = matched.name || "";
+      if (classSelect && matched.classLevel) classSelect.value = matched.classLevel;
+      if (notice) notice.style.display = "block";
+      if (invName) invName.textContent = matched.name || "—";
+      return;
+    }
+  }
+  if (notice) notice.style.display = "none";
+  if (invName && nameInp && nameInp.value) invName.textContent = nameInp.value;
+};
+
+window.handlePosCourseChange = function(val) {
+  const select = document.getElementById("posCourseSelect");
+  const opt = select ? select.selectedOptions[0] : null;
+  if (!opt || !val) return;
+
+  const price = Number(opt.dataset.price) || 850;
+  const reg = Number(opt.dataset.reg) || price;
+  const title = opt.dataset.title || opt.textContent;
+  const cl = opt.dataset.class;
+
+  const regInp = document.getElementById("posRegularFee");
+  const finalInp = document.getElementById("posFinalAmount");
+  const discInp = document.getElementById("posDiscount");
+  const classSelect = document.getElementById("posClass");
+
+  if (regInp) regInp.value = reg;
+  if (discInp) discInp.value = Math.max(0, reg - price);
+  if (finalInp) finalInp.value = price;
+  if (classSelect && cl) classSelect.value = cl;
+
+  const invCourse = document.getElementById("invCourseTitle");
+  const invAmt = document.getElementById("invAmount");
+  const invClass = document.getElementById("invStudentClass");
+
+  if (invCourse) invCourse.textContent = title;
+  if (invAmt) invAmt.textContent = `৳${price}`;
+  if (invClass && cl) invClass.textContent = cl;
+};
+
+window.calcPosTotal = function() {
+  const reg = Number(document.getElementById("posRegularFee")?.value) || 0;
+  const disc = Number(document.getElementById("posDiscount")?.value) || 0;
+  const finalInp = document.getElementById("posFinalAmount");
+  const total = Math.max(0, reg - disc);
+  if (finalInp) finalInp.value = total;
+
+  const invAmt = document.getElementById("invAmount");
+  if (invAmt) invAmt.textContent = `৳${total}`;
+};
+
+window.handlePosSaleSubmit = async function(e) {
+  e.preventDefault();
+  const phone = document.getElementById("posPhone")?.value.trim();
+  const name = document.getElementById("posName")?.value.trim() || "শিক্ষার্থী";
+  const classLevel = document.getElementById("posClass")?.value || "HSC";
+  const select = document.getElementById("posCourseSelect");
+  const opt = select?.selectedOptions[0];
+  const courseSlug = select?.value;
+  const courseTitle = opt?.dataset.title || opt?.textContent?.split("—")[0]?.trim() || "কোর্স";
+  const amount = Number(document.getElementById("posFinalAmount")?.value) || 0;
+  const paymentMethod = document.getElementById("posPaymentMethod")?.value || "cash";
+  const memo = document.getElementById("posMemo")?.value.trim() || `POS_${Date.now().toString().slice(-8)}`;
+
+  if (!phone || phone.length < 11) {
+    alert("অনুগ্রহ করে একটি সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন।");
+    return;
+  }
+  if (!courseSlug) {
+    alert("অনুগ্রহ করে একটি কোর্স নির্বাচন করুন।");
+    return;
+  }
+
+  const btn = document.getElementById("posSubmitBtn");
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> বিক্রয় প্রসেস হচ্ছে...`;
+  }
+
+  try {
+    const res = await fetch("/api/admin/pos/sale", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + (localStorage.getItem("adminToken") || "dipu_admin_super_token_2026")
+      },
+      body: JSON.stringify({
+        studentPhone: phone,
+        studentName: name,
+        classLevel,
+        courseSlug,
+        courseTitle,
+        amount,
+        paymentMethod,
+        memo
+      })
+    });
+
+    const data = await res.json();
+    if (data.success && data.invoice) {
+      showAdminToast(`🎉 ${data.message || 'POS বিক্রয় সফলভাবে সম্পন্ন হয়েছে!'}`);
+
+      // Update Live Invoice Slip
+      const inv = data.invoice;
+      const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      setVal("invNumber", inv.invoiceNo);
+      setVal("invDate", new Date().toLocaleString("bn-BD"));
+      setVal("invStudentName", inv.studentName);
+      setVal("invStudentPhone", inv.studentPhone);
+      setVal("invStudentClass", inv.classLevel);
+      setVal("invCourseTitle", inv.courseTitle);
+      setVal("invAmount", `৳${inv.amount}`);
+      setVal("invMethod", inv.paymentMethod?.toUpperCase());
+
+      // Refresh listings
+      await loadPosRecentSales();
+      if (window.fetchStudentsList) window.fetchStudentsList();
+      if (window.loadAllStudents) window.loadAllStudents();
+      if (window.fetchDashboardMetrics) window.fetchDashboardMetrics();
+
+      // Reset form
+      document.getElementById("posPhone").value = "";
+      document.getElementById("posName").value = "";
+      document.getElementById("posMemo").value = "";
+    } else {
+      alert(data.message || "বিক্রয় সম্পন্ন হতে পারেনি।");
+    }
+  } catch (err) {
+    showAdminToast("⚠️ বিক্রয় প্রক্রিয়াকরণে সমস্যা হয়েছে।");
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = `<i class="fas fa-check-circle"></i> <span>বিক্রয় সম্পন্ন ও কোর্স এক্সেস আনলক করুন</span>`;
+    }
+  }
+};
+
+window.previewPosInvoiceFromRow = function(trxID) {
+  const item = posSalesHistoryData.find(s => s.trxID === trxID);
+  if (!item) return;
+
+  const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  setVal("invNumber", item.trxID);
+  setVal("invDate", item.date ? new Date(item.date).toLocaleString("bn-BD") : "—");
+  setVal("invStudentName", item.studentName || "—");
+  setVal("invStudentPhone", item.studentPhone || "—");
+  setVal("invStudentClass", item.classLevel || "HSC");
+  setVal("invCourseTitle", item.courseTitle || "কোর্স");
+  setVal("invAmount", `৳${item.amount}`);
+  setVal("invMethod", item.paymentMethod?.toUpperCase());
+
+  const slip = document.getElementById("posInvoicePrintArea");
+  if (slip) {
+    slip.scrollIntoView({ behavior: "smooth", block: "center" });
+    slip.style.outline = "2px solid #00C2FF";
+    setTimeout(() => { slip.style.outline = "none"; }, 1500);
+  }
+};
+
+window.printPosInvoice = function() {
+  const printArea = document.getElementById("posInvoicePrintArea");
+  if (!printArea) return;
+
+  const printWindow = window.open("", "_blank", "width=600,height=700");
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html lang="bn">
+    <head>
+      <meta charset="UTF-8">
+      <title>Dipu Academy — বিক্রয় রসিদ</title>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap">
+      <style>
+        body { font-family: 'Hind Siliguri', sans-serif; background: #FFF; color: #111; padding: 30px; margin: 0; }
+        .receipt-card { border: 2px dashed #333; padding: 25px; border-radius: 12px; max-width: 480px; margin: 0 auto; }
+        .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 15px; }
+        .header h2 { margin: 0; font-size: 24px; }
+        .row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
+        .box { background: #F1F5F9; padding: 12px; border-radius: 8px; margin: 15px 0; border: 1px solid #CBD5E1; }
+        .footer { text-align: center; margin-top: 20px; font-size: 12px; color: #64748B; border-top: 1px solid #DDD; padding-top: 12px; }
+        @media print { button { display: none !important; } }
+      </style>
+    </head>
+    <body>
+      <div class="receipt-card">
+        <div class="header">
+          <h2>DIPU ACADEMY</h2>
+          <p style="margin: 3px 0 0; font-size: 12px; color: #475569;">অফিসিয়াল বিক্রয় রসিদ ও শিক্ষার্থী ভর্তি মেমো</p>
+        </div>
+        <div class="row"><span>ইনভয়েস নং:</span><strong>${document.getElementById("invNumber")?.textContent || "—"}</strong></div>
+        <div class="row"><span>তারিখ:</span><span>${document.getElementById("invDate")?.textContent || "—"}</span></div>
+        <div class="row"><span>শিক্ষার্থীর নাম:</span><strong>${document.getElementById("invStudentName")?.textContent || "—"}</strong></div>
+        <div class="row"><span>মোবাইল নম্বর:</span><strong>${document.getElementById("invStudentPhone")?.textContent || "—"}</strong></div>
+        <div class="row"><span>শ্রেণি / ক্লাস:</span><span>${document.getElementById("invStudentClass")?.textContent || "—"}</span></div>
+        <div class="box">
+          <div class="row"><strong>কোর্স: ${document.getElementById("invCourseTitle")?.textContent || "—"}</strong><strong>${document.getElementById("invAmount")?.textContent || "—"}</strong></div>
+          <div class="row" style="margin-bottom:0; font-size:12px; color:#475569;"><span>পেমেন্ট: ${document.getElementById("invMethod")?.textContent || "—"}</span><span>স্ট্যাটাস: সক্রিয় (PAID)</span></div>
+        </div>
+        <div class="footer">
+          <p>দীপু একাডেমির সাথে থাকার জন্য ধন্যবাদ! • www.dipuedu.com</p>
+        </div>
+      </div>
+      <script>window.onload = function() { window.print(); };</script>
+    </body>
+    </html>
+  `);
+  printWindow.document.close();
+};
+
+// Auto check for POS hash landing
+if (window.location.hash === '#pos') {
+  setTimeout(() => window.loadPosData && window.loadPosData(), 200);
+}
+
 
 

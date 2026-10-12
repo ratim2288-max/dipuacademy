@@ -3,8 +3,17 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
+import {
+  CLASS_DEFINITIONS,
+  ClassDefinition,
+  ClassCategoryKey,
+  ClassResourceItem,
+  normalizeClassKey,
+  getResourcesByClass,
+  getClassDefinition,
+} from "./class-curriculum-store";
 
-// ─── Keyframe Style Injection for Smooth Tab Transitions ─────────────────────
+// ─── Keyframe Style Injection for Smooth Tab Transitions & Text Animations ────
 const injectDashboardKeyframes = () => {
   if (typeof document === "undefined") return;
   const id = "da-dynamic-tab-keyframes";
@@ -16,8 +25,38 @@ const injectDashboardKeyframes = () => {
       0% { opacity: 0; transform: translateY(8px); }
       100% { opacity: 1; transform: translateY(0); }
     }
+    @keyframes daShimmerText {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes daBadgePulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(16, 185, 129, 0.45); }
+      50% { transform: scale(1.05); box-shadow: 0 0 24px rgba(16, 185, 129, 0.9); }
+    }
+    @keyframes daGlowPulse {
+      0%, 100% { box-shadow: 0 0 12px rgba(0, 194, 255, 0.35); }
+      50% { box-shadow: 0 0 26px rgba(0, 194, 255, 0.7); }
+    }
+    @keyframes daFloatSlow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
     .da-tab-pane {
       animation: daTabFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .da-shimmer-headline {
+      background: linear-gradient(90deg, #00C2FF 0%, #FFFFFF 25%, #0084FF 50%, #10B981 75%, #00C2FF 100%);
+      background-size: 250% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: daShimmerText 6s linear infinite;
+    }
+    .da-free-pulse-badge {
+      animation: daBadgePulse 2.2s infinite ease-in-out;
+    }
+    .da-glow-border-pulse {
+      animation: daGlowPulse 3s infinite ease-in-out;
     }
     .da-nav-item.active a {
       background: linear-gradient(135deg, rgba(0, 194, 255, 0.22) 0%, rgba(0, 132, 255, 0.12) 100%) !important;
@@ -33,9 +72,9 @@ const injectDashboardKeyframes = () => {
       transition: all 0.25s ease;
     }
     .da-interactive-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(0, 194, 255, 0.4) !important;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 194, 255, 0.15) !important;
+      transform: translateY(-4px);
+      border-color: rgba(0, 194, 255, 0.45) !important;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.55), 0 0 24px rgba(0, 194, 255, 0.2) !important;
     }
   `;
   document.head.appendChild(style);
@@ -84,6 +123,7 @@ interface GroupItem {
 
 interface CourseItem {
   id: string;
+  slug?: string;
   title: string;
   subject: string;
   mentor: string;
@@ -119,7 +159,18 @@ interface BookItem {
 
 export const DipuDashboardApp: React.FC = () => {
   // Reactive States
-  const [activeTab, setActiveTab] = useState<string>("dashboard");
+  const [activeTab, setActiveTab] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      const hash = window.location.hash.replace("#", "");
+      if (hash === "my-courses" || hash === "courses") return "my-courses";
+      if (hash === "video-classes") return "video-classes";
+      if (hash === "notes") return "notes";
+      if (hash === "bookshop") return "bookshop";
+      if (hash === "performance") return "performance";
+      if (hash === "settings") return "settings";
+    }
+    return "dashboard";
+  });
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [userName, setUserName] = useState<string>("ratim");
   const [userTarget, setUserTarget] = useState<string>("SSC 2026");
@@ -130,6 +181,20 @@ export const DipuDashboardApp: React.FC = () => {
   const [userMenuOpen, setUserMenuOpen] = useState<boolean>(false);
   const [userPhone, setUserPhone] = useState<string>("01712345678");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [dbEnrolledSlugs, setDbEnrolledSlugs] = useState<string[]>([]);
+  const [dbCompletedLessonsCount, setDbCompletedLessonsCount] = useState<number>(0);
+
+  // Class Curriculum & Resource Store States
+  const [selectedClassKey, setSelectedClassKey] = useState<ClassCategoryKey>(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("da_user_target");
+      return normalizeClassKey(stored);
+    }
+    return "ssc";
+  });
+  const [resourceSubTab, setResourceSubTab] = useState<"all" | "course" | "book" | "ebook" | "free">("all");
+  const [classModalOpen, setClassModalOpen] = useState<boolean>(false);
+  const [classTickerIdx, setClassTickerIdx] = useState<number>(0);
 
   // Video Classes Tab State
   const [currentVideoId, setCurrentVideoId] = useState<string>("gzhi2X6tpmg");
@@ -226,6 +291,7 @@ export const DipuDashboardApp: React.FC = () => {
       } catch (err) {}
       setUserName(storedName);
       setUserTarget(storedTarget);
+      setSelectedClassKey(normalizeClassKey(storedTarget));
       setUserGroup(storedGroup);
       setEditName(storedName);
       setEditTarget(storedTarget);
@@ -246,6 +312,11 @@ export const DipuDashboardApp: React.FC = () => {
     } catch (e) {
       console.warn("LocalStorage access error:", e);
     }
+
+    // Dynamic Rotating Ticker Timer for Class Highlights
+    const tickerInterval = setInterval(() => {
+      setClassTickerIdx((prev) => (prev + 1) % 4);
+    }, 4000);
 
     // Fetch latest dashboard media config from server
     fetch("/api/admin/dashboard-config")
@@ -277,10 +348,83 @@ export const DipuDashboardApp: React.FC = () => {
           if (Array.isArray(cfg.groups) && cfg.groups.length > 0) setGroups(cfg.groups);
         } catch (err) {}
       }
+      if (e.key === "da_user_target" && e.newValue) {
+        setSelectedClassKey(normalizeClassKey(e.newValue));
+        setUserTarget(e.newValue);
+      }
     };
+
+    const handleClassSync = () => {
+      try {
+        const stored = localStorage.getItem("da_user_target");
+        if (stored) {
+          setSelectedClassKey(normalizeClassKey(stored));
+          setUserTarget(stored);
+        }
+      } catch (err) {}
+    };
+
+    const handleHashChange = () => {
+      if (typeof window !== "undefined") {
+        const hash = window.location.hash.replace("#", "");
+        if (hash === "my-courses" || hash === "courses") setActiveTab("my-courses");
+        else if (hash === "dashboard" || !hash) setActiveTab("dashboard");
+        else if (hash === "video-classes") setActiveTab("video-classes");
+        else if (hash === "notes") setActiveTab("notes");
+        else if (hash === "bookshop") setActiveTab("bookshop");
+        else if (hash === "performance") setActiveTab("performance");
+        else if (hash === "settings") setActiveTab("settings");
+      }
+    };
+
     window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
+    window.addEventListener("dipu_class_changed", handleClassSync);
+    window.addEventListener("hashchange", handleHashChange);
+    return () => {
+      clearInterval(tickerInterval);
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("dipu_class_changed", handleClassSync);
+      window.removeEventListener("hashchange", handleHashChange);
+    };
   }, []);
+
+  // Fetch Database Enrolled Courses & Completed Lessons for current student
+  useEffect(() => {
+    const fetchEnrolledCourses = async () => {
+      try {
+        const phone = userPhone || (typeof localStorage !== "undefined" ? localStorage.getItem("dipu_user_phone") : null) || "01712345678";
+        const res = await fetch(`/api/student/enrolled-courses?phone=${encodeURIComponent(phone)}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.success && Array.isArray(data.enrolledCourseSlugs)) {
+            setDbEnrolledSlugs(data.enrolledCourseSlugs);
+            let count = 0;
+            if (Array.isArray(data.enrollments)) {
+              data.enrollments.forEach((e: any) => {
+                if (Array.isArray(e.completedLessons)) {
+                  count += e.completedLessons.length;
+                }
+              });
+            }
+            setDbCompletedLessonsCount(count);
+          }
+        }
+      } catch (err) {
+        console.warn("Error fetching enrolled courses from DB:", err);
+      }
+    };
+
+    fetchEnrolledCourses();
+    const handleEnrollmentChanged = () => {
+      fetchEnrolledCourses();
+    };
+    window.addEventListener("dipu_enrollment_changed", handleEnrollmentChanged);
+    window.addEventListener("storage", handleEnrollmentChanged);
+    return () => {
+      window.removeEventListener("dipu_enrollment_changed", handleEnrollmentChanged);
+      window.removeEventListener("storage", handleEnrollmentChanged);
+    };
+  }, [userPhone]);
 
   // Toast Timer
   useEffect(() => {
@@ -311,6 +455,46 @@ export const DipuDashboardApp: React.FC = () => {
     setProfileModalOpen(false);
     showToast("✅ সেটিংস সফলভাবে সংরক্ষিত হয়েছে!");
   };
+
+  // Class Switch Handler
+  const handleClassChange = (newKey: ClassCategoryKey) => {
+    setSelectedClassKey(newKey);
+    const def = getClassDefinition(newKey);
+    setUserTarget(def.shortName);
+    setEditTarget(def.shortName);
+    try {
+      localStorage.setItem("da_user_target", def.shortName);
+      localStorage.setItem("da_user_class_key", newKey);
+      window.dispatchEvent(new Event("dipu_class_changed"));
+    } catch (err) {}
+    setClassModalOpen(false);
+    showToast(`🎯 শ্রেণি পরিবর্তন: ${def.label}!`);
+  };
+
+  const currentClassDef = getClassDefinition(selectedClassKey);
+  const classResources = getResourcesByClass(selectedClassKey);
+
+  const isResourceEnrolled = (res: ClassResourceItem) => {
+    if (res.type !== "course") return false;
+    if (res.isFree) return true;
+    return dbEnrolledSlugs.some((s) => {
+      const sLower = s.toLowerCase();
+      const idLower = res.id.toLowerCase();
+      return sLower === idLower || sLower.includes(idLower) || idLower.includes(sLower);
+    });
+  };
+
+  const filteredClassResources = classResources.all.filter((item) => {
+    const matchesSubTab =
+      resourceSubTab === "all" ||
+      (resourceSubTab === "free" ? (item.type === "free" || item.isFree) : item.type === resourceSubTab);
+    const matchesSearch =
+      !searchQuery ||
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.subtitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.mentorOrAuthor.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesSubTab && matchesSearch;
+  });
 
   const handleLogout = () => {
     if (confirm("আপনি কি নিশ্চিত যে অ্যাকাউন্ট থেকে লগআউট করতে চান?")) {
@@ -822,14 +1006,16 @@ export const DipuDashboardApp: React.FC = () => {
           </li>
           <li className={`da-nav-item ${activeTab === "my-courses" ? "active" : ""}`}>
             <a
-              href="/user/courses"
+              href="#my-courses"
               onClick={(e) => {
                 e.preventDefault();
-                window.location.href = "/user/courses";
+                setActiveTab("my-courses");
+                setMobileDrawerOpen(false);
+                if (typeof window !== "undefined") window.location.hash = "my-courses";
               }}
             >
               <i className="fas fa-book-open" />
-              <span>আমার কোর্স</span>
+              <span>আমার কোর্স ও স্টাডি হাব</span>
             </a>
           </li>
           <li className={`da-nav-item ${activeTab === "video-classes" ? "active" : ""}`}>
@@ -962,14 +1148,15 @@ export const DipuDashboardApp: React.FC = () => {
             </li>
             <li className={`da-nav-item ${activeTab === "my-courses" ? "active" : ""}`}>
               <a
-                href="/user/courses"
+                href="#my-courses"
                 onClick={(e) => {
                   e.preventDefault();
-                  window.location.href = "/user/courses";
+                  setActiveTab("my-courses");
+                  if (typeof window !== "undefined") window.location.hash = "my-courses";
                 }}
               >
                 <i className="fas fa-book-open" />
-                <span>আমার কোর্স</span>
+                <span>আমার কোর্স ও স্টাডি হাব</span>
               </a>
             </li>
             <li className={`da-nav-item ${activeTab === "video-classes" ? "active" : ""}`}>
@@ -1125,7 +1312,7 @@ export const DipuDashboardApp: React.FC = () => {
                       <i className="fas fa-book-open" />
                     </div>
                     <div className="da-stat-info">
-                      <div className="da-stat-number">{enrolledCourses.length}</div>
+                      <div className="da-stat-number">{dbEnrolledSlugs.length > 0 ? dbEnrolledSlugs.length : enrolledCourses.length}</div>
                       <div className="da-stat-label">মোট কোর্স</div>
                     </div>
                   </div>
@@ -1145,7 +1332,7 @@ export const DipuDashboardApp: React.FC = () => {
                       <i className="fas fa-circle-play" />
                     </div>
                     <div className="da-stat-info">
-                      <div className="da-stat-number">8</div>
+                      <div className="da-stat-number">{dbCompletedLessonsCount > 0 ? dbCompletedLessonsCount : 8}</div>
                       <div className="da-stat-label">সম্পন্ন ভিডিও</div>
                     </div>
                   </div>
@@ -1195,6 +1382,247 @@ export const DipuDashboardApp: React.FC = () => {
                     title="পারফরম্যান্স দেখুন"
                   >
                     <i className="fas fa-chevron-right" />
+                  </div>
+                </div>
+              </section>
+
+              {/* ─── YOUR CLASS EXCLUSIVE RESOURCE HUB (ANIMATED) ─── */}
+              <section className="da-section" style={{ marginTop: "24px", marginBottom: "28px" }}>
+                <div style={{
+                  background: "linear-gradient(145deg, #071228 0%, #050B17 100%)",
+                  border: "1.5px solid rgba(0, 194, 255, 0.3)",
+                  borderRadius: "20px",
+                  padding: "24px 20px",
+                  boxShadow: "0 15px 35px rgba(0,0,0,0.6), 0 0 25px rgba(0, 194, 255, 0.12)",
+                  position: "relative",
+                  overflow: "hidden"
+                }}>
+                  {/* Background glowing ambient radial */}
+                  <div style={{
+                    position: "absolute",
+                    top: "-40px",
+                    right: "-40px",
+                    width: "220px",
+                    height: "220px",
+                    background: "radial-gradient(circle, rgba(0,194,255,0.18) 0%, transparent 70%)",
+                    pointerEvents: "none"
+                  }} />
+
+                  {/* Header with glowing animated text and switcher button */}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "14px", marginBottom: "18px" }}>
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
+                        <span style={{
+                          background: currentClassDef.color,
+                          color: "#FFF",
+                          fontSize: "11px",
+                          fontWeight: 800,
+                          padding: "3px 10px",
+                          borderRadius: "999px",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "5px"
+                        }}>
+                          <i className={currentClassDef.icon} />
+                          {currentClassDef.gradeBadge}
+                        </span>
+                        <span style={{ fontSize: "12px", color: "#94A3B8" }}>তোমার নির্বাচিত শ্রেণি ও পাঠ্যক্রম</span>
+                      </div>
+                      <h3 className="da-shimmer-headline" style={{ fontSize: "22px", fontWeight: 900, margin: 0, display: "flex", alignItems: "center", gap: "10px" }}>
+                        <span>{currentClassDef.label} — এক্সক্লুসিভ স্টাডি হাব</span>
+                      </h3>
+                      <p style={{ fontSize: "13px", color: "#CBD5E1", margin: "4px 0 0" }}>
+                        {currentClassDef.description}
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setClassModalOpen(true)}
+                      style={{
+                        background: "linear-gradient(135deg, rgba(0,194,255,0.2) 0%, rgba(0,132,255,0.1) 100%)",
+                        border: "1px solid rgba(0,194,255,0.4)",
+                        color: "#00C2FF",
+                        padding: "8px 16px",
+                        borderRadius: "10px",
+                        fontWeight: 700,
+                        fontSize: "13px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        transition: "all 0.2s ease"
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 0 15px rgba(0,194,255,0.3)")}
+                      onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
+                    >
+                      <i className="fas fa-arrows-rotate" />
+                      <span>শ্রেণি পরিবর্তন করুন ▾</span>
+                    </button>
+                  </div>
+
+                  {/* 4 Category Quick Cards Row */}
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: "14px" }}>
+                    {/* 1. Courses */}
+                    <div
+                      className="da-interactive-card"
+                      onClick={() => {
+                        setResourceSubTab("course");
+                        setActiveTab("my-courses");
+                      }}
+                      style={{
+                        background: "rgba(0, 194, 255, 0.06)",
+                        border: "1px solid rgba(0, 194, 255, 0.25)",
+                        borderRadius: "14px",
+                        padding: "16px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "14px"
+                      }}
+                    >
+                      <div style={{
+                        width: "44px",
+                        height: "44px",
+                        borderRadius: "12px",
+                        background: "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#FFF",
+                        fontSize: "18px",
+                        flexShrink: 0
+                      }}>
+                        <i className="fas fa-graduation-cap" />
+                      </div>
+                      <div>
+                        <div style={{ fontSize: "16px", fontWeight: 800, color: "#FFF" }}>
+                          {classResources.courses.length}টি কোর্স
+                        </div>
+                        <div style={{ fontSize: "12px", color: "#94A3B8" }}>একাডেমিক কোর্সসমূহ</div>
+                      </div>
+                    </div>
+
+                    {/* 2. Printed Books */}
+                    <div
+                      className="da-interactive-card"
+                      onClick={() => {
+                        setResourceSubTab("book");
+                        setActiveTab("my-courses");
+                      }}
+                      style={{
+                        background: "rgba(16, 185, 129, 0.06)",
+                        border: "1px solid rgba(16, 185, 129, 0.25)",
+                        borderRadius: "14px",
+                        padding: "16px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "14px"
+                      }}
+                    >
+                      <div style={{
+                        width: "44px",
+                        height: "44px",
+                        borderRadius: "12px",
+                        background: "linear-gradient(135deg, #10B981 0%, #059669 100%)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#FFF",
+                        fontSize: "18px",
+                        flexShrink: 0
+                      }}>
+                        <i className="fas fa-book" />
+                      </div>
+                      <div>
+                        <div style={{ fontSize: "16px", fontWeight: 800, color: "#FFF" }}>
+                          {classResources.books.length}টি বই
+                        </div>
+                        <div style={{ fontSize: "12px", color: "#94A3B8" }}>হার্ডকপি প্রিন্টেড বই</div>
+                      </div>
+                    </div>
+
+                    {/* 3. eBooks */}
+                    <div
+                      className="da-interactive-card"
+                      onClick={() => {
+                        setResourceSubTab("ebook");
+                        setActiveTab("my-courses");
+                      }}
+                      style={{
+                        background: "rgba(139, 92, 246, 0.06)",
+                        border: "1px solid rgba(139, 92, 246, 0.25)",
+                        borderRadius: "14px",
+                        padding: "16px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "14px"
+                      }}
+                    >
+                      <div style={{
+                        width: "44px",
+                        height: "44px",
+                        borderRadius: "12px",
+                        background: "linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#FFF",
+                        fontSize: "18px",
+                        flexShrink: 0
+                      }}>
+                        <i className="fas fa-file-pdf" />
+                      </div>
+                      <div>
+                        <div style={{ fontSize: "16px", fontWeight: 800, color: "#FFF" }}>
+                          {classResources.ebooks.length}টি ই-বুক
+                        </div>
+                        <div style={{ fontSize: "12px", color: "#94A3B8" }}>ইনস্ট্যান্ট PDF ডাউনলোড</div>
+                      </div>
+                    </div>
+
+                    {/* 4. 100% Free Resources */}
+                    <div
+                      className="da-interactive-card da-free-pulse-badge"
+                      onClick={() => {
+                        setResourceSubTab("free");
+                        setActiveTab("my-courses");
+                      }}
+                      style={{
+                        background: "rgba(16, 185, 129, 0.12)",
+                        border: "1.5px solid rgba(16, 185, 129, 0.5)",
+                        borderRadius: "14px",
+                        padding: "16px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "14px"
+                      }}
+                    >
+                      <div style={{
+                        width: "44px",
+                        height: "44px",
+                        borderRadius: "12px",
+                        background: "linear-gradient(135deg, #10B981 0%, #00C2FF 100%)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#FFF",
+                        fontSize: "18px",
+                        flexShrink: 0
+                      }}>
+                        <i className="fas fa-gift" />
+                      </div>
+                      <div>
+                        <div style={{ fontSize: "16px", fontWeight: 800, color: "#10B981", display: "flex", alignItems: "center", gap: "6px" }}>
+                          <span>{classResources.freeItems.length}টি ফ্রি রিসোর্স</span>
+                          <span style={{ fontSize: "10px", background: "#10B981", color: "#FFF", padding: "1px 6px", borderRadius: "4px" }}>FREE</span>
+                        </div>
+                        <div style={{ fontSize: "12px", color: "#A7F3D0" }}>ফ্রি ক্লাস ও হ্যান্ডনোটস</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </section>
@@ -1303,125 +1731,608 @@ export const DipuDashboardApp: React.FC = () => {
           )}
 
           {/* ──────────────────────────────────────────────────────────────────
-              TAB 2: আমার কোর্স (MY ENROLLED COURSES)
+              TAB 2: আমার কোর্স ও শ্রেণি পাঠ্যক্রম হাব (CLASS CURRICULUM & RESOURCE HUB)
               ────────────────────────────────────────────────────────────────── */}
           {activeTab === "my-courses" && (
             <div className="da-tab-pane">
-              <div style={{ marginBottom: "24px" }}>
-                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
-                  <i className="fas fa-book-open" style={{ color: "#00C2FF" }} />
-                  <span>আমার কোর্সসমূহ ({enrolledCourses.length})</span>
-                </h2>
-                <p style={{ fontSize: "14px", color: "#94A3B8", margin: 0 }}>
-                  আপনার মোট {enrolledCourses.length}টি সক্রিয় কোর্সের অগ্রগতি এবং ধারাবাহিক পড়ালেখা চালিয়ে যান।
-                </p>
-              </div>
+              {/* TOP BANNER WITH TEXT ANIMATION & CLASS SELECTOR */}
+              <div
+                style={{
+                  background: "linear-gradient(145deg, #071228 0%, #050B17 100%)",
+                  border: "1.5px solid rgba(0, 194, 255, 0.3)",
+                  borderRadius: "20px",
+                  padding: "24px",
+                  marginBottom: "24px",
+                  boxShadow: "0 15px 35px rgba(0,0,0,0.6), 0 0 25px rgba(0, 194, 255, 0.12)",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
+                {/* Background ambient glow */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "-30px",
+                    right: "-30px",
+                    width: "200px",
+                    height: "200px",
+                    background: "radial-gradient(circle, rgba(0,194,255,0.18) 0%, transparent 70%)",
+                    pointerEvents: "none",
+                  }}
+                />
 
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: "18px", marginBottom: "2rem" }}>
-                {enrolledCourses.map((c) => (
-                  <div
-                    key={c.id}
-                    className="da-interactive-card"
-                    style={{
-                      background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
-                      border: "1px solid rgba(0, 194, 255, 0.2)",
-                      borderRadius: "18px",
-                      overflow: "hidden",
-                      display: "flex",
-                      flexDirection: "column",
-                      boxShadow: "0 10px 25px rgba(0,0,0,0.5)",
-                    }}
-                  >
-                    <div style={{ position: "relative", width: "100%", height: "140px", overflow: "hidden" }}>
-                      <img src={c.image} alt={c.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "16px", marginBottom: "16px" }}>
+                  <div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
                       <span
                         style={{
-                          position: "absolute",
-                          top: "10px",
-                          left: "10px",
-                          background: c.tagColor,
+                          background: currentClassDef.color,
                           color: "#FFF",
                           fontSize: "11px",
                           fontWeight: 800,
-                          padding: "4px 10px",
+                          padding: "3px 10px",
                           borderRadius: "999px",
-                          boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "5px",
                         }}
                       >
-                        {c.tag}
+                        <i className={currentClassDef.icon} />
+                        {currentClassDef.gradeBadge}
                       </span>
+                      <span style={{ fontSize: "12px", color: "#94A3B8" }}>আমার নির্বাচিত শ্রেণি</span>
                     </div>
 
-                    <div style={{ padding: "16px", display: "flex", flexDirection: "column", flexGrow: 1 }}>
-                      <div style={{ fontSize: "12px", color: "#00C2FF", fontWeight: 700, marginBottom: "4px" }}>
-                        {c.subject}
-                      </div>
-                      <h4 style={{ fontSize: "15px", fontWeight: 800, color: "#FFFFFF", lineHeight: 1.35, marginBottom: "8px" }}>
-                        {c.title}
-                      </h4>
-                      <div style={{ fontSize: "12px", color: "#94A3B8", marginBottom: "12px" }}>
-                        <i className="fas fa-chalkboard-user" style={{ marginRight: "6px", color: "#F59E0B" }} />
-                        {c.mentor}
-                      </div>
+                    {/* Animated Shimmering Text Headline */}
+                    <h2
+                      className="da-shimmer-headline"
+                      style={{
+                        fontSize: "26px",
+                        fontWeight: 900,
+                        margin: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <i className="fas fa-book-open" style={{ color: "#00C2FF" }} />
+                      <span>{currentClassDef.label} — রিসোর্স ও কোর্স হাব</span>
+                    </h2>
 
-                      {/* Progress bar */}
-                      <div style={{ marginTop: "auto", marginBottom: "14px" }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", color: "#CBD5E1", marginBottom: "6px", fontWeight: 600 }}>
-                          <span>অগ্রগতি: {c.completedLessons}/{c.totalLessons} ক্লাস</span>
-                          <span style={{ color: "#00C2FF", fontWeight: 800 }}>{c.progress}%</span>
-                        </div>
-                        <div style={{ width: "100%", height: "6px", background: "rgba(255,255,255,0.08)", borderRadius: "999px", overflow: "hidden" }}>
-                          <div style={{ width: `${c.progress}%`, height: "100%", background: "linear-gradient(90deg, #0084FF, #00C2FF)", borderRadius: "999px" }} />
-                        </div>
-                      </div>
-
-                      <div style={{ display: "flex", gap: "8px" }}>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            window.location.href = `/player.html?course=${c.id}`;
-                          }}
-                          style={{
-                            flex: 1,
-                            padding: "9px 12px",
-                            borderRadius: "10px",
-                            background: "linear-gradient(135deg, #0070F3 0%, #00C2FF 100%)",
-                            color: "#FFFFFF",
-                            border: 0,
-                            fontWeight: 800,
-                            fontSize: "12px",
-                            cursor: "pointer",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            gap: "6px",
-                          }}
-                        >
-                          <i className="fas fa-play" style={{ fontSize: "10px" }} />
-                          <span>ভিডিও ক্লাস শুরু করুন</span>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setActiveTab("notes")}
-                          style={{
-                            padding: "9px 12px",
-                            borderRadius: "10px",
-                            background: "rgba(255,255,255,0.06)",
-                            border: "1px solid rgba(255,255,255,0.15)",
-                            color: "#CBD5E1",
-                            fontWeight: 700,
-                            fontSize: "12px",
-                            cursor: "pointer",
-                          }}
-                          title="কোর্স নোটস"
-                        >
-                          <i className="far fa-file-lines" />
-                        </button>
-                      </div>
+                    {/* Revolving Dynamic Ticker Line */}
+                    <div style={{ fontSize: "13px", color: "#CBD5E1", marginTop: "8px", display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
+                      {classTickerIdx === 0 && (
+                        <span>✨ তোমার শ্রেণি: <strong style={{ color: "#00C2FF" }}>{currentClassDef.label}</strong> — ১০০% সিলেবাস অনুযায়ী সাজানো স্টাডি মেটেরিয়াল!</span>
+                      )}
+                      {classTickerIdx === 1 && (
+                        <span>🎓 কোর্সসমূহ: <strong style={{ color: "#10B981" }}>{classResources.courses.length}টি স্পেশাল কোর্স</strong> তোমার প্রস্তুতির জন্য প্রস্তুত!</span>
+                      )}
+                      {classTickerIdx === 2 && (
+                        <span>📖 প্রিন্টেড বই ও 📱 ই-বুক: <strong style={{ color: "#8B5CF6" }}>{classResources.books.length}টি বই ও {classResources.ebooks.length}টি ই-বুক</strong> ইনস্ট্যান্ট সংগ্রহ করো!</span>
+                      )}
+                      {classTickerIdx === 3 && (
+                        <span>🎁 ফ্রি অ্যাক্সেস: <strong style={{ color: "#00C2FF" }}>{classResources.freeItems.length}টি সম্পূর্ণ ফ্রি ক্লাস ও নোটস</strong> উন্মুক্ত করা হয়েছে!</span>
+                      )}
                     </div>
                   </div>
-                ))}
+
+                  <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                    <button
+                      type="button"
+                      onClick={() => setClassModalOpen(true)}
+                      style={{
+                        padding: "8px 16px",
+                        borderRadius: "10px",
+                        background: "linear-gradient(135deg, rgba(0, 194, 255, 0.22) 0%, rgba(0, 132, 255, 0.12) 100%)",
+                        border: "1px solid rgba(0, 194, 255, 0.45)",
+                        color: "#00C2FF",
+                        fontWeight: 700,
+                        fontSize: "12.5px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                      }}
+                    >
+                      <i className="fas fa-arrows-rotate" />
+                      <span>শ্রেণি পরিবর্তন করুন ▾</span>
+                    </button>
+
+                    <a
+                      href="/user/courses"
+                      style={{
+                        padding: "8px 16px",
+                        borderRadius: "10px",
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1px solid rgba(255,255,255,0.15)",
+                        color: "#CBD5E1",
+                        fontWeight: 700,
+                        fontSize: "12.5px",
+                        textDecoration: "none",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                      }}
+                      title="ফুলস্ক্রিন পেজে যান"
+                    >
+                      <i className="fas fa-arrow-up-right-from-square" />
+                      <span>ফুলস্ক্রিন কোর্স পেজ ↗</span>
+                    </a>
+                  </div>
+                </div>
+
+                {/* QUICK CLASS SELECTOR PILLS BAR */}
+                <div style={{ marginTop: "14px", paddingTop: "14px", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                  <div style={{ fontSize: "11px", fontWeight: 700, color: "#94A3B8", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                    দ্রুত শ্রেণি পরিবর্তন করুন:
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "8px",
+                      overflowX: "auto",
+                      paddingBottom: "4px",
+                      scrollbarWidth: "none",
+                    }}
+                  >
+                    {CLASS_DEFINITIONS.map((cDef) => {
+                      const isActive = selectedClassKey === cDef.key;
+                      return (
+                        <button
+                          key={cDef.key}
+                          type="button"
+                          onClick={() => handleClassChange(cDef.key)}
+                          style={{
+                            padding: "6px 14px",
+                            borderRadius: "999px",
+                            background: isActive
+                              ? cDef.accentGradient
+                              : "rgba(255, 255, 255, 0.05)",
+                            color: isActive ? "#FFFFFF" : "#CBD5E1",
+                            border: isActive
+                              ? "1px solid rgba(255,255,255,0.4)"
+                              : "1px solid rgba(255, 255, 255, 0.1)",
+                            fontSize: "12px",
+                            fontWeight: isActive ? 800 : 600,
+                            cursor: "pointer",
+                            whiteSpace: "nowrap",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "6px",
+                            boxShadow: isActive ? "0 4px 14px rgba(0,0,0,0.4)" : "none",
+                            transition: "all 0.2s ease",
+                          }}
+                        >
+                          <i className={cDef.icon} style={{ fontSize: "11px" }} />
+                          <span>{cDef.shortName}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
+
+              {/* 5 SUB-CATEGORY FILTER TABS */}
+              <div
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  overflowX: "auto",
+                  paddingBottom: "10px",
+                  marginBottom: "20px",
+                  scrollbarWidth: "none",
+                }}
+              >
+                {/* 1. All */}
+                <button
+                  type="button"
+                  onClick={() => setResourceSubTab("all")}
+                  style={{
+                    padding: "9px 18px",
+                    borderRadius: "12px",
+                    background: resourceSubTab === "all" ? "linear-gradient(135deg, #0070F3 0%, #00C2FF 100%)" : "rgba(255,255,255,0.05)",
+                    color: resourceSubTab === "all" ? "#FFF" : "#CBD5E1",
+                    border: resourceSubTab === "all" ? "1px solid #00C2FF" : "1px solid rgba(255,255,255,0.1)",
+                    fontSize: "13px",
+                    fontWeight: resourceSubTab === "all" ? 800 : 600,
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    transition: "all 0.2s ease",
+                  }}
+                >
+                  <i className="fas fa-layer-group" />
+                  <span>সব রিসোর্স ({classResources.all.length})</span>
+                </button>
+
+                {/* 2. Courses */}
+                <button
+                  type="button"
+                  onClick={() => setResourceSubTab("course")}
+                  style={{
+                    padding: "9px 18px",
+                    borderRadius: "12px",
+                    background: resourceSubTab === "course" ? "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)" : "rgba(255,255,255,0.05)",
+                    color: resourceSubTab === "course" ? "#FFF" : "#CBD5E1",
+                    border: resourceSubTab === "course" ? "1px solid #00C2FF" : "1px solid rgba(255,255,255,0.1)",
+                    fontSize: "13px",
+                    fontWeight: resourceSubTab === "course" ? 800 : 600,
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    transition: "all 0.2s ease",
+                  }}
+                >
+                  <i className="fas fa-graduation-cap" />
+                  <span>🎓 কোর্সসমূহ ({classResources.courses.length})</span>
+                </button>
+
+                {/* 3. Printed Books */}
+                <button
+                  type="button"
+                  onClick={() => setResourceSubTab("book")}
+                  style={{
+                    padding: "9px 18px",
+                    borderRadius: "12px",
+                    background: resourceSubTab === "book" ? "linear-gradient(135deg, #10B981 0%, #059669 100%)" : "rgba(255,255,255,0.05)",
+                    color: resourceSubTab === "book" ? "#FFF" : "#CBD5E1",
+                    border: resourceSubTab === "book" ? "1px solid #10B981" : "1px solid rgba(255,255,255,0.1)",
+                    fontSize: "13px",
+                    fontWeight: resourceSubTab === "book" ? 800 : 600,
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    transition: "all 0.2s ease",
+                  }}
+                >
+                  <i className="fas fa-book" />
+                  <span>📖 হার্ডকপি বই ({classResources.books.length})</span>
+                </button>
+
+                {/* 4. eBooks (PDF) */}
+                <button
+                  type="button"
+                  onClick={() => setResourceSubTab("ebook")}
+                  style={{
+                    padding: "9px 18px",
+                    borderRadius: "12px",
+                    background: resourceSubTab === "ebook" ? "linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%)" : "rgba(255,255,255,0.05)",
+                    color: resourceSubTab === "ebook" ? "#FFF" : "#CBD5E1",
+                    border: resourceSubTab === "ebook" ? "1px solid #8B5CF6" : "1px solid rgba(255,255,255,0.1)",
+                    fontSize: "13px",
+                    fontWeight: resourceSubTab === "ebook" ? 800 : 600,
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    transition: "all 0.2s ease",
+                  }}
+                >
+                  <i className="fas fa-file-pdf" />
+                  <span>📱 ই-বুক PDF ({classResources.ebooks.length})</span>
+                </button>
+
+                {/* 5. 100% Free Resources */}
+                <button
+                  type="button"
+                  onClick={() => setResourceSubTab("free")}
+                  className={resourceSubTab === "free" ? "" : "da-free-pulse-badge"}
+                  style={{
+                    padding: "9px 18px",
+                    borderRadius: "12px",
+                    background: resourceSubTab === "free" ? "linear-gradient(135deg, #10B981 0%, #00C2FF 100%)" : "rgba(16, 185, 129, 0.12)",
+                    color: resourceSubTab === "free" ? "#FFF" : "#10B981",
+                    border: resourceSubTab === "free" ? "1px solid #10B981" : "1.5px solid rgba(16, 185, 129, 0.4)",
+                    fontSize: "13px",
+                    fontWeight: 800,
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    transition: "all 0.2s ease",
+                  }}
+                >
+                  <i className="fas fa-gift" />
+                  <span>🎁 ১০০% ফ্রি রিসোর্স ({classResources.freeItems.length})</span>
+                </button>
+              </div>
+
+              {/* RESOURCE CARDS GRID */}
+              {filteredClassResources.length === 0 ? (
+                <div
+                  style={{
+                    textAlign: "center",
+                    padding: "48px 20px",
+                    background: "rgba(255,255,255,0.02)",
+                    borderRadius: "18px",
+                    border: "1px dashed rgba(255,255,255,0.1)",
+                  }}
+                >
+                  <div style={{ fontSize: "40px", marginBottom: "12px" }}>🔍</div>
+                  <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#FFF", marginBottom: "6px" }}>
+                    কোনো রিসোর্স পাওয়া যায়নি
+                  </h3>
+                  <p style={{ fontSize: "13px", color: "#94A3B8", margin: "0 0 16px" }}>
+                    বর্তমান ক্যাটাগরিতে কোনো উপাদান পাওয়া যায়নি। সব ক্যাটাগরি দেখতে নিচের বাটনে ক্লিক করুন।
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setResourceSubTab("all")}
+                    style={{
+                      padding: "8px 20px",
+                      borderRadius: "10px",
+                      background: "linear-gradient(135deg, #0070F3 0%, #00C2FF 100%)",
+                      color: "#FFF",
+                      border: 0,
+                      fontWeight: 700,
+                      fontSize: "13px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    সব রিসোর্স দেখুন
+                  </button>
+                </div>
+              ) : (
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))",
+                    gap: "20px",
+                    marginBottom: "2.5rem",
+                  }}
+                >
+                  {filteredClassResources.map((res) => {
+                    const isCourse = res.type === "course";
+                    const isBook = res.type === "book";
+                    const isEbook = res.type === "ebook";
+                    const isFree = res.type === "free" || res.isFree;
+                    const isEnrolled = isCourse ? (isFree || isResourceEnrolled(res)) : false;
+
+                    return (
+                      <div
+                        key={res.id}
+                        className="da-interactive-card"
+                        style={{
+                          background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
+                          border: isFree
+                            ? "1.5px solid rgba(16, 185, 129, 0.45)"
+                            : isCourse && !isEnrolled
+                            ? "1.5px solid rgba(239, 68, 68, 0.45)"
+                            : "1px solid rgba(0, 194, 255, 0.2)",
+                          borderRadius: "18px",
+                          overflow: "hidden",
+                          display: "flex",
+                          flexDirection: "column",
+                          boxShadow: isFree ? "0 10px 25px rgba(0,0,0,0.5), 0 0 15px rgba(16,185,129,0.15)" : "0 10px 25px rgba(0,0,0,0.5)",
+                          position: "relative",
+                        }}
+                      >
+                        {/* Card Image Cover */}
+                        <div style={{ position: "relative", width: "100%", height: isBook ? "180px" : "145px", overflow: "hidden", background: "#050B17" }}>
+                          <img
+                            src={res.thumbnail}
+                            alt={res.title}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: isBook ? "contain" : "cover",
+                              padding: isBook ? "8px" : 0,
+                              transition: "transform 0.3s ease",
+                            }}
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = "/images/courses/hsc-28-prep.jpg";
+                            }}
+                          />
+
+                          {/* Top-left Type Tag */}
+                          <span
+                            style={{
+                              position: "absolute",
+                              top: "10px",
+                              left: "10px",
+                              background: isCourse
+                                ? isEnrolled
+                                  ? isFree ? "#10B981" : "#00C2FF"
+                                  : "#EF4444"
+                                : res.badgeColor || (isBook ? "#0084FF" : isEbook ? "#8B5CF6" : "#10B981"),
+                              color: "#FFF",
+                              fontSize: "11px",
+                              fontWeight: 800,
+                              padding: "4px 10px",
+                              borderRadius: "999px",
+                              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "4px",
+                            }}
+                          >
+                            <i className={isCourse ? (isEnrolled ? "fas fa-graduation-cap" : "fas fa-lock") : isBook ? "fas fa-book" : isEbook ? "fas fa-file-pdf" : "fas fa-gift"} style={{ fontSize: "10px" }} />
+                            <span>{isCourse ? (isEnrolled ? (isFree ? "১০০% ফ্রি ক্লাস" : "✅ এনরোল্ড • একটিভ") : "🔒 লক করা (পেইড)") : res.badge}</span>
+                          </span>
+
+                          {/* Top-right Free Pulse Badge */}
+                          {isFree && (
+                            <span
+                              className="da-free-pulse-badge"
+                              style={{
+                                position: "absolute",
+                                top: "10px",
+                                right: "10px",
+                                background: "#10B981",
+                                color: "#FFF",
+                                fontSize: "10px",
+                                fontWeight: 900,
+                                padding: "3px 8px",
+                                borderRadius: "6px",
+                                letterSpacing: "0.4px",
+                              }}
+                            >
+                              ১০০% ফ্রি 🎁
+                            </span>
+                          )}
+
+                          {/* Discount percentage tag for books */}
+                          {res.discountPct && !isFree && (
+                            <span
+                              style={{
+                                position: "absolute",
+                                top: "10px",
+                                right: "10px",
+                                background: "#EF4444",
+                                color: "#FFF",
+                                fontSize: "10px",
+                                fontWeight: 800,
+                                padding: "3px 8px",
+                                borderRadius: "6px",
+                              }}
+                            >
+                              {res.discountPct}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Card Body */}
+                        <div style={{ padding: "16px", display: "flex", flexDirection: "column", flexGrow: 1 }}>
+                          <div style={{ fontSize: "12px", color: isCourse && !isEnrolled ? "#EF4444" : "#00C2FF", fontWeight: 700, marginBottom: "4px" }}>
+                            {isCourse && !isEnrolled ? "🔒 পেইড কোর্স • এনরোলমেন্ট প্রয়োজন" : res.subtitle}
+                          </div>
+
+                          <h4 style={{ fontSize: "15px", fontWeight: 800, color: "#FFFFFF", lineHeight: 1.35, marginBottom: "8px" }}>
+                            {res.title}
+                          </h4>
+
+                          <div style={{ fontSize: "12px", color: "#94A3B8", marginBottom: "12px", display: "flex", alignItems: "center", gap: "6px" }}>
+                            <i className={isBook ? "fas fa-user-pen" : "fas fa-chalkboard-user"} style={{ color: "#F59E0B" }} />
+                            <span>{res.mentorOrAuthor}</span>
+                          </div>
+
+                          {/* Progress bar for course */}
+                          {isCourse && typeof res.progress === "number" && res.progress > 0 && (
+                            <div style={{ marginTop: "auto", marginBottom: "14px" }}>
+                              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", color: "#CBD5E1", marginBottom: "6px", fontWeight: 600 }}>
+                                <span>অগ্রগতি: {res.completedLessons}/{res.totalLessonsOrPages} ক্লাস</span>
+                                <span style={{ color: "#00C2FF", fontWeight: 800 }}>{res.progress}%</span>
+                              </div>
+                              <div style={{ width: "100%", height: "6px", background: "rgba(255,255,255,0.08)", borderRadius: "999px", overflow: "hidden" }}>
+                                <div style={{ width: `${res.progress}%`, height: "100%", background: "linear-gradient(90deg, #0084FF, #00C2FF)", borderRadius: "999px" }} />
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Price Row for Books & eBooks */}
+                          {(isBook || isEbook) && res.price && (
+                            <div style={{ marginTop: "auto", marginBottom: "14px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                              <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+                                <span style={{ fontSize: "18px", fontWeight: 900, color: "#10B981" }}>৳{res.price}</span>
+                                {res.originalPrice && (
+                                  <span style={{ fontSize: "13px", color: "#64748B", textDecoration: "line-through" }}>৳{res.originalPrice}</span>
+                                )}
+                              </div>
+                              {res.fileSize && (
+                                <span style={{ fontSize: "11px", color: "#94A3B8", background: "rgba(255,255,255,0.06)", padding: "2px 8px", borderRadius: "4px" }}>
+                                  <i className="fas fa-file-pdf" style={{ marginRight: "4px", color: "#8B5CF6" }} />
+                                  {res.fileSize}
+                                </span>
+                              )}
+                            </div>
+                          )}
+
+                          {/* Free Resource Feature Pill */}
+                          {isFree && (
+                            <div style={{ marginTop: "auto", marginBottom: "14px", display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: "11.5px", color: "#10B981", fontWeight: 700 }}>
+                              <span>
+                                <i className="fas fa-circle-check" style={{ marginRight: "4px" }} />
+                                লাইফটাইম ফ্রি অ্যাক্সেস
+                              </span>
+                              {res.videoDuration && (
+                                <span style={{ color: "#94A3B8", fontWeight: 500 }}>{res.videoDuration}</span>
+                              )}
+                              {res.fileSize && (
+                                <span style={{ color: "#94A3B8", fontWeight: 500 }}>{res.fileSize}</span>
+                              )}
+                            </div>
+                          )}
+
+                          {/* Action Buttons */}
+                          <div style={{ display: "flex", gap: "8px", marginTop: "auto" }}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (isCourse && !isEnrolled && !isFree) {
+                                  showToast("🔒 কোর্সটি এখনো কেনা হয়নি! কেনার পেজে নিয়ে যাওয়া হচ্ছে...");
+                                  window.location.href = `/course.html?id=${encodeURIComponent(res.id)}`;
+                                  return;
+                                }
+                                window.location.href = res.primaryActionUrl;
+                              }}
+                              style={{
+                                flex: 1,
+                                padding: "9px 12px",
+                                borderRadius: "10px",
+                                background: isCourse
+                                  ? isEnrolled
+                                    ? "linear-gradient(135deg, #10B981 0%, #059669 100%)"
+                                    : "linear-gradient(135deg, #EF4444 0%, #DC2626 100%)"
+                                  : isFree
+                                  ? "linear-gradient(135deg, #10B981 0%, #059669 100%)"
+                                  : isBook
+                                  ? "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)"
+                                  : isEbook
+                                  ? "linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%)"
+                                  : "linear-gradient(135deg, #0070F3 0%, #00C2FF 100%)",
+                                color: "#FFFFFF",
+                                border: 0,
+                                fontWeight: 800,
+                                fontSize: "12px",
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                gap: "6px",
+                                boxShadow: (isFree || isEnrolled) ? "0 4px 14px rgba(16,185,129,0.35)" : "none",
+                              }}
+                            >
+                              <i className={isCourse ? (isEnrolled ? "fas fa-play" : "fas fa-lock") : isBook ? "fas fa-cart-shopping" : isEbook ? "fas fa-download" : "fas fa-gift"} style={{ fontSize: "10px" }} />
+                              <span>{isCourse ? (isEnrolled ? (isFree ? "▶️ ফ্রি ক্লাস শুরু" : "▶️ ক্লাস করুন") : "🔒 এনরোল করুন — কোর্স কিনুন") : res.primaryActionText}</span>
+                            </button>
+
+                            {res.secondaryActionUrl && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  window.location.href = res.secondaryActionUrl!;
+                                }}
+                                style={{
+                                  padding: "9px 12px",
+                                  borderRadius: "10px",
+                                  background: "rgba(255,255,255,0.06)",
+                                  border: "1px solid rgba(255,255,255,0.15)",
+                                  color: "#CBD5E1",
+                                  fontWeight: 700,
+                                  fontSize: "12px",
+                                  cursor: "pointer",
+                                }}
+                                title={res.secondaryActionText || "বিস্তারিত"}
+                              >
+                                <span>{res.secondaryActionText || "বিস্তারিত"}</span>
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           )}
 
@@ -2244,6 +3155,115 @@ export const DipuDashboardApp: React.FC = () => {
         </main>
 
       </div>
+
+      {/* ─── 3. CLASS SELECTION MODAL ─── */}
+      {classModalOpen && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(3, 7, 18, 0.82)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "20px",
+          }}
+          onClick={() => setClassModalOpen(false)}
+        >
+          <div
+            style={{
+              background: "linear-gradient(145deg, #0A1530 0%, #060D20 100%)",
+              border: "1.5px solid rgba(0, 194, 255, 0.35)",
+              borderRadius: "24px",
+              padding: "26px",
+              maxWidth: "640px",
+              width: "100%",
+              maxHeight: "85vh",
+              overflowY: "auto",
+              boxShadow: "0 25px 60px rgba(0,0,0,0.85), 0 0 35px rgba(0, 194, 255, 0.2)",
+              position: "relative",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+              <div>
+                <h3 className="da-shimmer-headline" style={{ fontSize: "22px", fontWeight: 900, margin: 0 }}>
+                  তোমার শ্রেণি / পাঠ্যক্রম নির্বাচন করো
+                </h3>
+                <p style={{ fontSize: "13px", color: "#94A3B8", margin: "4px 0 0" }}>
+                  তোমার ক্লাসের স্পেশাল কোর্স, বই, ই-বুক ও ফ্রি রিসোর্স স্বয়ংক্রিয়ভাবে ফিল্টার হবে।
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setClassModalOpen(false)}
+                style={{
+                  background: "rgba(255,255,255,0.08)",
+                  border: 0,
+                  color: "#CBD5E1",
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "14px",
+                }}
+              >
+                <i className="fas fa-times" />
+              </button>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "12px" }}>
+              {CLASS_DEFINITIONS.map((cDef) => {
+                const isSelected = selectedClassKey === cDef.key;
+                return (
+                  <div
+                    key={cDef.key}
+                    onClick={() => handleClassChange(cDef.key)}
+                    style={{
+                      background: isSelected ? "rgba(0, 194, 255, 0.15)" : "rgba(255, 255, 255, 0.03)",
+                      border: isSelected ? "1.5px solid #00C2FF" : "1px solid rgba(255, 255, 255, 0.1)",
+                      borderRadius: "16px",
+                      padding: "16px",
+                      cursor: "pointer",
+                      transition: "all 0.2s ease",
+                      boxShadow: isSelected ? "0 4px 18px rgba(0, 194, 255, 0.25)" : "none",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "38px",
+                        height: "38px",
+                        borderRadius: "10px",
+                        background: cDef.accentGradient,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#FFF",
+                        fontSize: "16px",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <i className={cDef.icon} />
+                    </div>
+                    <div style={{ fontSize: "14px", fontWeight: 800, color: isSelected ? "#00C2FF" : "#FFF", marginBottom: "4px" }}>
+                      {cDef.shortName}
+                    </div>
+                    <div style={{ fontSize: "11px", color: "#94A3B8", lineHeight: 1.35 }}>
+                      {cDef.label}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ─── 4. FLOATING TOAST NOTIFICATION ─── */}
       {toastMessage && (

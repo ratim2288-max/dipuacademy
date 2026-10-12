@@ -21,6 +21,14 @@ const connectDB = async () => {
       serverSelectionTimeoutMS: 5000,
     });
     console.log(`[MongoDB Atlas] Connected Successfully: ${conn.connection.host}`);
+
+    // Seed/sync authentic courses in MongoDB
+    try {
+      const { seedCoursesIfEmpty } = require('../services/courseSeeder');
+      await seedCoursesIfEmpty();
+    } catch (seedErr) {
+      console.warn('[MongoDB] Course seeder note:', seedErr.message);
+    }
   } catch (error) {
     console.warn(`[MongoDB] Database connection warning: ${error.message}`);
     console.warn('[MongoDB] Running in fallback / in-memory simulated mode.');

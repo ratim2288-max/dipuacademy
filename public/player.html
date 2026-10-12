@@ -3,316 +3,492 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ভিডিও লেকচার ও লার্নিং ক্লাসরুম — Dipu Academy</title>
+  <title>ভিডিও ক্লাসরুম ও কোর্স সিলেবাস — Dipu Academy</title>
   <link rel="icon" type="image/png" sizes="32x32" href="/images/dipu-logo.png?v=5">
   <link rel="shortcut icon" href="/favicon.ico?v=5">
   <link rel="apple-touch-icon" href="/images/dipu-logo.png?v=5">
   
   <!-- SEO & Social Meta Tags -->
-  <meta name="description" content="Dipu Academy — আধুনিক LMS ক্লাসরুম, ইন্টারেক্টিভ ভিডিও লেকচার ও অ্যান্টি-পাইরেসি সুরক্ষিত স্টুডিও।">
+  <meta name="description" content="Dipu Academy — আধুনিক ২-কলাম ভিডিও ক্লাসরুম, কোর্স সিলেবাস, চ্যাপ্টার ম্যাটেরিয়াল ও অ্যান্টি-পাইরেসি সুরক্ষিত স্টুডিও।">
   <meta name="theme-color" content="#0B0D14">
 
   <!-- Google Fonts & Font Awesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Core & Player Stylesheets -->
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/player.css?v=3.2">
+  <link rel="stylesheet" href="/css/player.css?v=5.0">
 </head>
 <body class="player-body">
 
-  <div class="lms-app-wrapper">
-    
-    <!-- ========================================================================
-         1. LEFMOST CHARCOAL SIDEBAR (TYPESCRIPT REACT COMPONENT)
-         ======================================================================== -->
-    <div id="player-sidebar-root"></div>
+  <!-- ========================================================================
+       TOP HEADER & BREADCRUMB BAR (MATCHING 10MS & DIPU ACADEMY)
+       ======================================================================== -->
+  <header class="player-header-bar">
+    <div class="player-header-inner">
+      <div class="player-header-left">
+        <a href="/" class="player-brand-logo" title="Dipu Academy Homepage">
+          <img src="/images/dipu-logo.png" alt="Dipu Academy Logo" class="player-brand-icon player-logo-img" style="width: 36px; height: 36px; max-width: 36px; max-height: 36px; object-fit: contain; border-radius: 8px; flex-shrink: 0; display: block;">
+          <span class="player-brand-text">Dipu <strong>Academy</strong></span>
+        </a>
 
-    <!-- ========================================================================
-         2. MIDDLE COLUMN: COURSE CONTENT & SYLLABUS DRAWER
-         ======================================================================== -->
-    <aside class="lms-syllabus-drawer">
-      
-      <div class="drawer-top-header" style="display: flex; flex-direction: column; gap: 10px;">
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-          <a href="javascript:void(0)" onclick="if (window.history.length > 1 && document.referrer && document.referrer.includes(window.location.host)) { window.history.back(); } else { window.location.href = '/'; }" class="btn-back-dashboard" style="margin: 0;">
-            <i class="fas fa-arrow-left"></i> <span>পেছনে ফিরুন (Back)</span>
-          </a>
-          <a href="/" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #94A3B8; font-size: 12px; font-weight: 700; text-decoration: none; transition: all 0.2s;" onmouseenter="this.style.color='#FF7A1A'; this.style.borderColor='rgba(255,122,26,0.3)';" onmouseleave="this.style.color='#94A3B8'; this.style.borderColor='rgba(255,255,255,0.12)';">
-            <i class="fas fa-home"></i> <span>হোম</span>
-          </a>
-        </div>
-
-        <h2 class="drawer-course-title" id="drawerCourseTitle">
-          AI for Developers — Complete Masterclass
-        </h2>
-
-        <div class="progress-counter-row">
-          <span id="drawerProgressText">38 of 39 lessons complete</span>
-          <strong id="drawerProgressPct">100%</strong>
-        </div>
-
-        <div class="drawer-progress-track">
-          <div class="drawer-progress-bar" id="drawerProgressBar" style="width: 100%;"></div>
-        </div>
+        <!-- Breadcrumb Navigation -->
+        <nav class="player-breadcrumb-trail" aria-label="Breadcrumb">
+          <a href="/my-courses.html" class="bc-step">কোর্সসমূহ</a>
+          <span class="bc-sep">›</span>
+          <a href="javascript:void(0)" class="bc-step bc-course" id="bcCourseTitle">Graphic Designing with Photoshop</a>
+          <span class="bc-sep">›</span>
+          <span class="bc-step bc-active" id="bcLessonTitle">গ্রাফিক ডিজাইনিং-এর জন্য Photoshop-এর বেসিক...</span>
+        </nav>
       </div>
 
-      <!-- Drawer Tabs -->
-      <div class="drawer-tabs-row">
-        <button class="drawer-tab-btn active" id="drawerTabContentBtn" onclick="switchDrawerTab('content')">
-          <i class="fas fa-folder-open"></i> Course content
+      <div class="player-header-right">
+        <!-- Theme Toggle Button -->
+        <button type="button" class="player-btn-ghost" id="themeToggleBtn" title="থিম পরিবর্তন করুন (Light/Dark)" onclick="togglePlayerTheme()">
+          <i class="fas fa-moon" id="themeToggleIcon"></i>
+          <span class="btn-hide-mobile">থিম</span>
         </button>
-        <button class="drawer-tab-btn" id="drawerTabNotesBtn" onclick="switchDrawerTab('notes')">
-          <i class="fas fa-pen-to-square"></i> My notes
-        </button>
+
+        <!-- Back to Course Home Button (Exact link to current course syllabus) -->
+        <a href="javascript:void(0)" id="playerCourseHomeBackBtn" class="player-btn-ghost" onclick="handlePlayerBack()" title="কোর্স পেজ / সিলেবাসে ফিরুন" style="background: rgba(0, 194, 255, 0.12); border-color: rgba(0, 194, 255, 0.35); color: #00C2FF; font-weight: 700;">
+          <i class="fas fa-arrow-left"></i>
+          <span>পেছনে যান</span>
+        </a>
+
+        <!-- My Courses Link -->
+        <a href="/my-courses.html" class="player-btn-ghost" title="আমার কোর্সসমূহ">
+          <i class="fas fa-th-large"></i>
+          <span class="btn-hide-mobile">কোর্সসমূহ</span>
+        </a>
+
+        <a href="/" class="player-btn-ghost player-btn-home" title="হোমপেজ">
+          <i class="fas fa-home"></i>
+          <span class="btn-hide-mobile">হোম</span>
+        </a>
       </div>
+    </div>
+  </header>
 
-      <!-- Accordion Module List -->
-      <div class="drawer-module-accordion" id="playlistContainer">
-        <!-- Rendered dynamically via player.js -->
-      </div>
-
-    </aside>
-
-    <!-- ========================================================================
-         3. RIGHT MAIN COLUMN: CINEMA VIDEO THEATER & WORKSPACE
-         ======================================================================== -->
-    <main class="lms-main-content-area">
+  <!-- ========================================================================
+       MAIN 2-COLUMN STAGE: VIDEO PLAYER (LEFT) & COURSE SYLLABUS (RIGHT)
+       ======================================================================== -->
+  <main class="player-main-container">
+    <div class="player-grid-layout">
       
-      <!-- 16:9 Video Player Screen -->
-      <div class="video-theater-wrapper" id="videoFrameContainer">
+      <!-- ─── COLUMN 1: VIDEO THEATER & LESSON CONTENT (LEFT 68%) ─── -->
+      <section class="player-video-column">
         
-        <!-- Tier 3 Forensic Watermark Canvas -->
-        <canvas id="forensicCanvas" class="forensic-canvas-overlay" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5;"></canvas>
-
-        <!-- Physics / Animation Interactive Canvas -->
-        <canvas id="physicsSimCanvas" class="video-theater-canvas"></canvas>
-
-        <!-- Standard Video Element -->
-        <video id="videoScreenElem" class="video-theater-screen" style="display: none;" poster="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?q=80&w=1200&auto=format&fit=crop">
-          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
-        </video>
-
-        <!-- Center Big Play Button Overlay -->
-        <button class="video-theater-play-overlay" id="videoBigPlayBtn" title="Play / Pause">
-          <i class="fas fa-play"></i>
-        </button>
-
-        <!-- Anti-Piracy Inactive Focus Lock Screen -->
-        <div class="piracy-screen-shield" id="piracyScreenShield" style="display: none; position: absolute; inset: 0; background: rgba(5,5,10,0.95); z-index: 30; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 20px;">
-          <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(239, 68, 68, 0.2); color: #EF4444; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 12px;">
-            <i class="fas fa-shield-halved"></i>
-          </div>
-          <h3 style="font-size: 1.25rem; font-weight: 800; color: #FFF; margin-bottom: 6px;">ভিডিও সাময়িক স্থগিত</h3>
-          <p style="font-size: 0.85rem; color: #94A3B8; max-width: 360px; margin-bottom: 12px;">অ্যান্টি-পাইরেসি সুরক্ষার জন্য উইন্ডো ফোকাস ফিরে পেতে স্ক্রিনে ক্লিক করুন।</p>
-          <div style="font-size: 0.75rem; color: #10B981; font-family: monospace; background: rgba(16, 185, 129, 0.1); padding: 4px 12px; border-radius: 9999px;">
-            STUDENT ID: STU-BUET-2026 • WATERMARK ACTIVE
-          </div>
-        </div>
-
-        <!-- Video Custom Controls Bottom Bar -->
-        <div class="video-controls-bottom-bar">
+        <!-- 16:9 Video Player Screen -->
+        <div class="video-theater-wrapper" id="videoFrameContainer">
           
-          <!-- Timeline Track -->
-          <div class="timeline-track-wrap" id="timelineScrubberWrap">
-            <div class="timeline-progress-fill" id="timelineProgressBar" style="width: 32%;"></div>
+          <!-- Tier 3 Forensic Watermark Canvas -->
+          <canvas id="forensicCanvas" class="forensic-canvas-overlay"></canvas>
+
+          <!-- Physics / Animation Interactive Canvas -->
+          <canvas id="physicsSimCanvas" class="video-theater-canvas"></canvas>
+
+          <!-- Standard Video Element -->
+          <video id="videoScreenElem" class="video-theater-screen" style="display: none;" poster="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1200&auto=format&fit=crop">
+            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+          </video>
+
+          <!-- Center Big Play Button Overlay -->
+          <button class="video-theater-play-overlay" id="videoBigPlayBtn" title="Play / Pause">
+            <i class="fas fa-play"></i>
+          </button>
+
+          <!-- Anti-Piracy Inactive Focus Lock Screen -->
+          <div class="piracy-screen-shield" id="piracyScreenShield" style="display: none;">
+            <div class="piracy-shield-icon">
+              <i class="fas fa-shield-halved"></i>
+            </div>
+            <h3 class="piracy-shield-title">ভিডিও সাময়িক স্থগিত</h3>
+            <p class="piracy-shield-desc">অ্যান্টি-পাইরেসি সুরক্ষার জন্য উইন্ডো ফোকাস ফিরে পেতে স্ক্রিনে ক্লিক করুন।</p>
+            <div class="piracy-watermark-pill" id="piracyWatermarkTag">
+              STUDENT ID: STU-BUET-2026 • WATERMARK ACTIVE
+            </div>
           </div>
 
-          <!-- Controls Actions Row -->
-          <div class="controls-actions-row">
-            <div class="controls-left-actions">
-              <button class="control-btn-icon" id="btnPlayPause" title="Play / Pause">
-                <i class="fas fa-play" id="playPauseIcon"></i>
-              </button>
-              
-              <div class="time-readout" id="timeCounterDisplay">
-                <span style="color: #FFF; font-weight: 700;">02:25</span> / 12:45
-              </div>
+          <!-- Database Paywall Locked Class Screen -->
+          <div class="paywall-locked-screen" id="paywallLockedScreen" style="display: none;">
+            <div class="paywall-lock-badge-icon">
+              <i class="fas fa-lock"></i>
+            </div>
+            <span class="paywall-tag-pill">
+              🔒 এই ক্লাসটি লক করা • কোর্স ক্রয় আবশ্যক
+            </span>
+            <h2 class="paywall-heading-title" id="paywallTitle">
+              ক্লাসটি দেখতে কোর্সটি এনরোল করুন
+            </h2>
+            <p class="paywall-heading-desc" id="paywallDesc">
+              আপনি এখনও এই কোর্সটি কেনেননি। লেকচার ভিডিও, স্পেশাল হ্যান্ডনোটস এবং কুইজ আনলক করতে নিচের বাটনে ক্লিক করে কোর্সটি এনরোল করুন।
+            </p>
+            <div class="paywall-actions-row">
+              <a href="javascript:void(0)" id="paywallBuyCourseBtn" class="btn-paywall-enroll">
+                <i class="fas fa-cart-shopping"></i> <span id="paywallBuyBtnText">এখনই কোর্সটি কিনুন (Buy Course)</span>
+              </a>
+              <a href="/my-courses.html" class="btn-paywall-back">
+                <i class="fas fa-arrow-left"></i> <span>আমার কোর্সে ফিরুন</span>
+              </a>
+            </div>
+          </div>
 
-              <!-- Volume Range -->
-              <div style="display: flex; align-items: center; gap: 6px;">
-                <button class="control-btn-icon" title="Volume">
-                  <i class="fas fa-volume-high" style="font-size: 0.85rem;"></i>
+          <!-- Video Custom Controls Bottom Bar -->
+          <div class="video-controls-bottom-bar">
+            
+            <!-- Timeline Scrubber Track -->
+            <div class="timeline-track-wrap" id="timelineScrubberWrap">
+              <div class="timeline-progress-fill" id="timelineProgressBar" style="width: 25%;"></div>
+            </div>
+
+            <!-- Controls Actions Row -->
+            <div class="controls-actions-row">
+              <div class="controls-left-actions">
+                <button class="control-btn-icon" id="btnPlayPause" title="Play / Pause">
+                  <i class="fas fa-play" id="playPauseIcon"></i>
                 </button>
-                <input type="range" min="0" max="1" step="0.05" value="0.8" style="width: 70px; accent-color: var(--lms-accent); cursor: pointer;">
+                
+                <div class="time-readout" id="timeCounterDisplay">
+                  <span class="time-curr">00:03</span> / <span class="time-dur">01:03</span>
+                </div>
+
+                <!-- Volume Slider -->
+                <div class="volume-control-wrap">
+                  <button class="control-btn-icon" title="Volume">
+                    <i class="fas fa-volume-high"></i>
+                  </button>
+                  <input type="range" min="0" max="1" step="0.05" value="0.8" class="volume-slider-range" id="volumeSlider">
+                </div>
+              </div>
+
+              <div class="controls-right-actions">
+                <!-- Simulation / Real Video Toggle -->
+                <button class="control-badge-btn" id="btnSimToggle">
+                  <i class="fas fa-atom mr-1"></i> সিমুলেশন
+                </button>
+
+                <!-- Speed Selector -->
+                <button class="control-badge-btn" id="btnSpeedSelect" title="Playback Speed">
+                  1x ⌵
+                </button>
+
+                <!-- Quality Selector -->
+                <button class="control-badge-btn" id="btnQualitySelect" title="Quality">
+                  720p HD ⌵
+                </button>
+
+                <!-- Fullscreen Button -->
+                <button class="control-btn-icon" onclick="document.getElementById('videoFrameContainer').requestFullscreen?.()" title="Fullscreen">
+                  <i class="fas fa-expand"></i>
+                </button>
               </div>
             </div>
 
-            <div class="controls-right-actions">
-              <!-- Physics Sim / Real Video Mode Pill -->
-              <button class="control-badge-btn" id="btnSimToggle" style="background: rgba(255, 122, 26, 0.2); border-color: rgba(255, 122, 26, 0.4); color: #FFB347;">
-                <i class="fas fa-atom mr-1"></i> সিমুলেশন
-              </button>
-
-              <!-- Speed Selector -->
-              <button class="control-badge-btn" id="btnSpeedSelect" title="Playback Speed">
-                1x
-              </button>
-
-              <!-- Quality Selector -->
-              <button class="control-badge-btn" id="btnQualitySelect" title="Quality">
-                720p HD
-              </button>
-
-              <!-- Fullscreen Button -->
-              <button class="control-btn-icon" onclick="document.getElementById('videoFrameContainer').requestFullscreen?.()" title="Fullscreen">
-                <i class="fas fa-expand"></i>
-              </button>
-            </div>
           </div>
 
         </div>
 
-      </div>
+        <!-- ─── LESSON TITLE, SUBTITLE & ACTION BAR (EXACT MATCH TO IMAGE 2) ─── -->
+        <div class="lesson-details-card">
+          <h1 class="lesson-primary-heading" id="lessonTitleHeading">
+            Video: Photoshop-এ যা কিছু আছে এবং যা কিছু শেখা সম্ভব
+          </h1>
+          <p class="lesson-primary-subtitle" id="lessonDescHeading">
+            Photoshop-এ যা কিছু আছে এবং যা কিছু শেখা সম্ভব
+          </p>
 
-      <!-- Congratulations / Progress Alert Banner -->
-      <div class="lms-congrats-banner" id="congratsBanner">
-        <i class="fas fa-bullhorn"></i>
-        <span>🎉 Congratulations! You've completed the whole course.</span>
-      </div>
+          <!-- Action Buttons Bar (শেয়ার, রিপোর্ট, ডাউনলোড, সম্পন্ন, পরবর্তী ক্লাস) -->
+          <div class="lesson-action-toolbar">
+            <div class="action-btn-group-left">
+              <button type="button" class="btn-action-outline" id="btnShareModal" onclick="openShareModal()">
+                <i class="fas fa-share-nodes"></i>
+                <span>শেয়ার</span>
+              </button>
 
-      <!-- Lesson Category & Main Title -->
-      <div class="lesson-category-slug" id="lessonCategorySlug">
-        The Modern Ai Dev Stack Setup • Lesson 1 of 39
-      </div>
+              <button type="button" class="btn-action-outline" id="btnReportModal" onclick="openReportModal()">
+                <i class="fas fa-flag"></i>
+                <span>রিপোর্ট</span>
+              </button>
 
-      <h1 class="lesson-main-heading" id="lessonTitleHeading">
-        Lesson 1.1 - Course Roadmap & The AI-First Mindset
-      </h1>
+              <button type="button" class="btn-action-outline" id="btnDownloadNotes" onclick="downloadCurrentLessonMaterial()">
+                <i class="fas fa-download"></i>
+                <span>ডাউনলোড</span>
+              </button>
 
-      <!-- Action Buttons Row -->
-      <div class="lesson-action-bar-row">
+              <button type="button" class="btn-action-outline" id="btnBookmarkLesson" onclick="toggleBookmark()">
+                <i class="far fa-bookmark" id="bookmarkIcon"></i>
+                <span>বুকমার্ক</span>
+              </button>
+            </div>
+
+            <div class="action-btn-group-right">
+              <!-- Completed Button (Syncs directly to MongoDB) -->
+              <button type="button" class="btn-action-complete" id="btnMarkComplete">
+                <i class="fas fa-circle-check"></i>
+                <span id="completeBtnText">সম্পন্ন</span>
+              </button>
+
+              <!-- Next Lesson Button -->
+              <button type="button" class="btn-action-next" id="btnNextLesson">
+                <span>পরবর্তী ক্লাস</span>
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── CHAPTER MATERIALS SECTION ("চ্যাপ্টার ম্যাটেরিয়াল" - EXACT MATCH TO IMAGE 2) ─── -->
+        <div class="chapter-materials-card" id="chapterMaterialsSection">
+          <div class="materials-card-header">
+            <h3 class="materials-card-title">
+              <i class="fas fa-book-bookmark" style="color: #F59E0B;"></i>
+              <span>চ্যাপ্টার ম্যাটেরিয়াল</span>
+            </h3>
+            <span class="materials-count-pill" id="materialsCountPill">৪টি ম্যাটেরিয়াল</span>
+          </div>
+
+          <div class="materials-list-wrapper" id="materialsListContainer">
+            <!-- Rendered dynamically by player.js -->
+          </div>
+        </div>
+
+        <!-- ─── DOUBT SOLVING & PERSONAL NOTES TABS ─── -->
+        <div class="workspace-tabs-card">
+          <div class="workspace-nav-bar">
+            <button class="ws-tab-btn active" id="wsTabDoubtBtn" onclick="switchWsTab('doubt')">
+              <i class="fas fa-comments"></i> <span>ডাউট ও প্রশ্নোত্তর</span>
+            </button>
+            <button class="ws-tab-btn" id="wsTabNotesBtn" onclick="switchWsTab('notes')">
+              <i class="fas fa-pen-to-square"></i> <span>আমার লেকচার নোটস</span>
+            </button>
+            <button class="ws-tab-btn" id="wsTabCommunityBtn" onclick="switchWsTab('community')">
+              <i class="fas fa-users"></i> <span>স্টাডি গ্রুপ ও হেল্প</span>
+            </button>
+          </div>
+
+          <div class="workspace-content-body">
+            <!-- Pane 1: Doubt Box -->
+            <div id="wsPaneDoubt" class="ws-pane-item active">
+              <div class="doubt-input-card">
+                <div class="doubt-input-row">
+                  <input type="text" id="doubtInput" placeholder="এই ক্লাস নিয়ে কোনো প্রশ্ন বা কনফিউশন থাকলে লিখুন..." class="doubt-input-box">
+                  <button type="button" id="btnAskDoubt" class="doubt-submit-button">
+                    <i class="fas fa-paper-plane"></i> <span>প্রশ্ন পাঠান</span>
+                  </button>
+                </div>
+                <div id="doubtFeedList" class="doubt-discussion-feed">
+                  <!-- Injected via player.js -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Pane 2: Personal Notes -->
+            <div id="wsPaneNotes" class="ws-pane-item" style="display: none;">
+              <div class="personal-notes-editor-box">
+                <textarea id="personalNotesTextarea" class="notes-textarea-box" placeholder="লেকচারের গুরুত্বপূর্ণ পয়েন্ট, শর্টকাট সূত্র বা নিজের চিন্তা এখানে নোট করে রাখুন..."></textarea>
+                <div class="notes-action-row">
+                  <span id="notesSaveStatus" class="notes-status-badge">✓ স্বয়ংক্রিয়ভাবে লোকাল স্টোরেজে সংরক্ষিত</span>
+                  <button type="button" id="btnSaveNotes" class="notes-save-action-btn">
+                    <i class="fas fa-floppy-disk"></i> <span>নোট সংরক্ষণ করুন</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pane 3: Community Links -->
+            <div id="wsPaneCommunity" class="ws-pane-item" style="display: none;">
+              <div class="community-social-card">
+                <div class="community-item-link">
+                  <i class="fab fa-facebook text-blue-500"></i>
+                  <div>
+                    <strong>অফিসিয়াল ফেসবুক গ্রুপ:</strong>
+                    <a href="https://facebook.com/groups/dipuedubd/" target="_blank" rel="noreferrer">facebook.com/groups/dipuedubd/</a>
+                  </div>
+                </div>
+                <div class="community-item-link" style="margin-top: 10px;">
+                  <i class="fab fa-whatsapp text-emerald-500"></i>
+                  <div>
+                    <strong>হোয়াটসঅ্যাপ ডাউট সলভ গ্রুপ:</strong>
+                    <a href="https://chat.whatsapp.com/Cyi5MgSU36t6HTzMdKoyux" target="_blank" rel="noreferrer">chat.whatsapp.com/Cyi5MgSU36t6HTzMdKoyux</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ─── COLUMN 2: COURSE SYLLABUS CARD (RIGHT 32% - EXACT MATCH TO IMAGE 2) ─── -->
+      <aside class="player-syllabus-column">
         
-        <div class="lesson-nav-buttons-left">
-          <!-- Previous Button -->
-          <button class="btn-nav-prev-icon" id="btnPrevLesson" title="Previous Lesson">
-            <i class="fas fa-chevron-left"></i>
-          </button>
+        <div class="course-syllabus-card">
+          <!-- Card Header with Completion Percentage -->
+          <div class="syllabus-card-header">
+            <h3 class="syllabus-card-heading">কোর্স সিলেবাস</h3>
+            <span class="syllabus-progress-pill" id="drawerProgressPct">0% সম্পন্ন</span>
+          </div>
 
-          <!-- Completed Button -->
-          <button class="btn-mark-completed-cta" id="btnMarkComplete">
-            <i class="fas fa-circle-check"></i>
-            <span id="completeBtnText">Completed</span>
-          </button>
+          <!-- Thin Horizontal Progress Track -->
+          <div class="syllabus-progress-track">
+            <div class="syllabus-progress-bar" id="drawerProgressBar" style="width: 0%;"></div>
+          </div>
 
-          <!-- Next Lesson Button -->
-          <button class="btn-next-lesson-prominent" id="btnNextLesson">
-            <span>Next lesson</span>
-            <i class="fas fa-chevron-right text-xs"></i>
-          </button>
+          <!-- Chapters Accordion & Timeline Lesson List -->
+          <div class="syllabus-accordion-container" id="playlistContainer">
+            <!-- Injected dynamically by player.js -->
+          </div>
         </div>
 
-        <div class="lesson-tools-right">
-          <!-- Bookmark -->
-          <button class="btn-tool-outline" id="btnBookmarkLesson" title="Bookmark this lesson">
-            <i class="far fa-bookmark"></i>
-          </button>
+      </aside>
 
-          <!-- Take Notes Button -->
-          <button class="btn-tool-outline" onclick="openNotesTab()" title="Take in-lesson notes">
-            <i class="fas fa-pen-to-square"></i>
-            <span>Take notes</span>
-          </button>
+    </div>
+  </main>
 
-          <!-- Theater Mode -->
-          <button class="btn-tool-outline" onclick="toggleTheaterMode()" title="Theater view">
-            <i class="fas fa-tv"></i>
-          </button>
+  <!-- ========================================================================
+       MODALS: SHARE, REPORT & CELEBRATION
+       ======================================================================== -->
+  <!-- Share Modal -->
+  <div class="player-modal-backdrop" id="shareModalBackdrop" style="display: none;">
+    <div class="player-modal-box">
+      <div class="player-modal-header">
+        <h4 class="player-modal-title"><i class="fas fa-share-nodes text-cyan-400"></i> লেকচার শেয়ার করুন</h4>
+        <button type="button" class="modal-close-btn" onclick="closeShareModal()">✕</button>
+      </div>
+      <div class="player-modal-body">
+        <p style="font-size: 13.5px; color: #94A3B8; margin-bottom: 12px;">বন্ধুদের সাথে এই লেকচারের লিংক শেয়ার করুন:</p>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="shareUrlInput" readonly class="doubt-input-box" style="font-size: 12px;">
+          <button type="button" class="btn-action-complete" onclick="copyShareUrl()" style="white-space: nowrap;">কপি করুন</button>
         </div>
-
       </div>
+    </div>
+  </div>
 
-      <div class="next-lesson-subhint" id="nextLessonSubhint">
-        Next lesson: Lesson 1.2 - Installing & Configuring Cursor IDE
+  <!-- Report Issue Modal -->
+  <div class="player-modal-backdrop" id="reportModalBackdrop" style="display: none;">
+    <div class="player-modal-box">
+      <div class="player-modal-header">
+        <h4 class="player-modal-title"><i class="fas fa-flag text-red-400"></i> ভিডিও সমস্যা রিপোর্ট করুন</h4>
+        <button type="button" class="modal-close-btn" onclick="closeReportModal()">✕</button>
       </div>
-
-
-      <!-- Community Links Box (Exact match with reference image) -->
-      <div class="community-links-card">
-        Facebook Group Link - <a href="https://facebook.com" target="_blank" rel="noreferrer">www.facebook.com/groups/dipuedubd/</a> | 
-        Whatsapp Group Link - <a href="https://chat.whatsapp.com" target="_blank" rel="noreferrer">https://chat.whatsapp.com/Cyi5MgSU36t6HTzMdKoyux</a>
+      <div class="player-modal-body">
+        <p style="font-size: 13px; color: #94A3B8; margin-bottom: 10px;">ভিডিওতে কী ধরনের সমস্যা হচ্ছে?</p>
+        <select id="reportIssueType" class="doubt-input-box" style="margin-bottom: 10px;">
+          <option value="audio">সাউন্ড বা অডিওতে সমস্যা</option>
+          <option value="video">ভিডিও প্লে হতে আটকে যাচ্ছে</option>
+          <option value="content">লেকচারের কনটেন্ট বা স্লাইডে ভুল</option>
+          <option value="other">অন্যান্য সমস্যা</option>
+        </select>
+        <textarea id="reportIssueDetails" class="notes-textarea-box" rows="3" placeholder="বিস্তারিত লিখুন..."></textarea>
+        <div style="margin-top: 12px; text-align: right;">
+          <button type="button" class="btn-action-complete" onclick="submitReportIssue()">জমা দিন</button>
+        </div>
       </div>
-
-      <!-- Interactive Workspace Tabs (Mounted via TypeScript: components/ui/player-classroom.tsx) -->
-      <div id="player-workspace-root"></div>
-
-    </main>
-
+    </div>
   </div>
 
   <!-- Gamification Celebration Modal -->
-  <div class="modal-overlay" id="celebrateModalOverlay">
-    <div class="checkout-modal-card" style="text-align: center; padding: 2.5rem 1.5rem; max-width: 440px;">
-      <div style="width: 70px; height: 70px; border-radius: 50%; background: rgba(245, 158, 11, 0.15); color: #F59E0B; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.25rem; border: 2px solid #F59E0B;">
-        <i class="fas fa-coins"></i>
+  <div class="player-modal-backdrop" id="celebrateModalOverlay" style="display: none;">
+    <div class="player-modal-box" style="text-align: center; max-width: 420px; padding: 2rem 1.5rem;">
+      <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(245, 158, 11, 0.15); color: #F59E0B; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 1rem; border: 2px solid #F59E0B;">
+        <i class="fas fa-trophy"></i>
       </div>
-      <h2 style="font-size: 1.4rem; font-weight: 800; color: #FFF; margin-bottom: 8px;">লেকচার সম্পন্ন হয়েছে! 🎉</h2>
-      <p style="font-size: 0.9rem; color: #94A3B8; margin-bottom: 1.25rem;">
-        অভিনন্দন! আপনি সম্পূর্ণ লেকচারটি সফলভাবে সম্পন্ন করেছেন এবং রিওয়ার্ড অর্জন করেছেন।
+      <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 6px;">ক্লাস সম্পন্ন হয়েছে! 🎉</h3>
+      <p style="font-size: 0.9rem; color: #94A3B8; margin-bottom: 1rem;">
+        অভিনন্দন! আপনি লেকচারটি সম্পন্ন করেছেন এবং ডেটাবেসে আপনার প্রগ্রেস সংরক্ষিত হয়েছে।
       </p>
-      <div style="display: inline-block; padding: 6px 16px; border-radius: 9999px; background: rgba(245, 158, 11, 0.15); color: #F59E0B; font-weight: 800; font-size: 0.9rem; margin-bottom: 1.5rem;">
+      <div style="display: inline-block; padding: 5px 14px; border-radius: 999px; background: rgba(16, 185, 129, 0.15); color: #10B981; font-weight: 800; font-size: 0.85rem; margin-bottom: 1.25rem;">
         +২৫ EduCoins যোগ হয়েছে!
       </div>
-      <button type="button" class="btn-buy-course-primary" onclick="closeCelebrateModal()" style="background: var(--lms-accent);">
-        <span>পরবর্তী লেকচারে চলুন ></span>
-      </button>
+      <div>
+        <button type="button" class="btn-action-complete" onclick="closeCelebrateModal()" style="width: 100%; padding: 10px;">
+          <span>পরবর্তী ক্লাসে চলুন →</span>
+        </button>
+      </div>
     </div>
   </div>
 
   <script>
-    function toggleFoldersSubmenu() {
-      const submenu = document.getElementById("dashFoldersSubmenu");
-      const chevron = document.getElementById("folderChevron");
-      if (submenu) {
-        submenu.classList.toggle("hidden");
-        if (chevron) {
-          chevron.classList.toggle("fa-chevron-down");
-          chevron.classList.toggle("fa-chevron-up");
-        }
+    // Tab switching in workspace
+    function switchWsTab(tabId) {
+      document.querySelectorAll('.ws-tab-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(tabId === 'doubt' ? 'wsTabDoubtBtn' : tabId === 'notes' ? 'wsTabNotesBtn' : 'wsTabCommunityBtn');
+      if (activeBtn) activeBtn.classList.add('active');
+
+      document.querySelectorAll('.ws-pane-item').forEach(p => p.style.display = 'none');
+      const pane = document.getElementById(tabId === 'doubt' ? 'wsPaneDoubt' : tabId === 'notes' ? 'wsPaneNotes' : 'wsPaneCommunity');
+      if (pane) pane.style.display = 'block';
+    }
+
+    // Theme toggler
+    function togglePlayerTheme() {
+      const isLight = document.body.classList.toggle('light-theme');
+      localStorage.setItem('dipu_theme', isLight ? 'light' : 'dark');
+      const icon = document.getElementById('themeToggleIcon');
+      if (icon) {
+        icon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
       }
     }
 
-    function switchWorkspaceTab(tabId, btn) {
-      document.querySelectorAll('.workspace-tab-item').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelectorAll('.workspace-pane').forEach(p => p.style.display = 'none');
-      const target = document.getElementById('workspacePane-' + tabId);
-      if (target) target.style.display = 'block';
+    // Modal helpers
+    function openShareModal() {
+      const input = document.getElementById('shareUrlInput');
+      if (input) input.value = window.location.href;
+      const modal = document.getElementById('shareModalBackdrop');
+      if (modal) modal.style.display = 'flex';
+    }
+    function closeShareModal() {
+      const modal = document.getElementById('shareModalBackdrop');
+      if (modal) modal.style.display = 'none';
+    }
+    function copyShareUrl() {
+      const input = document.getElementById('shareUrlInput');
+      if (input) {
+        input.select();
+        navigator.clipboard?.writeText(input.value);
+        alert('লিংক কপি করা হয়েছে!');
+        closeShareModal();
+      }
     }
 
-    function openNotesTab() {
-      const btn = document.getElementById('tabBtnPersonalNotes');
-      if (btn) switchWorkspaceTab('notes', btn);
+    function openReportModal() {
+      const modal = document.getElementById('reportModalBackdrop');
+      if (modal) modal.style.display = 'flex';
     }
-
-    function switchDrawerTab(tab) {
-      document.getElementById('drawerTabContentBtn').classList.toggle('active', tab === 'content');
-      document.getElementById('drawerTabNotesBtn').classList.toggle('active', tab === 'notes');
-      if (tab === 'notes') openNotesTab();
+    function closeReportModal() {
+      const modal = document.getElementById('reportModalBackdrop');
+      if (modal) modal.style.display = 'none';
+    }
+    function submitReportIssue() {
+      alert('আপনার রিপোর্টটি জমা নেওয়া হয়েছে। আমাদের টিম দ্রুত বিষয়টি খতিয়ে দেখবে। ধন্যবাদ!');
+      closeReportModal();
     }
 
     function closeCelebrateModal() {
       const modal = document.getElementById('celebrateModalOverlay');
-      if (modal) modal.classList.remove('active');
+      if (modal) modal.style.display = 'none';
       if (typeof window.nextLesson === 'function') window.nextLesson();
     }
 
+    // Initialize saved theme
     (function() {
-      // Classroom video theater is permanently locked to Cinema Dark Mode for anti-glare & eye protection
-      document.body.classList.remove('light-theme');
+      const savedTheme = localStorage.getItem('dipu_theme');
+      if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+        const icon = document.getElementById('themeToggleIcon');
+        if (icon) icon.className = 'fas fa-sun';
+      }
     })();
   </script>
 
-  <!-- Player Suite TypeScript Component Bundle -->
-  <script src="/js/player-suite-bundle.js?v=4.2"></script>
-
   <!-- Player Engine Script -->
-  <script src="/js/player.js?v=4.2"></script>
+  <script src="/js/player.js?v=5.0"></script>
 
-  <!-- Global Animation Engine (Text & Box Reveals) -->
+  <!-- Global Animation Engine -->
   <script src="/js/site-animations.js" defer></script>
 </body>
 </html>

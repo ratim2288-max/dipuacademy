@@ -305,20 +305,119 @@
       font-weight: 600;
     }
 
-    /* Page Heading */
+    /* Page Heading & Text Animations */
+    @keyframes daShimmerText {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes daBadgePulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(16, 185, 129, 0.45); }
+      50% { transform: scale(1.05); box-shadow: 0 0 24px rgba(16, 185, 129, 0.9); }
+    }
+    .da-shimmer-headline {
+      background: linear-gradient(90deg, #00C2FF 0%, #0084FF 30%, #10B981 65%, #00C2FF 100%);
+      background-size: 250% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: daShimmerText 6s linear infinite;
+    }
+    .da-free-pulse-badge {
+      animation: daBadgePulse 2.2s infinite ease-in-out;
+    }
+
     .page-title {
-      font-size: 1.9rem;
-      font-weight: 800;
+      font-size: 2.1rem;
+      font-weight: 900;
       color: var(--text-main);
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.015em;
+    }
+
+    /* Class Curriculum Banner Box */
+    .class-curriculum-banner {
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin-bottom: 1.75rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+    [data-theme="dark"] .class-curriculum-banner {
+      border-color: rgba(0, 194, 255, 0.25);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .class-banner-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+    .class-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--brand-green);
+      font-size: 0.82rem;
+      font-weight: 800;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    [data-theme="dark"] .class-badge-pill {
+      background: rgba(0, 194, 255, 0.15);
+      color: var(--brand-cyan);
+      border-color: rgba(0, 194, 255, 0.35);
+    }
+    .class-pills-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .class-pills-row::-webkit-scrollbar {
+      display: none;
+    }
+    .class-pill-btn {
+      padding: 6px 14px;
+      border-radius: 9999px;
+      border: 1px solid var(--header-border);
+      background: rgba(148, 163, 184, 0.08);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .class-pill-btn:hover {
+      color: var(--text-main);
+      border-color: var(--brand-green);
+    }
+    .class-pill-btn.active {
+      background: linear-gradient(135deg, #0084FF 0%, #00C2FF 100%);
+      color: #FFFFFF !important;
+      border-color: transparent;
+      font-weight: 800;
+      box-shadow: 0 4px 14px rgba(0, 194, 255, 0.35);
     }
 
     /* ─── Category Tabs ─── */
     .category-tabs-nav {
       display: flex;
       align-items: center;
-      gap: 2rem;
+      gap: 1.25rem;
       border-bottom: 1.5px solid var(--header-border);
       margin-bottom: 1.75rem;
       overflow-x: auto;
@@ -772,22 +871,27 @@
        ========================================================================= -->
   <main class="main-wrapper">
 
-    <!-- Breadcrumb: হোম > আমার কোর্সসমূহ -->
-    <nav class="breadcrumb-row" aria-label="Breadcrumb">
-      <a href="/">হোম</a>
-      <i class="fas fa-chevron-right" style="font-size: 0.65rem;"></i>
-      <span class="current">আমার কোর্সসমূহ</span>
-    </nav>
+    <!-- Top Back & Breadcrumb Row -->
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 1.25rem;">
+      <nav class="breadcrumb-row" style="margin-bottom: 0;" aria-label="Breadcrumb">
+        <a href="/"><i class="fas fa-home" style="margin-right: 4px;"></i>হোম</a>
+        <i class="fas fa-chevron-right" style="font-size: 0.65rem;"></i>
+        <span class="current">আমার কোর্সসমূহ</span>
+      </nav>
+      <a href="/" class="btn-course-home" style="padding: 6px 14px; font-size: 0.85rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;" title="মূল ওয়েবসাইটে ফিরুন">
+        <i class="fas fa-arrow-left"></i> <span>হোমে ফিরে যান</span>
+      </a>
+    </div>
 
-    <!-- Page Heading -->
-    <h1 class="page-title">আমার কোর্সসমূহ</h1>
+    <!-- Page Heading with Shimmer Text Animation (Exact Match to Image 2) -->
+    <h1 class="page-title da-shimmer-headline">আমার কোর্সসমূহ</h1>
 
-    <!-- Category Tabs Navigation (সব | একাডেমিক পড়াশোনা | স্কিল ডেভেলপমেন্ট | বইসমূহ) -->
+    <!-- Category Tabs Navigation (Exact Match to Image 2: সব | একাডেমিক পড়াশোনা | স্কিল ডেভেলপমেন্ট | বইসমূহ) -->
     <div class="category-tabs-nav" role="tablist">
       <button class="tab-button active" onclick="filterCategory('all', this)">সব</button>
       <button class="tab-button" onclick="filterCategory('academic', this)">একাডেমিক পড়াশোনা</button>
       <button class="tab-button" onclick="filterCategory('skill', this)">স্কিল ডেভেলপমেন্ট</button>
-      <button class="tab-button" onclick="filterCategory('books', this)">বইসমূহ</button>
+      <button class="tab-button" onclick="filterCategory('book', this)">বইসমূহ</button>
     </div>
 
     <!-- Enrolled Courses List (Dynamic Render) -->
@@ -897,63 +1001,728 @@
 
 
   <!-- =========================================================================
-       4. JAVASCRIPT: DATA FEED & ACTIONS
+       4. JAVASCRIPT: DYNAMIC CLASS CURRICULUM STORE & ACTIONS
        ========================================================================= -->
   <script>
-    // Enrolled courses database matching student needs & user screenshot
-    const DEFAULT_COURSES = [
+    // ─── 1. Academic Classes Definitions ───
+    const ACADEMIC_CLASSES = [
       {
-        id: "course-skill-graphic-design",
+        key: "ssc",
+        label: "এসএসসি ২০২৬ (১০ম শ্রেণি)",
+        shortName: "SSC 2026",
+        gradeBadge: "SSC / ১০ম",
+        color: "#10B981",
+        icon: "fas fa-graduation-cap",
+        description: "বোর্ড পরীক্ষার নিশ্চিত গোল্ডেন A+ প্রস্তুতি, টেস্ট পেপার ও সৃজনশীল সলভিং"
+      },
+      {
+        key: "hsc27",
+        label: "HSC ২০২৭ (বিজ্ঞান বিভাগ)",
+        shortName: "HSC 2027",
+        gradeBadge: "HSC '27",
+        color: "#00C2FF",
+        icon: "fas fa-atom",
+        description: "এইচএসসি ২০২৭ বোর্ড ও এডমিশন মূল ভিত শক্ত করার প্রিমিয়াম একাডেমিক প্রোগ্রাম"
+      },
+      {
+        key: "hsc28",
+        label: "HSC ২০২৮ (বিজ্ঞান বিভাগ)",
+        shortName: "HSC 2028",
+        gradeBadge: "HSC '28",
+        color: "#8B5CF6",
+        icon: "fas fa-microscope",
+        description: "শুরু থেকেই বুয়েট ও মেডিকেল স্ট্যান্ডার্ড সেরা বেসিক ফাউন্ডেশন তৈরি"
+      },
+      {
+        key: "class9",
+        label: "নবম শ্রেণি (নতুন কারিকুলাম)",
+        shortName: "Class 9",
+        gradeBadge: "৯ম শ্রেণি",
+        color: "#F59E0B",
+        icon: "fas fa-book-bookmark",
+        description: "নতুন শিক্ষাক্রমের বিস্তারিত কনসেপ্ট, গণিত, বিজ্ঞান ও মূল্যায়ন প্রস্তুতি"
+      },
+      {
+        key: "class8",
+        label: "অষ্টম শ্রেণি",
+        shortName: "Class 8",
+        gradeBadge: "৮ম শ্রেণি",
+        color: "#06B6D4",
+        icon: "fas fa-shapes",
+        description: "অষ্টম শ্রেণির বার্ষিক পরীক্ষা, প্যাটার্ন ও গণিত-বিজ্ঞান প্রস্তুতি"
+      },
+      {
+        key: "class7",
+        label: "৭ম শ্রেণি",
+        shortName: "Class 7",
+        gradeBadge: "৭ম শ্রেণি",
+        color: "#EC4899",
+        icon: "fas fa-puzzle-piece",
+        description: "সপ্তম শ্রেণির এক্টিভিটি ও হ্যান্ডস-অন প্র্যাকটিস ভিত্তিক শিক্ষা"
+      },
+      {
+        key: "class6",
+        label: "৬ষ্ঠ শ্রেণি",
+        shortName: "Class 6",
+        gradeBadge: "৬ষ্ঠ শ্রেণি",
+        color: "#3B82F6",
+        icon: "fas fa-seedling",
+        description: "প্রাথমিক পর্যায় থেকে নতুন মাধ্যমিক শিক্ষাক্রমে প্রবেশের আত্মবিশ্বাস"
+      },
+      {
+        key: "admission",
+        label: "ভার্সিটি ও ইঞ্জিনিয়ারিং এডমিশন",
+        shortName: "Admission",
+        gradeBadge: "এডমিশন",
+        color: "#EF4444",
+        icon: "fas fa-university",
+        description: "বুয়েট, মেডিকেল, ঢাবি 'ক' ইউনিট ও ইঞ্জিনিয়ারিং প্রশ্নব্যাংক মাস্টারি"
+      },
+      {
+        key: "skill",
+        label: "স্কিল ডেভেলপমেন্ট ও ফ্রিল্যান্সিং",
+        shortName: "Skill",
+        gradeBadge: "স্কিল",
+        color: "#14B8A6",
+        icon: "fas fa-laptop-code",
+        description: "মার্কেটপ্লেস উপযোগী গ্রাফিক্স ডিজাইন, ওয়েব কোডিং ও ডিজিটাল স্কিলস"
+      }
+    ];
+
+    // ─── 2. Full Curriculum Resource Database (Courses, Books, eBooks, Free) ───
+    const CURRICULUM_RESOURCES = [
+      // Top Featured & Authentic Enrolled Courses (Matches Image 2 exactly)
+      {
+        id: "graphic-design-photoshop",
         slug: "graphic-design-photoshop",
+        classKey: "all",
+        categoryKey: "skill",
+        categoryLabel: "স্কিলস",
+        type: "course",
         title: "Graphic Designing with Photoshop",
-        category: "skill",
+        subtitle: "স্কিল ডেভেলপমেন্ট • ফটোশপ, লোগো, ব্যানার ও ফ্রিল্যান্সিং",
+        mentor: "Sadman Sadik",
         thumbnail: "/images/courses/graphic-design-photoshop.jpg",
         progress: 0,
         completedLessons: 0,
         totalLessons: 38,
-        courseHomeUrl: "/course.html?id=course-skill-graphic-design",
-        videoPlayerUrl: "/player.html?course=course-skill-graphic-design"
+        badge: "স্কিলস",
+        badgeColor: "#10B981",
+        playerUrl: "/player.html?course=graphic-design-photoshop",
+        homeUrl: "/course-home.html?course=graphic-design-photoshop"
       },
       {
-        id: "course-user-hsc28",
-        slug: "hsc-28-full-prep",
-        title: "HSC '২৮ পূর্ণাঙ্গ বিজ্ঞান প্রস্তুতি কোর্স (পদার্থ, রসায়ন, গণিত)",
-        category: "academic",
-        thumbnail: "/images/courses/hsc-28-prep.jpg",
-        progress: 18,
-        completedLessons: 7,
-        totalLessons: 40,
-        courseHomeUrl: "/course.html?id=course-user-hsc28",
-        videoPlayerUrl: "/player.html?course=course-user-hsc28"
+        id: "class-5-full-course",
+        slug: "class-5-full-course",
+        classKey: "all",
+        categoryKey: "academic",
+        categoryLabel: "একাডেমিক",
+        type: "course",
+        title: "৫ম শ্রেণীর পূর্ণাঙ্গ কোর্স",
+        subtitle: "একাডেমিক • সব বিষয়ের সম্পূর্ণ সিলেবাস ও বার্ষিক পরীক্ষা প্রস্তুতি",
+        mentor: "দীপু এডু একাডেমি",
+        thumbnail: "/images/courses/class5-full-course.jpg",
+        progress: 0,
+        completedLessons: 0,
+        totalLessons: 60,
+        badge: "একাডেমিক",
+        badgeColor: "#00C2FF",
+        playerUrl: "/player.html?course=class-5-full-course",
+        homeUrl: "/course-home.html?course=class-5-full-course"
       },
       {
-        id: "course-user-c10-biz",
-        slug: "class-10-business-studies",
+        id: "hsc-physics-1st-paper",
+        slug: "hsc-physics-1st-paper",
+        classKey: "all",
+        categoryKey: "academic",
+        categoryLabel: "একাডেমিক",
+        type: "course",
+        title: "HSC '২৭ পূর্ণাঙ্গ পদার্থবিজ্ঞান ১ম পত্র",
+        subtitle: "পদার্থবিজ্ঞান • ভেক্টর, গতিবিদ্যা ও কাজ শক্তি ক্ষমতা",
+        mentor: "দীপু স্যার (BUET)",
+        thumbnail: "/images/courses/hsc-27-prep.jpg",
+        progress: 65,
+        completedLessons: 18,
+        totalLessons: 28,
+        badge: "একাডেমিক",
+        badgeColor: "#10B981",
+        playerUrl: "/player.html?course=hsc-physics-1st-paper",
+        homeUrl: "/course-home.html?course=hsc-physics-1st-paper"
+      },
+
+      // SSC 2026
+      {
+        id: "c-ssc-chem",
+        classKey: "ssc",
+        type: "course",
+        title: "এসএসসি রসায়ন পূর্ণাঙ্গ বোর্ড প্রস্তুতি",
+        subtitle: "রসায়ন • গুণগত রসায়ন ও পর্যায়বৃত্ত ধর্ম",
+        mentor: "ড. শরিফুল ইসলাম (DMC)",
+        thumbnail: "/images/courses/class10-business-studies.jpg",
+        progress: 46,
+        completedLessons: 12,
+        totalLessons: 26,
+        badge: "এনরোল করা কোর্স",
+        badgeColor: "#10B981",
+        playerUrl: "/player.html?course=c-ssc-chem",
+        homeUrl: "/course.html?id=c-ssc-chem"
+      },
+      {
+        id: "c-ssc-biz",
+        classKey: "ssc",
+        type: "course",
         title: "১০ম শ্রেণীর পূর্ণাঙ্গ ব্যবসায় শিক্ষা ও হিসাববিজ্ঞান কোর্স",
-        category: "academic",
+        subtitle: "ব্যবসায় শিক্ষা • হিসাববিজ্ঞান ও ফিন্যান্স",
+        mentor: "দীপু স্যার ও কমার্স মেন্টর প্যানেল",
         thumbnail: "/images/courses/class10-business-studies.jpg",
         progress: 45,
         completedLessons: 18,
         totalLessons: 40,
-        courseHomeUrl: "/course.html?id=course-user-c10-biz",
-        videoPlayerUrl: "/player.html?course=course-user-c10-biz"
+        badge: "এনরোল করা কোর্স",
+        badgeColor: "#00C2FF",
+        playerUrl: "/player.html?course=course-user-c10-biz",
+        homeUrl: "/course.html?id=course-user-c10-biz"
       },
       {
-        id: "book-hsc-physics-master",
-        slug: "hsc-physics-printed-book",
-        title: "HSC পদার্থবিজ্ঞান ১ম ও ২য় পত্র পূর্ণাঙ্গ ফর্মুলা ও ম্যাথ হ্যান্ডবুক",
-        category: "books",
-        thumbnail: "/images/shop-banner-1.jpg",
-        progress: 100,
+        id: "c-ssc-math",
+        classKey: "ssc",
+        type: "course",
+        title: "এসএসসি সাধারণ গণিত ও উচ্চতর গণিত সিক্রেট মাস্টারক্লাস",
+        subtitle: "গণিত • বীজগণিত, জ্যামিতি ও ত্রিকোণমিতি A+ হ্যাকস",
+        mentor: "দীপু স্যার (BUET)",
+        thumbnail: "/images/courses/class5-full-course.jpg",
+        progress: 0,
+        completedLessons: 0,
+        totalLessons: 36,
+        badge: "বেস্টসেলার কোর্স ⭐",
+        badgeColor: "#F59E0B",
+        playerUrl: "/player.html?course=ssc-math-master",
+        homeUrl: "/course.html?id=ssc-math-master"
+      },
+      {
+        id: "b-ssc-bangla",
+        classKey: "ssc",
+        type: "book",
+        title: "বাংলা মাস্টারবুক — SSC সাহিত্য ও ব্যাকরণ",
+        subtitle: "SSC • পূর্ণাঙ্গ রঙিন গাইড ও বোর্ড সলভার",
+        mentor: "দীপু একাডেমি বাংলা ফ্যাকাল্টি",
+        thumbnail: "/images/books/book-ssc-bangla.jpg",
+        price: 330,
+        origPrice: 420,
+        discount: "২১% ছাড়",
+        badge: "হার্ডকপি প্রিন্টেড বই 📖",
+        badgeColor: "#10B981",
+        playerUrl: "/book?id=book-ssc-bangla",
+        homeUrl: "/shop"
+      },
+      {
+        id: "b-ssc-phy",
+        classKey: "ssc",
+        type: "book",
+        title: "পদার্থবিজ্ঞান Physics Guide — SSC সমাধান",
+        subtitle: "SSC • গাণিতিক পদার্থবিজ্ঞান ও সৃজনশীল সিক্রেট",
+        mentor: "দীপু স্যার (BUET)",
+        thumbnail: "/images/books/book-ssc-physics.jpg",
+        price: 340,
+        origPrice: 430,
+        discount: "২১% ছাড়",
+        badge: "হার্ডকপি প্রিন্টেড বই 📖",
+        badgeColor: "#00C2FF",
+        playerUrl: "/book?id=book-ssc-physics",
+        homeUrl: "/shop"
+      },
+      {
+        id: "b-ssc-eng1",
+        classKey: "ssc",
+        type: "book",
+        title: "Dipu's English Mastery 1st Paper",
+        subtitle: "SSC • Class 9 & 10 • 2026 & Beyond",
+        mentor: "দীপু একাডেমি ইংলিশ টিম",
+        thumbnail: "/images/books/english-mastery-1st.jpg",
+        price: 380,
+        origPrice: 480,
+        discount: "২১% ছাড়",
+        badge: "নতুন সংস্করণ ✨",
+        badgeColor: "#8B5CF6",
+        playerUrl: "/book?id=book-english-mastery-1st",
+        homeUrl: "/shop"
+      },
+      {
+        id: "eb-ssc-math-pdf",
+        classKey: "ssc",
+        type: "ebook",
+        title: "এসএসসি সাধারণ গণিত অল ফর্মুলা ই-বুক (PDF)",
+        subtitle: "বীজগণিত, জ্যামিতি ও ত্রিকোণমিতি শর্টকাট শিট",
+        mentor: "দীপু একাডেমি রিসার্চ প্যানেল",
+        thumbnail: "/images/books/book-class9-math.jpg",
+        price: 99,
+        origPrice: 200,
+        discount: "৫০% ছাড়",
+        fileSize: "4.8 MB",
+        badge: "📱 ডিজিটাল ই-বুক PDF",
+        badgeColor: "#8B5CF6",
+        playerUrl: "/shop",
+        homeUrl: "/book?id=book-class9-math"
+      },
+      {
+        id: "free-ssc-vid1",
+        classKey: "ssc",
+        type: "free",
+        title: "গণিতে ৭টি অধ্যায় করলেই A+ কনফার্ম || টেস্ট ও বার্ষিক পরীক্ষা",
+        subtitle: "সাধারণ গণিত • ফুল এইচডি মেগা লাইভ ক্লাস",
+        mentor: "দীপু স্যার ও রিফাত একাডেমি",
+        thumbnail: "/images/dashboard-hero.jpg",
+        isFree: true,
+        duration: "৪৫ মিনিট",
+        badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
+        badgeColor: "#10B981",
+        playerUrl: "/player.html?lessonId=gzhi2X6tpmg",
+        homeUrl: "/dashboard.html#video-classes"
+      },
+      {
+        id: "free-ssc-notes",
+        classKey: "ssc",
+        type: "free",
+        title: "SSC ২০২৬ সকল সাবজেক্ট কালারফুল ফর্মুলা শিট ও সাজেশন",
+        subtitle: "গণিত, পদার্থ, রসায়ন ও জীববিজ্ঞানের সেরা নোট সংকলন (PDF)",
+        mentor: "দীপু একাডেমি ফ্যাকাল্টি টিম",
+        thumbnail: "/images/books/book-ssc-bangla.jpg",
+        isFree: true,
+        fileSize: "6.4 MB",
+        badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
+        badgeColor: "#00C2FF",
+        playerUrl: "/dashboard.html#notes",
+        homeUrl: "/shop"
+      },
+
+      // HSC 2027
+      {
+        id: "c-hsc27-phy",
+        classKey: "hsc27",
+        type: "course",
+        title: "HSC '২৭ পূর্ণাঙ্গ পদার্থবিজ্ঞান ১ম পত্র",
+        subtitle: "পদার্থবিজ্ঞান • ভেক্টর, গতিবিদ্যা ও কাজ শক্তি ক্ষমতা",
+        mentor: "দীপু স্যার (BUET)",
+        thumbnail: "/images/courses/hsc-27-prep.jpg",
+        progress: 65,
+        completedLessons: 18,
+        totalLessons: 28,
+        badge: "এনরোল করা কোর্স",
+        badgeColor: "#EF4444",
+        playerUrl: "/player.html?course=c1",
+        homeUrl: "/course.html?id=c1"
+      },
+      {
+        id: "c-hsc27-math",
+        classKey: "hsc27",
+        type: "course",
+        title: "উচ্চতর গণিত ১ম পত্র — পূর্ণাঙ্গ ক্যালকুলাস",
+        subtitle: "উচ্চতর গণিত • অন্তরীকরণ ও সমাকলন",
+        mentor: "দীপু স্যার ও ম্যাথ টিম",
+        thumbnail: "/images/courses/hsc-28-prep.jpg",
+        progress: 80,
+        completedLessons: 24,
+        totalLessons: 30,
+        badge: "এনরোল করা কোর্স",
+        badgeColor: "#8B5CF6",
+        playerUrl: "/player.html?course=c2",
+        homeUrl: "/course.html?id=c2"
+      },
+      {
+        id: "b-hsc-bio",
+        classKey: "hsc27",
+        type: "book",
+        title: "জীববিজ্ঞান Masterbook — ১ম ও ২য় পত্র",
+        subtitle: "HSC • রঙিন চিত্র ও মেডিকেল স্ট্যান্ডার্ড তথ্য",
+        mentor: "ডা. ফারহানা সুলতানা",
+        thumbnail: "/images/books/book-hsc-biology.jpg",
+        price: 460,
+        origPrice: 570,
+        discount: "১৯% ছাড়",
+        badge: "হার্ডকপি প্রিন্টেড বই 📖",
+        badgeColor: "#10B981",
+        playerUrl: "/book?id=book-hsc-biology",
+        homeUrl: "/shop"
+      },
+      {
+        id: "b-hsc-phy-handbook",
+        classKey: "hsc27",
+        type: "book",
+        title: "HSC ফিজিক্স প্লাস হ্যান্ডবুক ২০২৬/২৭",
+        subtitle: "পদার্থবিজ্ঞান ১ম ও ২য় পত্রের পূর্ণাঙ্গ ফর্মুলা ও ম্যাথ হ্যাকস",
+        mentor: "দীপু আহমেদ (BUET)",
+        thumbnail: "/images/sidebar-books.jpg",
+        price: 350,
+        origPrice: 450,
+        discount: "২৫% ছাড়",
+        badge: "বেস্টসেলার বই ⭐",
+        badgeColor: "#EF4444",
+        playerUrl: "/book?id=hsc-physics-handbook",
+        homeUrl: "/shop"
+      },
+      {
+        id: "eb-hsc-phy-pdf",
+        classKey: "hsc27",
+        type: "ebook",
+        title: "পদার্থবিজ্ঞান PDF E-Book (ইনস্ট্যান্ট ডাউনলোড)",
+        subtitle: "HSC • পদার্থবিজ্ঞান ১ম ও ২য় পত্র ফুল সমাধান শিট",
+        mentor: "দীপু স্যার (BUET)",
+        thumbnail: "/images/books/ebook-hsc-physics.jpg",
+        price: 199,
+        origPrice: 350,
+        discount: "৪৩% ছাড়",
+        fileSize: "8.5 MB",
+        badge: "📱 ডিজিটাল ই-বুক PDF",
+        badgeColor: "#8B5CF6",
+        playerUrl: "/shop",
+        homeUrl: "/book?id=ebook-hsc-physics-pdf"
+      },
+      {
+        id: "free-hsc-vid1",
+        classKey: "hsc27",
+        type: "free",
+        title: "পদার্থবিজ্ঞান ১ম পত্র: ভেক্টর ডট ও ক্রস গুণনের শর্টকাট টেকনিক",
+        subtitle: "এইচএসসি ও বুয়েট প্রিলি স্পেশাল ফ্রি মাস্টারক্লাস",
+        mentor: "দীপু স্যার (BUET)",
+        thumbnail: "/images/courses/hsc-27-prep.jpg",
+        isFree: true,
+        duration: "৩৮ মিনিট",
+        badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
+        badgeColor: "#10B981",
+        playerUrl: "/player.html?lessonId=free-vector",
+        homeUrl: "/dashboard.html#video-classes"
+      },
+      {
+        id: "free-hsc-note",
+        classKey: "hsc27",
+        type: "free",
+        title: "ভেক্টর ও ত্রিমাত্রিক স্থানাঙ্ক পূর্ণাঙ্গ ফর্মুলা শিট",
+        subtitle: "পদার্থবিজ্ঞান ১ম পত্র • ৩৪ পৃষ্ঠার কালারফুল হ্যান্ডনোট (PDF)",
+        mentor: "দীপু একাডেমি ফ্যাকাল্টি",
+        thumbnail: "/images/books/book-hsc-biology.jpg",
+        isFree: true,
+        fileSize: "4.2 MB",
+        badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
+        badgeColor: "#00C2FF",
+        playerUrl: "/dashboard.html#notes",
+        homeUrl: "/shop"
+      },
+
+      // HSC 2028
+      {
+        id: "c-hsc28-prep",
+        classKey: "hsc28",
+        type: "course",
+        title: "HSC '২৮ পূর্ণাঙ্গ বিজ্ঞান প্রস্তুতি কোর্স",
+        subtitle: "বিজ্ঞান বিভাগ • পদার্থ, রসায়ন, গণিত ও বায়োলজি",
+        mentor: "দীপু স্যার (BUET) ও স্পেশালিস্ট টিম",
+        thumbnail: "/images/courses/hsc-28-prep.jpg",
+        progress: 18,
+        completedLessons: 7,
+        totalLessons: 40,
+        badge: "এনরোল করা কোর্স",
+        badgeColor: "#8B5CF6",
+        playerUrl: "/player.html?course=course-user-hsc28",
+        homeUrl: "/course.html?id=course-user-hsc28"
+      },
+      {
+        id: "b-hsc28-math",
+        classKey: "hsc28",
+        type: "book",
+        title: "উচ্চতর গণিত শর্টকাট হ্যাকস ও বেসিক বিল্ডার",
+        subtitle: "HSC '২৮ ব্যাচের শুরু থেকেই শতভাগ কনসেপ্ট ক্লিয়ারিং বুক",
+        mentor: "বুয়েট ও ঢাবি রিসার্চ প্যানেল",
+        thumbnail: "/images/sidebar-books.jpg",
+        price: 320,
+        origPrice: 420,
+        discount: "২৪% ছাড়",
+        badge: "হার্ডকপি প্রিন্টেড বই 📖",
+        badgeColor: "#8B5CF6",
+        playerUrl: "/shop",
+        homeUrl: "/book?id=hsc-math-hacks"
+      },
+      {
+        id: "free-hsc28-orient",
+        classKey: "hsc28",
+        type: "free",
+        title: "HSC '২৮ ব্যাচের ওরিয়েন্টেশন ও বিজ্ঞান পড়াশোনার গাইডলাইন",
+        subtitle: "কলেজে সেরা রেজাল্ট করার মাস্টার প্ল্যান",
+        mentor: "দীপু স্যার (BUET)",
+        thumbnail: "/images/courses/hsc-28-prep.jpg",
+        isFree: true,
+        duration: "৫০ মিনিট",
+        badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
+        badgeColor: "#10B981",
+        playerUrl: "/player.html",
+        homeUrl: "/dashboard.html#video-classes"
+      },
+
+      // CLASS 9
+      {
+        id: "c-c9-math",
+        classKey: "class9",
+        type: "course",
+        title: "৯ম শ্রেণি পূর্ণাঙ্গ গণিত ও বিজ্ঞান মাস্টারকোর্স",
+        subtitle: "নতুন কারিকুলাম • প্র্যাকটিক্যাল এক্সপেরিমেন্ট ও সলভিং",
+        mentor: "দীপু একাডেমি ফ্যাকাল্টি টিম",
+        thumbnail: "/images/courses/class7-full-course.jpg",
+        progress: 25,
+        completedLessons: 8,
+        totalLessons: 32,
+        badge: "নতুন শিক্ষাক্রম ২০২৩+",
+        badgeColor: "#F59E0B",
+        playerUrl: "/player.html",
+        homeUrl: "/course.html?id=class9-full"
+      },
+      {
+        id: "b-c9-math",
+        classKey: "class9",
+        type: "book",
+        title: "গণিত মাস্টারবুক — নবম শ্রেণি গণিত সমাধান",
+        subtitle: "নতুন কারিকুলাম • প্রতিটি অধ্যায়ের প্র্যাকটিস ও সমাধান",
+        mentor: "দীপু একাডেমি ম্যাথ টিম",
+        thumbnail: "/images/books/book-class9-math.jpg",
+        price: 300,
+        origPrice: 380,
+        discount: "২১% ছাড়",
+        badge: "হার্ডকপি প্রিন্টেড বই 📖",
+        badgeColor: "#F59E0B",
+        playerUrl: "/book?id=book-class9-math",
+        homeUrl: "/shop"
+      },
+      {
+        id: "free-c9-vid",
+        classKey: "class9",
+        type: "free",
+        title: "নবম শ্রেণি গণিত: অধ্যায় ১ ও ২ সম্পূর্ণ কনসেপ্ট ক্লাস",
+        subtitle: "সহজ ভাষায় নতুন কারিকুলামের অংক সমাধান",
+        mentor: "দীপু স্যার",
+        thumbnail: "/images/courses/class7-full-course.jpg",
+        isFree: true,
+        duration: "৪০ মিনিট",
+        badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
+        badgeColor: "#10B981",
+        playerUrl: "/player.html",
+        homeUrl: "/dashboard.html#video-classes"
+      },
+
+      // CLASS 8
+      {
+        id: "c-c8-prep",
+        classKey: "class8",
+        type: "course",
+        title: "৮ম শ্রেণি পূর্ণাঙ্গ বার্ষিক ও বোর্ড প্রস্তুতি কোর্স",
+        subtitle: "গণিত, বিজ্ঞান ও ইংরেজি ফাউন্ডেশন বিল্ডআপ",
+        mentor: "দীপু একাডেমি জুনিয়র টিম",
+        thumbnail: "/images/courses/class5-full-course.jpg",
+        progress: 25,
+        completedLessons: 6,
+        totalLessons: 24,
+        badge: "৮ম শ্রেণি স্পেশাল",
+        badgeColor: "#06B6D4",
+        playerUrl: "/player.html",
+        homeUrl: "/course.html?id=class8-prep"
+      },
+      {
+        id: "free-c8-vid",
+        classKey: "class8",
+        type: "free",
+        title: "অষ্টম শ্রেণি গণিত: জ্যামিতি ও প্যাটার্ন সহজ সমাধান",
+        subtitle: "বোর্ডের সবচেয়ে গুরুত্বপূর্ণ প্রশ্ন সমাধান",
+        mentor: "দীপু একাডেমি",
+        thumbnail: "/images/courses/class5-full-course.jpg",
+        isFree: true,
+        duration: "৩৫ মিনিট",
+        badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
+        badgeColor: "#10B981",
+        playerUrl: "/player.html",
+        homeUrl: "/dashboard.html#video-classes"
+      },
+
+      // CLASS 7 & 6
+      {
+        id: "c-c7-program",
+        classKey: "class7",
+        type: "course",
+        title: "৭ম শ্রেণি সম্পূর্ণ নতুন কারিকুলাম লার্নিং প্রোগ্রাম",
+        subtitle: "মজার গণিত, আবিষ্কারমুখী বিজ্ঞান ও স্পোকেন ইংলিশ",
+        mentor: "দীপু একাডেমি কিডস টিম",
+        thumbnail: "/images/courses/class7-full-course.jpg",
+        progress: 18,
+        completedLessons: 4,
+        totalLessons: 22,
+        badge: "৭ম শ্রেণি",
+        badgeColor: "#EC4899",
+        playerUrl: "/player.html",
+        homeUrl: "/course.html?id=class7-full"
+      },
+      {
+        id: "free-c7-vid",
+        classKey: "class7",
+        type: "free",
+        title: "৭ম শ্রেণি গণিত: ভগ্নাংশের খেলা ও জ্যামিতিক নকশা",
+        subtitle: "নতুন বইয়ের মজার অংক সহজ উপায়ে শেখা",
+        mentor: "দীপু একাডেমি",
+        thumbnail: "/images/courses/class7-full-course.jpg",
+        isFree: true,
+        duration: "২৮ মিনিট",
+        badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
+        badgeColor: "#10B981",
+        playerUrl: "/player.html",
+        homeUrl: "/dashboard.html#video-classes"
+      },
+      {
+        id: "c-c6-program",
+        classKey: "class6",
+        type: "course",
+        title: "৬ষ্ঠ শ্রেণি সম্পূর্ণ নতুন কারিকুলাম লার্নিং প্রোগ্রাম",
+        subtitle: "মাধ্যমিকের ভিত্তি মজবুত করার পরিপূর্ণ গাইড",
+        mentor: "দীপু একাডেমি",
+        thumbnail: "/images/courses/class5-full-course.jpg",
+        progress: 15,
+        completedLessons: 3,
+        totalLessons: 20,
+        badge: "৬ষ্ঠ শ্রেণি",
+        badgeColor: "#3B82F6",
+        playerUrl: "/player.html",
+        homeUrl: "/course.html?id=class6-full"
+      },
+      {
+        id: "free-c6-vid",
+        classKey: "class6",
+        type: "free",
+        title: "৬ষ্ঠ শ্রেণি গণিত: সংখ্যার গল্প ও মজার কুইজ",
+        subtitle: "রোমান সংখ্যা ও প্রাচীন সংখ্যার রহস্য উন্মোচন",
+        mentor: "দীপু একাডেমি",
+        thumbnail: "/images/courses/class5-full-course.jpg",
+        isFree: true,
+        duration: "৩০ মিনিট",
+        badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
+        badgeColor: "#10B981",
+        playerUrl: "/player.html",
+        homeUrl: "/dashboard.html#video-classes"
+      },
+
+      // ADMISSION
+      {
+        id: "c-adm-buet",
+        classKey: "admission",
+        type: "course",
+        title: "বুয়েট ও ইঞ্জিনিয়ারিং এডমিশন মাস্টারকোর্স ২০২৬",
+        subtitle: "পদার্থবিজ্ঞান, রসায়ন ও উচ্চতর গণিত প্রশ্নব্যাংক সলভিং",
+        mentor: "দীপু স্যার (BUET) ও বুয়েট টপার প্যানেল",
+        thumbnail: "/images/courses/hsc-27-prep.jpg",
+        progress: 22,
         completedLessons: 12,
-        totalLessons: 12,
-        courseHomeUrl: "/book.html?id=hsc-physics-handbook",
-        videoPlayerUrl: "/player.html?course=hsc-physics-1st-paper"
+        totalLessons: 55,
+        badge: "ইঞ্জিনিয়ারিং স্পেশাল",
+        badgeColor: "#EF4444",
+        playerUrl: "/player.html",
+        homeUrl: "/course.html?id=adm-buet"
+      },
+      {
+        id: "b-adm-qb",
+        classKey: "admission",
+        type: "book",
+        title: "ইঞ্জিনিয়ারিং প্রশ্নব্যাংক অ্যানালাইসিস বুক",
+        subtitle: "বিগত ২০ বছরের বুয়েট, রুয়েট, কুয়েট ও চুয়েট বিস্তারিত সমাধান",
+        mentor: "দীপু একাডেমি রিসার্চ টিম",
+        thumbnail: "/images/sidebar-books.jpg",
+        price: 550,
+        origPrice: 700,
+        discount: "২১% ছাড়",
+        badge: "হার্ডকপি প্রিন্টেড বই 📖",
+        badgeColor: "#EF4444",
+        playerUrl: "/shop",
+        homeUrl: "/book?id=adm-qb"
+      },
+      {
+        id: "free-adm-vid",
+        classKey: "admission",
+        type: "free",
+        title: "বুয়েট প্রিলিমিনারি প্রশ্ন সমাধান হ্যাকস ও টাইম ম্যানেজমেন্ট",
+        subtitle: "১০০ নম্বরের পরীক্ষায় সর্বোচ্চ নম্বর তোলার সুপার স্ট্র্যাটেজি",
+        mentor: "দীপু স্যার (BUET)",
+        thumbnail: "/images/courses/hsc-27-prep.jpg",
+        isFree: true,
+        duration: "৫৫ মিনিট",
+        badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
+        badgeColor: "#10B981",
+        playerUrl: "/player.html",
+        homeUrl: "/dashboard.html#video-classes"
+      },
+
+      // SKILL
+      {
+        id: "c-skill-design",
+        classKey: "skill",
+        type: "course",
+        title: "Graphic Designing with Photoshop",
+        subtitle: "স্কিল ডেভেলপমেন্ট • ফটোশপ, ব্যানার, ইউআই ও ফ্রিল্যান্সিং",
+        mentor: "সাদমান সাদিক ও দীপু একাডেমি",
+        thumbnail: "/images/courses/graphic-design-photoshop.jpg",
+        progress: 0,
+        completedLessons: 0,
+        totalLessons: 38,
+        badge: "স্কিল কোর্স",
+        badgeColor: "#14B8A6",
+        playerUrl: "/player.html?course=course-skill-graphic-design",
+        homeUrl: "/course.html?id=course-skill-graphic-design"
+      },
+      {
+        id: "eb-skill-shortcuts",
+        classKey: "skill",
+        type: "ebook",
+        title: "ফটোশপ কীবোর্ড শর্টকাট ও ডিজাইন কালার প্যালেট চিটশিট (PDF)",
+        subtitle: "প্রফেশনাল ডিজাইনারদের ব্যবহৃত হাই-স্পিড শর্টকাট গাইড",
+        mentor: "দীপু একাডেমি ডিজাইন ল্যাব",
+        thumbnail: "/images/courses/graphic-design-photoshop.jpg",
+        price: 80,
+        origPrice: 150,
+        discount: "৪৭% ছাড়",
+        fileSize: "3.5 MB",
+        badge: "📱 ডিজিটাল ই-বুক PDF",
+        badgeColor: "#14B8A6",
+        playerUrl: "/shop",
+        homeUrl: "/dashboard.html#notes"
+      },
+      {
+        id: "free-skill-vid",
+        classKey: "skill",
+        type: "free",
+        title: "ফ্রিল্যান্সিং ও গ্রাফিক্স ডিজাইনের বেসিক মাস্টারি",
+        subtitle: "জিরো থেকে প্রথম ফ্রিল্যান্সিং আয় করার রোডম্যাপ",
+        mentor: "দীপু একাডেমি ক্রিয়েটিভ টিম",
+        thumbnail: "/images/courses/graphic-design-photoshop.jpg",
+        isFree: true,
+        duration: "৪০ মিনিট",
+        badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
+        badgeColor: "#10B981",
+        playerUrl: "/player.html",
+        homeUrl: "/dashboard.html#video-classes"
       }
     ];
 
+    let currentClassKey = 'ssc';
     let currentCategory = 'all';
     let searchQuery = '';
+
+    // Normalize class key from string
+    function normalizeKey(str) {
+      if (!str) return 'ssc';
+      const s = str.toLowerCase();
+      if (s.includes('28') || s.includes('২০২৮')) return 'hsc28';
+      if (s.includes('27') || s.includes('২০২৭')) return 'hsc27';
+      if (s.includes('hsc') || s.includes('এইচএসসি')) return 'hsc27';
+      if (s.includes('10') || s.includes('১০') || s.includes('ssc') || s.includes('এসএসসি')) return 'ssc';
+      if (s.includes('9') || s.includes('৯')) return 'class9';
+      if (s.includes('8') || s.includes('৮')) return 'class8';
+      if (s.includes('7') || s.includes('৭')) return 'class7';
+      if (s.includes('6') || s.includes('৬')) return 'class6';
+      if (s.includes('admis') || s.includes('ভর্তি') || s.includes('এডমিশন')) return 'admission';
+      if (s.includes('skill') || s.includes('গ্রাফিক') || s.includes('স্কিল')) return 'skill';
+      return 'ssc';
+    }
 
     // Load User Profile from LocalStorage
     function initProfile() {
@@ -968,12 +1737,60 @@
         if (stored.avatar) {
           document.getElementById('userAvatarImg').src = stored.avatar;
         }
+
+        const storedTarget = localStorage.getItem('da_user_target') || 'SSC 2026';
+        currentClassKey = normalizeKey(storedTarget);
+      } catch(e) {
+        currentClassKey = 'ssc';
+      }
+    }
+
+    // Render Class Pills in Banner
+    function renderClassPills() {
+      const container = document.getElementById('classPillsContainer');
+      if (!container) return;
+
+      container.innerHTML = ACADEMIC_CLASSES.map(cls => {
+        const isActive = cls.key === currentClassKey;
+        return `
+          <button
+            type="button"
+            class="class-pill-btn ${isActive ? 'active' : ''}"
+            onclick="switchClass('${cls.key}')"
+            title="${cls.label}"
+          >
+            <i class="${cls.icon}"></i>
+            <span>${cls.shortName}</span>
+          </button>
+        `;
+      }).join('');
+
+      // Update banner header texts
+      const def = ACADEMIC_CLASSES.find(c => c.key === currentClassKey) || ACADEMIC_CLASSES[0];
+      const titleElem = document.getElementById('currentClassTitle');
+      const descElem = document.getElementById('currentClassDesc');
+      const gradeElem = document.getElementById('currentClassGrade');
+      if (titleElem) titleElem.textContent = def.label;
+      if (descElem) descElem.textContent = def.description;
+      if (gradeElem) gradeElem.textContent = def.gradeBadge;
+    }
+
+    // Switch Selected Academic Class
+    function switchClass(key) {
+      currentClassKey = key;
+      const def = ACADEMIC_CLASSES.find(c => c.key === key) || ACADEMIC_CLASSES[0];
+      try {
+        localStorage.setItem('da_user_target', def.shortName);
+        localStorage.setItem('da_user_class_key', key);
+        window.dispatchEvent(new Event('dipu_class_changed'));
       } catch(e) {}
+      renderClassPills();
+      renderResources();
     }
 
     // Theme Management
     function initTheme() {
-      const savedTheme = localStorage.getItem('dipu_theme') || 'light';
+      const savedTheme = localStorage.getItem('dipu_theme') || 'dark';
       applyTheme(savedTheme);
     }
 
@@ -996,77 +1813,185 @@
       }
     }
 
-    // Filter by Category Tab
+    // Filter by Category Tab (all | course | book | ebook | free)
     function filterCategory(cat, btn) {
       currentCategory = cat;
       document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
-      renderCourses();
+      renderResources();
     }
 
     // Live Search
     function handleSearchCourses(query) {
       searchQuery = (query || '').toLowerCase().trim();
-      renderCourses();
+      renderResources();
     }
 
-    // Render Course Cards with exact design from screenshot
-    function renderCourses() {
+    let userEnrolledSlugs = [];
+
+    // Load actual enrolled courses from MongoDB & Local Storage
+    async function loadEnrolledCoursesFromDB() {
+      try {
+        const localEnrolled = JSON.parse(localStorage.getItem('da_enrolled_courses') || '[]');
+        userEnrolledSlugs = [...localEnrolled];
+
+        const token = localStorage.getItem('da_token') || localStorage.getItem('auth_token');
+        const phone = localStorage.getItem('da_user_phone') || localStorage.getItem('user_phone') || '01712345678';
+        const res = await fetch(`/api/student/enrolled-courses?phone=${encodeURIComponent(phone)}`, {
+          headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && data.enrolledCourses) {
+            data.enrolledCourses.forEach(e => {
+              const slug = e.courseSlug || e.courseId;
+              if (slug && !userEnrolledSlugs.includes(slug)) {
+                userEnrolledSlugs.push(slug);
+              }
+              // If course has title and not in CURRICULUM_RESOURCES, inject it
+              if (slug && !CURRICULUM_RESOURCES.some(c => c.slug === slug || c.id === slug)) {
+                CURRICULUM_RESOURCES.unshift({
+                  id: slug,
+                  slug: slug,
+                  classKey: "all",
+                  categoryKey: "academic",
+                  categoryLabel: "এনরোল করা",
+                  type: "course",
+                  title: e.courseTitle || "আমার এনরোল করা কোর্স",
+                  subtitle: "একাডেমিক • লাইভ ও রেকর্ডেড ক্লাস",
+                  mentor: "দীপু একাডেমি",
+                  thumbnail: "/images/courses/class5-full-course.jpg",
+                  progress: e.progress || 0,
+                  completedLessons: e.completedLessons?.length || 0,
+                  totalLessons: 30,
+                  badge: "এনরোল করা",
+                  badgeColor: "#10B981",
+                  playerUrl: `/player.html?course=${encodeURIComponent(slug)}`,
+                  homeUrl: `/course-home.html?course=${encodeURIComponent(slug)}`
+                });
+              }
+            });
+          }
+        }
+      } catch(e) {}
+      renderResources();
+    }
+
+    // Render Cards Grid for Currently Selected Class
+    function renderResources() {
       const container = document.getElementById('coursesList');
       const emptyState = document.getElementById('emptyState');
-      
-      const filtered = DEFAULT_COURSES.filter(course => {
-        const matchesCategory = currentCategory === 'all' || course.category === currentCategory;
-        const matchesSearch = !searchQuery || course.title.toLowerCase().includes(searchQuery);
-        return matchesCategory && matchesSearch;
+      if (!container) return;
+
+      const items = CURRICULUM_RESOURCES.filter(item => {
+        let matchesCat = true;
+        if (currentCategory === 'all') {
+          matchesCat = true;
+        } else if (currentCategory === 'academic') {
+          matchesCat = item.categoryKey === 'academic' || (item.type === 'course' && item.classKey !== 'skill');
+        } else if (currentCategory === 'skill') {
+          matchesCat = item.categoryKey === 'skill' || item.classKey === 'skill';
+        } else if (currentCategory === 'book') {
+          matchesCat = item.type === 'book' || item.type === 'ebook';
+        }
+
+        const matchesSearch = !searchQuery || 
+          item.title.toLowerCase().includes(searchQuery) ||
+          item.subtitle.toLowerCase().includes(searchQuery) ||
+          item.mentor.toLowerCase().includes(searchQuery);
+
+        return matchesCat && matchesSearch;
       });
 
-      if (filtered.length === 0) {
+      if (items.length === 0) {
         container.innerHTML = '';
-        emptyState.style.display = 'block';
+        if (emptyState) emptyState.style.display = 'block';
         return;
       }
 
-      emptyState.style.display = 'none';
+      if (emptyState) emptyState.style.display = 'none';
 
-      container.innerHTML = filtered.map(course => {
-        const isStarted = course.progress > 0;
-        const playBtnLabel = isStarted ? 'চালিয়ে যান' : 'শুরু করুন';
-        
+      container.innerHTML = items.map(item => {
+        const isCourse = item.type === 'course';
+        const isBook = item.type === 'book';
+        const isEbook = item.type === 'ebook';
+        const isFree = item.type === 'free' || item.isFree;
+
+        const courseSlug = item.slug || item.id;
+        const playerLink = item.playerUrl || `/player.html?course=${encodeURIComponent(courseSlug)}`;
+        const courseHomeLink = item.homeUrl || `/course-home.html?course=${encodeURIComponent(courseSlug)}`;
+
+        const isStarted = (item.progress || 0) > 0;
+        const mainBtnText = isCourse 
+          ? (isStarted ? 'চালিয়ে যান' : 'শুরু করুন')
+          : isFree 
+          ? 'এখনই ফ্রি দেখুন' 
+          : isBook 
+          ? 'অর্ডার করুন' 
+          : 'ডাউনলোড করুন';
+
+        const categoryPillLabel = item.categoryLabel || (item.categoryKey === 'skill' || item.classKey === 'skill' ? 'স্কিলস' : 'একাডেমিক');
+
         return `
           <div class="course-card-horizontal">
-            <!-- Top Section: Thumbnail + Title + Progress Bar -->
+            <!-- Top Section: Thumbnail + Details + Progress / Price -->
             <div class="card-top-row">
-              <div class="course-thumb-box" onclick="goToVideo('${course.videoPlayerUrl}')" style="cursor: pointer;" title="ভিডিও ক্লাস শুরু করুন">
-                <img src="${course.thumbnail}" alt="${course.title}" onerror="this.src='/images/courses/hsc-28-prep.jpg'">
+              <div class="course-thumb-box" onclick="goToVideo('${courseHomeLink}')" style="cursor: pointer; position: relative;" title="${item.title}">
+                <img src="${item.thumbnail}" alt="${item.title}" onerror="this.src='/images/courses/hsc-28-prep.jpg'">
               </div>
 
               <div class="course-details">
-                <h3 class="course-card-title">${course.title}</h3>
+                <h3 class="course-card-title" onclick="goToVideo('${courseHomeLink}')" style="cursor: pointer;">${item.title}</h3>
                 
-                <!-- Progress Tracker Line with Knob and Percentage -->
-                <div class="progress-bar-container">
-                  <div class="progress-track">
-                    <div class="progress-fill" style="width: ${course.progress}%;">
-                      <span class="progress-knob"></span>
+                <!-- Course Progress Bar with Milestone Knob & Label (Exact Match to Image 2) -->
+                ${isCourse ? `
+                  <div class="progress-bar-container">
+                    <div class="progress-track">
+                      <div class="progress-fill" style="width: ${item.progress || 0}%;">
+                        <span class="progress-knob"></span>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <span class="progress-milestone-icon">
-                    <i class="far fa-circle-check"></i>
-                  </span>
+                    
+                    <span class="progress-milestone-icon" title="সার্টিফিকেট মাইলস্টোন">
+                      <i class="far fa-circle-check"></i>
+                    </span>
 
-                  <span class="progress-pct-label">${course.progress}% সম্পন্ন</span>
-                </div>
+                    <span class="progress-pct-label">${item.progress || 0}% সম্পন্ন</span>
+                  </div>
+
+                  <!-- Category Pill under Progress Bar (Exact Match to Image 2: "স্কিলস") -->
+                  <div>
+                    <span style="display: inline-block; background: rgba(148, 163, 184, 0.12); color: var(--text-muted); font-size: 0.78rem; font-weight: 700; padding: 2px 10px; border-radius: 6px; border: 1px solid var(--header-border);">
+                      ${categoryPillLabel}
+                    </span>
+                  </div>
+                ` : `
+                  <div style="font-size: 0.82rem; color: var(--brand-cyan); font-weight: 700;">
+                    ${item.subtitle}
+                  </div>
+                  <div style="font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
+                    <i class="fas fa-book" style="color: #F59E0B;"></i>
+                    <span>${item.mentor}</span>
+                  </div>
+                `}
+
+                <!-- Price row for books / ebooks -->
+                ${(isBook || isEbook) && item.price ? `
+                  <div style="display: flex; align-items: center; gap: 12px; margin-top: 4px;">
+                    <span style="font-size: 1.15rem; font-weight: 900; color: #10B981;">৳${item.price}</span>
+                    ${item.origPrice ? `<span style="font-size: 0.85rem; color: #64748B; text-decoration: line-through;">৳${item.origPrice}</span>` : ''}
+                    ${item.discount ? `<span style="font-size: 0.78rem; background: #EF4444; color: #FFF; padding: 1px 6px; border-radius: 4px; font-weight: 700;">${item.discount}</span>` : ''}
+                    ${item.fileSize ? `<span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fas fa-file-pdf" style="color: #8B5CF6; margin-right: 4px;"></i>${item.fileSize}</span>` : ''}
+                  </div>
+                ` : ''}
               </div>
             </div>
 
             <!-- Dashed Divider -->
             <div class="card-divider"></div>
 
-            <!-- Bottom Section: Ready Avatars & Action Buttons -->
+            <!-- Bottom Section: Ready Banner & Action Buttons (Exact Match to Image 2) -->
             <div class="card-bottom-row">
-              <!-- Ready Avatars Banner -->
               <div class="ready-banner">
                 <div class="avatar-stack">
                   <div class="stack-circle circle-coral"><i class="fas fa-play" style="font-size: 8px;"></i></div>
@@ -1076,16 +2001,22 @@
                 <span class="ready-text">শেখার জন্য প্রস্তুত?</span>
               </div>
 
-              <!-- Buttons: শুরু করুন (ভিডিওতে নিয়ে যাবে) and কোর্স হোম -->
+              <!-- Action Buttons: শুরু করুন (Takes to Course Home) & ভিডিও ক্লাস (Player) -->
               <div class="action-btn-group">
-                <a href="${course.videoPlayerUrl}" class="btn-play-video" title="সরাসরি ভিডিও ক্লাসরুমে যান">
-                  <i class="fas fa-circle-play"></i>
-                  <span>${playBtnLabel}</span>
+                <a href="${isCourse ? courseHomeLink : playerLink}" class="btn-play-video" title="${mainBtnText}">
+                  <span>${mainBtnText}</span>
                 </a>
                 
-                <a href="${course.courseHomeUrl}" class="btn-course-home" title="কোর্সের পূর্ণাঙ্গ সিলেবাস ও বিবরণ">
-                  <span>কোর্স হোম</span>
-                </a>
+                ${isCourse ? `
+                  <a href="${playerLink}" class="btn-course-home" title="ভিডিও ক্লাস প্লেয়ার">
+                    <i class="fas fa-circle-play" style="font-size: 13px;"></i>
+                    <span>ভিডিও ক্লাস</span>
+                  </a>
+                ` : item.homeUrl ? `
+                  <a href="${item.homeUrl}" class="btn-course-home">
+                    <span>${isBook ? 'বুকশপ' : 'প্রিভিউ'}</span>
+                  </a>
+                ` : ''}
               </div>
             </div>
           </div>
@@ -1098,13 +2029,28 @@
       window.location.href = url;
     }
 
+    // Listen for cross-page class sync
+    window.addEventListener('dipu_class_changed', () => {
+      initProfile();
+      renderClassPills();
+      loadEnrolledCoursesFromDB();
+    });
+
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'da_user_target' || e.key === 'da_enrolled_courses') {
+        initProfile();
+        renderClassPills();
+        loadEnrolledCoursesFromDB();
+      }
+    });
+
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
       initProfile();
       initTheme();
-      renderCourses();
+      renderClassPills();
+      loadEnrolledCoursesFromDB();
     });
   </script>
-
 </body>
 </html>
