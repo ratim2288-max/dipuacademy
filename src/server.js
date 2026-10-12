@@ -85,8 +85,27 @@ app.get('/api/reviews', async (req, res) => {
   }
 });
 
-// Public Hero Video Endpoint (Feeds Homepage Preview Card)
-app.get('/api/hero-video', (req, res) => {
+// Public Hero Video Endpoint (Feeds Homepage Preview Card & Dynamic Hero Bundle)
+app.get('/api/hero-video', async (req, res) => {
+  try {
+    const mongoose = require('mongoose');
+    if (mongoose.connection.readyState === 1) {
+      const SiteLink = require('./models/SiteLink');
+      const doc = await SiteLink.getLinks();
+      if (doc && doc.heroVideoUrl) {
+        return res.status(200).json({
+          success: true,
+          data: {
+            videoUrl: doc.heroVideoUrl,
+            title: doc.heroVideoTitle || "এইচএসসি ও এডমিশন স্পেশাল মাস্টারক্লাস",
+            updatedAt: doc.updatedAt
+          }
+        });
+      }
+    }
+  } catch (err) {
+    console.error('[Public /api/hero-video DB error]', err.message);
+  }
   const cfg = adminRoutes.HERO_VIDEO_CONFIG || {
     videoUrl: "https://www.youtube.com/watch?v=gzhi2X6tpmg",
     title: "এইচএসসি ও এডমিশন স্পেশাল মাস্টারক্লাস",
@@ -94,17 +113,48 @@ app.get('/api/hero-video', (req, res) => {
   return res.status(200).json({ success: true, data: cfg });
 });
 
-// Public Social Media Links Endpoint (Feeds Homepage & All Page Footers)
-app.get('/api/social-links', (req, res) => {
+// Public Social Media Links Endpoint (Feeds Homepage, Shop, Courses & All Page Footers)
+app.get('/api/social-links', async (req, res) => {
+  try {
+    const mongoose = require('mongoose');
+    if (mongoose.connection.readyState === 1) {
+      const SiteLink = require('./models/SiteLink');
+      const doc = await SiteLink.getLinks();
+      if (doc) {
+        const links = {
+          fb: doc.fb || "https://facebook.com/dipuedu",
+          yt: doc.yt || "https://youtu.be/gzhi2X6tpmg?si=MiyRu_JIe3mqh80L",
+          insta: doc.insta || "https://instagram.com/dipuedu",
+          linkedin: doc.linkedin || "https://linkedin.com/company/dipuedu",
+          tiktok: doc.tiktok || "https://tiktok.com/@dipuedu",
+          whatsapp: doc.whatsapp || "https://wa.me/8801912345678",
+          telegram: doc.telegram || "https://t.me/dipuacademy",
+          hotline: doc.hotline || "16910",
+          supportEmail: doc.supportEmail || "support@dipuacademy.com",
+          heroVideoUrl: doc.heroVideoUrl,
+          heroVideoTitle: doc.heroVideoTitle,
+          updatedAt: doc.updatedAt
+        };
+        return res.status(200).json({ success: true, links, data: links });
+      }
+    }
+  } catch (err) {
+    console.error('[Public /api/social-links DB error]', err.message);
+  }
   const links = adminRoutes.SOCIAL_LINKS_CONFIG || {
-    fb: "https://facebook.com",
+    fb: "https://facebook.com/dipuedu",
     yt: "https://youtu.be/gzhi2X6tpmg?si=MiyRu_JIe3mqh80L",
-    insta: "https://instagram.com",
-    linkedin: "https://linkedin.com",
-    tiktok: "https://tiktok.com"
+    insta: "https://instagram.com/dipuedu",
+    linkedin: "https://linkedin.com/company/dipuedu",
+    tiktok: "https://tiktok.com/@dipuedu",
+    whatsapp: "https://wa.me/8801912345678",
+    telegram: "https://t.me/dipuacademy",
+    hotline: "16910",
+    supportEmail: "support@dipuacademy.com"
   };
   return res.status(200).json({ success: true, links, data: links });
 });
+
 
 // Public Site Statistics Endpoint (Feeds Homepage Hero Counters)
 app.get('/api/site-stats', (req, res) => {
@@ -118,6 +168,29 @@ app.get('/api/site-stats', (req, res) => {
   };
   return res.status(200).json({ success: true, stats, data: stats });
 });
+
+// Public Helpline & Contact Info Endpoint (Feeds Header Contact Modal)
+app.get('/api/helpline', (req, res) => {
+  const helpline = adminRoutes.HELPLINE_CONFIG || {
+    title: "যোগাযোগ ও হেল্পলাইন",
+    subtitle: "Dipu Academy ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র",
+    hotlineTitle: "২৪/৭ হটলাইন সাপোর্ট",
+    hotlineNumber: "01712-345678",
+    hotlineLink: "tel:01712345678",
+    hotlineBtnText: "কল করুন →",
+    whatsappTitle: "WhatsApp চ্যাট ও ডাউট সলভ",
+    whatsappNumber: "+880 1812-987654",
+    whatsappLink: "https://wa.me/8801812987654",
+    whatsappBtnText: "চ্যাট করুন →",
+    emailTitle: "অফিসিয়াল ইমেইল",
+    emailAddress: "support@dipuedu.com",
+    emailLink: "mailto:support@dipuedu.com",
+    emailBtnText: "ইমেইল →",
+    addressText: "প্রধান কার্যালয়: শান্তি নগর, ঢাকা-১২১৭, বাংলাদেশ। (প্রতিদিন সকাল ৯টা - রাত ১১টা)"
+  };
+  return res.status(200).json({ success: true, config: helpline, data: helpline });
+});
+
 
 // Public Features Endpoint (Feeds Homepage Interactive 7-Features Component)
 app.get('/api/features', (req, res) => {
@@ -200,6 +273,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // HTML page routes
+app.get(['/my-courses', '/my-courses.html', '/user/courses', '/user/courses/'], (req, res) => res.sendFile(path.join(__dirname, '../public/my-courses.html')));
 app.get('/course', (req, res) => res.sendFile(path.join(__dirname, '../public/course.html')));
 app.get('/course/:slug', (req, res) => res.sendFile(path.join(__dirname, '../public/course.html')));
 app.get(['/exam', '/exam/:slug', '/exam.html'], (req, res) => res.redirect('/'));

@@ -1290,6 +1290,14 @@ body {
 .btn-social-save.linkedin:hover { background: #084E96; }
 .btn-social-save.tiktok { background: #1F1F2E; border: 1px solid rgba(255, 255, 255, 0.15); color: #25F4EE; }
 .btn-social-save.tiktok:hover { background: #2A2A3D; }
+.btn-social-save.whatsapp { background: #25D366; color: #FFFFFF; }
+.btn-social-save.whatsapp:hover { background: #20BA5A; }
+.btn-social-save.telegram { background: #229ED9; color: #FFFFFF; }
+.btn-social-save.telegram:hover { background: #1B86BA; }
+.btn-social-save.hotline { background: #FF7A1A; color: #FFFFFF; }
+.btn-social-save.hotline:hover { background: #E66A12; }
+.btn-social-save.email { background: #6366F1; color: #FFFFFF; }
+.btn-social-save.email:hover { background: #4F46E5; }
 
 /* Courses Grid */
 .courses-admin-grid {

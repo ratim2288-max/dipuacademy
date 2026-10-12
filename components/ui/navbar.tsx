@@ -22,16 +22,19 @@ function injectNavbarStyles() {
   style.id = id;
   style.textContent = `
     @keyframes navFadeDown {
-      0% { opacity: 0; transform: translateY(-10px); }
+      0% { opacity: 0; transform: translateY(-14px); }
+      60% { opacity: 1; transform: translateY(2px); }
       100% { opacity: 1; transform: translateY(0); }
     }
     @keyframes dropdownSlideIn {
-      0% { opacity: 0; transform: translateY(8px) scale(0.97); }
+      0% { opacity: 0; transform: translateY(10px) scale(0.96); }
+      60% { opacity: 1; transform: translateY(-2px) scale(1.005); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
     }
     @keyframes drawerSlideIn {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(0); }
+      0% { transform: translateX(105%); opacity: 0.6; }
+      60% { transform: translateX(-4px); }
+      100% { transform: translateX(0); opacity: 1; }
     }
     @keyframes pulseRing {
       0%, 100% { box-shadow: 0 0 0 0 rgba(0, 194, 255, 0.4); }
@@ -41,38 +44,108 @@ function injectNavbarStyles() {
       0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.8); }
       50% { transform: scale(1.18); opacity: 0.95; box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
     }
-    .dipu-nav-dropdown-item:hover {
-      background: rgba(0, 194, 255, 0.08) !important;
-      transform: translateX(4px);
+    @keyframes navUnderlineExpand {
+      0% { transform: scaleX(0); opacity: 0; }
+      100% { transform: scaleX(1); opacity: 1; }
+    }
+
+    /* ── Nav Link Base ─────────────────────────────────────────────── */
+    .dipu-nav-link {
+      position: relative;
+      transition: color 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    .dipu-nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 70%;
+      height: 2px;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #0084FF, #00C2FF);
+      transform-origin: center;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .dipu-nav-link:hover::after,
+    .dipu-nav-link.active::after {
+      transform: translateX(-50%) scaleX(1);
+      opacity: 1;
     }
     .dipu-nav-link:hover {
       color: #00C2FF !important;
     }
+
+    /* ── Dropdown Items & Bridge ────────────────────────────────────── */
+    .dipu-nav-dropdown-menu::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: 0;
+      right: 0;
+      height: 12px;
+      background: transparent;
+    }
+    .dipu-nav-dropdown-item {
+      transition: background 0.18s ease, transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.18s ease !important;
+      border-radius: 8px;
+    }
+    .dipu-nav-dropdown-item:hover {
+      background: rgba(0, 194, 255, 0.09) !important;
+      transform: translateX(5px) !important;
+      color: #00C2FF !important;
+    }
+
+    /* ── Mobile Drawer Card ─────────────────────────────────────────── */
     .dipu-drawer-card {
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
     }
     .dipu-drawer-card:hover {
-      transform: translateY(-1px);
+      transform: translateY(-2px) scale(1.01) !important;
+      box-shadow: 0 8px 28px rgba(0, 194, 255, 0.18) !important;
     }
-    .dipu-drawer-scroll::-webkit-scrollbar {
-      width: 4px;
-    }
+
+    /* ── Scrollbar ──────────────────────────────────────────────────── */
+    .dipu-drawer-scroll::-webkit-scrollbar { width: 4px; }
+    .dipu-drawer-scroll::-webkit-scrollbar-track { background: transparent; }
     .dipu-drawer-scroll::-webkit-scrollbar-thumb {
-      background: rgba(0, 194, 255, 0.25);
+      background: rgba(0, 194, 255, 0.3);
       border-radius: 9999px;
     }
+    .dipu-drawer-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 194, 255, 0.55);
+    }
+
+    /* ── Mobile Toggle ──────────────────────────────────────────────── */
+    .dipu-mobile-toggle-btn {
+      transition: background 0.18s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    }
+    .dipu-mobile-toggle-btn:hover {
+      background: rgba(0, 194, 255, 0.12) !important;
+      transform: scale(1.08) !important;
+    }
+    .dipu-mobile-toggle-btn:active {
+      transform: scale(0.93) !important;
+    }
+
+    /* ── Avatar Hover ───────────────────────────────────────────────── */
+    #openDashboardAvatarBtn {
+      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease !important;
+    }
+    #openDashboardAvatarBtn:hover {
+      transform: scale(1.1) !important;
+      box-shadow: 0 4px 20px rgba(0, 194, 255, 0.55) !important;
+    }
+
+    /* ── Responsive ─────────────────────────────────────────────────── */
     @media (max-width: 991px) {
-      .dipu-nav-desktop-links {
-        display: none !important;
-      }
-      .dipu-nav-mobile-toggle {
-        display: inline-flex !important;
-      }
+      .dipu-nav-desktop-links { display: none !important; }
+      .dipu-nav-mobile-toggle { display: inline-flex !important; }
     }
     @media (min-width: 992px) {
-      .dipu-nav-mobile-toggle {
-        display: none !important;
-      }
+      .dipu-nav-mobile-toggle { display: none !important; }
     }
   `;
   document.head.appendChild(style);
@@ -114,10 +187,46 @@ export const Navbar: React.FC = () => {
 
   const [scrolled, setScrolled] = React.useState(false);
   const [activeDropdown, setActiveDropdown] = React.useState<DropdownKey>(null);
+  const dropdownTimeoutRef = React.useRef<any>(null);
+
+  const handleMouseEnterDropdown = React.useCallback((key: DropdownKey) => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+      dropdownTimeoutRef.current = null;
+    }
+    setActiveDropdown(key);
+  }, []);
+
+  const handleMouseLeaveDropdown = React.useCallback(() => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+    }
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 180);
+  }, []);
+
   const [isMobileOpen, setIsMobileOpen] = React.useState(false);
   const [mobileOpenDropdown, setMobileOpenDropdown] = React.useState<DropdownKey>(null);
   const [isAiModalOpen, setIsAiModalOpen] = React.useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = React.useState(false);
+  const [helplineConfig, setHelplineConfig] = React.useState({
+    title: "যোগাযোগ ও হেল্পলাইন",
+    subtitle: "Dipu Academy ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র",
+    hotlineTitle: "২৪/৭ হটলাইন সাপোর্ট",
+    hotlineNumber: "01712-345678",
+    hotlineLink: "tel:01712345678",
+    hotlineBtnText: "কল করুন →",
+    whatsappTitle: "WhatsApp চ্যাট ও ডাউট সলভ",
+    whatsappNumber: "+880 1812-987654",
+    whatsappLink: "https://wa.me/8801812987654",
+    whatsappBtnText: "চ্যাট করুন →",
+    emailTitle: "অফিসিয়াল ইমেইল",
+    emailAddress: "support@dipuedu.com",
+    emailLink: "mailto:support@dipuedu.com",
+    emailBtnText: "ইমেইল →",
+    addressText: "প্রধান কার্যালয়: শান্তি নগর, ঢাকা-১২১৭, বাংলাদেশ। (প্রতিদিন সকাল ৯টা - রাত ১১টা)"
+  });
   const [aiQuestion, setAiQuestion] = React.useState("");
   const [aiLoading, setAiLoading] = React.useState(false);
   const [aiMessages, setAiMessages] = React.useState<Array<{ role: "user" | "ai"; text: string }>>([
@@ -126,6 +235,27 @@ export const Navbar: React.FC = () => {
       text: "স্বাগতম! আমি Dipu Academy AI স্মার্ট একাডেমিক টিউটর। তোমার পদার্থবিজ্ঞান, রসায়ন, গণিত বা যেকোনো বিষয়ের কনসেপ্ট বা সমস্যার প্রশ্ন লিখো।",
     },
   ]);
+
+  const checkIsLoggedIn = (): boolean => {
+    if (typeof window === "undefined") return false;
+    try {
+      if (localStorage.getItem("dipu_logged_in") === "true") return true;
+      const token = localStorage.getItem("dipu_auth_token");
+      if (token && token.trim().length > 0 && token !== "null" && token !== "undefined") return true;
+      const phone = localStorage.getItem("dipu_user_phone");
+      if (phone && phone.trim().length > 0 && phone !== "null" && phone !== "undefined") return true;
+      const rawProfile = localStorage.getItem("dipu_user_profile");
+      if (rawProfile && rawProfile.trim().length > 0 && rawProfile !== "null" && rawProfile !== "undefined" && rawProfile !== "{}") {
+        const parsed = JSON.parse(rawProfile);
+        if (parsed && (parsed.phone || parsed.fullName || parsed.name)) return true;
+      }
+    } catch {
+      return false;
+    }
+    return false;
+  };
+
+  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(checkIsLoggedIn);
 
   const [userProfile, setUserProfile] = React.useState<UserProfile | null>(() => {
     if (typeof window !== "undefined") {
@@ -220,6 +350,16 @@ export const Navbar: React.FC = () => {
     (window as any).openAiModal = () => setIsAiModalOpen(true);
     (window as any).openContactModal = () => setIsContactModalOpen(true);
 
+    // Fetch dynamic contact and helpline settings
+    fetch("/api/helpline")
+      .then(r => r.json())
+      .then(data => {
+        if (data && data.config) {
+          setHelplineConfig(prev => ({ ...prev, ...data.config }));
+        }
+      })
+      .catch(() => {});
+
     // Scroll listener
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -252,20 +392,26 @@ export const Navbar: React.FC = () => {
     };
     document.addEventListener("click", handleOutsideClick);
 
-    // Profile listener
+    // Profile & Auth listener
     const handleStorage = () => {
       try {
         const raw = localStorage.getItem("dipu_user_profile");
         setUserProfile(raw ? JSON.parse(raw) : null);
+        setIsLoggedIn(checkIsLoggedIn());
       } catch {}
     };
     window.addEventListener("storage", handleStorage);
+    window.addEventListener("dipu_auth_changed", handleStorage);
 
     return () => {
+      if (dropdownTimeoutRef.current) {
+        clearTimeout(dropdownTimeoutRef.current);
+      }
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("dipu_theme_changed", handleExternalTheme);
       document.removeEventListener("click", handleOutsideClick);
       window.removeEventListener("storage", handleStorage);
+      window.removeEventListener("dipu_auth_changed", handleStorage);
     };
   }, [applyTheme, theme]);
 
@@ -313,8 +459,8 @@ export const Navbar: React.FC = () => {
           WebkitBackdropFilter: "blur(24px) saturate(180%)",
           borderBottom: navBorder,
           boxShadow: navShadow,
-          transition: "background 0.25s, border-color 0.25s, box-shadow 0.25s",
-          animation: "navFadeDown 0.35s ease both",
+          transition: "background 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+          animation: "navFadeDown 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both",
         }}
       >
         <div
@@ -380,8 +526,16 @@ export const Navbar: React.FC = () => {
 
           {/* ── Center: Desktop Navigation Links ────────────────────────────── */}
           <nav className="dipu-nav-desktop-links" style={{ display: "flex", alignItems: "center", gap: "1.8rem" }}>
+            {/* If NOT logged in, show Category Dropdowns: স্কুল, SSC, HSC */}
+            {!isLoggedIn && (
+              <>
             {/* Dropdown 1: স্কুল (৬ষ্ঠ - ৮ম) - Stacked 2 Lines like Screenshot */}
-            <div className="dipu-nav-dropdown-container" style={{ position: "relative" }}>
+            <div
+              className="dipu-nav-dropdown-container"
+              style={{ position: "relative" }}
+              onMouseEnter={() => handleMouseEnterDropdown("school")}
+              onMouseLeave={handleMouseLeaveDropdown}
+            >
               <button
                 type="button"
                 onClick={() => setActiveDropdown(activeDropdown === "school" ? null : "school")}
@@ -427,6 +581,7 @@ export const Navbar: React.FC = () => {
 
               {activeDropdown === "school" && (
                 <div
+                  className="dipu-nav-dropdown-menu"
                   style={{
                     position: "absolute",
                     top: "calc(100% + 8px)",
@@ -582,7 +737,12 @@ export const Navbar: React.FC = () => {
             </div>
 
             {/* Dropdown 2: SSC */}
-            <div className="dipu-nav-dropdown-container" style={{ position: "relative" }}>
+            <div
+              className="dipu-nav-dropdown-container"
+              style={{ position: "relative" }}
+              onMouseEnter={() => handleMouseEnterDropdown("ssc")}
+              onMouseLeave={handleMouseLeaveDropdown}
+            >
               <button
                 type="button"
                 onClick={() => setActiveDropdown(activeDropdown === "ssc" ? null : "ssc")}
@@ -615,6 +775,7 @@ export const Navbar: React.FC = () => {
 
               {activeDropdown === "ssc" && (
                 <div
+                  className="dipu-nav-dropdown-menu"
                   style={{
                     position: "absolute",
                     top: "calc(100% + 8px)",
@@ -734,7 +895,12 @@ export const Navbar: React.FC = () => {
             </div>
 
             {/* Dropdown 3: HSC */}
-            <div className="dipu-nav-dropdown-container" style={{ position: "relative" }}>
+            <div
+              className="dipu-nav-dropdown-container"
+              style={{ position: "relative" }}
+              onMouseEnter={() => handleMouseEnterDropdown("hsc")}
+              onMouseLeave={handleMouseLeaveDropdown}
+            >
               <button
                 type="button"
                 onClick={() => setActiveDropdown(activeDropdown === "hsc" ? null : "hsc")}
@@ -767,6 +933,7 @@ export const Navbar: React.FC = () => {
 
               {activeDropdown === "hsc" && (
                 <div
+                  className="dipu-nav-dropdown-menu"
                   style={{
                     position: "absolute",
                     top: "calc(100% + 8px)",
@@ -884,9 +1051,16 @@ export const Navbar: React.FC = () => {
                 </div>
               )}
             </div>
+              </>
+            )}
 
             {/* 4. Shop (বই, নোট ও স্টাডি স্টোর - Directly Links to /shop) */}
-            <div className="dipu-nav-dropdown-container" style={{ position: "relative" }}>
+            <div
+              className="dipu-nav-dropdown-container"
+              style={{ position: "relative" }}
+              onMouseEnter={() => handleMouseEnterDropdown("shop")}
+              onMouseLeave={handleMouseLeaveDropdown}
+            >
               <div style={{ display: "inline-flex", alignItems: "center" }}>
                 <a
                   href="/shop"
@@ -938,6 +1112,7 @@ export const Navbar: React.FC = () => {
 
               {activeDropdown === "shop" && (
                 <div
+                  className="dipu-nav-dropdown-menu"
                   style={{
                     position: "absolute",
                     top: "calc(100% + 8px)",
@@ -1175,6 +1350,27 @@ export const Navbar: React.FC = () => {
               <span>{lang === "en" ? "Contact" : "যোগাযোগ"}</span>
             </button>
 
+            {/* My Courses Navigation Link */}
+            <a
+              href="/user/courses"
+              className="dipu-nav-link"
+              style={{
+                textDecoration: "none",
+                color: textColor,
+                fontSize: "0.95rem",
+                fontWeight: 700,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "7px",
+                padding: "6px 10px",
+                borderRadius: "8px",
+              }}
+              title="আমার কোর্সসমূহ"
+            >
+              <i className="fas fa-graduation-cap" style={{ fontSize: "0.92rem", color: "#10B981" }} />
+              <span>{lang === "en" ? "My Courses" : "আমার কোর্স"}</span>
+            </a>
+
           </nav>
 
           {/* ── Right: Action Controls (Capsules & Avatar) ───────────────────── */}
@@ -1241,73 +1437,100 @@ export const Navbar: React.FC = () => {
 
 
 
-            {/* 3. Profile Avatar Button */}
-            <a
-              href="/dashboard.html"
-              id="openDashboardAvatarBtn"
-              title="আমার ড্যাশবোর্ড"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "38px",
-                height: "38px",
-                minWidth: "38px",
-                maxWidth: "38px",
-                minHeight: "38px",
-                maxHeight: "38px",
-                borderRadius: "50%",
-                padding: "2px",
-                background: "linear-gradient(135deg, #0084FF, #0084FF)",
-                boxShadow: "0 2px 12px rgba(0, 194, 255, 0.4)",
-                cursor: "pointer",
-                textDecoration: "none",
-                flexShrink: 0,
-                boxSizing: "border-box",
-                position: "relative",
-                transition: "transform 0.2s ease, box-shadow 0.2s ease",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.08)")}
-              onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-            >
-              <img
-                src={currentAvatar}
-                alt="Profile"
+            {/* 3. Profile Avatar Button or Login Button */}
+            {isLoggedIn ? (
+              <a
+                href="/dashboard.html"
+                id="openDashboardAvatarBtn"
+                title="আমার ড্যাশবোর্ড"
                 style={{
-                  width: "32px",
-                  height: "32px",
-                  minWidth: "32px",
-                  maxWidth: "32px",
-                  minHeight: "32px",
-                  maxHeight: "32px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "38px",
+                  height: "38px",
+                  minWidth: "38px",
+                  maxWidth: "38px",
+                  minHeight: "38px",
+                  maxHeight: "38px",
                   borderRadius: "50%",
-                  objectFit: "cover",
-                  border: isLight ? "2px solid #FFFFFF" : "2px solid #0D0E17",
-                  display: "block",
-                  pointerEvents: "none",
+                  padding: "2px",
+                  background: "linear-gradient(135deg, #0084FF, #0084FF)",
+                  boxShadow: "0 2px 12px rgba(0, 194, 255, 0.4)",
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  flexShrink: 0,
+                  boxSizing: "border-box",
+                  position: "relative",
+                  transition: "transform 0.2s ease, box-shadow 0.2s ease",
                 }}
-              />
-              <span
+                onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.08)")}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+              >
+                <img
+                  src={currentAvatar}
+                  alt="Profile"
+                  style={{
+                    width: "32px",
+                    height: "32px",
+                    minWidth: "32px",
+                    maxWidth: "32px",
+                    minHeight: "32px",
+                    maxHeight: "32px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    border: isLight ? "2px solid #FFFFFF" : "2px solid #0D0E17",
+                    display: "block",
+                    pointerEvents: "none",
+                  }}
+                />
+                <span
+                  style={{
+                    position: "absolute",
+                    bottom: "1px",
+                    right: "1px",
+                    width: "9px",
+                    height: "9px",
+                    background: "#10B981",
+                    border: isLight ? "1.5px solid #FFFFFF" : "1.5px solid #0D0E17",
+                    borderRadius: "50%",
+                    boxShadow: "0 0 8px rgba(16, 185, 129, 0.9)",
+                    pointerEvents: "none",
+                    animation: "pulseOnline 2.2s infinite",
+                  }}
+                />
+              </a>
+            ) : (
+              <a
+                href="/login.html"
+                id="openLoginBtn"
+                title="লগইন করুন"
                 style={{
-                  position: "absolute",
-                  bottom: "1px",
-                  right: "1px",
-                  width: "9px",
-                  height: "9px",
-                  background: "#10B981",
-                  border: isLight ? "1.5px solid #FFFFFF" : "1.5px solid #0D0E17",
-                  borderRadius: "50%",
-                  boxShadow: "0 0 8px rgba(16, 185, 129, 0.9)",
-                  pointerEvents: "none",
-                  animation: "pulseOnline 2.2s infinite",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  padding: "6px 14px",
+                  borderRadius: "9999px",
+                  background: "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)",
+                  boxShadow: "0 2px 10px rgba(0, 194, 255, 0.4)",
+                  color: "#050B17",
+                  fontWeight: 700,
+                  fontSize: "0.88rem",
+                  textDecoration: "none",
+                  transition: "all 0.2s ease",
                 }}
-              />
-            </a>
+                onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-1px)")}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
+              >
+                <i className="fas fa-arrow-right-to-bracket" style={{ fontSize: "0.82rem" }} />
+                <span>{lang === "en" ? "Login" : "লগইন"}</span>
+              </a>
+            )}
 
             {/* 4. Mobile Hamburger / Close Toggle */}
             <button
               type="button"
-              className="dipu-nav-mobile-toggle"
+              className="dipu-nav-mobile-toggle dipu-mobile-toggle-btn"
               onClick={() => setIsMobileOpen(!isMobileOpen)}
               aria-label={isMobileOpen ? "Close menu" : "Open menu"}
               style={{
@@ -1329,11 +1552,14 @@ export const Navbar: React.FC = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 cursor: "pointer",
-                transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
-                boxShadow: isMobileOpen ? "0 2px 10px rgba(0, 194, 255, 0.35)" : "none",
+                transition: "all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                boxShadow: isMobileOpen ? "0 2px 12px rgba(0, 194, 255, 0.4)" : "none",
               }}
             >
-              <i className={isMobileOpen ? "fas fa-times" : "fas fa-bars"} />
+              <i
+                className={isMobileOpen ? "fas fa-times" : "fas fa-bars"}
+                style={{ transition: "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)", transform: isMobileOpen ? "rotate(90deg)" : "rotate(0deg)" }}
+              />
             </button>
           </div>
         </div>
@@ -1395,6 +1621,52 @@ export const Navbar: React.FC = () => {
           >
             {/* Drawer Category Links */}
             <div style={{ display: "flex", flexDirection: "column", gap: "10px", flex: 1 }}>
+              {/* My Courses Shortcut */}
+              <a
+                href="/user/courses"
+                onClick={() => setIsMobileOpen(false)}
+                style={{
+                  borderRadius: "14px",
+                  background: isLight
+                    ? "linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(0, 194, 255, 0.08))"
+                    : "linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(0, 194, 255, 0.12))",
+                  border: isLight ? "1.5px solid rgba(16, 185, 129, 0.4)" : "1.5px solid rgba(16, 185, 129, 0.5)",
+                  padding: "12px 14px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  textDecoration: "none",
+                  boxShadow: "0 2px 10px rgba(16, 185, 129, 0.1)",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                  <div
+                    style={{
+                      width: "36px",
+                      height: "36px",
+                      borderRadius: "10px",
+                      background: "linear-gradient(135deg, #10B981, #00C2FF)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#FFFFFF",
+                      fontSize: "1rem",
+                      boxShadow: "0 2px 8px rgba(16, 185, 129, 0.35)",
+                    }}
+                  >
+                    <i className="fas fa-graduation-cap" />
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 800, fontSize: "0.95rem", color: "#10B981" }}>আমার কোর্সসমূহ</div>
+                    <div style={{ fontSize: "0.72rem", color: isLight ? "#64748B" : "#94A3B8" }}>চলমান ক্লাস ও ভিডিও লেকচার</div>
+                  </div>
+                </div>
+                <i className="fas fa-arrow-right" style={{ color: "#10B981", fontSize: "0.85rem" }} />
+              </a>
+
+              {/* If NOT logged in, show School, SSC, HSC in drawer */}
+              {!isLoggedIn && (
+                <>
               {/* Category 1: School */}
               <div
                 className="dipu-drawer-card"
@@ -1904,6 +2176,8 @@ export const Navbar: React.FC = () => {
                   </div>
                 )}
               </div>
+                </>
+              )}
 
               {/* Category 4: Shop */}
               <div
@@ -2326,40 +2600,85 @@ export const Navbar: React.FC = () => {
                 </div>
               </div>
 
-              {/* Dashboard Primary Button */}
-              <a
-                href="/dashboard.html"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "10px",
-                  padding: "12px 18px",
-                  borderRadius: "14px",
-                  background: "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)",
-                  boxShadow: "0 6px 20px rgba(0, 194, 255, 0.4)",
-                  color: "#FFFFFF",
-                  textDecoration: "none",
-                  fontWeight: 700,
-                  fontSize: "0.95rem",
-                  marginTop: "6px",
-                  transition: "all 0.2s ease",
-                }}
-              >
-                <img
-                  src={currentAvatar}
-                  alt="Profile"
+              {/* Dashboard / Login Primary Button */}
+              {isLoggedIn ? (
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginTop: "6px" }}>
+                  <a
+                    href="/dashboard.html"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "6px",
+                      padding: "11px 12px",
+                      borderRadius: "12px",
+                      background: "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)",
+                      boxShadow: "0 4px 14px rgba(0, 194, 255, 0.4)",
+                      color: "#FFFFFF",
+                      textDecoration: "none",
+                      fontWeight: 700,
+                      fontSize: "0.88rem",
+                    }}
+                  >
+                    <i className="fas fa-home" style={{ fontSize: "0.85rem" }} />
+                    <span>ড্যাশবোর্ড</span>
+                  </a>
+                  <a
+                    href="/profile.html"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "6px",
+                      padding: "11px 12px",
+                      borderRadius: "12px",
+                      background: "rgba(255, 255, 255, 0.08)",
+                      border: "1px solid rgba(0, 194, 255, 0.3)",
+                      color: "#FFFFFF",
+                      textDecoration: "none",
+                      fontWeight: 700,
+                      fontSize: "0.88rem",
+                    }}
+                  >
+                    <img
+                      src={currentAvatar}
+                      alt="Profile"
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                        border: "1px solid #00C2FF",
+                      }}
+                    />
+                    <span>প্রোফাইল</span>
+                  </a>
+                </div>
+              ) : (
+                <a
+                  href="/login.html"
                   style={{
-                    width: "26px",
-                    height: "26px",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                    border: "1.5px solid #FFFFFF",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                    padding: "12px 18px",
+                    borderRadius: "14px",
+                    background: "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)",
+                    boxShadow: "0 6px 20px rgba(0, 194, 255, 0.4)",
+                    color: "#050B17",
+                    textDecoration: "none",
+                    fontWeight: 700,
+                    fontSize: "0.95rem",
+                    marginTop: "6px",
+                    transition: "all 0.2s ease",
                   }}
-                />
-                <span>আমার ড্যাশবোর্ড</span>
-                <i className="fas fa-arrow-right" style={{ fontSize: "0.8rem" }} />
-              </a>
+                >
+                  <i className="fas fa-arrow-right-to-bracket" style={{ fontSize: "0.9rem" }} />
+                  <span>লগইন করুন</span>
+                  <i className="fas fa-arrow-right" style={{ fontSize: "0.8rem" }} />
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -2666,10 +2985,10 @@ export const Navbar: React.FC = () => {
                 </div>
                 <div>
                   <h3 style={{ margin: 0, fontSize: "16px", fontWeight: 800, color: textColor }}>
-                    যোগাযোগ ও হেল্পলাইন
+                    {helplineConfig.title || "যোগাযোগ ও হেল্পলাইন"}
                   </h3>
                   <span style={{ fontSize: "11px", color: isLight ? "#64748B" : "#94A3B8" }}>
-                    Dipu Academy ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র
+                    {helplineConfig.subtitle || "Dipu Academy ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র"}
                   </span>
                 </div>
               </div>
@@ -2686,7 +3005,7 @@ export const Navbar: React.FC = () => {
             <div style={{ padding: "20px 22px", display: "flex", flexDirection: "column", gap: "12px" }}>
               {/* Phone */}
               <a
-                href="tel:01712345678"
+                href={helplineConfig.hotlineLink || `tel:${(helplineConfig.hotlineNumber || "").replace(/[^0-9+]/g, "")}`}
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -2704,18 +3023,18 @@ export const Navbar: React.FC = () => {
                     <i className="fas fa-phone-volume" />
                   </div>
                   <div>
-                    <div style={{ fontSize: "12px", color: isLight ? "#64748B" : "#94A3B8" }}>২৪/৭ হটলাইন সাপোর্ট</div>
-                    <div style={{ fontSize: "15px", fontWeight: 800, color: textColor }}>01712-345678</div>
+                    <div style={{ fontSize: "12px", color: isLight ? "#64748B" : "#94A3B8" }}>{helplineConfig.hotlineTitle || "২৪/৭ হটলাইন সাপোর্ট"}</div>
+                    <div style={{ fontSize: "15px", fontWeight: 800, color: textColor }}>{helplineConfig.hotlineNumber || "01712-345678"}</div>
                   </div>
                 </div>
                 <span style={{ fontSize: "12px", fontWeight: 700, color: "#10B981", background: "rgba(16, 185, 129, 0.12)", padding: "4px 10px", borderRadius: "9999px" }}>
-                  কল করুন →
+                  {helplineConfig.hotlineBtnText || "কল করুন →"}
                 </span>
               </a>
 
               {/* WhatsApp */}
               <a
-                href="https://wa.me/8801712345678"
+                href={helplineConfig.whatsappLink || `https://wa.me/${(helplineConfig.whatsappNumber || "").replace(/[^0-9]/g, "")}`}
                 target="_blank"
                 rel="noreferrer"
                 style={{
@@ -2735,18 +3054,18 @@ export const Navbar: React.FC = () => {
                     <i className="fab fa-whatsapp" />
                   </div>
                   <div>
-                    <div style={{ fontSize: "12px", color: isLight ? "#64748B" : "#94A3B8" }}>WhatsApp চ্যাট ও ডাউট সলভ</div>
-                    <div style={{ fontSize: "15px", fontWeight: 800, color: textColor }}>+880 1812-987654</div>
+                    <div style={{ fontSize: "12px", color: isLight ? "#64748B" : "#94A3B8" }}>{helplineConfig.whatsappTitle || "WhatsApp চ্যাট ও ডাউট সলভ"}</div>
+                    <div style={{ fontSize: "15px", fontWeight: 800, color: textColor }}>{helplineConfig.whatsappNumber || "+880 1812-987654"}</div>
                   </div>
                 </div>
                 <span style={{ fontSize: "12px", fontWeight: 700, color: "#25D366", background: "rgba(37, 211, 102, 0.12)", padding: "4px 10px", borderRadius: "9999px" }}>
-                  চ্যাট করুন →
+                  {helplineConfig.whatsappBtnText || "চ্যাট করুন →"}
                 </span>
               </a>
 
               {/* Email */}
               <a
-                href="mailto:support@dipuedu.com"
+                href={helplineConfig.emailLink || `mailto:${helplineConfig.emailAddress || "support@dipuedu.com"}`}
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -2764,12 +3083,12 @@ export const Navbar: React.FC = () => {
                     <i className="fas fa-envelope" />
                   </div>
                   <div>
-                    <div style={{ fontSize: "12px", color: isLight ? "#64748B" : "#94A3B8" }}>অফিসিয়াল ইমেইল</div>
-                    <div style={{ fontSize: "14px", fontWeight: 700, color: textColor }}>support@dipuedu.com</div>
+                    <div style={{ fontSize: "12px", color: isLight ? "#64748B" : "#94A3B8" }}>{helplineConfig.emailTitle || "অফিসিয়াল ইমেইল"}</div>
+                    <div style={{ fontSize: "14px", fontWeight: 700, color: textColor }}>{helplineConfig.emailAddress || "support@dipuedu.com"}</div>
                   </div>
                 </div>
                 <span style={{ fontSize: "12px", fontWeight: 700, color: "#00C2FF", background: "rgba(0, 194, 255, 0.12)", padding: "4px 10px", borderRadius: "9999px" }}>
-                  ইমেইল →
+                  {helplineConfig.emailBtnText || "ইমেইল →"}
                 </span>
               </a>
 
@@ -2788,7 +3107,7 @@ export const Navbar: React.FC = () => {
                 }}
               >
                 <i className="fas fa-location-dot" style={{ color: "var(--dash-amber, #0084FF)" }} />
-                <span>প্রধান কার্যালয়: শান্তি নগর, ঢাকা-১২১৭, বাংলাদেশ। (প্রতিদিন সকাল ৯টা - রাত ১১টা)</span>
+                <span>{helplineConfig.addressText || "প্রধান কার্যালয়: শান্তি নগর, ঢাকা-১২১৭, বাংলাদেশ। (প্রতিদিন সকাল ৯টা - রাত ১১টা)"}</span>
               </div>
             </div>
           </div>

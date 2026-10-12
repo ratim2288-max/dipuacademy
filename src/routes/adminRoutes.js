@@ -172,20 +172,12 @@ router.get('/students', devOrAdminAuth, async (req, res) => {
           .skip(skip)
           .limit(limit);
       } catch (dbErr) {
-        students = [
-          { _id: 'demo1', name: 'তানভীর হাসান', phone: '01712345678', classLevel: 'HSC', streakDays: 7, eduCoins: 250, createdAt: new Date() },
-          { _id: 'demo2', name: 'সাবিনা আক্তার', phone: '01812345678', classLevel: 'SSC', streakDays: 12, eduCoins: 420, createdAt: new Date() },
-          { _id: 'demo3', name: 'রাফিদ ইসলাম', phone: '01912345678', classLevel: 'HSC', streakDays: 3, eduCoins: 80, createdAt: new Date() },
-        ];
-        total = 3;
+        students = [];
+        total = 0;
       }
     } else {
-      students = [
-        { _id: 'demo1', name: 'তানভীর হাসান', phone: '01712345678', classLevel: 'HSC', streakDays: 7, eduCoins: 250, createdAt: new Date() },
-        { _id: 'demo2', name: 'সাবিনা আক্তার', phone: '01812345678', classLevel: 'SSC', streakDays: 12, eduCoins: 420, createdAt: new Date() },
-        { _id: 'demo3', name: 'রাফিদ ইসলাম', phone: '01912345678', classLevel: 'HSC', streakDays: 3, eduCoins: 80, createdAt: new Date() },
-      ];
-      total = 3;
+      students = [];
+      total = 0;
     }
 
     return res.status(200).json({
@@ -343,30 +335,60 @@ let HERO_VIDEO_CONFIG = {
 };
 
 // GET /api/admin/hero-video
-router.get('/hero-video', (req, res) => {
+router.get('/hero-video', async (req, res) => {
+  try {
+    const mongoose = require('mongoose');
+    if (mongoose.connection.readyState === 1) {
+      const SiteLink = require('../models/SiteLink');
+      const doc = await SiteLink.getLinks();
+      if (doc && doc.heroVideoUrl) {
+        HERO_VIDEO_CONFIG.videoUrl = doc.heroVideoUrl;
+        HERO_VIDEO_CONFIG.title = doc.heroVideoTitle || HERO_VIDEO_CONFIG.title;
+        HERO_VIDEO_CONFIG.updatedAt = doc.updatedAt;
+      }
+    }
+  } catch (err) {
+    console.error('[Admin GET /hero-video DB error]', err.message);
+  }
   return res.status(200).json({
     success: true,
     data: HERO_VIDEO_CONFIG
   });
 });
 
-// POST /api/admin/hero-video — Update hero video URL
-router.post('/hero-video', (req, res) => {
+// POST /api/admin/hero-video — Update hero video URL & save to MongoDB Atlas
+router.post('/hero-video', async (req, res) => {
   try {
     const { videoUrl, title } = req.body;
     if (!videoUrl || !videoUrl.trim()) {
       return res.status(400).json({ success: false, message: 'ভিডিও লিঙ্ক (YouTube / Video URL) দিন।' });
     }
 
-    HERO_VIDEO_CONFIG.videoUrl = videoUrl.trim();
-    if (title && title.trim()) {
-      HERO_VIDEO_CONFIG.title = title.trim();
-    }
+    const cleanUrl = videoUrl.trim();
+    const cleanTitle = (title && title.trim()) ? title.trim() : HERO_VIDEO_CONFIG.title;
+
+    HERO_VIDEO_CONFIG.videoUrl = cleanUrl;
+    HERO_VIDEO_CONFIG.title = cleanTitle;
     HERO_VIDEO_CONFIG.updatedAt = new Date().toISOString();
+
+    // Persist to MongoDB Atlas database
+    const mongoose = require('mongoose');
+    if (mongoose.connection.readyState === 1) {
+      try {
+        const SiteLink = require('../models/SiteLink');
+        await SiteLink.findOneAndUpdate(
+          { key: 'site_links_config' },
+          { $set: { heroVideoUrl: cleanUrl, heroVideoTitle: cleanTitle, updatedAt: new Date() } },
+          { upsert: true, new: true }
+        );
+      } catch (dbErr) {
+        console.error('[Admin hero-video DB error]', dbErr.message);
+      }
+    }
 
     return res.status(200).json({
       success: true,
-      message: 'হোমপেজ ভিডিও সফলভাবে আপডেট করা হয়েছে!',
+      message: 'হোমপেজ ভিডিও ডেটাবেজে সফলভাবে আপডেট করা হয়েছে!',
       data: HERO_VIDEO_CONFIG
     });
   } catch (error) {
@@ -378,16 +400,49 @@ router.post('/hero-video', (req, res) => {
 // FR-11: Social Media Links Configuration (Individual platform update support)
 // ==============================================================================
 let SOCIAL_LINKS_CONFIG = {
-  fb: "https://facebook.com",
+  fb: "https://facebook.com/dipuedu",
   yt: "https://youtu.be/gzhi2X6tpmg?si=MiyRu_JIe3mqh80L",
-  insta: "https://instagram.com",
-  linkedin: "https://linkedin.com",
-  tiktok: "https://tiktok.com",
+  insta: "https://instagram.com/dipuedu",
+  linkedin: "https://linkedin.com/company/dipuedu",
+  tiktok: "https://tiktok.com/@dipuedu",
+  whatsapp: "https://wa.me/8801912345678",
+  telegram: "https://t.me/dipuacademy",
+  hotline: "16910",
+  supportEmail: "support@dipuacademy.com",
   updatedAt: new Date().toISOString()
 };
 
-// GET /api/admin/social-links
-router.get('/social-links', (req, res) => {
+// GET /api/admin/social-links (Loads directly from MongoDB Atlas)
+router.get('/social-links', async (req, res) => {
+  try {
+    const mongoose = require('mongoose');
+    if (mongoose.connection.readyState === 1) {
+      const SiteLink = require('../models/SiteLink');
+      const doc = await SiteLink.getLinks();
+      if (doc) {
+        const links = {
+          fb: doc.fb || SOCIAL_LINKS_CONFIG.fb,
+          yt: doc.yt || SOCIAL_LINKS_CONFIG.yt,
+          insta: doc.insta || SOCIAL_LINKS_CONFIG.insta,
+          linkedin: doc.linkedin || SOCIAL_LINKS_CONFIG.linkedin,
+          tiktok: doc.tiktok || SOCIAL_LINKS_CONFIG.tiktok,
+          whatsapp: doc.whatsapp || SOCIAL_LINKS_CONFIG.whatsapp,
+          telegram: doc.telegram || SOCIAL_LINKS_CONFIG.telegram,
+          hotline: doc.hotline || SOCIAL_LINKS_CONFIG.hotline,
+          supportEmail: doc.supportEmail || SOCIAL_LINKS_CONFIG.supportEmail,
+          updatedAt: doc.updatedAt || SOCIAL_LINKS_CONFIG.updatedAt
+        };
+        SOCIAL_LINKS_CONFIG = { ...SOCIAL_LINKS_CONFIG, ...links };
+        return res.status(200).json({
+          success: true,
+          links,
+          data: links
+        });
+      }
+    }
+  } catch (err) {
+    console.error('[Admin GET /social-links DB error]', err.message);
+  }
   return res.status(200).json({
     success: true,
     links: SOCIAL_LINKS_CONFIG,
@@ -395,27 +450,49 @@ router.get('/social-links', (req, res) => {
   });
 });
 
-// POST /api/admin/social-links — Update individual or all social links
-router.post('/social-links', (req, res) => {
+// POST /api/admin/social-links — Update individual or all social links & save to MongoDB Atlas
+router.post('/social-links', async (req, res) => {
   try {
-    const { platform, url, fb, yt, insta, linkedin, tiktok } = req.body;
+    const { platform, url, fb, yt, insta, linkedin, tiktok, whatsapp, telegram, hotline, supportEmail } = req.body;
+    const updates = {};
 
     if (platform && url !== undefined) {
-      if (platform in SOCIAL_LINKS_CONFIG) {
-        SOCIAL_LINKS_CONFIG[platform] = url.trim();
-      }
+      const cleanUrl = url.trim();
+      SOCIAL_LINKS_CONFIG[platform] = cleanUrl;
+      updates[platform] = cleanUrl;
     } else {
-      if (fb !== undefined) SOCIAL_LINKS_CONFIG.fb = fb.trim();
-      if (yt !== undefined) SOCIAL_LINKS_CONFIG.yt = yt.trim();
-      if (insta !== undefined) SOCIAL_LINKS_CONFIG.insta = insta.trim();
-      if (linkedin !== undefined) SOCIAL_LINKS_CONFIG.linkedin = linkedin.trim();
-      if (tiktok !== undefined) SOCIAL_LINKS_CONFIG.tiktok = tiktok.trim();
+      if (fb !== undefined) { SOCIAL_LINKS_CONFIG.fb = fb.trim(); updates.fb = fb.trim(); }
+      if (yt !== undefined) { SOCIAL_LINKS_CONFIG.yt = yt.trim(); updates.yt = yt.trim(); }
+      if (insta !== undefined) { SOCIAL_LINKS_CONFIG.insta = insta.trim(); updates.insta = insta.trim(); }
+      if (linkedin !== undefined) { SOCIAL_LINKS_CONFIG.linkedin = linkedin.trim(); updates.linkedin = linkedin.trim(); }
+      if (tiktok !== undefined) { SOCIAL_LINKS_CONFIG.tiktok = tiktok.trim(); updates.tiktok = tiktok.trim(); }
+      if (whatsapp !== undefined) { SOCIAL_LINKS_CONFIG.whatsapp = whatsapp.trim(); updates.whatsapp = whatsapp.trim(); }
+      if (telegram !== undefined) { SOCIAL_LINKS_CONFIG.telegram = telegram.trim(); updates.telegram = telegram.trim(); }
+      if (hotline !== undefined) { SOCIAL_LINKS_CONFIG.hotline = hotline.trim(); updates.hotline = hotline.trim(); }
+      if (supportEmail !== undefined) { SOCIAL_LINKS_CONFIG.supportEmail = supportEmail.trim(); updates.supportEmail = supportEmail.trim(); }
     }
-    SOCIAL_LINKS_CONFIG.updatedAt = new Date().toISOString();
+
+    updates.updatedAt = new Date();
+    SOCIAL_LINKS_CONFIG.updatedAt = updates.updatedAt.toISOString();
+
+    // Persist to MongoDB Atlas database
+    const mongoose = require('mongoose');
+    if (mongoose.connection.readyState === 1) {
+      try {
+        const SiteLink = require('../models/SiteLink');
+        await SiteLink.findOneAndUpdate(
+          { key: 'site_links_config' },
+          { $set: updates },
+          { upsert: true, new: true }
+        );
+      } catch (dbErr) {
+        console.error('[Admin social-links POST DB error]', dbErr.message);
+      }
+    }
 
     return res.status(200).json({
       success: true,
-      message: 'সোশ্যাল মিডিয়া লিংক সফলভাবে আপডেট করা হয়েছে!',
+      message: 'সোশ্যাল মিডিয়া ও যোগাযোগের লিংক ডেটাবেজে সফলভাবে আপডেট করা হয়েছে!',
       links: SOCIAL_LINKS_CONFIG,
       data: SOCIAL_LINKS_CONFIG
     });
@@ -423,6 +500,7 @@ router.post('/social-links', (req, res) => {
     return res.status(500).json({ success: false, message: 'সোশ্যাল লিংক আপডেট করতে সমস্যা হয়েছে।', error: error.message });
   }
 });
+
 
 // ==============================================================================
 // FR-12: Total Students & Course Enrolled Site Statistics
@@ -814,13 +892,86 @@ router.post('/dashboard-config', (req, res) => {
   }
 });
 
+// ==============================================================================
+// FR-15: Helpline & Contact Modal Configuration
+// ==============================================================================
+const HELPLINE_CONFIG_FILE = path.join(__dirname, '../config/helpline-config.json');
+
+function loadHelplineConfigFromFile() {
+  try {
+    if (fs.existsSync(HELPLINE_CONFIG_FILE)) {
+      const data = fs.readFileSync(HELPLINE_CONFIG_FILE, 'utf8');
+      return JSON.parse(data);
+    }
+  } catch (e) {
+    console.error('Failed to read helpline-config.json:', e.message);
+  }
+  return null;
+}
+
+function saveHelplineConfigToFile(cfg) {
+  try {
+    fs.writeFileSync(HELPLINE_CONFIG_FILE, JSON.stringify(cfg, null, 2), 'utf8');
+  } catch (e) {
+    console.error('Failed to persist helpline-config.json:', e.message);
+  }
+}
+
+let HELPLINE_CONFIG = loadHelplineConfigFromFile() || {
+  title: "যোগাযোগ ও হেল্পলাইন",
+  subtitle: "Dipu Academy ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র",
+  hotlineTitle: "২৪/৭ হটলাইন সাপোর্ট",
+  hotlineNumber: "01712-345678",
+  hotlineLink: "tel:01712345678",
+  hotlineBtnText: "কল করুন →",
+  whatsappTitle: "WhatsApp চ্যাট ও ডাউট সলভ",
+  whatsappNumber: "+880 1812-987654",
+  whatsappLink: "https://wa.me/8801812987654",
+  whatsappBtnText: "চ্যাট করুন →",
+  emailTitle: "অফিসিয়াল ইমেইল",
+  emailAddress: "support@dipuedu.com",
+  emailLink: "mailto:support@dipuedu.com",
+  emailBtnText: "ইমেইল →",
+  addressText: "প্রধান কার্যালয়: শান্তি নগর, ঢাকা-১২১৭, বাংলাদেশ। (প্রতিদিন সকাল ৯টা - রাত ১১টা)"
+};
+
+// GET /api/admin/helpline
+router.get('/helpline', (req, res) => {
+  return res.status(200).json({ success: true, config: HELPLINE_CONFIG });
+});
+
+// POST /api/admin/helpline
+router.post('/helpline', (req, res) => {
+  try {
+    const updated = req.body;
+    if (!updated || typeof updated !== 'object') {
+      return res.status(400).json({ success: false, message: 'সঠিক হেল্পলাইন ডেটা প্রদান করুন।' });
+    }
+    HELPLINE_CONFIG = {
+      ...HELPLINE_CONFIG,
+      ...updated,
+    };
+    saveHelplineConfigToFile(HELPLINE_CONFIG);
+    return res.status(200).json({
+      success: true,
+      message: 'যোগাযোগ ও হেল্পলাইন তথ্য সফলভাবে সংরক্ষিত হয়েছে!',
+      config: HELPLINE_CONFIG
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'হেল্পলাইন তথ্য সংরক্ষণ ব্যর্থ হয়েছে।', error: err.message });
+  }
+});
+
 router.IN_MEMORY_REVIEWS = IN_MEMORY_REVIEWS;
 router.HERO_VIDEO_CONFIG = HERO_VIDEO_CONFIG;
 router.SOCIAL_LINKS_CONFIG = SOCIAL_LINKS_CONFIG;
 router.SITE_STATS_CONFIG = SITE_STATS_CONFIG;
 router.FEATURES_CONFIG = FEATURES_CONFIG;
 router.DASHBOARD_CONFIG = DASHBOARD_CONFIG;
+router.HELPLINE_CONFIG = HELPLINE_CONFIG;
 router.saveFeaturesToFile = saveFeaturesToFile;
 router.saveDashboardConfigToFile = saveDashboardConfigToFile;
+router.saveHelplineConfigToFile = saveHelplineConfigToFile;
 module.exports = router;
+
 

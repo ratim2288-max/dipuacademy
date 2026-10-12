@@ -44,19 +44,10 @@ const verifyAuth = async (req, res, next) => {
     }
 
     if (!user) {
-      user = {
-        _id: decoded.id || 'demo-student-id',
-        phone: decoded.phone || '01712345678',
-        name: 'শিক্ষার্থী (Dipu Student)',
-        role: decoded.role || 'student',
-        classLevel: 'HSC',
-        streakDays: 7,
-        eduCoins: 250,
-        enrolledCourses: ['course-user-c10-biz', 'course-user-hsc28'],
-        preferredLanguage: 'bn',
-        activeSessionToken: decoded.sessionToken,
-        save: async function() { return this; }
-      };
+      return res.status(401).json({
+        success: false,
+        message: 'User account not found. Please log in with a valid account.',
+      });
     }
 
     // Tier 2: Single-Device Concurrency Control

@@ -701,15 +701,15 @@ router.get('/track', async (req, res) => {
       success: true,
       trackKey: track.trackKey,
       student: {
-        name: studentProfile?.name || 'তানভির হোসেন',
-        phone: phone || studentProfile?.phone || '01712345678',
+        name: studentProfile?.name || studentProfile?.fullName || '',
+        phone: phone || studentProfile?.phone || '',
         classLevel: track.classLevel,
         inputClassLevel: effectiveClass,
         group: track.group,
         inputGroup: effectiveGroup,
         target: studentProfile?.target || track.targetDefault,
         badgeColor: track.badgeColor,
-        institution: studentProfile?.institution || 'নটর ডেম কলেজ, ঢাকা'
+        institution: studentProfile?.institution || ''
       },
       track: {
         title: track.classLevel + ' — ' + track.group,
@@ -751,8 +751,8 @@ router.post('/track', async (req, res) => {
     const track = TRACK_DEFINITIONS[trackKey] || TRACK_DEFINITIONS['science-hsc27'];
 
     const studentRecord = {
-      fullName: fullName || 'শিক্ষার্থী',
-      phone: phone || '01712345678',
+      fullName: fullName || '',
+      phone: phone || '',
       classLevel: track.classLevel,
       userSpecifiedClass: classLevel,
       group: track.group,

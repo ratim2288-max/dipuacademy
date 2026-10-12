@@ -227,6 +227,14 @@
             </a>
           </li>
 
+          <!-- 9. যোগাযোগ ও হেল্পলাইন -->
+          <li>
+            <a href="#helpline" class="nav-item" data-tab="helpline">
+              <i class="fas fa-headset nav-icon"></i>
+              <span>যোগাযোগ ও হেল্পলাইন</span>
+            </a>
+          </li>
+
         </ul>
       </nav>
 
@@ -878,7 +886,60 @@
                 <i class="fas fa-floppy-disk"></i> টিকটক সেভ
               </button>
             </div>
+
+            <!-- WhatsApp -->
+            <div class="social-card-item">
+              <div class="social-logo-box" style="background: rgba(37, 211, 102, 0.15); color: #25D366;">
+                <i class="fab fa-whatsapp"></i>
+              </div>
+              <div>
+                <input type="url" id="socialInputWhatsapp" class="form-input" placeholder="https://wa.me/8801912345678" value="https://wa.me/8801912345678">
+              </div>
+              <button class="btn-social-save whatsapp" id="btnSaveWhatsapp" onclick="saveSocialLinkSingle('whatsapp')">
+                <i class="fas fa-floppy-disk"></i> হোয়াটসঅ্যাপ সেভ
+              </button>
+            </div>
+
+            <!-- Telegram -->
+            <div class="social-card-item">
+              <div class="social-logo-box" style="background: rgba(34, 158, 217, 0.15); color: #229ED9;">
+                <i class="fab fa-telegram"></i>
+              </div>
+              <div>
+                <input type="url" id="socialInputTelegram" class="form-input" placeholder="https://t.me/dipuacademy" value="https://t.me/dipuacademy">
+              </div>
+              <button class="btn-social-save telegram" id="btnSaveTelegram" onclick="saveSocialLinkSingle('telegram')">
+                <i class="fas fa-floppy-disk"></i> টেলিগ্রাম সেভ
+              </button>
+            </div>
+
+            <!-- Helpline / Hotline -->
+            <div class="social-card-item">
+              <div class="social-logo-box" style="background: rgba(255, 122, 26, 0.15); color: #FF7A1A;">
+                <i class="fas fa-phone-volume"></i>
+              </div>
+              <div>
+                <input type="text" id="socialInputHotline" class="form-input" placeholder="16910" value="16910">
+              </div>
+              <button class="btn-social-save hotline" id="btnSaveHotline" onclick="saveSocialLinkSingle('hotline')">
+                <i class="fas fa-floppy-disk"></i> হেল্পলাইন সেভ
+              </button>
+            </div>
+
+            <!-- Support Email -->
+            <div class="social-card-item">
+              <div class="social-logo-box" style="background: rgba(99, 102, 241, 0.15); color: #6366F1;">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div>
+                <input type="email" id="socialInputSupportEmail" class="form-input" placeholder="support@dipuacademy.com" value="support@dipuacademy.com">
+              </div>
+              <button class="btn-social-save email" id="btnSaveSupportEmail" onclick="saveSocialLinkSingle('supportEmail')">
+                <i class="fas fa-floppy-disk"></i> ইমেইল সেভ
+              </button>
+            </div>
           </div>
+
 
           <!-- 3. Site Statistics Manager -->
           <div class="card-panel">
@@ -1428,6 +1489,345 @@
           </div>
 
         </section>
+
+        <!-- ====================================================================
+             VIEW 9: HELPLINE & CONTACT MODAL MANAGER (যোগাযোগ ও হেল্পলাইন)
+             ==================================================================== -->
+        <section id="view-helpline" class="admin-view hidden">
+          <!-- Header Banner -->
+          <div class="careplus-section-card" style="margin-bottom: 24px; border-radius: 20px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(8, 16, 34, 0.95)); border: 1px solid rgba(16, 185, 129, 0.35); padding: 22px 26px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+              <div>
+                <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px; border-radius: 999px; background: rgba(16, 185, 129, 0.16); color: #10B981; font-size: 11px; font-weight: 700; margin-bottom: 8px;">
+                  <i class="fas fa-headset"></i> হেল্পলাইন ও কন্টাক্ট সাপোর্ট সেটিংস
+                </div>
+                <h2 style="font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 6px;">
+                  যোগাযোগ ও হেল্পলাইন মডাল কন্ট্রোলার
+                </h2>
+                <p style="font-size: 13px; color: #94A3B8; max-width: 650px; line-height: 1.6; margin: 0;">
+                  ওয়েবসাইটের হেডারে "যোগাযোগ ও হেল্পলাইন" বাটনে ক্লিক করলে যে পপআপ মডালটি আসে, তার হটলাইন নম্বর, WhatsApp নম্বর, ইমেইল এবং প্রধান কার্যালয়ের ঠিকানা এখান থেকে সরাসরি এডিট করুন।
+                </p>
+              </div>
+              <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <button type="button" class="btn-careplus-green-cta" onclick="saveHelplineSettings()" style="border-radius: 999px; padding: 10px 24px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 4px 18px rgba(16, 185, 129, 0.35); background: linear-gradient(135deg, #10B981, #059669); border: none; color: #ffffff;">
+                  <i class="fas fa-floppy-disk"></i> পরিবর্তন সংরক্ষণ করুন
+                </button>
+                <a href="/" target="_blank" class="btn-careplus-hero-dark-outline" style="border-radius: 999px; padding: 9px 18px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                  <i class="fas fa-arrow-up-right-from-square"></i> লাইভ সাইটে দেখুন
+                </a>
+                <button type="button" class="btn-careplus-hero-dark-outline" onclick="resetHelplineSettingsToDefault()" style="border-radius: 999px; padding: 9px 16px;" title="ডিফল্ট তথ্য ফিরিয়ে আনুন">
+                  <i class="fas fa-rotate-left"></i> রিস্টোর
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2 Columns Grid: Left Editor & Right Live Modal Preview -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(440px, 1fr)); gap: 24px; margin-bottom: 24px;">
+            
+            <!-- LEFT COLUMN: EDIT FORM CARDS -->
+            <div style="display: flex; flexDirection: column; gap: 20px;">
+
+              <!-- CARD 1: Modal Header Title & Subtitle -->
+              <div class="careplus-section-card" style="border-radius: 16px; background: rgba(13, 27, 54, 0.85); border: 1px solid rgba(16, 185, 129, 0.2); padding: 20px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center; color: #10B981; font-size: 16px;">
+                      <i class="fas fa-heading"></i>
+                    </div>
+                    <div>
+                      <h3 style="font-size: 16px; font-weight: 700; color: #fff; margin: 0;">১. মডাল হেডার ও পরিচিতি</h3>
+                      <p style="font-size: 11px; color: #94A3B8; margin: 0;">পপআপের শীর্ষ শিরোনাম ও সাবটাইটেল</p>
+                    </div>
+                  </div>
+                  <span class="careplus-pill-badge" style="background: rgba(16,185,129,0.15); color: #10B981; font-size: 10px; padding: 3px 8px; border-radius: 6px;">HEADER</span>
+                </div>
+
+                <div class="form-group-mb" style="margin-bottom: 14px;">
+                  <label class="form-label">মডাল শিরোনাম (Title) *</label>
+                  <input type="text" id="helplineInputTitle" class="form-input" placeholder="যেমন: যোগাযোগ ও হেল্পলাইন" value="যোগাযোগ ও হেল্পলাইন" oninput="updateHelplineLivePreview()">
+                </div>
+
+                <div class="form-group-mb" style="margin-bottom: 4px;">
+                  <label class="form-label">মডাল সাবটাইটেল (Subtitle) *</label>
+                  <input type="text" id="helplineInputSubtitle" class="form-input" placeholder="যেমন: Dipu Academy ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র" value="Dipu Academy ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র" oninput="updateHelplineLivePreview()">
+                </div>
+              </div>
+
+              <!-- CARD 2: Hotline Support -->
+              <div class="careplus-section-card" style="border-radius: 16px; background: rgba(13, 27, 54, 0.85); border: 1px solid rgba(16, 185, 129, 0.2); padding: 20px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center; color: #10B981; font-size: 16px;">
+                      <i class="fas fa-phone-volume"></i>
+                    </div>
+                    <div>
+                      <h3 style="font-size: 16px; font-weight: 700; color: #fff; margin: 0;">২. ২৪/৭ হটলাইন সাপোর্ট</h3>
+                      <p style="font-size: 11px; color: #94A3B8; margin: 0;">সরাসরি কল করার হটলাইন নম্বর</p>
+                    </div>
+                  </div>
+                  <span class="careplus-pill-badge" style="background: rgba(16,185,129,0.15); color: #10B981; font-size: 10px; padding: 3px 8px; border-radius: 6px;">HOTLINE</span>
+                </div>
+
+                <div class="form-group-mb" style="margin-bottom: 12px;">
+                  <label class="form-label">সাপোর্ট টাইটেল / লেবেল</label>
+                  <input type="text" id="helplineInputHotlineTitle" class="form-input" placeholder="যেমন: ২৪/৭ হটলাইন সাপোর্ট" value="২৪/৭ হটলাইন সাপোর্ট" oninput="updateHelplineLivePreview()">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin-bottom: 12px;">
+                  <div>
+                    <label class="form-label">হটলাইন নম্বর (প্রদর্শিত নম্বর) *</label>
+                    <input type="text" id="helplineInputHotlineNumber" class="form-input" placeholder="যেমন: 01712-345678" value="01712-345678" oninput="updateHelplineLivePreview()">
+                  </div>
+                  <div>
+                    <label class="form-label">বাটন টেক্সট</label>
+                    <input type="text" id="helplineInputHotlineBtnText" class="form-input" placeholder="যেমন: কল করুন →" value="কল করুন →" oninput="updateHelplineLivePreview()">
+                  </div>
+                </div>
+
+                <div class="form-group-mb" style="margin-bottom: 4px;">
+                  <label class="form-label">সরাসরি কল লিংক (tel: URL)</label>
+                  <input type="text" id="helplineInputHotlineLink" class="form-input" placeholder="যেমন: tel:01712345678" value="tel:01712345678" oninput="updateHelplineLivePreview()">
+                  <div style="font-size: 11px; color: #64748B; margin-top: 4px;">মোবাইলে শিক্ষার্থী ক্লিক করলে সরাসরি ডায়াল প্যাডে চলে যাবে।</div>
+                </div>
+              </div>
+
+              <!-- CARD 3: WhatsApp Support -->
+              <div class="careplus-section-card" style="border-radius: 16px; background: rgba(13, 27, 54, 0.85); border: 1px solid rgba(37, 211, 102, 0.2); padding: 20px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(37, 211, 102, 0.15); display: flex; align-items: center; justify-content: center; color: #25D366; font-size: 18px;">
+                      <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <div>
+                      <h3 style="font-size: 16px; font-weight: 700; color: #fff; margin: 0;">৩. WhatsApp চ্যাট ও ডাউট সলভ</h3>
+                      <p style="font-size: 11px; color: #94A3B8; margin: 0;">হোয়াটসঅ্যাপ সাপোর্ট নম্বর ও সরাসরি চ্যাট লিংক</p>
+                    </div>
+                  </div>
+                  <span class="careplus-pill-badge" style="background: rgba(37, 211, 102, 0.15); color: #25D366; font-size: 10px; padding: 3px 8px; border-radius: 6px;">WHATSAPP</span>
+                </div>
+
+                <div class="form-group-mb" style="margin-bottom: 12px;">
+                  <label class="form-label">সাপোর্ট টাইটেল / লেবেল</label>
+                  <input type="text" id="helplineInputWhatsappTitle" class="form-input" placeholder="যেমন: WhatsApp চ্যাট ও ডাউট সলভ" value="WhatsApp চ্যাট ও ডাউট সলভ" oninput="updateHelplineLivePreview()">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin-bottom: 12px;">
+                  <div>
+                    <label class="form-label">হোয়াটসঅ্যাপ নম্বর (প্রদর্শিত নম্বর) *</label>
+                    <input type="text" id="helplineInputWhatsappNumber" class="form-input" placeholder="যেমন: +880 1812-987654" value="+880 1812-987654" oninput="updateHelplineLivePreview()">
+                  </div>
+                  <div>
+                    <label class="form-label">বাটন টেক্সট</label>
+                    <input type="text" id="helplineInputWhatsappBtnText" class="form-input" placeholder="যেমন: চ্যাট করুন →" value="চ্যাট করুন →" oninput="updateHelplineLivePreview()">
+                  </div>
+                </div>
+
+                <div class="form-group-mb" style="margin-bottom: 4px;">
+                  <label class="form-label">সরাসরি হোয়াটসঅ্যাপ লিংক (https://wa.me/... URL)</label>
+                  <input type="text" id="helplineInputWhatsappLink" class="form-input" placeholder="যেমন: https://wa.me/8801812987654" value="https://wa.me/8801812987654" oninput="updateHelplineLivePreview()">
+                  <div style="font-size: 11px; color: #64748B; margin-top: 4px;">ক্লিক করলে সরাসরি WhatsApp অ্যাপ বা ওয়েবে চ্যাট উইন্ডো খুলবে।</div>
+                </div>
+              </div>
+
+              <!-- CARD 4: Official Email Support -->
+              <div class="careplus-section-card" style="border-radius: 16px; background: rgba(13, 27, 54, 0.85); border: 1px solid rgba(0, 194, 255, 0.2); padding: 20px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(0, 194, 255, 0.15); display: flex; align-items: center; justify-content: center; color: #00C2FF; font-size: 16px;">
+                      <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                      <h3 style="font-size: 16px; font-weight: 700; color: #fff; margin: 0;">৪. অফিসিয়াল ইমেইল সাপোর্ট</h3>
+                      <p style="font-size: 11px; color: #94A3B8; margin: 0;">অফিসিয়াল সহায়তা ও ইনকোয়ারি ইমেইল</p>
+                    </div>
+                  </div>
+                  <span class="careplus-pill-badge" style="background: rgba(0, 194, 255, 0.15); color: #00C2FF; font-size: 10px; padding: 3px 8px; border-radius: 6px;">EMAIL</span>
+                </div>
+
+                <div class="form-group-mb" style="margin-bottom: 12px;">
+                  <label class="form-label">সাপোর্ট টাইটেল / লেবেল</label>
+                  <input type="text" id="helplineInputEmailTitle" class="form-input" placeholder="যেমন: অফিসিয়াল ইমেইল" value="অফিসিয়াল ইমেইল" oninput="updateHelplineLivePreview()">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin-bottom: 12px;">
+                  <div>
+                    <label class="form-label">ইমেইল ঠিকানা (Display Email) *</label>
+                    <input type="email" id="helplineInputEmailAddress" class="form-input" placeholder="যেমন: support@dipuedu.com" value="support@dipuedu.com" oninput="updateHelplineLivePreview()">
+                  </div>
+                  <div>
+                    <label class="form-label">বাটন টেক্সট</label>
+                    <input type="text" id="helplineInputEmailBtnText" class="form-input" placeholder="যেমন: ইমেইল →" value="ইমেইল →" oninput="updateHelplineLivePreview()">
+                  </div>
+                </div>
+
+                <div class="form-group-mb" style="margin-bottom: 4px;">
+                  <label class="form-label">ইমেইল লিংক (mailto: URL)</label>
+                  <input type="text" id="helplineInputEmailLink" class="form-input" placeholder="যেমন: mailto:support@dipuedu.com" value="mailto:support@dipuedu.com" oninput="updateHelplineLivePreview()">
+                </div>
+              </div>
+
+              <!-- CARD 5: Main Office Address & Working Hours -->
+              <div class="careplus-section-card" style="border-radius: 16px; background: rgba(13, 27, 54, 0.85); border: 1px solid rgba(0, 132, 255, 0.2); padding: 20px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(0, 132, 255, 0.15); display: flex; align-items: center; justify-content: center; color: #0084FF; font-size: 16px;">
+                      <i class="fas fa-location-dot"></i>
+                    </div>
+                    <div>
+                      <h3 style="font-size: 16px; font-weight: 700; color: #fff; margin: 0;">৫. প্রধান কার্যালয়ের ঠিকানা ও সময়সূচী</h3>
+                      <p style="font-size: 11px; color: #94A3B8; margin: 0;">মডালের নিচে প্রদর্শিত ঠিকানা ও সহায়তা সময়</p>
+                    </div>
+                  </div>
+                  <span class="careplus-pill-badge" style="background: rgba(0, 132, 255, 0.15); color: #0084FF; font-size: 10px; padding: 3px 8px; border-radius: 6px;">LOCATION</span>
+                </div>
+
+                <div class="form-group-mb" style="margin-bottom: 4px;">
+                  <label class="form-label">কার্যালয় ঠিকানা ও খোলা থাকার সময় *</label>
+                  <textarea id="helplineInputAddressText" class="form-input" rows="3" placeholder="যেমন: প্রধান কার্যালয়: শান্তি নগর, ঢাকা-১২১৭, বাংলাদেশ। (প্রতিদিন সকাল ৯টা - রাত ১১টা)" oninput="updateHelplineLivePreview()">প্রধান কার্যালয়: শান্তি নগর, ঢাকা-১২১৭, বাংলাদেশ। (প্রতিদিন সকাল ৯টা - রাত ১১টা)</textarea>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: REAL-TIME LIVE PREVIEW (MATCHING SCREENSHOT) -->
+            <div>
+              <div style="position: sticky; top: 85px;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <span style="color: #10B981; font-weight: 800; font-size: 13.5px; display: inline-flex; align-items: center; gap: 6px;">
+                    <i class="fas fa-eye"></i> লাইভ রিয়েলটাইম প্রিভিউ
+                  </span>
+                  <span class="careplus-pill-badge" style="background: rgba(16, 185, 129, 0.15); color: #10B981; font-size: 11px; padding: 3px 10px; border-radius: 999px;">
+                    EXACT LIVE PREVIEW
+                  </span>
+                </div>
+
+                <!-- Preview Modal Card: Exact clone of User's Modal Screenshot -->
+                <div style="background: #0D1626; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 20px; box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 40px rgba(16,185,129,0.1); overflow: hidden; max-width: 460px; margin: 0 auto;">
+                  
+                  <!-- Modal Header -->
+                  <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: space-between; background: rgba(255, 255, 255, 0.015);">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <div style="width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #10B981, #059669); display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35); flex-shrink: 0;">
+                        <i class="fas fa-headset"></i>
+                      </div>
+                      <div>
+                        <h3 id="prevHelplineTitle" style="margin: 0; font-size: 16.5px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.2px;">
+                          যোগাযোগ ও হেল্পলাইন
+                        </h3>
+                        <span id="prevHelplineSubtitle" style="font-size: 11.5px; color: #94A3B8; display: block; margin-top: 1px;">
+                          Dipu Academy ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র
+                        </span>
+                      </div>
+                    </div>
+                    <button type="button" style="background: none; border: none; color: #94A3B8; font-size: 18px; cursor: pointer; padding: 4px;" title="বন্ধ করুন">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+
+                  <!-- Modal Body: Contact Channels -->
+                  <div style="padding: 20px 22px; display: flex; flex-direction: column; gap: 12px;">
+                    
+                    <!-- Channel 1: Phone Hotline -->
+                    <div id="prevHelplineHotlineCard" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-radius: 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.2s;">
+                      <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(16, 185, 129, 0.15); color: #10B981; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;">
+                          <i class="fas fa-phone-volume"></i>
+                        </div>
+                        <div>
+                          <div id="prevHelplineHotlineTitle" style="font-size: 12px; color: #94A3B8;">২৪/৭ হটলাইন সাপোর্ট</div>
+                          <div id="prevHelplineHotlineNumber" style="font-size: 15px; font-weight: 800; color: #FFFFFF;">01712-345678</div>
+                        </div>
+                      </div>
+                      <span id="prevHelplineHotlineBtn" style="font-size: 12px; font-weight: 700; color: #10B981; background: rgba(16, 185, 129, 0.14); padding: 4px 12px; border-radius: 9999px; white-space: nowrap;">
+                        কল করুন →
+                      </span>
+                    </div>
+
+                    <!-- Channel 2: WhatsApp -->
+                    <div id="prevHelplineWhatsappCard" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-radius: 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.2s;">
+                      <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(37, 211, 102, 0.15); color: #25D366; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; flex-shrink: 0;">
+                          <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div>
+                          <div id="prevHelplineWhatsappTitle" style="font-size: 12px; color: #94A3B8;">WhatsApp চ্যাট ও ডাউট সলভ</div>
+                          <div id="prevHelplineWhatsappNumber" style="font-size: 15px; font-weight: 800; color: #FFFFFF;">+880 1812-987654</div>
+                        </div>
+                      </div>
+                      <span id="prevHelplineWhatsappBtn" style="font-size: 12px; font-weight: 700; color: #25D366; background: rgba(37, 211, 102, 0.14); padding: 4px 12px; border-radius: 9999px; white-space: nowrap;">
+                        চ্যাট করুন →
+                      </span>
+                    </div>
+
+                    <!-- Channel 3: Email -->
+                    <div id="prevHelplineEmailCard" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-radius: 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.2s;">
+                      <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(0, 194, 255, 0.15); color: #00C2FF; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;">
+                          <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                          <div id="prevHelplineEmailTitle" style="font-size: 12px; color: #94A3B8;">অফিসিয়াল ইমেইল</div>
+                          <div id="prevHelplineEmailAddress" style="font-size: 14px; font-weight: 700; color: #FFFFFF;">support@dipuedu.com</div>
+                        </div>
+                      </div>
+                      <span id="prevHelplineEmailBtn" style="font-size: 12px; font-weight: 700; color: #00C2FF; background: rgba(0, 194, 255, 0.14); padding: 4px 12px; border-radius: 9999px; white-space: nowrap;">
+                        ইমেইল →
+                      </span>
+                    </div>
+
+                    <!-- Channel 4: Address Footer Box -->
+                    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 11px 14px; font-size: 12px; color: #94A3B8; display: flex; align-items: flex-start; gap: 8px; line-height: 1.5;">
+                      <i class="fas fa-location-dot" style="color: #00C2FF; font-size: 13px; margin-top: 2px; flex-shrink: 0;"></i>
+                      <span id="prevHelplineAddressText">প্রধান কার্যালয়: শান্তি নগর, ঢাকা-১২১৭, বাংলাদেশ। (প্রতিদিন সকাল ৯টা - রাত ১১টা)</span>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <!-- Live Test Action Bar -->
+                <div style="margin-top: 14px; background: rgba(13, 27, 54, 0.6); border: 1px dashed rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                  <span style="font-size: 12px; color: #94A3B8;">
+                    <i class="fas fa-bolt text-warning mr-1"></i> দ্রুত টেস্ট বাটন:
+                  </span>
+                  <div style="display: flex; gap: 8px;">
+                    <a id="testCallLink" href="tel:01712345678" class="btn-careplus-dark" style="font-size: 11.5px; padding: 5px 10px; text-decoration: none;" title="কল টেস্ট">
+                      <i class="fas fa-phone text-success mr-1"></i> কল
+                    </a>
+                    <a id="testWaLink" href="https://wa.me/8801812987654" target="_blank" class="btn-careplus-dark" style="font-size: 11.5px; padding: 5px 10px; text-decoration: none;" title="WhatsApp টেস্ট">
+                      <i class="fab fa-whatsapp text-success mr-1"></i> চ্যাট
+                    </a>
+                    <a id="testMailLink" href="mailto:support@dipuedu.com" class="btn-careplus-dark" style="font-size: 11.5px; padding: 5px 10px; text-decoration: none;" title="ইমেইল টেস্ট">
+                      <i class="fas fa-envelope text-info mr-1"></i> ইমেইল
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Floating Save Bar for Helpline -->
+          <div style="margin-top: 28px; background: linear-gradient(135deg, rgba(8, 16, 34, 0.95), rgba(16, 185, 129, 0.12)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: #10B981; box-shadow: 0 0 10px #10B981;"></span>
+              <span style="font-size: 13px; font-weight: 600; color: #CBD5E1;">সেভ বাটনে চাপলে রিয়েলটাইমে ওয়েবসাইটের পপআপ মডালে সব তথ্য আপডেট হয়ে যাবে।</span>
+            </div>
+            <div style="display: flex; gap: 12px;">
+              <button type="button" class="btn-careplus-hero-dark-outline" onclick="resetHelplineSettingsToDefault()" style="border-radius: 999px; padding: 10px 20px;">
+                <i class="fas fa-rotate-left mr-1"></i> ডিফল্ট করুন
+              </button>
+              <button type="button" class="btn-careplus-green-cta" onclick="saveHelplineSettings()" style="border-radius: 999px; padding: 10px 28px; font-weight: 800; background: linear-gradient(135deg, #10B981, #059669); border: none; color: #FFFFFF; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);">
+                <i class="fas fa-floppy-disk mr-1.5"></i> হেল্পলাইন আপডেট সেভ করুন
+              </button>
+            </div>
+          </div>
+
+        </section>
+
 
       </div>
 
@@ -2052,6 +2452,6 @@
   </div>
 
   <!-- JavaScript Engine -->
-  <script src="/js/admin.js?v=3.0"></script>
+  <script src="/js/admin.js?v=4.0"></script>
 </body>
 </html>

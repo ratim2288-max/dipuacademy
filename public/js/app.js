@@ -387,12 +387,9 @@ function initAuthStatus() {
 }
 
 // ==============================================================================
-// Dynamic Hero Featured Video (Loads Admin configured YouTube / Video)
+// Dynamic Hero Featured Video (Loads Admin configured YouTube / Video from MongoDB Atlas)
 // ==============================================================================
 async function initHeroVideo() {
-  const iframe = document.getElementById("heroVideoIframe");
-  if (!iframe) return;
-
   function parseVideoEmbed(url) {
     if (!url) return "";
     const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/);
@@ -402,17 +399,39 @@ async function initHeroVideo() {
     return url;
   }
 
-  iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+  function applyHeroVideo(data) {
+    if (!data || !data.videoUrl) return;
+    const iframe = document.getElementById("heroVideoIframe");
+    if (iframe) {
+      const embedUrl = parseVideoEmbed(data.videoUrl);
+      if (embedUrl) iframe.src = embedUrl;
+    }
 
+    const ytMatch = data.videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/);
+    if (ytMatch && ytMatch[1]) {
+      window.dispatchEvent(new CustomEvent("dipu_hero_updated", {
+        detail: {
+          videoYoutubeId: ytMatch[1],
+          videoTitle: data.title || "এইচএসসি ও এডমিশন স্পেশাল মাস্টারক্লাস"
+        }
+      }));
+    }
+  }
+
+  // 1. Instant cached apply
+  try {
+    const cached = localStorage.getItem("dipu_hero_video");
+    if (cached) applyHeroVideo(JSON.parse(cached));
+  } catch (e) {}
+
+  // 2. Fresh fetch from MongoDB Atlas
   try {
     const res = await fetch("/api/hero-video");
     if (res.ok) {
       const resJson = await res.json();
       if (resJson && resJson.data && resJson.data.videoUrl) {
-        const embedUrl = parseVideoEmbed(resJson.data.videoUrl);
-        if (embedUrl) {
-          iframe.src = embedUrl;
-        }
+        localStorage.setItem("dipu_hero_video", JSON.stringify(resJson.data));
+        applyHeroVideo(resJson.data);
       }
     }
   } catch (err) {
@@ -421,7 +440,7 @@ async function initHeroVideo() {
 }
 
 // ==============================================================================
-// Dynamic Social Media Links (Facebook, YouTube, Instagram, LinkedIn, TikTok)
+// Dynamic Social & Contact Links (Facebook, YouTube, Instagram, LinkedIn, TikTok, WhatsApp, Telegram, Hotline, Support Email)
 // ==============================================================================
 async function initDynamicSocialLinks() {
   function applyLinks(links) {
@@ -431,12 +450,42 @@ async function initDynamicSocialLinks() {
     const instaEl = document.getElementById("footerInstaLink");
     const inEl = document.getElementById("footerLinkedinLink");
     const tiktokEl = document.getElementById("footerTiktokLink");
+    const waEl = document.getElementById("footerWhatsappLink");
+    const tgEl = document.getElementById("footerTelegramLink");
+    const hotlineEl = document.getElementById("footerHotlineLink");
+    const hotlineNumEl = document.getElementById("footerHotlineNumLink");
+    const hotlineText = document.getElementById("footerHotlineText");
+    const emailEl = document.getElementById("footerEmailLink");
+    const emailText = document.getElementById("footerEmailText");
 
     if (fbEl && links.fb) fbEl.href = links.fb;
     if (ytEl && links.yt) ytEl.href = links.yt;
     if (instaEl && links.insta) instaEl.href = links.insta;
     if (inEl && links.linkedin) inEl.href = links.linkedin;
     if (tiktokEl && links.tiktok) tiktokEl.href = links.tiktok;
+    if (waEl && links.whatsapp) waEl.href = links.whatsapp;
+    if (tgEl && links.telegram) tgEl.href = links.telegram;
+
+    if (links.hotline) {
+      if (hotlineEl) hotlineEl.href = `tel:${links.hotline}`;
+      if (hotlineNumEl) hotlineNumEl.href = `tel:${links.hotline}`;
+      if (hotlineText) hotlineText.textContent = links.hotline;
+      document.querySelectorAll(".dynamic-hotline-link").forEach(el => el.href = `tel:${links.hotline}`);
+    }
+
+    if (links.supportEmail) {
+      if (emailEl) emailEl.href = `mailto:${links.supportEmail}`;
+      if (emailText) emailText.textContent = links.supportEmail;
+      document.querySelectorAll(".dynamic-email-link").forEach(el => el.href = `mailto:${links.supportEmail}`);
+    }
+
+    // Generic class-based updaters for WhatsApp & Telegram across any page
+    if (links.whatsapp) {
+      document.querySelectorAll(".dynamic-whatsapp-link").forEach(el => el.href = links.whatsapp);
+    }
+    if (links.telegram) {
+      document.querySelectorAll(".dynamic-telegram-link").forEach(el => el.href = links.telegram);
+    }
   }
 
   // 1. Instant cached apply
@@ -445,14 +494,15 @@ async function initDynamicSocialLinks() {
     if (cached) applyLinks(JSON.parse(cached));
   } catch (e) {}
 
-  // 2. Fetch fresh from backend API
+  // 2. Fetch fresh from MongoDB Atlas database API
   try {
     const res = await fetch("/api/social-links");
     if (res.ok) {
       const data = await res.json();
-      if (data.success && data.links) {
-        localStorage.setItem("dipu_social_links", JSON.stringify(data.links));
-        applyLinks(data.links);
+      const links = data.links || data.data;
+      if (data.success && links) {
+        localStorage.setItem("dipu_social_links", JSON.stringify(links));
+        applyLinks(links);
       }
     }
   } catch (err) {
@@ -468,6 +518,7 @@ async function initDynamicSocialLinks() {
     }
   });
 }
+
 
 // ==============================================================================
 // Dynamic Site Stats (Total Students & Course Enrolls)

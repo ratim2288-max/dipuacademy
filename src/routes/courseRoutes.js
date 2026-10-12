@@ -6,6 +6,61 @@ const Course = require('../models/Course');
 // Sample default courses (authentic curriculum courses)
 let IN_MEMORY_COURSES = [
   {
+    _id: "course-skill-graphic-design",
+    slug: "graphic-design-photoshop",
+    title: {
+      en: "Graphic Designing with Photoshop",
+      bn: "Graphic Designing with Photoshop"
+    },
+    subject: "স্কিল ডেভেলপমেন্ট ও গ্রাফিক ডিজাইন",
+    classLevel: "Skill",
+    category: "skill",
+    instructor: {
+      name: "সাদমান সাদিক ও দীপু একাডেমি মেন্টর টিম",
+      institution: "সিনিয়র ক্রিয়েটিভ ট্রেইনার • ১০+ বছরের অভিজ্ঞতা",
+      avatar: "/images/student-hero.jpg"
+    },
+    price: 3500,
+    discountPrice: 1950,
+    thumbnail: "/images/courses/graphic-design-photoshop.jpg",
+    routineImage: "/images/courses/routine-banner.jpg",
+    enrolledStudentsCount: 2450,
+    rating: 4.98,
+    description: {
+      bn: "ফটোশপের বেসিক থেকে শুরু করে প্রফেশনাল ব্যানার, পোস্টার, সোশ্যাল মিডিয়া থাম্বনেইল, ইউআই ডিজাইন এবং ফ্রিল্যান্সিং মার্কেটপ্লেস প্রজেক্টের পূর্ণাঙ্গ মাস্টারকোর্স।",
+      en: "Master creative graphic designing with Adobe Photoshop from scratch with real portfolio projects."
+    },
+    features: [
+      "৫০+ প্র্যাকটিক্যাল হ্যান্ডস-অন ভিডিও ক্লাস",
+      "ফটোশপ টুলস, মাস্কিং ও লেয়ার স্টাইলস",
+      "মার্কেটপ্লেস ক্লায়েন্ট প্রজেক্ট ও পোর্টফোলিও",
+      "কোর্স সমাপনী অফিসিয়াল সার্টিফিকেট",
+      "লাইফটাইম অ্যাক্সেস ও সাপোর্ট কমিউনিটি"
+    ],
+    chapters: [
+      {
+        chapterTitle: { en: "Module 1: Introduction to Photoshop Workspace", bn: "মডিউল ১: ফটোশপ ইন্টারফেস ও বেসিক টুলস পরিচিতি" },
+        order: 1,
+        lessons: [
+          {
+            lessonTitle: { en: "Lecture 1: Photoshop Workspace & Selection Tools", bn: "ক্লাস ১: ফটোশপ পরিচিতি ও সিলেকশন টুলসের ব্যবহার" },
+            videoType: "youtube",
+            videoSource: "dQw4w9WgXcQ",
+            isFree: true,
+            durationMinutes: 38
+          },
+          {
+            lessonTitle: { en: "Lecture 2: Layers, Masking & Blend Modes", bn: "ক্লাস ২: লেয়ার মাস্কিং ও ব্লেন্ডিং মোড মাস্টারি" },
+            videoType: "youtube",
+            videoSource: "dQw4w9WgXcQ",
+            isFree: false,
+            durationMinutes: 42
+          }
+        ]
+      }
+    ]
+  },
+  {
     _id: "course-user-c10-biz",
     slug: "class-10-business-studies",
     title: {
@@ -716,8 +771,8 @@ router.get(['/stream/token/:lessonId', '/token/:lessonId'], (req, res) => {
       const secret = process.env.JWT_SECRET || 'dipu_edu_default_jwt_secret_dev';
       const decoded = jwt.verify(token, secret);
       user = {
-        phone: decoded.phone || '01712345678',
-        userId: decoded.id ? decoded.id.toString().slice(-6) : 'STU-DEMO',
+        phone: decoded.phone || '',
+        userId: decoded.id ? decoded.id.toString().slice(-6) : '',
       };
       sessionToken = decoded.sessionToken || sessionToken;
     }
@@ -727,10 +782,10 @@ router.get(['/stream/token/:lessonId', '/token/:lessonId'], (req, res) => {
 
   // Forensic Watermark Payload (student phone & ID)
   const watermarkPayload = {
-    phone: user ? user.phone : '01712-345678',
-    userId: user ? user.userId : 'STU-94821',
+    phone: user ? user.phone : '',
+    userId: user ? user.userId : '',
     timestamp: Date.now(),
-    studentName: user ? 'Registered Student' : 'Demo Student (BUET Aspirant)',
+    studentName: user ? 'Student' : '',
   };
 
   return res.status(200).json({

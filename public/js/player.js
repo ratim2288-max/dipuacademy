@@ -248,6 +248,84 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function initPlayerStudio() {
+  // Check URL query parameters for course selection
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const courseParam = params.get('course');
+    if (courseParam === 'course-skill-graphic-design' || courseParam === 'graphic-design-photoshop') {
+      COURSE_DATA.title = {
+        en: "Graphic Designing with Photoshop — Masterclass",
+        bn: "Graphic Designing with Photoshop — প্রফেশনাল মাস্টারক্লাস"
+      };
+      COURSE_DATA.instructor = "সাদমান সাদিক ও ক্রিয়েটিভ মেন্টর প্যানেল";
+      COURSE_DATA.chapters = [
+        {
+          id: "ch_gd_1",
+          title: { en: "MODULE 1: PHOTOSHOP WORKSPACE & TOOLS", bn: "মডিউল ১: ফটোশপ ইন্টারফেস ও সিলেকশন টুলস" },
+          lessons: [
+            {
+              id: "gd_1_1",
+              number: "1.1",
+              title: {
+                en: "Lesson 1.1 - Photoshop Workspace & Setup",
+                bn: "ক্লাস ১.১ - ফটোশপ পরিচিতি, ডকুমেন্ট সাইজ ও সিলেকশন টুলস"
+              },
+              type: "video",
+              duration: "38:20",
+              durationSeconds: 2300,
+              isFree: true,
+              watched: true,
+              notesKey: "notes/skill/photoshop_basics.pdf",
+              examSlug: "photoshop-mock-01",
+              formulas: []
+            },
+            {
+              id: "gd_1_2",
+              number: "1.2",
+              title: {
+                en: "Lesson 1.2 - Layers, Masking & Blend Modes",
+                bn: "ক্লাস ১.২ - লেয়ার মাস্কিং, ব্লেন্ডিং মোড ও এডজাস্টমেন্ট লেয়ার"
+              },
+              type: "video",
+              duration: "42:15",
+              durationSeconds: 2535,
+              isFree: false,
+              watched: false,
+              notesKey: "notes/skill/layers_masking.pdf",
+              examSlug: "photoshop-mock-01",
+              formulas: []
+            }
+          ]
+        }
+      ];
+      currentLesson = COURSE_DATA.chapters[0].lessons[0];
+    } else if (courseParam === 'course-user-hsc28' || courseParam === 'hsc-28-full-prep') {
+      COURSE_DATA.title = {
+        en: "HSC 2028 Complete Academic Preparation",
+        bn: "HSC '২৮ পূর্ণাঙ্গ বিজ্ঞান প্রস্তুতি কোর্স"
+      };
+      COURSE_DATA.instructor = "দীপু স্যার (BUET)";
+    } else if (courseParam === 'course-user-c10-biz' || courseParam === 'class-10-business-studies') {
+      COURSE_DATA.title = {
+        en: "Class 10 Business Studies & Accounting",
+        bn: "১০ম শ্রেণীর পূর্ণাঙ্গ ব্যবসায় শিক্ষা ও হিসাববিজ্ঞান কোর্স"
+      };
+      COURSE_DATA.instructor = "দীপু স্যার ও কমার্স মেন্টর প্যানেল";
+    }
+  } catch(e) {}
+
+  const titleEl = document.getElementById("drawerCourseTitle");
+  if (titleEl && COURSE_DATA.title) {
+    titleEl.textContent = COURSE_DATA.title[currentLang] || COURSE_DATA.title.bn || COURSE_DATA.title.en;
+  }
+
+  // Load user profile from localStorage
+  try {
+    const prof = JSON.parse(localStorage.getItem('dipu_user_profile') || '{}');
+    if (prof.fullName) studentData.name = prof.fullName;
+    if (prof.phone) studentData.phone = prof.phone;
+  } catch(e) {}
+
   updateUserSnippet();
   renderPlaylistDrawer();
   loadLesson(currentLesson.id);

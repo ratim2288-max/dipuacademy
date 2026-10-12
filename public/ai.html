@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-:root{--ink:#0f110f;--deep:#2f5a2a;--mint:#a6f76a;--pale:#dcfbe9;--text:#0b2b21;--mute:#6b7f77;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--ink:#0f110f;--deep:#2f5a2a;--mint:#a6f76a;--lime:#a6f76a;--pale:#dcfbe9;--text:#0b2b21;--mute:#6b7f77;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
 *{box-sizing:border-box;margin:0}
 body{background:#0f110f;color:#e8ede9;font-family:Inter,"Hind Siliguri",system-ui,sans-serif;line-height:1.5}
@@ -21,23 +21,54 @@ a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--mint);outline-offset:3px}
 
 /* hero */
-.hero{position:relative;min-height:100vh;background:radial-gradient(circle at 4% 0%,rgba(184,234,0,.6),transparent 34%),radial-gradient(circle at 100% 100%,rgba(184,234,0,.35),transparent 34%),#121412;color:#fff;overflow:hidden;text-align:center;padding:0 20px 80px}
+.hero{position:relative;min-height:100vh;background:radial-gradient(circle at 4% 0%,rgba(184,234,0,.6),transparent 34%),radial-gradient(circle at 100% 100%,rgba(184,234,0,.35),transparent 34%),#121412;color:#fff;overflow:hidden;text-align:center;padding:90px 20px 80px}
 .arc{position:absolute;left:50%;width:150%;aspect-ratio:2/1;transform:translateX(-50%);border:2px solid rgba(166,247,106,.45);border-radius:50%;box-shadow:0 0 60px rgba(166,247,106,.25),inset 0 0 60px rgba(166,247,106,.1);pointer-events:none}
 .arc.a{top:-8%;border-top-color:transparent;border-left-color:transparent;border-right-color:transparent}
 .arc.b{bottom:-52%;border-bottom-color:transparent;border-left-color:transparent;border-right-color:transparent;animation:pulse 5s ease-in-out infinite}
 @keyframes pulse{50%{box-shadow:0 0 110px rgba(166,247,106,.6),inset 0 0 70px rgba(166,247,106,.25)}}
 
-nav{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:22px 0;gap:12px}
-.logo{font-weight:800;letter-spacing:.02em;font-size:20px;display:flex;align-items:center;gap:6px}.logo i{color:var(--mint);font-style:normal}
-.pill{display:flex;gap:4px;padding:5px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(30,33,30,.85);backdrop-filter:blur(8px)}
-.pill a{padding:7px 14px;border-radius:8px;font-size:13px;color:#cfe;line-height:1.2;text-align:center;transition:background .2s}.pill a:hover{background:rgba(255,255,255,.1)}
-.pill .en{font-size:10px}
+nav{position:relative;z-index:60;display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:20px 0;gap:16px}
+.logo{font-weight:800;letter-spacing:.02em;font-size:20px;display:flex;align-items:center;gap:6px;text-decoration:none}.logo i{color:var(--mint);font-style:normal}
 .btn{display:inline-block;background:var(--mint);color:#0b1a06;border-radius:10px;padding:9px 18px;font-weight:700;font-size:14px;line-height:1.2;text-align:center;border:0;cursor:pointer;transition:transform .18s,box-shadow .18s}
 .btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(166,247,106,.35)}
 .btn .en{font-size:10px;opacity:.8}
 .btn.g{background:linear-gradient(135deg,#1c8a62,var(--mint));color:#02150d}
 .btn.outline{background:rgba(255,255,255,0.06);color:#fff;border:1px solid rgba(255,255,255,0.18)}
 .btn.outline:hover{background:rgba(255,255,255,0.12);box-shadow:none}
+
+/* Top Nav Authentication & User Account Component */
+.ai-nav-auth-container{display:flex;align-items:center;gap:10px;position:relative}
+.ai-nav-login-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:9999px;background:linear-gradient(135deg,rgba(166,247,106,0.16),rgba(166,247,106,0.05));border:1.5px solid rgba(166,247,106,0.45);color:#FFFFFF;font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;box-shadow:0 4px 14px rgba(166,247,106,0.15);transition:all .25s cubic-bezier(0.16,1,0.3,1)}
+.ai-nav-login-btn i{color:var(--mint);font-size:14px;transition:transform .2s ease}
+.ai-nav-login-btn:hover{background:var(--mint);color:#0b1a06;border-color:var(--mint);transform:translateY(-2px);box-shadow:0 6px 20px rgba(166,247,106,0.4)}
+.ai-nav-login-btn:hover i{color:#0b1a06;transform:translateX(3px)}
+
+.ai-account-dropdown-wrap{position:relative}
+.ai-nav-user-pill{display:inline-flex;align-items:center;gap:10px;padding:4px 14px 4px 5px;border-radius:9999px;background:rgba(25,30,26,0.92);border:1.5px solid rgba(166,247,106,0.35);color:#FFFFFF;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 4px 16px rgba(0,0,0,0.35);transition:all .22s cubic-bezier(0.16,1,0.3,1);font-family:inherit;font-size:14px}
+.ai-nav-user-pill:hover,.ai-nav-user-pill.active{border-color:var(--mint);background:rgba(35,42,36,0.98);box-shadow:0 6px 20px rgba(166,247,106,0.25);transform:translateY(-1px)}
+.ai-avatar-ring{position:relative;width:32px;height:32px;border-radius:50%;flex-shrink:0}
+.ai-nav-avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1.5px solid var(--mint);display:block}
+.ai-online-dot{position:absolute;bottom:0px;right:0px;width:9px;height:9px;border-radius:50%;background:#10B981;border:1.5px solid #0f110f;box-shadow:0 0 8px rgba(16,185,129,0.9);animation:pulseAiDot 2s infinite}
+@keyframes pulseAiDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.2);opacity:.85}}
+.ai-user-name{font-weight:700;font-size:13.5px;color:#F1F5F2;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ai-dropdown-arrow{font-size:10px;color:rgba(255,255,255,0.6);transition:transform .2s ease}
+.ai-nav-user-pill.active .ai-dropdown-arrow{transform:rotate(180deg);color:var(--mint)}
+
+.ai-account-menu{position:absolute;top:calc(100% + 10px);right:0;width:230px;background:#171b17;border:1px solid rgba(166,247,106,0.28);border-radius:16px;padding:8px;box-shadow:0 16px 40px rgba(0,0,0,0.6),0 0 20px rgba(166,247,106,0.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:1000;opacity:0;visibility:hidden;transform:translateY(-8px) scale(0.97);transition:opacity .2s cubic-bezier(0.16,1,0.3,1),transform .2s cubic-bezier(0.16,1,0.3,1),visibility .2s}
+.ai-account-menu.show{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+.ai-menu-header{padding:8px 10px 10px}
+.ai-menu-user-row{display:flex;align-items:center;gap:10px}
+.ai-menu-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1.5px solid var(--mint)}
+.ai-menu-user-info{flex:1;min-width:0;text-align:left}
+.ai-menu-name{font-weight:700;font-size:13.5px;color:#FFFFFF;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ai-menu-meta{font-size:11px;color:var(--mint);opacity:0.9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ai-menu-divider{height:1px;background:rgba(255,255,255,0.08);margin:6px 0}
+.ai-menu-item{display:flex;align-items:center;gap:10px;width:100%;padding:9px 12px;border-radius:10px;font-size:13px;font-weight:600;color:#D4E0D9;text-decoration:none;background:transparent;border:none;cursor:pointer;text-align:left;transition:background .15s ease,color .15s ease,transform .15s ease;box-sizing:border-box}
+.ai-menu-item i{font-size:13px;width:16px;text-align:center;color:var(--mint)}
+.ai-menu-item:hover{background:rgba(166,247,106,0.12);color:#FFFFFF;transform:translateX(3px)}
+.ai-menu-logout{color:#FF8A80}
+.ai-menu-logout i{color:#FF8A80}
+.ai-menu-logout:hover{background:rgba(255,107,107,0.14);color:#FFA49E}
 
 .stage{position:relative;z-index:2;width:min(540px,94vw);height:min(450px,78vw);margin:10px auto 0}
 .stage canvas{width:100%;height:100%;display:block}
@@ -196,8 +227,35 @@ h2 .en{color:#fff;opacity:.75;font-size:.58em}
 .sr{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px;color:#cfd8d3;text-align:left}
 .sr b{color:#fff;text-align:right;font-weight:700}.sr .en{font-size:11px;opacity:.6}.sr b .en{opacity:.6;color:#cfd8d3}
 .tot{font-size:24px;color:var(--mint)!important}.tot .en{font-size:12px}
+.btn.l{background:linear-gradient(135deg, #10B981, #a6f76a);color:#041407;margin-top:auto;padding:12px 18px;border-radius:12px;font-weight:800}
 .big{width:100%;padding:15px;font-size:16px;margin-top:18px;border-radius:14px;font-weight:800}.big:disabled{opacity:.6;cursor:wait}
 .demo{font-size:12px;color:#8d9a93;margin-top:12px;text-align:center}
+
+/* High-Visibility Glowing Pay Button */
+#pay {
+  background: linear-gradient(135deg, #10B981 0%, #a6f76a 100%) !important;
+  color: #041407 !important;
+  font-weight: 800 !important;
+  font-size: 16px !important;
+  padding: 16px 20px !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 22px rgba(166, 247, 106, 0.45) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.4) !important;
+  cursor: pointer !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  width: 100% !important;
+  display: block !important;
+  text-align: center !important;
+  letter-spacing: -0.01em !important;
+}
+#pay:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 34px rgba(166, 247, 106, 0.75) !important;
+  filter: brightness(1.08) !important;
+}
+#pay:active {
+  transform: scale(0.98) !important;
+}
 
 /* order confirmed */
 .ok{text-align:center;max-width:640px}
@@ -246,28 +304,11 @@ footer a:hover{color:var(--mint)}
 </head>
 <body>
 
+<!-- Global Unified React TypeScript Navbar -->
+<div id="site-navbar-root"></div>
+
 <header class="hero">
   <div class="arc a"></div><div class="arc b"></div>
-  <nav class="fi" style="--d:0s">
-    <a class="logo" href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-      <img src="/images/dipu-logo.png" alt="Dipu Academy Logo" style="width:36px;height:36px;border-radius:10px;object-fit:cover;box-shadow:0 0 16px rgba(166,247,106,0.4);border:1.5px solid rgba(166,247,106,0.35);">
-      <div style="display:flex;flex-direction:column;line-height:1.15;text-align:left;">
-        <span style="font-weight:800;font-size:16px;color:#FFFFFF;">Dipu</span>
-        <span style="font-weight:800;font-size:14px;color:var(--mint);">Academy AI</span>
-      </div>
-    </a>
-    <div class="pill">
-      <a href="#home"><span class="bn">হোম</span><span class="en">Home</span></a>
-      <a href="#ask"><span class="bn">লাইভ ডেমো</span><span class="en">Live Demo</span></a>
-      <a href="#how"><span class="bn">কীভাবে কাজ করে</span><span class="en">How it works</span></a>
-      <a href="#pricing"><span class="bn">প্রাইস</span><span class="en">Pricing</span></a>
-      <a href="/" style="color:var(--mint);"><span class="bn">মূল ওয়েবসাইট</span><span class="en">Main Site</span></a>
-    </div>
-    <div style="display: flex; gap: 8px; align-items: center;">
-      <a class="btn outline" href="/"><span class="bn">মূল সাইট</span><span class="en">Back Home</span></a>
-      <a class="btn g" href="#pricing"><span class="bn">শুরু করুন</span><span class="en">Get Started</span></a>
-    </div>
-  </nav>
 
   <div class="stage fi" id="home" style="--d:.3s"><canvas id="gl" aria-label="3D Depus AI"></canvas></div>
   <h1 class="wr load"><span class="bn">বিশ্বাস করে শেখো</span><span class="en">Learn it. Solve it. Trust it.</span></h1>
@@ -406,16 +447,46 @@ footer a:hover{color:var(--mint)}
     <h2 class="vt"><span class="bn">অর্ডার সম্পূর্ণ করুন</span><span class="en">Complete your order</span></h2>
     <div class="co">
       <div class="card">
-        <label class="fd"><span class="bn">আপনার নাম</span><span class="en">Your name</span><input id="nm" autocomplete="name" placeholder="যেমন: তানভীর হাসান"><small class="er" id="e-nm"></small></label>
-        <label class="fd"><span class="bn">মোবাইল নম্বর</span><span class="en">Mobile number</span><input id="ph" inputmode="tel" autocomplete="tel" placeholder="01XXXXXXXXX"><small class="er" id="e-ph"></small></label>
-        <label class="fd"><span class="bn">ক্লাস</span><span class="en">Class</span><select id="cl"><option>৫ম</option><option>৬ষ্ঠ</option><option>৭ম</option><option>৮ম</option><option selected>৯ম (SSC '28)</option><option>১০ম (SSC '27)</option><option>১১শ (HSC '28)</option><option>১২শ (HSC '27)</option></select></label>
-        <div id="payblk">
-          <div class="fd" style="margin-bottom:10px"><span class="bn">পেমেন্ট পদ্ধতি</span><span class="en">Payment method</span></div>
-          <div class="pm" id="pm">
-            <button type="button" class="pmo on" data-m="bKash" style="--c:#e2136e"><i></i>bKash</button>
-            <button type="button" class="pmo" data-m="Nagad" style="--c:#f6921e"><i></i>Nagad</button>
-            <button type="button" class="pmo" data-m="Rocket" style="--c:#8c3494"><i></i>Rocket</button>
-            <button type="button" class="pmo" data-m="Card" style="--c:#a6f76a"><i></i>Card</button>
+        <!-- Logged-in Account Badge: Shows this account is purchasing the plan -->
+        <div id="aiCheckoutAccountCard" style="display:none; margin-bottom: 18px; padding: 14px 16px; border-radius: 16px; background: rgba(166, 247, 106, 0.1); border: 1.5px solid rgba(166, 247, 106, 0.4); box-shadow: 0 4px 16px rgba(0,0,0,0.3);">
+          <div style="font-size: 11px; font-weight: 700; color: var(--mint); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+            <i class="fas fa-circle-check" style="font-size: 13px;"></i>
+            <span>এই অ্যাকাউন্টে সাবস্ক্রিপশন সক্রিয় হবে:</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <img id="aiCheckoutAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150" alt="Student" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--mint); box-shadow: 0 0 12px rgba(166,247,106,0.3);">
+            <div>
+              <div id="aiCheckoutName" style="font-size: 16px; font-weight: 800; color: #FFFFFF;">শিক্ষার্থী</div>
+              <div id="aiCheckoutPhone" style="font-size: 13px; color: #CBD5E1; font-weight: 600;">01XXXXXXXXX</div>
+            </div>
+            <div style="margin-left: auto; background: rgba(166, 247, 106, 0.18); border: 1px solid rgba(166, 247, 106, 0.4); padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; color: var(--mint);">
+              অ্যাক্টিভ প্রোফাইল
+            </div>
+          </div>
+        </div>
+
+        <!-- Unauthenticated Login Notice: If not logged in, prompt user to log in -->
+        <div id="aiCheckoutLoginBanner" style="display:none; margin-bottom: 18px; padding: 18px; border-radius: 16px; background: rgba(255, 122, 26, 0.12); border: 1.5px solid rgba(255, 122, 26, 0.4); text-align: center;">
+          <i class="fas fa-user-lock" style="font-size: 26px; color: #FF7A1A; margin-bottom: 8px; display: block;"></i>
+          <div style="font-size: 16px; font-weight: 800; color: #FFFFFF; margin-bottom: 4px;">অ্যাকাউন্টে লগইন করা প্রয়োজন</div>
+          <p style="font-size: 13px; color: #CBD5E1; margin-bottom: 14px; line-height: 1.4;">প্ল্যানটি কিনতে এবং আপনার প্রোফাইলে যুক্ত করতে অনুগ্রহ করে প্রথমে অ্যাকাউন্টে লগইন করুন।</p>
+          <a id="aiCheckoutLoginBtn" href="/login.html?redirect=/ai" class="btn" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--mint); color: #0b1a06; font-weight: 800; font-size: 14px; padding: 11px 24px; border-radius: 12px; text-decoration: none; box-shadow: 0 4px 15px rgba(166,247,106,0.35);">
+            <i class="fas fa-arrow-right-to-bracket"></i> <span>লগইন করুন</span>
+          </a>
+        </div>
+
+        <div id="aiCheckoutFormFields">
+          <label class="fd"><span class="bn">আপনার নাম</span><span class="en">Your name</span><input id="nm" autocomplete="name" placeholder="যেমন: তানভীর হাসান"><small class="er" id="e-nm"></small></label>
+          <label class="fd"><span class="bn">মোবাইল নম্বর</span><span class="en">Mobile number</span><input id="ph" inputmode="tel" autocomplete="tel" placeholder="01XXXXXXXXX"><small class="er" id="e-ph"></small></label>
+          <label class="fd"><span class="bn">ক্লাস</span><span class="en">Class</span><select id="cl"><option>৫ম</option><option>৬ষ্ঠ</option><option>৭ম</option><option>৮ম</option><option selected>৯ম (SSC '28)</option><option>১০ম (SSC '27)</option><option>১১শ (HSC '28)</option><option>১২শ (HSC '27)</option></select></label>
+          <div id="payblk">
+            <div class="fd" style="margin-bottom:10px"><span class="bn">পেমেন্ট পদ্ধতি</span><span class="en">Payment method</span></div>
+            <div class="pm" id="pm">
+              <button type="button" class="pmo on" data-m="bKash" style="--c:#e2136e"><i></i>bKash</button>
+              <button type="button" class="pmo" data-m="Nagad" style="--c:#f6921e"><i></i>Nagad</button>
+              <button type="button" class="pmo" data-m="Rocket" style="--c:#8c3494"><i></i>Rocket</button>
+              <button type="button" class="pmo" data-m="Card" style="--c:#a6f76a"><i></i>Card</button>
+            </div>
           </div>
         </div>
       </div>
@@ -754,6 +825,18 @@ else {
   
   function open(k){
     cur=P[k] || P.free;var p=cur;
+    var isLoggedIn = localStorage.getItem('dipu_logged_in') === 'true' || !!localStorage.getItem('dipu_auth_token');
+
+    // If not logged in, prompt to login and redirect to login page!
+    if (!isLoggedIn) {
+      sessionStorage.setItem('dipu_redirect_url', '/ai?buy=' + k);
+      var wantLogin = confirm('প্ল্যানটি আপনার অ্যাকাউন্টে যুক্ত করতে প্রথমে লগইন করা প্রয়োজন।\n\nআপনি কি এখনই লগইন পেজে যেতে চান?');
+      if (wantLogin) {
+        window.location.href = '/login.html?redirect=' + encodeURIComponent('/ai?buy=' + k);
+        return;
+      }
+    }
+
     $('s-plan').innerHTML=two(p.bn,p.en);
     $('s-dur').innerHTML=two(bd(p.d)+' দিন',p.d+' days');
     $('s-st').innerHTML=dd(new Date());$('s-en').innerHTML=dd(add(p.d));
@@ -761,8 +844,72 @@ else {
     $('pay').innerHTML=p.p?two('৳'+bd(p.p)+' দিয়ে কিনুন','Pay Tk '+p.p):two('ফ্রি শুরু করুন','Start free');
     $('pay').disabled=false;$('payblk').style.display=p.p?'':'none';
     $('e-nm').textContent='';$('e-ph').textContent='';
+
+    // Setup active account display or login banner
+    var acctCard = $('aiCheckoutAccountCard');
+    var loginBanner = $('aiCheckoutLoginBanner');
+    var loginBtn = $('aiCheckoutLoginBtn');
+
+    if (isLoggedIn) {
+      if (acctCard) acctCard.style.display = 'block';
+      if (loginBanner) loginBanner.style.display = 'none';
+
+      var profile = null;
+      try { profile = JSON.parse(localStorage.getItem('dipu_user_profile') || 'null'); } catch(e){}
+      var name = (profile && profile.fullName) || localStorage.getItem('da_user_name') || 'শিক্ষার্থী';
+      var phone = (profile && profile.phone) || localStorage.getItem('dipu_user_phone') || '';
+      var avatar = (profile && profile.avatar) || localStorage.getItem('dipu_user_avatar') || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150';
+      var classLvl = (profile && profile.classLevel) || '';
+
+      if ($('aiCheckoutAvatar')) $('aiCheckoutAvatar').src = avatar;
+      if ($('aiCheckoutName')) $('aiCheckoutName').textContent = name;
+      if ($('aiCheckoutPhone')) $('aiCheckoutPhone').textContent = phone ? phone : 'লগইনকৃত শিক্ষার্থী';
+
+      // Auto-fill user fields
+      if ($('nm')) $('nm').value = name;
+      if ($('ph') && phone) $('ph').value = phone;
+
+      if (classLvl && $('cl')) {
+        for (var ci = 0; ci < $('cl').options.length; ci++) {
+          if ($('cl').options[ci].text.includes(classLvl) || classLvl.includes($('cl').options[ci].text.replace(/\s*\(.*\)/, ''))) {
+            $('cl').selectedIndex = ci;
+            break;
+          }
+        }
+      }
+
+      // Ensure Pay button is active and functional
+      $('pay').onclick = function() {
+        var nmVal = $('nm').value.trim(), phVal = $('ph').value.replace(/[\s-]/g, ''), bad = false;
+        if (nmVal.length < 2) { $('e-nm').textContent = 'নাম লিখুন / Enter your name'; bad = true; }
+        if (!/^01[3-9]\d{8}$/.test(phVal)) { $('e-ph').textContent = 'সঠিক ১১ সংখ্যার নম্বর দিন / Enter a valid 11-digit number'; if (!bad) $('ph').focus(); bad = true; }
+        if (bad) { if ($('e-nm').textContent) $('nm').focus(); return; }
+        var btn = $('pay'); btn.disabled = true; btn.innerHTML = two('প্রক্রিয়া হচ্ছে…', 'Processing…');
+        setTimeout(function() { done(nmVal, phVal); }, 1500);
+      };
+    } else {
+      if (acctCard) acctCard.style.display = 'none';
+      if (loginBanner) loginBanner.style.display = 'block';
+      if (loginBtn) loginBtn.href = '/login.html?redirect=' + encodeURIComponent('/ai?buy=' + k);
+      $('pay').innerHTML = two('লগইন করে কিনুন', 'Login to purchase');
+      $('pay').onclick = function() {
+        window.location.href = '/login.html?redirect=' + encodeURIComponent('/ai?buy=' + k);
+      };
+    }
+
     show('v-checkout');
   }
+
+  // Auto-open checkout if user redirected back from login page (?buy=15 / ?plan=15)
+  (function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var targetPlan = urlParams.get('buy') || urlParams.get('plan');
+    if (targetPlan && P[targetPlan]) {
+      setTimeout(function() {
+        open(targetPlan);
+      }, 400);
+    }
+  })();
 
   [].forEach.call(document.querySelectorAll('.buy'),function(b){b.addEventListener('click',function(){open(b.dataset.plan)})});
   [].forEach.call($('pm').children,function(b){b.addEventListener('click',function(){method=b.dataset.m;[].forEach.call($('pm').children,function(x){x.classList.toggle('on',x===b)})})});
@@ -813,5 +960,9 @@ else {
   };
 })();
 </script>
+
+<!-- Global React Navbar Bundle -->
+<script src="/js/navbar-bundle.js?v=4.0"></script>
 </body>
 </html>
+

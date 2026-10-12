@@ -127,6 +127,8 @@ export const DipuDashboardApp: React.FC = () => {
   const [notificationsOpen, setNotificationsOpen] = useState<boolean>(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState<boolean>(false);
   const [profileModalOpen, setProfileModalOpen] = useState<boolean>(false);
+  const [userMenuOpen, setUserMenuOpen] = useState<boolean>(false);
+  const [userPhone, setUserPhone] = useState<string>("01712345678");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Video Classes Tab State
@@ -209,6 +211,19 @@ export const DipuDashboardApp: React.FC = () => {
       const storedGroup = localStorage.getItem("da_user_group") || "বিজ্ঞান বিভাগ (Science)";
       const storedTheme = localStorage.getItem("dipu_theme") || "dark";
       const storedLang = localStorage.getItem("dipu_lang") || "bn";
+      const storedPhone = localStorage.getItem("dipu_user_phone");
+      if (storedPhone) setUserPhone(storedPhone);
+      try {
+        const rawProf = localStorage.getItem("dipu_user_profile");
+        if (rawProf) {
+          const prof = JSON.parse(rawProf);
+          if (prof.phone) setUserPhone(prof.phone);
+          if (prof.fullName) {
+            setUserName(prof.fullName);
+            setEditName(prof.fullName);
+          }
+        }
+      } catch (err) {}
       setUserName(storedName);
       setUserTarget(storedTarget);
       setUserGroup(storedGroup);
@@ -295,6 +310,22 @@ export const DipuDashboardApp: React.FC = () => {
     } catch (err) {}
     setProfileModalOpen(false);
     showToast("✅ সেটিংস সফলভাবে সংরক্ষিত হয়েছে!");
+  };
+
+  const handleLogout = () => {
+    if (confirm("আপনি কি নিশ্চিত যে অ্যাকাউন্ট থেকে লগআউট করতে চান?")) {
+      try {
+        localStorage.removeItem("dipu_logged_in");
+        localStorage.removeItem("dipu_auth_token");
+        localStorage.removeItem("dipu_user_profile");
+        localStorage.removeItem("dipu_user_phone");
+        window.dispatchEvent(new Event("dipu_auth_changed"));
+      } catch (err) {}
+      showToast("👋 সফলভাবে লগআউট হচ্ছে...");
+      setTimeout(() => {
+        window.location.href = "/login.html";
+      }, 600);
+    }
   };
 
   const handleAddForumPost = (e: React.FormEvent) => {
@@ -644,19 +675,116 @@ export const DipuDashboardApp: React.FC = () => {
             </div>
           )}
 
-          {/* User Avatar linking to settings tab */}
-          <a
-            href="#settings"
-            onClick={(e) => {
-              e.preventDefault();
-              setActiveTab("settings");
-            }}
-            className="da-user-menu"
-            title="সেটিংস ও প্রোফাইল"
-          >
-            <div className="da-avatar">{firstLetter}</div>
-            <i className="fas fa-chevron-down da-chevron" />
-          </a>
+          {/* User Avatar linking to settings & profile dropdown */}
+          <div style={{ position: "relative" }}>
+            <button
+              type="button"
+              onClick={() => setUserMenuOpen(!userMenuOpen)}
+              className="da-user-menu"
+              title="সেটিংস ও প্রোফাইল মেনু"
+              style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}
+            >
+              <div className="da-avatar">{firstLetter}</div>
+              <i className="fas fa-chevron-down da-chevron" />
+            </button>
+
+            {userMenuOpen && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "125%",
+                  right: 0,
+                  width: "230px",
+                  background: "#09142F",
+                  border: "1.5px solid rgba(0, 194, 255, 0.35)",
+                  borderRadius: "14px",
+                  boxShadow: "0 15px 45px rgba(0,0,0,0.85)",
+                  padding: "10px",
+                  zIndex: 9999,
+                }}
+              >
+                <div style={{ padding: "8px 10px", borderBottom: "1px solid rgba(255,255,255,0.08)", marginBottom: "6px" }}>
+                  <div style={{ fontSize: "14px", fontWeight: 800, color: "#FFFFFF" }}>{userName}</div>
+                  <div style={{ fontSize: "11px", color: "#00C2FF", marginTop: "2px" }}>{userTarget}</div>
+                </div>
+
+                <a
+                  href="/profile.html"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    padding: "9px 12px",
+                    borderRadius: "8px",
+                    color: "#FFFFFF",
+                    textDecoration: "none",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(0,194,255,0.12)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                >
+                  <i className="fas fa-user-gear" style={{ color: "#00C2FF" }} />
+                  <span>আমার প্রোফাইল</span>
+                </a>
+
+                <a
+                  href="#settings"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveTab("settings");
+                    setUserMenuOpen(false);
+                  }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    padding: "9px 12px",
+                    borderRadius: "8px",
+                    color: "#FFFFFF",
+                    textDecoration: "none",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(0,194,255,0.12)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                >
+                  <i className="fas fa-gear" style={{ color: "#10B981" }} />
+                  <span>সেটিংস</span>
+                </a>
+
+                <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", marginTop: "6px", paddingTop: "6px" }}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setUserMenuOpen(false);
+                      handleLogout();
+                    }}
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      padding: "9px 12px",
+                      borderRadius: "8px",
+                      color: "#EF4444",
+                      background: "transparent",
+                      border: "none",
+                      fontSize: "13px",
+                      fontWeight: 700,
+                      cursor: "pointer",
+                      textAlign: "left",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(239,68,68,0.15)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                  >
+                    <i className="fas fa-arrow-right-from-bracket" />
+                    <span>লগআউট করুন</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </header>
 
@@ -694,11 +822,10 @@ export const DipuDashboardApp: React.FC = () => {
           </li>
           <li className={`da-nav-item ${activeTab === "my-courses" ? "active" : ""}`}>
             <a
-              href="#my-courses"
+              href="/user/courses"
               onClick={(e) => {
                 e.preventDefault();
-                setActiveTab("my-courses");
-                setMobileDrawerOpen(false);
+                window.location.href = "/user/courses";
               }}
             >
               <i className="fas fa-book-open" />
@@ -783,6 +910,20 @@ export const DipuDashboardApp: React.FC = () => {
               <span>সেটিংস</span>
             </a>
           </li>
+          <li className="da-nav-item" style={{ marginTop: "4px" }}>
+            <a
+              href="#logout"
+              onClick={(e) => {
+                e.preventDefault();
+                setMobileDrawerOpen(false);
+                handleLogout();
+              }}
+              style={{ color: "#EF4444" }}
+            >
+              <i className="fas fa-arrow-right-from-bracket" style={{ color: "#EF4444" }} />
+              <span style={{ color: "#EF4444", fontWeight: 700 }}>লগআউট (Log Out)</span>
+            </a>
+          </li>
 
         </ul>
 
@@ -821,10 +962,10 @@ export const DipuDashboardApp: React.FC = () => {
             </li>
             <li className={`da-nav-item ${activeTab === "my-courses" ? "active" : ""}`}>
               <a
-                href="#my-courses"
+                href="/user/courses"
                 onClick={(e) => {
                   e.preventDefault();
-                  setActiveTab("my-courses");
+                  window.location.href = "/user/courses";
                 }}
               >
                 <i className="fas fa-book-open" />
@@ -901,6 +1042,19 @@ export const DipuDashboardApp: React.FC = () => {
               >
                 <i className="fas fa-gear" />
                 <span>সেটিংস</span>
+              </a>
+            </li>
+            <li className="da-nav-item" style={{ marginTop: "4px" }}>
+              <a
+                href="#logout"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLogout();
+                }}
+                style={{ color: "#EF4444" }}
+              >
+                <i className="fas fa-arrow-right-from-bracket" style={{ color: "#EF4444" }} />
+                <span style={{ color: "#EF4444", fontWeight: 700 }}>লগআউট (Log Out)</span>
               </a>
             </li>
 
@@ -1225,9 +1379,7 @@ export const DipuDashboardApp: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => {
-                            setCurrentVideoTitle(c.nextClass);
-                            setActiveTab("video-classes");
-                            showToast(`🎬 ${c.nextClass} ক্লাসে স্বাগতম!`);
+                            window.location.href = `/player.html?course=${c.id}`;
                           }}
                           style={{
                             flex: 1,
@@ -1246,7 +1398,7 @@ export const DipuDashboardApp: React.FC = () => {
                           }}
                         >
                           <i className="fas fa-play" style={{ fontSize: "10px" }} />
-                          <span>পড়া শুরু করুন</span>
+                          <span>ভিডিও ক্লাস শুরু করুন</span>
                         </button>
                         <button
                           type="button"
@@ -1911,7 +2063,7 @@ export const DipuDashboardApp: React.FC = () => {
                       </label>
                       <input
                         type="text"
-                        value="01712345678"
+                        value={userPhone}
                         disabled
                         style={{
                           width: "100%",
@@ -2005,98 +2157,82 @@ export const DipuDashboardApp: React.FC = () => {
                   </button>
                 </form>
 
+                {/* Account Security & Logout Section */}
+                <div
+                  style={{
+                    marginTop: "24px",
+                    paddingTop: "20px",
+                    borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+                  }}
+                >
+                  <h4 style={{ fontSize: "14px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: "8px" }}>
+                    <i className="fas fa-shield-halved" style={{ color: "#EF4444" }} />
+                    <span>অ্যাকাউন্ট সিকিউরিটি ও সাইন আউট</span>
+                  </h4>
+                  <p style={{ fontSize: "12px", color: "#94A3B8", margin: "0 0 16px 0" }}>
+                    বর্তমান ডিভাইস অথবা ব্রাউজার সেশন থেকে নিরাপদে প্রস্থান করতে লগআউট বাটনে ক্লিক করুন।
+                  </p>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "12px" }}>
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      style={{
+                        padding: "12px 18px",
+                        borderRadius: "12px",
+                        background: "rgba(239, 68, 68, 0.15)",
+                        border: "1.5px solid rgba(239, 68, 68, 0.45)",
+                        color: "#EF4444",
+                        fontWeight: 800,
+                        fontSize: "13.5px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "8px",
+                        transition: "all 0.2s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = "#EF4444";
+                        e.currentTarget.style.color = "#FFFFFF";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "rgba(239, 68, 68, 0.15)";
+                        e.currentTarget.style.color = "#EF4444";
+                      }}
+                    >
+                      <i className="fas fa-arrow-right-from-bracket" />
+                      <span>লগআউট করুন (Log Out)</span>
+                    </button>
+
+                    <a
+                      href="/profile.html"
+                      style={{
+                        padding: "12px 18px",
+                        borderRadius: "12px",
+                        background: "rgba(0, 194, 255, 0.1)",
+                        border: "1px solid rgba(0, 194, 255, 0.3)",
+                        color: "#00C2FF",
+                        fontWeight: 700,
+                        fontSize: "13px",
+                        textDecoration: "none",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "8px",
+                      }}
+                    >
+                      <i className="fas fa-user-gear" />
+                      <span>পূর্ণাঙ্গ প্রোফাইল</span>
+                    </a>
+                  </div>
+                </div>
+
 
               </div>
             </div>
           )}
 
-          {/* MOBILE ONLY: PROFILE & QUICK ACCESS FLOW */}
-          <div className="da-mobile-right-flow">
-            <div className="da-user-card">
-              <div className="da-user-card-top">
-                <div className="da-right-avatar">{firstLetter}</div>
-                <div className="da-user-meta">
-                  <h3 className="da-user-name">{userName}</h3>
-                  <div className="da-user-status">
-                    <span className="da-status-dot" />
-                    <span>Student</span>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  className="da-btn-edit"
-                  onClick={() => setActiveTab("settings")}
-                  title="সেটিংস"
-                  style={{ background: "transparent", border: 0, cursor: "pointer", color: "#00C2FF" }}
-                >
-                  <i className="fas fa-pen" />
-                </button>
-              </div>
-
-              <div className="da-target-section">
-                <div className="da-target-header">
-                  <div className="da-target-title-wrap">
-                    <i className="fas fa-bullseye da-target-icon" />
-                    <span className="da-target-label">তোমার লক্ষ্য</span>
-                  </div>
-                </div>
-                <div className="da-target-batch">{userTarget}</div>
-
-                <div className="da-progress-wrap">
-                  <div className="da-progress-bar">
-                    <div className="da-progress-fill" style={{ width: "75%" }} />
-                  </div>
-                  <span className="da-progress-value">75%</span>
-                </div>
-              </div>
-
-              <div className="da-quote-card">
-                <div className="da-quote-rocket">
-                  <i className="fas fa-rocket" />
-                </div>
-                <p className="da-quote-text">
-                  &ldquo;ধীরে চল, কিন্তু থমকে না, একদিন তুমি সফল হবেই।&rdquo;
-                </p>
-              </div>
-            </div>
-
-            <div className="da-quick-access-card">
-              <div className="da-quick-title">
-                <i className="fas fa-thumbtack da-pin-icon" />
-                <span>দ্রুত অ্যাক্সেস</span>
-              </div>
-              <ul className="da-quick-list">
-                <li className="da-quick-item" onClick={() => setActiveTab("my-courses")}>
-                  <div className="da-quick-left">
-                    <i className="fas fa-book-open da-quick-icon da-q-blue" />
-                    <span>আমার কোর্স</span>
-                  </div>
-                  <i className="fas fa-chevron-right da-quick-chevron" />
-                </li>
-                <li className="da-quick-item" onClick={() => setActiveTab("video-classes")}>
-                  <div className="da-quick-left">
-                    <i className="fas fa-circle-play da-quick-icon da-q-green" />
-                    <span>ভিডিও ক্লাস</span>
-                  </div>
-                  <i className="fas fa-chevron-right da-quick-chevron" />
-                </li>
-                <li className="da-quick-item" onClick={() => setActiveTab("notes")}>
-                  <div className="da-quick-left">
-                    <i className="fas fa-download da-quick-icon da-q-teal" />
-                    <span>নোটস ডাউনলোড</span>
-                  </div>
-                  <i className="fas fa-chevron-right da-quick-chevron" />
-                </li>
-                <li className="da-quick-item" onClick={() => setActiveTab("settings")}>
-                  <div className="da-quick-left">
-                    <i className="fas fa-user-gear da-quick-icon da-q-slate" />
-                    <span>প্রোফাইল সেটিংস</span>
-                  </div>
-                  <i className="fas fa-chevron-right da-quick-chevron" />
-                </li>
-              </ul>
-            </div>
-          </div>
 
           {/* FOOTER */}
           <footer className="da-footer">
@@ -2107,121 +2243,6 @@ export const DipuDashboardApp: React.FC = () => {
           </footer>
         </main>
 
-        {/* DESKTOP RIGHT SIDEBAR */}
-        <aside className="da-right-sidebar">
-          {/* Profile & Target Card */}
-          <div className="da-user-card">
-            <div className="da-user-card-top">
-              <div className="da-right-avatar">{firstLetter}</div>
-              <div className="da-user-meta">
-                <h3 className="da-user-name">{userName}</h3>
-                <div className="da-user-status">
-                  <span className="da-status-dot" />
-                  <span>Student</span>
-                </div>
-              </div>
-              <button
-                type="button"
-                className="da-btn-edit"
-                onClick={() => setActiveTab("settings")}
-                title="সেটিংস এ যান"
-                style={{ background: "transparent", border: 0, cursor: "pointer", color: "#00C2FF" }}
-              >
-                <i className="fas fa-pen" />
-              </button>
-            </div>
-
-            <div className="da-target-section">
-              <div className="da-target-header">
-                <div className="da-target-title-wrap">
-                  <i className="fas fa-bullseye da-target-icon" />
-                  <span className="da-target-label">তোমার লক্ষ্য</span>
-                </div>
-              </div>
-              <div className="da-target-batch">{userTarget}</div>
-
-              <div className="da-progress-wrap">
-                <div className="da-progress-bar">
-                  <div className="da-progress-fill" style={{ width: "75%" }} />
-                </div>
-                <span className="da-progress-value">75%</span>
-              </div>
-            </div>
-
-            <div className="da-quote-card">
-              <div className="da-quote-rocket">
-                <i className="fas fa-rocket" />
-              </div>
-              <p className="da-quote-text">
-                &ldquo;ধীরে চল, কিন্তু থমকে না, একদিন তুমি সফল হবেই।&rdquo;
-              </p>
-            </div>
-          </div>
-
-          {/* Quick Access Card */}
-          <div className="da-quick-access-card">
-            <div className="da-quick-title">
-              <i className="fas fa-thumbtack da-pin-icon" />
-              <span>দ্রুত অ্যাক্সেস</span>
-            </div>
-
-            <ul className="da-quick-list">
-              <li className="da-quick-item" onClick={() => setActiveTab("my-courses")}>
-                <div className="da-quick-left">
-                  <i className="fas fa-book-open da-quick-icon da-q-blue" />
-                  <span>আমার কোর্স</span>
-                </div>
-                <i className="fas fa-chevron-right da-quick-chevron" />
-              </li>
-              <li className="da-quick-item" onClick={() => setActiveTab("video-classes")}>
-                <div className="da-quick-left">
-                  <i className="fas fa-circle-play da-quick-icon da-q-green" />
-                  <span>ভিডিও ক্লাস</span>
-                </div>
-                <i className="fas fa-chevron-right da-quick-chevron" />
-              </li>
-              <li className="da-quick-item" onClick={() => setActiveTab("notes")}>
-                <div className="da-quick-left">
-                  <i className="fas fa-download da-quick-icon da-q-teal" />
-                  <span>নোটস ডাউনলোড</span>
-                </div>
-                <i className="fas fa-chevron-right da-quick-chevron" />
-              </li>
-              <li className="da-quick-item" onClick={() => setActiveTab("bookshop")}>
-                <div className="da-quick-left">
-                  <i className="fas fa-book da-quick-icon da-q-purple" />
-                  <span>বুকশপ ও গাইড</span>
-                </div>
-                <i className="fas fa-chevron-right da-quick-chevron" />
-              </li>
-              <li className="da-quick-item" onClick={() => setActiveTab("settings")}>
-                <div className="da-quick-left">
-                  <i className="fas fa-gear da-quick-icon da-q-slate" />
-                  <span>সেটিংস</span>
-                </div>
-                <i className="fas fa-chevron-right da-quick-chevron" />
-              </li>
-            </ul>
-          </div>
-
-          {/* Promo Card */}
-          <div className="da-promo-banner-card">
-            <div className="da-promo-banner-tag">স্পেশাল অফার</div>
-            <h4 className="da-promo-banner-title">HSC '২৭ পূর্ণাঙ্গ ব্যাচে ৩০% ছাড়!</h4>
-            <p className="da-promo-banner-sub">দেশসেরা শিক্ষকদের সাথে তোমার বোর্ড ও এডমিশন প্রস্তুতি শুরু করো।</p>
-            <button
-              type="button"
-              className="da-promo-banner-btn"
-              onClick={() => {
-                setActiveTab("my-courses");
-                showToast("🚀 অফার কোর্সে স্বাগতম!");
-              }}
-            >
-              <span>বিস্তারিত দেখুন</span>
-              <i className="fas fa-arrow-right" />
-            </button>
-          </div>
-        </aside>
       </div>
 
       {/* ─── 4. FLOATING TOAST NOTIFICATION ─── */}

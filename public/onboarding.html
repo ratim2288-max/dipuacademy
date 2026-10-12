@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>প্রোফাইল সেটআপ — Dipu Academy</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/dipu-logo.png?v=5">
+  <link rel="apple-touch-icon" href="/images/dipu-logo.png?v=5">
+
+  <!-- Google Fonts: Hind Siliguri, Inter, Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-dark: #070913;
+      --card-bg: rgba(14, 18, 30, 0.85);
+      --card-border: rgba(0, 194, 255, 0.18);
+      --primary: #00C2FF;
+      --primary-gradient: linear-gradient(135deg, #0084FF 0%, #00C2FF 100%);
+      --accent: #FF7A1A;
+      --accent-gradient: linear-gradient(135deg, #FF7A1A 0%, #FF5500 100%);
+      --text: #FFFFFF;
+      --text-muted: #94A3B8;
+      --input-bg: rgba(22, 27, 46, 0.75);
+      --input-border: rgba(255, 255, 255, 0.12);
+      --success: #10B981;
+      --danger: #EF4444;
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Hind Siliguri', 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Glow Background */
+    body::before, body::after {
+      content: '';
+      position: fixed;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(140px);
+      opacity: 0.18;
+    }
+    body::before {
+      top: -100px;
+      left: -100px;
+      background: #0084FF;
+    }
+    body::after {
+      bottom: -100px;
+      right: -100px;
+      background: #00C2FF;
+    }
+
+    /* Top Brand Bar */
+    .top-header {
+      position: relative;
+      z-index: 10;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(7, 9, 19, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .brand-logo img {
+      width: 40px;
+      height: 40px;
+      border-radius: 11px;
+      object-fit: cover;
+      box-shadow: 0 4px 14px rgba(0, 194, 255, 0.4);
+      border: 1.5px solid rgba(0, 194, 255, 0.25);
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+    .brand-text span:first-child {
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #FFFFFF;
+      letter-spacing: -0.01em;
+    }
+    .brand-text span:last-child {
+      font-weight: 800;
+      font-size: 1.15rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.01em;
+    }
+
+    .skip-btn {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.2s ease;
+    }
+    .skip-btn:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Main Container */
+    .onboarding-wrapper {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1rem 3.5rem;
+    }
+
+    .onboarding-card {
+      width: 100%;
+      max-width: 680px;
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 2.5rem 2.25rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 35px rgba(0, 194, 255, 0.08);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      transition: all 0.3s ease;
+    }
+
+    /* Stepper Progress Bar */
+    .stepper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      margin-bottom: 2.5rem;
+      padding: 0 0.5rem;
+    }
+    .stepper::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 12%;
+      right: 12%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 1;
+    }
+    .stepper-progress {
+      position: absolute;
+      top: 20px;
+      left: 12%;
+      height: 3px;
+      background: var(--primary-gradient);
+      z-index: 2;
+      transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      width: 0%;
+      box-shadow: 0 0 12px rgba(0, 194, 255, 0.6);
+    }
+    .step-node {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .step-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #111422;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .step-node.active .step-circle {
+      background: var(--primary-gradient);
+      border-color: #00C2FF;
+      color: #FFFFFF;
+      box-shadow: 0 0 18px rgba(0, 194, 255, 0.6);
+      transform: scale(1.12);
+    }
+    .step-node.completed .step-circle {
+      background: #10B981;
+      border-color: #10B981;
+      color: #FFFFFF;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.45);
+    }
+    .step-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: color 0.2s ease;
+      text-align: center;
+    }
+    .step-node.active .step-label {
+      color: #00C2FF;
+      font-weight: 700;
+    }
+    .step-node.completed .step-label {
+      color: #E2E8F0;
+    }
+
+    /* Step Pages */
+    .step-panel {
+      display: none;
+      animation: stepFadeIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .step-panel.active {
+      display: block;
+    }
+    @keyframes stepFadeIn {
+      0% { opacity: 0; transform: translateY(12px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .step-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .step-header h2 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    .step-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 1.4rem;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #CBD5E1;
+      margin-bottom: 8px;
+    }
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-icon {
+      position: absolute;
+      left: 16px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      pointer-events: none;
+      transition: color 0.2s ease;
+    }
+    .form-input {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1.5px solid var(--input-border);
+      border-radius: 12px;
+      padding: 13px 44px 13px 46px;
+      color: #FFFFFF;
+      font-size: 0.98rem;
+      outline: none;
+      transition: all 0.22s ease;
+    }
+    .form-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 16px rgba(0, 194, 255, 0.28);
+      background: rgba(22, 27, 46, 0.95);
+    }
+    .toggle-pass-btn {
+      position: absolute;
+      right: 14px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.95rem;
+      padding: 4px;
+      transition: color 0.2s ease;
+    }
+    .toggle-pass-btn:hover {
+      color: #FFFFFF;
+    }
+
+    .pass-hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Step 2: Class Grid with Vibrant Theme Colors & Modern UI/UX */
+    .classes-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 1.8rem;
+    }
+    @media (max-width: 900px) {
+      .classes-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+    }
+    @media (max-width: 480px) {
+      .classes-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+    }
+
+    .class-card {
+      position: relative;
+      background: rgba(18, 24, 42, 0.75);
+      border: 1.5px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 18px 10px 15px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease, border-color 0.28s ease, background 0.28s ease;
+      overflow: hidden;
+    }
+    .class-card:hover {
+      transform: translateY(-5px);
+    }
+    .class-card.selected {
+      transform: translateY(-4px) scale(1.02);
+    }
+
+    /* Selected Check Badge */
+    .class-check-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      color: #FFFFFF;
+      font-size: 10px;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      transform: scale(0.3);
+      transition: all 0.26s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      z-index: 2;
+    }
+    .class-card.selected .class-check-badge {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Icon Box with Gradient Glow */
+    .class-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 1.35rem;
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease;
+      flex-shrink: 0;
+    }
+    .class-card:hover .class-icon-box {
+      transform: scale(1.12) rotate(-4deg);
+    }
+
+    .class-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      width: 100%;
+    }
+    .class-name {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+    .class-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+    }
+
+    /* Theme 1: Emerald (৬ষ্ঠ শ্রেণি) */
+    .class-card.theme-emerald .class-icon-box {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.12));
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34D399;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
+    }
+    .class-card.theme-emerald .class-badge {
+      background: rgba(16, 185, 129, 0.14);
+      color: #6EE7B7;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .class-card.theme-emerald:hover {
+      border-color: rgba(16, 185, 129, 0.6);
+      box-shadow: 0 10px 28px rgba(16, 185, 129, 0.22);
+    }
+    .class-card.theme-emerald.selected {
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.18), rgba(18, 24, 42, 0.95));
+      border-color: #10B981;
+      box-shadow: 0 0 28px rgba(16, 185, 129, 0.35), inset 0 0 20px rgba(16, 185, 129, 0.12);
+    }
+    .class-card.theme-emerald .class-check-badge {
+      background: #10B981;
+    }
+
+    /* Theme 2: Sky Cyan (৭ম শ্রেণি) */
+    .class-card.theme-cyan .class-icon-box {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(14, 165, 233, 0.12));
+      border: 1px solid rgba(6, 182, 212, 0.4);
+      color: #38BDF8;
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.2);
+    }
+    .class-card.theme-cyan .class-badge {
+      background: rgba(6, 182, 212, 0.14);
+      color: #7DD3FC;
+      border: 1px solid rgba(6, 182, 212, 0.3);
+    }
+    .class-card.theme-cyan:hover {
+      border-color: rgba(6, 182, 212, 0.6);
+      box-shadow: 0 10px 28px rgba(6, 182, 212, 0.22);
+    }
+    .class-card.theme-cyan.selected {
+      background: linear-gradient(145deg, rgba(6, 182, 212, 0.18), rgba(18, 24, 42, 0.95));
+      border-color: #06B6D4;
+      box-shadow: 0 0 28px rgba(6, 182, 212, 0.35), inset 0 0 20px rgba(6, 182, 212, 0.12);
+    }
+    .class-card.theme-cyan .class-check-badge {
+      background: #06B6D4;
+    }
+
+    /* Theme 3: Royal Violet (৮ম শ্রেণি) */
+    .class-card.theme-violet .class-icon-box {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(99, 102, 241, 0.12));
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      color: #A78BFA;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.2);
+    }
+    .class-card.theme-violet .class-badge {
+      background: rgba(139, 92, 246, 0.14);
+      color: #C4B5FD;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+    .class-card.theme-violet:hover {
+      border-color: rgba(139, 92, 246, 0.6);
+      box-shadow: 0 10px 28px rgba(139, 92, 246, 0.22);
+    }
+    .class-card.theme-violet.selected {
+      background: linear-gradient(145deg, rgba(139, 92, 246, 0.18), rgba(18, 24, 42, 0.95));
+      border-color: #8B5CF6;
+      box-shadow: 0 0 28px rgba(139, 92, 246, 0.35), inset 0 0 20px rgba(139, 92, 246, 0.12);
+    }
+    .class-card.theme-violet .class-check-badge {
+      background: #8B5CF6;
+    }
+
+    /* Theme 4: Amber Gold (৯ম শ্রেণি) */
+    .class-card.theme-amber .class-icon-box {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.12));
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #FBBF24;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.2);
+    }
+    .class-card.theme-amber .class-badge {
+      background: rgba(245, 158, 11, 0.14);
+      color: #FDE68A;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    .class-card.theme-amber:hover {
+      border-color: rgba(245, 158, 11, 0.6);
+      box-shadow: 0 10px 28px rgba(245, 158, 11, 0.22);
+    }
+    .class-card.theme-amber.selected {
+      background: linear-gradient(145deg, rgba(245, 158, 11, 0.18), rgba(18, 24, 42, 0.95));
+      border-color: #F59E0B;
+      box-shadow: 0 0 28px rgba(245, 158, 11, 0.35), inset 0 0 20px rgba(245, 158, 11, 0.12);
+    }
+    .class-card.theme-amber .class-check-badge {
+      background: #F59E0B;
+    }
+
+    /* Theme 5: Sunset Orange (১০ম শ্রেণি) */
+    .class-card.theme-orange .class-icon-box {
+      background: linear-gradient(135deg, rgba(255, 122, 26, 0.25), rgba(234, 88, 12, 0.12));
+      border: 1px solid rgba(255, 122, 26, 0.4);
+      color: #FB923C;
+      box-shadow: 0 4px 14px rgba(255, 122, 26, 0.2);
+    }
+    .class-card.theme-orange .class-badge {
+      background: rgba(255, 122, 26, 0.14);
+      color: #FDBA74;
+      border: 1px solid rgba(255, 122, 26, 0.3);
+    }
+    .class-card.theme-orange:hover {
+      border-color: rgba(255, 122, 26, 0.6);
+      box-shadow: 0 10px 28px rgba(255, 122, 26, 0.22);
+    }
+    .class-card.theme-orange.selected {
+      background: linear-gradient(145deg, rgba(255, 122, 26, 0.18), rgba(18, 24, 42, 0.95));
+      border-color: #FF7A1A;
+      box-shadow: 0 0 28px rgba(255, 122, 26, 0.35), inset 0 0 20px rgba(255, 122, 26, 0.12);
+    }
+    .class-card.theme-orange .class-check-badge {
+      background: #FF7A1A;
+    }
+
+    /* Theme 6: Rose Pink (এসএসসি - SSC) */
+    .class-card.theme-pink .class-icon-box {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.25), rgba(219, 39, 119, 0.12));
+      border: 1px solid rgba(236, 72, 153, 0.4);
+      color: #F472B6;
+      box-shadow: 0 4px 14px rgba(236, 72, 153, 0.2);
+    }
+    .class-card.theme-pink .class-badge {
+      background: rgba(236, 72, 153, 0.14);
+      color: #FBCFE8;
+      border: 1px solid rgba(236, 72, 153, 0.3);
+    }
+    .class-card.theme-pink:hover {
+      border-color: rgba(236, 72, 153, 0.6);
+      box-shadow: 0 10px 28px rgba(236, 72, 153, 0.22);
+    }
+    .class-card.theme-pink.selected {
+      background: linear-gradient(145deg, rgba(236, 72, 153, 0.18), rgba(18, 24, 42, 0.95));
+      border-color: #EC4899;
+      box-shadow: 0 0 28px rgba(236, 72, 153, 0.35), inset 0 0 20px rgba(236, 72, 153, 0.12);
+    }
+    .class-card.theme-pink .class-check-badge {
+      background: #EC4899;
+    }
+
+    /* Theme 7: Electric Blue (এইচএসসি - HSC - Brand Hero) */
+    .class-card.theme-blue .class-icon-box {
+      background: linear-gradient(135deg, rgba(0, 194, 255, 0.28), rgba(0, 132, 255, 0.12));
+      border: 1px solid rgba(0, 194, 255, 0.45);
+      color: #00C2FF;
+      box-shadow: 0 4px 16px rgba(0, 194, 255, 0.25);
+    }
+    .class-card.theme-blue .class-badge {
+      background: rgba(0, 194, 255, 0.15);
+      color: #BAE6FD;
+      border: 1px solid rgba(0, 194, 255, 0.35);
+    }
+    .class-card.theme-blue:hover {
+      border-color: rgba(0, 194, 255, 0.65);
+      box-shadow: 0 10px 30px rgba(0, 194, 255, 0.28);
+    }
+    .class-card.theme-blue.selected {
+      background: linear-gradient(145deg, rgba(0, 194, 255, 0.2), rgba(18, 24, 42, 0.95));
+      border-color: #00C2FF;
+      box-shadow: 0 0 30px rgba(0, 194, 255, 0.4), inset 0 0 22px rgba(0, 194, 255, 0.12);
+    }
+    .class-card.theme-blue .class-check-badge {
+      background: #00C2FF;
+    }
+
+    /* Theme 8: Royal Ruby (এডমিশন - Admission) */
+    .class-card.theme-ruby .class-icon-box {
+      background: linear-gradient(135deg, rgba(225, 29, 72, 0.25), rgba(245, 158, 11, 0.15));
+      border: 1px solid rgba(225, 29, 72, 0.4);
+      color: #FB7185;
+      box-shadow: 0 4px 14px rgba(225, 29, 72, 0.2);
+    }
+    .class-card.theme-ruby .class-badge {
+      background: rgba(225, 29, 72, 0.14);
+      color: #FECDD3;
+      border: 1px solid rgba(225, 29, 72, 0.3);
+    }
+    .class-card.theme-ruby:hover {
+      border-color: rgba(225, 29, 72, 0.6);
+      box-shadow: 0 10px 28px rgba(225, 29, 72, 0.22);
+    }
+    .class-card.theme-ruby.selected {
+      background: linear-gradient(145deg, rgba(225, 29, 72, 0.18), rgba(18, 24, 42, 0.95));
+      border-color: #E11D48;
+      box-shadow: 0 0 28px rgba(225, 29, 72, 0.35), inset 0 0 20px rgba(225, 29, 72, 0.12);
+    }
+    .class-card.theme-ruby .class-check-badge {
+      background: #E11D48;
+    }
+
+    /* Group Section (Class 9-10, SSC, HSC, Admission) */
+    .group-selection-box {
+      background: rgba(14, 20, 36, 0.7);
+      border: 1.5px solid rgba(0, 194, 255, 0.25);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 1.8rem;
+      animation: groupSlideDown 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+    }
+    @keyframes groupSlideDown {
+      0% { opacity: 0; transform: translateY(-8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .group-selection-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #00C2FF;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .group-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 600px) {
+      .group-options {
+        grid-template-columns: 1fr;
+      }
+    }
+    .group-pill {
+      background: rgba(22, 28, 48, 0.8);
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 14px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      user-select: none;
+    }
+    .group-pill:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0, 194, 255, 0.4);
+      background: rgba(28, 36, 62, 0.9);
+    }
+    .group-pill .group-icon {
+      font-size: 1.25rem;
+      transition: transform 0.25s ease;
+    }
+    .group-pill:hover .group-icon {
+      transform: scale(1.15);
+    }
+    .group-pill .group-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.2;
+    }
+    .group-pill .group-eng {
+      font-size: 0.72rem;
+      color: #94A3B8;
+      line-height: 1.2;
+    }
+
+    /* Individual Group Themes */
+    .group-pill.group-science .group-icon { color: #00C2FF; }
+    .group-pill.group-science.selected {
+      background: linear-gradient(135deg, #0070F3 0%, #00C2FF 100%);
+      border-color: #00C2FF;
+      box-shadow: 0 6px 20px rgba(0, 194, 255, 0.45);
+    }
+    .group-pill.group-science.selected .group-eng { color: #E0F2FE; }
+
+    .group-pill.group-commerce .group-icon { color: #10B981; }
+    .group-pill.group-commerce.selected {
+      background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+      border-color: #10B981;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+    }
+    .group-pill.group-commerce.selected .group-eng { color: #D1FAE5; }
+
+    .group-pill.group-humanities .group-icon { color: #A855F7; }
+    .group-pill.group-humanities.selected {
+      background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%);
+      border-color: #A855F7;
+      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.45);
+    }
+    .group-pill.group-humanities.selected .group-eng { color: #F3E8FF; }
+
+    /* Step 3: Avatars Grid & Preview */
+    .avatar-picker-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 2rem;
+    }
+    .current-avatar-preview {
+      position: relative;
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      padding: 4px;
+      background: var(--primary-gradient);
+      box-shadow: 0 8px 28px rgba(0, 194, 255, 0.45);
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .current-avatar-preview:hover {
+      transform: scale(1.06);
+    }
+    .current-avatar-preview img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #111422;
+      border: 3px solid #080A12;
+      display: block;
+    }
+    .online-indicator {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      width: 22px;
+      height: 22px;
+      background: #10B981;
+      border: 3px solid #080A12;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.9);
+    }
+
+    .preset-avatars-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      width: 100%;
+    }
+    .avatar-item {
+      position: relative;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      padding: 2px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+      margin: 0 auto;
+    }
+    .avatar-item:hover {
+      transform: scale(1.12);
+      border-color: rgba(0, 194, 255, 0.5);
+    }
+    .avatar-item.selected {
+      background: var(--primary-gradient);
+      border-color: #00C2FF;
+      transform: scale(1.15);
+      box-shadow: 0 4px 18px rgba(0, 194, 255, 0.5);
+    }
+    .avatar-item img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #080A12;
+    }
+
+    .custom-upload-box {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    .upload-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #CBD5E1;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .upload-btn:hover {
+      background: rgba(0, 194, 255, 0.12);
+      border-color: #00C2FF;
+      color: #00C2FF;
+    }
+
+    /* Live Student Preview Card */
+    .preview-summary-card {
+      background: linear-gradient(135deg, rgba(25, 30, 52, 0.7), rgba(12, 16, 28, 0.85));
+      border: 1px solid rgba(0, 194, 255, 0.2);
+      border-radius: 16px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 14px;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    }
+    .summary-info h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 2px;
+    }
+    .summary-info p {
+      font-size: 0.85rem;
+      color: #00C2FF;
+      font-weight: 600;
+    }
+
+    /* Action Buttons Navigation */
+    .btn-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 2rem;
+    }
+    .btn-back {
+      flex: 1;
+      padding: 14px 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-back:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+    }
+    .btn-next {
+      flex: 2;
+      padding: 14px 24px;
+      border-radius: 12px;
+      border: none;
+      background: var(--primary-gradient);
+      color: #FFFFFF;
+      font-size: 1.02rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 194, 255, 0.4);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-next:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 26px rgba(0, 194, 255, 0.55);
+    }
+    .btn-next:active {
+      transform: translateY(0);
+    }
+
+    /* Alert Message */
+    .alert-banner {
+      display: none;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+      align-items: center;
+      gap: 8px;
+    }
+    .alert-banner.error {
+      display: flex;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #F87171;
+    }
+    .alert-banner.success {
+      display: flex;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34D399;
+    }
+
+    /* Success Confetti Overlay */
+    .celebrate-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(7, 9, 19, 0.85);
+      backdrop-filter: blur(24px);
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .celebrate-modal.show {
+      display: flex;
+      animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    @keyframes modalPop {
+      0% { opacity: 0; transform: scale(0.85); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .celebrate-card {
+      background: #111422;
+      border: 2px solid #00C2FF;
+      border-radius: 24px;
+      padding: 2.8rem 2rem;
+      text-align: center;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 0 50px rgba(0, 194, 255, 0.4);
+    }
+
+    @media (max-width: 600px) {
+      .onboarding-card {
+        padding: 1.75rem 1.25rem;
+      }
+      .group-options {
+        grid-template-columns: 1fr;
+      }
+      .preset-avatars-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+      }
+      .avatar-item {
+        width: 56px;
+        height: 56px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Brand Navigation Header -->
+  <header class="top-header">
+    <a href="/" class="brand-logo">
+      <img src="/images/dipu-logo.png" alt="Dipu Academy Logo">
+      <div class="brand-text">
+        <span>Dipu</span>
+        <span>Academy</span>
+      </div>
+    </a>
+    <a href="/dashboard.html" class="skip-btn" id="skipBtn" title="পরে সম্পূর্ণ করুন">
+      <span>স্কিপ করুন</span> <i class="fas fa-angle-right" style="font-size: 0.75rem;"></i>
+    </a>
+  </header>
+
+  <!-- Multi-step Onboarding Container -->
+  <div class="onboarding-wrapper">
+    <div class="onboarding-card">
+
+      <!-- Stepper Indicator -->
+      <div class="stepper">
+        <div class="stepper-progress" id="stepperProgress"></div>
+        
+        <div class="step-node active" id="node1">
+          <div class="step-circle"><i class="fas fa-user-lock"></i></div>
+          <span class="step-label">তথ্য ও পাসওয়ার্ড</span>
+        </div>
+
+        <div class="step-node" id="node2">
+          <div class="step-circle"><i class="fas fa-graduation-cap"></i></div>
+          <span class="step-label">শ্রেণি ও বিভাগ</span>
+        </div>
+
+        <div class="step-node" id="node3">
+          <div class="step-circle"><i class="fas fa-camera"></i></div>
+          <span class="step-label">প্রোফাইল ছবি</span>
+        </div>
+      </div>
+
+      <!-- Alert Message Box -->
+      <div class="alert-banner" id="alertBox">
+        <i class="fas fa-circle-exclamation"></i>
+        <span id="alertMsg"></span>
+      </div>
+
+      <!-- =========================================================================
+           STEP 1: Full Name, Password & Confirm Password
+           ========================================================================= -->
+      <div class="step-panel active" id="step1">
+        <div class="step-header">
+          <h2>স্বাগতম! তোমার প্রোফাইল শুরু করো</h2>
+          <p>তোমার পুরো নাম এবং পরবর্তীতে সহজে লগইন করার জন্য একটি পাসওয়ার্ড সেট করো।</p>
+        </div>
+
+        <form id="step1Form" onsubmit="return false;">
+          <!-- Name Input -->
+          <div class="form-group">
+            <label class="form-label">তোমার পুরো নাম *</label>
+            <div class="input-wrapper">
+              <i class="fas fa-user input-icon"></i>
+              <input type="text" id="nameInput" class="form-input" placeholder="উদা: তানভীর হাসান" required autocomplete="name">
+            </div>
+          </div>
+
+          <!-- Password Input -->
+          <div class="form-group">
+            <label class="form-label">নতুন পাসওয়ার্ড সেট করো *</label>
+            <div class="input-wrapper">
+              <i class="fas fa-key input-icon"></i>
+              <input type="password" id="passInput" class="form-input" placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড" required autocomplete="new-password">
+              <button type="button" class="toggle-pass-btn" onclick="togglePassVisibility('passInput', this)">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            <div class="pass-hint">
+              <i class="fas fa-info-circle" style="color: #00C2FF;"></i>
+              <span>কমপক্ষে ৬ অক্ষরের একটি শক্তিশালী পাসওয়ার্ড দিন।</span>
+            </div>
+          </div>
+
+          <!-- Confirm Password Input -->
+          <div class="form-group">
+            <label class="form-label">পাসওয়ার্ড নিশ্চিত করো (Confirm Password) *</label>
+            <div class="input-wrapper">
+              <i class="fas fa-shield-halved input-icon"></i>
+              <input type="password" id="confirmPassInput" class="form-input" placeholder="পাসওয়ার্ডটি পুনরায় লিখুন" required autocomplete="new-password">
+              <button type="button" class="toggle-pass-btn" onclick="togglePassVisibility('confirmPassInput', this)">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Action Button -->
+          <div class="btn-row">
+            <button type="button" class="btn-next" onclick="goToStep2()" style="flex: 1;">
+              <span>পরবর্তী ধাপ: শ্রেণি নির্বাচন</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- =========================================================================
+           STEP 2: Class Selection & Group (Science / Commerce / Humanities)
+           ========================================================================= -->
+      <div class="step-panel" id="step2">
+        <div class="step-header">
+          <h2>তুমি কোন শ্রেণিতে পড়ছো?</h2>
+          <p>তোমার শ্রেণির কারিকুলাম অনুযায়ী কোর্স ও পড়ার রুটিন সাজানো হবে।</p>
+        </div>
+
+        <form id="step2Form" onsubmit="return false;">
+          <!-- Class Grid Cards with Distinct Theme Colors & Micro-Badges -->
+          <div class="classes-grid">
+            <!-- 1. ৬ষ্ঠ শ্রেণি (Emerald) -->
+            <div class="class-card theme-emerald" onclick="selectClass('৬ষ্ঠ শ্রেণি', 'Class-6', this)">
+              <div class="class-check-badge"><i class="fas fa-check"></i></div>
+              <div class="class-icon-box">
+                <i class="fas fa-shapes"></i>
+              </div>
+              <div class="class-content">
+                <div class="class-name">৬ষ্ঠ শ্রেণি</div>
+                <div class="class-badge">নতুন কারিকুলাম</div>
+              </div>
+            </div>
+
+            <!-- 2. ৭ম শ্রেণি (Cyan) -->
+            <div class="class-card theme-cyan" onclick="selectClass('৭ম শ্রেণি', 'Class-7', this)">
+              <div class="class-check-badge"><i class="fas fa-check"></i></div>
+              <div class="class-icon-box">
+                <i class="fas fa-book-open"></i>
+              </div>
+              <div class="class-content">
+                <div class="class-name">৭ম শ্রেণি</div>
+                <div class="class-badge">নতুন কারিকুলাম</div>
+              </div>
+            </div>
+
+            <!-- 3. ৮ম শ্রেণি (Violet) -->
+            <div class="class-card theme-violet" onclick="selectClass('৮ম শ্রেণি', 'Class-8', this)">
+              <div class="class-check-badge"><i class="fas fa-check"></i></div>
+              <div class="class-icon-box">
+                <i class="fas fa-atom"></i>
+              </div>
+              <div class="class-content">
+                <div class="class-name">৮ম শ্রেণি</div>
+                <div class="class-badge">জুনিয়র বৃত্তি</div>
+              </div>
+            </div>
+
+            <!-- 4. ৯ম শ্রেণি (Amber) -->
+            <div class="class-card theme-amber" onclick="selectClass('৯ম শ্রেণি', 'Class-9', this)">
+              <div class="class-check-badge"><i class="fas fa-check"></i></div>
+              <div class="class-icon-box">
+                <i class="fas fa-dna"></i>
+              </div>
+              <div class="class-content">
+                <div class="class-name">৯ম শ্রেণি</div>
+                <div class="class-badge">গ্রুপ স্টাডি</div>
+              </div>
+            </div>
+
+            <!-- 5. ১০ম শ্রেণি (Orange) -->
+            <div class="class-card theme-orange" onclick="selectClass('১০ম শ্রেণি', 'Class-10', this)">
+              <div class="class-check-badge"><i class="fas fa-check"></i></div>
+              <div class="class-icon-box">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <div class="class-content">
+                <div class="class-name">১০ম শ্রেণি</div>
+                <div class="class-badge">বোর্ড প্রস্তুতি</div>
+              </div>
+            </div>
+
+            <!-- 6. এসএসসি (SSC) (Pink) -->
+            <div class="class-card theme-pink" onclick="selectClass('SSC ব্যাচ', 'SSC', this)">
+              <div class="class-check-badge"><i class="fas fa-check"></i></div>
+              <div class="class-icon-box">
+                <i class="fas fa-medal"></i>
+              </div>
+              <div class="class-content">
+                <div class="class-name">এসএসসি (SSC)</div>
+                <div class="class-badge">২০২৬ / ২০২৭</div>
+              </div>
+            </div>
+
+            <!-- 7. এইচএসসি (HSC) (Dipu Blue - Selected by default) -->
+            <div class="class-card theme-blue selected" onclick="selectClass('HSC ব্যাচ', 'HSC', this)">
+              <div class="class-check-badge"><i class="fas fa-check"></i></div>
+              <div class="class-icon-box">
+                <i class="fas fa-award"></i>
+              </div>
+              <div class="class-content">
+                <div class="class-name">এইচএসসি (HSC)</div>
+                <div class="class-badge">২০২৬ / ২০২৭</div>
+              </div>
+            </div>
+
+            <!-- 8. এডমিশন (Ruby / Gold) -->
+            <div class="class-card theme-ruby" onclick="selectClass('এডমিশন', 'Admission', this)">
+              <div class="class-check-badge"><i class="fas fa-check"></i></div>
+              <div class="class-icon-box">
+                <i class="fas fa-university"></i>
+              </div>
+              <div class="class-content">
+                <div class="class-name">এডমিশন</div>
+                <div class="class-badge">BUET / Medical</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Group Box (Auto-appears for Class 9-10, SSC, HSC, Admission) -->
+          <div class="group-selection-box" id="groupBox">
+            <div class="group-selection-title">
+              <i class="fas fa-layer-group"></i>
+              <span>তোমার বিভাগ / গ্রুপ নির্বাচন করো:</span>
+            </div>
+            <div class="group-options">
+              <div class="group-pill group-science selected" onclick="selectGroup('বিজ্ঞান বিভাগ (Science)', this)">
+                <i class="fas fa-atom group-icon"></i>
+                <div>
+                  <div class="group-name">বিজ্ঞান</div>
+                  <div class="group-eng">Science</div>
+                </div>
+              </div>
+              <div class="group-pill group-commerce" onclick="selectGroup('ব্যবসায় শিক্ষা (Commerce)', this)">
+                <i class="fas fa-chart-pie group-icon"></i>
+                <div>
+                  <div class="group-name">ব্যবসায় শিক্ষা</div>
+                  <div class="group-eng">Commerce</div>
+                </div>
+              </div>
+              <div class="group-pill group-humanities" onclick="selectGroup('মানবিক বিভাগ (Humanities)', this)">
+                <i class="fas fa-landmark group-icon"></i>
+                <div>
+                  <div class="group-name">মানবিক</div>
+                  <div class="group-eng">Humanities</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- School / College Name (Optional) -->
+          <div class="form-group">
+            <label class="form-label">তোমার স্কুল বা কলেজের নাম (ঐচ্ছিক)</label>
+            <div class="input-wrapper">
+              <i class="fas fa-school input-icon"></i>
+              <input type="text" id="institutionInput" class="form-input" placeholder="উদা: ঢাকা কলেজ / রাজউক উত্তরা মডেল কলেজ">
+            </div>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="btn-row">
+            <button type="button" class="btn-back" onclick="goToStep(1)">
+              <i class="fas fa-arrow-left"></i> <span>পূর্ববর্তী ধাপ</span>
+            </button>
+            <button type="button" class="btn-next" onclick="goToStep3()">
+              <span>পরবর্তী ধাপ: ছবি নির্বাচন</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- =========================================================================
+           STEP 3: Profile Avatar & Preview
+           ========================================================================= -->
+      <div class="step-panel" id="step3">
+        <div class="step-header">
+          <h2>প্রোফাইল ছবি বা অবতার বেছে নাও</h2>
+          <p>তোমার পছন্দের অবতার নির্বাচন করো অথবা নিজের ছবি আপলোড করো।</p>
+        </div>
+
+        <div class="avatar-picker-section">
+          <!-- Current Selected Avatar Preview -->
+          <div class="current-avatar-preview" id="mainAvatarPreview" title="নির্বাচিত অবতার">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200" id="previewImg" alt="Profile Avatar">
+            <span class="online-indicator"></span>
+          </div>
+
+          <!-- Preset Avatars Grid -->
+          <div class="preset-avatars-grid">
+            <div class="avatar-item selected" onclick="pickAvatar('https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200', this)">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200" alt="Avatar 1">
+            </div>
+            <div class="avatar-item" onclick="pickAvatar('https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200', this)">
+              <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200" alt="Avatar 2">
+            </div>
+            <div class="avatar-item" onclick="pickAvatar('https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200', this)">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200" alt="Avatar 3">
+            </div>
+            <div class="avatar-item" onclick="pickAvatar('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200', this)">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200" alt="Avatar 4">
+            </div>
+            <div class="avatar-item" onclick="pickAvatar('https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200', this)">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200" alt="Avatar 5">
+            </div>
+            <div class="avatar-item" onclick="pickAvatar('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200', this)">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200" alt="Avatar 6">
+            </div>
+            <div class="avatar-item" onclick="pickAvatar('https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200', this)">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200" alt="Avatar 7">
+            </div>
+            <div class="avatar-item" onclick="pickAvatar('https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200', this)">
+              <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200" alt="Avatar 8">
+            </div>
+          </div>
+
+          <!-- Custom Photo Upload Button -->
+          <div class="custom-upload-box">
+            <input type="file" id="fileUploadInput" accept="image/*" style="display: none;" onchange="handleCustomFileUpload(event)">
+            <button type="button" class="upload-btn" onclick="document.getElementById('fileUploadInput').click()">
+              <i class="fas fa-cloud-arrow-up"></i>
+              <span>অথবা নিজের ছবি আপলোড করো</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Real-time Live Student ID Card Summary -->
+        <div class="preview-summary-card">
+          <div style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid #00C2FF;">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200" id="cardAvatarThumb" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div class="summary-info" style="flex: 1;">
+            <h4 id="cardNamePreview">শিক্ষার্থী</h4>
+            <p id="cardClassPreview">HSC ব্যাচ • বিজ্ঞান বিভাগ</p>
+          </div>
+          <span style="background: rgba(16, 185, 129, 0.15); color: #10B981; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 999px;">
+            <i class="fas fa-circle-check"></i> প্রস্তুত
+          </span>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="btn-row">
+          <button type="button" class="btn-back" onclick="goToStep(2)">
+            <i class="fas fa-arrow-left"></i> <span>পূর্ববর্তী ধাপ</span>
+          </button>
+          <button type="button" class="btn-next" id="submitBtn" onclick="submitOnboarding()">
+            <span>প্রোফাইল সম্পন্ন করুন</span>
+            <i class="fas fa-check-circle"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Fullscreen Celebration Modal -->
+  <div class="celebrate-modal" id="celebrateModal">
+    <div class="celebrate-card">
+      <div style="font-size: 3.5rem; margin-bottom: 1rem; animation: bounce 0.6s infinite alternate;">🎉</div>
+      <h2 style="font-size: 1.8rem; font-weight: 800; color: #FFFFFF; margin-bottom: 0.5rem;">অভিনন্দন!</h2>
+      <p style="color: #94A3B8; font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.6;">
+        তোমার Dipu Academy প্রোফাইল সফলভাবে তৈরি হয়েছে। তোমাকে ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...
+      </p>
+      <div style="width: 44px; height: 44px; border: 4px solid rgba(0, 194, 255, 0.2); border-top-color: #00C2FF; border-radius: 50%; margin: 0 auto; animation: spin 0.8s linear infinite;"></div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-8px); }
+    }
+  </style>
+
+  <script>
+    // State Store
+    const state = {
+      phone: localStorage.getItem('dipu_user_phone') || '',
+      name: '',
+      password: '',
+      confirmPassword: '',
+      classLabel: 'HSC ব্যাচ',
+      classLevel: 'HSC',
+      group: 'বিজ্ঞান বিভাগ (Science)',
+      institution: '',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200',
+      currentStep: 1,
+    };
+
+    // Load any existing profile data if available
+    try {
+      const stored = JSON.parse(localStorage.getItem('dipu_user_profile') || '{}');
+      if (stored.fullName) {
+        document.getElementById('nameInput').value = stored.fullName;
+        state.name = stored.fullName;
+      }
+      if (stored.phone) state.phone = stored.phone;
+      if (stored.institution) document.getElementById('institutionInput').value = stored.institution;
+      if (stored.avatar) pickAvatar(stored.avatar);
+    } catch(e) {}
+
+    function showAlert(msg, isSuccess = false) {
+      const box = document.getElementById('alertBox');
+      const text = document.getElementById('alertMsg');
+      box.className = 'alert-banner ' + (isSuccess ? 'success' : 'error');
+      text.textContent = msg;
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function hideAlert() {
+      document.getElementById('alertBox').style.display = 'none';
+    }
+
+    function togglePassVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const isPass = input.type === 'password';
+      input.type = isPass ? 'text' : 'password';
+      btn.innerHTML = isPass ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+    }
+
+    function updateStepper(step) {
+      state.currentStep = step;
+      const progress = document.getElementById('stepperProgress');
+      const node1 = document.getElementById('node1');
+      const node2 = document.getElementById('node2');
+      const node3 = document.getElementById('node3');
+
+      node1.className = 'step-node';
+      node2.className = 'step-node';
+      node3.className = 'step-node';
+
+      if (step === 1) {
+        progress.style.width = '0%';
+        node1.classList.add('active');
+      } else if (step === 2) {
+        progress.style.width = '50%';
+        node1.classList.add('completed');
+        node2.classList.add('active');
+      } else if (step === 3) {
+        progress.style.width = '100%';
+        node1.classList.add('completed');
+        node2.classList.add('completed');
+        node3.classList.add('active');
+      }
+    }
+
+    function goToStep(step) {
+      hideAlert();
+      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById(`step${step}`).classList.add('active');
+      updateStepper(step);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Step 1 Validation & Proceed
+    function goToStep2() {
+      hideAlert();
+      const name = document.getElementById('nameInput').value.trim();
+      const pass = document.getElementById('passInput').value;
+      const confirmPass = document.getElementById('confirmPassInput').value;
+
+      if (!name) {
+        showAlert('অনুগ্রহ করে তোমার পুরো নাম লিখো।');
+        document.getElementById('nameInput').focus();
+        return;
+      }
+      if (!pass || pass.length < 6) {
+        showAlert('পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।');
+        document.getElementById('passInput').focus();
+        return;
+      }
+      if (pass !== confirmPass) {
+        showAlert('কনফার্ম পাসওয়ার্ডের সাথে মূল পাসওয়ার্ড মিলছে না!');
+        document.getElementById('confirmPassInput').focus();
+        return;
+      }
+
+      state.name = name;
+      state.password = pass;
+      document.getElementById('cardNamePreview').textContent = name;
+      goToStep(2);
+    }
+
+    // Step 2 Class & Group Selection
+    function selectClass(label, level, elem) {
+      document.querySelectorAll('.class-card').forEach(c => c.classList.remove('selected'));
+      elem.classList.add('selected');
+      state.classLabel = label;
+      state.classLevel = level;
+
+      // Group Selection requirement: 9, 10, SSC, HSC, Admission
+      const groupBox = document.getElementById('groupBox');
+      const needsGroup = ['Class-9', 'Class-10', 'SSC', 'HSC', 'Admission'].includes(level) || label.includes('৯ম') || label.includes('১০ম') || label.includes('SSC') || label.includes('HSC');
+      
+      if (needsGroup) {
+        groupBox.style.display = 'block';
+      } else {
+        groupBox.style.display = 'none';
+        state.group = null;
+      }
+
+      updateCardSummary();
+    }
+
+    function selectGroup(groupName, elem) {
+      document.querySelectorAll('.group-pill').forEach(p => p.classList.remove('selected'));
+      elem.classList.add('selected');
+      state.group = groupName;
+      updateCardSummary();
+    }
+
+    function updateCardSummary() {
+      const summaryElem = document.getElementById('cardClassPreview');
+      if (state.group) {
+        const shortGroup = state.group.split(' ')[0];
+        summaryElem.textContent = `${state.classLabel} • ${shortGroup}`;
+      } else {
+        summaryElem.textContent = state.classLabel;
+      }
+    }
+
+    function goToStep3() {
+      hideAlert();
+      const inst = document.getElementById('institutionInput').value.trim();
+      if (inst) state.institution = inst;
+      goToStep(3);
+    }
+
+    // Step 3 Avatar Selection & Upload
+    function pickAvatar(url, elem) {
+      state.avatar = url;
+      document.getElementById('previewImg').src = url;
+      document.getElementById('cardAvatarThumb').src = url;
+      if (elem) {
+        document.querySelectorAll('.avatar-item').forEach(a => a.classList.remove('selected'));
+        elem.classList.add('selected');
+      }
+    }
+
+    function handleCustomFileUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith('image/')) {
+        showAlert('অনুগ্রহ করে শুধুমাত্র ছবি ফাইল নির্বাচন করো।');
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        showAlert('ছবির সাইজ ৫MB এর কম হতে হবে।');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64 = e.target.result;
+        pickAvatar(base64);
+        showAlert('ছবি সফলভাবে লোড হয়েছে!', true);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Final Submission: Save to MongoDB Atlas & LocalStorage
+    async function submitOnboarding() {
+      hideAlert();
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>সংরক্ষণ করা হচ্ছে...</span>';
+
+      const payload = {
+        phone: state.phone,
+        name: state.name,
+        password: state.password,
+        classLevel: state.classLevel,
+        group: state.group,
+        institution: state.institution || 'শিক্ষা প্রতিষ্ঠান',
+        avatar: state.avatar,
+      };
+
+      try {
+        const authToken = localStorage.getItem('dipu_auth_token');
+        const headers = { 'Content-Type': 'application/json' };
+        if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
+
+        const res = await fetch('/api/auth/complete-onboarding', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (data && data.success) {
+          // Sync with LocalStorage
+          if (data.sessionToken) {
+            localStorage.setItem('dipu_auth_token', data.sessionToken);
+          }
+          localStorage.setItem('dipu_logged_in', 'true');
+          localStorage.setItem('dipu_user_phone', state.phone);
+          localStorage.setItem('da_user_name', state.name);
+          localStorage.setItem('da_user_target', state.classLabel);
+          if (state.group) localStorage.setItem('da_user_group', state.group);
+          localStorage.setItem('dipu_user_avatar', state.avatar);
+
+          const fullProfile = {
+            fullName: state.name,
+            phone: state.phone,
+            classLevel: state.classLevel,
+            classLabel: state.classLabel,
+            group: state.group,
+            institution: state.institution || 'শিক্ষা প্রতিষ্ঠান',
+            avatar: state.avatar,
+            isOnboarded: true,
+            updatedAt: new Date().toISOString()
+          };
+          localStorage.setItem('dipu_user_profile', JSON.stringify(fullProfile));
+
+          // Also notify student track endpoint for dashboard sync
+          try {
+            fetch('/api/student/track', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(fullProfile)
+            }).catch(() => {});
+          } catch(e) {}
+
+          // Show celebration modal & redirect
+          document.getElementById('celebrateModal').classList.add('show');
+          setTimeout(() => {
+            window.location.href = '/dashboard.html';
+          }, 1600);
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>প্রোফাইল সম্পন্ন করুন</span> <i class="fas fa-check-circle"></i>';
+          showAlert(data ? data.message : 'প্রোফাইল সেভ করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+        }
+      } catch (err) {
+        console.error('Onboarding save error:', err);
+        // Fallback save in localstorage and proceed
+        localStorage.setItem('dipu_logged_in', 'true');
+        localStorage.setItem('da_user_name', state.name);
+        localStorage.setItem('da_user_target', state.classLabel);
+        if (state.group) localStorage.setItem('da_user_group', state.group);
+        const fullProfile = {
+          fullName: state.name,
+          phone: state.phone,
+          classLevel: state.classLevel,
+          group: state.group,
+          institution: state.institution || 'শিক্ষা প্রতিষ্ঠান',
+          avatar: state.avatar,
+          isOnboarded: true
+        };
+        localStorage.setItem('dipu_user_profile', JSON.stringify(fullProfile));
+        
+        document.getElementById('celebrateModal').classList.add('show');
+        setTimeout(() => {
+          window.location.href = '/dashboard.html';
+        }, 1200);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -137,6 +137,7 @@ function initTabRouting() {
     if (targetTab === "reviews" && window.loadReviews) window.loadReviews();
     if (targetTab === "features" && window.loadFeaturesInAdmin) window.loadFeaturesInAdmin();
     if (targetTab === "user-dashboard" && window.loadUserDashboardConfig) window.loadUserDashboardConfig();
+    if (targetTab === "helpline" && window.loadHelplineSettings) window.loadHelplineSettings();
   }
 
   // Sidebar link clicks
@@ -1267,32 +1268,101 @@ async function initHeroVideoManagement() {
   const titleInput = document.getElementById("adminHeroVideoTitle");
   if (!input) return;
 
+  // 1. Check local cache
   const saved = JSON.parse(localStorage.getItem("dipu_hero_video") || "null");
   if (saved && saved.videoUrl) {
     input.value = saved.videoUrl;
     if (titleInput && saved.title) titleInput.value = saved.title;
   }
 
+  // 2. Fetch fresh data from MongoDB Atlas database
+  try {
+    const res = await fetch("/api/admin/hero-video");
+    if (res.ok) {
+      const json = await res.json();
+      if (json && json.data && json.data.videoUrl) {
+        input.value = json.data.videoUrl;
+        if (titleInput && json.data.title) titleInput.value = json.data.title;
+        localStorage.setItem("dipu_hero_video", JSON.stringify(json.data));
+      }
+    }
+  } catch (err) {
+    console.error("[Hero Video Admin Fetch]", err);
+  }
+
   window.previewAdminHeroVideo();
   input.addEventListener("input", window.previewAdminHeroVideo);
 }
 
-// 11. Social Media Links Management
+// 11. Social Media Links Management (MongoDB Atlas Synchronized)
 async function initSocialLinksManagement() {
+  const setIfPresent = (id, val) => {
+    const el = document.getElementById(id);
+    if (el && val !== undefined && val !== null) el.value = val;
+  };
+
+  const populateFields = (links) => {
+    if (!links) return;
+    setIfPresent("socialInputFb", links.fb);
+    setIfPresent("socialInputYt", links.yt);
+    setIfPresent("socialInputInsta", links.insta);
+    setIfPresent("socialInputLinkedin", links.linkedin);
+    setIfPresent("socialInputTiktok", links.tiktok);
+    setIfPresent("socialInputWhatsapp", links.whatsapp);
+    setIfPresent("socialInputTelegram", links.telegram);
+    setIfPresent("socialInputHotline", links.hotline);
+    setIfPresent("socialInputSupportEmail", links.supportEmail);
+  };
+
+  // 1. Check local cache first for instant display
   const saved = JSON.parse(localStorage.getItem("dipu_social_links") || "null");
   if (saved) {
-    if (saved.fb) document.getElementById("socialInputFb").value = saved.fb;
-    if (saved.yt) document.getElementById("socialInputYt").value = saved.yt;
-    if (saved.insta) document.getElementById("socialInputInsta").value = saved.insta;
-    if (saved.linkedin) document.getElementById("socialInputLinkedin").value = saved.linkedin;
-    if (saved.tiktok) document.getElementById("socialInputTiktok").value = saved.tiktok;
+    populateFields(saved);
+  }
+
+  // 2. Fetch fresh configuration directly from MongoDB Atlas database
+  try {
+    const res = await fetch("/api/admin/social-links");
+    if (res.ok) {
+      const json = await res.json();
+      const links = json.links || json.data;
+      if (links) {
+        populateFields(links);
+        localStorage.setItem("dipu_social_links", JSON.stringify(links));
+      }
+    }
+  } catch (err) {
+    console.error("[Social Links Admin Fetch]", err);
   }
 }
 
 window.saveSocialLinkSingle = async function(platform) {
-  const platformNameMap = { fb: "ফেসবুক", yt: "ইউটিউব", insta: "ইনস্টাগ্রাম", linkedin: "লিঙ্কডইন", tiktok: "টিকটক" };
-  const cap = platform.charAt(0).toUpperCase() + platform.slice(1);
-  const input = document.getElementById("socialInput" + cap);
+  const platformNameMap = {
+    fb: "ফেসবুক",
+    yt: "ইউটিউব",
+    insta: "ইনস্টাগ্রাম",
+    linkedin: "লিঙ্কডইন",
+    tiktok: "টিকটক",
+    whatsapp: "হোয়াটসঅ্যাপ",
+    telegram: "টেলিগ্রাম",
+    hotline: "হেল্পলাইন",
+    supportEmail: "সাপোর্ট ইমেইল"
+  };
+
+  const inputMap = {
+    fb: "socialInputFb",
+    yt: "socialInputYt",
+    insta: "socialInputInsta",
+    linkedin: "socialInputLinkedin",
+    tiktok: "socialInputTiktok",
+    whatsapp: "socialInputWhatsapp",
+    telegram: "socialInputTelegram",
+    hotline: "socialInputHotline",
+    supportEmail: "socialInputSupportEmail"
+  };
+
+  const inputId = inputMap[platform] || ("socialInput" + platform.charAt(0).toUpperCase() + platform.slice(1));
+  const input = document.getElementById(inputId);
   if (!input) return;
 
   const url = input.value.trim();
@@ -1301,14 +1371,22 @@ window.saveSocialLinkSingle = async function(platform) {
   localStorage.setItem("dipu_social_links", JSON.stringify(saved));
 
   try {
-    await fetch("/api/admin/social-links", {
+    const res = await fetch("/api/admin/social-links", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ platform, url })
     });
-  } catch (err) {}
+    if (res.ok) {
+      const json = await res.json();
+      if (json.links) {
+        localStorage.setItem("dipu_social_links", JSON.stringify(json.links));
+      }
+    }
+  } catch (err) {
+    console.error("[Save Social Link Single Error]", err);
+  }
 
-  showAdminToast(`✓ ${platformNameMap[platform] || platform} লিংক সফলভাবে সেভ হয়েছে!`);
+  showAdminToast(`✓ ${platformNameMap[platform] || platform} লিংক ডেটাবেজে সফলভাবে সেভ হয়েছে!`);
 };
 
 window.saveAllSocialLinks = async function() {
@@ -1318,19 +1396,32 @@ window.saveAllSocialLinks = async function() {
     insta: document.getElementById("socialInputInsta")?.value.trim(),
     linkedin: document.getElementById("socialInputLinkedin")?.value.trim(),
     tiktok: document.getElementById("socialInputTiktok")?.value.trim(),
+    whatsapp: document.getElementById("socialInputWhatsapp")?.value.trim(),
+    telegram: document.getElementById("socialInputTelegram")?.value.trim(),
+    hotline: document.getElementById("socialInputHotline")?.value.trim(),
+    supportEmail: document.getElementById("socialInputSupportEmail")?.value.trim(),
   };
 
   localStorage.setItem("dipu_social_links", JSON.stringify(payload));
   try {
-    await fetch("/api/admin/social-links", {
+    const res = await fetch("/api/admin/social-links", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
-  } catch (err) {}
+    if (res.ok) {
+      const json = await res.json();
+      if (json.links) {
+        localStorage.setItem("dipu_social_links", JSON.stringify(json.links));
+      }
+    }
+  } catch (err) {
+    console.error("[Save All Social Links Error]", err);
+  }
 
-  showAdminToast("✓ সব সোশ্যাল লিংক সফলভাবে সংরক্ষিত হয়েছে!");
+  showAdminToast("✓ সকল লিংক ডেটাবেজে সফলভাবে সংরক্ষিত হয়েছে!");
 };
+
 
 // 12. Site Statistics Management
 async function initSiteStatsManagement() {
@@ -3047,4 +3138,225 @@ window.resetUserDashboardConfigToDefault = async function() {
   await window.saveUserDashboardConfig();
   showAdminToast("🔄 ইউজার ড্যাশবোর্ড ডিফল্ট কনফিগারেশনে ফিরিয়ে আনা হয়েছে!");
 };
+
+// ==============================================================================
+// 21. HELPLINE & CONTACT MODAL SETTINGS CONTROLLER (যোগাযোগ ও হেল্পলাইন)
+// ==============================================================================
+const DEFAULT_HELPLINE_CONFIG = {
+  title: "যোগাযোগ ও হেল্পলাইন",
+  subtitle: "Dipu Academy ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র",
+  hotlineTitle: "২৪/৭ হটলাইন সাপোর্ট",
+  hotlineNumber: "01712-345678",
+  hotlineLink: "tel:01712345678",
+  hotlineBtnText: "কল করুন →",
+  whatsappTitle: "WhatsApp চ্যাট ও ডাউট সলভ",
+  whatsappNumber: "+880 1812-987654",
+  whatsappLink: "https://wa.me/8801812987654",
+  whatsappBtnText: "চ্যাট করুন →",
+  emailTitle: "অফিসিয়াল ইমেইল",
+  emailAddress: "support@dipuedu.com",
+  emailLink: "mailto:support@dipuedu.com",
+  emailBtnText: "ইমেইল →",
+  addressText: "প্রধান কার্যালয়: শান্তি নগর, ঢাকা-১২১৭, বাংলাদেশ। (প্রতিদিন সকাল ৯টা - রাত ১১টা)"
+};
+
+let currentHelplineConfig = { ...DEFAULT_HELPLINE_CONFIG };
+
+window.updateHelplineLivePreview = function() {
+  const title = document.getElementById("helplineInputTitle")?.value.trim() || DEFAULT_HELPLINE_CONFIG.title;
+  const subtitle = document.getElementById("helplineInputSubtitle")?.value.trim() || DEFAULT_HELPLINE_CONFIG.subtitle;
+  
+  const hotlineTitle = document.getElementById("helplineInputHotlineTitle")?.value.trim() || DEFAULT_HELPLINE_CONFIG.hotlineTitle;
+  const hotlineNumber = document.getElementById("helplineInputHotlineNumber")?.value.trim() || DEFAULT_HELPLINE_CONFIG.hotlineNumber;
+  let hotlineLink = document.getElementById("helplineInputHotlineLink")?.value.trim();
+  if (!hotlineLink) hotlineLink = `tel:${hotlineNumber.replace(/[^0-9+]/g, '')}`;
+  const hotlineBtnText = document.getElementById("helplineInputHotlineBtnText")?.value.trim() || DEFAULT_HELPLINE_CONFIG.hotlineBtnText;
+
+  const whatsappTitle = document.getElementById("helplineInputWhatsappTitle")?.value.trim() || DEFAULT_HELPLINE_CONFIG.whatsappTitle;
+  const whatsappNumber = document.getElementById("helplineInputWhatsappNumber")?.value.trim() || DEFAULT_HELPLINE_CONFIG.whatsappNumber;
+  let whatsappLink = document.getElementById("helplineInputWhatsappLink")?.value.trim();
+  if (!whatsappLink) whatsappLink = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}`;
+  const whatsappBtnText = document.getElementById("helplineInputWhatsappBtnText")?.value.trim() || DEFAULT_HELPLINE_CONFIG.whatsappBtnText;
+
+  const emailTitle = document.getElementById("helplineInputEmailTitle")?.value.trim() || DEFAULT_HELPLINE_CONFIG.emailTitle;
+  const emailAddress = document.getElementById("helplineInputEmailAddress")?.value.trim() || DEFAULT_HELPLINE_CONFIG.emailAddress;
+  let emailLink = document.getElementById("helplineInputEmailLink")?.value.trim();
+  if (!emailLink) emailLink = `mailto:${emailAddress}`;
+  const emailBtnText = document.getElementById("helplineInputEmailBtnText")?.value.trim() || DEFAULT_HELPLINE_CONFIG.emailBtnText;
+
+  const addressText = document.getElementById("helplineInputAddressText")?.value.trim() || DEFAULT_HELPLINE_CONFIG.addressText;
+
+  // Update preview elements
+  const prevTitle = document.getElementById("prevHelplineTitle");
+  if (prevTitle) prevTitle.textContent = title;
+
+  const prevSubtitle = document.getElementById("prevHelplineSubtitle");
+  if (prevSubtitle) prevSubtitle.textContent = subtitle;
+
+  const prevHotlineTitle = document.getElementById("prevHelplineHotlineTitle");
+  if (prevHotlineTitle) prevHotlineTitle.textContent = hotlineTitle;
+  const prevHotlineNumber = document.getElementById("prevHelplineHotlineNumber");
+  if (prevHotlineNumber) prevHotlineNumber.textContent = hotlineNumber;
+  const prevHotlineBtn = document.getElementById("prevHelplineHotlineBtn");
+  if (prevHotlineBtn) prevHotlineBtn.textContent = hotlineBtnText;
+
+  const prevWhatsappTitle = document.getElementById("prevHelplineWhatsappTitle");
+  if (prevWhatsappTitle) prevWhatsappTitle.textContent = whatsappTitle;
+  const prevWhatsappNumber = document.getElementById("prevHelplineWhatsappNumber");
+  if (prevWhatsappNumber) prevWhatsappNumber.textContent = whatsappNumber;
+  const prevWhatsappBtn = document.getElementById("prevHelplineWhatsappBtn");
+  if (prevWhatsappBtn) prevWhatsappBtn.textContent = whatsappBtnText;
+
+  const prevEmailTitle = document.getElementById("prevHelplineEmailTitle");
+  if (prevEmailTitle) prevEmailTitle.textContent = emailTitle;
+  const prevEmailAddress = document.getElementById("prevHelplineEmailAddress");
+  if (prevEmailAddress) prevEmailAddress.textContent = emailAddress;
+  const prevEmailBtn = document.getElementById("prevHelplineEmailBtn");
+  if (prevEmailBtn) prevEmailBtn.textContent = emailBtnText;
+
+  const prevAddress = document.getElementById("prevHelplineAddressText");
+  if (prevAddress) prevAddress.textContent = addressText;
+
+  // Update test buttons
+  const testCall = document.getElementById("testCallLink");
+  if (testCall) testCall.href = hotlineLink;
+
+  const testWa = document.getElementById("testWaLink");
+  if (testWa) testWa.href = whatsappLink;
+
+  const testMail = document.getElementById("testMailLink");
+  if (testMail) testMail.href = emailLink;
+};
+
+window.loadHelplineSettings = async function() {
+  try {
+    const res = await fetch("/api/admin/helpline");
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.config) {
+        currentHelplineConfig = { ...DEFAULT_HELPLINE_CONFIG, ...data.config };
+      }
+    }
+  } catch (err) {
+    console.warn("Helpline fetch warning:", err);
+  }
+
+  // Populate inputs
+  const setValue = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.value = val !== undefined ? val : "";
+  };
+
+  setValue("helplineInputTitle", currentHelplineConfig.title);
+  setValue("helplineInputSubtitle", currentHelplineConfig.subtitle);
+  setValue("helplineInputHotlineTitle", currentHelplineConfig.hotlineTitle);
+  setValue("helplineInputHotlineNumber", currentHelplineConfig.hotlineNumber);
+  setValue("helplineInputHotlineLink", currentHelplineConfig.hotlineLink);
+  setValue("helplineInputHotlineBtnText", currentHelplineConfig.hotlineBtnText);
+  setValue("helplineInputWhatsappTitle", currentHelplineConfig.whatsappTitle);
+  setValue("helplineInputWhatsappNumber", currentHelplineConfig.whatsappNumber);
+  setValue("helplineInputWhatsappLink", currentHelplineConfig.whatsappLink);
+  setValue("helplineInputWhatsappBtnText", currentHelplineConfig.whatsappBtnText);
+  setValue("helplineInputEmailTitle", currentHelplineConfig.emailTitle);
+  setValue("helplineInputEmailAddress", currentHelplineConfig.emailAddress);
+  setValue("helplineInputEmailLink", currentHelplineConfig.emailLink);
+  setValue("helplineInputEmailBtnText", currentHelplineConfig.emailBtnText);
+  setValue("helplineInputAddressText", currentHelplineConfig.addressText);
+
+  window.updateHelplineLivePreview();
+};
+
+window.saveHelplineSettings = async function() {
+  const title = document.getElementById("helplineInputTitle")?.value.trim() || DEFAULT_HELPLINE_CONFIG.title;
+  const subtitle = document.getElementById("helplineInputSubtitle")?.value.trim() || DEFAULT_HELPLINE_CONFIG.subtitle;
+  const hotlineTitle = document.getElementById("helplineInputHotlineTitle")?.value.trim() || DEFAULT_HELPLINE_CONFIG.hotlineTitle;
+  const hotlineNumber = document.getElementById("helplineInputHotlineNumber")?.value.trim() || DEFAULT_HELPLINE_CONFIG.hotlineNumber;
+  let hotlineLink = document.getElementById("helplineInputHotlineLink")?.value.trim();
+  if (!hotlineLink) hotlineLink = `tel:${hotlineNumber.replace(/[^0-9+]/g, '')}`;
+  const hotlineBtnText = document.getElementById("helplineInputHotlineBtnText")?.value.trim() || DEFAULT_HELPLINE_CONFIG.hotlineBtnText;
+
+  const whatsappTitle = document.getElementById("helplineInputWhatsappTitle")?.value.trim() || DEFAULT_HELPLINE_CONFIG.whatsappTitle;
+  const whatsappNumber = document.getElementById("helplineInputWhatsappNumber")?.value.trim() || DEFAULT_HELPLINE_CONFIG.whatsappNumber;
+  let whatsappLink = document.getElementById("helplineInputWhatsappLink")?.value.trim();
+  if (!whatsappLink) whatsappLink = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}`;
+  const whatsappBtnText = document.getElementById("helplineInputWhatsappBtnText")?.value.trim() || DEFAULT_HELPLINE_CONFIG.whatsappBtnText;
+
+  const emailTitle = document.getElementById("helplineInputEmailTitle")?.value.trim() || DEFAULT_HELPLINE_CONFIG.emailTitle;
+  const emailAddress = document.getElementById("helplineInputEmailAddress")?.value.trim() || DEFAULT_HELPLINE_CONFIG.emailAddress;
+  let emailLink = document.getElementById("helplineInputEmailLink")?.value.trim();
+  if (!emailLink) emailLink = `mailto:${emailAddress}`;
+  const emailBtnText = document.getElementById("helplineInputEmailBtnText")?.value.trim() || DEFAULT_HELPLINE_CONFIG.emailBtnText;
+
+  const addressText = document.getElementById("helplineInputAddressText")?.value.trim() || DEFAULT_HELPLINE_CONFIG.addressText;
+
+  currentHelplineConfig = {
+    title,
+    subtitle,
+    hotlineTitle,
+    hotlineNumber,
+    hotlineLink,
+    hotlineBtnText,
+    whatsappTitle,
+    whatsappNumber,
+    whatsappLink,
+    whatsappBtnText,
+    emailTitle,
+    emailAddress,
+    emailLink,
+    emailBtnText,
+    addressText
+  };
+
+  try {
+    const res = await fetch("/api/admin/helpline", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(currentHelplineConfig)
+    });
+    if (res.ok) {
+      showAdminToast("💾 যোগাযোগ ও হেল্পলাইন তথ্য সফলভাবে সংরক্ষিত হয়েছে!");
+    } else {
+      showAdminToast("⚠️ হেল্পলাইন সংরক্ষণ সফল হতে পারেনি।");
+    }
+  } catch (err) {
+    showAdminToast("💾 লোকাল ডেটা আপডেট হয়েছে!");
+  }
+};
+
+window.resetHelplineSettingsToDefault = async function() {
+  if (!confirm("আপনি কি নিশ্চিত যে যোগাযোগ ও হেল্পলাইনের সকল তথ্য ডিফল্ট মানে ফিরিয়ে আনতে চান?")) return;
+
+  currentHelplineConfig = { ...DEFAULT_HELPLINE_CONFIG };
+
+  const setValue = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.value = val !== undefined ? val : "";
+  };
+
+  setValue("helplineInputTitle", currentHelplineConfig.title);
+  setValue("helplineInputSubtitle", currentHelplineConfig.subtitle);
+  setValue("helplineInputHotlineTitle", currentHelplineConfig.hotlineTitle);
+  setValue("helplineInputHotlineNumber", currentHelplineConfig.hotlineNumber);
+  setValue("helplineInputHotlineLink", currentHelplineConfig.hotlineLink);
+  setValue("helplineInputHotlineBtnText", currentHelplineConfig.hotlineBtnText);
+  setValue("helplineInputWhatsappTitle", currentHelplineConfig.whatsappTitle);
+  setValue("helplineInputWhatsappNumber", currentHelplineConfig.whatsappNumber);
+  setValue("helplineInputWhatsappLink", currentHelplineConfig.whatsappLink);
+  setValue("helplineInputWhatsappBtnText", currentHelplineConfig.whatsappBtnText);
+  setValue("helplineInputEmailTitle", currentHelplineConfig.emailTitle);
+  setValue("helplineInputEmailAddress", currentHelplineConfig.emailAddress);
+  setValue("helplineInputEmailLink", currentHelplineConfig.emailLink);
+  setValue("helplineInputEmailBtnText", currentHelplineConfig.emailBtnText);
+  setValue("helplineInputAddressText", currentHelplineConfig.addressText);
+
+  window.updateHelplineLivePreview();
+  await window.saveHelplineSettings();
+  showAdminToast("🔄 হেল্পলাইন সেটিংস ডিফল্ট মানে ফিরিয়ে আনা হয়েছে!");
+};
+
+// Initial load check if landing on #helpline
+if (window.location.hash === '#helpline') {
+  setTimeout(() => window.loadHelplineSettings && window.loadHelplineSettings(), 200);
+}
+
 

@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>আমার কোর্সসমূহ — Dipu Academy</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/dipu-logo.png?v=5">
+  <link rel="shortcut icon" href="/favicon.ico?v=5">
+  <link rel="apple-touch-icon" href="/images/dipu-logo.png?v=5">
+
+  <!-- Google Fonts: Hind Siliguri & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-page: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --card-border: #E2E8F0;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --brand-green: #10B981;
+      --brand-green-hover: #059669;
+      --brand-blue: #0084FF;
+      --brand-cyan: #00C2FF;
+      --tab-active-color: #10B981;
+      --progress-track: #E2E8F0;
+      --progress-fill: #10B981;
+      --header-bg: #FFFFFF;
+      --header-border: #E2E8F0;
+    }
+
+    [data-theme="dark"], .dark-theme {
+      --bg-page: #070913;
+      --card-bg: #0E1322;
+      --card-border: rgba(0, 194, 255, 0.16);
+      --text-main: #FFFFFF;
+      --text-muted: #94A3B8;
+      --brand-green: #10B981;
+      --brand-green-hover: #059669;
+      --brand-blue: #0084FF;
+      --brand-cyan: #00C2FF;
+      --tab-active-color: #00C2FF;
+      --progress-track: rgba(255, 255, 255, 0.12);
+      --progress-fill: #00C2FF;
+      --header-bg: rgba(14, 19, 34, 0.95);
+      --header-border: rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Hind Siliguri', 'Inter', -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Top Brand Navbar (Matching 10MS / Dipu Academy Style) ─── */
+    .site-header {
+      background-color: var(--header-bg);
+      border-bottom: 1px solid var(--header-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .brand-logo img {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      object-fit: cover;
+    }
+    .brand-title {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+    .brand-title span:first-child {
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+    .brand-title span:last-child {
+      font-weight: 800;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, #0084FF 0%, #00C2FF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      list-style: none;
+    }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+      padding: 6px 4px;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--brand-green);
+    }
+    [data-theme="dark"] .nav-link:hover, [data-theme="dark"] .nav-link.active {
+      color: var(--brand-cyan);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* Search Bar */
+    .search-box {
+      position: relative;
+      width: 220px;
+      display: flex;
+      align-items: center;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 8px 14px 8px 36px;
+      border-radius: 9999px;
+      border: 1px solid var(--header-border);
+      background: rgba(148, 163, 184, 0.08);
+      color: var(--text-main);
+      font-size: 0.88rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .search-box input:focus {
+      border-color: var(--brand-green);
+      background: var(--card-bg);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    }
+    [data-theme="dark"] .search-box input:focus {
+      border-color: var(--brand-cyan);
+      box-shadow: 0 0 0 3px rgba(0, 194, 255, 0.18);
+    }
+    .search-box i {
+      position: absolute;
+      left: 12px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+
+    /* Hotline Button */
+    .hotline-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: var(--brand-green);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.1);
+      transition: all 0.2s ease;
+    }
+    .hotline-btn:hover {
+      background: rgba(16, 185, 129, 0.18);
+    }
+
+    /* Notification Bell */
+    .icon-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      cursor: pointer;
+      position: relative;
+      padding: 6px;
+      border-radius: 50%;
+      transition: color 0.2s;
+    }
+    .icon-btn:hover {
+      color: var(--text-main);
+    }
+
+    /* User Profile Capsule */
+    .user-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      padding: 4px 10px 4px 4px;
+      border-radius: 9999px;
+      border: 1px solid var(--header-border);
+      background: var(--card-bg);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .user-pill:hover {
+      border-color: var(--brand-green);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--brand-green);
+    }
+    .user-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+      max-width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* ─── Main Content Container ─── */
+    .main-wrapper {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 4rem;
+      flex: 1;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+    .breadcrumb-row a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .breadcrumb-row a:hover {
+      color: var(--brand-green);
+    }
+    .breadcrumb-row span.current {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    /* Page Heading */
+    .page-title {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    /* ─── Category Tabs ─── */
+    .category-tabs-nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      border-bottom: 1.5px solid var(--header-border);
+      margin-bottom: 1.75rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .category-tabs-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-button {
+      background: none;
+      border: none;
+      padding: 0.65rem 0.2rem 0.85rem;
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      position: relative;
+      white-space: nowrap;
+      transition: color 0.2s ease;
+    }
+    .tab-button:hover {
+      color: var(--text-main);
+    }
+    .tab-button.active {
+      color: var(--tab-active-color);
+      font-weight: 700;
+    }
+    .tab-button.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1.5px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--tab-active-color);
+      border-radius: 9999px;
+    }
+
+    /* ─── Course Cards Container ─── */
+    .courses-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* Horizontal Wide Course Card (Exact Match to Screenshot) */
+    .course-card-horizontal {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .course-card-horizontal:hover {
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+    [data-theme="dark"] .course-card-horizontal:hover {
+      border-color: rgba(0, 194, 255, 0.35);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-top-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .course-thumb-box {
+      width: 170px;
+      height: 98px;
+      border-radius: 12px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #111827;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .course-thumb-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .course-card-horizontal:hover .course-thumb-box img {
+      transform: scale(1.05);
+    }
+
+    .course-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .course-card-title {
+      font-size: 1.22rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    /* Progress Tracker Bar with Dot / Knob & % */
+    .progress-bar-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 6px;
+      background: var(--progress-track);
+      border-radius: 9999px;
+      position: relative;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--progress-fill);
+      border-radius: 9999px;
+      position: relative;
+      transition: width 0.4s ease;
+    }
+    .progress-knob {
+      position: absolute;
+      right: -5px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 3px solid var(--progress-fill);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+
+    .progress-milestone-icon {
+      color: #94A3B8;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .progress-pct-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* Dashed Divider Line */
+    .card-divider {
+      height: 1px;
+      border-top: 1px dashed var(--card-border);
+      margin-bottom: 1.15rem;
+    }
+
+    /* Bottom Row: Avatars & Action Buttons */
+    .card-bottom-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .ready-banner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar-stack {
+      display: flex;
+      align-items: center;
+    }
+    .stack-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid var(--card-bg);
+      margin-left: -7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      color: #FFFFFF;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .stack-circle:first-child {
+      margin-left: 0;
+    }
+    .circle-coral { background: #FF5A5F; }
+    .circle-blue { background: #0070F3; }
+    .circle-amber { background: #F59E0B; }
+
+    .ready-text {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .action-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Primary Action: "শুরু করুন" / "চালিয়ে যান" -> TAKES TO VIDEO CLASS! */
+    .btn-play-video {
+      background: var(--brand-green);
+      color: #FFFFFF;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+    }
+    .btn-play-video:hover {
+      background: var(--brand-green-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+    }
+    [data-theme="dark"] .btn-play-video {
+      background: linear-gradient(135deg, #0084FF 0%, #00C2FF 100%);
+      box-shadow: 0 4px 14px rgba(0, 194, 255, 0.35);
+    }
+    [data-theme="dark"] .btn-play-video:hover {
+      box-shadow: 0 6px 20px rgba(0, 194, 255, 0.5);
+    }
+
+    /* Secondary Action: "কোর্স হোম" -> TAKES TO COURSE OVERVIEW */
+    .btn-course-home {
+      background: transparent;
+      color: var(--brand-green);
+      border: 1.5px solid var(--brand-green);
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-course-home:hover {
+      background: rgba(16, 185, 129, 0.08);
+    }
+    [data-theme="dark"] .btn-course-home {
+      color: var(--brand-cyan);
+      border-color: var(--brand-cyan);
+    }
+    [data-theme="dark"] .btn-course-home:hover {
+      background: rgba(0, 194, 255, 0.1);
+    }
+
+    /* Empty state */
+    .empty-state {
+      display: none;
+      text-align: center;
+      padding: 4rem 1.5rem;
+      background: var(--card-bg);
+      border-radius: 16px;
+      border: 1px dashed var(--card-border);
+    }
+    .empty-state img {
+      width: 140px;
+      opacity: 0.7;
+      margin-bottom: 1.5rem;
+    }
+    .empty-state h3 {
+      font-size: 1.3rem;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    .empty-state p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ─── Footer (Matching Screenshot) ─── */
+    .site-footer {
+      background-color: var(--card-bg);
+      border-top: 1px solid var(--card-border);
+      padding: 3rem 1.25rem 2rem;
+      margin-top: auto;
+    }
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+      gap: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .footer-col h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 1.2rem;
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .footer-col ul a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover {
+      color: var(--brand-green);
+    }
+    .app-badge-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    .app-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: #000000;
+      color: #FFFFFF;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+    .app-badge:hover {
+      opacity: 0.9;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .header-nav { display: none; }
+      .search-box { width: 140px; }
+      .footer-container { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 650px) {
+      .card-top-row { flex-direction: column; align-items: flex-start; }
+      .course-thumb-box { width: 100%; height: 160px; }
+      .card-bottom-row { flex-direction: column; align-items: stretch; gap: 1rem; }
+      .action-btn-group { justify-content: stretch; }
+      .action-btn-group a, .action-btn-group button { flex: 1; text-align: center; justify-content: center; }
+      .footer-container { grid-template-columns: 1fr; }
+      .search-box { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. TOP BRAND HEADER / NAVBAR
+       ========================================================================= -->
+  <header class="site-header">
+    <div class="header-container">
+      
+      <!-- Brand & Desktop Nav Links -->
+      <div class="header-left">
+        <a href="/" class="brand-logo">
+          <img src="/images/dipu-logo.png" alt="Dipu Academy">
+          <div class="brand-title">
+            <span>Dipu</span>
+            <span>Academy</span>
+          </div>
+        </a>
+
+        <ul class="header-nav">
+          <li><a href="/dashboard.html" class="nav-link"><i class="fas fa-chart-pie"></i> <span>ড্যাশবোর্ড</span></a></li>
+          <li><a href="/dashboard.html#report" class="nav-link"><i class="fas fa-chart-line"></i> <span>লার্নিং রিপোর্ট</span></a></li>
+          <li><a href="/#courses" class="nav-link"><i class="fas fa-compass"></i> <span>এক্সপ্লোর</span> <i class="fas fa-chevron-down" style="font-size: 0.65rem;"></i></a></li>
+        </ul>
+      </div>
+
+      <!-- Search, Phone, Bell & Profile -->
+      <div class="header-right">
+        <!-- Live Course Search Filter -->
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="courseSearchInput" placeholder="সার্চ করুন..." oninput="handleSearchCourses(this.value)">
+        </div>
+
+        <!-- Hotline Link -->
+        <a href="tel:16910" class="hotline-btn">
+          <i class="fas fa-phone-volume"></i>
+          <span>16910</span>
+        </a>
+
+        <!-- Notifications -->
+        <button type="button" class="icon-btn" title="বিজ্ঞপ্তি" onclick="alert('নতুন কোনো নোটিফিকেশন নেই।')">
+          <i class="far fa-bell"></i>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button type="button" class="icon-btn" id="themeToggleBtn" title="থিম পরিবর্তন" onclick="toggleTheme()">
+          <i class="fas fa-moon" id="themeIcon"></i>
+        </button>
+
+        <!-- User Profile Pill -->
+        <a href="/dashboard.html" class="user-pill" id="userPill">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150" id="userAvatarImg" class="user-avatar" alt="User">
+          <span class="user-name" id="userNameLabel">শিক্ষার্থী</span>
+          <i class="fas fa-chevron-down" style="font-size: 0.65rem; color: var(--text-muted);"></i>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       2. MAIN PAGE CONTENT: MY COURSES
+       ========================================================================= -->
+  <main class="main-wrapper">
+
+    <!-- Breadcrumb: হোম > আমার কোর্সসমূহ -->
+    <nav class="breadcrumb-row" aria-label="Breadcrumb">
+      <a href="/">হোম</a>
+      <i class="fas fa-chevron-right" style="font-size: 0.65rem;"></i>
+      <span class="current">আমার কোর্সসমূহ</span>
+    </nav>
+
+    <!-- Page Heading -->
+    <h1 class="page-title">আমার কোর্সসমূহ</h1>
+
+    <!-- Category Tabs Navigation (সব | একাডেমিক পড়াশোনা | স্কিল ডেভেলপমেন্ট | বইসমূহ) -->
+    <div class="category-tabs-nav" role="tablist">
+      <button class="tab-button active" onclick="filterCategory('all', this)">সব</button>
+      <button class="tab-button" onclick="filterCategory('academic', this)">একাডেমিক পড়াশোনা</button>
+      <button class="tab-button" onclick="filterCategory('skill', this)">স্কিল ডেভেলপমেন্ট</button>
+      <button class="tab-button" onclick="filterCategory('books', this)">বইসমূহ</button>
+    </div>
+
+    <!-- Enrolled Courses List (Dynamic Render) -->
+    <div class="courses-list" id="coursesList">
+      <!-- Injected via JavaScript with authentic data & fallback -->
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyState">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
+      <h3>কোনো কোর্স খুঁজে পাওয়া যায়নি</h3>
+      <p>এই বিভাগে আপনার কোনো কোর্স তালিকাভুক্ত নেই। নতুন স্কিল ও একাডেমিক প্রস্তুতি শুরু করতে আমাদের কোর্স ব্রাউজ করুন।</p>
+      <a href="/#courses" class="btn-play-video" style="display: inline-flex;">
+        <span>নতুন কোর্স এক্সপ্লোর করুন</span>
+        <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       3. SITE FOOTER (10MS / Dipu Academy Style)
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      
+      <!-- Brand & Mobile App -->
+      <div class="footer-col">
+        <a href="/" class="brand-logo" style="margin-bottom: 1rem;">
+          <img src="/images/dipu-logo.png" alt="Dipu Academy">
+          <div class="brand-title">
+            <span>Dipu</span>
+            <span>Academy</span>
+          </div>
+        </a>
+        <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 1.25rem;">
+          ডাউনলোড করুন আমাদের মোবাইল অ্যাপ এবং শুরু করুন ডিজিটাল লার্নিং যাত্রা যেকোনো সময়, যেকোনো স্থান থেকে।
+        </p>
+        <div class="app-badge-row">
+          <a href="#" class="app-badge">
+            <i class="fab fa-google-play" style="font-size: 1.1rem; color: #34A853;"></i>
+            <div>
+              <div style="font-size: 9px; opacity: 0.7;">GET IT ON</div>
+              <div>Google Play</div>
+            </div>
+          </a>
+          <a href="#" class="app-badge">
+            <i class="fab fa-apple" style="font-size: 1.15rem;"></i>
+            <div>
+              <div style="font-size: 9px; opacity: 0.7;">Download on the</div>
+              <div>App Store</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Company Links -->
+      <div class="footer-col">
+        <h4>কোম্পানি</h4>
+        <ul>
+          <li><a href="/#instructors">শিক্ষক হিসেবে যোগ দিন</a></li>
+          <li><a href="/#affiliate">অ্যাফিলিয়েট রেজিস্ট্রেশন</a></li>
+          <li><a href="/#portal">অ্যাফিলিয়েট ভেরিফিকেশন পোর্টাল</a></li>
+          <li><a href="/#privacy">প্রাইভেসি পলিসি</a></li>
+          <li><a href="/#terms">ব্যবহারের শর্তাবলী</a></li>
+        </ul>
+      </div>
+
+      <!-- Other Services -->
+      <div class="footer-col">
+        <h4>অন্যান্য</h4>
+        <ul>
+          <li><a href="/#courses">চাকরি প্রস্তুতি কোর্সসমূহ</a></li>
+          <li><a href="/#certificate">সার্টিফিকেট ভেরিফাই করুন</a></li>
+          <li><a href="/shop">ফ্রি বুকস ও নোটস ডাউনলোড</a></li>
+          <li><a href="/ai">স্মার্ট এআই ডাউট সলভার</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="footer-col">
+        <h4>আমাদের যোগাযোগ মাধ্যম</h4>
+        <div style="display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.88rem; color: var(--text-muted);">
+          <div>কল করুন: <a href="tel:16910" id="footerHotlineLink" style="color: var(--brand-green); text-decoration: none;"><strong id="footerHotlineText">16910</strong></a> (24x7)</div>
+          <div>দেশের বাহির থেকে: <strong>+880 9610916910</strong></div>
+          <div>ইমেইল: <a href="mailto:support@dipuacademy.com" id="footerEmailLink" style="color: inherit; text-decoration: none;"><strong id="footerEmailText">support@dipuacademy.com</strong></a></div>
+          <div>পার্টনারশিপের জন্য: <strong>partnership@dipuacademy.com</strong></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 Dipu Academy. সর্বস্বত্ব সংরক্ষিত।</div>
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <a href="https://facebook.com/dipuedu" id="footerFbLink" target="_blank" rel="noreferrer" style="color: var(--text-muted);" title="Facebook"><i class="fab fa-facebook fa-lg"></i></a>
+        <a href="https://youtu.be/gzhi2X6tpmg?si=MiyRu_JIe3mqh80L" id="footerYtLink" target="_blank" rel="noreferrer" style="color: var(--text-muted);" title="YouTube"><i class="fab fa-youtube fa-lg"></i></a>
+        <a href="https://instagram.com/dipuedu" id="footerInstaLink" target="_blank" rel="noreferrer" style="color: var(--text-muted);" title="Instagram"><i class="fab fa-instagram fa-lg"></i></a>
+        <a href="https://linkedin.com/company/dipuedu" id="footerLinkedinLink" target="_blank" rel="noreferrer" style="color: var(--text-muted);" title="LinkedIn"><i class="fab fa-linkedin fa-lg"></i></a>
+        <a href="https://wa.me/8801912345678" id="footerWhatsappLink" target="_blank" rel="noreferrer" style="color: var(--text-muted);" title="WhatsApp"><i class="fab fa-whatsapp fa-lg"></i></a>
+        <a href="https://t.me/dipuacademy" id="footerTelegramLink" target="_blank" rel="noreferrer" style="color: var(--text-muted);" title="Telegram"><i class="fab fa-telegram fa-lg"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/app.js"></script>
+
+
+  <!-- =========================================================================
+       4. JAVASCRIPT: DATA FEED & ACTIONS
+       ========================================================================= -->
+  <script>
+    // Enrolled courses database matching student needs & user screenshot
+    const DEFAULT_COURSES = [
+      {
+        id: "course-skill-graphic-design",
+        slug: "graphic-design-photoshop",
+        title: "Graphic Designing with Photoshop",
+        category: "skill",
+        thumbnail: "/images/courses/graphic-design-photoshop.jpg",
+        progress: 0,
+        completedLessons: 0,
+        totalLessons: 38,
+        courseHomeUrl: "/course.html?id=course-skill-graphic-design",
+        videoPlayerUrl: "/player.html?course=course-skill-graphic-design"
+      },
+      {
+        id: "course-user-hsc28",
+        slug: "hsc-28-full-prep",
+        title: "HSC '২৮ পূর্ণাঙ্গ বিজ্ঞান প্রস্তুতি কোর্স (পদার্থ, রসায়ন, গণিত)",
+        category: "academic",
+        thumbnail: "/images/courses/hsc-28-prep.jpg",
+        progress: 18,
+        completedLessons: 7,
+        totalLessons: 40,
+        courseHomeUrl: "/course.html?id=course-user-hsc28",
+        videoPlayerUrl: "/player.html?course=course-user-hsc28"
+      },
+      {
+        id: "course-user-c10-biz",
+        slug: "class-10-business-studies",
+        title: "১০ম শ্রেণীর পূর্ণাঙ্গ ব্যবসায় শিক্ষা ও হিসাববিজ্ঞান কোর্স",
+        category: "academic",
+        thumbnail: "/images/courses/class10-business-studies.jpg",
+        progress: 45,
+        completedLessons: 18,
+        totalLessons: 40,
+        courseHomeUrl: "/course.html?id=course-user-c10-biz",
+        videoPlayerUrl: "/player.html?course=course-user-c10-biz"
+      },
+      {
+        id: "book-hsc-physics-master",
+        slug: "hsc-physics-printed-book",
+        title: "HSC পদার্থবিজ্ঞান ১ম ও ২য় পত্র পূর্ণাঙ্গ ফর্মুলা ও ম্যাথ হ্যান্ডবুক",
+        category: "books",
+        thumbnail: "/images/shop-banner-1.jpg",
+        progress: 100,
+        completedLessons: 12,
+        totalLessons: 12,
+        courseHomeUrl: "/book.html?id=hsc-physics-handbook",
+        videoPlayerUrl: "/player.html?course=hsc-physics-1st-paper"
+      }
+    ];
+
+    let currentCategory = 'all';
+    let searchQuery = '';
+
+    // Load User Profile from LocalStorage
+    function initProfile() {
+      try {
+        const stored = JSON.parse(localStorage.getItem('dipu_user_profile') || '{}');
+        if (stored.fullName) {
+          document.getElementById('userNameLabel').textContent = stored.fullName;
+        } else {
+          const authName = localStorage.getItem('da_user_name');
+          if (authName) document.getElementById('userNameLabel').textContent = authName;
+        }
+        if (stored.avatar) {
+          document.getElementById('userAvatarImg').src = stored.avatar;
+        }
+      } catch(e) {}
+    }
+
+    // Theme Management
+    function initTheme() {
+      const savedTheme = localStorage.getItem('dipu_theme') || 'light';
+      applyTheme(savedTheme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      localStorage.setItem('dipu_theme', next);
+    }
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.body.classList.add('dark-theme');
+        document.getElementById('themeIcon').className = 'fas fa-sun';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.body.classList.remove('dark-theme');
+        document.getElementById('themeIcon').className = 'fas fa-moon';
+      }
+    }
+
+    // Filter by Category Tab
+    function filterCategory(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderCourses();
+    }
+
+    // Live Search
+    function handleSearchCourses(query) {
+      searchQuery = (query || '').toLowerCase().trim();
+      renderCourses();
+    }
+
+    // Render Course Cards with exact design from screenshot
+    function renderCourses() {
+      const container = document.getElementById('coursesList');
+      const emptyState = document.getElementById('emptyState');
+      
+      const filtered = DEFAULT_COURSES.filter(course => {
+        const matchesCategory = currentCategory === 'all' || course.category === currentCategory;
+        const matchesSearch = !searchQuery || course.title.toLowerCase().includes(searchQuery);
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+
+      container.innerHTML = filtered.map(course => {
+        const isStarted = course.progress > 0;
+        const playBtnLabel = isStarted ? 'চালিয়ে যান' : 'শুরু করুন';
+        
+        return `
+          <div class="course-card-horizontal">
+            <!-- Top Section: Thumbnail + Title + Progress Bar -->
+            <div class="card-top-row">
+              <div class="course-thumb-box" onclick="goToVideo('${course.videoPlayerUrl}')" style="cursor: pointer;" title="ভিডিও ক্লাস শুরু করুন">
+                <img src="${course.thumbnail}" alt="${course.title}" onerror="this.src='/images/courses/hsc-28-prep.jpg'">
+              </div>
+
+              <div class="course-details">
+                <h3 class="course-card-title">${course.title}</h3>
+                
+                <!-- Progress Tracker Line with Knob and Percentage -->
+                <div class="progress-bar-container">
+                  <div class="progress-track">
+                    <div class="progress-fill" style="width: ${course.progress}%;">
+                      <span class="progress-knob"></span>
+                    </div>
+                  </div>
+                  
+                  <span class="progress-milestone-icon">
+                    <i class="far fa-circle-check"></i>
+                  </span>
+
+                  <span class="progress-pct-label">${course.progress}% সম্পন্ন</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dashed Divider -->
+            <div class="card-divider"></div>
+
+            <!-- Bottom Section: Ready Avatars & Action Buttons -->
+            <div class="card-bottom-row">
+              <!-- Ready Avatars Banner -->
+              <div class="ready-banner">
+                <div class="avatar-stack">
+                  <div class="stack-circle circle-coral"><i class="fas fa-play" style="font-size: 8px;"></i></div>
+                  <div class="stack-circle circle-blue"><i class="fas fa-book-open" style="font-size: 8px;"></i></div>
+                  <div class="stack-circle circle-amber"><i class="fas fa-graduation-cap" style="font-size: 8px;"></i></div>
+                </div>
+                <span class="ready-text">শেখার জন্য প্রস্তুত?</span>
+              </div>
+
+              <!-- Buttons: শুরু করুন (ভিডিওতে নিয়ে যাবে) and কোর্স হোম -->
+              <div class="action-btn-group">
+                <a href="${course.videoPlayerUrl}" class="btn-play-video" title="সরাসরি ভিডিও ক্লাসরুমে যান">
+                  <i class="fas fa-circle-play"></i>
+                  <span>${playBtnLabel}</span>
+                </a>
+                
+                <a href="${course.courseHomeUrl}" class="btn-course-home" title="কোর্সের পূর্ণাঙ্গ সিলেবাস ও বিবরণ">
+                  <span>কোর্স হোম</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Direct Navigation to Video Player
+    function goToVideo(url) {
+      window.location.href = url;
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      initProfile();
+      initTheme();
+      renderCourses();
+    });
+  </script>
+
+</body>
+</html>

@@ -12,72 +12,8 @@ const { sendSMS, formatOtpMessage } = require('../services/smsService');
 const mongoose = require('mongoose');
 
 const IN_MEMORY_OTPS = new Map();
-const IN_MEMORY_USERS = new Map([
-  [
-    '01712345678',
-    {
-      _id: 'demo-student-id',
-      phone: '01712345678',
-      name: 'তানভীর হাসান (শিক্ষার্থী)',
-      role: 'student',
-      institution: 'ঢাকা কলেজ',
-      classLevel: 'HSC',
-      streakDays: 7,
-      eduCoins: 250,
-      enrolledCourses: ['course-user-c10-biz', 'course-user-hsc28'],
-      activeSessionToken: null,
-      save: async function() { return this; }
-    }
-  ],
-  [
-    'demo-student-id',
-    {
-      _id: 'demo-student-id',
-      phone: '01712345678',
-      name: 'তানভীর হাসান (শিক্ষার্থী)',
-      role: 'student',
-      institution: 'ঢাকা কলেজ',
-      classLevel: 'HSC',
-      streakDays: 7,
-      eduCoins: 250,
-      enrolledCourses: ['course-user-c10-biz', 'course-user-hsc28'],
-      activeSessionToken: null,
-      save: async function() { return this; }
-    }
-  ],
-  [
-    '01912345678',
-    {
-      _id: 'demo-admin-id',
-      phone: '01912345678',
-      name: 'দীপু আহমেদ (অ্যাডমিন)',
-      role: 'admin',
-      institution: 'BUET',
-      classLevel: 'All',
-      streakDays: 30,
-      eduCoins: 1000,
-      enrolledCourses: [],
-      activeSessionToken: null,
-      save: async function() { return this; }
-    }
-  ],
-  [
-    'demo-admin-id',
-    {
-      _id: 'demo-admin-id',
-      phone: '01912345678',
-      name: 'দীপু আহমেদ (অ্যাডমিন)',
-      role: 'admin',
-      institution: 'BUET',
-      classLevel: 'All',
-      streakDays: 30,
-      eduCoins: 1000,
-      enrolledCourses: [],
-      activeSessionToken: null,
-      save: async function() { return this; }
-    }
-  ]
-]);
+// Real accounts only — empty map for memory fallback
+const IN_MEMORY_USERS = new Map();
 
 // POST /api/auth/send-otp
 router.post('/send-otp', otpSendRateLimiter, async (req, res) => {
@@ -268,6 +204,7 @@ router.post('/verify-otp', async (req, res) => {
         success: true,
         message: 'Login successful.',
         isNewUser,
+        isOnboarded: !!user.isOnboarded,
         needsClassSelection: isNewUser || !user.classLevel || user.classLevel === 'HSC',
         sessionToken: token,
         user: {
@@ -276,6 +213,9 @@ router.post('/verify-otp', async (req, res) => {
           phone: user.phone,
           role: user.role,
           classLevel: user.classLevel,
+          group: user.group,
+          avatar: user.avatar,
+          isOnboarded: !!user.isOnboarded,
           streakDays: user.streakDays,
           eduCoins: user.eduCoins,
           enrolledCourses: user.enrolledCourses,
@@ -341,6 +281,203 @@ router.post('/set-language', verifyAuth, async (req, res) => {
   }
 });
 
+// POST /api/auth/complete-onboarding — Multi-step profile setup after login
+router.post('/complete-onboarding', async (req, res) => {
+  try {
+    let { phone, name, password, classLevel, group, institution, avatar } = req.body;
+    let user = null;
+    let decodedId = null;
+    let decodedPhone = null;
+
+    // Check auth token if present
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      try {
+        const decoded = jwt.verify(authHeader.split(' ')[1], process.env.JWT_SECRET || 'dipu_edu_default_jwt_secret_dev');
+        decodedId = decoded.id;
+        decodedPhone = decoded.phone;
+      } catch (e) {}
+    }
+
+    const targetPhone = phone || decodedPhone;
+
+    if (mongoose.connection.readyState === 1) {
+      try {
+        if (decodedId) user = await User.findById(decodedId);
+        if (!user && targetPhone) user = await User.findOne({ phone: targetPhone });
+        if (!user) {
+          if (!targetPhone) {
+            return res.status(400).json({ success: false, message: 'User not found. Please provide phone or login again.' });
+          }
+          user = new User({ phone: targetPhone });
+        }
+
+        if (name) user.name = name.trim();
+        if (password) {
+          const salt = await bcrypt.genSalt(10);
+          user.password = await bcrypt.hash(password, salt);
+        }
+        if (classLevel) user.classLevel = classLevel;
+        if (group) user.group = group;
+        if (institution) user.institution = institution;
+        if (avatar) user.avatar = avatar;
+        user.isOnboarded = true;
+
+        await user.save();
+      } catch (dbErr) {
+        console.warn('[DB Error in onboarding, using fallback]:', dbErr.message);
+        user = null;
+      }
+    }
+
+    // In-memory fallback if not connected or db error
+    if (!user) {
+      user = IN_MEMORY_USERS.get(targetPhone) || (decodedId ? IN_MEMORY_USERS.get(decodedId) : null);
+      if (!user) {
+        user = {
+          _id: decodedId || `user_${Date.now()}`,
+          phone: targetPhone || '01900000000',
+          role: 'student',
+          streakDays: 1,
+          eduCoins: 50,
+          enrolledCourses: [],
+        };
+      }
+      if (name) user.name = name.trim();
+      if (password) {
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
+      }
+      if (classLevel) user.classLevel = classLevel;
+      if (group) user.group = group;
+      if (institution) user.institution = institution;
+      if (avatar) user.avatar = avatar;
+      user.isOnboarded = true;
+
+      if (targetPhone) IN_MEMORY_USERS.set(targetPhone, user);
+      if (user._id) IN_MEMORY_USERS.set(user._id.toString(), user);
+    }
+
+    const newSessionToken = user.activeSessionToken || uuidv4();
+    user.activeSessionToken = newSessionToken;
+    if (typeof user.save === 'function') {
+      await user.save().catch(() => {});
+    }
+
+    const secret = process.env.JWT_SECRET || 'dipu_edu_default_jwt_secret_dev';
+    const token = jwt.sign(
+      { id: user._id, phone: user.phone, role: user.role, sessionToken: newSessionToken },
+      secret,
+      { expiresIn: '30d' }
+    );
+
+    res.cookie('session_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: 'Onboarding completed successfully!',
+      sessionToken: token,
+      user: {
+        id: user._id,
+        name: user.name,
+        phone: user.phone,
+        role: user.role,
+        classLevel: user.classLevel,
+        group: user.group,
+        avatar: user.avatar,
+        isOnboarded: true,
+        streakDays: user.streakDays || 1,
+        eduCoins: user.eduCoins || 50,
+        institution: user.institution || 'শিক্ষা প্রতিষ্ঠান',
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to complete onboarding.', error: error.message });
+  }
+});
+
+// POST /api/auth/login-password — Login using Phone and Password
+router.post('/login-password', async (req, res) => {
+  try {
+    const { phone, password } = req.body;
+    if (!phone || !password) {
+      return res.status(400).json({ success: false, message: 'মোবাইল নম্বর এবং পাসওয়ার্ড উভয়ই প্রয়োজন।' });
+    }
+
+    let user = null;
+    if (mongoose.connection.readyState === 1) {
+      try {
+        user = await User.findOne({ phone });
+      } catch (e) {
+        user = null;
+      }
+    }
+    if (!user) {
+      user = IN_MEMORY_USERS.get(phone);
+    }
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'এই নম্বরে কোনো অ্যাকাউন্ট পাওয়া যায়নি। অনুগ্রহ করে ওটিপি দিয়ে লগইন করুন।' });
+    }
+
+    if (!user.password) {
+      return res.status(400).json({ success: false, message: 'এই অ্যাকাউন্টে এখনও পাসওয়ার্ড সেট করা হয়নি। অনুগ্রহ করে ওটিপি দিয়ে প্রবেশ করে পাসওয়ার্ড সেট করুন।' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ success: false, message: 'ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন অথবা ওটিপি ব্যবহার করুন।' });
+    }
+
+    const newSessionToken = uuidv4();
+    user.activeSessionToken = newSessionToken;
+    user.lastActiveDate = new Date();
+    if (typeof user.save === 'function') {
+      await user.save().catch(() => {});
+    }
+
+    const secret = process.env.JWT_SECRET || 'dipu_edu_default_jwt_secret_dev';
+    const token = jwt.sign(
+      { id: user._id, phone: user.phone, role: user.role, sessionToken: newSessionToken },
+      secret,
+      { expiresIn: '30d' }
+    );
+
+    res.cookie('session_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: 'Login successful.',
+      isOnboarded: !!user.isOnboarded,
+      sessionToken: token,
+      user: {
+        id: user._id,
+        name: user.name,
+        phone: user.phone,
+        role: user.role,
+        classLevel: user.classLevel,
+        group: user.group,
+        avatar: user.avatar,
+        isOnboarded: !!user.isOnboarded,
+        streakDays: user.streakDays || 1,
+        eduCoins: user.eduCoins || 50,
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Password login failed.', error: error.message });
+  }
+});
+
 // GET /api/auth/me
 router.get('/me', verifyAuth, (req, res) => {
   return res.status(200).json({
@@ -351,6 +488,9 @@ router.get('/me', verifyAuth, (req, res) => {
       phone: req.user.phone,
       role: req.user.role,
       classLevel: req.user.classLevel,
+      group: req.user.group,
+      avatar: req.user.avatar,
+      isOnboarded: !!req.user.isOnboarded,
       streakDays: req.user.streakDays,
       eduCoins: req.user.eduCoins,
       preferredLanguage: req.user.preferredLanguage,

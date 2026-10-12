@@ -442,8 +442,46 @@
       transition: border-color 0.2s;
     }
 
+    /* Fluid Word Text Animation for FAQ & Syllabus Accordion */
+    @keyframes faqWordReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(8px) scale(0.96);
+        filter: blur(3px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    .faq-word-anim {
+      display: inline-block;
+      opacity: 0;
+      animation: faqWordReveal 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      will-change: transform, opacity, filter;
+      margin-right: 0.28rem;
+    }
+
+    .chapter-accordion-item {
+      border: 1px solid var(--cd-border);
+      border-radius: 12px;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.02);
+      transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+
     .chapter-accordion-item:hover {
-      border-color: rgba(255, 122, 26, 0.3);
+      border-color: rgba(255, 122, 26, 0.35);
+      background: rgba(255, 122, 26, 0.025);
+    }
+
+    .chapter-accordion-item.active {
+      border-color: rgba(255, 122, 26, 0.5);
+      background: rgba(255, 122, 26, 0.04);
+      box-shadow: 0 6px 22px rgba(255, 122, 26, 0.12);
     }
 
     .chapter-header {
@@ -454,6 +492,7 @@
       cursor: pointer;
       user-select: none;
       gap: 12px;
+      transition: background 0.2s ease;
     }
 
     .chapter-title {
@@ -463,14 +502,30 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      transition: color 0.25s ease;
+    }
+
+    .chapter-accordion-item.active .chapter-title {
+      color: #FFB347;
+    }
+
+    .chapter-header .fa-chevron-down {
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.25s ease;
+      font-size: 0.85rem;
+      color: #94A3B8;
+    }
+
+    .chapter-accordion-item.active .chapter-header .fa-chevron-down {
+      color: var(--cd-orange);
     }
 
     .chapter-body {
       padding: 0 1.25rem 1.25rem;
       display: none;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
-      font-size: 0.92rem;
-      color: #94A3B8;
+      font-size: 0.94rem;
+      line-height: 1.75;
+      color: #CBD5E1;
       padding-top: 1rem;
     }
 
@@ -1018,12 +1073,12 @@
             <span>সাধারণ জিজ্ঞাসাসমূহ (FAQ)</span>
           </h2>
           <div id="faqListWrap">
-            <div class="chapter-accordion-item">
+            <div class="chapter-accordion-item active">
               <div class="chapter-header" onclick="toggleChapter(this)">
                 <div class="chapter-title"><i class="fas fa-truck" style="color: var(--cd-orange);"></i> বই ডেলিভারি হতে কত দিন সময় লাগবে?</div>
-                <i class="fas fa-chevron-down"></i>
+                <i class="fas fa-chevron-down" style="transform: rotate(180deg); color: var(--cd-orange);"></i>
               </div>
-              <div class="chapter-body">
+              <div class="chapter-body active">
                 ঢাকার ভেতর ২৪ থেকে ৪৮ ঘণ্টা এবং ঢাকার বাইরে জেলা সদরে ২ থেকে ৩ কার্যদিবসের মধ্যে সরাসরি ক্যাশ অন ডেলিভারিতে বই পৌঁছে দেওয়া হবে।
               </div>
             </div>
@@ -1817,6 +1872,24 @@
       // Render Chapters Accordion
       renderChapters(currentBook.chapters || []);
 
+      // Trigger fluid word animation on active items
+      setTimeout(() => {
+        document.querySelectorAll("#faqListWrap .chapter-body.active, #bookChaptersList .chapter-body.active").forEach(triggerAccordionWordAnimation);
+      }, 150);
+
+      // Trigger word animation when FAQ section scrolls into view
+      const faqSec = document.getElementById("sec-faq");
+      if (faqSec && 'IntersectionObserver' in window) {
+        const faqObs = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              faqSec.querySelectorAll(".chapter-body.active").forEach(triggerAccordionWordAnimation);
+              faqObs.unobserve(faqSec);
+            }
+          });
+        }, { threshold: 0.1 });
+        faqObs.observe(faqSec);
+      }
     }
 
     function renderChapters(chapters) {
@@ -1855,13 +1928,47 @@
       `).join("");
     }
 
+    function triggerAccordionWordAnimation(bodyEl) {
+      if (!bodyEl) return;
+      const targetEl = bodyEl.querySelector("p") || bodyEl;
+      let rawText = targetEl.getAttribute("data-raw-text");
+      if (!rawText) {
+        const clone = targetEl.cloneNode(true);
+        clone.querySelectorAll("button, i, a").forEach(el => el.remove());
+        rawText = clone.textContent.trim();
+        targetEl.setAttribute("data-raw-text", rawText);
+      }
+      if (!rawText) return;
+      const words = rawText.split(/\s+/).filter(Boolean);
+      const animatedSpans = words.map((w, idx) => 
+        `<span class="faq-word-anim" style="animation-delay: ${Math.min(idx * 22, 600)}ms">${w}</span>`
+      ).join(" ");
+
+      if (targetEl !== bodyEl) {
+        targetEl.innerHTML = animatedSpans;
+      } else {
+        const preservedBtns = Array.from(bodyEl.querySelectorAll("button, a"));
+        bodyEl.innerHTML = animatedSpans;
+        preservedBtns.forEach(btn => bodyEl.appendChild(btn));
+      }
+    }
+
     function toggleChapter(headerEl) {
+      const parentItem = headerEl.closest(".chapter-accordion-item");
       const bodyEl = headerEl.nextElementSibling;
       const icon = headerEl.querySelector(".fa-chevron-down");
       if (bodyEl) {
-        bodyEl.classList.toggle("active");
+        const isOpening = !bodyEl.classList.contains("active");
+        bodyEl.classList.toggle("active", isOpening);
+        if (parentItem) {
+          parentItem.classList.toggle("active", isOpening);
+        }
         if (icon) {
-          icon.style.transform = bodyEl.classList.contains("active") ? "rotate(180deg)" : "rotate(0deg)";
+          icon.style.transform = isOpening ? "rotate(180deg)" : "rotate(0deg)";
+          icon.style.color = isOpening ? "var(--cd-orange)" : "#94A3B8";
+        }
+        if (isOpening) {
+          triggerAccordionWordAnimation(bodyEl);
         }
       }
     }
@@ -2024,8 +2131,157 @@
     document.addEventListener("DOMContentLoaded", initBookPage);
   </script>
 
+  <!-- ============================================================================
+       MASTER FOOTER (DIPU'S EDU — 5-COLUMN ENTERPRISE FOOTER)
+       ============================================================================ -->
+  <footer class="master-footer" id="masterFooter">
+    <div class="container">
+      
+      <div class="footer-top-grid">
+        
+        <!-- Col 1: Brand, App Download & Social Media -->
+        <div>
+          <a href="/" class="footer-brand-title" style="text-decoration: none; display: inline-flex; align-items: center; gap: 12px; margin-bottom: 0.85rem;">
+            <img src="/images/dipu-logo.png" alt="Dipu Academy Logo" style="width: 42px; height: 42px; border-radius: 11px; object-fit: cover; box-shadow: 0 4px 16px rgba(0, 194, 255, 0.4); border: 1.5px solid rgba(0, 194, 255, 0.25); flex-shrink: 0;">
+            <div style="display: flex; flex-direction: column; line-height: 1.15;">
+              <span style="color: #FFFFFF; font-weight: 800; font-size: 1.25rem; letter-spacing: -0.01em;">Dipu</span>
+              <span style="background: linear-gradient(135deg, #0084FF 0%, #00C2FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; font-size: 1.25rem; letter-spacing: -0.01em;">Academy</span>
+            </div>
+          </a>
+          <p class="footer-desc">
+            বাংলাদেশের অগ্রণী ডিজিটাল লার্নিং প্ল্যাটফর্ম। ৬ষ্ঠ থেকে দ্বাদশ ও এডমিশন শিক্ষার্থীদের জন্য উন্নতমানের শিক্ষা নিশ্চিত করাই আমাদের অঙ্গীকার।
+          </p>
+
+          <div class="app-download-badges">
+            <a href="https://play.google.com" target="_blank" rel="noreferrer" class="app-badge-btn" title="Download on Google Play">
+              <!-- Real 4-Color Google Play Vector Logo -->
+              <svg width="28" height="28" viewBox="0 0 512 512" style="flex-shrink: 0;">
+                <path fill="#4285F4" d="M325.3 234.3L104.6 13l280.8 161.2-60.1 59.9z"/>
+                <path fill="#EA4335" d="M47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.4l256.7-256L47 0z"/>
+                <path fill="#FBBC04" d="M405.3 205.2L348.6 238l-43.1 43.1 43.1 43.1 57-33.1c20-11.5 20-30.3-.3-45.9z"/>
+                <path fill="#34A853" d="M104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
+              </svg>
+              <div>
+                <div class="app-badge-sub">GET IT ON</div>
+                <div class="app-badge-title">Google Play</div>
+              </div>
+            </a>
+          </div>
+
+          <div class="footer-social-row">
+            <!-- Facebook -->
+            <a href="https://facebook.com" id="footerFbLink" target="_blank" rel="noreferrer" class="social-icon-btn social-fb" title="Facebook" aria-label="Facebook">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+
+            <!-- YouTube -->
+            <a href="https://youtube.com" id="footerYtLink" target="_blank" rel="noreferrer" class="social-icon-btn social-yt" title="YouTube" aria-label="YouTube">
+              <svg width="20" height="20" viewBox="0 0 24 24">
+                <path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.376.55 9.376.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/>
+                <path fill="#FFFFFF" d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://instagram.com" id="footerInstaLink" target="_blank" rel="noreferrer" class="social-icon-btn social-insta" title="Instagram" aria-label="Instagram">
+              <svg width="19" height="19" viewBox="0 0 24 24">
+                <defs>
+                  <linearGradient id="instaFooterGradBook" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#FFDC80"/>
+                    <stop offset="25%" stop-color="#FD5949"/>
+                    <stop offset="50%" stop-color="#D6249F"/>
+                    <stop offset="100%" stop-color="#285AEB"/>
+                  </linearGradient>
+                </defs>
+                <path fill="url(#instaFooterGradBook)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </a>
+
+            <!-- LinkedIn -->
+            <a href="https://linkedin.com" id="footerLinkedinLink" target="_blank" rel="noreferrer" class="social-icon-btn social-in" title="LinkedIn" aria-label="LinkedIn">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="#0A66C2">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </a>
+
+            <!-- TikTok -->
+            <a href="https://tiktok.com" id="footerTiktokLink" target="_blank" rel="noreferrer" class="social-icon-btn social-tiktok" title="TikTok" aria-label="TikTok">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298 0 .591.044.87.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.3 6.3 0 0 0 1.87-4.49V8.6a8.28 8.28 0 0 0 4.9 1.59V6.74c-.33-.01-.67-.03-1-.05z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: আমাদের সম্পর্কে -->
+        <div>
+          <h4 class="footer-col-title">আমাদের সম্পর্কে</h4>
+          <ul class="footer-links-list">
+            <li><a href="/#about" class="footer-link-item">কোম্পানি পরিচিতি</a></li>
+            <li><a href="/#hero" class="footer-link-item">মিশন ও ভিশন</a></li>
+            <li><a href="/#features" class="footer-link-item">শিক্ষণ পদ্ধতি</a></li>
+            <li><a href="#" class="footer-link-item">মিডিয়া কভারেজ</a></li>
+            <li><a href="#" class="footer-link-item">ব্লগ ও আর্টিকেল</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: ক্যারিয়ার -->
+        <div>
+          <h4 class="footer-col-title">ক্যারিয়ার</h4>
+          <ul class="footer-links-list">
+            <li><a href="#" class="footer-link-item">উন্মুক্ত পদসমূহ (Hiring)</a></li>
+            <li><a href="#" class="footer-link-item">শিক্ষক নিয়োগ বিজ্ঞপ্তি</a></li>
+            <li><a href="#" class="footer-link-item">আমাদের ওয়ার্ক কালচার</a></li>
+            <li><a href="#" class="footer-link-item">ইন্টার্নশিপ প্রোগ্রাম</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: স্কিলস ও প্রোগ্রাম -->
+        <div>
+          <h4 class="footer-col-title">স্কিলস ও প্রোগ্রাম</h4>
+          <ul class="footer-links-list">
+            <li><a href="/course" class="footer-link-item">এইচএসসি ২০২৬/২৭</a></li>
+            <li><a href="/course" class="footer-link-item">এসএসসি ২০২৬/২৭</a></li>
+            <li><a href="/course" class="footer-link-item">ভিডিও ও লেকচার ক্লাস</a></li>
+            <li><a href="/dashboard" class="footer-link-item">লাইভ মডেল টেস্ট</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 5: টিচার পোর্টাল ও হেল্প -->
+        <div>
+          <h4 class="footer-col-title">টিচার পোর্টাল ও হেল্প</h4>
+          <ul class="footer-links-list">
+            <li><a href="tel:16910" class="footer-link-item"><span style="color:#FF7A1A; margin-right:4px;">🎧</span> ২৪/৭ হেল্প ও সাপোর্ট</a></li>
+            <li><a href="#" class="footer-link-item">লেকচার গাইডলাইন</a></li>
+            <li><a href="tel:16910" class="footer-link-item">হেল্পলাইন: 16910</a></li>
+            <li><a href="mailto:support@dipusedu.com" class="footer-link-item">support@dipusedu.com</a></li>
+            <li style="color:#94A3B8; font-size: 0.82rem; padding-top: 4px; line-height: 1.5;">রোড ৬৬, ব্লক ডি, বনানী, ঢাকা-১২১৩</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Legal Bottom Sub-footer -->
+      <div class="footer-legal-bar">
+        <div>
+          © ২০২৬ Dipu Academy. সর্বস্বত্ব সংরক্ষিত।
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 0.65rem; flex-wrap: wrap;">
+          <a href="#" class="footer-link-item">শর্তাবলী ও নিয়মাবলী</a>
+          <span>•</span>
+          <a href="#" class="footer-link-item">প্রাইভেসি পলিসি</a>
+          <span>•</span>
+          <a href="#" class="footer-link-item">রিফান্ড পলিসি</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
   <!-- React TypeScript Navbar Bundle & Global Animations Engine -->
-  <script src="/js/navbar-bundle.js"></script>
+  <script src="/js/navbar-bundle.js?v=4.0"></script>
   <script src="/js/site-animations.js" defer></script>
 </body>
 </html>

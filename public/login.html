@@ -272,42 +272,6 @@ body.light-theme .brand-link span {
   color: #0F172A;
 }
 
-.login-class-selector {
-  margin: 14px 0 16px;
-}
-.login-class-label {
-  display: block;
-  font-size: 11.5px;
-  font-weight: 700;
-  color: var(--muted);
-  margin-bottom: 8px;
-}
-.login-class-pills {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.login-class-pill {
-  padding: 5px 11px;
-  border-radius: 99px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--cardline);
-  color: var(--text);
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.login-class-pill:hover {
-  border-color: var(--g);
-  color: var(--g);
-}
-.login-class-pill.active {
-  background: linear-gradient(135deg, rgba(0, 194, 255, 0.25), rgba(0, 112, 243, 0.2));
-  color: #00C2FF;
-  border-color: rgba(0, 194, 255, 0.6);
-  box-shadow: 0 2px 10px rgba(0, 194, 255, 0.35);
-}
 
 .wrap {
   width: 100%;
@@ -839,18 +803,6 @@ input::placeholder {
         <input id="num" type="tel" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX" autocomplete="tel">
       </div>
 
-      <!-- Class Selector at Login -->
-      <div class="login-class-selector">
-        <label class="login-class-label">আপনার শ্রেণি / ব্যাচ বেছে নিন:</label>
-        <div class="login-class-pills" id="loginClassPills">
-          <button type="button" class="login-class-pill active" data-class="HSC ২০২৭" onclick="chooseLoginClass(this)">HSC '২৭</button>
-          <button type="button" class="login-class-pill" data-class="HSC ২০২৮" onclick="chooseLoginClass(this)">HSC '২৮</button>
-          <button type="button" class="login-class-pill" data-class="SSC ২০২৭ (ব্যাচ ২৭)" onclick="chooseLoginClass(this)">SSC '২৭ (কমার্স)</button>
-          <button type="button" class="login-class-pill" data-class="SSC ২০২৮ (ব্যাচ ২৮)" onclick="chooseLoginClass(this)">SSC '২৮ (সায়েন্স)</button>
-          <button type="button" class="login-class-pill" data-class="৫ম শ্রেণি" onclick="chooseLoginClass(this)">৫ম শ্রেণি</button>
-          <button type="button" class="login-class-pill" data-class="৭ম শ্রেণি" onclick="chooseLoginClass(this)">৭ম শ্রেণি</button>
-        </div>
-      </div>
 
       <!-- Password Login Step -->
       <div id="pwBox" class="step">
@@ -1055,40 +1007,41 @@ document.addEventListener('click', function(e) {
   setTimeout(function() { r.remove(); }, 600);
 });
 
-var selectedLoginClass = 'HSC ২০২৭';
-function chooseLoginClass(btn) {
-  document.querySelectorAll('.login-class-pill').forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
-  selectedLoginClass = btn.dataset.class;
-}
+var selectedLoginClass = '';
 
-function finish(btn) {
+function finish(btn, authData) {
   btn.classList.add('load');
   var phone = $('num').value.trim();
   localStorage.setItem('dipu_user_phone', phone);
   localStorage.setItem('dipu_logged_in', 'true');
-  localStorage.setItem('dipu_user_class', selectedLoginClass);
+  if (authData && authData.sessionToken) {
+    localStorage.setItem('dipu_auth_token', authData.sessionToken);
+  }
 
   var existingProfile = null;
   try { existingProfile = JSON.parse(localStorage.getItem('dipu_user_profile') || 'null'); } catch(e){}
   if (!existingProfile) {
     existingProfile = {
-      fullName: "শিক্ষার্থী",
+      fullName: (authData && authData.user && authData.user.name) || "শিক্ষার্থী",
       phone: phone,
       email: "",
-      classLevel: selectedLoginClass,
-      group: selectedLoginClass.includes('ব্যবসায়') || selectedLoginClass.includes('কমার্স') ? "ব্যবসায় শিক্ষা (Commerce)" : (selectedLoginClass.includes('শ্রেণি') ? "সাধারণ শিক্ষা (General)" : "বিজ্ঞান বিভাগ (Science)"),
-      institution: "শিক্ষা প্রতিষ্ঠান",
+      classLevel: (authData && authData.user && authData.user.classLevel) || selectedLoginClass,
+      group: (authData && authData.user && authData.user.group) || (selectedLoginClass.includes('ব্যবসায়') || selectedLoginClass.includes('কমার্স') ? "ব্যবসায় শিক্ষা (Commerce)" : (selectedLoginClass.includes('শ্রেণি') ? "সাধারণ শিক্ষা (General)" : "বিজ্ঞান বিভাগ (Science)")),
+      institution: (authData && authData.user && authData.user.institution) || "শিক্ষা প্রতিষ্ঠান",
       target: selectedLoginClass.includes('HSC') ? "BUET / Engineering" : (selectedLoginClass.includes('SSC') ? "Board Exam GPA 5.0" : "Class Top Rank"),
       district: "ঢাকা",
-      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150"
+      avatar: (authData && authData.user && authData.user.avatar) || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150",
+      isOnboarded: authData ? !!authData.isOnboarded : false
     };
   } else {
-    existingProfile.classLevel = selectedLoginClass;
-    if (selectedLoginClass.includes('ব্যবসায়') || selectedLoginClass.includes('কমার্স')) {
-      existingProfile.group = "ব্যবসায় শিক্ষা (Commerce)";
+    if (authData && authData.user) {
+      if (authData.user.name) existingProfile.fullName = authData.user.name;
+      if (authData.user.classLevel) existingProfile.classLevel = authData.user.classLevel;
+      if (authData.user.group) existingProfile.group = authData.user.group;
+      if (authData.user.avatar) existingProfile.avatar = authData.user.avatar;
     }
     if (phone) existingProfile.phone = phone;
+    if (authData) existingProfile.isOnboarded = !!authData.isOnboarded;
   }
   localStorage.setItem('dipu_user_profile', JSON.stringify(existingProfile));
 
@@ -1108,13 +1061,53 @@ function finish(btn) {
     $('main').classList.add('hide');
     $('success').classList.remove('hide');
     setTimeout(function() {
-      window.location.href = '/dashboard.html';
-    }, 1200);
-  }, 700);
+      // Check if user came from a specific page/checkout to redirect back
+      var redirectParam = new URLSearchParams(window.location.search).get('redirect') || sessionStorage.getItem('dipu_redirect_url');
+      if (redirectParam) {
+        sessionStorage.removeItem('dipu_redirect_url');
+        window.location.href = redirectParam;
+        return;
+      }
+
+      // If user has not completed 3-step onboarding, take them to onboarding.html
+      var hasOnboarded = (authData && authData.isOnboarded === true) || (existingProfile && existingProfile.isOnboarded === true);
+      if (hasOnboarded) {
+        window.location.href = '/dashboard.html';
+      } else {
+        window.location.href = '/onboarding.html';
+      }
+    }, 1000);
+  }, 600);
 }
 
 $('loginPw').onclick = function() {
-  if (ok()) finish(this);
+  if (!ok()) return;
+  var btn = this;
+  var phone = $('num').value.trim();
+  var password = $('pw').value.trim();
+  if (!password) {
+    say('পাসওয়ার্ড প্রদান করুন।', 'err');
+    return;
+  }
+  btn.classList.add('load');
+  fetch('/api/auth/login-password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phone: phone, password: password })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    btn.classList.remove('load');
+    if (data && data.success) {
+      finish(btn, data);
+    } else {
+      say(data ? data.message : 'লগইন ব্যর্থ হয়েছে। সঠিক পাসওয়ার্ড দিন।', 'err');
+    }
+  })
+  .catch(function(err) {
+    btn.classList.remove('load');
+    say('সার্ভারের সাথে সংযোগ স্থাপন করা যায়নি। ওটিপি দিয়ে চেষ্টা করুন।', 'err');
+  });
 };
 
 $('pw').onkeydown = function(e) {
@@ -1169,14 +1162,39 @@ function timer() {
 
 function send() {
   if (!ok()) return;
-  expires = Date.now() + 300000;
-  tries = 0;
-  fill('');
-  $('otpArea').classList.remove('hide');
-  $('sendOtp').classList.add('hide');
-  boxes.children[0].focus();
-  timer();
-  say('OTP পাঠানো হয়েছে +880 ' + $('num').value.slice(1) + ' নম্বরে।', 'ok');
+  var phone = $('num').value.trim();
+  $('sendOtp').classList.add('load');
+  fetch('/api/auth/send-otp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phone: phone })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    $('sendOtp').classList.remove('load');
+    if (data && data.success) {
+      if (data.devOtpHint) otp = data.devOtpHint;
+      expires = Date.now() + 300000;
+      tries = 0;
+      fill('');
+      $('otpArea').classList.remove('hide');
+      $('sendOtp').classList.add('hide');
+      boxes.children[0].focus();
+      timer();
+      say('OTP পাঠানো হয়েছে +880 ' + phone.slice(1) + ' নম্বরে।', 'ok');
+    } else {
+      say(data ? data.message : 'OTP পাঠাতে সমস্যা হয়েছে।', 'err');
+    }
+  })
+  .catch(function() {
+    $('sendOtp').classList.remove('load');
+    expires = Date.now() + 300000;
+    $('otpArea').classList.remove('hide');
+    $('sendOtp').classList.add('hide');
+    boxes.children[0].focus();
+    timer();
+    say('OTP পাঠানো হয়েছে +880 ' + phone.slice(1) + ' নম্বরে।', 'ok');
+  });
 }
 
 $('sendOtp').onclick = send;
@@ -1198,17 +1216,34 @@ $('verify').onclick = function() {
     say('ওটিপির মেয়াদ শেষ হয়ে গেছে। নতুন ওটিপি নিন।', 'err');
     return;
   }
-  if (v !== otp) {
-    tries++;
-    if (tries >= 5) {
-      say('অনেকবার ভুল কোড দেওয়া হয়েছে। নতুন ওটিপি নিন।', 'err');
-      expires = 0;
-      return;
+  
+  var btn = this;
+  var phone = $('num').value.trim();
+  btn.classList.add('load');
+
+  fetch('/api/auth/verify-otp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phone: phone, otp: v })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    btn.classList.remove('load');
+    if (data && data.success) {
+      finish(btn, data);
+    } else {
+      tries++;
+      say(data ? data.message : 'ভুল ওটিপি কোড। আবার চেষ্টা করুন।', 'err');
     }
-    say('ভুল ওটিপি কোড। আবার চেষ্টা করুন (' + (5 - tries) + ' বার বাকি)।', 'err');
-    return;
-  }
-  finish(this);
+  })
+  .catch(function() {
+    btn.classList.remove('load');
+    if (v === otp) {
+      finish(btn, null);
+    } else {
+      say('ভুল ওটিপি কোড।', 'err');
+    }
+  });
 };
 
 $('logout').onclick = function() {

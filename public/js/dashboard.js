@@ -896,6 +896,12 @@ window.toggleNotifications = function() {
 window.logoutStudent = function() {
   if (confirm("আপনি কি নিশ্চিত আপনার ড্যাশবোর্ড থেকে লগআউট করতে চান?")) {
     localStorage.removeItem("dipu_logged_in");
+    localStorage.removeItem("dipu_auth_token");
+    localStorage.removeItem("dipu_user_profile");
+    localStorage.removeItem("dipu_user_phone");
+    try {
+      window.dispatchEvent(new Event("dipu_auth_changed"));
+    } catch(e) {}
     window.location.href = "/login.html";
   }
 };
