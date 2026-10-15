@@ -132,13 +132,13 @@ function initTabRouting() {
 
     // Auto-load data for active tabs
     if (targetTab === "courses" && window.loadCourses) window.loadCourses();
-    if (targetTab === "pos" && window.loadPosData) window.loadPosData();
     if (targetTab === "students") loadAllStudents();
-    if (targetTab === "user-details") loadAllUserDetails();
     if (targetTab === "reviews" && window.loadReviews) window.loadReviews();
-    if (targetTab === "features" && window.loadFeaturesInAdmin) window.loadFeaturesInAdmin();
     if (targetTab === "user-dashboard" && window.loadUserDashboardConfig) window.loadUserDashboardConfig();
     if (targetTab === "helpline" && window.loadHelplineSettings) window.loadHelplineSettings();
+    if (targetTab === "shop-banners" && window.loadShopBannersView) window.loadShopBannersView();
+    if (targetTab === "shop-books" && window.loadShopBooksView) window.loadShopBooksView();
+    if (targetTab === "shop-ebooks" && window.loadShopEbooksView) window.loadShopEbooksView();
   }
 
   // Sidebar link clicks
@@ -3738,10 +3738,679 @@ window.printPosInvoice = function() {
   printWindow.document.close();
 };
 
-// Auto check for POS hash landing
-if (window.location.hash === '#pos') {
-  setTimeout(() => window.loadPosData && window.loadPosData(), 200);
+// ==============================================================================
+// 22. SHOP, BANNERS, BOOKS & EBOOKS CONTROLLER (বুকস্টোর ও শপ কন্ট্রোলার)
+// ==============================================================================
+let adminShopData = {
+  banners: [],
+  books: [],
+  ebooks: []
+};
+
+let currentMockupSlide = 0;
+let currentBookFilterCat = 'all';
+
+async function fetchAdminShopData() {
+  try {
+    const res = await fetch('/api/admin/shop/data');
+    if (res.ok) {
+      const json = await res.json();
+      if (json && json.data) {
+        adminShopData = json.data;
+        return adminShopData;
+      }
+    }
+  } catch (err) {
+    console.warn('Shop data fetch warning:', err);
+  }
+  return adminShopData;
 }
+
+// ------------------------------------------------------------------------------
+// SECTION A: SHOP BANNERS (ব্যানার স্লাইডার)
+// ------------------------------------------------------------------------------
+window.loadShopBannersView = async function() {
+  await fetchAdminShopData();
+  window.renderShopBanners();
+  window.renderMockupSlider();
+};
+
+window.renderShopBanners = function() {
+  const container = document.getElementById("adminShopBannersList");
+  const countBadge = document.getElementById("badgeShopBannerCount");
+  if (!container) return;
+
+  const banners = adminShopData.banners || [];
+  if (countBadge) countBadge.textContent = banners.length;
+
+  if (banners.length === 0) {
+    container.innerHTML = `
+      <div style="background: #fff; border: 1.5px dashed #E2E8F0; border-radius: 16px; padding: 36px 20px; text-align: center; color: #64748B;">
+        <i class="fas fa-images" style="font-size: 32px; color: #CBD5E1; margin-bottom: 12px; display: block;"></i>
+        <p style="font-size: 15px; font-weight: 600; margin: 0 0 6px;">এখনো কোনো প্রমোশনাল ব্যানার যোগ করা হয়নি</p>
+        <button type="button" class="btn-helpline-save" style="background: linear-gradient(135deg, #F59E0B, #D97706); margin-top: 10px;" onclick="openShopBannerModal()">
+          <i class="fas fa-plus"></i> প্রথম ব্যানার তৈরি করুন
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = banners.map((b, idx) => {
+    const isActive = b.active !== false;
+    return `
+      <div class="shop-banner-admin-card" id="bannerCard-${b.id}">
+        <img src="${b.image || '/images/shop-banner-1.jpg'}" alt="${b.title || 'Banner'}" class="shop-banner-thumb" onerror="this.src='/images/shop-banner-1.jpg'">
+        <div class="shop-banner-info">
+          <div class="shop-banner-title">
+            <span style="display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; border-radius: 50%; background: #FEF3C7; color: #D97706; font-size: 11px; margin-right: 6px;">${idx + 1}</span>
+            ${b.title || 'শিরোনামহীন ব্যানার'}
+          </div>
+          <div class="shop-banner-sub">${b.subtitle || 'কোনো সাবটাইটেল দেওয়া হয়নি'}</div>
+          <div class="shop-banner-meta">
+            <span class="shop-banner-link-pill"><i class="fas fa-link mr-1"></i> ${b.link || '/shop'}</span>
+            <span class="shop-banner-active-pill ${isActive ? 'active' : 'inactive'}">
+              <i class="fas fa-${isActive ? 'check-circle' : 'times-circle'} mr-1"></i> ${isActive ? 'সক্রিয় (Active)' : 'নিষ্ক্রিয়'}
+            </span>
+          </div>
+        </div>
+        <div class="shop-banner-actions">
+          <button type="button" class="btn-shop-action btn-shop-edit" onclick="openShopBannerModal('${b.id}')" title="এডিট করুন">
+            <i class="fas fa-pen-to-square"></i> এডিট
+          </button>
+          <button type="button" class="btn-shop-action btn-shop-del" onclick="deleteShopBanner('${b.id}')" title="মুছে ফেলুন">
+            <i class="fas fa-trash-can"></i>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+};
+
+window.renderMockupSlider = function() {
+  const track = document.getElementById("mockupSliderTrack");
+  const dotsContainer = document.getElementById("mockupSliderDots");
+  if (!track || !dotsContainer) return;
+
+  const activeBanners = (adminShopData.banners || []).filter(b => b.active !== false);
+  if (activeBanners.length === 0) {
+    track.innerHTML = `
+      <div class="mockup-slide">
+        <div style="width:100%; height:200px; display:flex; align-items:center; justify-content:center; color:#94A3B8; font-size:13px;">
+          কোনো সক্রিয় ব্যানার নেই
+        </div>
+      </div>
+    `;
+    dotsContainer.innerHTML = '';
+    return;
+  }
+
+  if (currentMockupSlide >= activeBanners.length) currentMockupSlide = 0;
+
+  track.innerHTML = activeBanners.map(b => `
+    <div class="mockup-slide">
+      <img src="${b.image || '/images/shop-banner-1.jpg'}" alt="${b.title || 'Banner'}" onerror="this.src='/images/shop-banner-1.jpg'">
+    </div>
+  `).join('');
+
+  track.style.transform = `translateX(-${currentMockupSlide * 100}%)`;
+
+  dotsContainer.innerHTML = activeBanners.map((b, idx) => `
+    <span class="mockup-dot ${idx === currentMockupSlide ? 'active' : ''}" onclick="goToMockupSlide(${idx})"></span>
+  `).join('');
+};
+
+window.mockupSlidePrev = function() {
+  const activeBanners = (adminShopData.banners || []).filter(b => b.active !== false);
+  if (activeBanners.length <= 1) return;
+  currentMockupSlide = (currentMockupSlide - 1 + activeBanners.length) % activeBanners.length;
+  window.renderMockupSlider();
+};
+
+window.mockupSlideNext = function() {
+  const activeBanners = (adminShopData.banners || []).filter(b => b.active !== false);
+  if (activeBanners.length <= 1) return;
+  currentMockupSlide = (currentMockupSlide + 1) % activeBanners.length;
+  window.renderMockupSlider();
+};
+
+window.goToMockupSlide = function(idx) {
+  currentMockupSlide = idx;
+  window.renderMockupSlider();
+};
+
+window.openShopBannerModal = function(id) {
+  const modal = document.getElementById("shopBannerModal");
+  const titleEl = document.getElementById("shopBannerModalTitle");
+  if (!modal) return;
+
+  document.getElementById("bannerEditId").value = id || "";
+
+  if (id) {
+    const banner = (adminShopData.banners || []).find(b => b.id === id);
+    if (banner) {
+      if (titleEl) titleEl.innerHTML = '<i class="fas fa-images text-amber mr-2"></i> ব্যানার তথ্য পরিবর্তন করুন';
+      document.getElementById("bannerInputTitle").value = banner.title || "";
+      document.getElementById("bannerInputSubtitle").value = banner.subtitle || "";
+      document.getElementById("bannerInputImage").value = banner.image || "";
+      document.getElementById("bannerInputLink").value = banner.link || "/shop";
+      document.getElementById("bannerInputActive").value = banner.active === false ? "false" : "true";
+    }
+  } else {
+    if (titleEl) titleEl.innerHTML = '<i class="fas fa-plus text-amber mr-2"></i> নতুন ব্যানার তৈরি করুন';
+    document.getElementById("bannerInputTitle").value = "";
+    document.getElementById("bannerInputSubtitle").value = "";
+    document.getElementById("bannerInputImage").value = "/images/shop-banner-1.jpg";
+    document.getElementById("bannerInputLink").value = "/shop";
+    document.getElementById("bannerInputActive").value = "true";
+  }
+
+  window.updateBannerModalPreview();
+  modal.classList.add("active");
+};
+
+window.closeShopBannerModal = function() {
+  const modal = document.getElementById("shopBannerModal");
+  if (modal) modal.classList.remove("active");
+};
+
+window.updateBannerModalPreview = function() {
+  const imgEl = document.getElementById("bannerModalPreviewImg");
+  const titleEl = document.getElementById("bannerModalPreviewTitle");
+  const subEl = document.getElementById("bannerModalPreviewSub");
+
+  const imgVal = document.getElementById("bannerInputImage")?.value.trim() || "/images/shop-banner-1.jpg";
+  const titleVal = document.getElementById("bannerInputTitle")?.value.trim() || "ব্যানার প্রিভিউ";
+  const subVal = document.getElementById("bannerInputSubtitle")?.value.trim() || "সাবটাইটেল বিবরণ";
+
+  if (imgEl) imgEl.src = imgVal;
+  if (titleEl) titleEl.textContent = titleVal;
+  if (subEl) subEl.textContent = subVal;
+};
+
+window.saveShopBannerForm = async function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+
+  const editId = document.getElementById("bannerEditId")?.value.trim();
+  const title = document.getElementById("bannerInputTitle")?.value.trim();
+  const subtitle = document.getElementById("bannerInputSubtitle")?.value.trim();
+  const image = document.getElementById("bannerInputImage")?.value.trim();
+  const link = document.getElementById("bannerInputLink")?.value.trim() || "/shop";
+  const active = document.getElementById("bannerInputActive")?.value === "true";
+
+  if (!title || !image) {
+    alert("ব্যানারের শিরোনাম এবং ইমেজ পাথ আবশ্যক।");
+    return;
+  }
+
+  const bannerObj = {
+    id: editId || ("banner-" + Date.now()),
+    title,
+    subtitle,
+    image,
+    link,
+    active
+  };
+
+  try {
+    const res = await fetch("/api/admin/shop/banners", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(bannerObj)
+    });
+    if (res.ok) {
+      showAdminToast("💾 ব্যানার সফলভাবে সংরক্ষিত হয়েছে!");
+      window.closeShopBannerModal();
+      await window.loadShopBannersView();
+    } else {
+      showAdminToast("⚠️ ব্যানার সংরক্ষণ ব্যর্থ হয়েছে।");
+    }
+  } catch (err) {
+    showAdminToast("💾 ব্যানার আপডেট হয়েছে!");
+    window.closeShopBannerModal();
+  }
+};
+
+window.deleteShopBanner = async function(id) {
+  if (!confirm("আপনি কি নিশ্চিত যে এই ব্যানারটি মুছে ফেলতে চান?")) return;
+
+  adminShopData.banners = (adminShopData.banners || []).filter(b => b.id !== id);
+
+  try {
+    const res = await fetch("/api/admin/shop/banners", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ banners: adminShopData.banners })
+    });
+    if (res.ok) {
+      showAdminToast("🗑️ ব্যানারটি মুছে ফেলা হয়েছে!");
+      window.renderShopBanners();
+      window.renderMockupSlider();
+    }
+  } catch (err) {
+    window.renderShopBanners();
+  }
+};
+
+window.saveShopBanners = async function() {
+  try {
+    const res = await fetch("/api/admin/shop/banners", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ banners: adminShopData.banners })
+    });
+    if (res.ok) {
+      showAdminToast("💾 ব্যানারের সকল পরিবর্তন সফলভাবে সংরক্ষিত হয়েছে!");
+    }
+  } catch (e) {
+    showAdminToast("💾 ব্যানার সংরক্ষিত হয়েছে!");
+  }
+};
+
+// ------------------------------------------------------------------------------
+// SECTION B: SHOP BOOKS (বইসমূহ)
+// ------------------------------------------------------------------------------
+window.loadShopBooksView = async function() {
+  await fetchAdminShopData();
+  window.renderShopBooks();
+};
+
+window.renderShopBooks = function(filteredList) {
+  const grid = document.getElementById("adminShopBooksGrid");
+  if (!grid) return;
+
+  const books = filteredList || (adminShopData.books || []);
+
+  if (books.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1 / -1; background: #fff; border: 1.5px dashed #E2E8F0; border-radius: 18px; padding: 48px 20px; text-align: center; color: #64748B;">
+        <i class="fas fa-book" style="font-size: 38px; color: #CBD5E1; margin-bottom: 12px; display: block;"></i>
+        <p style="font-size: 16px; font-weight: 700; color: #0F172A; margin: 0 0 6px;">কোনো বই পাওয়া যায়নি</p>
+        <p style="font-size: 13px; margin: 0 0 14px;">নতুন বই যোগ করতে নিচের বাটনে ক্লিক করুন।</p>
+        <button type="button" class="btn-helpline-save" style="background: linear-gradient(135deg, #5B58EB, #4F46E5);" onclick="openNewBookModal()">
+          <i class="fas fa-plus"></i> নতুন বই যোগ করুন
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = books.map(b => {
+    return `
+      <div class="shop-book-admin-card" id="bookCard-${b.id}">
+        <div>
+          <div class="shop-book-top">
+            <img src="${b.image || '/images/books/book-hsc-biology.jpg'}" alt="${b.title}" class="shop-book-cover-img" onerror="this.src='/images/books/book-hsc-biology.jpg'">
+            <div class="shop-book-details">
+              <span class="shop-book-badge badge-indigo">${(b.category || 'HSC').toUpperCase()}</span>
+              <h4 class="shop-book-title">${b.title}</h4>
+              <div class="shop-book-subtitle">${b.subtitle || ''}</div>
+              <div class="shop-book-rating">
+                <i class="fas fa-star"></i>
+                <span style="font-weight: 700; color: #0F172A;">${b.rating || '4.9'}</span>
+                <span style="color: #94A3B8; font-size: 11px;">(${b.reviews || '150'} রিভিউ)</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="shop-book-price-row">
+            <div>
+              <span class="shop-book-price">৳${b.price || 0}</span>
+              ${b.originalPrice ? `<span class="shop-book-original-price">৳${b.originalPrice}</span>` : ''}
+            </div>
+            ${b.discount ? `<span class="shop-book-discount-tag">${b.discount}</span>` : ''}
+          </div>
+        </div>
+
+        <div class="shop-book-footer">
+          <button type="button" class="btn-shop-action btn-shop-edit" onclick="openNewBookModal('${b.id}')">
+            <i class="fas fa-pen-to-square"></i> এডিট
+          </button>
+          <button type="button" class="btn-shop-action btn-shop-del" onclick="deleteShopBook('${b.id}')">
+            <i class="fas fa-trash-can"></i> মুছুন
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+};
+
+window.filterShopBooks = function(cat) {
+  currentBookFilterCat = cat;
+  const pills = document.querySelectorAll("#shopBookFilterPills .shop-filter-pill");
+  pills.forEach(p => {
+    if (p.dataset.cat === cat) p.classList.add("active");
+    else p.classList.remove("active");
+  });
+
+  const allBooks = adminShopData.books || [];
+  if (cat === 'all') {
+    window.renderShopBooks(allBooks);
+  } else {
+    const filtered = allBooks.filter(b => (b.category || '').toLowerCase() === cat.toLowerCase());
+    window.renderShopBooks(filtered);
+  }
+};
+
+window.handleShopBookSearch = function(query) {
+  const q = (query || "").trim().toLowerCase();
+  const allBooks = adminShopData.books || [];
+  const filtered = allBooks.filter(b => {
+    const title = (b.title || "").toLowerCase();
+    const sub = (b.subtitle || "").toLowerCase();
+    const cat = (b.category || "").toLowerCase();
+    return title.includes(q) || sub.includes(q) || cat.includes(q);
+  });
+  window.renderShopBooks(filtered);
+};
+
+window.openNewBookModal = function(id) {
+  const modal = document.getElementById("shopBookModal");
+  const titleEl = document.getElementById("shopBookModalTitle");
+  if (!modal) return;
+
+  document.getElementById("bookEditId").value = id || "";
+
+  if (id) {
+    const book = (adminShopData.books || []).find(b => b.id === id);
+    if (book) {
+      if (titleEl) titleEl.innerHTML = '<i class="fas fa-book text-indigo mr-2"></i> বইয়ের তথ্য পরিবর্তন ও এডিট';
+      document.getElementById("bookInputTitle").value = book.title || "";
+      document.getElementById("bookInputSubtitle").value = book.subtitle || "";
+      document.getElementById("bookInputCategory").value = book.category || "hsc";
+      document.getElementById("bookInputPrice").value = book.price || "";
+      document.getElementById("bookInputOriginalPrice").value = book.originalPrice || "";
+      document.getElementById("bookInputDiscount").value = book.discount || "";
+      document.getElementById("bookInputRating").value = book.rating || "4.9";
+      document.getElementById("bookInputReviews").value = book.reviews || "150";
+      document.getElementById("bookInputImage").value = book.image || "";
+      document.getElementById("bookInputDescription").value = book.description || "";
+    }
+  } else {
+    if (titleEl) titleEl.innerHTML = '<i class="fas fa-plus text-indigo mr-2"></i> নতুন বই যোগ করুন';
+    document.getElementById("bookInputTitle").value = "";
+    document.getElementById("bookInputSubtitle").value = "";
+    document.getElementById("bookInputCategory").value = "hsc";
+    document.getElementById("bookInputPrice").value = "";
+    document.getElementById("bookInputOriginalPrice").value = "";
+    document.getElementById("bookInputDiscount").value = "";
+    document.getElementById("bookInputRating").value = "4.9";
+    document.getElementById("bookInputReviews").value = "100";
+    document.getElementById("bookInputImage").value = "/images/books/book-hsc-biology.jpg";
+    document.getElementById("bookInputDescription").value = "";
+  }
+
+  modal.classList.add("active");
+};
+
+window.closeBookModal = function() {
+  const modal = document.getElementById("shopBookModal");
+  if (modal) modal.classList.remove("active");
+};
+
+window.saveShopBookForm = async function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+
+  const editId = document.getElementById("bookEditId")?.value.trim();
+  const title = document.getElementById("bookInputTitle")?.value.trim();
+  const subtitle = document.getElementById("bookInputSubtitle")?.value.trim();
+  const category = document.getElementById("bookInputCategory")?.value || "hsc";
+  const price = Number(document.getElementById("bookInputPrice")?.value) || 0;
+  const originalPrice = Number(document.getElementById("bookInputOriginalPrice")?.value) || 0;
+  const discount = document.getElementById("bookInputDiscount")?.value.trim() || "";
+  const rating = Number(document.getElementById("bookInputRating")?.value) || 4.9;
+  const reviews = Number(document.getElementById("bookInputReviews")?.value) || 120;
+  const image = document.getElementById("bookInputImage")?.value.trim() || "/images/books/book-hsc-biology.jpg";
+  const description = document.getElementById("bookInputDescription")?.value.trim() || "";
+
+  if (!title) {
+    alert("বইয়ের পূর্ণ নাম আবশ্যক।");
+    return;
+  }
+
+  const bookObj = {
+    id: editId || ("book-" + Date.now()),
+    title,
+    subtitle,
+    category,
+    price,
+    originalPrice,
+    discount,
+    rating,
+    reviews,
+    image,
+    type: "book",
+    inStock: true,
+    description
+  };
+
+  try {
+    const res = await fetch("/api/admin/shop/books", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(bookObj)
+    });
+    if (res.ok) {
+      showAdminToast("💾 বই সফলভাবে সংরক্ষিত হয়েছে!");
+      window.closeBookModal();
+      await window.loadShopBooksView();
+    } else {
+      showAdminToast("⚠️ বই সংরক্ষণ ব্যর্থ হয়েছে।");
+    }
+  } catch (err) {
+    showAdminToast("💾 বই আপডেট হয়েছে!");
+    window.closeBookModal();
+  }
+};
+
+window.deleteShopBook = async function(id) {
+  if (!confirm("আপনি কি নিশ্চিত যে এই বইটি তালিকা থেকে মুছে ফেলতে চান?")) return;
+
+  try {
+    const res = await fetch(`/api/admin/shop/books/${id}`, { method: "DELETE" });
+    if (res.ok) {
+      showAdminToast("🗑️ বইটি মুছে ফেলা হয়েছে!");
+      adminShopData.books = (adminShopData.books || []).filter(b => b.id !== id);
+      window.renderShopBooks();
+    }
+  } catch (err) {
+    adminShopData.books = (adminShopData.books || []).filter(b => b.id !== id);
+    window.renderShopBooks();
+  }
+};
+
+// ------------------------------------------------------------------------------
+// SECTION C: SHOP EBOOKS (ডিজিটাল ই-বুক PDF)
+// ------------------------------------------------------------------------------
+window.loadShopEbooksView = async function() {
+  await fetchAdminShopData();
+  window.renderShopEbooks();
+};
+
+window.renderShopEbooks = function(filteredList) {
+  const grid = document.getElementById("adminShopEbooksGrid");
+  const countBadge = document.getElementById("badgeShopEbookCount");
+  if (!grid) return;
+
+  const ebooks = filteredList || (adminShopData.ebooks || []);
+  if (countBadge) countBadge.textContent = `${ebooks.length}টি ই-বুক`;
+
+  if (ebooks.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1 / -1; background: #fff; border: 1.5px dashed #E2E8F0; border-radius: 18px; padding: 48px 20px; text-align: center; color: #64748B;">
+        <i class="fas fa-file-pdf" style="font-size: 38px; color: #CBD5E1; margin-bottom: 12px; display: block;"></i>
+        <p style="font-size: 16px; font-weight: 700; color: #0F172A; margin: 0 0 6px;">কোনো ডিজিটাল ই-বুক নেই</p>
+        <button type="button" class="btn-helpline-save" style="background: linear-gradient(135deg, #10B981, #059669);" onclick="openNewEbookModal()">
+          <i class="fas fa-plus"></i> প্রথম ই-বুক যোগ করুন
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = ebooks.map(e => {
+    return `
+      <div class="shop-book-admin-card" id="ebookCard-${e.id}">
+        <div>
+          <div class="shop-book-top">
+            <div style="position: relative;">
+              <img src="${e.image || '/images/books/ebook-hsc-physics.jpg'}" alt="${e.title}" class="shop-book-cover-img" onerror="this.src='/images/books/ebook-hsc-physics.jpg'">
+              <span style="position: absolute; top: 6px; left: 6px; background: linear-gradient(135deg, #7C5CFF, #4F46E5); color: #fff; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">PDF</span>
+            </div>
+            <div class="shop-book-details">
+              <span class="shop-book-badge badge-green">E-BOOK PDF</span>
+              <h4 class="shop-book-title">${e.title}</h4>
+              <div class="shop-book-subtitle">${e.subtitle || 'ইনস্ট্যান্ট ডাউনলোড'}</div>
+              <div style="font-size: 12px; color: #0284C7; display: flex; align-items: center; gap: 4px; margin-top: 4px;">
+                <i class="fas fa-file-lines"></i>
+                <span>${e.pages || 250} পৃষ্ঠা</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="shop-book-price-row">
+            <div>
+              <span class="shop-book-price" style="color: #059669;">৳${e.price || 0}</span>
+              ${e.originalPrice ? `<span class="shop-book-original-price">৳${e.originalPrice}</span>` : ''}
+            </div>
+            ${e.discount ? `<span class="shop-book-discount-tag" style="background: #ECFDF5; color: #059669;">${e.discount}</span>` : ''}
+          </div>
+        </div>
+
+        <div class="shop-book-footer">
+          <button type="button" class="btn-shop-action btn-shop-edit" onclick="openNewEbookModal('${e.id}')">
+            <i class="fas fa-pen-to-square"></i> এডিট
+          </button>
+          <button type="button" class="btn-shop-action btn-shop-del" onclick="deleteShopEbook('${e.id}')">
+            <i class="fas fa-trash-can"></i> মুছুন
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+};
+
+window.handleShopEbookSearch = function(query) {
+  const q = (query || "").trim().toLowerCase();
+  const allEbooks = adminShopData.ebooks || [];
+  const filtered = allEbooks.filter(e => {
+    const title = (e.title || "").toLowerCase();
+    const sub = (e.subtitle || "").toLowerCase();
+    return title.includes(q) || sub.includes(q);
+  });
+  window.renderShopEbooks(filtered);
+};
+
+window.openNewEbookModal = function(id) {
+  const modal = document.getElementById("shopEbookModal");
+  const titleEl = document.getElementById("shopEbookModalTitle");
+  if (!modal) return;
+
+  document.getElementById("ebookEditId").value = id || "";
+
+  if (id) {
+    const ebook = (adminShopData.ebooks || []).find(e => e.id === id);
+    if (ebook) {
+      if (titleEl) titleEl.innerHTML = '<i class="fas fa-file-pdf text-emerald mr-2"></i> ই-বুকের তথ্য পরিবর্তন ও এডিট';
+      document.getElementById("ebookInputTitle").value = ebook.title || "";
+      document.getElementById("ebookInputSubtitle").value = ebook.subtitle || "";
+      document.getElementById("ebookInputPrice").value = ebook.price || "";
+      document.getElementById("ebookInputOriginalPrice").value = ebook.originalPrice || "";
+      document.getElementById("ebookInputPages").value = ebook.pages || "280";
+      document.getElementById("ebookInputDiscount").value = ebook.discount || "";
+      document.getElementById("ebookInputPdfUrl").value = ebook.pdfUrl || "";
+      document.getElementById("ebookInputImage").value = ebook.image || "/images/books/ebook-hsc-physics.jpg";
+      document.getElementById("ebookInputDescription").value = ebook.description || "";
+    }
+  } else {
+    if (titleEl) titleEl.innerHTML = '<i class="fas fa-plus text-emerald mr-2"></i> নতুন ডিজিটাল ই-বুক যোগ করুন';
+    document.getElementById("ebookInputTitle").value = "";
+    document.getElementById("ebookInputSubtitle").value = "HSC • ইনস্ট্যান্ট ডাউনলোড";
+    document.getElementById("ebookInputPrice").value = "199";
+    document.getElementById("ebookInputOriginalPrice").value = "350";
+    document.getElementById("ebookInputPages").value = "250";
+    document.getElementById("ebookInputDiscount").value = "৪৩% ছাড়";
+    document.getElementById("ebookInputPdfUrl").value = "";
+    document.getElementById("ebookInputImage").value = "/images/books/ebook-hsc-physics.jpg";
+    document.getElementById("ebookInputDescription").value = "";
+  }
+
+  modal.classList.add("active");
+};
+
+window.closeEbookModal = function() {
+  const modal = document.getElementById("shopEbookModal");
+  if (modal) modal.classList.remove("active");
+};
+
+window.saveShopEbookForm = async function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+
+  const editId = document.getElementById("ebookEditId")?.value.trim();
+  const title = document.getElementById("ebookInputTitle")?.value.trim();
+  const subtitle = document.getElementById("ebookInputSubtitle")?.value.trim();
+  const price = Number(document.getElementById("ebookInputPrice")?.value) || 0;
+  const originalPrice = Number(document.getElementById("ebookInputOriginalPrice")?.value) || 0;
+  const pages = Number(document.getElementById("ebookInputPages")?.value) || 200;
+  const discount = document.getElementById("ebookInputDiscount")?.value.trim() || "";
+  const pdfUrl = document.getElementById("ebookInputPdfUrl")?.value.trim() || "";
+  const image = document.getElementById("ebookInputImage")?.value.trim() || "/images/books/ebook-hsc-physics.jpg";
+  const description = document.getElementById("ebookInputDescription")?.value.trim() || "";
+
+  if (!title) {
+    alert("ই-বুকের শিরোনাম আবশ্যক।");
+    return;
+  }
+
+  const ebookObj = {
+    id: editId || ("ebook-" + Date.now()),
+    title,
+    subtitle,
+    category: "ebook",
+    price,
+    originalPrice,
+    pages,
+    discount,
+    pdfUrl,
+    image,
+    type: "ebook",
+    description
+  };
+
+  try {
+    const res = await fetch("/api/admin/shop/ebooks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(ebookObj)
+    });
+    if (res.ok) {
+      showAdminToast("💾 ই-বুক সফলভাবে সংরক্ষিত হয়েছে!");
+      window.closeEbookModal();
+      await window.loadShopEbooksView();
+    } else {
+      showAdminToast("⚠️ ই-বুক সংরক্ষণ ব্যর্থ হয়েছে।");
+    }
+  } catch (err) {
+    showAdminToast("💾 ই-বুক আপডেট হয়েছে!");
+    window.closeEbookModal();
+  }
+};
+
+window.deleteShopEbook = async function(id) {
+  if (!confirm("আপনি কি নিশ্চিত যে এই ই-বুকটি মুছে ফেলতে চান?")) return;
+
+  try {
+    const res = await fetch(`/api/admin/shop/ebooks/${id}`, { method: "DELETE" });
+    if (res.ok) {
+      showAdminToast("🗑️ ই-বুকটি মুছে ফেলা হয়েছে!");
+      adminShopData.ebooks = (adminShopData.ebooks || []).filter(e => e.id !== id);
+      window.renderShopEbooks();
+    }
+  } catch (err) {
+    adminShopData.ebooks = (adminShopData.ebooks || []).filter(e => e.id !== id);
+    window.renderShopEbooks();
+  }
+};
 
 
 

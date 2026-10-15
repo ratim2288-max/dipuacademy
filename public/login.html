@@ -15,23 +15,26 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="/css/style.css?v=3.6">
 
+<!-- Cloudflare Turnstile Bot Protection (Invisible / Managed Captcha) -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" async defer></script>
+
 <style>
 :root {
-  --bg1: #07090E;
-  --bg2: #0B0E18;
-  --card: #101422;
-  --cardline: rgba(0, 194, 255, 0.22);
-  --navy: #FFFFFF;
-  --text: #E2E8F0;
-  --muted: #94A3B8;
-  --line: rgba(255, 255, 255, 0.12);
-  --g: #00C2FF;
-  --g2: #0070F3;
-  --coral: #00C2FF;
-  --amber: #38BDF8;
+  --bg1: #F8FAFD;
+  --bg2: #F0F6FF;
+  --card: #FFFFFF;
+  --cardline: #E2E8F0;
+  --navy: #0D1B36;
+  --text: #0F172A;
+  --muted: #64748B;
+  --line: #E2E8F0;
+  --g: #0084FF;
+  --g2: #00C2FF;
+  --coral: #0070F3;
+  --amber: #0084FF;
   --err: #EF4444;
-  --soft: rgba(0, 194, 255, 0.08);
-  --soft2: rgba(0, 132, 255, 0.18);
+  --soft: rgba(0, 132, 255, 0.08);
+  --soft2: rgba(0, 132, 255, 0.16);
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -52,9 +55,9 @@ body {
   font-family: "Inter", "Hind Siliguri", system-ui, -apple-system, sans-serif;
   color: var(--text);
   background: 
-    radial-gradient(circle at 15% 90%, rgba(0, 194, 255, 0.12), transparent 45%),
-    radial-gradient(circle at 90% 10%, rgba(0, 112, 243, 0.12), transparent 40%),
-    linear-gradient(160deg, var(--bg1), var(--bg2));
+    radial-gradient(circle at 10% 20%, rgba(0, 194, 255, 0.07), transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(0, 112, 243, 0.06), transparent 40%),
+    linear-gradient(180deg, #FFFFFF 0%, #F8FAFD 55%, #F0F6FF 100%);
 }
 
 .top-nav-bar {
@@ -74,25 +77,30 @@ body {
   font-family: 'Inter', system-ui, sans-serif;
 }
 
+.brand-link span:first-child {
+  color: #0D1B36 !important;
+}
+
 .home-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 8px 18px;
   border-radius: 99px;
-  background: rgba(255, 255, 255, 0.05);
+  background: #FFFFFF;
   border: 1px solid var(--line);
-  color: #94A3B8;
+  color: #475569;
   font-size: 0.85rem;
   font-weight: 600;
   text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
   transition: all 0.2s;
 }
 
 .home-btn:hover {
-  color: #FFFFFF;
+  color: #0084FF;
   border-color: var(--g);
-  background: rgba(0, 194, 255, 0.12);
+  background: #F0F9FF;
   transform: translateX(-2px);
 }
 
@@ -100,8 +108,8 @@ body {
 .nav-lang-toggle {
   display: inline-flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #F1F5F9;
+  border: 1px solid var(--line);
   border-radius: 9999px;
   padding: 3px;
   gap: 2px;
@@ -276,10 +284,10 @@ body.light-theme .brand-link span {
 .wrap {
   width: 100%;
   max-width: 1020px;
-  background: var(--card);
-  border: 1px solid var(--cardline);
-  border-radius: 20px;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 50px rgba(0, 194, 255, 0.1);
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 24px;
+  box-shadow: 0 25px 70px rgba(15, 23, 42, 0.08), 0 0 40px rgba(0, 132, 255, 0.05);
   display: grid;
   grid-template-columns: 1fr 1.1fr;
   gap: 20px;
@@ -303,50 +311,53 @@ h1 {
   font-size: 2.3rem;
   line-height: 1.15;
   font-weight: 800;
-  color: var(--navy);
+  color: #0D1B36;
   letter-spacing: -0.02em;
 }
 
 h1 span {
   display: block;
-  background: linear-gradient(135deg, var(--g) 0%, var(--amber) 100%);
+  background: linear-gradient(135deg, #0084FF 0%, #00C2FF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 label.l {
   display: block;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #334155;
   margin: 16px 0 8px;
 }
 
 .box {
   display: flex;
   align-items: center;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid #CBD5E1;
+  border-radius: 12px;
+  background: #FFFFFF;
   transition: all 0.25s;
 }
 
 .box:focus-within {
-  border-color: var(--g);
-  background: rgba(255, 122, 26, 0.06);
-  box-shadow: 0 0 0 4px rgba(255, 122, 26, 0.15);
+  border-color: #0084FF;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 4px rgba(0, 132, 255, 0.12);
 }
 
 .pre {
-  padding: 0 12px;
-  color: var(--muted);
-  font-size: 0.85rem;
-  font-weight: 600;
-  border-right: 1px solid var(--line);
+  padding: 0 14px;
+  color: #475569;
+  font-size: 0.88rem;
+  font-weight: 700;
+  border-right: 1.5px solid #E2E8F0;
   align-self: stretch;
   display: flex;
   align-items: center;
   user-select: none;
+  background: #F8FAFC;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 input {
@@ -354,14 +365,16 @@ input {
   border: 0;
   outline: 0;
   background: transparent;
-  color: #FFFFFF;
+  color: #0D1B36;
   padding: 14px 14px;
   font: inherit;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 input::placeholder {
-  color: #64748B;
+  color: #94A3B8;
+  font-weight: 400;
 }
 
 .eye {
@@ -522,20 +535,20 @@ input::placeholder {
   max-width: 48px;
   padding: 12px 0;
   font-size: 1.3rem;
-  font-weight: 700;
-  color: #fff;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
+  font-weight: 800;
+  color: #0D1B36;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 10px;
+  background: #FFFFFF;
   transition: all 0.2s;
   animation: pop 0.4s both;
 }
 
 .otp input:focus {
-  border-color: var(--g);
-  background: rgba(255, 122, 26, 0.1);
-  box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.25);
-  transform: translateY(-3px);
+  border-color: #0084FF;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(0, 132, 255, 0.2);
+  transform: translateY(-2px);
   outline: none;
 }
 
@@ -544,20 +557,20 @@ input::placeholder {
 .chip {
   display: inline-block;
   margin-top: 12px;
-  padding: 6px 14px;
+  padding: 8px 16px;
   border-radius: 99px;
-  border: 1px dashed var(--g);
-  background: rgba(255, 122, 26, 0.08);
-  color: var(--amber);
-  font-size: 0.78rem;
-  font-weight: 600;
+  border: 1.5px dashed #0084FF;
+  background: #F0F9FF;
+  color: #0284C7;
+  font-size: 0.82rem;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .chip:hover {
-  background: rgba(255, 122, 26, 0.18);
-  color: #FFFFFF;
+  background: #E0F2FE;
+  color: #0369A1;
 }
 
 .msg {
@@ -623,13 +636,13 @@ input::placeholder {
 .fc {
   position: absolute;
   z-index: 2;
-  background: #161726;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
   padding: 12px 14px;
-  font-size: 0.72rem;
-  color: var(--muted);
+  font-size: 0.75rem;
+  color: #475569;
   animation: flo 5s ease-in-out infinite;
 }
 
@@ -638,7 +651,7 @@ input::placeholder {
 .fc .bar {
   height: 5px;
   border-radius: 3px;
-  background: var(--cardline);
+  background: #E2E8F0;
   margin-top: 7px;
 }
 
@@ -653,10 +666,10 @@ input::placeholder {
 
 .c1 b {
   font-size: 1.5rem;
-  color: var(--g);
-  background: rgba(255, 122, 26, 0.15);
+  color: #0084FF;
+  background: rgba(0, 132, 255, 0.1);
   padding: 8px 10px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: 800;
 }
 
@@ -670,19 +683,19 @@ input::placeholder {
 .c2 .t {
   display: flex;
   justify-content: space-between;
-  color: #FFFFFF;
-  font-weight: 600;
+  color: #0D1B36;
+  font-weight: 700;
   gap: 8px;
 }
 
 .c2 .t u {
-  color: var(--amber);
+  color: #0084FF;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .c2 .bar.r {
-  background: var(--g);
+  background: #0084FF;
 }
 
 .c3 {
@@ -699,7 +712,7 @@ input::placeholder {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: rgba(255, 122, 26, 0.15);
+  background: rgba(0, 132, 255, 0.1);
   display: grid;
   place-items: center;
   font-size: 1.1rem;
@@ -707,13 +720,13 @@ input::placeholder {
 }
 
 .c3 .st {
-  color: var(--amber);
+  color: #F59E0B;
   letter-spacing: 2px;
   font-size: 0.85rem;
 }
 
 .c3 .bar.t {
-  background: var(--g);
+  background: #0084FF;
   width: 60%;
 }
 
@@ -725,9 +738,9 @@ input::placeholder {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: #161726;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
   display: grid;
   place-items: center;
   font-size: 1.15rem;
@@ -795,52 +808,42 @@ input::placeholder {
 <div class="wrap">
   <div class="form">
     <div id="main">
-      <h1>Welcome<span>Back, Student!</span></h1>
+      <h1 id="mainTitle">Welcome<span>Back, Student!</span></h1>
+      <p id="mainSub" style="color:var(--muted);font-size:0.88rem;margin:-10px 0 20px;line-height:1.4;">
+        মোবাইল নম্বর দিয়ে সাইন ইন বা নতুন অ্যাকাউন্ট খুলুন
+      </p>
 
-      <!-- Switch Tabs: OTP vs Password -->
-      <div class="auth-tabs" style="display:flex;gap:8px;margin-bottom:18px;background:rgba(255,255,255,0.04);padding:4px;border-radius:12px;border:1px solid var(--line);">
-        <button id="tabOtp" type="button" class="tab-btn" style="flex:1;padding:9px 10px;border:none;border-radius:8px;background:linear-gradient(135deg, #00C2FF, #0070F3);color:#fff;font-weight:700;font-size:0.84rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s;box-shadow:0 2px 10px rgba(0,194,255,0.35);">
-          <i class="fas fa-bolt" style="font-size:0.8rem;"></i>
-          <span>১-ক্লিকে OTP লগইন</span>
-        </button>
-        <button id="tabPw" type="button" class="tab-btn" style="flex:1;padding:9px 10px;border:none;border-radius:8px;background:transparent;color:var(--muted);font-weight:700;font-size:0.84rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s;">
-          <i class="fas fa-lock" style="font-size:0.8rem;"></i>
-          <span>পাসওয়ার্ড লগইন</span>
-        </button>
+      <!-- Active Phone Number Summary Pill (Shown in Step 2A and 2B) -->
+      <div id="phoneBadge" class="hide" style="display:flex;align-items:center;justify-content:space-between;background:rgba(0,194,255,0.08);border:1px solid rgba(0,194,255,0.25);border-radius:12px;padding:10px 14px;margin-bottom:18px;">
+        <div style="display:flex;align-items:center;gap:8px;font-size:0.9rem;font-weight:700;color:var(--g);">
+          <i class="fas fa-mobile-alt"></i>
+          <span id="displayPhone">+880 01XXXXXXXXX</span>
+        </div>
+        <button type="button" class="lk" id="btnChangePhone" style="font-size:0.8rem;color:var(--muted);font-weight:600;">[নম্বর পরিবর্তন]</button>
       </div>
 
-      <label class="l" for="num">Mobile number (মোবাইল নম্বর)</label>
-      <div class="box">
-        <span class="pre">+880</span>
-        <input id="num" type="tel" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX" autocomplete="tel">
-      </div>
-
-      <!-- OTP Login Step (Default Quick Login) -->
-      <div id="otpBox" class="step">
+      <!-- Step 1: Phone Number Input -->
+      <div id="stepPhone" class="step">
+        <label class="l" for="num">Mobile number (মোবাইল নম্বর)</label>
+        <div class="box">
+          <span class="pre">+880</span>
+          <input id="num" type="tel" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX" autocomplete="tel">
+        </div>
+        <!-- Cloudflare Turnstile Bot Protection Container -->
+        <div id="turnstile-container" style="margin: 10px 0 0; min-height: 0; display: flex; justify-content: center;"></div>
         <div style="height:14px"></div>
-        <button class="btn" id="sendOtp" type="button">
-          <i class="fas fa-paper-plane" style="margin-right:6px;"></i> OTP কোড পাঠান
+        <button class="btn" id="btnContinue" type="button">
+          <span>এগিয়ে যান</span>
+          <i class="fas fa-arrow-right" style="margin-left:8px;"></i>
         </button>
-        <div id="otpArea" class="hide">
-          <label class="l">6-digit OTP code (৬ ডিজিটের কোড)</label>
-          <div class="otp" id="boxes"></div>
-          <span class="chip" id="chip">👉 টেস্ট ওটিপি: 123456 (এখানে চাপুন)</span>
-          <div class="row" style="margin-bottom:16px">
-            <span id="timer"></span>
-            <button class="lk" id="resend" type="button" disabled>নতুন কোড পাঠান</button>
-          </div>
-          <button class="btn" id="verify" type="button">যাচাই ও প্রবেশ করুন</button>
-        </div>
-        <div class="row" style="justify-content:center;margin:14px 0 0">
-          <button class="lk" id="toPw" type="button">পাসওয়ার্ড দিয়ে লগইন করতে চান?</button>
-        </div>
       </div>
 
-      <!-- Password Login Step -->
-      <div id="pwBox" class="step hide">
+      <!-- Step 2A: Password Step (If account exists) -->
+      <div id="stepPassword" class="step hide">
+        <div id="userGreeting" style="font-size:0.9rem;color:var(--g);font-weight:700;margin-bottom:12px;"></div>
         <label class="l" for="pw">Password (পাসওয়ার্ড)</label>
         <div class="box">
-          <input id="pw" type="password" placeholder="পাসওয়ার্ড দিন" autocomplete="current-password">
+          <input id="pw" type="password" placeholder="আপনার পাসওয়ার্ড দিন" autocomplete="current-password">
           <button class="eye" id="eye" type="button" aria-label="Show password">👁️</button>
         </div>
         <div class="row">
@@ -851,14 +854,32 @@ input::placeholder {
             </span>
             Remember Me
           </label>
-          <button class="lk" id="toOtp" type="button">Login with OTP</button>
+          <button class="lk" id="btnForgotToOtp" type="button">পাসওয়ার্ড ভুলে গেছেন? ওটিপি পাঠান</button>
         </div>
-        <button class="btn" id="loginPw" type="button">সাইন ইন / অ্যাকাউন্ট তৈরি</button>
+        <button class="btn" id="loginPw" type="button">
+          <i class="fas fa-sign-in-alt" style="margin-right:6px;"></i> লগইন করুন
+        </button>
+      </div>
+
+      <!-- Step 2B: OTP Verification Step (If new user or OTP login requested) -->
+      <div id="stepOtp" class="step hide">
+        <div id="otpSubtitle" style="font-size:0.86rem;color:var(--muted);margin-bottom:12px;line-height:1.4;">
+          আপনার মোবাইল নম্বরে ৬-সংখ্যার OTP কোড পাঠানো হয়েছে।
+        </div>
+        <label class="l">6-digit OTP code (৬ ডিজিটের ওটিপি কোড)</label>
+        <div class="otp" id="boxes"></div>
+        <span class="chip" id="chip">👉 টেস্ট ওটিপি: 123456 (এখানে চাপুন)</span>
+        <div class="row" style="margin-bottom:16px">
+          <span id="timer"></span>
+          <button class="lk" id="resend" type="button" disabled>নতুন কোড পাঠান</button>
+        </div>
+        <button class="btn" id="verify" type="button">
+          <i class="fas fa-check-circle" style="margin-right:6px;"></i> যাচাই ও প্রবেশ করুন
+        </button>
       </div>
 
       <div class="msg" id="msg" role="alert"></div>
-      <div class="foot">অ্যাকাউন্ট নেই? <button class="lk" id="signup" type="button">নতুন অ্যাকাউন্ট খুলুন</button></div>
-      <div class="note">💡 টেস্ট মোড: যেকোনো নম্বরে টেস্ট OTP <b>123456</b> দিয়ে বা যেকোনো পাসওয়ার্ড দিয়ে সাথে সাথে প্রবেশ করা যাবে।</div>
+      <div class="note">💡 <b>স্মার্ট লগইন:</b> নম্বর দিলেই অ্যাকাউন্ট থাকলে পাসওয়ার্ড চাইবে, না থাকলে ওটিপি (OTP) পাঠিয়ে অ্যাকাউন্ট তৈরি করা হবে।</div>
     </div>
 
     <!-- Success Screen -->
@@ -973,51 +994,92 @@ function ok() {
   return true;
 }
 
-function swap(a, b) {
-  b.classList.add('hide');
-  a.classList.remove('hide');
-  a.style.animation = 'none';
-  void a.offsetWidth;
-  a.style.animation = '';
-}
-
-function setAuthMode(mode) {
+function showStepPhone() {
   say('');
-  if (mode === 'otp') {
-    if ($('tabOtp')) {
-      $('tabOtp').style.background = 'linear-gradient(135deg, #00C2FF, #0070F3)';
-      $('tabOtp').style.color = '#fff';
-      $('tabOtp').style.boxShadow = '0 2px 10px rgba(0,194,255,0.35)';
-    }
-    if ($('tabPw')) {
-      $('tabPw').style.background = 'transparent';
-      $('tabPw').style.color = 'var(--muted)';
-      $('tabPw').style.boxShadow = 'none';
-    }
-    swap($('otpBox'), $('pwBox'));
-  } else {
-    if ($('tabPw')) {
-      $('tabPw').style.background = 'linear-gradient(135deg, #00C2FF, #0070F3)';
-      $('tabPw').style.color = '#fff';
-      $('tabPw').style.boxShadow = '0 2px 10px rgba(0,194,255,0.35)';
-    }
-    if ($('tabOtp')) {
-      $('tabOtp').style.background = 'transparent';
-      $('tabOtp').style.color = 'var(--muted)';
-      $('tabOtp').style.boxShadow = 'none';
-    }
-    clearInterval(tick);
-    $('otpArea').classList.add('hide');
-    $('sendOtp').classList.remove('hide');
-    swap($('pwBox'), $('otpBox'));
-    setTimeout(function() { $('pw').focus(); }, 150);
-  }
+  $('phoneBadge').classList.add('hide');
+  $('stepPassword').classList.add('hide');
+  $('stepOtp').classList.add('hide');
+  $('stepPhone').classList.remove('hide');
+  $('mainTitle').innerHTML = 'Welcome<span>Back, Student!</span>';
+  $('mainSub').textContent = 'মোবাইল নম্বর দিয়ে সাইন ইন বা নতুন অ্যাকাউন্ট খুলুন';
+  setTimeout(function() { $('num').focus(); }, 150);
 }
 
-if ($('tabOtp')) $('tabOtp').onclick = function() { setAuthMode('otp'); };
-if ($('tabPw')) $('tabPw').onclick = function() { setAuthMode('pw'); };
-$('toOtp').onclick = function() { setAuthMode('otp'); };
-$('toPw').onclick = function() { setAuthMode('pw'); };
+function handleContinue() {
+  if (!ok()) return;
+  var phone = $('num').value.trim();
+  var btn = $('btnContinue');
+  btn.classList.add('load');
+  say('');
+
+  var turnstileToken = '';
+  if (window.turnstile && window.turnstileWidgetId !== undefined) {
+    try {
+      turnstileToken = window.turnstile.getResponse(window.turnstileWidgetId) || '';
+    } catch(e) {}
+  }
+
+  fetch('/api/auth/check-phone', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phone: phone, turnstileToken: turnstileToken })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    btn.classList.remove('load');
+    if (!data || !data.success) {
+      say(data ? data.message : 'নম্বর যাচাই করতে সমস্যা হয়েছে।', 'err');
+      return;
+    }
+
+    $('displayPhone').textContent = '+880 ' + phone.slice(1);
+    $('phoneBadge').classList.remove('hide');
+    $('stepPhone').classList.add('hide');
+
+    if (data.exists && data.hasPassword) {
+      // User has account with password -> ask for password!
+      $('mainTitle').innerHTML = 'পাসওয়ার্ড দিন<span>' + (data.name || 'শিক্ষার্থী') + '</span>';
+      $('mainSub').textContent = 'আপনার অ্যাকাউন্টের পাসওয়ার্ড দিয়ে প্রবেশ করুন';
+      $('userGreeting').textContent = 'স্বাগতম, ' + (data.name || 'শিক্ষার্থী') + '! আপনার পাসওয়ার্ড দিন:';
+      $('stepPassword').classList.remove('hide');
+      setTimeout(function() { $('pw').focus(); }, 150);
+    } else {
+      // User does NOT exist (or exists without password) -> OTP code dispatched!
+      if (data.devOtpHint) otp = data.devOtpHint;
+      expires = Date.now() + 180000;
+      tries = 0;
+      fill('');
+      $('mainTitle').innerHTML = 'ওটিপি যাচাই<span>নতুন অ্যাকাউন্ট</span>';
+      var subText = data.exists 
+        ? 'আপনার অ্যাকাউন্টে পাসওয়ার্ড নেই। ওটিপি (OTP) দিয়ে সরাসরি প্রবেশ করুন।' 
+        : 'নতুন শিক্ষার্থী! আপনার নম্বরে পাঠানো ৬-ডিজিটের কোড দিন। ওটিপি দিলেই স্বয়ংক্রিয়ভাবে অ্যাকাউন্ট তৈরি হবে।';
+      $('mainSub').textContent = subText;
+      $('otpSubtitle').textContent = subText;
+      $('stepOtp').classList.remove('hide');
+      boxes.children[0].focus();
+      timer();
+      say(data.message || 'মোবাইল নম্বরে ওটিপি পাঠানো হয়েছে।', 'ok');
+    }
+  })
+  .catch(function() {
+    btn.classList.remove('load');
+    // Fallback: If network error or static server
+    $('displayPhone').textContent = '+880 ' + phone.slice(1);
+    $('phoneBadge').classList.remove('hide');
+    $('stepPhone').classList.add('hide');
+    $('stepOtp').classList.remove('hide');
+    boxes.children[0].focus();
+    timer();
+    say('নম্বর যাচাই হয়েছে। ওটিপি (123456) দিন।', 'ok');
+  });
+}
+
+$('btnContinue').onclick = handleContinue;
+$('btnChangePhone').onclick = showStepPhone;
+
+$('num').onkeydown = function(e) {
+  if (e.key === 'Enter') handleContinue();
+};
 
 $('num').oninput = function() {
   this.value = this.value.replace(/\D/g, '');
@@ -1029,9 +1091,35 @@ $('eye').onclick = function() {
   this.textContent = s ? '🙈' : '👁️';
 };
 
-$('signup').onclick = function() {
-  say('💡 যেকোনো নম্বর ও পাসওয়ার্ড দিয়ে "সাইন ইন" চাপুন, অথবা ওটিপি (123456) দিয়ে ১-ক্লিকে প্রবেশ করুন। স্বয়ংক্রিয়ভাবে অ্যাকাউন্ট হয়ে যাবে!', 'ok');
-  setAuthMode('otp');
+$('btnForgotToOtp').onclick = function() {
+  var phone = $('num').value.trim();
+  say('ওটিপি পাঠানো হচ্ছে...', 'ok');
+  fetch('/api/auth/send-otp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phone: phone })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data && data.devOtpHint) otp = data.devOtpHint;
+    expires = Date.now() + 180000;
+    tries = 0;
+    fill('');
+    $('stepPassword').classList.add('hide');
+    $('stepOtp').classList.remove('hide');
+    $('mainTitle').innerHTML = 'ওটিপি লগইন<span>' + phone + '</span>';
+    $('mainSub').textContent = 'আপনার মোবাইল নম্বরে পাঠানো ৬-ডিজিটের ওটিপি দিন';
+    boxes.children[0].focus();
+    timer();
+    say('পাসওয়ার্ড রিকভারি ওটিপি পাঠানো হয়েছে।', 'ok');
+  })
+  .catch(function() {
+    $('stepPassword').classList.add('hide');
+    $('stepOtp').classList.remove('hide');
+    boxes.children[0].focus();
+    timer();
+    say('ওটিপি (123456) পাঠানো হয়েছে।', 'ok');
+  });
 };
 
 document.addEventListener('click', function(e) {
@@ -1213,41 +1301,43 @@ function timer() {
 function send() {
   if (!ok()) return;
   var phone = $('num').value.trim();
-  $('sendOtp').classList.add('load');
+  $('resend').disabled = true;
+  say('নতুন ওটিপি পাঠানো হচ্ছে...', 'ok');
+
+  var turnstileToken = '';
+  if (window.turnstile && window.turnstileWidgetId !== undefined) {
+    try {
+      turnstileToken = window.turnstile.getResponse(window.turnstileWidgetId) || '';
+    } catch(e) {}
+  }
+
   fetch('/api/auth/send-otp', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ phone: phone })
+    body: JSON.stringify({ phone: phone, turnstileToken: turnstileToken })
   })
   .then(function(r) { return r.json(); })
   .then(function(data) {
-    $('sendOtp').classList.remove('load');
     if (data && data.success) {
       if (data.devOtpHint) otp = data.devOtpHint;
-      expires = Date.now() + 300000;
+      expires = Date.now() + 180000;
       tries = 0;
       fill('');
-      $('otpArea').classList.remove('hide');
-      $('sendOtp').classList.add('hide');
       boxes.children[0].focus();
       timer();
-      say('OTP পাঠানো হয়েছে +880 ' + phone.slice(1) + ' নম্বরে।', 'ok');
+      say('নতুন OTP পাঠানো হয়েছে +880 ' + phone.slice(1) + ' নম্বরে।', 'ok');
     } else {
       say(data ? data.message : 'OTP পাঠাতে সমস্যা হয়েছে।', 'err');
     }
   })
   .catch(function() {
-    $('sendOtp').classList.remove('load');
-    expires = Date.now() + 300000;
-    $('otpArea').classList.remove('hide');
-    $('sendOtp').classList.add('hide');
+    expires = Date.now() + 180000;
     boxes.children[0].focus();
     timer();
-    say('OTP পাঠানো হয়েছে +880 ' + phone.slice(1) + ' নম্বরে।', 'ok');
+    say('নতুন OTP (123456) পাঠানো হয়েছে।', 'ok');
   });
 }
 
-$('sendOtp').onclick = send;
 $('resend').onclick = send;
 
 $('chip').onclick = function() {
@@ -1303,15 +1393,14 @@ $('logout').onclick = function() {
   $('pw').value = '';
   fill('');
   say('');
-  $('toPw').click();
+  showStepPhone();
 };
 
-// Theme Synchronization
-var theme = localStorage.getItem('dipu_theme') || 'dark';
-if (theme === 'light') {
-  document.body.classList.add('light-theme');
-  document.documentElement.classList.add('light-theme');
-}
+// Theme Synchronization (Default Light Theme as requested)
+var theme = 'light';
+localStorage.setItem('dipu_theme', 'light');
+document.body.classList.add('light-theme');
+document.documentElement.classList.add('light-theme');
 document.querySelectorAll('.theme-option').forEach(function(btn) {
   btn.classList.toggle('active', btn.dataset.theme === theme);
   btn.onclick = function() {
@@ -1335,8 +1424,19 @@ document.querySelectorAll('.lang-option').forEach(function(btn) {
     document.querySelectorAll('.lang-option').forEach(function(b) {
       b.classList.toggle('active', b.dataset.lang === l);
     });
-  };
-});
+// Cloudflare Turnstile Callback
+window.onloadTurnstileCallback = function() {
+  if (window.turnstile && document.getElementById('turnstile-container')) {
+    try {
+      window.turnstileWidgetId = window.turnstile.render('#turnstile-container', {
+        sitekey: window.CF_TURNSTILE_SITE_KEY || '1x00000000000000000000AA',
+        appearance: 'interaction-only',
+        theme: 'light',
+        'refresh-expired': 'auto'
+      });
+    } catch(e) {}
+  }
+};
 </script>
 <script src="/js/site-animations.js" defer></script>
 </body>

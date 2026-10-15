@@ -218,6 +218,102 @@ let IN_MEMORY_COURSES = [
     ]
   },
   {
+    _id: "course-user-ssc27",
+    slug: "ssc-27-science",
+    title: {
+      en: "SSC 2027 Complete Science Board Preparation Course",
+      bn: "SSC '২৭ বিজ্ঞান পূর্ণাঙ্গ প্রস্তুতি কোর্স"
+    },
+    subject: "বিজ্ঞান বিভাগ (পদার্থ, রসায়ন, উচ্চতর গণিত ও জীব)",
+    classLevel: "SSC",
+    category: "academic",
+    instructor: {
+      name: "দীপু স্যার (BUET) ও বিজ্ঞান টিম",
+      institution: "বুয়েট ইঞ্জিনিয়ারিং • লিড মেন্টর",
+      avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%230084FF'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='40' text-anchor='middle' font-weight='bold'>২৭</text></svg>"
+    },
+    price: 5500,
+    discountPrice: 3950,
+    thumbnail: "/images/courses/ssc-27-prep.jpg",
+    routineImage: "/images/courses/routine-banner.jpg",
+    enrolledStudentsCount: 1640,
+    rating: 4.97,
+    description: {
+      bn: "এসএসসি ২০২৭ ব্যাচের শিক্ষার্থীদের পদার্থবিজ্ঞান, রসায়ন, উচ্চতর গণিত এবং জীববিজ্ঞানের শতভাগ বেসিক ও বোর্ড পরীক্ষায় নিশ্চিত গোল্ডেন A+ অর্জনের লক্ষ্যে সাজানো পূর্ণাঙ্গ মাস্টারকোর্স।",
+      en: "Complete comprehensive board preparation for SSC 2027 batch."
+    },
+    features: [
+      "অনলাইন লাইভ ক্লাস ও ২৪/৭ ডাউট সলভ সাপোর্ট",
+      "অধ্যায়ভিত্তিক CQ ও MCQ শর্টকাট টেকনিক ক্লাস",
+      "বোর্ড স্ট্যান্ডার্ড পূর্ণাঙ্গ মক টেস্ট সিরিজ",
+      "রঙিন প্রিন্ট-উপযোগী পিডিএফ লেকচার নোটস",
+      "গোল্ডেন A+ নিশ্চিতকরণে পার্সোনালাইজড ট্র্যাকিং"
+    ],
+    chapters: [
+      {
+        chapterTitle: { en: "Chapter 1: Motion and Forces", bn: "অধ্যায় ১: গতি ও বলবিদ্যা ফাউন্ডেশন" },
+        order: 1,
+        lessons: [
+          {
+            lessonTitle: { en: "Lecture 1: Kinematics & Equations of Motion", bn: "লেকচার ১: গতির সমীকরণ ও গ্রাফিক্যাল বিশ্লেষণ" },
+            videoType: "youtube",
+            videoSource: "dQw4w9WgXcQ",
+            isFree: true,
+            durationMinutes: 48
+          }
+        ]
+      }
+    ]
+  },
+  {
+    _id: "course-user-ssc28",
+    slug: "ssc-28-full-prep",
+    title: {
+      en: "SSC 2028 Complete Foundation & Academic Preparation Course",
+      bn: "SSC '২৮ পূর্ণাঙ্গ প্রস্তুতি ও ফাউন্ডেশন কোর্স"
+    },
+    subject: "বিজ্ঞান বিভাগ • পদার্থ, রসায়ন, গণিত ও জীব",
+    classLevel: "SSC",
+    category: "academic",
+    instructor: {
+      name: "দীপু স্যার ও সিনিয়র মেন্টর প্যানেল",
+      institution: "এসএসসি স্পেশালিস্ট ফ্যাকাল্টি",
+      avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%236366F1'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='40' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
+    },
+    price: 4500,
+    discountPrice: 2999,
+    thumbnail: "/images/courses/ssc-28-prep.jpg",
+    routineImage: "/images/courses/routine-banner.jpg",
+    enrolledStudentsCount: 950,
+    rating: 4.95,
+    description: {
+      bn: "এসএসসি ২০২৮ ব্যাচের শিক্ষার্থীদের জন্য বিজ্ঞান বিভাগের ৪টি মূল বিষয় (পদার্থ, রসায়ন, গণিত ও জীব)-এর পুঙ্খানুপুঙ্খ বেসিক গঠন ও বোর্ড পরীক্ষার জন্য আগাম পূর্ণাঙ্গ প্রস্তুতি।",
+      en: "Complete foundational prep for SSC 2028 batch."
+    },
+    features: [
+      "অনলাইন ইন্টারঅ্যাক্টিভ লাইভ ও ব্যাকআপ ক্লাস",
+      "টপিকভিত্তিক অধ্যায় মূল্যায়ন ও মক টেস্ট",
+      "রঙিন স্মার্ট নোটস ও হ্যান্ডরিটেন শিট",
+      "CQ ও MCQ সমাধানের এক্সক্লুসিভ হ্যাকস",
+      "গোল্ডেন A+ নিশ্চিতকরণে পার্সোনালাইজড ট্র্যাকিং"
+    ],
+    chapters: [
+      {
+        chapterTitle: { en: "Chapter 1: Basic Science Foundation", bn: "অধ্যায় ১: বিজ্ঞানের মূল ধারণা ও গাণিতিক প্রয়োগ" },
+        order: 1,
+        lessons: [
+          {
+            lessonTitle: { en: "Lecture 1: Science & Math Fundamentals", bn: "লেকচার ১: বিজ্ঞান ও গণিতের মৌলিক ধারণা" },
+            videoType: "youtube",
+            videoSource: "dQw4w9WgXcQ",
+            isFree: true,
+            durationMinutes: 45
+          }
+        ]
+      }
+    ]
+  },
+  {
     _id: "course-user-c5",
     slug: "class-5-full-course",
     title: {
@@ -452,6 +548,375 @@ let IN_MEMORY_COURSES = [
             videoSource: "dQw4w9WgXcQ",
             isFree: true,
             durationMinutes: 50
+          }
+        ]
+      }
+    ]
+  },
+  {
+    _id: "course-ssc27-sci",
+    slug: "ssc-27-science",
+    title: {
+      en: "SSC 2027 Complete Science Preparation Course",
+      bn: "SSC '২৭ বিজ্ঞান পূর্ণাঙ্গ প্রস্তুতি কোর্স"
+    },
+    subject: "বিজ্ঞান বিভাগ (পদার্থ, রসায়ন, উচ্চতর গণিত ও জীব)",
+    classLevel: "SSC",
+    category: "academic",
+    instructor: {
+      name: "দীপু স্যার (BUET) ও বিজ্ঞান টিম",
+      institution: "বুয়েট ইঞ্জিনিয়ারিং • লিড মেন্টর",
+      avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%230084FF'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৭</text></svg>"
+    },
+    price: 5500,
+    discountPrice: 3950,
+    thumbnail: "/images/courses/ssc-27-prep.jpg",
+    routineImage: "/images/courses/routine-banner.jpg",
+    enrolledStudentsCount: 1640,
+    rating: 4.97,
+    description: {
+      bn: "এসএসসি ২০২৭ ব্যাচের শিক্ষার্থীদের পদার্থবিজ্ঞান, রসায়ন, উচ্চতর গণিত এবং জীববিজ্ঞানের শতভাগ বেসিক ও বোর্ড পরীক্ষায় নিশ্চিত গোল্ডেন A+ অর্জনের লক্ষ্যে সাজানো পূর্ণাঙ্গ মাস্টারকোর্স।",
+      en: "Complete SSC 2027 Science curriculum masterclass covering Physics, Chemistry, Math and Biology."
+    },
+    features: [
+      "অনলাইন লাইভ ক্লাস ও ২৪/৭ ডাউট সলভ সাপোর্ট",
+      "অধ্যায়ভিত্তিক CQ ও MCQ শর্টকাট টেকনিক ক্লাস",
+      "বোর্ড স্ট্যান্ডার্ড পূর্ণাঙ্গ মক টেস্ট সিরিজ",
+      "রঙিন প্রিন্ট-উপযোগী পিডিএফ লেকচার নোটস",
+      "বোর্ড পরীক্ষায় গোল্ডেন A+ নিশ্চিতকরণ রোডম্যাপ"
+    ],
+    chapters: [
+      {
+        chapterTitle: { en: "Physics: Motion and Forces", bn: "অধ্যায় ১: গতি ও বলের সৃজনশীল সমাধান" },
+        order: 1,
+        lessons: [
+          {
+            lessonTitle: { en: "Lecture 1: Motion Concepts & Board CQ Hacks", bn: "লেকচার ১: গতির সমীকরণ ও গ্রাফিক্যাল প্রশ্ন সমাধান" },
+            videoType: "youtube",
+            videoSource: "dQw4w9WgXcQ",
+            isFree: true,
+            durationMinutes: 48
+          }
+        ]
+      }
+    ]
+  },
+  {
+    _id: "course-ssc27-hum",
+    slug: "ssc-27-humanities",
+    title: {
+      en: "SSC 2027 Complete Humanities Course",
+      bn: "SSC '২৭ মানবিক পূর্ণাঙ্গ প্রস্তুতি কোর্স"
+    },
+    subject: "মানবিক বিভাগ (পৌরনীতি, ভূগোল, ইতিহাস ও অর্থনীতি)",
+    classLevel: "SSC",
+    category: "academic",
+    instructor: {
+      name: "মানবিক স্পেশালিস্ট প্যানেল",
+      institution: "ঢাকা বিশ্ববিদ্যালয় ও সিনিয়র শিক্ষক প্যানেল",
+      avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%238B5CF6'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>মান</text></svg>"
+    },
+    price: 4200,
+    discountPrice: 2950,
+    thumbnail: "/images/courses/class7-full-course.jpg",
+    routineImage: "/images/courses/routine-banner.jpg",
+    enrolledStudentsCount: 720,
+    rating: 4.93,
+    description: {
+      bn: "এসএসসি ২০২৭ মানবিক বিভাগের শিক্ষার্থীদের জন্য পৌরনীতি ও নাগরিকতা, বাংলাদেশের ইতিহাস, ভূগোল ও অর্থনীতির প্রতিটি অধ্যায়ের সহজ বিশ্লেষণ, রঙিন চার্ট ও বোর্ড পরীক্ষার হ্যান্ডনোট।",
+      en: "Comprehensive SSC 2027 humanities preparation program."
+    },
+    features: [
+      "সহজ ভাষায় মানবিক সকল বিষয়ের অনলাইন লাইভ ক্লাস",
+      "সৃজনশীল প্রশ্নের কাঠামো ও লেখার স্পেশাল টেকনিক",
+      "অধ্যায়ভিত্তিক মডেল টেস্ট ও বিস্তারিত উত্তরপত্র",
+      "পরীক্ষার আগে ফাইনাল রিভিশন ও সাজেশন ক্লাস",
+      "সহজে A+ পাওয়ার কার্যকরী গাইডলাইন"
+    ],
+    chapters: [
+      {
+        chapterTitle: { en: "Civics and Governance", bn: "অধ্যায় ১: নাগরিক ও নাগরিকতা বেসিক" },
+        order: 1,
+        lessons: [
+          {
+            lessonTitle: { en: "Lecture 1: Rights and Duties of Citizens", bn: "লেকচার ১: নাগরিকের অধিকার ও দায়িত্ব বিশ্লেষণ" },
+            videoType: "youtube",
+            videoSource: "dQw4w9WgXcQ",
+            isFree: true,
+            durationMinutes: 42
+          }
+        ]
+      }
+    ]
+  },
+  {
+    _id: "course-ssc28-biz",
+    slug: "ssc-28-business",
+    title: {
+      en: "SSC 2028 Business Studies Foundation Course",
+      bn: "SSC '২৮ ব্যবসায় শিক্ষা ফাউন্ডেশন কোর্স"
+    },
+    subject: "ব্যবসায় শিক্ষা (হিসাববিজ্ঞান ও ব্যবসায় উদ্যোগ বেসিক)",
+    classLevel: "SSC",
+    category: "academic",
+    instructor: {
+      name: "কমার্স মেন্টর টিম",
+      institution: "ব্যবসায় শিক্ষা বিশেষজ্ঞ ফ্যাকাল্টি",
+      avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23F59E0B'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
+    },
+    price: 4000,
+    discountPrice: 2750,
+    thumbnail: "/images/courses/class10-business-studies.jpg",
+    routineImage: "/images/courses/routine-banner.jpg",
+    enrolledStudentsCount: 580,
+    rating: 4.91,
+    description: {
+      bn: "এসএসসি ২০২৮ ব্যাচের কমার্স শিক্ষার্থীদের জন্য হিসাববিজ্ঞান, ফিন্যান্স এবং ব্যবসায় উদ্যোগের প্রাথমিক ধারণা থেকে শুরু করে বোর্ড পরীক্ষার আগাম প্রস্তুতি।"
+    },
+    features: [
+      "হিসাববিজ্ঞানের গোল্ডেন রুলস ও সহজ কৌশল",
+      "নিয়মিত লাইভ ক্লাস ও কুইজ প্র্যাকটিস",
+      "অধ্যায়ভিত্তিক স্মার্ট নোট শিট",
+      "বাস্তবধর্মী হিসাবনিকাশ শেখার ক্লাস"
+    ],
+    chapters: [
+      {
+        chapterTitle: { en: "Basics of Accounting", bn: "অধ্যায় ১: হিসাববিজ্ঞানের প্রাথমিক পরিচিতি" },
+        order: 1,
+        lessons: [
+          {
+            lessonTitle: { en: "Lecture 1: What is Accounting", bn: "লেকচার ১: হিসাববিজ্ঞান কী ও কেন প্রয়োজন" },
+            videoType: "youtube",
+            videoSource: "dQw4w9WgXcQ",
+            isFree: true,
+            durationMinutes: 40
+          }
+        ]
+      }
+    ]
+  },
+  {
+    _id: "course-ssc28-hum",
+    slug: "ssc-28-humanities",
+    title: {
+      en: "SSC 2028 Humanities Foundation Course",
+      bn: "SSC '২৮ মানবিক ফাউন্ডেশন কোর্স"
+    },
+    subject: "মানবিক বিভাগ (বাংলাদেশ ও বিশ্বপরিচয় এবং সাধারণ বিজ্ঞান)",
+    classLevel: "SSC",
+    category: "academic",
+    instructor: {
+      name: "মানবিক মেন্টরস",
+      institution: "দীপু একাডেমি মানবিক বিভাগ",
+      avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%236366F1'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
+    },
+    price: 3800,
+    discountPrice: 2500,
+    thumbnail: "/images/courses/class5-full-course.jpg",
+    routineImage: "/images/courses/routine-banner.jpg",
+    enrolledStudentsCount: 510,
+    rating: 4.89,
+    description: {
+      bn: "এসএসসি ২০২৮ মানবিক শিক্ষার্থীদের জন্য বাংলাদেশ ও বিশ্বপরিচয়, ইতিহাস এবং সাধারণ বিজ্ঞান বিষয়ের শক্ত ভিত্তি গড়ে তোলার স্পেশাল ফাউন্ডেশন কোর্স।"
+    },
+    features: [
+      "অধ্যায়ভিত্তিক ইন্টারেক্টিভ ক্লাস",
+      "রঙিন মানচিত্র ও চার্টসহ হ্যান্ডনোট",
+      "সাপ্তাহিক কুইজ ও অগ্রগতি মূল্যায়ন"
+    ],
+    chapters: [
+      {
+        chapterTitle: { en: "Bangladesh Heritage", bn: "অধ্যায় ১: বাংলার প্রাচীন ইতিহাস ও ঐতিহ্য" },
+        order: 1,
+        lessons: [
+          {
+            lessonTitle: { en: "Lecture 1: Ancient Bengal", bn: "লেকচার ১: প্রাচীন জনপদ ও ভৌগোলিক বৈশিষ্ট্য" },
+            videoType: "youtube",
+            videoSource: "dQw4w9WgXcQ",
+            isFree: true,
+            durationMinutes: 38
+          }
+        ]
+      }
+    ]
+  },
+  {
+    _id: "course-hsc27-biz",
+    slug: "hsc-27-business",
+    title: {
+      en: "HSC 2027 Complete Business Studies Course",
+      bn: "HSC '২৭ পূর্ণাঙ্গ ব্যবসায় শিক্ষা কোর্স"
+    },
+    subject: "ব্যবসায় শিক্ষা (হিসাববিজ্ঞান, ব্যবসায় সংগঠন ও ফিন্যান্স)",
+    classLevel: "HSC",
+    category: "academic",
+    instructor: {
+      name: "ব্যবসায় শিক্ষা ফ্যাকাল্টি",
+      institution: "ঢাকা বিশ্ববিদ্যালয় বাণিজ্য অনুষদ টপার্স",
+      avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23F59E0B'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৭</text></svg>"
+    },
+    price: 5500,
+    discountPrice: 3950,
+    thumbnail: "/images/courses/class10-business-studies.jpg",
+    routineImage: "/images/courses/routine-banner.jpg",
+    enrolledStudentsCount: 890,
+    rating: 4.94,
+    description: {
+      bn: "এইচএসসি ২০২৭ ব্যাচের হিসাববিজ্ঞান ১ম ও ২য় পত্র, ব্যবসায় সংগঠন ও ব্যবস্থাপনা এবং ফিন্যান্স বিষয়ের প্রতিটি কনসেপ্টের পুঙ্খানুপুঙ্খ ব্যাখ্যা ও বোর্ড সলভিং।"
+    },
+    features: [
+      "অনলাইন লাইভ ক্লাস ও রেকর্ডেড ক্লাস আর্কাইভ",
+      "বোর্ড স্ট্যান্ডার্ড CQ ও MCQ মক টেস্ট সিরিজ",
+      "প্রিমিয়াম কালারফুল হ্যান্ডনোট ও প্রশ্নব্যাংক",
+      "ঢাকা বিশ্ববিদ্যালয় সি-ইউনিট এডমিশন ফাউন্ডেশন"
+    ],
+    chapters: [
+      {
+        chapterTitle: { en: "Accounting 1st Paper", bn: "অধ্যায় ১: হিসাববিজ্ঞান পরিচিতি ও সমন্বয় দাখিলা" },
+        order: 1,
+        lessons: [
+          {
+            lessonTitle: { en: "Lecture 1: Adjusting Entries Hacks", bn: "লেকচার ১: সমন্বয় দাখিলার জাদুকরী নিয়ম ও CQ হ্যাকস" },
+            videoType: "youtube",
+            videoSource: "dQw4w9WgXcQ",
+            isFree: true,
+            durationMinutes: 52
+          }
+        ]
+      }
+    ]
+  },
+  {
+    _id: "course-hsc27-hum",
+    slug: "hsc-27-humanities",
+    title: {
+      en: "HSC 2027 Complete Humanities Course",
+      bn: "HSC '২৭ পূর্ণাঙ্গ মানবিক কোর্স"
+    },
+    subject: "মানবিক বিভাগ (অর্থনীতি, পৌরনীতি ও যুক্তিবিদ্যা)",
+    classLevel: "HSC",
+    category: "academic",
+    instructor: {
+      name: "মানবিক মেন্টর টিম",
+      institution: "সিনিয়র বিসিএস ও বিশ্ববিদ্যালয় মেন্টর প্যানেল",
+      avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%238B5CF6'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৭</text></svg>"
+    },
+    price: 5000,
+    discountPrice: 3500,
+    thumbnail: "/images/courses/class7-full-course.jpg",
+    routineImage: "/images/courses/routine-banner.jpg",
+    enrolledStudentsCount: 640,
+    rating: 4.92,
+    description: {
+      bn: "এইচএসসি ২০২৭ ব্যাচের শিক্ষার্থীদের অর্থনীতি, পৌরনীতি ও সুশাসন এবং যুক্তিবিদ্যা বিষয়ে সহজ বিশ্লেষণ, গ্রাফ সমাধান ও বোর্ড পরীক্ষায় গোল্ডেন A+ পাওয়ার পূর্ণাঙ্গ প্যাকেজ।"
+    },
+    features: [
+      "অর্থনীতির গ্রাফ ও গানিতিক ব্যাখ্যার বিশেষ ক্লাস",
+      "বোর্ড স্ট্যান্ডার্ড হ্যান্ডনোট ও পূর্ণাঙ্গ সাজেশন",
+      "অধ্যায়ভিত্তিক মডেল টেস্ট ও সৃজনশীল খাতা মূল্যায়ন",
+      "বিশ্ববিদ্যালয় খ-ইউনিট এডমিশন বেসিক প্রস্তুতি"
+    ],
+    chapters: [
+      {
+        chapterTitle: { en: "Economics: Demand and Supply", bn: "অধ্যায় ১: চাহিদা, যোগান ও স্থিতিস্থাপকতা" },
+        order: 1,
+        lessons: [
+          {
+            lessonTitle: { en: "Lecture 1: Demand Curves and Math", bn: "লেকচার ১: চাহিদা রেখা অঙ্কন ও গাণিতিক সমীকরণ সমাধান" },
+            videoType: "youtube",
+            videoSource: "dQw4w9WgXcQ",
+            isFree: true,
+            durationMinutes: 50
+          }
+        ]
+      }
+    ]
+  },
+  {
+    _id: "course-hsc28-biz",
+    slug: "hsc-28-business",
+    title: {
+      en: "HSC 2028 Business Studies Foundation Course",
+      bn: "HSC '২৮ ব্যবসায় শিক্ষা পূর্ণাঙ্গ কোর্স"
+    },
+    subject: "ব্যবসায় শিক্ষা (১ম বর্ষের পূর্ণাঙ্গ সিলেবাস)",
+    classLevel: "HSC",
+    category: "academic",
+    instructor: {
+      name: "সিনিয়র কমার্স টিম",
+      institution: "বাণিজ্য শিক্ষা বিশেষজ্ঞ মেন্টরস",
+      avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23FF7A1A'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
+    },
+    price: 5500,
+    discountPrice: 3950,
+    thumbnail: "/images/courses/class10-business-studies.jpg",
+    routineImage: "/images/courses/routine-banner.jpg",
+    enrolledStudentsCount: 730,
+    rating: 4.93,
+    description: {
+      bn: "এইচএসসি ২০২৮ ব্যাচের শিক্ষার্থীদের শুরু থেকেই কমার্সের মূল বিষয়গুলো পুঙ্খানুপুঙ্খভাবে আত্মস্থ করার জন্য সাজানো পূর্ণাঙ্গ একাডেমি কোর্স।"
+    },
+    features: [
+      "১ম বর্ষের প্রতিটি অধ্যায়ের পুঙ্খানুপুঙ্খ বেসিক ক্লাস",
+      "সাপ্তাহিক অনলাইন পরীক্ষা ও লিডারবোর্ড র‍্যাঙ্কিং",
+      "রঙিন হ্যান্ডনোটস ও প্র্যাকটিস শিট"
+    ],
+    chapters: [
+      {
+        chapterTitle: { en: "Principles of Accounting", bn: "অধ্যায় ১: হিসাববিজ্ঞানের মূল ভিত্তি" },
+        order: 1,
+        lessons: [
+          {
+            lessonTitle: { en: "Lecture 1: Double Entry Rules", bn: "লেকচার ১: দুতরফা দাখিলা ও জাবেদা ভুক্তিকরণ" },
+            videoType: "youtube",
+            videoSource: "dQw4w9WgXcQ",
+            isFree: true,
+            durationMinutes: 45
+          }
+        ]
+      }
+    ]
+  },
+  {
+    _id: "course-hsc28-hum",
+    slug: "hsc-28-humanities",
+    title: {
+      en: "HSC 2028 Humanities Foundation Course",
+      bn: "HSC '২৮ মানবিক পূর্ণাঙ্গ প্রস্তুতি কোর্স"
+    },
+    subject: "মানবিক বিভাগ (১ম বর্ষের পূর্ণাঙ্গ প্রস্তুতি)",
+    classLevel: "HSC",
+    category: "academic",
+    instructor: {
+      name: "মানবিক ফ্যাকাল্টি",
+      institution: "দীপু একাডেমি মানবিক বিভাগ",
+      avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%2310B981'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
+    },
+    price: 5000,
+    discountPrice: 3500,
+    thumbnail: "/images/courses/class5-full-course.jpg",
+    routineImage: "/images/courses/routine-banner.jpg",
+    enrolledStudentsCount: 560,
+    rating: 4.91,
+    description: {
+      bn: "এইচএসসি ২০২৮ মানবিক শিক্ষার্থীদের জন্য অর্থনীতি, পৌরনীতি ও যুক্তিবিদ্যা ১ম পত্রের প্রতিটি বিষয়ের সহজবোধ্য ব্যাখ্যা ও বেসিক ফাউন্ডেশন কোর্স।"
+    },
+    features: [
+      "১ম বর্ষের সকল অধ্যায়ের সহজ বিশ্লেষণ ক্লাস",
+      "অধ্যায়ভিত্তিক অনলাইন পরীক্ষা ও প্র্যাকটিস নোটস",
+      "পরীক্ষায় সর্বোচ্চ নম্বর পাওয়ার টিপস ও ট্রিকস"
+    ],
+    chapters: [
+      {
+        chapterTitle: { en: "Economics Basics", bn: "অধ্যায় ১: মৌলিক অর্থনৈতিক সমস্যা ও এর সমাধান" },
+        order: 1,
+        lessons: [
+          {
+            lessonTitle: { en: "Lecture 1: Scarcity and Choice", bn: "লেকচার ১: দুষ্প্রাপ্যতা ও অসীম অভাবের বিশ্লেষণ" },
+            videoType: "youtube",
+            videoSource: "dQw4w9WgXcQ",
+            isFree: true,
+            durationMinutes: 42
           }
         ]
       }

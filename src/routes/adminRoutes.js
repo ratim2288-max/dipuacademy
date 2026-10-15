@@ -1201,6 +1201,132 @@ router.get('/pos/sales', devOrAdminAuth, async (req, res) => {
   }
 });
 
+// ==============================================================================
+// FR-22: Shop, Banners, Books & eBooks Management
+// ==============================================================================
+const SHOP_DATA_FILE = path.join(__dirname, '../config/shop-data.json');
+
+function loadShopDataFromFile() {
+  try {
+    if (fs.existsSync(SHOP_DATA_FILE)) {
+      const data = fs.readFileSync(SHOP_DATA_FILE, 'utf8');
+      return JSON.parse(data);
+    }
+  } catch (e) {
+    console.error('Failed to read shop-data.json:', e.message);
+  }
+  return { banners: [], books: [], ebooks: [] };
+}
+
+function saveShopDataToFile(data) {
+  try {
+    fs.writeFileSync(SHOP_DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
+  } catch (e) {
+    console.error('Failed to persist shop-data.json:', e.message);
+  }
+}
+
+let SHOP_DATA = loadShopDataFromFile();
+
+// 1. GET /api/admin/shop/data
+router.get('/shop/data', (req, res) => {
+  return res.status(200).json({ success: true, data: SHOP_DATA });
+});
+
+// 2. POST /api/admin/shop/banners — Save or reorder banners
+router.post('/shop/banners', (req, res) => {
+  try {
+    const { banners } = req.body;
+    if (Array.isArray(banners)) {
+      SHOP_DATA.banners = banners;
+    } else if (req.body && req.body.id) {
+      const idx = SHOP_DATA.banners.findIndex(b => b.id === req.body.id);
+      if (idx !== -1) {
+        SHOP_DATA.banners[idx] = { ...SHOP_DATA.banners[idx], ...req.body };
+      } else {
+        SHOP_DATA.banners.push(req.body);
+      }
+    }
+    saveShopDataToFile(SHOP_DATA);
+    return res.status(200).json({ success: true, message: 'ব্যানার সফলভাবে সংরক্ষিত হয়েছে!', banners: SHOP_DATA.banners });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'ব্যানার সংরক্ষণ ব্যর্থ হয়েছে।', error: err.message });
+  }
+});
+
+// 3. POST /api/admin/shop/books — Add or update a book
+router.post('/shop/books', (req, res) => {
+  try {
+    const book = req.body;
+    if (!book || !book.title) {
+      return res.status(400).json({ success: false, message: 'বইয়ের শিরোনাম আবশ্যক।' });
+    }
+    if (!book.id) {
+      book.id = 'book-' + Date.now();
+    }
+    const idx = SHOP_DATA.books.findIndex(b => b.id === book.id);
+    if (idx !== -1) {
+      SHOP_DATA.books[idx] = { ...SHOP_DATA.books[idx], ...book };
+    } else {
+      SHOP_DATA.books.unshift(book);
+    }
+    saveShopDataToFile(SHOP_DATA);
+    return res.status(200).json({ success: true, message: 'বইয়ের তথ্য সফলভাবে সংরক্ষিত হয়েছে!', book, books: SHOP_DATA.books });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'বই সংরক্ষণ ব্যর্থ হয়েছে।', error: err.message });
+  }
+});
+
+// 4. DELETE /api/admin/shop/books/:id — Delete a book
+router.delete('/shop/books/:id', (req, res) => {
+  try {
+    const id = req.params.id;
+    SHOP_DATA.books = SHOP_DATA.books.filter(b => b.id !== id);
+    saveShopDataToFile(SHOP_DATA);
+    return res.status(200).json({ success: true, message: 'বইটি তালিকা থেকে মুছে ফেলা হয়েছে!', books: SHOP_DATA.books });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'বই মোছা ব্যর্থ হয়েছে।', error: err.message });
+  }
+});
+
+// 5. POST /api/admin/shop/ebooks — Add or update an ebook
+router.post('/shop/ebooks', (req, res) => {
+  try {
+    const ebook = req.body;
+    if (!ebook || !ebook.title) {
+      return res.status(400).json({ success: false, message: 'ই-বুকের শিরোনাম আবশ্যক।' });
+    }
+    if (!ebook.id) {
+      ebook.id = 'ebook-' + Date.now();
+    }
+    const idx = SHOP_DATA.ebooks.findIndex(e => e.id === ebook.id);
+    if (idx !== -1) {
+      SHOP_DATA.ebooks[idx] = { ...SHOP_DATA.ebooks[idx], ...ebook };
+    } else {
+      SHOP_DATA.ebooks.unshift(ebook);
+    }
+    saveShopDataToFile(SHOP_DATA);
+    return res.status(200).json({ success: true, message: 'ই-বুক সফলভাবে সংরক্ষিত হয়েছে!', ebook, ebooks: SHOP_DATA.ebooks });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'ই-বুক সংরক্ষণ ব্যর্থ হয়েছে।', error: err.message });
+  }
+});
+
+// 6. DELETE /api/admin/shop/ebooks/:id — Delete an ebook
+router.delete('/shop/ebooks/:id', (req, res) => {
+  try {
+    const id = req.params.id;
+    SHOP_DATA.ebooks = SHOP_DATA.ebooks.filter(e => e.id !== id);
+    saveShopDataToFile(SHOP_DATA);
+    return res.status(200).json({ success: true, message: 'ই-বুকটি মুছে ফেলা হয়েছে!', ebooks: SHOP_DATA.ebooks });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'ই-বুক মোছা ব্যর্থ হয়েছে।', error: err.message });
+  }
+});
+
+router.SHOP_DATA = SHOP_DATA;
+router.saveShopDataToFile = saveShopDataToFile;
+
 router.IN_MEMORY_REVIEWS = IN_MEMORY_REVIEWS;
 router.HERO_VIDEO_CONFIG = HERO_VIDEO_CONFIG;
 router.SOCIAL_LINKS_CONFIG = SOCIAL_LINKS_CONFIG;

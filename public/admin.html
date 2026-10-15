@@ -17,8 +17,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <!-- Dipu's Edu Luxury Dark Admin Stylesheet -->
-  <link rel="stylesheet" href="/css/admin.css?v=2.5">
+  <!-- Dipu's Edu Luxury Dribbble White Admin Stylesheet -->
+  <link rel="stylesheet" href="/css/admin.css?v=5.0">
 </head>
 <body>
 
@@ -138,27 +138,23 @@
       <!-- Brand Header with Mobile Close Button -->
       <div class="careplus-brand">
         <a href="/" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
-          <img src="/images/dipu-logo.png" alt="Dipu Academy Logo" style="width:44px;height:44px;border-radius:12px;object-fit:cover;box-shadow:0 4px 16px rgba(0,194,255,0.45);border:1.5px solid rgba(0,194,255,0.35);flex-shrink:0;">
+          <div class="dribbble-brand-logo-icon">
+            <span>D</span>
+          </div>
           <div class="careplus-brand-text">
-            <div class="careplus-brand-name">Dipu <span style="background: linear-gradient(135deg, #0084FF, #00C2FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Academy</span></div>
-            <div class="careplus-brand-sub" style="color: #94A3B8; font-size: 10px; font-weight: 600; letter-spacing: 0.3px;">Learn • Grow • Build Your Future</div>
+            <div class="careplus-brand-name">Dipu <span class="careplus-brand-name-sub">Academy</span></div>
           </div>
         </a>
+        <button class="dribbble-sidebar-collapse-btn" aria-label="সংকুচিত করুন" title="সংকুচিত করুন">
+          <i class="fas fa-chevron-left"></i>
+        </button>
         <button class="mobile-sidebar-close-btn" id="mobileSidebarCloseBtn" aria-label="মেনু বন্ধ করুন" onclick="toggleMobileSidebar(false)">
           <i class="fas fa-times"></i>
         </button>
       </div>
 
-      <!-- Active Status Card -->
-      <div class="careplus-agency-card" style="background: rgba(0, 194, 255, 0.06); border: 1px solid rgba(0, 194, 255, 0.2); border-radius: 12px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem;">
-        <div class="careplus-agency-icon" style="width: 32px; height: 32px; border-radius: 9px; background: rgba(0, 194, 255, 0.18); color: #00C2FF; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; box-shadow: 0 0 12px rgba(0,194,255,0.25);">
-          <i class="fas fa-shield-halved"></i>
-        </div>
-        <div class="careplus-agency-info">
-          <div class="careplus-agency-lbl" style="font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.6px; color: #94A3B8; font-weight: 700;">ব্র্যান্ড ও সিস্টেম স্ট্যাটাস</div>
-          <div class="careplus-agency-title" style="font-size: 12px; font-weight: 700; color: #00C2FF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">অ্যাডমিন প্রটেকশন সক্রিয়</div>
-        </div>
-      </div>
+      <!-- Menu Category Label -->
+      <div class="sidebar-category-header">MENU</div>
 
       <!-- Sidebar Navigation Menu (6টি বাটন) -->
       <nav class="careplus-nav">
@@ -167,7 +163,7 @@
           <!-- 1. ড্যাশবোর্ড -->
           <li>
             <a href="#overview" class="nav-item active" data-tab="overview">
-              <i class="fas fa-table-cells-large nav-icon"></i>
+              <i class="fas fa-house nav-icon"></i>
               <span>ড্যাশবোর্ড</span>
             </a>
           </li>
@@ -175,21 +171,13 @@
           <!-- 2. কোর্সসমূহ -->
           <li>
             <a href="#courses" class="nav-item" data-tab="courses">
-              <i class="fas fa-graduation-cap nav-icon"></i>
+              <i class="fas fa-bag-shopping nav-icon"></i>
               <span>কোর্সসমূহ</span>
+              <i class="fas fa-chevron-down nav-sub-arrow"></i>
             </a>
           </li>
 
-          <!-- 3. POS কাউন্টার (কোর্স বিক্রয়) -->
-          <li>
-            <a href="#pos" class="nav-item" data-tab="pos" style="position: relative;">
-              <i class="fas fa-cash-register nav-icon" style="color: #00C2FF;"></i>
-              <span>POS সেল কাউন্টার</span>
-              <span style="font-size: 9.5px; background: rgba(0, 194, 255, 0.2); color: #00C2FF; border: 1px solid rgba(0, 194, 255, 0.4); padding: 1px 6px; border-radius: 999px; font-weight: 800; margin-left: auto;">POS</span>
-            </a>
-          </li>
-
-          <!-- 4. শিক্ষার্থী -->
+          <!-- 3. শিক্ষার্থী তালিকা -->
           <li>
             <a href="#students" class="nav-item" data-tab="students">
               <i class="fas fa-users nav-icon"></i>
@@ -197,39 +185,30 @@
             </a>
           </li>
 
-          <!-- 4. ইউজার ডিটেইলস -->
-          <li>
-            <a href="#user-details" class="nav-item" data-tab="user-details">
-              <i class="fas fa-id-card nav-icon"></i>
-              <span>ইউজার ডিটেইলস</span>
-            </a>
-          </li>
-
-          <!-- 5. রিভিউ ও ফিডব্যাক -->
+          <!-- 4. রিভিউ ও ফিডব্যাক -->
           <li>
             <a href="#reviews" class="nav-item" data-tab="reviews">
-              <i class="fas fa-star nav-icon"></i>
+              <i class="fas fa-chart-line nav-icon"></i>
               <span>রিভিউ ও ফিডব্যাক</span>
             </a>
           </li>
 
-          <!-- 6. ওয়েবসাইট সেটিংস -->
+          <!-- 5. ওয়েবসাইট সেটিংস -->
           <li>
             <a href="#settings" class="nav-item" data-tab="settings">
               <i class="fas fa-sliders nav-icon"></i>
               <span>ওয়েবসাইট সেটিংস</span>
+              <span class="dribbble-menu-badge-green">25</span>
             </a>
           </li>
 
-          <!-- 7. ফিচার ও টেক্সট এনিমেশন এডিটর -->
-          <li>
-            <a href="#features" class="nav-item" data-tab="features">
-              <i class="fas fa-wand-magic-sparkles nav-icon"></i>
-              <span>ফিচার ও এনিমেশন এডিটর</span>
-            </a>
-          </li>
+        </ul>
 
-          <!-- 8. ইউজার ড্যাশবোর্ড মিডিয়া ও লোগো কন্ট্রোলার -->
+        <!-- Integrations Category Label -->
+        <div class="sidebar-category-header" style="margin-top: 24px;">INTEGRATIONS</div>
+
+        <ul class="careplus-menu-list">
+          <!-- 6. ইউজার ড্যাশবোর্ড মিডিয়া ও লোগো কন্ট্রোলার -->
           <li>
             <a href="#user-dashboard" class="nav-item" data-tab="user-dashboard">
               <i class="fas fa-palette nav-icon"></i>
@@ -237,23 +216,50 @@
             </a>
           </li>
 
-          <!-- 9. যোগাযোগ ও হেল্পলাইন -->
+          <!-- 7. যোগাযোগ ও হেল্পলাইন -->
           <li>
             <a href="#helpline" class="nav-item" data-tab="helpline">
               <i class="fas fa-headset nav-icon"></i>
               <span>যোগাযোগ ও হেল্পলাইন</span>
             </a>
           </li>
+        </ul>
 
+        <!-- Shop Category Label (বুকস্টোর ও শপ ম্যানেজার) -->
+        <div class="sidebar-category-header" style="margin-top: 24px;">SHOP / বুকস্টোর</div>
+
+        <ul class="careplus-menu-list">
+          <!-- 8. শপ ব্যানার (Shop Banners) -->
+          <li>
+            <a href="#shop-banners" class="nav-item" data-tab="shop-banners">
+              <i class="fas fa-images nav-icon"></i>
+              <span>১. ব্যানার এডিট ও অ্যাড</span>
+            </a>
+          </li>
+
+          <!-- 9. বইসমূহ (Books) -->
+          <li>
+            <a href="#shop-books" class="nav-item" data-tab="shop-books">
+              <i class="fas fa-book nav-icon"></i>
+              <span>২. বই এডিট ও নতুন অ্যাড</span>
+            </a>
+          </li>
+
+          <!-- 10. ই-বুক PDF (eBooks) -->
+          <li>
+            <a href="#shop-ebooks" class="nav-item" data-tab="shop-ebooks">
+              <i class="fas fa-file-pdf nav-icon"></i>
+              <span>৩. ই-বুক এডিট ও অ্যাড</span>
+            </a>
+          </li>
         </ul>
       </nav>
 
       <!-- Sidebar Bottom Section -->
       <div class="careplus-sidebar-bottom">
-        <a href="/" target="_self" class="careplus-field-app-btn">
-          <i class="fas fa-globe"></i>
-          <span>লাইভ ওয়েবসাইট দেখুন</span>
-          <i class="fas fa-arrow-up-right-from-square" style="font-size:10px; margin-left: 4px;"></i>
+        <a href="/" class="nav-item dribbble-logout-link" title="লগআউট / লাইভ সাইটে যান">
+          <i class="fas fa-arrow-right-from-bracket nav-icon"></i>
+          <span>Logout</span>
         </a>
 
         <div class="careplus-user-profile">
@@ -264,9 +270,6 @@
             <div class="careplus-user-name">Dipu Sir</div>
             <div class="careplus-user-role">Super Admin</div>
           </div>
-          <a href="/" class="careplus-logout-btn" title="লাইভ সাইটে যান">
-            <i class="fas fa-arrow-right-from-bracket"></i>
-          </a>
         </div>
       </div>
 
@@ -278,65 +281,36 @@
     <main class="admin-main-content">
       
       <!-- Top Navigation Bar -->
-      <!-- Top Navigation Bar -->
       <header class="careplus-topbar">
-        <div class="careplus-topbar-left">
-          <div class="careplus-title-group" style="display: flex; align-items: center; gap: 12px;">
-            <img src="/images/dipu-logo.png" alt="Dipu Academy" style="width: 38px; height: 38px; border-radius: 10px; border: 1.5px solid rgba(0,194,255,0.35); box-shadow: 0 4px 14px rgba(0,194,255,0.3); object-fit: cover; flex-shrink: 0;">
-            <div>
-              <h1 class="careplus-page-title" id="currentBreadcrumb" style="margin: 0; line-height: 1.2;">ড্যাশবোর্ড</h1>
-              <div class="careplus-meta-pills" style="margin-top: 3px;">
-                <span class="careplus-badge-coordinator" style="background: linear-gradient(135deg, #0084FF, #00C2FF); color: #050B17; font-weight: 800; font-size: 10.5px; padding: 2px 8px; border-radius: 999px;">Dipu Academy</span>
-                <span class="careplus-status-connecting">
-                  <span class="status-pulse-dot" style="background: #10B981;"></span> <span class="status-text-live" style="color: #10B981; font-weight: 700;">সিস্টেম অনলাইন</span>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Global Quick Search Bar -->
-        <div class="careplus-topbar-search">
-          <i class="fas fa-search search-icon"></i>
-          <input type="text" id="adminGlobalSearchInput" placeholder="শিক্ষার্থী বা কোর্স খুঁজুন..." oninput="handleAdminGlobalSearch(this.value)">
-          <button type="button" class="search-clear-btn" id="adminSearchClearBtn" onclick="clearAdminGlobalSearch()" style="display:none;" title="ক্লিয়ার করুন">
+        <!-- Search Pill -->
+        <div class="dribbble-top-search">
+          <i class="fas fa-search dribbble-search-icon"></i>
+          <input type="text" id="adminGlobalSearchInput" placeholder="Search / অনুসন্ধান করুন..." oninput="handleAdminGlobalSearch(this.value)">
+          <button type="button" id="adminSearchClearBtn" onclick="clearAdminGlobalSearch()" style="display:none;" class="search-clear-btn" title="মুছুন">
             <i class="fas fa-times"></i>
           </button>
         </div>
 
         <div class="careplus-topbar-right">
-          <a href="/" target="_self" class="careplus-header-link" title="লাইভ হোমপেজ দেখুন">
-            <i class="fas fa-globe"></i>
-            <span class="topbar-btn-text">লাইভ সাইট</span>
-          </a>
-          
-          <button class="careplus-header-icon-btn" id="notifBellBtn" title="নোটিফিকেশন দেখুন" onclick="toggleNotificationsModal()">
+          <!-- Notification Bell with Dot -->
+          <div class="dribbble-circle-btn" title="বিজ্ঞপ্তি ও আপডেট">
             <i class="far fa-bell"></i>
-            <span class="careplus-notif-dot">!</span>
-          </button>
-
-          <!-- Notification Dropdown -->
-          <div class="notifications-dropdown" id="notifDropdown">
-            <div class="notif-header">
-              <span class="notif-title"><i class="fas fa-bell mr-1" style="color:var(--accent-orange)"></i> নোটিফিকেশন</span>
-              <span style="font-size: 11px; color: var(--accent-amber); cursor: pointer;" onclick="toggleNotificationsModal()">বন্ধ করুন</span>
-            </div>
-            <div class="notif-item">
-              <i class="fas fa-user-check" style="color:#10B981; margin-top:2px;"></i>
-              <div>
-                <strong>নতুন শিক্ষার্থী নিবন্ধিত</strong>
-                <div style="font-size: 11px; color: var(--text-muted);">তানভির হোসেন (HSC) অ্যাকাউন্ট খুলেছেন।</div>
-              </div>
-            </div>
-            <div class="notif-item">
-              <i class="fas fa-cart-shopping" style="color:var(--accent-orange); margin-top:2px;"></i>
-              <div>
-                <strong>কোর্স এনরোলমেন্ট</strong>
-                <div style="font-size: 11px; color: var(--text-muted);">নুসরাত জাহান 'রসায়ন ১ম পত্র' কোর্স কিনেছেন।</div>
-              </div>
-            </div>
+            <span class="dribbble-notif-pulse-dot"></span>
           </div>
 
+          <!-- Date / Status Chip -->
+          <div class="dribbble-balance-chip">
+            <span class="dribbble-chip-lbl">সিস্টেম স্ট্যাটাস</span>
+            <span class="dribbble-chip-val" id="careplusTodayDate">আজ, ১৬ অক্টোবর ২০২৬</span>
+          </div>
+
+          <!-- Admin Avatar & Greeting -->
+          <div class="dribbble-admin-profile-chip">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop" alt="Dipu Sir" class="dribbble-profile-avatar">
+            <span class="dribbble-profile-greeting">Hi, <strong>Dipu Sir</strong></span>
+          </div>
+
+          <!-- Green Action Button -->
           <button class="btn-careplus-green-cta" onclick="openCourseModal()">
             <i class="fas fa-plus"></i>
             <span class="topbar-btn-text">নতুন কোর্স</span>
@@ -357,91 +331,262 @@
              ==================================================================== -->
         <section id="view-overview" class="admin-view active">
           
-          <!-- Hero Banner -->
-          <div class="careplus-hero-banner">
-            <div class="careplus-hero-banner-content">
-              <div class="careplus-date-badge">
-                <i class="far fa-calendar-check"></i>
-                <span id="careplusTodayDate">আজ লোড হচ্ছে...</span>
+          <!-- Subheader Row: Dashboard title with icon + Filters + Download Report -->
+          <div class="dribbble-dashboard-subbar">
+            <div class="dribbble-dashboard-title-box">
+              <div class="dribbble-dashboard-icon-pill">
+                <i class="fas fa-house"></i>
               </div>
-              <h2 class="careplus-hero-title">Dipu Academy অ্যাডমিন ড্যাশবোর্ড</h2>
-              <p class="careplus-hero-sub">
-                প্ল্যাটফর্মের সকল কোর্স, শিক্ষার্থী এনরোলমেন্ট, রাজস্ব ও ইউজার অ্যাক্টিভিটি রিয়েল-টাইমে মনিটর করুন।
-              </p>
+              <h2 class="dribbble-page-h2">Dashboard</h2>
             </div>
             
-            <div class="careplus-hero-banner-actions">
-              <div class="hero-actions-top-row">
-                <button type="button" class="btn-careplus-hero-green" onclick="openCourseModal()">
-                  <i class="fas fa-plus"></i> <span>নতুন কোর্স</span>
-                </button>
-                <button type="button" class="btn-careplus-hero-dark" onclick="document.querySelector('[data-tab=students]').click()">
-                  <i class="fas fa-users"></i> <span>সব শিক্ষার্থী</span>
-                </button>
+            <div class="dribbble-subbar-actions">
+              <div class="dribbble-date-picker-pill">
+                <i class="far fa-calendar-alt"></i>
+                <span>This Month / চলতি মাস</span>
+                <i class="fas fa-chevron-down" style="font-size: 11px; margin-left: 4px;"></i>
               </div>
-              <div class="hero-actions-bottom-row">
-                <button type="button" class="btn-careplus-hero-dark-outline" onclick="document.querySelector('[data-tab=courses]').click()">
-                  <i class="fas fa-graduation-cap"></i> <span>কোর্স পরিচালনা</span>
-                </button>
-                <button type="button" class="btn-careplus-hero-circle" onclick="refreshDashboard()" title="রিফ্রেশ">
-                  <i class="fas fa-rotate"></i>
-                </button>
-              </div>
+              <button class="btn-dribbble-download-report" onclick="window.print()">
+                <i class="fas fa-cloud-arrow-down"></i>
+                <span>Download Report</span>
+              </button>
             </div>
           </div>
 
-          <!-- 4 Metric Cards -->
-          <div class="careplus-metric-cards-row">
-            <!-- 1. মোট শিক্ষার্থী -->
-            <div class="careplus-stat-card">
-              <div class="careplus-stat-header">
-                <span class="careplus-stat-label">মোট শিক্ষার্থী</span>
-                <div class="careplus-stat-icon-badge badge-lavender">
-                  <i class="fas fa-user-group"></i>
-                </div>
-              </div>
-              <div class="careplus-stat-number" id="pillTotalStudents">—</div>
-              <div class="careplus-stat-subtitle">নিবন্ধিত শিক্ষার্থী</div>
-            </div>
-
-            <!-- 2. কোর্স কিনেছে -->
-            <div class="careplus-stat-card">
-              <div class="careplus-stat-header">
-                <span class="careplus-stat-label">কোর্স এনরোলমেন্ট</span>
-                <div class="careplus-stat-icon-badge badge-mint">
+          <!-- 4 Metric Cards Row -->
+          <div class="dribbble-metrics-grid">
+            <!-- 1. Total Sales / মোট শিক্ষার্থী -->
+            <div class="dribbble-stat-card">
+              <div class="dribbble-stat-card-inner">
+                <div class="dribbble-stat-icon-wrap" style="background: #EDE9FE; color: #5B58EB;">
                   <i class="fas fa-cart-shopping"></i>
                 </div>
+                <div class="dribbble-stat-info">
+                  <span class="dribbble-stat-label">Total Sales / মোট শিক্ষার্থী</span>
+                  <div class="dribbble-stat-num-row">
+                    <span class="dribbble-stat-number" id="pillTotalStudents">২৬৩k</span>
+                    <span class="dribbble-trend-badge trend-up"><i class="fas fa-arrow-up"></i> ১৫.৬%</span>
+                  </div>
+                </div>
               </div>
-              <div class="careplus-stat-number" id="pillCourseEnrolled">—</div>
-              <div class="careplus-stat-subtitle">মোট কোর্স কিনেছে</div>
             </div>
 
-            <!-- 3. সক্রিয় কোর্স -->
-            <div class="careplus-stat-card">
-              <div class="careplus-stat-header">
-                <span class="careplus-stat-label">সক্রিয় কোর্স</span>
-                <div class="careplus-stat-icon-badge badge-amber">
+            <!-- 2. Total Visitors / কোর্স এনরোলমেন্ট -->
+            <div class="dribbble-stat-card">
+              <div class="dribbble-stat-card-inner">
+                <div class="dribbble-stat-icon-wrap" style="background: #E0F2FE; color: #0284C7;">
+                  <i class="fas fa-users"></i>
+                </div>
+                <div class="dribbble-stat-info">
+                  <span class="dribbble-stat-label">Total Visitors / কোর্স এনরোলমেন্ট</span>
+                  <div class="dribbble-stat-num-row">
+                    <span class="dribbble-stat-number" id="pillCourseEnrolled">৩৫k</span>
+                    <span class="dribbble-trend-badge trend-down"><i class="fas fa-arrow-down"></i> ৬.২%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Total Orders / সক্রিয় কোর্স -->
+            <div class="dribbble-stat-card">
+              <div class="dribbble-stat-card-inner">
+                <div class="dribbble-stat-icon-wrap" style="background: #F3E8FF; color: #9333EA;">
+                  <i class="fas fa-bag-shopping"></i>
+                </div>
+                <div class="dribbble-stat-info">
+                  <span class="dribbble-stat-label">Total Orders / সক্রিয় কোর্স</span>
+                  <div class="dribbble-stat-num-row">
+                    <span class="dribbble-stat-number" id="pillActiveCourses">১৬৫k</span>
+                    <span class="dribbble-trend-badge trend-up"><i class="fas fa-arrow-up"></i> ৩.৫%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. HSC/SSC শিক্ষার্থী -->
+            <div class="dribbble-stat-card">
+              <div class="dribbble-stat-card-inner">
+                <div class="dribbble-stat-icon-wrap" style="background: #D1FAE5; color: #059669;">
                   <i class="fas fa-graduation-cap"></i>
                 </div>
-              </div>
-              <div class="careplus-stat-number" id="pillActiveCourses">—</div>
-              <div class="careplus-stat-subtitle">প্রকাশিত কোর্স সংখ্যা</div>
-            </div>
-
-            <!-- 4. এইচএসসি শিক্ষার্থী -->
-            <div class="careplus-stat-card">
-              <div class="careplus-stat-header">
-                <span class="careplus-stat-label">HSC শিক্ষার্থী</span>
-                <div class="careplus-stat-icon-badge badge-teal">
-                  <i class="fas fa-book-open-reader"></i>
+                <div class="dribbble-stat-info">
+                  <span class="dribbble-stat-label">HSC/SSC শিক্ষার্থী</span>
+                  <div class="dribbble-stat-num-row">
+                    <span class="dribbble-stat-number" id="pillHscStudents">৯৮k</span>
+                    <span class="dribbble-trend-badge trend-up"><i class="fas fa-arrow-up"></i> ১২.৪%</span>
+                  </div>
                 </div>
               </div>
-              <div class="careplus-stat-number" id="pillHscStudents">—</div>
-              <div class="careplus-stat-subtitle">HSC শ্রেণিতে ভর্তি</div>
             </div>
           </div>
 
-          <!-- সাম্প্রতিক শিক্ষার্থী টেবিল -->
+          <!-- 2-Column Main Analytics Grid (Exact Visual Center of Mockup) -->
+          <div class="dribbble-analytics-grid">
+            
+            <!-- Left Column: Online Store Sessions & Animated SVG Curve Wave Chart -->
+            <div class="dribbble-sessions-card">
+              <!-- Top Header Row -->
+              <div class="dribbble-card-head-row">
+                <h3 class="dribbble-chart-head-title">Online Store Sessions / শিক্ষার্থী ট্রাফিক</h3>
+                <button type="button" class="btn-dribbble-report-outline" onclick="document.querySelector('[data-tab=students]').click()">
+                  View Report
+                </button>
+              </div>
+
+              <!-- Visitors Micro Stat Row -->
+              <div class="dribbble-visitors-stat-box">
+                <div class="dribbble-visitors-icon-circle">
+                  <i class="fas fa-user-group"></i>
+                </div>
+                <div class="dribbble-visitors-numbers">
+                  <span class="dribbble-visitors-tag">Visitors</span>
+                  <span class="dribbble-visitors-count">৬৮ জন</span>
+                </div>
+                <div class="dribbble-visitors-trend-col">
+                  <span class="trend-green-text"><i class="fas fa-arrow-up"></i> ১৫.৬%</span>
+                  <div class="trend-sub-badge-row">
+                    <span class="trend-sub-val">২৬ জন</span>
+                    <span class="trend-red-text"><i class="fas fa-arrow-down"></i> ১.৬%</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sessions Over Time Subheading & Month Pill -->
+              <div class="dribbble-sessions-timeline-bar">
+                <span class="dribbble-timeline-label">Sessions Over Time</span>
+                <div class="dribbble-timeline-month-pill">
+                  <i class="far fa-calendar"></i>
+                  <span>February / চলতি মাস</span>
+                  <i class="fas fa-chevron-down" style="font-size: 10px;"></i>
+                </div>
+              </div>
+
+              <!-- Interactive Smooth SVG Curve Wave Chart with Micro-animations -->
+              <div class="dribbble-svg-chart-container">
+                <svg class="dribbble-wave-svg" viewBox="0 0 540 185" preserveAspectRatio="none">
+                  <defs>
+                    <!-- Stroke Gradient (Royal Purple to Deep Indigo) -->
+                    <linearGradient id="waveStrokeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#5B58EB" />
+                      <stop offset="65%" stop-color="#4F46E5" />
+                      <stop offset="100%" stop-color="#6366F1" />
+                    </linearGradient>
+
+                    <!-- Wave Area Fill Gradient -->
+                    <linearGradient id="waveAreaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#5B58EB" stop-opacity="0.16" />
+                      <stop offset="100%" stop-color="#5B58EB" stop-opacity="0.0" />
+                    </linearGradient>
+
+                    <!-- Glow Drop Shadow Filter -->
+                    <filter id="waveStrokeGlow" x="-10%" y="-10%" width="120%" height="130%">
+                      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#4F46E5" flood-opacity="0.32" />
+                    </filter>
+                  </defs>
+
+                  <!-- Horizontal Guide Lines -->
+                  <line x1="30" y1="28" x2="530" y2="28" stroke="#F1F3F9" stroke-width="1.2" />
+                  <line x1="30" y1="72" x2="530" y2="72" stroke="#F1F3F9" stroke-width="1.2" />
+                  <line x1="30" y1="116" x2="530" y2="116" stroke="#F1F3F9" stroke-width="1.2" />
+                  <line x1="30" y1="160" x2="530" y2="160" stroke="#F1F3F9" stroke-width="1.2" />
+
+                  <!-- Y-Axis Labels -->
+                  <text x="12" y="32" font-size="11" fill="#94A3B8" font-family="Inter, sans-serif" font-weight="600">15</text>
+                  <text x="12" y="76" font-size="11" fill="#94A3B8" font-family="Inter, sans-serif" font-weight="600">10</text>
+                  <text x="16" y="120" font-size="11" fill="#94A3B8" font-family="Inter, sans-serif" font-weight="600">5</text>
+                  <text x="16" y="164" font-size="11" fill="#94A3B8" font-family="Inter, sans-serif" font-weight="600">0</text>
+
+                  <!-- Soft Area under the Wave -->
+                  <path d="M 32,160 L 32,138 C 72,138 92,102 135,102 C 175,102 188,148 232,148 C 275,148 290,122 335,122 C 380,122 396,144 438,144 C 478,144 492,62 530,32 L 530,160 Z" fill="url(#waveAreaGradient)" />
+
+                  <!-- Smooth Undulating Wave Path with Animation -->
+                  <path class="animated-wave-line" d="M 32,138 C 72,138 92,102 135,102 C 175,102 188,148 232,148 C 275,148 290,122 335,122 C 380,122 396,144 438,144 C 478,144 492,62 530,32" fill="none" stroke="url(#waveStrokeGradient)" stroke-width="3.8" stroke-linecap="round" filter="url(#waveStrokeGlow)" />
+
+                  <!-- Pulsing Interactive Peak Dot -->
+                  <circle cx="530" cy="32" r="5" fill="#4F46E5" stroke="#FFFFFF" stroke-width="3" class="animated-peak-pulse" />
+                </svg>
+              </div>
+
+              <!-- Day Selector Pills Row matching < 21 22 23 24 25 > from mockup -->
+              <div class="dribbble-chart-day-pills-row">
+                <button type="button" class="dribbble-day-arrow-btn" aria-label="পূর্ববর্তী দিন"><i class="fas fa-chevron-left"></i></button>
+                <button type="button" class="dribbble-day-pill active">21</button>
+                <button type="button" class="dribbble-day-pill">22</button>
+                <button type="button" class="dribbble-day-pill">23</button>
+                <button type="button" class="dribbble-day-pill">24</button>
+                <button type="button" class="dribbble-day-pill">25</button>
+                <button type="button" class="dribbble-day-arrow-btn" aria-label="পরবর্তী দিন"><i class="fas fa-chevron-right"></i></button>
+              </div>
+            </div>
+
+            <!-- Right Column: Stacked Promo Card + Semi-Circular Gauge Meter Card -->
+            <div class="dribbble-right-stack">
+              
+              <!-- Card 1: Need More Stats? / Promo Banner Card -->
+              <div class="dribbble-promo-card">
+                <div class="dribbble-promo-text-wrap">
+                  <h4 class="dribbble-promo-title">Need More Stats?</h4>
+                  <p class="dribbble-promo-desc">Upgrade to pro for added benefits. লাইভ ক্লাসরুম ও স্মার্ট এনালিটিক্স।</p>
+                  <button type="button" class="btn-dribbble-gopro-cta" onclick="openCourseModal()">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Go Pro Now</span>
+                  </button>
+                </div>
+                <!-- Decorative Graphic -->
+                <div class="dribbble-promo-floating-art">
+                  <svg width="110" height="100" viewBox="0 0 110 100" fill="none">
+                    <path d="M15 70C15 62 21 56 29 56C30.5 56 32 56.3 33.4 56.7C36.5 50.8 42.8 46.8 50 46.8C59.2 46.8 66.6 54.2 66.6 63.4C66.6 64 66.5 64.6 66.4 65.2C69.3 66.2 71.4 69 71.4 72.3C71.4 76.2 68.3 79.3 64.5 79.3H24.2C19.1 79.3 15 75.2 15 70Z" fill="white" fill-opacity="0.22"/>
+                    <path d="M55 16L69 38L55 34L41 38L55 16Z" fill="white" fill-opacity="0.95"/>
+                    <line x1="55" y1="34" x2="55" y2="62" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="3 3"/>
+                    <circle cx="86" cy="30" r="3.5" fill="white" fill-opacity="0.7"/>
+                    <circle cx="76" cy="18" r="2" fill="white" fill-opacity="0.5"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Card 2: Conversion / Semi-Circular Progress Gauge Card -->
+              <div class="dribbble-gauge-card">
+                <h4 class="dribbble-gauge-head-title">Conversion / কোর্স সমাপ্তির হার</h4>
+                
+                <div class="dribbble-gauge-view">
+                  <svg class="dribbble-gauge-svg" viewBox="0 0 200 112">
+                    <defs>
+                      <linearGradient id="dribbbleGaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#5B58EB" />
+                        <stop offset="100%" stop-color="#4F46E5" />
+                      </linearGradient>
+                    </defs>
+                    <!-- Background Semi-Circle Arc -->
+                    <path d="M 24,98 A 76,76 0 0,1 176,98" fill="none" stroke="#EEF2F6" stroke-width="22" stroke-linecap="round" />
+                    <!-- Foreground Semi-Circle Progress Arc with Animated Stroke -->
+                    <path class="animated-gauge-path" d="M 24,98 A 76,76 0 0,1 176,98" fill="none" stroke="url(#dribbbleGaugeGrad)" stroke-width="22" stroke-linecap="round" stroke-dasharray="239" stroke-dashoffset="100" />
+                  </svg>
+
+                  <div class="dribbble-gauge-label-center">
+                    <div class="dribbble-gauge-big-num">58,19%</div>
+                    <div class="dribbble-gauge-trend-pill"><i class="fas fa-arrow-up"></i> ৩.৫%</div>
+                  </div>
+                </div>
+
+                <!-- Footer Breakdown: Income & Expenses Stats -->
+                <div class="dribbble-gauge-footer-row">
+                  <div class="gauge-stat-box">
+                    <span class="gauge-icon-check"><i class="fas fa-check"></i></span>
+                    <span class="gauge-lbl">Income</span>
+                    <span class="gauge-val" id="gaugeIncomeVal">$542,317</span>
+                  </div>
+                  <div class="gauge-stat-box">
+                    <span class="gauge-icon-arrow"><i class="fas fa-arrow-up-right-dots"></i></span>
+                    <span class="gauge-lbl">Expences</span>
+                    <span class="gauge-val" id="gaugeExpencesVal">$497,456</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- সাম্প্রতিক শিক্ষার্থী টেবিল (Preserved with clean Dribbble styling) -->
           <div class="careplus-section-card">
             <div class="careplus-section-header">
               <div class="careplus-section-header-left">
@@ -503,300 +648,6 @@
           <!-- Courses Grid -->
           <div class="courses-admin-grid" id="adminCoursesGrid">
             <!-- Dynamic courses rendered via admin.js -->
-          </div>
-        </section>
-
-        <!-- ====================================================================
-             VIEW: POS (POINT OF SALE) — কোর্স বিক্রয় ও কাউন্টার ক্যাশ এনরোলমেন্ট
-             ==================================================================== -->
-        <section id="view-pos" class="admin-view hidden">
-          <div class="view-header-row">
-            <div>
-              <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: rgba(0, 194, 255, 0.12); border: 1px solid rgba(0, 194, 255, 0.35); color: #00C2FF; font-size: 11px; font-weight: 800; margin-bottom: 6px;">
-                <i class="fas fa-cash-register"></i> DIPU ACADEMY POS TERMINAL
-              </div>
-              <h2 class="view-main-title">POS সেল কাউন্টার — সরাসরি কোর্স বিক্রয় ও সক্রিয়করণ</h2>
-              <p class="view-subtitle">কাউন্টারে বা সরাসরি শিক্ষার্থীকে যেকোনো কোর্সে ভর্তি করান, ক্যাশ বা ডিজিটাল পেমেন্ট গ্রহণ করুন ও প্রিন্ট রসিদ দিন।</p>
-            </div>
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <span id="posSalesCountBadge" class="badge-clocked-in" style="padding: 6px 12px; font-size: 12px;">লোড হচ্ছে...</span>
-              <button class="btn-careplus-green-cta" onclick="loadPosData()">
-                <i class="fas fa-rotate"></i> <span>রিফ্রেশ</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- POS Metric Cards Row -->
-          <div class="careplus-metric-cards-row" style="margin-bottom: 24px;">
-            <div class="careplus-stat-card">
-              <div class="careplus-stat-header">
-                <span class="careplus-stat-label">মোট কোর্স বিক্রয়</span>
-                <div class="careplus-stat-icon-badge badge-lavender">
-                  <i class="fas fa-cart-shopping"></i>
-                </div>
-              </div>
-              <div class="careplus-stat-number" id="posTotalSalesCount">০টি</div>
-              <div class="careplus-stat-subtitle">অনলাইন ও কাউন্টার মিলিয়ে</div>
-            </div>
-
-            <div class="careplus-stat-card">
-              <div class="careplus-stat-header">
-                <span class="careplus-stat-label">মোট রাজস্ব সংগ্রহ</span>
-                <div class="careplus-stat-icon-badge badge-mint">
-                  <i class="fas fa-bangladeshi-taka-sign"></i>
-                </div>
-              </div>
-              <div class="careplus-stat-number" id="posTotalRevenueBDT">৳০</div>
-              <div class="careplus-stat-subtitle">সর্বমোট পরিশোধিত ফি</div>
-            </div>
-
-            <div class="careplus-stat-card">
-              <div class="careplus-stat-header">
-                <span class="careplus-stat-label">ক্যাশ কাউন্টার সংগ্রহ</span>
-                <div class="careplus-stat-icon-badge badge-amber">
-                  <i class="fas fa-money-bill-wave"></i>
-                </div>
-              </div>
-              <div class="careplus-stat-number" id="posCashRevenueBDT">৳০</div>
-              <div class="careplus-stat-subtitle">সরাসরি ক্যাশ পেমেন্ট</div>
-            </div>
-
-            <div class="careplus-stat-card">
-              <div class="careplus-stat-header">
-                <span class="careplus-stat-label">bKash ও অনলাইন</span>
-                <div class="careplus-stat-icon-badge badge-teal">
-                  <i class="fas fa-mobile-screen-button"></i>
-                </div>
-              </div>
-              <div class="careplus-stat-number" id="posDigitalRevenueBDT">৳০</div>
-              <div class="careplus-stat-subtitle">বিকাশ / নগদ / ডিজিটাল</div>
-            </div>
-          </div>
-
-          <!-- POS Main Workspace: Left Terminal Form, Right Invoice Slip -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; margin-bottom: 30px;">
-            
-            <!-- Left: POS Form Card -->
-            <div class="careplus-section-card" style="padding: 24px;">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.08);">
-                <div>
-                  <h3 style="margin: 0; font-size: 1.1rem; color: #FFFFFF; font-weight: 800;">
-                    <i class="fas fa-bolt" style="color: #00C2FF; margin-right: 8px;"></i>নতুন বিক্রয় টার্মিনাল
-                  </h3>
-                  <div style="font-size: 12px; color: #94A3B8; margin-top: 3px;">শিক্ষার্থীর তথ্য দিন এবং এক ক্লিকে কোর্স আনলক করুন</div>
-                </div>
-                <span style="font-size: 11px; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); padding: 3px 8px; border-radius: 6px; font-weight: 700;">
-                  ইনস্ট্যান্ট অ্যাক্টিভেশন
-                </span>
-              </div>
-
-              <form id="posSaleForm" onsubmit="handlePosSaleSubmit(event)">
-                
-                <!-- 1. Student Phone & Search -->
-                <div style="margin-bottom: 14px;">
-                  <label style="display: block; font-size: 12.5px; font-weight: 700; color: #E2E8F0; margin-bottom: 6px;">
-                    শিক্ষার্থীর ফোন নম্বর * <span style="font-size: 11px; color: #64748B; font-weight: 400;">(অটো ডাটাবেজ ম্যাচ)</span>
-                  </label>
-                  <div style="position: relative;">
-                    <input type="tel" id="posPhone" class="form-input" placeholder="017XXXXXXXX" required style="width: 100%; box-sizing: border-box; padding-left: 36px;" oninput="handlePosPhoneInput(this.value)">
-                    <i class="fas fa-phone" style="position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: #64748B; font-size: 13px;"></i>
-                  </div>
-                  <div id="posUserMatchNotice" style="display: none; font-size: 11.5px; color: #10B981; margin-top: 4px; font-weight: 600;">
-                    <i class="fas fa-check-circle"></i> বিদ্যমান অ্যাকাউন্ট পাওয়া গেছে
-                  </div>
-                </div>
-
-                <!-- 2. Student Name & Class -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
-                  <div>
-                    <label style="display: block; font-size: 12.5px; font-weight: 700; color: #E2E8F0; margin-bottom: 6px;">শিক্ষার্থীর নাম</label>
-                    <input type="text" id="posName" class="form-input" placeholder="যেমন: তানজির আহমেদ" style="width: 100%; box-sizing: border-box;">
-                  </div>
-                  <div>
-                    <label style="display: block; font-size: 12.5px; font-weight: 700; color: #E2E8F0; margin-bottom: 6px;">শ্রেণি / ব্যাচ</label>
-                    <select id="posClass" class="form-select" style="width: 100%; box-sizing: border-box;">
-                      <option value="HSC" selected>HSC (একাদশ-দ্বাদশ)</option>
-                      <option value="SSC">SSC (নবম-দশম)</option>
-                      <option value="Admission">Admission (এডমিশন)</option>
-                      <option value="Class 8">৮ম শ্রেণি</option>
-                      <option value="Class 7">৭ম শ্রেণি</option>
-                      <option value="Class 6">৬ষ্ঠ শ্রেণি</option>
-                      <option value="Class 5">৫ম শ্রেণি</option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- 3. Course Selection -->
-                <div style="margin-bottom: 14px;">
-                  <label style="display: block; font-size: 12.5px; font-weight: 700; color: #E2E8F0; margin-bottom: 6px;">
-                    কোর্স নির্বাচন করুন *
-                  </label>
-                  <select id="posCourseSelect" class="form-select" required style="width: 100%; box-sizing: border-box;" onchange="handlePosCourseChange(this.value)">
-                    <option value="">-- কোর্স বাছাই করুন --</option>
-                  </select>
-                </div>
-
-                <!-- 4. Price & Discount Calc Row -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px;">
-                  <div>
-                    <label style="display: block; font-size: 11.5px; font-weight: 700; color: #94A3B8; margin-bottom: 4px;">মূল কোর্স ফি (৳)</label>
-                    <input type="number" id="posRegularFee" class="form-input" readonly value="850" style="width: 100%; box-sizing: border-box; background: rgba(255,255,255,0.03); color: #94A3B8;">
-                  </div>
-                  <div>
-                    <label style="display: block; font-size: 11.5px; font-weight: 700; color: #94A3B8; margin-bottom: 4px;">ডিসকাউন্ট ছাড় (৳)</label>
-                    <input type="number" id="posDiscount" class="form-input" value="0" min="0" style="width: 100%; box-sizing: border-box; color: #10B981; font-weight: 700;" oninput="calcPosTotal()">
-                  </div>
-                  <div>
-                    <label style="display: block; font-size: 11.5px; font-weight: 700; color: #00C2FF; margin-bottom: 4px;">পরিশোধিত ফি (৳) *</label>
-                    <input type="number" id="posFinalAmount" class="form-input" value="850" min="0" required style="width: 100%; box-sizing: border-box; color: #00C2FF; font-weight: 800; font-size: 1.05rem;">
-                  </div>
-                </div>
-
-                <!-- 5. Payment Gateway & Memo -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px;">
-                  <div>
-                    <label style="display: block; font-size: 12.5px; font-weight: 700; color: #E2E8F0; margin-bottom: 6px;">পেমেন্ট মেথড *</label>
-                    <select id="posPaymentMethod" class="form-select" style="width: 100%; box-sizing: border-box;">
-                      <option value="cash" selected>💵 ক্যাশ (সরাসরি কাউন্টার)</option>
-                      <option value="bkash">📱 বিকাশ (bKash)</option>
-                      <option value="nagad">📲 নগদ (Nagad)</option>
-                      <option value="rocket">🏦 রকেট (Rocket)</option>
-                      <option value="manual">📝 ব্যাংক / অন্যান্য</option>
-                      <option value="free_grant">🎁 ১০০% ফ্রি স্কলারশিপ</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label style="display: block; font-size: 12.5px; font-weight: 700; color: #E2E8F0; margin-bottom: 6px;">মেমো / Trx ID</label>
-                    <input type="text" id="posMemo" class="form-input" placeholder="স্বয়ংক্রিয় তৈরি হবে" style="width: 100%; box-sizing: border-box;">
-                  </div>
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit" id="posSubmitBtn" style="width: 100%; padding: 14px; border-radius: 12px; background: linear-gradient(135deg, #0084FF, #00C2FF); border: none; color: #050B17; font-weight: 800; font-size: 1rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(0,194,255,0.4); display: flex; align-items: center; justify-content: center; gap: 8px;">
-                  <i class="fas fa-check-circle"></i>
-                  <span>বিক্রয় সম্পন্ন ও কোর্স এক্সেস আনলক করুন</span>
-                </button>
-              </form>
-            </div>
-
-            <!-- Right: POS Invoice & Print Slip -->
-            <div class="careplus-section-card" style="padding: 24px; display: flex; flex-direction: column;">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.08);">
-                <div>
-                  <h3 style="margin: 0; font-size: 1.1rem; color: #FFFFFF; font-weight: 800;">
-                    <i class="fas fa-receipt" style="color: #10B981; margin-right: 8px;"></i>ডিজিটাল ইনভয়েস স্লিপ
-                  </h3>
-                  <div style="font-size: 12px; color: #94A3B8; margin-top: 3px;">অফিসিয়াল ক্যাশ মেমো ও প্রিন্ট কপি</div>
-                </div>
-                <button type="button" onclick="printPosInvoice()" style="background: rgba(0,194,255,0.15); border: 1px solid rgba(0,194,255,0.4); color: #00C2FF; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-                  <i class="fas fa-print"></i> <span>প্রিন্ট করুন</span>
-                </button>
-              </div>
-
-              <!-- Printable Slip Area -->
-              <div id="posInvoicePrintArea" style="background: #030814; border: 1.5px dashed rgba(0, 194, 255, 0.35); border-radius: 16px; padding: 22px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; font-family: 'Hind Siliguri', sans-serif;">
-                
-                <div>
-                  <!-- Header -->
-                  <div style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; margin-bottom: 14px;">
-                    <div style="font-size: 1.15rem; font-weight: 800; color: #FFFFFF;">
-                      DIPU <span style="color: #00C2FF;">ACADEMY</span>
-                    </div>
-                    <div style="font-size: 11px; color: #94A3B8;">অফিসিয়াল বিক্রয় রসিদ ও শিক্ষার্থী ভর্তি মেমো</div>
-                    <div style="font-size: 10.5px; color: #64748B; margin-top: 2px;">peace • knowledge • excellence</div>
-                  </div>
-
-                  <!-- Invoice Meta -->
-                  <div style="display: flex; justify-content: space-between; font-size: 12px; color: #CBD5E1; margin-bottom: 8px;">
-                    <span>ইনভয়েস নং:</span>
-                    <strong style="color: #00C2FF; font-family: monospace;" id="invNumber">POS-DEMO-001</strong>
-                  </div>
-                  <div style="display: flex; justify-content: space-between; font-size: 12px; color: #CBD5E1; margin-bottom: 8px;">
-                    <span>তারিখ ও সময়:</span>
-                    <span id="invDate" style="color: #94A3B8;">—</span>
-                  </div>
-                  <div style="display: flex; justify-content: space-between; font-size: 12px; color: #CBD5E1; margin-bottom: 8px;">
-                    <span>শিক্ষার্থীর নাম:</span>
-                    <strong id="invStudentName" style="color: #FFFFFF;">—</strong>
-                  </div>
-                  <div style="display: flex; justify-content: space-between; font-size: 12px; color: #CBD5E1; margin-bottom: 8px;">
-                    <span>মোবাইল নম্বর:</span>
-                    <span id="invStudentPhone" style="font-family: monospace; color: #F59E0B;">—</span>
-                  </div>
-                  <div style="display: flex; justify-content: space-between; font-size: 12px; color: #CBD5E1; margin-bottom: 14px;">
-                    <span>শ্রেণি / ক্লাস:</span>
-                    <span id="invStudentClass" style="color: #94A3B8;">HSC</span>
-                  </div>
-
-                  <!-- Course Item Box -->
-                  <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 12px; margin-bottom: 14px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                      <span style="font-weight: 700; color: #FFFFFF; font-size: 13px;" id="invCourseTitle">কোর্স নির্বাচন করুন</span>
-                      <strong style="color: #10B981; font-size: 14px;" id="invAmount">৳০</strong>
-                    </div>
-                    <div style="font-size: 11px; color: #94A3B8; display: flex; justify-content: space-between;">
-                      <span>স্ট্যাটাস: <span style="color:#10B981; font-weight:700;">✓ এক্সেস সক্রিয়</span></span>
-                      <span>পেমেন্ট: <span id="invMethod" style="color:#00C2FF; font-weight:700;">ক্যাশ</span></span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Footer with Seal -->
-                <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; display: flex; align-items: center; justify-content: space-between;">
-                  <div>
-                    <div style="font-size: 10px; color: #64748B;">ভর্তি সম্পন্নকারী:</div>
-                    <div style="font-size: 11.5px; font-weight: 700; color: #00C2FF;">সুপার অ্যাডমিন কনসোল</div>
-                  </div>
-                  <div style="padding: 4px 10px; border-radius: 8px; border: 1.5px solid #10B981; color: #10B981; font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">
-                    PAID • ভেরিফাইড
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Bottom: Recent POS Sales History Table -->
-          <div class="careplus-section-card">
-            <div class="careplus-section-header">
-              <div class="careplus-section-header-left">
-                <h3 class="careplus-section-title">সাম্প্রতিক বিক্রয় ও এনরোলমেন্ট ইতিহাস</h3>
-                <p class="careplus-section-sub">কাউন্টার ও অনলাইন সকল ট্রানজেকশনের লাইভ ডাটাবেজ রেকর্ড</p>
-              </div>
-              <div class="careplus-filter-pills">
-                <button class="filter-pill active" onclick="filterPosSales('all', this)">সব বিক্রয়</button>
-                <button class="filter-pill" onclick="filterPosSales('cash', this)">ক্যাশ কাউন্টার</button>
-                <button class="filter-pill" onclick="filterPosSales('bkash', this)">বিকাশ</button>
-                <button class="filter-pill" onclick="filterPosSales('nagad', this)">নগদ</button>
-              </div>
-            </div>
-
-            <div class="careplus-table-wrap">
-              <table class="careplus-table">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>ইনভয়েস / TrxID</th>
-                    <th>শিক্ষার্থীর নাম</th>
-                    <th>ফোন নম্বর</th>
-                    <th>শ্রেণি</th>
-                    <th>কোর্স</th>
-                    <th>পরিশোধিত ফি</th>
-                    <th>পেমেন্ট মাধ্যম</th>
-                    <th>তারিখ</th>
-                    <th>অ্যাকশন</th>
-                  </tr>
-                </thead>
-                <tbody id="posSalesTableBody">
-                  <tr>
-                    <td colspan="10" style="text-align:center; padding: 30px; color: var(--text-muted);">
-                      <i class="fas fa-spinner fa-spin mr-2"></i> বিক্রয় রেকর্ড লোড হচ্ছে...
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
           </div>
         </section>
 
@@ -894,51 +745,6 @@
                   <tr>
                     <td colspan="7" style="text-align:center; padding: 40px; color: var(--text-muted);">
                       <i class="fas fa-spinner fa-spin mr-2"></i> শিক্ষার্থী তথ্য লোড হচ্ছে...
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        <!-- ====================================================================
-             VIEW 4: USER DETAILS — ফোন নম্বর ও সোশ্যাল তথ্য
-             ==================================================================== -->
-        <section id="view-user-details" class="admin-view hidden">
-          <div class="view-header-row">
-            <div>
-              <h2 class="view-main-title">ইউজার ডিটেইলস</h2>
-              <p class="view-subtitle">শিক্ষার্থীদের ফোন নম্বর, ইমেইল এবং সম্পূর্ণ ব্যক্তিগত তথ্য।</p>
-            </div>
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <div style="position: relative;">
-                <input type="text" id="userSearchInput" class="form-input" placeholder="🔍 নাম বা ফোন দিয়ে খুঁজুন..." style="padding-left: 14px; width: 260px;" oninput="searchUserDetails(this.value)">
-              </div>
-              <button class="btn-careplus-green-cta" onclick="loadAllUserDetails()">
-                <i class="fas fa-rotate"></i> <span>রিফ্রেশ</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="careplus-section-card">
-            <div class="careplus-table-wrap">
-              <table class="careplus-table">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>পূর্ণ নাম</th>
-                    <th>ফোন নম্বর</th>
-                    <th>ইমেইল</th>
-                    <th>শ্রেণি</th>
-                    <th>কোর্স কেনার সংখ্যা</th>
-                    <th>নিবন্ধন তারিখ</th>
-                  </tr>
-                </thead>
-                <tbody id="userDetailsTableBody">
-                  <tr>
-                    <td colspan="7" style="text-align:center; padding: 40px; color: var(--text-muted);">
-                      <i class="fas fa-spinner fa-spin mr-2"></i> ইউজার তথ্য লোড হচ্ছে...
                     </td>
                   </tr>
                 </tbody>
@@ -1245,261 +1051,7 @@
           </div>
 
 
-          <!-- 3. Site Statistics Manager -->
-          <div class="card-panel">
-            <h3 class="panel-title" style="margin-bottom: 14px;"><i class="fas fa-chart-line text-orange mr-2"></i> হোমপেজ স্ট্যাটস ও কাউন্টার</h3>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
-              হোমপেজে প্রদর্শিত মোট শিক্ষার্থী ও অন্যান্য কাউন্টারের সংখ্যা বাংলায় ও ইংরেজিতে নিয়ন্ত্রণ করুন:
-            </p>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-              <div class="form-group-mb">
-                <label class="form-label">মোট শিক্ষার্থী (বাংলায়)</label>
-                <input type="text" id="statInputTotalStudentsBn" class="form-input" value="৩০ লক্ষ+">
-              </div>
-              <div class="form-group-mb">
-                <label class="form-label">মোট শিক্ষার্থী (ইংরেজিতে)</label>
-                <input type="text" id="statInputTotalStudentsEn" class="form-input" value="3.0M+">
-              </div>
-              <div class="form-group-mb">
-                <label class="form-label">কোর্স এনরোলমেন্ট (বাংলায়)</label>
-                <input type="text" id="statInputCourseEnrolledBn" class="form-input" value="১,৮০,০০০+">
-              </div>
-              <div class="form-group-mb">
-                <label class="form-label">কোর্স এনরোলমেন্ট (ইংরেজিতে)</label>
-                <input type="text" id="statInputCourseEnrolledEn" class="form-input" value="180K+">
-              </div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 12px; margin-top: 10px;">
-              <button type="button" id="saveStatsBtn" class="btn-primary-gradient" onclick="saveSiteStatsFromForm()">
-                <i class="fas fa-floppy-disk mr-1.5"></i> মেট্রিক্স সংরক্ষণ করুন
-              </button>
-              <span id="siteStatsMsg" style="font-size: 12px; font-weight: 600;"></span>
-            </div>
-          </div>
-        </section>
 
-        <!-- ====================================================================
-             VIEW 7: FEATURES & TEXT ANIMATION MANAGER (TypeScript Component Editor)
-             ==================================================================== -->
-        <section id="view-features" class="admin-view hidden">
-          <!-- Header Banner -->
-          <div class="careplus-section-card" style="margin-bottom: 24px; border-radius: 20px; background: linear-gradient(135deg, rgba(255,122,26,0.12), rgba(15,23,42,0.95)); border: 1px solid rgba(255,122,26,0.25);">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-              <div>
-                <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px; border-radius: 999px; background: rgba(255,122,26,0.18); color: #FF923C; font-size: 11px; font-weight: 700; margin-bottom: 8px;">
-                  <i class="fas fa-wand-magic-sparkles"></i> TYPESCRIPT REACT COMPONENT
-                </div>
-                <h2 style="font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 6px;">
-                  হোমপেজ ফিচার ও টেক্সট এনিমেশন এডিটর
-                </h2>
-                <p style="font-size: 13px; color: #94A3B8; max-width: 650px; line-height: 1.6;">
-                  হোমপেজের ফিচার সেকশনের প্রতিটি ট্যাব, শিরোনাম, বিবরণ, বুলেট পয়েন্ট, বাটন ও ছবি এখান থেকে সরাসরি এডিট, নতুন ফিচার যোগ এবং রিমুভ করতে পারবেন।
-                </p>
-              </div>
-              <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                <button type="button" class="btn-careplus-green-cta" onclick="openNewFeatureModal()" style="border-radius: 999px; padding: 10px 22px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 4px 18px rgba(16,185,129,0.35);">
-                  <i class="fas fa-plus-circle"></i> নতুন ফিচার যোগ করুন
-                </button>
-                <button type="button" class="btn-careplus-hero-dark-outline" onclick="resetFeaturesToDefault()" style="border-radius: 999px; padding: 9px 18px;">
-                  <i class="fas fa-rotate-left mr-1"></i> ডিফল্ট রিসেট
-                </button>
-                <a href="/#features" target="_blank" class="btn-primary-gradient" style="border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; padding: 9px 20px;">
-                  <i class="fas fa-eye"></i> লাইভ ফিচার দেখুন
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Feature Tab Selector Buttons (Horizontal Scroll/Pill List) -->
-          <div style="margin-bottom: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
-              <div style="font-size: 13px; font-weight: 700; color: #CBD5E1; display: flex; align-items: center; gap: 6px;">
-                <i class="fas fa-layer-group" style="color: #FF7A1A;"></i> 
-                <span>ফিচার তালিকা (<span id="adminFeatCountBadge" style="color: #FF7A1A; font-weight: 800;">৭টি</span>) — নির্বাচন করে এডিট করুন অথবা রিমুভ করুন:</span>
-              </div>
-              <button type="button" class="btn-careplus-hero-dark-outline" onclick="openNewFeatureModal()" style="font-size: 12px; padding: 6px 14px; border-radius: 999px; color: #10B981; border-color: rgba(16,185,129,0.35); background: rgba(16,185,129,0.08); display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
-                <i class="fas fa-plus"></i> নতুন ফিচার
-              </button>
-            </div>
-            <div id="adminFeatureTabsList" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-              <!-- Dynamically populated feature tabs with delete buttons -->
-            </div>
-          </div>
-
-          <!-- Edit Grid: Form on Left + Live Animated Preview on Right -->
-          <div style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; align-items: start;">
-            
-            <!-- Edit Form Card -->
-            <div class="careplus-section-card" style="border-radius: 20px; border: 1px solid rgba(255,255,255,0.08);">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.08);">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <span id="adminFeatFormBadgeIcon" style="width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,122,26,0.15); color: #FF7A1A; font-size: 16px;">
-                    <i class="fas fa-video"></i>
-                  </span>
-                  <div>
-                    <h3 id="adminFeatFormHeading" style="font-size: 16px; font-weight: 800; color: #fff;">ফিচার এডিট করুন</h3>
-                    <span id="adminFeatFormSubheading" style="font-size: 12px; color: #94A3B8;">আইডি: live</span>
-                  </div>
-                </div>
-                <span id="adminFeatSaveIndicator" style="font-size: 12px; font-weight: 600;"></span>
-              </div>
-
-              <form id="adminFeatureEditForm" onsubmit="event.preventDefault(); saveCurrentFeature();">
-                <input type="hidden" id="featEditId" value="live">
-
-                <!-- Row 1: Tab Label & Accent Color -->
-                <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 14px; margin-bottom: 14px;">
-                  <div>
-                    <label class="form-label">ট্যাব লেবেল (Tab Name) *</label>
-                    <input type="text" id="featEditTabLabel" class="form-input" style="border-radius: 12px;" required oninput="updateLivePreview()">
-                  </div>
-                  <div>
-                    <label class="form-label">থিম রঙ (Accent Color) *</label>
-                    <div style="display: flex; gap: 8px; align-items: center;">
-                      <input type="color" id="featEditColorPicker" style="width: 42px; height: 38px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: transparent; cursor: pointer;" oninput="onColorPickerChange(this.value)">
-                      <input type="text" id="featEditAccentColor" class="form-input" style="border-radius: 12px;" required oninput="onColorTextChange(this.value)">
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Row 2: Badge Text & Icon -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
-                  <div>
-                    <label class="form-label">ব্যাজ টেক্সট (Tag Badge)</label>
-                    <input type="text" id="featEditBadge" class="form-input" style="border-radius: 12px;" placeholder="HD 1080P INTERACTIVE" oninput="updateLivePreview()">
-                  </div>
-                  <div>
-                    <label class="form-label">FontAwesome আইকন ক্লাস</label>
-                    <input type="text" id="featEditIcon" class="form-input" style="border-radius: 12px;" placeholder="fas fa-video" oninput="updateLivePreview()">
-                  </div>
-                </div>
-
-                <!-- Row 3: Title -->
-                <div style="margin-bottom: 14px;">
-                  <label class="form-label">ফিচার প্রধান শিরোনাম (Title) *</label>
-                  <input type="text" id="featEditTitle" class="form-input" style="border-radius: 12px;" required oninput="updateLivePreview()">
-                </div>
-
-                <!-- Row 4: Description -->
-                <div style="margin-bottom: 14px;">
-                  <label class="form-label">বিস্তারিত বিবরণ (Description) *</label>
-                  <textarea id="featEditDesc" class="form-input" rows="3" style="border-radius: 12px; resize: vertical;" required oninput="updateLivePreview()"></textarea>
-                </div>
-
-                <!-- Row 5: 3 Bullet Points -->
-                <div style="margin-bottom: 14px;">
-                  <label class="form-label" style="display: flex; justify-content: space-between;">
-                    <span>ফিচার বুলেট পয়েন্টস (সুবিধাসমূহ)</span>
-                    <span style="font-size: 11px; color: #94A3B8;">৩টি গুরুত্বপূর্ণ বুলেট</span>
-                  </label>
-                  <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                      <span style="color: #10B981; font-size: 13px;"><i class="fas fa-check-circle"></i></span>
-                      <input type="text" id="featEditPoint1" class="form-input" style="border-radius: 10px;" placeholder="বুলেট পয়েন্ট ১" oninput="updateLivePreview()">
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                      <span style="color: #10B981; font-size: 13px;"><i class="fas fa-check-circle"></i></span>
-                      <input type="text" id="featEditPoint2" class="form-input" style="border-radius: 10px;" placeholder="বুলেট পয়েন্ট ২" oninput="updateLivePreview()">
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                      <span style="color: #10B981; font-size: 13px;"><i class="fas fa-check-circle"></i></span>
-                      <input type="text" id="featEditPoint3" class="form-input" style="border-radius: 10px;" placeholder="বুলেট পয়েন্ট ৩" oninput="updateLivePreview()">
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Row 6: Image URL and File Upload -->
-                <div style="margin-bottom: 14px;">
-                  <label class="form-label">ফিচার ব্যানার ছবি (Image URL বা সরাসরি আপলোড) *</label>
-                  <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
-                    <input type="text" id="featEditImageUrl" class="form-input" style="border-radius: 12px; flex: 1;" placeholder="/images/student-hero.jpg বা অনলাইন URL" required oninput="updateLivePreview()">
-                    <label class="btn-careplus-hero-dark-outline" style="border-radius: 12px; cursor: pointer; white-space: nowrap; margin: 0; padding: 9px 14px;">
-                      <i class="fas fa-cloud-arrow-up"></i> ছবি আপলোড
-                      <input type="file" id="featEditImageFileInput" accept="image/*" style="display: none;" onchange="handleFeatureImageUpload(this)">
-                    </label>
-                  </div>
-                  <div style="font-size: 11px; color: #94A3B8;">
-                    পরামর্শ: 16:10 বা 16:9 অনুপাতের যেকোনো ছবি দিন অথবা ডিভাইস থেকে সিলেক্ট করুন।
-                  </div>
-                </div>
-
-                <!-- Row 7: CTA Button -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;">
-                  <div>
-                    <label class="form-label">বাটন টেক্সট (CTA Text)</label>
-                    <input type="text" id="featEditBtnText" class="form-input" style="border-radius: 12px;" placeholder="ফ্রি লাইভ ডেমো দেখো →" oninput="updateLivePreview()">
-                  </div>
-                  <div>
-                    <label class="form-label">বাটন লিংক (CTA URL)</label>
-                    <input type="text" id="featEditBtnHref" class="form-input" style="border-radius: 12px;" placeholder="/player বা /courses" oninput="updateLivePreview()">
-                  </div>
-                </div>
-
-                <!-- Submit & Delete Buttons -->
-                <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-                  <button type="submit" id="btnSaveFeature" class="btn-primary-gradient" style="border-radius: 999px; padding: 12px 30px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
-                    <i class="fas fa-floppy-disk"></i> এই ফিচার সংরক্ষণ করুন
-                  </button>
-                  <button type="button" id="btnDeleteCurrentFeat" class="btn-careplus-hero-dark-outline" onclick="deleteCurrentFeature()" style="border-radius: 999px; padding: 12px 20px; font-weight: 700; color: #EF4444; border-color: rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.08); display: inline-flex; align-items: center; gap: 8px; cursor: pointer;" title="এই ফিচারটি স্থায়ীভাবে মুছে ফেলুন">
-                    <i class="fas fa-trash-can"></i> ফিচারটি রিমুভ করুন
-                  </button>
-                  <button type="button" class="btn-careplus-hero-dark-outline" onclick="triggerPreviewAnimation()" style="border-radius: 999px; padding: 12px 20px;">
-                    <i class="fas fa-play"></i> এনিমেশন প্লে করুন
-                  </button>
-                </div>
-              </form>
-            </div>
-
-            <!-- Live Animated Preview Card (Rounded & State of the Art) -->
-            <div class="careplus-section-card" style="border-radius: 20px; position: sticky; top: 90px; border: 1px solid rgba(255,255,255,0.1);">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                <h4 style="font-size: 14px; font-weight: 700; color: #CBD5E1; display: flex; align-items: center; gap: 6px;">
-                  <i class="fas fa-desktop" style="color: #FF7A1A;"></i> লাইভ এনিমেশন প্রিভিউ
-                </h4>
-                <span id="prevAccentPill" style="font-size: 10px; padding: 3px 10px; border-radius: 999px; font-weight: 700; background: rgba(255,122,26,0.15); color: #FF7A1A;">
-                  LIVE PREVIEW
-                </span>
-              </div>
-
-              <!-- Preview Card Wrapper -->
-              <div id="adminFeatLivePreviewBox" style="background: rgba(10, 15, 29, 0.95); border-radius: 18px; padding: 18px; border: 1px solid rgba(255,122,26,0.25); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: border-color 0.3s, box-shadow 0.3s;">
-                <!-- Preview Badge -->
-                <div style="margin-bottom: 10px;">
-                  <span id="prevBadge" style="display: inline-flex; align-items: center; gap: 5px; padding: 3px 12px; border-radius: 999px; background: rgba(255,122,26,0.15); border: 1px solid rgba(255,122,26,0.3); color: #FF7A1A; font-size: 10px; font-weight: 700; letter-spacing: 1px;">
-                    <i class="fas fa-bolt"></i> <span id="prevBadgeText">HD 1080P INTERACTIVE</span>
-                  </span>
-                </div>
-
-                <!-- Preview Image -->
-                <div style="border-radius: 14px; overflow: hidden; margin-bottom: 14px; aspect-ratio: 16/10; border: 1px solid rgba(255,255,255,0.08); position: relative; background: #0F172A;">
-                  <img id="prevImg" src="/images/student-hero.jpg" alt="Feature Preview" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.src='/images/student-hero.jpg'">
-                </div>
-
-                <!-- Preview Title -->
-                <h4 id="prevTitle" style="font-size: 15px; font-weight: 800; color: #fff; line-height: 1.4; margin-bottom: 8px;">
-                  স্মার্ট হোয়াইটবোর্ডে দেশের সেরা টিচারদের লাইভ ক্লাস
-                </h4>
-
-                <!-- Preview Desc -->
-                <p id="prevDesc" style="font-size: 12px; color: #94A3B8; line-height: 1.6; margin-bottom: 12px;">
-                  বুয়েট ও মেডিকেল ফ্যাকাল্টির শিক্ষকদের সাথে সরাসরি টু-ওয়ে ইন্টারঅ্যাকশন।
-                </p>
-
-                <!-- Preview Bullets -->
-                <ul id="prevBullets" style="list-style: none; padding: 0; margin: 0 0 14px; display: flex; flex-direction: column; gap: 6px;">
-                  <!-- Dynamically populated -->
-                </ul>
-
-                <!-- Preview CTA -->
-                <div>
-                  <span id="prevBtn" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; border-radius: 999px; background: #FF7A1A; color: #0A0D1A; font-weight: 800; font-size: 12px;">
-                    ফ্রি লাইভ ডেমো দেখো →
-                  </span>
-                </div>
-              </div>
-            </div>
-
-          </div>
         </section>
 
         <!-- ====================================================================
@@ -1798,292 +1350,357 @@
              VIEW 9: HELPLINE & CONTACT MODAL MANAGER (যোগাযোগ ও হেল্পলাইন)
              ==================================================================== -->
         <section id="view-helpline" class="admin-view hidden">
-          <!-- Header Banner -->
-          <div class="careplus-section-card" style="margin-bottom: 24px; border-radius: 20px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(8, 16, 34, 0.95)); border: 1px solid rgba(16, 185, 129, 0.35); padding: 22px 26px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-              <div>
-                <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px; border-radius: 999px; background: rgba(16, 185, 129, 0.16); color: #10B981; font-size: 11px; font-weight: 700; margin-bottom: 8px;">
-                  <i class="fas fa-headset"></i> হেল্পলাইন ও কন্টাক্ট সাপোর্ট সেটিংস
-                </div>
-                <h2 style="font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 6px;">
-                  যোগাযোগ ও হেল্পলাইন মডাল কন্ট্রোলার
-                </h2>
-                <p style="font-size: 13px; color: #94A3B8; max-width: 650px; line-height: 1.6; margin: 0;">
-                  ওয়েবসাইটের হেডারে "যোগাযোগ ও হেল্পলাইন" বাটনে ক্লিক করলে যে পপআপ মডালটি আসে, তার হটলাইন নম্বর, WhatsApp নম্বর, ইমেইল এবং প্রধান কার্যালয়ের ঠিকানা এখান থেকে সরাসরি এডিট করুন।
-                </p>
+          <!-- Header Banner (Dribbble White Theme) -->
+          <div class="helpline-header-card">
+            <div class="helpline-header-left">
+              <div class="helpline-header-badge">
+                <span class="helpline-pulse-dot"></span>
+                <span>হেল্পলাইন ও কন্টাক্ট সাপোর্ট কন্ট্রোলার</span>
               </div>
-              <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                <button type="button" class="btn-careplus-green-cta" onclick="saveHelplineSettings()" style="border-radius: 999px; padding: 10px 24px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 4px 18px rgba(16, 185, 129, 0.35); background: linear-gradient(135deg, #10B981, #059669); border: none; color: #ffffff;">
-                  <i class="fas fa-floppy-disk"></i> পরিবর্তন সংরক্ষণ করুন
-                </button>
-                <a href="/" target="_blank" class="btn-careplus-hero-dark-outline" style="border-radius: 999px; padding: 9px 18px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-                  <i class="fas fa-arrow-up-right-from-square"></i> লাইভ সাইটে দেখুন
-                </a>
-                <button type="button" class="btn-careplus-hero-dark-outline" onclick="resetHelplineSettingsToDefault()" style="border-radius: 999px; padding: 9px 16px;" title="ডিফল্ট তথ্য ফিরিয়ে আনুন">
-                  <i class="fas fa-rotate-left"></i> রিস্টোর
-                </button>
-              </div>
+              <h2 class="helpline-header-title">যোগাযোগ ও হেল্পলাইন মডাল কন্ট্রোলার</h2>
+              <p class="helpline-header-desc">
+                ওয়েবসাইটের হেডারে "যোগাযোগ ও হেল্পলাইন" বাটনে ক্লিক করলে যে পপআপ মডালটি আসে, তার হটলাইন নম্বর, WhatsApp নম্বর, ইমেইল এবং প্রধান কার্যালয়ের ঠিকানা এখান থেকে সরাসরি এডিট ও কাস্টমাইজ করুন।
+              </p>
+            </div>
+            <div class="helpline-header-actions">
+              <button type="button" class="btn-helpline-save" onclick="saveHelplineSettings()">
+                <i class="fas fa-floppy-disk"></i> পরিবর্তন সংরক্ষণ করুন
+              </button>
+              <a href="/" target="_blank" class="btn-helpline-outline">
+                <i class="fas fa-arrow-up-right-from-square"></i> লাইভ সাইটে দেখুন
+              </a>
+              <button type="button" class="btn-helpline-outline" onclick="resetHelplineSettingsToDefault()" title="ডিফল্ট তথ্য ফিরিয়ে আনুন">
+                <i class="fas fa-rotate-left"></i> রিস্টোর
+              </button>
             </div>
           </div>
 
-          <!-- 2 Columns Grid: Left Editor & Right Live Modal Preview -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(440px, 1fr)); gap: 24px; margin-bottom: 24px;">
+          <!-- 2 Columns Grid: Left Editor & Right Sticky Live Preview -->
+          <div class="helpline-main-grid">
             
-            <!-- LEFT COLUMN: EDIT FORM CARDS -->
-            <div style="display: flex; flexDirection: column; gap: 20px;">
+            <!-- LEFT COLUMN: EDIT FORM CARDS (Stacked Vertically) -->
+            <div class="helpline-forms-column">
 
               <!-- CARD 1: Modal Header Title & Subtitle -->
-              <div class="careplus-section-card" style="border-radius: 16px; background: rgba(13, 27, 54, 0.85); border: 1px solid rgba(16, 185, 129, 0.2); padding: 20px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center; color: #10B981; font-size: 16px;">
+              <div class="helpline-card card-accent-indigo">
+                <div class="helpline-card-header">
+                  <div class="helpline-card-title-group">
+                    <div class="helpline-card-icon bg-indigo-soft text-indigo">
                       <i class="fas fa-heading"></i>
                     </div>
                     <div>
-                      <h3 style="font-size: 16px; font-weight: 700; color: #fff; margin: 0;">১. মডাল হেডার ও পরিচিতি</h3>
-                      <p style="font-size: 11px; color: #94A3B8; margin: 0;">পপআপের শীর্ষ শিরোনাম ও সাবটাইটেল</p>
+                      <h3 class="helpline-card-title">১. মডাল হেডার ও পরিচিতি</h3>
+                      <p class="helpline-card-desc">পপআপের শীর্ষ শিরোনাম ও পরিচিতিমূলক সাবটাইটেল</p>
                     </div>
                   </div>
-                  <span class="careplus-pill-badge" style="background: rgba(16,185,129,0.15); color: #10B981; font-size: 10px; padding: 3px 8px; border-radius: 6px;">HEADER</span>
+                  <span class="helpline-card-badge badge-indigo">HEADER</span>
                 </div>
 
-                <div class="form-group-mb" style="margin-bottom: 14px;">
-                  <label class="form-label">মডাল শিরোনাম (Title) *</label>
-                  <input type="text" id="helplineInputTitle" class="form-input" placeholder="যেমন: যোগাযোগ ও হেল্পলাইন" value="যোগাযোগ ও হেল্পলাইন" oninput="updateHelplineLivePreview()">
-                </div>
+                <div class="helpline-card-body">
+                  <div class="helpline-form-group">
+                    <label class="helpline-label" for="helplineInputTitle">
+                      <span>মডাল প্রধান শিরোনাম (Title) <span class="req">*</span></span>
+                    </label>
+                    <div class="helpline-input-wrap">
+                      <i class="fas fa-quote-left helpline-input-icon"></i>
+                      <input type="text" id="helplineInputTitle" class="helpline-input" placeholder="যেমন: যোগাযোগ ও হেল্পলাইন" value="যোগাযোগ ও হেল্পলাইন" oninput="updateHelplineLivePreview()">
+                    </div>
+                    <span class="helpline-hint"><i class="fas fa-circle-info"></i> পপআপ মডালের একদম শীর্ষে বড় বোল্ড অক্ষরে প্রদর্শিত হবে।</span>
+                  </div>
 
-                <div class="form-group-mb" style="margin-bottom: 4px;">
-                  <label class="form-label">মডাল সাবটাইটেল (Subtitle) *</label>
-                  <input type="text" id="helplineInputSubtitle" class="form-input" placeholder="যেমন: Dipu Academy ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র" value="Dipu Academy ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র" oninput="updateHelplineLivePreview()">
+                  <div class="helpline-form-group">
+                    <label class="helpline-label" for="helplineInputSubtitle">
+                      <span>মডাল সাবটাইটেল (Subtitle) <span class="req">*</span></span>
+                    </label>
+                    <div class="helpline-input-wrap">
+                      <i class="fas fa-comment-dots helpline-input-icon"></i>
+                      <input type="text" id="helplineInputSubtitle" class="helpline-input" placeholder="যেমন: Dipu Academy ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র" value="Dipu Academy ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র" oninput="updateHelplineLivePreview()">
+                    </div>
+                    <span class="helpline-hint"><i class="fas fa-circle-info"></i> শিরোনামের ঠিক নিচে ছোট অক্ষরে সহায়ক বিবরণ হিসেবে প্রদর্শিত হবে।</span>
+                  </div>
                 </div>
               </div>
 
               <!-- CARD 2: Hotline Support -->
-              <div class="careplus-section-card" style="border-radius: 16px; background: rgba(13, 27, 54, 0.85); border: 1px solid rgba(16, 185, 129, 0.2); padding: 20px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center; color: #10B981; font-size: 16px;">
+              <div class="helpline-card card-accent-emerald">
+                <div class="helpline-card-header">
+                  <div class="helpline-card-title-group">
+                    <div class="helpline-card-icon bg-emerald-soft text-emerald">
                       <i class="fas fa-phone-volume"></i>
                     </div>
                     <div>
-                      <h3 style="font-size: 16px; font-weight: 700; color: #fff; margin: 0;">২. ২৪/৭ হটলাইন সাপোর্ট</h3>
-                      <p style="font-size: 11px; color: #94A3B8; margin: 0;">সরাসরি কল করার হটলাইন নম্বর</p>
+                      <h3 class="helpline-card-title">২. ২৪/৭ হটলাইন সাপোর্ট</h3>
+                      <p class="helpline-card-desc">শিক্ষার্থীদের সরাসরি ফোন কল করার হটলাইন নম্বর ও বাটন</p>
                     </div>
                   </div>
-                  <span class="careplus-pill-badge" style="background: rgba(16,185,129,0.15); color: #10B981; font-size: 10px; padding: 3px 8px; border-radius: 6px;">HOTLINE</span>
+                  <span class="helpline-card-badge badge-emerald">HOTLINE</span>
                 </div>
 
-                <div class="form-group-mb" style="margin-bottom: 12px;">
-                  <label class="form-label">সাপোর্ট টাইটেল / লেবেল</label>
-                  <input type="text" id="helplineInputHotlineTitle" class="form-input" placeholder="যেমন: ২৪/৭ হটলাইন সাপোর্ট" value="২৪/৭ হটলাইন সাপোর্ট" oninput="updateHelplineLivePreview()">
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin-bottom: 12px;">
-                  <div>
-                    <label class="form-label">হটলাইন নম্বর (প্রদর্শিত নম্বর) *</label>
-                    <input type="text" id="helplineInputHotlineNumber" class="form-input" placeholder="যেমন: 01712-345678" value="01712-345678" oninput="updateHelplineLivePreview()">
+                <div class="helpline-card-body">
+                  <div class="helpline-form-group">
+                    <label class="helpline-label" for="helplineInputHotlineTitle">সাপোর্ট টাইটেল / হেডিং</label>
+                    <div class="helpline-input-wrap">
+                      <i class="fas fa-tag helpline-input-icon"></i>
+                      <input type="text" id="helplineInputHotlineTitle" class="helpline-input" placeholder="যেমন: ২৪/৭ হটলাইন সাপোর্ট" value="২৪/৭ হটলাইন সাপোর্ট" oninput="updateHelplineLivePreview()">
+                    </div>
                   </div>
-                  <div>
-                    <label class="form-label">বাটন টেক্সট</label>
-                    <input type="text" id="helplineInputHotlineBtnText" class="form-input" placeholder="যেমন: কল করুন →" value="কল করুন →" oninput="updateHelplineLivePreview()">
-                  </div>
-                </div>
 
-                <div class="form-group-mb" style="margin-bottom: 4px;">
-                  <label class="form-label">সরাসরি কল লিংক (tel: URL)</label>
-                  <input type="text" id="helplineInputHotlineLink" class="form-input" placeholder="যেমন: tel:01712345678" value="tel:01712345678" oninput="updateHelplineLivePreview()">
-                  <div style="font-size: 11px; color: #64748B; margin-top: 4px;">মোবাইলে শিক্ষার্থী ক্লিক করলে সরাসরি ডায়াল প্যাডে চলে যাবে।</div>
+                  <div class="helpline-grid-2col">
+                    <div class="helpline-form-group">
+                      <label class="helpline-label" for="helplineInputHotlineNumber">
+                        <span>হটলাইন নম্বর (প্রদর্শিত নম্বর) <span class="req">*</span></span>
+                      </label>
+                      <div class="helpline-input-wrap">
+                        <i class="fas fa-phone helpline-input-icon"></i>
+                        <input type="text" id="helplineInputHotlineNumber" class="helpline-input" placeholder="যেমন: 01712-345678" value="01712-345678" oninput="updateHelplineLivePreview()">
+                      </div>
+                    </div>
+                    <div class="helpline-form-group">
+                      <label class="helpline-label" for="helplineInputHotlineBtnText">বাটন টেক্সট</label>
+                      <div class="helpline-input-wrap">
+                        <i class="fas fa-arrow-right helpline-input-icon"></i>
+                        <input type="text" id="helplineInputHotlineBtnText" class="helpline-input" placeholder="যেমন: কল করুন →" value="কল করুন →" oninput="updateHelplineLivePreview()">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="helpline-form-group">
+                    <label class="helpline-label" for="helplineInputHotlineLink">সরাসরি কল লিংক (tel: URL)</label>
+                    <div class="helpline-input-wrap">
+                      <i class="fas fa-link helpline-input-icon"></i>
+                      <input type="text" id="helplineInputHotlineLink" class="helpline-input" placeholder="যেমন: tel:01712345678" value="tel:01712345678" oninput="updateHelplineLivePreview()">
+                    </div>
+                    <span class="helpline-hint"><i class="fas fa-mobile-screen"></i> মোবাইলে শিক্ষার্থী ক্লিক করলে সরাসরি ফোনের ডায়াল প্যাডে চলে যাবে।</span>
+                  </div>
                 </div>
               </div>
 
               <!-- CARD 3: WhatsApp Support -->
-              <div class="careplus-section-card" style="border-radius: 16px; background: rgba(13, 27, 54, 0.85); border: 1px solid rgba(37, 211, 102, 0.2); padding: 20px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(37, 211, 102, 0.15); display: flex; align-items: center; justify-content: center; color: #25D366; font-size: 18px;">
+              <div class="helpline-card card-accent-green">
+                <div class="helpline-card-header">
+                  <div class="helpline-card-title-group">
+                    <div class="helpline-card-icon bg-green-soft text-green">
                       <i class="fab fa-whatsapp"></i>
                     </div>
                     <div>
-                      <h3 style="font-size: 16px; font-weight: 700; color: #fff; margin: 0;">৩. WhatsApp চ্যাট ও ডাউট সলভ</h3>
-                      <p style="font-size: 11px; color: #94A3B8; margin: 0;">হোয়াটসঅ্যাপ সাপোর্ট নম্বর ও সরাসরি চ্যাট লিংক</p>
+                      <h3 class="helpline-card-title">৩. WhatsApp চ্যাট ও ডাউট সলভ</h3>
+                      <p class="helpline-card-desc">হোয়াটসঅ্যাপ সাপোর্ট নম্বর ও সরাসরি ইনস্ট্যান্ট চ্যাট লিংক</p>
                     </div>
                   </div>
-                  <span class="careplus-pill-badge" style="background: rgba(37, 211, 102, 0.15); color: #25D366; font-size: 10px; padding: 3px 8px; border-radius: 6px;">WHATSAPP</span>
+                  <span class="helpline-card-badge badge-green">WHATSAPP</span>
                 </div>
 
-                <div class="form-group-mb" style="margin-bottom: 12px;">
-                  <label class="form-label">সাপোর্ট টাইটেল / লেবেল</label>
-                  <input type="text" id="helplineInputWhatsappTitle" class="form-input" placeholder="যেমন: WhatsApp চ্যাট ও ডাউট সলভ" value="WhatsApp চ্যাট ও ডাউট সলভ" oninput="updateHelplineLivePreview()">
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin-bottom: 12px;">
-                  <div>
-                    <label class="form-label">হোয়াটসঅ্যাপ নম্বর (প্রদর্শিত নম্বর) *</label>
-                    <input type="text" id="helplineInputWhatsappNumber" class="form-input" placeholder="যেমন: +880 1812-987654" value="+880 1812-987654" oninput="updateHelplineLivePreview()">
+                <div class="helpline-card-body">
+                  <div class="helpline-form-group">
+                    <label class="helpline-label" for="helplineInputWhatsappTitle">সাপোর্ট টাইটেল / হেডিং</label>
+                    <div class="helpline-input-wrap">
+                      <i class="fas fa-tag helpline-input-icon"></i>
+                      <input type="text" id="helplineInputWhatsappTitle" class="helpline-input" placeholder="যেমন: WhatsApp চ্যাট ও ডাউট সলভ" value="WhatsApp চ্যাট ও ডাউট সলভ" oninput="updateHelplineLivePreview()">
+                    </div>
                   </div>
-                  <div>
-                    <label class="form-label">বাটন টেক্সট</label>
-                    <input type="text" id="helplineInputWhatsappBtnText" class="form-input" placeholder="যেমন: চ্যাট করুন →" value="চ্যাট করুন →" oninput="updateHelplineLivePreview()">
-                  </div>
-                </div>
 
-                <div class="form-group-mb" style="margin-bottom: 4px;">
-                  <label class="form-label">সরাসরি হোয়াটসঅ্যাপ লিংক (https://wa.me/... URL)</label>
-                  <input type="text" id="helplineInputWhatsappLink" class="form-input" placeholder="যেমন: https://wa.me/8801812987654" value="https://wa.me/8801812987654" oninput="updateHelplineLivePreview()">
-                  <div style="font-size: 11px; color: #64748B; margin-top: 4px;">ক্লিক করলে সরাসরি WhatsApp অ্যাপ বা ওয়েবে চ্যাট উইন্ডো খুলবে।</div>
+                  <div class="helpline-grid-2col">
+                    <div class="helpline-form-group">
+                      <label class="helpline-label" for="helplineInputWhatsappNumber">
+                        <span>হোয়াটসঅ্যাপ নম্বর (প্রদর্শিত নম্বর) <span class="req">*</span></span>
+                      </label>
+                      <div class="helpline-input-wrap">
+                        <i class="fab fa-whatsapp helpline-input-icon"></i>
+                        <input type="text" id="helplineInputWhatsappNumber" class="helpline-input" placeholder="যেমন: +880 1812-987654" value="+880 1812-987654" oninput="updateHelplineLivePreview()">
+                      </div>
+                    </div>
+                    <div class="helpline-form-group">
+                      <label class="helpline-label" for="helplineInputWhatsappBtnText">বাটন টেক্সট</label>
+                      <div class="helpline-input-wrap">
+                        <i class="fas fa-arrow-right helpline-input-icon"></i>
+                        <input type="text" id="helplineInputWhatsappBtnText" class="helpline-input" placeholder="যেমন: চ্যাট করুন →" value="চ্যাট করুন →" oninput="updateHelplineLivePreview()">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="helpline-form-group">
+                    <label class="helpline-label" for="helplineInputWhatsappLink">সরাসরি হোয়াটসঅ্যাপ লিংক (https://wa.me/... URL)</label>
+                    <div class="helpline-input-wrap">
+                      <i class="fas fa-link helpline-input-icon"></i>
+                      <input type="text" id="helplineInputWhatsappLink" class="helpline-input" placeholder="যেমন: https://wa.me/8801812987654" value="https://wa.me/8801812987654" oninput="updateHelplineLivePreview()">
+                    </div>
+                    <span class="helpline-hint"><i class="fab fa-whatsapp"></i> ক্লিক করলে সরাসরি WhatsApp অ্যাপ বা ওয়েবে চ্যাট উইন্ডো খুলবে।</span>
+                  </div>
                 </div>
               </div>
 
               <!-- CARD 4: Official Email Support -->
-              <div class="careplus-section-card" style="border-radius: 16px; background: rgba(13, 27, 54, 0.85); border: 1px solid rgba(0, 194, 255, 0.2); padding: 20px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(0, 194, 255, 0.15); display: flex; align-items: center; justify-content: center; color: #00C2FF; font-size: 16px;">
+              <div class="helpline-card card-accent-blue">
+                <div class="helpline-card-header">
+                  <div class="helpline-card-title-group">
+                    <div class="helpline-card-icon bg-blue-soft text-blue">
                       <i class="fas fa-envelope"></i>
                     </div>
                     <div>
-                      <h3 style="font-size: 16px; font-weight: 700; color: #fff; margin: 0;">৪. অফিসিয়াল ইমেইল সাপোর্ট</h3>
-                      <p style="font-size: 11px; color: #94A3B8; margin: 0;">অফিসিয়াল সহায়তা ও ইনকোয়ারি ইমেইল</p>
+                      <h3 class="helpline-card-title">৪. অফিসিয়াল ইমেইল সাপোর্ট</h3>
+                      <p class="helpline-card-desc">অফিসিয়াল সহায়তা ও ইনকোয়ারি ইমেইল ঠিকানা</p>
                     </div>
                   </div>
-                  <span class="careplus-pill-badge" style="background: rgba(0, 194, 255, 0.15); color: #00C2FF; font-size: 10px; padding: 3px 8px; border-radius: 6px;">EMAIL</span>
+                  <span class="helpline-card-badge badge-blue">EMAIL</span>
                 </div>
 
-                <div class="form-group-mb" style="margin-bottom: 12px;">
-                  <label class="form-label">সাপোর্ট টাইটেল / লেবেল</label>
-                  <input type="text" id="helplineInputEmailTitle" class="form-input" placeholder="যেমন: অফিসিয়াল ইমেইল" value="অফিসিয়াল ইমেইল" oninput="updateHelplineLivePreview()">
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin-bottom: 12px;">
-                  <div>
-                    <label class="form-label">ইমেইল ঠিকানা (Display Email) *</label>
-                    <input type="email" id="helplineInputEmailAddress" class="form-input" placeholder="যেমন: support@dipuedu.com" value="support@dipuedu.com" oninput="updateHelplineLivePreview()">
+                <div class="helpline-card-body">
+                  <div class="helpline-form-group">
+                    <label class="helpline-label" for="helplineInputEmailTitle">সাপোর্ট টাইটেল / হেডিং</label>
+                    <div class="helpline-input-wrap">
+                      <i class="fas fa-tag helpline-input-icon"></i>
+                      <input type="text" id="helplineInputEmailTitle" class="helpline-input" placeholder="যেমন: অফিসিয়াল ইমেইল" value="অফিসিয়াল ইমেইল" oninput="updateHelplineLivePreview()">
+                    </div>
                   </div>
-                  <div>
-                    <label class="form-label">বাটন টেক্সট</label>
-                    <input type="text" id="helplineInputEmailBtnText" class="form-input" placeholder="যেমন: ইমেইল →" value="ইমেইল →" oninput="updateHelplineLivePreview()">
-                  </div>
-                </div>
 
-                <div class="form-group-mb" style="margin-bottom: 4px;">
-                  <label class="form-label">ইমেইল লিংক (mailto: URL)</label>
-                  <input type="text" id="helplineInputEmailLink" class="form-input" placeholder="যেমন: mailto:support@dipuedu.com" value="mailto:support@dipuedu.com" oninput="updateHelplineLivePreview()">
+                  <div class="helpline-grid-2col">
+                    <div class="helpline-form-group">
+                      <label class="helpline-label" for="helplineInputEmailAddress">
+                        <span>ইমেইল ঠিকানা (Display Email) <span class="req">*</span></span>
+                      </label>
+                      <div class="helpline-input-wrap">
+                        <i class="fas fa-at helpline-input-icon"></i>
+                        <input type="email" id="helplineInputEmailAddress" class="helpline-input" placeholder="যেমন: support@dipuedu.com" value="support@dipuedu.com" oninput="updateHelplineLivePreview()">
+                      </div>
+                    </div>
+                    <div class="helpline-form-group">
+                      <label class="helpline-label" for="helplineInputEmailBtnText">বাটন টেক্সট</label>
+                      <div class="helpline-input-wrap">
+                        <i class="fas fa-arrow-right helpline-input-icon"></i>
+                        <input type="text" id="helplineInputEmailBtnText" class="helpline-input" placeholder="যেমন: ইমেইল →" value="ইমেইল →" oninput="updateHelplineLivePreview()">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="helpline-form-group">
+                    <label class="helpline-label" for="helplineInputEmailLink">ইমেইল লিংক (mailto: URL)</label>
+                    <div class="helpline-input-wrap">
+                      <i class="fas fa-link helpline-input-icon"></i>
+                      <input type="text" id="helplineInputEmailLink" class="helpline-input" placeholder="যেমন: mailto:support@dipuedu.com" value="mailto:support@dipuedu.com" oninput="updateHelplineLivePreview()">
+                    </div>
+                    <span class="helpline-hint"><i class="fas fa-paper-plane"></i> ক্লিক করলে স্বয়ংক্রিয়ভাবে ব্যবহারকারীর ডিফল্ট মেইল অ্যাপ খুলবে।</span>
+                  </div>
                 </div>
               </div>
 
               <!-- CARD 5: Main Office Address & Working Hours -->
-              <div class="careplus-section-card" style="border-radius: 16px; background: rgba(13, 27, 54, 0.85); border: 1px solid rgba(0, 132, 255, 0.2); padding: 20px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(0, 132, 255, 0.15); display: flex; align-items: center; justify-content: center; color: #0084FF; font-size: 16px;">
+              <div class="helpline-card card-accent-purple">
+                <div class="helpline-card-header">
+                  <div class="helpline-card-title-group">
+                    <div class="helpline-card-icon bg-purple-soft text-purple">
                       <i class="fas fa-location-dot"></i>
                     </div>
                     <div>
-                      <h3 style="font-size: 16px; font-weight: 700; color: #fff; margin: 0;">৫. প্রধান কার্যালয়ের ঠিকানা ও সময়সূচী</h3>
-                      <p style="font-size: 11px; color: #94A3B8; margin: 0;">মডালের নিচে প্রদর্শিত ঠিকানা ও সহায়তা সময়</p>
+                      <h3 class="helpline-card-title">৫. প্রধান কার্যালয়ের ঠিকানা ও সময়সূচী</h3>
+                      <p class="helpline-card-desc">মডালের নিচে প্রদর্শিত প্রধান অফিস ও সহায়তার সময়সূচী</p>
                     </div>
                   </div>
-                  <span class="careplus-pill-badge" style="background: rgba(0, 132, 255, 0.15); color: #0084FF; font-size: 10px; padding: 3px 8px; border-radius: 6px;">LOCATION</span>
+                  <span class="helpline-card-badge badge-purple">LOCATION</span>
                 </div>
 
-                <div class="form-group-mb" style="margin-bottom: 4px;">
-                  <label class="form-label">কার্যালয় ঠিকানা ও খোলা থাকার সময় *</label>
-                  <textarea id="helplineInputAddressText" class="form-input" rows="3" placeholder="যেমন: প্রধান কার্যালয়: শান্তি নগর, ঢাকা-১২১৭, বাংলাদেশ। (প্রতিদিন সকাল ৯টা - রাত ১১টা)" oninput="updateHelplineLivePreview()">প্রধান কার্যালয়: শান্তি নগর, ঢাকা-১২১৭, বাংলাদেশ। (প্রতিদিন সকাল ৯টা - রাত ১১টা)</textarea>
+                <div class="helpline-card-body">
+                  <div class="helpline-form-group">
+                    <label class="helpline-label" for="helplineInputAddressText">
+                      <span>কার্যালয় ঠিকানা ও খোলা থাকার সময় <span class="req">*</span></span>
+                    </label>
+                    <textarea id="helplineInputAddressText" class="helpline-textarea" rows="3" placeholder="যেমন: প্রধান কার্যালয়: শান্তি নগর, ঢাকা-১২১৭, বাংলাদেশ। (প্রতিদিন সকাল ৯টা - রাত ১১টা)" oninput="updateHelplineLivePreview()">প্রধান কার্যালয়: শান্তি নগর, ঢাকা-১২১৭, বাংলাদেশ। (প্রতিদিন সকাল ৯টা - রাত ১১টা)</textarea>
+                    <span class="helpline-hint"><i class="fas fa-clock"></i> পপআপ মডালের ফুটারে শিক্ষার্থীদের জন্য সার্বক্ষণিক সহায়তা ঠিকানা প্রদর্শিত হবে।</span>
+                  </div>
                 </div>
               </div>
 
             </div>
 
             <!-- RIGHT COLUMN: REAL-TIME LIVE PREVIEW (MATCHING SCREENSHOT) -->
-            <div>
-              <div style="position: sticky; top: 85px;">
+            <div class="helpline-preview-column">
+              <div class="helpline-preview-sticky">
                 
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                  <span style="color: #10B981; font-weight: 800; font-size: 13.5px; display: inline-flex; align-items: center; gap: 6px;">
-                    <i class="fas fa-eye"></i> লাইভ রিয়েলটাইম প্রিভিউ
-                  </span>
-                  <span class="careplus-pill-badge" style="background: rgba(16, 185, 129, 0.15); color: #10B981; font-size: 11px; padding: 3px 10px; border-radius: 999px;">
-                    EXACT LIVE PREVIEW
+                <div class="helpline-preview-topbar">
+                  <div class="helpline-preview-title">
+                    <i class="fas fa-eye text-emerald"></i> লাইভ রিয়েলটাইম প্রিভিউ
+                  </div>
+                  <span class="helpline-live-tag">
+                    <span class="helpline-pulse-dot"></span> EXACT LIVE PREVIEW
                   </span>
                 </div>
 
                 <!-- Preview Modal Card: Exact clone of User's Modal Screenshot -->
-                <div style="background: #0D1626; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 20px; box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 40px rgba(16,185,129,0.1); overflow: hidden; max-width: 460px; margin: 0 auto;">
+                <div class="helpline-modal-mockup">
                   
                   <!-- Modal Header -->
-                  <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: space-between; background: rgba(255, 255, 255, 0.015);">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                      <div style="width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #10B981, #059669); display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35); flex-shrink: 0;">
+                  <div class="helpline-mockup-header">
+                    <div class="helpline-mockup-header-left">
+                      <div class="helpline-mockup-headset">
                         <i class="fas fa-headset"></i>
                       </div>
                       <div>
-                        <h3 id="prevHelplineTitle" style="margin: 0; font-size: 16.5px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.2px;">
+                        <h3 id="prevHelplineTitle" class="helpline-mockup-title">
                           যোগাযোগ ও হেল্পলাইন
                         </h3>
-                        <span id="prevHelplineSubtitle" style="font-size: 11.5px; color: #94A3B8; display: block; margin-top: 1px;">
+                        <span id="prevHelplineSubtitle" class="helpline-mockup-subtitle">
                           Dipu Academy ২৪/৭ শিক্ষার্থী সহায়তা কেন্দ্র
                         </span>
                       </div>
                     </div>
-                    <button type="button" style="background: none; border: none; color: #94A3B8; font-size: 18px; cursor: pointer; padding: 4px;" title="বন্ধ করুন">
+                    <button type="button" class="helpline-mockup-close" title="বন্ধ করুন">
                       <i class="fas fa-times"></i>
                     </button>
                   </div>
 
                   <!-- Modal Body: Contact Channels -->
-                  <div style="padding: 20px 22px; display: flex; flex-direction: column; gap: 12px;">
+                  <div class="helpline-mockup-body">
                     
                     <!-- Channel 1: Phone Hotline -->
-                    <div id="prevHelplineHotlineCard" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-radius: 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.2s;">
-                      <div style="display: flex; align-items: center; gap: 12px;">
-                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(16, 185, 129, 0.15); color: #10B981; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;">
+                    <div id="prevHelplineHotlineCard" class="helpline-mockup-channel">
+                      <div class="helpline-channel-info">
+                        <div class="helpline-channel-icon bg-emerald-soft text-emerald">
                           <i class="fas fa-phone-volume"></i>
                         </div>
                         <div>
-                          <div id="prevHelplineHotlineTitle" style="font-size: 12px; color: #94A3B8;">২৪/৭ হটলাইন সাপোর্ট</div>
-                          <div id="prevHelplineHotlineNumber" style="font-size: 15px; font-weight: 800; color: #FFFFFF;">01712-345678</div>
+                          <div id="prevHelplineHotlineTitle" class="helpline-channel-label">২৪/৭ হটলাইন সাপোর্ট</div>
+                          <div id="prevHelplineHotlineNumber" class="helpline-channel-val">01712-345678</div>
                         </div>
                       </div>
-                      <span id="prevHelplineHotlineBtn" style="font-size: 12px; font-weight: 700; color: #10B981; background: rgba(16, 185, 129, 0.14); padding: 4px 12px; border-radius: 9999px; white-space: nowrap;">
+                      <span id="prevHelplineHotlineBtn" class="helpline-channel-btn btn-pill-emerald">
                         কল করুন →
                       </span>
                     </div>
 
                     <!-- Channel 2: WhatsApp -->
-                    <div id="prevHelplineWhatsappCard" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-radius: 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.2s;">
-                      <div style="display: flex; align-items: center; gap: 12px;">
-                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(37, 211, 102, 0.15); color: #25D366; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; flex-shrink: 0;">
+                    <div id="prevHelplineWhatsappCard" class="helpline-mockup-channel">
+                      <div class="helpline-channel-info">
+                        <div class="helpline-channel-icon bg-green-soft text-green">
                           <i class="fab fa-whatsapp"></i>
                         </div>
                         <div>
-                          <div id="prevHelplineWhatsappTitle" style="font-size: 12px; color: #94A3B8;">WhatsApp চ্যাট ও ডাউট সলভ</div>
-                          <div id="prevHelplineWhatsappNumber" style="font-size: 15px; font-weight: 800; color: #FFFFFF;">+880 1812-987654</div>
+                          <div id="prevHelplineWhatsappTitle" class="helpline-channel-label">WhatsApp চ্যাট ও ডাউট সলভ</div>
+                          <div id="prevHelplineWhatsappNumber" class="helpline-channel-val">+880 1812-987654</div>
                         </div>
                       </div>
-                      <span id="prevHelplineWhatsappBtn" style="font-size: 12px; font-weight: 700; color: #25D366; background: rgba(37, 211, 102, 0.14); padding: 4px 12px; border-radius: 9999px; white-space: nowrap;">
+                      <span id="prevHelplineWhatsappBtn" class="helpline-channel-btn btn-pill-green">
                         চ্যাট করুন →
                       </span>
                     </div>
 
                     <!-- Channel 3: Email -->
-                    <div id="prevHelplineEmailCard" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-radius: 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.2s;">
-                      <div style="display: flex; align-items: center; gap: 12px;">
-                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(0, 194, 255, 0.15); color: #00C2FF; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;">
+                    <div id="prevHelplineEmailCard" class="helpline-mockup-channel">
+                      <div class="helpline-channel-info">
+                        <div class="helpline-channel-icon bg-blue-soft text-blue">
                           <i class="fas fa-envelope"></i>
                         </div>
                         <div>
-                          <div id="prevHelplineEmailTitle" style="font-size: 12px; color: #94A3B8;">অফিসিয়াল ইমেইল</div>
-                          <div id="prevHelplineEmailAddress" style="font-size: 14px; font-weight: 700; color: #FFFFFF;">support@dipuedu.com</div>
+                          <div id="prevHelplineEmailTitle" class="helpline-channel-label">অফিসিয়াল ইমেইল</div>
+                          <div id="prevHelplineEmailAddress" class="helpline-channel-val">support@dipuedu.com</div>
                         </div>
                       </div>
-                      <span id="prevHelplineEmailBtn" style="font-size: 12px; font-weight: 700; color: #00C2FF; background: rgba(0, 194, 255, 0.14); padding: 4px 12px; border-radius: 9999px; white-space: nowrap;">
+                      <span id="prevHelplineEmailBtn" class="helpline-channel-btn btn-pill-blue">
                         ইমেইল →
                       </span>
                     </div>
 
                     <!-- Channel 4: Address Footer Box -->
-                    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 11px 14px; font-size: 12px; color: #94A3B8; display: flex; align-items: flex-start; gap: 8px; line-height: 1.5;">
-                      <i class="fas fa-location-dot" style="color: #00C2FF; font-size: 13px; margin-top: 2px; flex-shrink: 0;"></i>
+                    <div class="helpline-mockup-address">
+                      <i class="fas fa-location-dot text-blue"></i>
                       <span id="prevHelplineAddressText">প্রধান কার্যালয়: শান্তি নগর, ঢাকা-১২১৭, বাংলাদেশ। (প্রতিদিন সকাল ৯টা - রাত ১১টা)</span>
                     </div>
 
@@ -2092,19 +1709,19 @@
                 </div>
 
                 <!-- Live Test Action Bar -->
-                <div style="margin-top: 14px; background: rgba(13, 27, 54, 0.6); border: 1px dashed rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                  <span style="font-size: 12px; color: #94A3B8;">
-                    <i class="fas fa-bolt text-warning mr-1"></i> দ্রুত টেস্ট বাটন:
-                  </span>
-                  <div style="display: flex; gap: 8px;">
-                    <a id="testCallLink" href="tel:01712345678" class="btn-careplus-dark" style="font-size: 11.5px; padding: 5px 10px; text-decoration: none;" title="কল টেস্ট">
-                      <i class="fas fa-phone text-success mr-1"></i> কল
+                <div class="helpline-quick-test-box">
+                  <div class="helpline-quick-test-label">
+                    <i class="fas fa-bolt text-amber"></i> দ্রুত টেস্ট বাটন:
+                  </div>
+                  <div class="helpline-quick-test-btns">
+                    <a id="testCallLink" href="tel:01712345678" class="helpline-test-btn" title="কল টেস্ট">
+                      <i class="fas fa-phone text-emerald"></i> কল
                     </a>
-                    <a id="testWaLink" href="https://wa.me/8801812987654" target="_blank" class="btn-careplus-dark" style="font-size: 11.5px; padding: 5px 10px; text-decoration: none;" title="WhatsApp টেস্ট">
-                      <i class="fab fa-whatsapp text-success mr-1"></i> চ্যাট
+                    <a id="testWaLink" href="https://wa.me/8801812987654" target="_blank" class="helpline-test-btn" title="WhatsApp টেস্ট">
+                      <i class="fab fa-whatsapp text-green"></i> চ্যাট
                     </a>
-                    <a id="testMailLink" href="mailto:support@dipuedu.com" class="btn-careplus-dark" style="font-size: 11.5px; padding: 5px 10px; text-decoration: none;" title="ইমেইল টেস্ট">
-                      <i class="fas fa-envelope text-info mr-1"></i> ইমেইল
+                    <a id="testMailLink" href="mailto:support@dipuedu.com" class="helpline-test-btn" title="ইমেইল টেস্ট">
+                      <i class="fas fa-envelope text-blue"></i> ইমেইল
                     </a>
                   </div>
                 </div>
@@ -2115,25 +1732,218 @@
           </div>
 
           <!-- Bottom Floating Save Bar for Helpline -->
-          <div style="margin-top: 28px; background: linear-gradient(135deg, rgba(8, 16, 34, 0.95), rgba(16, 185, 129, 0.12)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span style="width: 10px; height: 10px; border-radius: 50%; background: #10B981; box-shadow: 0 0 10px #10B981;"></span>
-              <span style="font-size: 13px; font-weight: 600; color: #CBD5E1;">সেভ বাটনে চাপলে রিয়েলটাইমে ওয়েবসাইটের পপআপ মডালে সব তথ্য আপডেট হয়ে যাবে।</span>
+          <div class="helpline-footer-bar">
+            <div class="helpline-footer-info">
+              <span class="helpline-footer-dot"></span>
+              <span class="helpline-footer-text">সেভ বাটনে চাপলে রিয়েলটাইমে ওয়েবসাইটের পপআপ মডালে সব তথ্য সাথে সাথে আপডেট হয়ে যাবে।</span>
             </div>
-            <div style="display: flex; gap: 12px;">
-              <button type="button" class="btn-careplus-hero-dark-outline" onclick="resetHelplineSettingsToDefault()" style="border-radius: 999px; padding: 10px 20px;">
-                <i class="fas fa-rotate-left mr-1"></i> ডিফল্ট করুন
+            <div class="helpline-footer-actions">
+              <button type="button" class="btn-helpline-outline" onclick="resetHelplineSettingsToDefault()">
+                <i class="fas fa-rotate-left"></i> ডিফল্ট করুন
               </button>
-              <button type="button" class="btn-careplus-green-cta" onclick="saveHelplineSettings()" style="border-radius: 999px; padding: 10px 28px; font-weight: 800; background: linear-gradient(135deg, #10B981, #059669); border: none; color: #FFFFFF; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);">
-                <i class="fas fa-floppy-disk mr-1.5"></i> হেল্পলাইন আপডেট সেভ করুন
+              <button type="button" class="btn-helpline-save" onclick="saveHelplineSettings()">
+                <i class="fas fa-floppy-disk"></i> হেল্পলাইন আপডেট সেভ করুন
               </button>
             </div>
           </div>
 
         </section>
 
+        <!-- ====================================================================
+             VIEW 10: SHOP BANNERS CONTROLLER (শপ ব্যানার স্লাইডার)
+             ==================================================================== -->
+        <section id="view-shop-banners" class="admin-view hidden">
+          <!-- Header Banner -->
+          <div class="helpline-header-card">
+            <div class="helpline-header-left">
+              <div class="helpline-header-badge" style="background: rgba(245, 158, 11, 0.12); color: #D97706;">
+                <span class="helpline-pulse-dot" style="background: #F59E0B;"></span>
+                <span>শপ প্রমোশনাল ব্যানার কন্ট্রোলার</span>
+              </div>
+              <h2 class="helpline-header-title">শপ হিরো ব্যানার স্লাইডার ম্যানেজার</h2>
+              <p class="helpline-header-desc">
+                বুকশপ ও ই-বুক পেজের শীর্ষে চলমান ৩টি প্রমোশনাল ব্যানার সরাসরি এডিট করুন অথবা নতুন আকর্ষণীয় ব্যানার তৈরি ও যুক্ত করুন।
+              </p>
+            </div>
+            <div class="helpline-header-actions">
+              <button type="button" class="btn-helpline-save" style="background: linear-gradient(135deg, #F59E0B, #D97706);" onclick="openShopBannerModal()">
+                <i class="fas fa-plus"></i> নতুন ব্যানার যোগ করুন
+              </button>
+              <a href="/shop" target="_blank" class="btn-helpline-outline">
+                <i class="fas fa-arrow-up-right-from-square"></i> লাইভ শপে দেখুন
+              </a>
+              <button type="button" class="btn-helpline-outline" onclick="loadShopBannersView()" title="রিফ্রেশ করুন">
+                <i class="fas fa-rotate-right"></i> রিফ্রেশ
+              </button>
+            </div>
+          </div>
 
-      </div>
+          <!-- 2 Columns Grid: Left Banners List & Right Sticky Live Slider Preview -->
+          <div class="helpline-main-grid">
+            
+            <!-- Left Column: Banners List Cards -->
+            <div class="helpline-forms-column">
+              <div class="shop-banners-header-bar">
+                <div style="font-weight: 700; color: #0F172A; font-size: 15px; display: flex; align-items: center; gap: 8px;">
+                  <i class="fas fa-images text-amber"></i>
+                  <span>সকল প্রমোশনাল ব্যানারসমূহ</span>
+                  <span class="dribbble-menu-badge-green" id="badgeShopBannerCount" style="margin-left: 6px;">3</span>
+                </div>
+                <button type="button" class="btn-helpline-outline" style="padding: 6px 14px; font-size: 12.5px;" onclick="saveShopBanners()">
+                  <i class="fas fa-floppy-disk"></i> ক্রম সংরক্ষণ করুন
+                </button>
+              </div>
+
+              <!-- Dynamic Banners Container -->
+              <div id="adminShopBannersList" style="display: flex; flex-direction: column; gap: 16px;">
+                <!-- Rendered dynamically by JavaScript -->
+              </div>
+            </div>
+
+            <!-- Right Column: Sticky Live Slider Preview -->
+            <div class="helpline-preview-column">
+              <div class="helpline-preview-sticky">
+                
+                <div class="helpline-preview-topbar">
+                  <div class="helpline-preview-title">
+                    <i class="fas fa-eye text-amber"></i> লাইভ স্লাইডার প্রিভিউ
+                  </div>
+                  <span class="helpline-live-tag" style="background: rgba(245, 158, 11, 0.12); color: #D97706;">
+                    <span class="helpline-pulse-dot" style="background: #F59E0B;"></span> LIVE SLIDER
+                  </span>
+                </div>
+
+                <!-- Slider Frame Mockup (Mirroring shop.html) -->
+                <div class="shop-slider-mockup">
+                  <div class="shop-slider-mockup-inner" id="mockupSliderTrack">
+                    <!-- Populated by JS -->
+                  </div>
+                  
+                  <!-- Controls -->
+                  <button type="button" class="mockup-slider-btn prev" onclick="mockupSlidePrev()">
+                    <i class="fas fa-chevron-left"></i>
+                  </button>
+                  <button type="button" class="mockup-slider-btn next" onclick="mockupSlideNext()">
+                    <i class="fas fa-chevron-right"></i>
+                  </button>
+                  
+                  <div class="mockup-slider-dots" id="mockupSliderDots">
+                    <!-- Dots -->
+                  </div>
+                </div>
+
+                <!-- Info Box -->
+                <div class="helpline-quick-test-box" style="margin-top: 16px;">
+                  <div style="font-size: 12px; color: #64748B; line-height: 1.5;">
+                    <i class="fas fa-circle-info text-amber mr-1"></i>
+                    ব্যানারের ছবি রেশিও ১৬:৯ (যেমন ১২০০×৫০০ পিক্সেল) হলে সবচেয়ে আকর্ষণীয় ও ঝকঝকে দেখায়।
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             VIEW 11: SHOP BOOKS CONTROLLER (বইসমূহ)
+             ==================================================================== -->
+        <section id="view-shop-books" class="admin-view hidden">
+          <!-- Header Banner -->
+          <div class="helpline-header-card">
+            <div class="helpline-header-left">
+              <div class="helpline-header-badge" style="background: rgba(91, 88, 235, 0.12); color: #5B58EB;">
+                <span class="helpline-pulse-dot" style="background: #5B58EB;"></span>
+                <span>হার্ডকপি বই ও মাস্টারবুক ম্যানেজার</span>
+              </div>
+              <h2 class="helpline-header-title">বই কালেকশন ও বুক কন্ট্রোলার</h2>
+              <p class="helpline-header-desc">
+                শপের সকল হার্ডকপি বই ও মাস্টারবুকের স্টক, বিক্রয় মূল্য, ছাড়ের শতকরা হার, কভার ইমেজ ও বিবরণ সহজে এডিট করুন এবং নতুন বই যুক্ত করুন।
+              </p>
+            </div>
+            <div class="helpline-header-actions">
+              <button type="button" class="btn-helpline-save" style="background: linear-gradient(135deg, #5B58EB, #4F46E5);" onclick="openNewBookModal()">
+                <i class="fas fa-plus"></i> নতুন বই যোগ করুন
+              </button>
+              <a href="/books" target="_blank" class="btn-helpline-outline">
+                <i class="fas fa-arrow-up-right-from-square"></i> লাইভ শপে দেখুন
+              </a>
+              <button type="button" class="btn-helpline-outline" onclick="loadShopBooksView()" title="রিফ্রেশ করুন">
+                <i class="fas fa-rotate-right"></i> রিফ্রেশ
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter & Search Subbar -->
+          <div class="shop-filter-bar">
+            <div class="shop-filter-pills" id="shopBookFilterPills">
+              <button type="button" class="shop-filter-pill active" data-cat="all" onclick="filterShopBooks('all')">সব বই</button>
+              <button type="button" class="shop-filter-pill" data-cat="hsc" onclick="filterShopBooks('hsc')">এইচএসসি (HSC)</button>
+              <button type="button" class="shop-filter-pill" data-cat="ssc" onclick="filterShopBooks('ssc')">এসএসসি (SSC)</button>
+              <button type="button" class="shop-filter-pill" data-cat="9" onclick="filterShopBooks('9')">নবম শ্রেণি</button>
+            </div>
+
+            <div class="shop-search-wrap">
+              <i class="fas fa-search shop-search-icon"></i>
+              <input type="text" id="adminShopBookSearchInput" class="shop-search-input" placeholder="বইয়ের নাম বা বিষয় দিয়ে খুঁজুন..." oninput="handleShopBookSearch(this.value)">
+            </div>
+          </div>
+
+          <!-- Dynamic Books Grid -->
+          <div id="adminShopBooksGrid" class="shop-books-admin-grid">
+            <!-- Populated by JS -->
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             VIEW 12: SHOP EBOOKS CONTROLLER (ই-বুকসমূহ)
+             ==================================================================== -->
+        <section id="view-shop-ebooks" class="admin-view hidden">
+          <!-- Header Banner -->
+          <div class="helpline-header-card">
+            <div class="helpline-header-left">
+              <div class="helpline-header-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">
+                <span class="helpline-pulse-dot" style="background: #10B981;"></span>
+                <span>ডিজিটাল ই-বুক ও স্টাডি PDF ম্যানেজার</span>
+              </div>
+              <h2 class="helpline-header-title">ডিজিটাল ই-বুক (PDF) কন্ট্রোলার</h2>
+              <p class="helpline-header-desc">
+                শিক্ষার্থীদের তাৎক্ষণিক ডাউনলোডযোগ্য ডিজিটাল কালারফুল PDF ই-বুক ও হ্যান্ডনোট এডিট করুন এবং নতুন ই-বুক যুক্ত করুন।
+              </p>
+            </div>
+            <div class="helpline-header-actions">
+              <button type="button" class="btn-helpline-save" style="background: linear-gradient(135deg, #10B981, #059669);" onclick="openNewEbookModal()">
+                <i class="fas fa-plus"></i> নতুন ই-বুক যোগ করুন
+              </button>
+              <a href="/ebooks" target="_blank" class="btn-helpline-outline">
+                <i class="fas fa-arrow-up-right-from-square"></i> লাইভ ই-বুক শপে দেখুন
+              </a>
+              <button type="button" class="btn-helpline-outline" onclick="loadShopEbooksView()" title="রিফ্রেশ করুন">
+                <i class="fas fa-rotate-right"></i> রিফ্রেশ
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter & Search Subbar -->
+          <div class="shop-filter-bar">
+            <div style="font-size: 13px; font-weight: 700; color: #334155; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-file-pdf text-emerald"></i>
+              <span>ডিজিটাল ই-বুক ক্যাটালগ</span>
+              <span class="dribbble-menu-badge-green" id="badgeShopEbookCount">১টি ই-বুক</span>
+            </div>
+
+            <div class="shop-search-wrap">
+              <i class="fas fa-search shop-search-icon"></i>
+              <input type="text" id="adminShopEbookSearchInput" class="shop-search-input" placeholder="ই-বুকের নাম খুঁজুন..." oninput="handleShopEbookSearch(this.value)">
+            </div>
+          </div>
+
+          <!-- Dynamic eBooks Grid -->
+          <div id="adminShopEbooksGrid" class="shop-books-admin-grid">
+            <!-- Populated by JS -->
+          </div>
+        </section>
 
     </main>
 
@@ -2469,124 +2279,6 @@
   </div>
 
   <!-- ============================================================================
-       MODAL 4: CREATE NEW FEATURE SHOWCASE ITEM (নতুন ফিচার তৈরি ও যুক্ত করুন)
-       ============================================================================ -->
-  <div class="admin-modal-overlay" id="newFeatureModal">
-    <div class="admin-modal-box" style="max-width: 680px;">
-      <div class="admin-modal-header">
-        <h3><i class="fas fa-wand-magic-sparkles text-orange mr-2" style="color:var(--accent-orange)"></i> নতুন ফিচার আইটেম তৈরি ও যুক্ত করুন</h3>
-        <button class="modal-close-btn" onclick="closeNewFeatureModal()">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="admin-modal-body" style="padding: 24px;">
-        <form id="createFeatureForm" onsubmit="event.preventDefault(); handleCreateNewFeature();">
-          
-          <!-- Row 1: Tab Label & Accent Color -->
-          <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 14px; margin-bottom: 14px;">
-            <div>
-              <label class="form-label">ট্যাব নাম (Tab Label) *</label>
-              <input type="text" id="newFeatTabLabel" class="form-input" style="border-radius: 12px;" placeholder="যেমন: মডেল টেস্ট" required oninput="autoGenerateFeatureId(this.value)">
-            </div>
-            <div>
-              <label class="form-label">থিম কালার (Accent Color) *</label>
-              <div style="display: flex; gap: 8px; align-items: center;">
-                <input type="color" id="newFeatColorPicker" value="#FF7A1A" style="width: 42px; height: 38px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: transparent; cursor: pointer;" oninput="document.getElementById('newFeatAccentColor').value = this.value">
-                <input type="text" id="newFeatAccentColor" class="form-input" style="border-radius: 12px;" value="#FF7A1A" required oninput="if(/^#[0-9A-Fa-f]{6}$/.test(this.value)) document.getElementById('newFeatColorPicker').value = this.value">
-              </div>
-            </div>
-          </div>
-
-          <!-- Row 2: Unique Slug ID & FontAwesome Icon -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
-            <div>
-              <label class="form-label">ফিচার আইডি (Slug ID) *</label>
-              <input type="text" id="newFeatId" class="form-input" style="border-radius: 12px;" placeholder="যেমন: mocktest" required>
-            </div>
-            <div>
-              <label class="form-label">FontAwesome আইকন ক্লাস *</label>
-              <input type="text" id="newFeatIcon" class="form-input" style="border-radius: 12px;" placeholder="fas fa-trophy" value="fas fa-star" required>
-            </div>
-          </div>
-
-          <!-- Row 3: Tag Badge & Title -->
-          <div style="display: grid; grid-template-columns: 1fr 1.4fr; gap: 14px; margin-bottom: 14px;">
-            <div>
-              <label class="form-label">ট্যাগ ব্যাজ (Badge Text)</label>
-              <input type="text" id="newFeatBadge" class="form-input" style="border-radius: 12px;" placeholder="উদা: SPECIAL MOCK TEST" value="SPECIAL FEATURE">
-            </div>
-            <div>
-              <label class="form-label">প্রধান শিরোনাম (Title) *</label>
-              <input type="text" id="newFeatTitle" class="form-input" style="border-radius: 12px;" placeholder="যেমন: সেরা প্রস্তুতির জন্য পূর্ণাঙ্গ মডেল টেস্ট" required>
-            </div>
-          </div>
-
-          <!-- Row 4: Description -->
-          <div style="margin-bottom: 14px;">
-            <label class="form-label">বিস্তারিত বিবরণ (Description) *</label>
-            <textarea id="newFeatDesc" class="form-input" rows="3" style="border-radius: 12px; resize: vertical;" placeholder="ফিচারের সুবিধা ও বিস্তারিত বিবরণ লিখুন..." required></textarea>
-          </div>
-
-          <!-- Row 5: 3 Bullet Points -->
-          <div style="margin-bottom: 14px;">
-            <label class="form-label" style="display: flex; justify-content: space-between;">
-              <span>ফিচার বুলেট পয়েন্টস (সুবিধাসমূহ)</span>
-              <span style="font-size: 11px; color: #94A3B8;">৩টি গুরুত্বপূর্ণ বুলেট</span>
-            </label>
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="color: #10B981; font-size: 13px;"><i class="fas fa-check-circle"></i></span>
-                <input type="text" id="newFeatPoint1" class="form-input" style="border-radius: 10px;" placeholder="বুলেট পয়েন্ট ১ (যেমন: রিয়েলটাইম লিডারবোর্ড ও লাইভ র‍্যাঙ্কিং)" required>
-              </div>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="color: #10B981; font-size: 13px;"><i class="fas fa-check-circle"></i></span>
-                <input type="text" id="newFeatPoint2" class="form-input" style="border-radius: 10px;" placeholder="বুলেট পয়েন্ট ২ (যেমন: স্বয়ংক্রিয় নেগেটিভ মার্কিং হিসাব)">
-              </div>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="color: #10B981; font-size: 13px;"><i class="fas fa-check-circle"></i></span>
-                <input type="text" id="newFeatPoint3" class="form-input" style="border-radius: 10px;" placeholder="বুলেট পয়েন্ট ৩ (যেমন: প্রতিটি ভুলের বিস্তারিত সমাধান)">
-              </div>
-            </div>
-          </div>
-
-          <!-- Row 6: Image URL and Device Upload -->
-          <div style="margin-bottom: 14px;">
-            <label class="form-label">ফিচার প্রিভিউ ছবি (URL বা ডিভাইস থেকে আপলোড) *</label>
-            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
-              <input type="text" id="newFeatImageUrl" class="form-input" style="border-radius: 12px; flex: 1;" placeholder="/images/student-hero.jpg বা অনলাইন URL" value="/images/student-hero.jpg" required>
-              <label class="btn-careplus-hero-dark-outline" style="border-radius: 12px; cursor: pointer; white-space: nowrap; margin: 0; padding: 9px 14px;">
-                <i class="fas fa-cloud-arrow-up"></i> ছবি আপলোড
-                <input type="file" id="newFeatImageFileInput" accept="image/*" style="display: none;" onchange="handleNewFeatureImageUpload(this)">
-              </label>
-            </div>
-            <div style="font-size: 11px; color: #94A3B8;">
-              পরামর্শ: যেকোনো 16:9 বা 16:10 অনুপাতের আকর্ষণীয় ছবি নির্বাচন করুন।
-            </div>
-          </div>
-
-          <!-- Row 7: CTA Button -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;">
-            <div>
-              <label class="form-label">বাটন টেক্সট (CTA Text)</label>
-              <input type="text" id="newFeatBtnText" class="form-input" style="border-radius: 12px;" placeholder="অংশগ্রহণ করো →" value="বিস্তারিত দেখো →">
-            </div>
-            <div>
-              <label class="form-label">বাটন লিংক (CTA URL)</label>
-              <input type="text" id="newFeatBtnHref" class="form-input" style="border-radius: 12px;" placeholder="/exam বা /courses" value="/courses">
-            </div>
-          </div>
-
-          <!-- Actions -->
-          <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px;">
-            <button type="button" class="btn-careplus-dark" onclick="closeNewFeatureModal()">বাতিল</button>
-            <button type="submit" id="submitNewFeatBtn" class="btn-careplus-green-cta" style="border-radius: 999px; padding: 11px 26px;">
-              <i class="fas fa-plus-circle mr-1.5"></i> নতুন ফিচার যোগ করুন
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  <!-- ============================================================================
        MODAL: SUBJECT EDIT / CREATE MODAL
        ============================================================================ -->
   <div class="admin-modal-overlay" id="subjectModal" style="display: none;">
@@ -2755,7 +2447,250 @@
     </div>
   </div>
 
+  <!-- ============================================================================
+       MODAL: SHOP BANNER (ব্যানার এডিট ও নতুন ব্যানার অ্যাড)
+       ============================================================================ -->
+  <div class="admin-modal-overlay" id="shopBannerModal">
+    <div class="admin-modal-box" style="max-width: 580px;">
+      <div class="admin-modal-header">
+        <h3 id="shopBannerModalTitle"><i class="fas fa-images text-amber mr-2"></i> প্রমোশনাল ব্যানার এডিট ও অ্যাড</h3>
+        <button class="modal-close-btn" onclick="closeShopBannerModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="admin-modal-body">
+        <form id="shopBannerForm" onsubmit="saveShopBannerForm(event)">
+          <input type="hidden" id="bannerEditId" value="">
+
+          <div class="form-group-mb" style="margin-bottom: 14px;">
+            <label class="form-label">ব্যানার শিরোনাম (Title) *</label>
+            <input type="text" id="bannerInputTitle" class="form-input" placeholder="যেমন: সেরা বইয়ের সংগ্রহ — Dipu Academy" required oninput="updateBannerModalPreview()">
+          </div>
+
+          <div class="form-group-mb" style="margin-bottom: 14px;">
+            <label class="form-label">সাবটাইটেল / অফার বিবরণ</label>
+            <input type="text" id="bannerInputSubtitle" class="form-input" placeholder="যেমন: HSC, SSC ও স্কুল লেভেলের সেরা মাস্টারবুক" oninput="updateBannerModalPreview()">
+          </div>
+
+          <div class="form-group-mb" style="margin-bottom: 14px;">
+            <label class="form-label">ব্যানার ছবি (URL বা পাথ) *</label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="bannerInputImage" class="form-input" placeholder="/images/shop-banner-1.jpg" required oninput="updateBannerModalPreview()">
+              <select class="form-select" style="width: 140px; flex-shrink: 0;" onchange="document.getElementById('bannerInputImage').value = this.value; updateBannerModalPreview();">
+                <option value="">প্রিসেট ছবি</option>
+                <option value="/images/shop-banner-1.jpg">ব্যানার ১</option>
+                <option value="/images/shop-banner-2.jpg">ব্যানার ২</option>
+                <option value="/images/shop-banner-3.jpg">ব্যানার ৩</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 12px; margin-bottom: 16px;">
+            <div>
+              <label class="form-label">বাটন ক্লিক লিংক</label>
+              <input type="text" id="bannerInputLink" class="form-input" placeholder="যেমন: /shop অথবা /ebooks" value="/shop">
+            </div>
+            <div>
+              <label class="form-label">অবস্থা (Status)</label>
+              <select id="bannerInputActive" class="form-select">
+                <option value="true">সক্রিয় (Active)</option>
+                <option value="false">নিষ্ক্রিয় (Inactive)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Banner Mini Preview -->
+          <div style="margin-bottom: 20px; border-radius: 12px; overflow: hidden; border: 1px solid #ECEEF5; box-shadow: 0 4px 14px rgba(0,0,0,0.06); position: relative; background: #0D1626;">
+            <img id="bannerModalPreviewImg" src="/images/shop-banner-1.jpg" style="width: 100%; height: 160px; object-fit: cover; display: block;" onerror="this.src='/images/shop-banner-1.jpg'">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 12px 14px; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); color: #fff;">
+              <div id="bannerModalPreviewTitle" style="font-size: 13.5px; font-weight: 700;">সেরা বইয়ের সংগ্রহ — Dipu Academy</div>
+              <div id="bannerModalPreviewSub" style="font-size: 11.5px; color: #CBD5E1;">HSC, SSC ও স্কুল লেভেলের সেরা মাস্টারবুক</div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #ECEEF5; padding-top: 16px;">
+            <button type="button" class="btn-helpline-outline" onclick="closeShopBannerModal()">বাতিল</button>
+            <button type="submit" class="btn-helpline-save" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
+              <i class="fas fa-check mr-1"></i> ব্যানার সেভ করুন
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================================
+       MODAL: SHOP BOOK (বই এডিট ও নতুন বই যোগ)
+       ============================================================================ -->
+  <div class="admin-modal-overlay" id="shopBookModal">
+    <div class="admin-modal-box" style="max-width: 650px;">
+      <div class="admin-modal-header">
+        <h3 id="shopBookModalTitle"><i class="fas fa-book text-indigo mr-2"></i> বই এডিট ও নতুন বই যোগ</h3>
+        <button class="modal-close-btn" onclick="closeBookModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="admin-modal-body">
+        <form id="shopBookForm" onsubmit="saveShopBookForm(event)">
+          <input type="hidden" id="bookEditId" value="">
+
+          <div class="form-group-mb" style="margin-bottom: 14px;">
+            <label class="form-label">বইয়ের পুরো নাম (Title) *</label>
+            <input type="text" id="bookInputTitle" class="form-input" placeholder="যেমন: জীববিজ্ঞান Masterbook" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div>
+              <label class="form-label">সাবটাইটেল / শ্রেণি ও পত্র *</label>
+              <input type="text" id="bookInputSubtitle" class="form-input" placeholder="যেমন: HSC • ১ম ও ২য় পত্র" required>
+            </div>
+            <div>
+              <label class="form-label">ক্যাটাগরি *</label>
+              <select id="bookInputCategory" class="form-select">
+                <option value="hsc">এইচএসসি (HSC)</option>
+                <option value="ssc">এসএসসি (SSC)</option>
+                <option value="9">নবম শ্রেণি</option>
+                <option value="8">অষ্টম শ্রেণি</option>
+                <option value="7">৭ম শ্রেণি</option>
+                <option value="6">ষষ্ঠ শ্রেণি</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div>
+              <label class="form-label">বিক্রয় মূল্য (৳) *</label>
+              <input type="number" id="bookInputPrice" class="form-input" placeholder="460" required>
+            </div>
+            <div>
+              <label class="form-label">আসল মূল্য (৳)</label>
+              <input type="number" id="bookInputOriginalPrice" class="form-input" placeholder="570">
+            </div>
+            <div>
+              <label class="form-label">ছাড়ের টেক্সট</label>
+              <input type="text" id="bookInputDiscount" class="form-input" placeholder="১৯% ছাড়">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div>
+              <label class="form-label">স্টার রেটিং (১-৫)</label>
+              <input type="text" id="bookInputRating" class="form-input" placeholder="4.9" value="4.9">
+            </div>
+            <div>
+              <label class="form-label">রিভিউ সংখ্যা</label>
+              <input type="number" id="bookInputReviews" class="form-input" placeholder="185" value="150">
+            </div>
+          </div>
+
+          <div class="form-group-mb" style="margin-bottom: 14px;">
+            <label class="form-label">কভার ছবির লিংক (Image URL)</label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="bookInputImage" class="form-input" placeholder="/images/books/book-hsc-biology.jpg">
+              <select class="form-select" style="width: 150px; flex-shrink: 0;" onchange="if(this.value) document.getElementById('bookInputImage').value = this.value;">
+                <option value="">প্রিসেট কভার</option>
+                <option value="/images/books/book-hsc-biology.jpg">জীববিজ্ঞান</option>
+                <option value="/images/books/book-hsc-english.jpg">ইংরেজি</option>
+                <option value="/images/books/book-ssc-bangla.jpg">বাংলা</option>
+                <option value="/images/books/book-ssc-physics.jpg">পদার্থবিজ্ঞান</option>
+                <option value="/images/books/book-class9-math.jpg">গণিত</option>
+                <option value="/images/books/english-mastery-1st.jpg">English 1st</option>
+                <option value="/images/books/english-mastery-2nd.jpg">English 2nd</option>
+                <option value="/images/books/masterbook-bundle.jpg">বান্ডেল</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group-mb" style="margin-bottom: 16px;">
+            <label class="form-label">বইয়ের সংক্ষিপ্ত বিবরণ</label>
+            <textarea id="bookInputDescription" class="form-input" rows="2" placeholder="বইয়ের বিশেষ বৈশিষ্ট্য ও সিলেবাস কভারেজ..."></textarea>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #ECEEF5; padding-top: 16px;">
+            <button type="button" class="btn-helpline-outline" onclick="closeBookModal()">বাতিল</button>
+            <button type="submit" class="btn-helpline-save" style="background: linear-gradient(135deg, #5B58EB, #4F46E5);">
+              <i class="fas fa-check mr-1"></i> বই সংরক্ষণ করুন
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================================
+       MODAL: SHOP EBOOK (ই-বুক এডিট ও নতুন ই-বুক যোগ)
+       ============================================================================ -->
+  <div class="admin-modal-overlay" id="shopEbookModal">
+    <div class="admin-modal-box" style="max-width: 600px;">
+      <div class="admin-modal-header">
+        <h3 id="shopEbookModalTitle"><i class="fas fa-file-pdf text-emerald mr-2"></i> ই-বুক (PDF) এডিট ও নতুন ই-বুক যোগ</h3>
+        <button class="modal-close-btn" onclick="closeEbookModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="admin-modal-body">
+        <form id="shopEbookForm" onsubmit="saveShopEbookForm(event)">
+          <input type="hidden" id="ebookEditId" value="">
+
+          <div class="form-group-mb" style="margin-bottom: 14px;">
+            <label class="form-label">ই-বুকের নাম (Title) *</label>
+            <input type="text" id="ebookInputTitle" class="form-input" placeholder="যেমন: পদার্থবিজ্ঞান PDF E-Book" required>
+          </div>
+
+          <div class="form-group-mb" style="margin-bottom: 14px;">
+            <label class="form-label">সাবটাইটেল / বিবরণ *</label>
+            <input type="text" id="ebookInputSubtitle" class="form-input" placeholder="যেমন: HSC • ইনস্ট্যান্ট ডাউনলোড" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div>
+              <label class="form-label">বিক্রয় মূল্য (৳) *</label>
+              <input type="number" id="ebookInputPrice" class="form-input" placeholder="199" required>
+            </div>
+            <div>
+              <label class="form-label">আসল মূল্য (৳)</label>
+              <input type="number" id="ebookInputOriginalPrice" class="form-input" placeholder="350">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div>
+              <label class="form-label">মোট পেজ সংখ্যা</label>
+              <input type="number" id="ebookInputPages" class="form-input" placeholder="280" value="280">
+            </div>
+            <div>
+              <label class="form-label">ছাড়ের টেক্সট</label>
+              <input type="text" id="ebookInputDiscount" class="form-input" placeholder="৪৩% ছাড়" value="৪৩% ছাড়">
+            </div>
+          </div>
+
+          <div class="form-group-mb" style="margin-bottom: 14px;">
+            <label class="form-label">PDF ডাউনলোড লিংক বা ড্রাইভ লিংক</label>
+            <input type="text" id="ebookInputPdfUrl" class="form-input" placeholder="https://drive.google.com/... বা /downloads/sample.pdf">
+          </div>
+
+          <div class="form-group-mb" style="margin-bottom: 14px;">
+            <label class="form-label">ডিজিটাল কভার ছবি</label>
+            <input type="text" id="ebookInputImage" class="form-input" placeholder="/images/books/ebook-hsc-physics.jpg" value="/images/books/ebook-hsc-physics.jpg">
+          </div>
+
+          <div class="form-group-mb" style="margin-bottom: 16px;">
+            <label class="form-label">ই-বুকের সংক্ষিপ্ত বিবরণ</label>
+            <textarea id="ebookInputDescription" class="form-input" rows="2" placeholder="সম্পূর্ণ রঙিন ডিজিটাল PDF বই..."></textarea>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #ECEEF5; padding-top: 16px;">
+            <button type="button" class="btn-helpline-outline" onclick="closeEbookModal()">বাতিল</button>
+            <button type="submit" class="btn-helpline-save" style="background: linear-gradient(135deg, #10B981, #059669);">
+              <i class="fas fa-check mr-1"></i> ই-বুক সংরক্ষণ করুন
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- JavaScript Engine -->
-  <script src="/js/admin.js?v=4.0"></script>
+  <script src="/js/admin.js?v=5.0"></script>
 </body>
 </html>

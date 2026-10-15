@@ -120,6 +120,17 @@ async function build() {
       },
     });
     console.log('✅ Dipu Profile TypeScript bundle created at public/js/dipu-profile-bundle.js');
+
+    await esbuild.build({
+      entryPoints: ['components/ui/demo-not-found.tsx'],
+      bundle: true,
+      outfile: 'public/js/not-found-bundle.js',
+      minify: true,
+      define: {
+        'process.env.NODE_ENV': '"production"',
+      },
+    });
+    console.log('✅ NotFound TypeScript bundle created at public/js/not-found-bundle.js');
   } catch (err) {
     console.error('Build failed:', err);
     process.exit(1);

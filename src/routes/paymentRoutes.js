@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const User = require('../models/User');
 const Course = require('../models/Course');
 const Enrollment = require('../models/Enrollment');
+const PaymentAuditLog = require('../models/PaymentAuditLog');
 const { verifyAuth } = require('../middleware/auth');
 
 // ==============================================================================
@@ -170,6 +171,18 @@ const handleCallback = async (req, res) => {
 
     // In production, signature match is mandatory
     if (signature && signature !== computedSignature && process.env.NODE_ENV === 'production') {
+      await PaymentAuditLog.create({
+        trxID: finalTrxId,
+        userPhone: studentPhone,
+        courseId,
+        amount: Number(amount) || 0,
+        paymentGateway: 'bkash',
+        status: 'REJECTED_INVALID_SIGNATURE',
+        ipAddress: req.ip || req.headers['x-forwarded-for'] || '',
+        userAgent: req.headers['user-agent'] || '',
+        failureReason: 'Cryptographic HMAC SHA-256 signature mismatch.'
+      }).catch(() => {});
+
       return res.status(403).json({ success: false, message: 'Invalid cryptographic signature.' });
     }
 
@@ -177,7 +190,6 @@ const handleCallback = async (req, res) => {
 
     if (paymentStatus === 'SUCCESS' || paymentStatus === 'COMPLETED') {
       // Auto-enroll user and award EduCoins
-      const Enrollment = require('../models/Enrollment');
       const user = await User.findOne({ phone: studentPhone });
       
       if (user && courseId) {
@@ -187,7 +199,7 @@ const handleCallback = async (req, res) => {
           await user.save();
         }
 
-        // Create Enrollment record
+        // Create Enrollment record (Unique TrxID enforced)
         try {
           await Enrollment.create({
             userId: user._id,
@@ -200,6 +212,20 @@ const handleCallback = async (req, res) => {
         } catch (enrErr) {
           console.log('[Enrollment Record Note]', enrErr.message);
         }
+
+        // Audit Log entry
+        await PaymentAuditLog.create({
+          trxID: finalTrxId,
+          userId: user._id,
+          userPhone: studentPhone,
+          courseId,
+          amount: Number(amount) || 999,
+          paymentGateway: 'bkash',
+          status: 'SUCCESS',
+          ipAddress: req.ip || req.headers['x-forwarded-for'] || '',
+          userAgent: req.headers['user-agent'] || '',
+          gatewayResponse: { type: 'IPN_WEBHOOK_VERIFIED', signatureVerified: true }
+        }).catch(() => {});
       }
 
       console.log(`[Payment IPN] Verified & Enrolled: Phone ${studentPhone} in Course ${courseId}. BDT ${amount}`);
@@ -270,8 +296,32 @@ router.post('/enroll', async (req, res) => {
     const cTitle = course ? (course.title?.bn || course.title?.en || course.title) : 'কোর্স';
     const cLevel = course ? course.classLevel : 'HSC';
     const finalAmount = Number(customAmount) || (course ? (course.discountPrice || course.price) : 999);
-    const finalTrxId = trxID || `TXN_${Date.now()}_${Math.floor(1000 + Math.random() * 9000)}`;
+    const finalTrxId = (trxID || '').toString().trim() || `TXN_${Date.now()}_${Math.floor(1000 + Math.random() * 9000)}`;
     const gateway = paymentGateway || 'bkash';
+
+    // Anti-Fraud 1: Duplicate Transaction Check (ডুপ্লিকেট ট্রানজাকশন রোধ)
+    const existingTxn = await Enrollment.findOne({ trxID: finalTrxId });
+    if (existingTxn) {
+      await PaymentAuditLog.create({
+        trxID: finalTrxId,
+        userId: user ? user._id : null,
+        userPhone: phone,
+        courseId: cId,
+        courseSlug: cSlug,
+        amount: finalAmount,
+        paymentGateway: gateway,
+        status: 'DUPLICATE',
+        ipAddress: req.ip || req.headers['x-forwarded-for'] || '',
+        userAgent: req.headers['user-agent'] || '',
+        failureReason: 'ডুপ্লিকেট ট্রানজাকশন আইডি দিয়ে পুনরায় কোর্স অ্যাক্টিভেশনের চেষ্টা শনাক্ত।'
+      }).catch(() => {});
+
+      return res.status(409).json({
+        success: false,
+        duplicateTrx: true,
+        message: 'এই ট্রানজাকশন আইডি (TrxID) দিয়ে ইতোমধ্যে কোর্স সক্রিয় করা হয়েছে। একই TrxID দুইবার ব্যবহার করা যাবে না।'
+      });
+    }
 
     // 4. Update User record in MongoDB
     if (!user.enrolledCourses) user.enrolledCourses = [];
@@ -326,7 +376,22 @@ router.post('/enroll', async (req, res) => {
       await course.save().catch(() => {});
     }
 
-    console.log(`[DB Enrollment Tracked] User ${user.phone} (${user._id}) successfully bought and enrolled in course "${cSlug}"! Trx: ${finalTrxId}`);
+    // Anti-Fraud 2: Audit Log (প্রতিটি সফল লেনদেনের আইপি, সময় ও গেটওয়ে রেসপন্স সংরক্ষণ)
+    await PaymentAuditLog.create({
+      trxID: finalTrxId,
+      userId: user._id,
+      userPhone: user.phone,
+      courseId: cId,
+      courseSlug: cSlug,
+      amount: finalAmount,
+      paymentGateway: gateway,
+      status: 'SUCCESS',
+      ipAddress: req.ip || req.headers['x-forwarded-for'] || '',
+      userAgent: req.headers['user-agent'] || '',
+      gatewayResponse: { status: 'VERIFIED_AND_ENROLLED', timestamp: new Date() }
+    }).catch(() => {});
+
+    console.log(`[DB Enrollment Tracked & Audited] User ${user.phone} (${user._id}) successfully enrolled in course "${cSlug}"! Trx: ${finalTrxId}`);
 
     return res.status(200).json({
       success: true,

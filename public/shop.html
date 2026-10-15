@@ -17,33 +17,42 @@
 
   <style>
     :root {
-      --cyan: #00C2FF;
-      --blue: #0084FF;
-      --orange: #FF7A1A;
-      --ink: #050B17;
-      --card-bg: #0D1526;
-      --card-border: rgba(255,255,255,0.08);
-      --text: #FFFFFF;
-      --muted: #94A3B8;
+      --bg-page: #F8FAFC;
+      --bg-card: #FFFFFF;
+      --border-card: #E2E8F0;
+      --border-card-hover: #93C5FD;
+      --text-main: #0F172A;
+      --text-sub: #475569;
+      --text-muted: #64748B;
+      --blue-primary: #0084FF;
+      --cyan-primary: #00C2FF;
+      --orange-accent: #FF7A1A;
+      --purple-ebook: #7C3AED;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow-card: 0 4px 18px rgba(15, 23, 42, 0.05);
+      --shadow-card-hover: 0 20px 35px -8px rgba(15, 23, 42, 0.12), 0 0 0 1.5px rgba(0, 132, 255, 0.35);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
+    
+    html, body {
+      background-color: #F8FAFC !important;
+      color: #0F172A !important;
       font-family: 'Hind Siliguri', 'Inter', system-ui, sans-serif;
-      color: var(--text);
-      background: #080B16;
       overflow-x: hidden;
     }
+
     a { text-decoration: none; color: inherit; }
 
     /* ============================================================
-       HERO BANNER SLIDER
+       HERO BANNER SLIDER (White Theme Frame)
        ============================================================ */
     .hero-slider {
       position: relative;
       overflow: hidden;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      background: #070d18;
+      background: #FFFFFF;
+      border-bottom: 1px solid #E2E8F0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
     }
 
     .hero-track {
@@ -69,54 +78,61 @@
       -webkit-user-drag: none;
     }
 
-
-
-    /* Slider Controls */
+    /* Slider Controls (White Frosted Circular Buttons) */
     .slider-arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       z-index: 10;
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: #FFFFFF;
-      font-size: 16px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1.5px solid #E2E8F0;
+      color: #0F172A;
+      font-size: 17px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
       backdrop-filter: blur(8px);
     }
 
     .slider-arrow:hover {
-      background: rgba(0,194,255,0.3);
-      border-color: var(--cyan);
-      box-shadow: 0 0 20px rgba(0,194,255,0.4);
+      background: #0084FF;
+      color: #FFFFFF;
+      border-color: #0084FF;
+      box-shadow: 0 8px 24px rgba(0, 132, 255, 0.35);
+      transform: translateY(-50%) scale(1.08);
     }
 
-    .slider-arrow.prev { left: 16px; }
-    .slider-arrow.next { right: 16px; }
+    .slider-arrow.prev { left: 18px; }
+    .slider-arrow.next { right: 18px; }
 
     /* Dot indicators */
     .slider-dots {
       position: absolute;
-      bottom: 18px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 9px;
+      gap: 10px;
       z-index: 10;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 6px 14px;
+      border-radius: 99px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      backdrop-filter: blur(6px);
     }
 
     .slider-dot {
-      width: 28px;
-      height: 4px;
+      width: 24px;
+      height: 5px;
       border-radius: 99px;
-      background: rgba(255,255,255,0.3);
+      background: #CBD5E1;
       cursor: pointer;
       transition: all 0.35s ease;
       border: none;
@@ -124,18 +140,18 @@
     }
 
     .slider-dot.active {
-      background: var(--cyan);
-      width: 44px;
-      box-shadow: 0 0 10px var(--cyan);
+      background: linear-gradient(135deg, #0084FF, #00C2FF);
+      width: 42px;
+      box-shadow: 0 0 10px rgba(0, 132, 255, 0.4);
     }
 
     /* ============================================================
-       MAIN CATALOG
+       MAIN CATALOG (White Theme)
        ============================================================ */
     .wrap {
-      max-width: 1200px;
+      max-width: 1220px;
       margin: auto;
-      padding: 0 20px;
+      padding: 0 24px;
     }
 
     /* Filter & Search Row */
@@ -145,24 +161,25 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 16px;
-      margin: 36px 0 24px;
+      margin: 36px 0 28px;
     }
 
     .pills {
       display: inline-flex;
       gap: 8px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07);
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
       padding: 6px;
-      border-radius: 14px;
+      border-radius: 16px;
       flex-wrap: wrap;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
     }
 
     .pill {
       padding: 9px 18px;
-      border-radius: 10px;
+      border-radius: 11px;
       background: transparent;
-      color: var(--muted);
+      color: #475569;
       cursor: pointer;
       font-size: 14px;
       font-weight: 700;
@@ -172,53 +189,75 @@
     }
 
     .pill:hover {
-      background: rgba(0,194,255,0.1);
-      color: #FFFFFF;
-      border-color: rgba(0,194,255,0.3);
+      background: #F1F5F9;
+      color: #0F172A;
     }
 
     .pill.on {
-      background: linear-gradient(135deg, rgba(0,132,255,0.25), rgba(0,194,255,0.15));
-      color: var(--cyan);
-      border-color: rgba(0,194,255,0.5);
-      box-shadow: 0 0 14px rgba(0,194,255,0.15);
+      background: linear-gradient(135deg, #0084FF, #00C2FF) !important;
+      color: #FFFFFF !important;
+      border-color: transparent !important;
+      box-shadow: 0 4px 14px rgba(0, 132, 255, 0.28) !important;
     }
 
-    /* Search */
+    /* Special eBook pill */
+    .pill[data-c="ebook"] {
+      color: #7C3AED !important;
+      background: #F5F3FF !important;
+      border-color: #DDD6FE !important;
+    }
+    .pill[data-c="ebook"]:hover {
+      background: #EDE9FE !important;
+      color: #6D28D9 !important;
+    }
+    .pill[data-c="ebook"].on {
+      background: linear-gradient(135deg, #7C3AED, #6366F1) !important;
+      color: #FFFFFF !important;
+      border-color: transparent !important;
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3) !important;
+    }
+
+    /* Search Box */
     .shop-search-box {
       position: relative;
-      min-width: 260px;
-      max-width: 340px;
+      min-width: 270px;
+      max-width: 360px;
       flex: 1;
     }
 
     .shop-search-box input {
       width: 100%;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px;
-      padding: 11px 16px 11px 42px;
-      color: #FFFFFF;
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 11px 16px 11px 44px;
+      color: #0F172A;
       font-size: 14px;
+      font-weight: 500;
       font-family: inherit;
       outline: none;
-      transition: all 0.2s ease;
+      transition: all 0.22s ease;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
     }
 
     .shop-search-box input:focus {
-      border-color: var(--cyan);
-      background: rgba(0,194,255,0.06);
-      box-shadow: 0 0 0 3px rgba(0,194,255,0.12);
+      border-color: #0084FF;
+      box-shadow: 0 0 0 3px rgba(0, 132, 255, 0.15);
+      background: #FFFFFF;
     }
 
-    .shop-search-box input::placeholder { color: var(--muted); }
+    .shop-search-box input::placeholder {
+      color: #94A3B8;
+      font-weight: 400;
+    }
 
     .shop-search-box i {
       position: absolute;
-      left: 14px;
+      left: 16px;
       top: 50%;
       transform: translateY(-50%);
-      color: var(--muted);
+      color: #64748B;
+      font-size: 14px;
     }
 
     /* Section Header */
@@ -232,78 +271,81 @@
     .sec-h h2 {
       font-size: 24px;
       font-weight: 800;
-      color: #FFFFFF;
+      color: #0F172A;
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .sec-h a {
-      font-weight: 700;
-      color: var(--cyan);
-      font-size: 14px;
-      transition: color 0.2s;
+    .sec-h h2 i {
+      color: #0084FF;
+      font-size: 22px;
     }
 
-    .sec-h a:hover { color: var(--blue); }
+    .sec-h h2 span {
+      color: #0F172A;
+    }
+
+    .sec-h a {
+      font-weight: 700;
+      color: #0084FF;
+      font-size: 14.5px;
+      transition: all 0.2s;
+      padding: 6px 14px;
+      border-radius: 10px;
+      background: rgba(0, 132, 255, 0.06);
+    }
+
+    .sec-h a:hover {
+      background: rgba(0, 132, 255, 0.12);
+      color: #0066CC;
+    }
 
     /* ============================================================
-       BOOK CARDS
+       BOOK CARDS (Dribbble White Theme)
        ============================================================ */
     .rail {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-      gap: 22px;
-      margin-bottom: 80px;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 24px;
+      margin-bottom: 70px;
     }
 
     .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 22px;
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 20px;
       padding: 0;
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.25s ease;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       text-decoration: none;
-      color: inherit;
+      color: #0F172A;
       overflow: hidden;
       position: relative;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
     }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 22px;
-      background: linear-gradient(135deg, rgba(0,194,255,0.06), transparent 60%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .card:hover::before { opacity: 1; }
 
     .card:hover {
-      box-shadow: 0 24px 50px -8px rgba(0,0,0,0.8), 0 0 35px rgba(0,194,255,0.18);
-      border-color: rgba(0,194,255,0.45);
+      box-shadow: 0 20px 35px -8px rgba(15, 23, 42, 0.12), 0 0 0 1.5px rgba(0, 132, 255, 0.35);
+      border-color: #93C5FD;
       transform: translateY(-8px);
     }
 
-    .card.hide { display: none; }
+    .card.hide { display: none !important; }
 
-    /* Book Cover Area */
+    /* Book Cover Presentation Box */
     .cover-box {
       position: relative;
-      height: 230px;
+      height: 235px;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
       border-radius: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.35) 100%);
+      background: linear-gradient(180deg, #F8FAFC 0%, #EEF2F6 100%);
+      border-bottom: 1px solid #F1F5F9;
     }
 
     /* Discount badge */
@@ -312,25 +354,25 @@
       top: 12px;
       right: 12px;
       z-index: 5;
-      background: linear-gradient(135deg, #FF3D71, #e02057);
+      background: linear-gradient(135deg, #FF3D71, #E11D48);
       color: #FFFFFF;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 800;
       padding: 4px 10px;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(255,61,113,0.5);
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35);
       letter-spacing: 0.3px;
     }
 
-    /* 3D Book Cover */
+    /* 3D Book Cover & Realistic Depth */
     .book-cover-3d {
       width: 130px;
       height: 185px;
       border-radius: 4px 14px 14px 4px;
       box-shadow:
-        -10px 14px 28px rgba(0,0,0,0.7),
-        inset 6px 0 0 rgba(255,255,255,0.2),
-        inset -2px 0 0 rgba(0,0,0,0.3);
+        -10px 14px 28px rgba(15, 23, 42, 0.22),
+        inset 6px 0 0 rgba(255,255,255,0.25),
+        inset -2px 0 0 rgba(0,0,0,0.2);
       padding: 14px 12px;
       color: #fff;
       font-weight: 800;
@@ -341,18 +383,17 @@
       justify-content: space-between;
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       transform: rotateY(-22deg) perspective(600px);
-      border: 1px solid rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.2);
       position: relative;
       overflow: hidden;
     }
 
-    /* Shine effect on book */
     .book-cover-3d::after {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 55%;
-      background: linear-gradient(180deg, rgba(255,255,255,0.12), transparent);
+      background: linear-gradient(180deg, rgba(255,255,255,0.2), transparent);
       border-radius: 4px 14px 0 0;
       pointer-events: none;
     }
@@ -360,9 +401,9 @@
     .card:hover .book-cover-3d {
       transform: rotateY(0) perspective(600px) scale(1.07);
       box-shadow:
-        -2px 18px 40px rgba(0,0,0,0.65),
-        inset 6px 0 0 rgba(255,255,255,0.28),
-        inset -2px 0 0 rgba(0,0,0,0.2);
+        -2px 18px 40px rgba(15, 23, 42, 0.25),
+        inset 6px 0 0 rgba(255,255,255,0.35),
+        inset -2px 0 0 rgba(0,0,0,0.15);
     }
 
     .book-cover-3d .book-label {
@@ -370,8 +411,8 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
-      opacity: 0.85;
-      background: rgba(0,0,0,0.25);
+      opacity: 0.95;
+      background: rgba(0,0,0,0.3);
       padding: 2px 6px;
       border-radius: 4px;
       display: inline-block;
@@ -386,11 +427,11 @@
     .book-cover-3d .book-sub {
       font-size: 9.5px;
       font-weight: 600;
-      opacity: 0.9;
+      opacity: 0.95;
       letter-spacing: 0.3px;
     }
 
-    /* Card Info */
+    /* Card Details Area */
     .card-info {
       padding: 16px 18px 18px;
       flex: 1;
@@ -399,47 +440,49 @@
       justify-content: space-between;
       position: relative;
       z-index: 1;
+      background: #FFFFFF;
     }
 
     .card h3 {
-      font-size: 16px;
+      font-size: 16.5px;
       font-weight: 800;
-      color: #FFFFFF;
+      color: #0F172A !important;
       margin-bottom: 5px;
       line-height: 1.35;
     }
 
     .card .meta {
-      color: var(--muted);
-      font-size: 12.5px;
+      color: #64748B !important;
+      font-size: 13px;
+      font-weight: 500;
       display: flex;
       align-items: center;
-      gap: 5px;
-      margin-bottom: 14px;
+      gap: 6px;
+      margin-bottom: 12px;
     }
 
     .card .meta i {
-      color: var(--cyan);
-      font-size: 11px;
+      color: #0084FF !important;
+      font-size: 12px;
     }
 
     /* Star Rating */
     .card-stars {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
       margin-bottom: 14px;
     }
 
     .card-stars .stars {
-      color: #FBBF24;
-      font-size: 12px;
+      color: #F59E0B;
+      font-size: 13px;
       letter-spacing: 1px;
     }
 
     .card-stars .rating-count {
-      color: var(--muted);
-      font-size: 11px;
+      color: #64748B !important;
+      font-size: 12px;
       font-weight: 600;
     }
 
@@ -448,8 +491,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 12px;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 14px;
+      border-top: 1px solid #F1F5F9;
     }
 
     .price-group {
@@ -460,89 +503,142 @@
 
     .price b {
       font-size: 21px;
-      color: #FFFFFF;
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
+      color: #0F172A !important;
+      font-family: 'Hind Siliguri', 'JetBrains Mono', monospace;
+      font-weight: 800;
     }
 
     .price s {
-      color: #4B5563;
-      font-size: 13px;
-      font-family: 'JetBrains Mono', monospace;
+      color: #94A3B8 !important;
+      font-size: 13.5px;
+      font-family: 'Hind Siliguri', 'JetBrains Mono', monospace;
+      text-decoration: line-through;
     }
 
     .buy-btn {
-      background: linear-gradient(135deg, rgba(0,132,255,0.2), rgba(0,194,255,0.12));
-      border: 1px solid rgba(0,194,255,0.4);
-      color: var(--cyan);
+      background: #EFF6FF;
+      border: 1.5px solid #BFDBFE;
+      color: #0284C7 !important;
       padding: 8px 16px;
-      border-radius: 10px;
+      border-radius: 11px;
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 700;
       cursor: pointer;
       font-family: inherit;
       transition: all 0.22s ease;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
     }
 
     .card:hover .buy-btn {
-      background: linear-gradient(135deg, var(--blue), var(--cyan));
-      color: #FFFFFF;
-      border-color: transparent;
-      box-shadow: 0 6px 18px rgba(0,194,255,0.4);
-      transform: scale(1.05);
+      background: linear-gradient(135deg, #0084FF, #00C2FF) !important;
+      color: #FFFFFF !important;
+      border-color: transparent !important;
+      box-shadow: 0 6px 18px rgba(0, 132, 255, 0.35);
+      transform: scale(1.04);
     }
 
     /* ============================================================
-       ANIMATIONS
+       EMPTY STATE (বই পাওয়া না গেলে চমৎকার বার্তা)
        ============================================================ */
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    .shop-empty-state {
+      text-align: center;
+      padding: 60px 24px;
+      background: #FFFFFF;
+      border: 1.5px dashed #CBD5E1;
+      border-radius: 20px;
+      margin: 20px 0 70px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
     }
 
+    .shop-empty-icon {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: #EFF6FF;
+      color: #0084FF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .shop-empty-title {
+      color: #0F172A !important;
+      font-size: 19px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .shop-empty-desc {
+      color: #64748B !important;
+      font-size: 14.5px;
+      margin-bottom: 22px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+
+    .shop-empty-btn {
+      background: linear-gradient(135deg, #0084FF, #00C2FF);
+      color: #FFFFFF !important;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(0, 132, 255, 0.3);
+      transition: all 0.2s;
+    }
+
+    .shop-empty-btn:hover {
+      box-shadow: 0 6px 20px rgba(0, 132, 255, 0.45);
+      transform: translateY(-2px);
+    }
+
+    /* Animations */
     @keyframes cardFadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
     .card {
-      animation: cardFadeIn 0.5s ease both;
+      animation: cardFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
-    /* ============================================================
-       RESPONSIVE
-       ============================================================ */
+    /* Responsive */
     @media (max-width: 640px) {
       .hero-slide img { height: 260px; }
-      .hero-slide-title { font-size: 22px; }
-      .hero-slide-sub { font-size: 13px; display: none; }
-      .hero-slide-cta { padding: 11px 22px; font-size: 14px; }
-      .slider-arrow { width: 36px; height: 36px; font-size: 13px; }
+      .slider-arrow { width: 38px; height: 38px; font-size: 14px; }
       .slider-arrow.prev { left: 8px; }
       .slider-arrow.next { right: 8px; }
       .search-filter-row { flex-direction: column; align-items: stretch; gap: 12px; }
-      .shop-search-box { max-width: 100%; }
-      .rail { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .shop-search-box { max-width: 100%; min-width: 100%; }
+      .rail { grid-template-columns: 1fr 1fr; gap: 14px; }
       .cover-box { height: 190px; }
       .book-cover-3d { width: 105px; height: 150px; font-size: 11px; }
       .card h3 { font-size: 14px; }
       .price b { font-size: 17px; }
     }
 
-    @media (max-width: 380px) {
+    @media (max-width: 400px) {
       .rail { grid-template-columns: 1fr; }
     }
 
     @media (min-width: 641px) and (max-width: 1024px) {
       .hero-slide img { height: 340px; }
-      .rail { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+      .rail { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
     }
   </style>
 </head>
-<body>
+<body class="light-theme">
 
   <!-- REACT NAVBAR BUNDLE MOUNT -->
   <div id="site-navbar-root"></div>
@@ -598,14 +694,14 @@
     <!-- Search & Filter Controls -->
     <div class="search-filter-row">
       <div class="pills" id="pills" role="group" aria-label="বই ক্যাটাগরি ফিল্টার">
-        <button class="pill on" data-c="all">সব</button>
-        <button class="pill" data-c="hsc">এইচএসসি</button>
-        <button class="pill" data-c="ssc">এসএসসি</button>
+        <button class="pill on" data-c="all">সব বই</button>
+        <button class="pill" data-c="hsc">এইচএসসি (HSC)</button>
+        <button class="pill" data-c="ssc">এসএসসি (SSC)</button>
         <button class="pill" data-c="9">নবম শ্রেণি</button>
         <button class="pill" data-c="8">অষ্টম শ্রেণি</button>
         <button class="pill" data-c="7">৭ম শ্রেণি</button>
         <button class="pill" data-c="6">ষষ্ঠ শ্রেণি</button>
-        <button class="pill" data-c="ebook" style="color:#7c5cff; border-color: rgba(124,92,255,0.4);">📱 ই-বুক PDF</button>
+        <button class="pill" data-c="ebook">📱 ই-বুক PDF</button>
       </div>
 
       <div class="shop-search-box">
@@ -616,7 +712,7 @@
 
     <div class="sec-h">
       <h2>
-        <i class="fas fa-book-bookmark" style="color: var(--cyan);"></i>
+        <i class="fas fa-book-bookmark" style="color: #0084FF;"></i>
         <span>বইয়ের সংগ্রহ</span>
       </h2>
       <a href="javascript:void(0)" onclick="resetFilters()">সব দেখুন ›</a>
@@ -625,32 +721,38 @@
     <!-- Product Grid -->
     <div class="rail" id="rail"></div>
 
+    <!-- Empty State (যখন কোনো ক্যাটাগরিতে বা সার্চে বই পাওয়া যাবে না) -->
+    <div id="shopEmptyState" class="shop-empty-state" style="display: none;">
+      <div class="shop-empty-icon">
+        <i class="fas fa-book-open"></i>
+      </div>
+      <h3 class="shop-empty-title">কোনো বই পাওয়া যায়নি</h3>
+      <p class="shop-empty-desc">আপনার নির্বাচিত শ্রেণি বা সার্চের সাথে মিল রয়েছে এমন কোনো বই এই মুহূর্তে নেই।</p>
+      <button type="button" class="shop-empty-btn" onclick="resetFilters()">
+        <i class="fas fa-rotate-left mr-1"></i> সকল বই দেখুন
+      </button>
+    </div>
+
   </main>
 
 
   <script>
     /* ============================================================
-       BOOK CATALOG DATA
-       [cat, title, subtitle, price, origPrice, gradient, id, rating, reviews, discount, img, type]
-       type: 'book' | 'ebook'
+       BOOK CATALOG DATA & DYNAMIC API SYNC
        ============================================================ */
-    const books = [
-      /* ── ছবি সহ বই ── */
+    const defaultBooks = [
       ['hsc','জীববিজ্ঞান Masterbook','HSC • ১ম ও ২য় পত্র',460,570,'','book-hsc-biology',4.9,185,'19% ছাড়','/images/books/book-hsc-biology.jpg','book'],
       ['hsc','English Masterbook','HSC • Grammar & Literature',440,540,'','book-hsc-english',4.8,162,'19% ছাড়','/images/books/book-hsc-english.jpg','book'],
       ['ssc','বাংলা মাস্টারবুক','SSC • সাহিত্য ও ব্যাকরণ',330,420,'','book-ssc-bangla',4.8,204,'21% ছাড়','/images/books/book-ssc-bangla.jpg','book'],
       ['ssc','পদার্থবিজ্ঞান Physics Guide','SSC • পদার্থবিজ্ঞান সমাধান',340,430,'','book-ssc-physics',4.7,178,'21% ছাড়','/images/books/book-ssc-physics.jpg','book'],
       ['9','গণিত মাস্টারবুক','নবম শ্রেণি • গণিত সমাধান',300,380,'','book-class9-math',4.8,143,'21% ছাড়','/images/books/book-class9-math.jpg','book'],
-
-      /* ── নতুন ২টি বই (Dipu's English Mastery) ── */
       ['ssc',"Dipu's English Mastery 1st Paper",'SSC • Class 9 & 10 • 2026 & Beyond',380,480,'','book-english-mastery-1st',4.9,267,'21% ছাড়','/images/books/english-mastery-1st.jpg','book'],
       ['ssc',"Dipu's English Mastery 2nd Paper",'SSC • Class 9 & 10 • 2026 & Beyond',380,480,'','book-english-mastery-2nd',4.9,241,'21% ছাড়','/images/books/english-mastery-2nd.jpg','book'],
-
-      /* ── ই-বুক (ছবি সহ) ── */
       ['ebook','পদার্থবিজ্ঞান PDF E-Book','HSC • ইনস্ট্যান্ট ডাউনলোড',199,350,'','ebook-hsc-physics-pdf',4.9,312,'43% ছাড়','/images/books/ebook-hsc-physics.jpg','ebook']
     ];
 
-    /* Render star rating */
+    let currentBooksList = [...defaultBooks];
+
     function starsHTML(r) {
       const full = Math.floor(r);
       const half = r % 1 >= 0.5 ? 1 : 0;
@@ -658,113 +760,163 @@
       return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
     }
 
-    /* Render book cards */
-    const rail = document.getElementById('rail');
-    rail.innerHTML = books.map((b, i) => {
-      const isEbook = b[11] === 'ebook';
-      const hasImg = b[10] && b[10].length > 0;
-      const coverContent = hasImg
-        ? `<img src="${b[10]}" alt="${b[1]}" loading="lazy" style="width:130px;height:185px;object-fit:cover;border-radius:4px 14px 14px 4px;box-shadow:-10px 14px 28px rgba(0,0,0,0.7);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);transform:rotateY(-22deg) perspective(600px);" class="book-img-3d">`
-        : `<div class="book-cover-3d" style="background:${b[5]}">
-            <span class="book-label">${isEbook ? '📱 PDF E-Book' : "Dipu's Books"}</span>
-            <span class="book-title">${b[1]}</span>
-            <span class="book-sub">${b[2]}</span>
-           </div>`;
-      const ebookTag = isEbook ? `<span style="position:absolute;top:12px;left:12px;z-index:5;background:linear-gradient(135deg,#7c5cff,#4f46e5);color:#fff;font-size:10px;font-weight:800;padding:3px 9px;border-radius:6px;letter-spacing:0.3px;">PDF</span>` : '';
-      return `
-      <a href="/book?id=${b[6]}" class="card" data-c="${b[0]}" style="animation-delay:${i * 0.05}s" aria-label="${b[1]} - দাম ৳${b[3]}">
-        <div class="cover-box">
-          ${ebookTag}
-          <span class="discount-badge">${b[9]}</span>
-          ${coverContent}
-        </div>
-        <div class="card-info">
-          <div>
-            <h3>${b[1]}</h3>
-            <div class="meta">
-              <i class="fas fa-${isEbook ? 'file-pdf' : 'tag'}"></i>
-              <span>${b[2]}</span>
+    function renderCatalogItems(items) {
+      const rail = document.getElementById('rail');
+      if (!rail) return;
+      rail.innerHTML = items.map((b, i) => {
+        const isEbook = b[11] === 'ebook';
+        const hasImg = b[10] && b[10].length > 0;
+        const coverContent = hasImg
+          ? `<img src="${b[10]}" alt="${b[1]}" loading="lazy" style="width:130px;height:185px;object-fit:cover;border-radius:4px 14px 14px 4px;box-shadow:-10px 14px 28px rgba(0,0,0,0.7);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);transform:rotateY(-22deg) perspective(600px);" class="book-img-3d" onerror="this.src='/images/books/book-hsc-biology.jpg'">`
+          : `<div class="book-cover-3d" style="background:${b[5] || 'linear-gradient(135deg,#1e293b,#0f172a)'}">
+              <span class="book-label">${isEbook ? '📱 PDF E-Book' : "Dipu's Books"}</span>
+              <span class="book-title">${b[1]}</span>
+              <span class="book-sub">${b[2]}</span>
+             </div>`;
+        const ebookTag = isEbook ? `<span style="position:absolute;top:12px;left:12px;z-index:5;background:linear-gradient(135deg,#7c5cff,#4f46e5);color:#fff;font-size:10px;font-weight:800;padding:3px 9px;border-radius:6px;letter-spacing:0.3px;">PDF</span>` : '';
+        return `
+        <a href="/book?id=${encodeURIComponent(b[6])}" class="card" data-c="${b[0]}" style="animation-delay:${i * 0.04}s" aria-label="${b[1]} - দাম ৳${b[3]}">
+          <div class="cover-box">
+            ${ebookTag}
+            <span class="discount-badge">${b[9]}</span>
+            ${coverContent}
+          </div>
+          <div class="card-info">
+            <div>
+              <h3>${b[1]}</h3>
+              <div class="meta">
+                <i class="fas fa-${isEbook ? 'file-pdf' : 'tag'}"></i>
+                <span>${b[2]}</span>
+              </div>
+              <div class="card-stars">
+                <span class="stars" aria-label="${b[7]} স্টার">${starsHTML(b[7])}</span>
+                <span class="rating-count">${b[7]} (${b[8]})</span>
+              </div>
             </div>
-            <div class="card-stars">
-              <span class="stars" aria-label="${b[7]} স্টার">${starsHTML(b[7])}</span>
-              <span class="rating-count">${b[7]} (${b[8]})</span>
+            <div class="price">
+              <div class="price-group">
+                <b>৳${b[3]}</b>
+                <s>৳${b[4]}</s>
+              </div>
+              <span class="buy-btn">
+                <i class="fas fa-${isEbook ? 'download' : 'cart-plus'}"></i> ${isEbook ? 'ডাউনলোড' : 'কিনুন'}
+              </span>
             </div>
           </div>
-          <div class="price">
-            <div class="price-group">
-              <b>৳${b[3]}</b>
-              <s>৳${b[4]}</s>
-            </div>
-            <span class="buy-btn">
-              <i class="fas fa-${isEbook ? 'download' : 'cart-plus'}"></i> ${isEbook ? 'ডাউনলোড' : 'কিনুন'}
-            </span>
-          </div>
-        </div>
-      </a>`;
-    }).join('');
+        </a>`;
+      }).join('');
 
-    /* ============================================================
-       HOVER & TILT EFFECTS — per card (no cross-card interference)
-       ============================================================ */
-    const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
+      attachCardInteractions();
+      if (typeof updateEmptyState === 'function') updateEmptyState();
+    }
 
-    document.querySelectorAll('.card').forEach(card => {
-      const img = card.querySelector('.book-img-3d');
-
-      /* Image 3D rotate on hover */
-      card.addEventListener('mouseenter', () => {
-        if (img) img.style.transform = 'rotateY(0) perspective(600px) scale(1.06)';
+    function attachCardInteractions() {
+      const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
+      document.querySelectorAll('.card').forEach(card => {
+        const img = card.querySelector('.book-img-3d');
+        card.addEventListener('mouseenter', () => {
+          if (img) img.style.transform = 'rotateY(0) perspective(600px) scale(1.06)';
+        });
+        card.addEventListener('mouseleave', () => {
+          if (img) img.style.transform = 'rotateY(-22deg) perspective(600px)';
+          card.style.transform = '';
+        });
+        card.addEventListener('mousemove', e => {
+          if (isTouchDevice()) return;
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5;
+          const y = (e.clientY - r.top) / r.height - 0.5;
+          card.style.transform = `perspective(900px) rotateX(${-y * 6}deg) rotateY(${x * 8}deg) translateY(-8px)`;
+        });
       });
-      card.addEventListener('mouseleave', () => {
-        if (img) img.style.transform = 'rotateY(-22deg) perspective(600px)';
-        card.style.transform = ''; /* reset card tilt */
-      });
+    }
 
-      /* 3D card tilt — desktop only */
-      card.addEventListener('mousemove', e => {
-        if (isTouchDevice()) return;
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transform = `perspective(900px) rotateX(${-y * 6}deg) rotateY(${x * 8}deg) translateY(-8px)`;
+    function updateEmptyState() {
+      const cards = document.querySelectorAll('.card');
+      let visible = 0;
+      cards.forEach(c => {
+        if (!c.classList.contains('hide')) visible++;
       });
-    });
-    document.getElementById('pills').addEventListener('click', e => {
+      const emptyEl = document.getElementById('shopEmptyState');
+      if (emptyEl) {
+        emptyEl.style.display = visible === 0 ? 'block' : 'none';
+      }
+    }
+
+    // Initial render with defaults
+    renderCatalogItems(defaultBooks);
+    updateEmptyState();
+
+    // Filtering controls
+    document.getElementById('pills')?.addEventListener('click', e => {
       const p = e.target.closest('.pill');
       if (!p) return;
       document.querySelectorAll('.pill').forEach(x => x.classList.toggle('on', x === p));
+      
+      const searchVal = document.getElementById('shopSearchInput')?.value.toLowerCase().trim() || '';
+      
       document.querySelectorAll('.card').forEach(c => {
-        c.classList.toggle('hide', p.dataset.c !== 'all' && c.dataset.c !== p.dataset.c);
+        const catMatch = p.dataset.c === 'all' || c.dataset.c === p.dataset.c;
+        const textMatch = !searchVal || c.textContent.toLowerCase().includes(searchVal);
+        c.classList.toggle('hide', !(catMatch && textMatch));
       });
+      updateEmptyState();
     });
 
     function resetFilters() {
+      const searchInput = document.getElementById('shopSearchInput');
+      if (searchInput) searchInput.value = '';
       const allPill = document.querySelector('.pill[data-c="all"]');
       if (allPill) allPill.click();
     }
 
-    /* Live Search */
-    document.getElementById('shopSearchInput').addEventListener('input', e => {
+    // Search controls
+    document.getElementById('shopSearchInput')?.addEventListener('input', e => {
       const q = e.target.value.toLowerCase().trim();
+      const activePill = document.querySelector('.pill.on');
+      const activeCat = activePill ? activePill.dataset.c : 'all';
+
       document.querySelectorAll('.card').forEach(c => {
-        const text = c.textContent.toLowerCase();
-        c.classList.toggle('hide', q.length > 0 && !text.includes(q));
+        const catMatch = activeCat === 'all' || c.dataset.c === activeCat;
+        const textMatch = !q || c.textContent.toLowerCase().includes(q);
+        c.classList.toggle('hide', !(catMatch && textMatch));
       });
+      updateEmptyState();
     });
-
-
-
 
     /* ============================================================
        HERO BANNER SLIDER CONTROLLER
        ============================================================ */
-    (function() {
-      const track  = document.getElementById('heroTrack');
-      const dots   = [...document.querySelectorAll('.slider-dot')];
-      const slides = document.querySelectorAll('.hero-slide');
-      let current  = 0;
-      let autoTimer;
-      const total  = slides.length;
+    let sliderInstance = null;
+
+    function initHeroSlider(banners) {
+      const track = document.getElementById('heroTrack');
+      const dotsContainer = document.getElementById('sliderDots');
+      if (!track || !dotsContainer) return;
+
+      if (Array.isArray(banners) && banners.length > 0) {
+        track.innerHTML = banners.map(b => `
+          <div class="hero-slide">
+            <a href="${b.link || '/shop'}" style="display:block;width:100%;height:100%;">
+              <img src="${b.image || '/images/shop-banner-1.jpg'}" alt="${b.title || 'ব্যানার'}" draggable="false" onerror="this.src='/images/shop-banner-1.jpg'">
+            </a>
+          </div>
+        `).join('');
+
+        dotsContainer.innerHTML = banners.map((b, i) => `
+          <button class="slider-dot ${i === 0 ? 'active' : ''}" data-idx="${i}" aria-label="ব্যানার ${i + 1}"></button>
+        `).join('');
+      }
+
+      if (sliderInstance && sliderInstance.cleanup) {
+        sliderInstance.cleanup();
+      }
+
+      const dots = [...dotsContainer.querySelectorAll('.slider-dot')];
+      const slides = track.querySelectorAll('.hero-slide');
+      let current = 0;
+      let autoTimer = null;
+      const total = slides.length || 1;
 
       function goTo(idx) {
         current = ((idx % total) + total) % total;
@@ -774,30 +926,93 @@
 
       function startAuto() {
         clearInterval(autoTimer);
-        autoTimer = setInterval(() => goTo(current + 1), 5000);
+        if (total > 1) {
+          autoTimer = setInterval(() => goTo(current + 1), 5000);
+        }
       }
 
-      document.getElementById('sliderPrev').onclick = () => { goTo(current - 1); startAuto(); };
-      document.getElementById('sliderNext').onclick = () => { goTo(current + 1); startAuto(); };
+      const prevBtn = document.getElementById('sliderPrev');
+      const nextBtn = document.getElementById('sliderNext');
+      if (prevBtn) prevBtn.onclick = () => { goTo(current - 1); startAuto(); };
+      if (nextBtn) nextBtn.onclick = () => { goTo(current + 1); startAuto(); };
 
       dots.forEach(d => {
-        d.onclick = () => { goTo(parseInt(d.dataset.idx)); startAuto(); };
+        d.onclick = () => { goTo(parseInt(d.dataset.idx, 10)); startAuto(); };
       });
-
-      /* Touch / Swipe support */
-      let touchStartX = 0;
-      const slider = document.getElementById('heroSlider');
-      slider.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-      slider.addEventListener('touchend', e => {
-        const diff = touchStartX - e.changedTouches[0].clientX;
-        if (Math.abs(diff) > 50) {
-          goTo(diff > 0 ? current + 1 : current - 1);
-          startAuto();
-        }
-      }, { passive: true });
 
       goTo(0);
       startAuto();
+
+      sliderInstance = {
+        cleanup: () => clearInterval(autoTimer)
+      };
+    }
+
+    // Initialize slider with existing DOM
+    initHeroSlider();
+
+    // Async Fetch Live Shop Data from Backend
+    (function fetchLiveShopData() {
+      fetch('/api/shop/catalog')
+        .then(r => r.json())
+        .then(res => {
+          if (!res || !res.success) return;
+
+          // Update Banners if provided
+          if (Array.isArray(res.banners) && res.banners.length > 0) {
+            const activeBanners = res.banners.filter(b => b.active !== false);
+            if (activeBanners.length > 0) {
+              initHeroSlider(activeBanners);
+            }
+          }
+
+          // Build unified book array: [cat, title, sub, price, origPrice, grad, id, rating, revs, disc, img, type]
+          const combined = [];
+          if (Array.isArray(res.books)) {
+            res.books.forEach(b => {
+              combined.push([
+                b.category || 'other',
+                b.title || 'Untitled',
+                b.subtitle || '',
+                b.price || 0,
+                b.originalPrice || b.price || 0,
+                '',
+                b.id || ('book-' + Math.random()),
+                b.rating || 4.9,
+                b.reviews || 100,
+                b.discount || '',
+                b.image || '',
+                'book'
+              ]);
+            });
+          }
+          if (Array.isArray(res.ebooks)) {
+            res.ebooks.forEach(eb => {
+              combined.push([
+                'ebook',
+                eb.title || 'Untitled eBook',
+                eb.subtitle || (eb.pages ? `${eb.pages} পৃষ্ঠা • PDF` : 'PDF ই-বুক'),
+                eb.price || 0,
+                eb.originalPrice || eb.price || 0,
+                '',
+                eb.id || ('ebook-' + Math.random()),
+                eb.rating || 4.9,
+                eb.reviews || 80,
+                eb.discount || '',
+                eb.image || '',
+                'ebook'
+              ]);
+            });
+          }
+
+          if (combined.length > 0) {
+            currentBooksList = combined;
+            renderCatalogItems(combined);
+          }
+        })
+        .catch(err => {
+          console.warn('Shop catalog live sync skipped, showing defaults:', err.message);
+        });
     })();
   </script>
 

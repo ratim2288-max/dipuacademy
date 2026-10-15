@@ -34,6 +34,40 @@ const server = http.createServer((req, res) => {
   }
 
   // Simulated Mock API Endpoints for instant local demo
+  if (req.url === '/api/auth/check-phone' && req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', () => {
+      let parsed = {};
+      try { parsed = JSON.parse(body || '{}'); } catch(e){}
+      const phone = parsed.phone || '';
+      // If user ends with '00' or starts with test numbers, treat as existing user with password
+      const isExisting = phone.endsWith('00') || phone === '01712345678' || phone === '01912345678';
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      if (isExisting) {
+        res.end(JSON.stringify({
+          success: true,
+          exists: true,
+          hasPassword: true,
+          name: 'মিজানুর রহমান',
+          phone: phone,
+          message: 'আপনার অ্যাকাউন্ট পাওয়া গেছে। পাসওয়ার্ড দিন।'
+        }));
+      } else {
+        res.end(JSON.stringify({
+          success: true,
+          exists: false,
+          name: 'নতুন শিক্ষার্থী',
+          phone: phone,
+          message: 'নতুন শিক্ষার্থী! ওটিপি কোড পাঠানো হয়েছে।',
+          devOtpHint: '123456',
+          expiresInSeconds: 180
+        }));
+      }
+    });
+    return;
+  }
+
   if (req.url === '/api/auth/send-otp' && req.method === 'POST') {
     req.on('data', () => {});
     req.on('end', () => {

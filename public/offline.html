@@ -1,156 +1,641 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="bn" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Offline — No Internet Connection | Dipu Academy</title>
+  <title>ইন্টারনেট সংযোগ বিচ্ছিন্ন — Dipu Academy</title>
   <link rel="icon" type="image/png" sizes="32x32" href="/images/dipu-logo.png?v=5">
   <link rel="shortcut icon" href="/favicon.ico?v=5">
   <link rel="apple-touch-icon" href="/images/dipu-logo.png?v=5">
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+
   <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            void: '#000000',
-          }
-        }
-      }
+    // Immediate service worker cleanup & stale cache purge
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(regs) {
+        for (var r of regs) r.unregister();
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(function(keys) {
+        for (var k of keys) caches.delete(k);
+      });
+    }
+    // If user accessed root '/' or is online, immediately route to fresh homepage
+    if (window.location.pathname === '/' || window.location.pathname === '/index.html' || (window.location.pathname === '' && window.location.search === '')) {
+      window.location.replace('/?fresh=' + Date.now());
+    } else {
+      fetch('/api/health?t=' + Date.now(), { cache: 'no-store' }).then(function(res) {
+        if (res.ok) window.location.replace('/?restored=' + Date.now());
+      }).catch(function() {});
     }
   </script>
 
-  <!-- Google Fonts: Inter -->
+  <!-- Google Fonts: Hind Siliguri + Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --font-bn: 'Hind Siliguri', sans-serif;
+      --font-en: 'Inter', sans-serif;
+      --bg-dark: #07090E;
+      --color-brand-blue: #0084FF;
+      --color-brand-cyan: #00C2FF;
+      --color-danger: #EF4444;
+      --color-success: #10B981;
+    }
+
     body {
-      background-color: #000000;
+      background-color: var(--bg-dark);
       color: #F8FAFC;
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: var(--font-bn);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 0;
       padding: 1.5rem;
-      overflow: hidden;
+      overflow-x: hidden;
+      position: relative;
       user-select: none;
     }
 
-    .metallic-offline {
-      font-size: clamp(4.5rem, 14vw, 9rem);
-      font-weight: 900;
-      line-height: 0.95;
-      letter-spacing: -0.06em;
-      background: linear-gradient(180deg, #FFFFFF 0%, #D1D5DB 45%, #6B7280 85%, #374151 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.9));
+    /* Ambient Glowing Orbs */
+    .ambient-glow-1 {
+      position: absolute;
+      top: 15%;
+      left: 18%;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(0, 132, 255, 0.16) 0%, rgba(0, 0, 0, 0) 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      animation: floatGlow 12s ease-in-out infinite alternate;
+    }
+
+    .ambient-glow-2 {
+      position: absolute;
+      bottom: 15%;
+      right: 18%;
+      width: 440px;
+      height: 440px;
+      background: radial-gradient(circle, rgba(239, 68, 68, 0.14) 0%, rgba(0, 0, 0, 0) 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      animation: floatGlow 14s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, -30px) scale(1.12); }
+    }
+
+    /* Subtle Grid Background Pattern */
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Main Container */
+    .da-offline-card {
       position: relative;
-      display: inline-block;
+      z-index: 10;
+      max-width: 620px;
+      width: 100%;
+      background: rgba(15, 20, 32, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-radius: 28px;
+      padding: 42px 32px;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
-    .btn-home {
-      background-color: #FFFFFF;
-      color: #000000;
-      font-weight: 600;
-      font-size: 0.875rem;
-      padding: 0.65rem 1.4rem;
-      border-radius: 0.65rem;
+    /* Brand Header */
+    .da-brand {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      cursor: pointer;
+      gap: 10px;
       text-decoration: none;
+      margin-bottom: 24px;
     }
 
-    .btn-home:hover {
-      background-color: #E2E8F0;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
-    }
-
-    .btn-explore {
-      background-color: transparent;
+    .da-brand-badge {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #0084FF 0%, #00C2FF 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: #FFFFFF;
-      font-weight: 600;
-      font-size: 0.875rem;
-      padding: 0.65rem 1.4rem;
-      border-radius: 0.65rem;
+      font-size: 18px;
+      box-shadow: 0 4px 14px rgba(0, 194, 255, 0.4);
+    }
+
+    .da-brand-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      font-family: var(--font-en);
+      letter-spacing: -0.02em;
+    }
+
+    .da-brand-title span {
+      color: var(--color-brand-cyan);
+    }
+
+    /* Central Holographic Disconnected Radar */
+    .da-radar-wrap {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .da-pulse-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(239, 68, 68, 0.4);
+      animation: radarRipple 3s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+    }
+
+    .da-pulse-ring.delay-1 {
+      animation-delay: 1s;
+    }
+
+    .da-pulse-ring.delay-2 {
+      animation-delay: 2s;
+    }
+
+    @keyframes radarRipple {
+      0% {
+        transform: scale(0.6);
+        opacity: 0.9;
+        border-color: rgba(239, 68, 68, 0.6);
+      }
+      100% {
+        transform: scale(1.65);
+        opacity: 0;
+        border-color: rgba(239, 68, 68, 0);
+      }
+    }
+
+    .da-radar-center {
+      position: relative;
+      z-index: 2;
+      width: 90px;
+      height: 90px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(15, 23, 42, 0.9));
+      border: 1.5px solid rgba(239, 68, 68, 0.5);
+      box-shadow: 0 10px 30px rgba(239, 68, 68, 0.25), inset 0 0 20px rgba(239, 68, 68, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      color: #EF4444;
+      animation: floatCenter 4s ease-in-out infinite;
+    }
+
+    @keyframes floatCenter {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Status Pill */
+    .da-status-pill {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #FCA5A5;
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .da-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #EF4444;
+      box-shadow: 0 0 10px #EF4444;
+      animation: pulseDot 1.8s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* Titles */
+    .da-offline-title {
+      font-size: clamp(1.8rem, 4vw, 2.3rem);
+      font-weight: 900;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .da-offline-desc {
+      font-size: 1.02rem;
+      color: #94A3B8;
+      line-height: 1.7;
+      max-width: 500px;
+      margin: 0 auto 28px;
+    }
+
+    /* Action Buttons */
+    .da-btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .da-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 12px 28px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #0084FF 0%, #00C2FF 100%);
+      color: #FFFFFF;
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 700;
+      border: none;
       cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0, 194, 255, 0.35);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
       text-decoration: none;
     }
 
-    .btn-explore:hover {
-      background-color: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.4);
+    .da-btn-primary:hover {
       transform: translateY(-2px);
+      box-shadow: 0 8px 26px rgba(0, 194, 255, 0.5);
+    }
+
+    .da-btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .da-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 12px 24px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #F8FAFC;
+      font-family: inherit;
+      font-size: 0.96rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: all 0.22s ease;
+      text-decoration: none;
+    }
+
+    .da-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Troubleshooting Accordion / Card */
+    .da-tips-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 18px 20px;
+      text-align: left;
+      margin-bottom: 24px;
+    }
+
+    .da-tips-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #E2E8F0;
+    }
+
+    .da-tips-list {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: #94A3B8;
+      line-height: 1.5;
+    }
+
+    .da-tip-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .da-tip-item i {
+      color: var(--color-brand-cyan);
+      margin-top: 3px;
+      font-size: 13px;
+    }
+
+    /* Interactive Mini Focus Widget (Fun feature while waiting) */
+    .da-game-section {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 20px;
+    }
+
+    .da-game-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 0.85rem;
+      color: #CBD5E1;
+    }
+
+    .da-game-btn {
+      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+      border: none;
+      color: #FFFFFF;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.15s ease;
+    }
+
+    .da-game-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .da-quote-box {
+      font-size: 0.88rem;
+      color: #38BDF8;
+      font-style: italic;
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    /* Online Restored State */
+    .online-restored {
+      background: rgba(16, 185, 129, 0.15) !important;
+      border-color: rgba(16, 185, 129, 0.4) !important;
+      color: #6EE7B7 !important;
+    }
+
+    .online-restored .da-status-dot {
+      background: #10B981 !important;
+      box-shadow: 0 0 10px #10B981 !important;
+    }
+
+    /* Shaking animation when retry fails */
+    @keyframes shakeBtn {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    .shake {
+      animation: shakeBtn 0.4s ease;
     }
   </style>
 </head>
 <body>
 
-  <main class="text-center max-w-lg mx-auto flex flex-col items-center">
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+  <div class="bg-grid"></div>
+
+  <main class="da-offline-card">
     
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/25 text-rose-400 text-xs font-mono mb-4">
-      <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
-      ইন্টারনেট সংযোগ বিচ্ছিন্ন (Offline)
+    <!-- Brand Badge -->
+    <a href="/" class="da-brand">
+      <div class="da-brand-badge">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div class="da-brand-title">
+        Dipu <span>Academy</span>
+      </div>
+    </a>
+
+    <!-- Animated Holographic Radar -->
+    <div class="da-radar-wrap" id="radarWrap">
+      <div class="da-pulse-ring"></div>
+      <div class="da-pulse-ring delay-1"></div>
+      <div class="da-pulse-ring delay-2"></div>
+      <div class="da-radar-center" id="radarCenter">
+        <i class="fa-solid fa-wifi" style="position: relative;">
+          <span style="position: absolute; width: 120%; height: 3px; background: #EF4444; top: 50%; left: -10%; transform: rotate(-45deg); border-radius: 2px;"></span>
+        </i>
+      </div>
     </div>
 
-    <!-- 404 / Offline Metallic Header -->
-    <div class="metallic-offline mb-4">
-      404
+    <!-- Status Pill -->
+    <div class="da-status-pill" id="statusPill">
+      <span class="da-status-dot"></span>
+      <span id="statusText">ইন্টারনেট সংযোগ বিচ্ছিন্ন (Offline)</span>
     </div>
 
-    <!-- Explanatory Subtitle -->
-    <p class="text-slate-300 text-sm sm:text-base font-normal mb-8 max-w-sm mx-auto leading-relaxed">
-      The page you're looking for might have been moved or doesn't exist.
+    <!-- Heading & Description -->
+    <h1 class="da-offline-title" id="offlineTitle">আপনি বর্তমানে অফলাইনে আছেন</h1>
+    <p class="da-offline-desc" id="offlineDesc">
+      আপনার ডিভাইসে সক্রিয় কোনো ইন্টারনেট সংযোগ পাওয়া যায়নি। কানেকশন ঠিক হলে পেজটি স্বয়ংক্রিয়ভাবে রিলোড হবে।
     </p>
 
-    <!-- Action Buttons -->
-    <div class="flex items-center justify-center gap-3">
-      <button onclick="window.location.reload()" class="btn-home">
-        <i class="fa-solid fa-rotate-right text-sm"></i>
-        <span>Retry Connection</span>
+    <!-- Buttons -->
+    <div class="da-btn-group">
+      <button type="button" class="da-btn-primary" id="retryBtn">
+        <i class="fa-solid fa-rotate-right" id="retryIcon"></i>
+        <span id="retryText">আবার চেষ্টা করুন</span>
       </button>
 
-      <a href="/" class="btn-explore">
-        <i class="fa-regular fa-compass text-sm"></i>
-        <span>Go Home</span>
+      <a href="/" class="da-btn-secondary">
+        <i class="fa-solid fa-house"></i>
+        <span>হোমপেজে যান</span>
       </a>
     </div>
 
-    <p class="text-xs text-slate-500 mt-6" id="statusNotice">
-      ইন্টারনেট কানেকশন ফিরে আসলে পেজটি স্বয়ংক্রিয়ভাবে রিলোড হবে।
-    </p>
+    <!-- Troubleshooting Tips Box -->
+    <div class="da-tips-card">
+      <div class="da-tips-header">
+        <span><i class="fa-solid fa-circle-info" style="color: #38BDF8; margin-right: 6px;"></i> সমাধান করতে করণীয়:</span>
+        <i class="fa-solid fa-wrench" style="color: #64748B; font-size: 13px;"></i>
+      </div>
+      <div class="da-tips-list">
+        <div class="da-tip-item">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>১. আপনার Wi-Fi বা মোবাইল ডেটা চালু আছে কি না পরীক্ষা করুন।</span>
+        </div>
+        <div class="da-tip-item">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>২. ফ্লাইট মোড অন থাকলে তা বন্ধ করে কিছুক্ষণ অপেক্ষা করুন।</span>
+        </div>
+        <div class="da-tip-item">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>৩. রাউটার বা মডেম রিস্টার্ট দিন অথবা নেটওয়ার্কটি পুনরায় কানেক্ট করুন।</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Motivation / Brain Warmup While Waiting -->
+    <div class="da-game-section">
+      <div class="da-game-header">
+        <span>💡 নেট আসার ফাঁকে মোটিভেশন:</span>
+        <button type="button" class="da-game-btn" id="nextQuoteBtn">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> নতুন বাণী
+        </button>
+      </div>
+      <div class="da-quote-box" id="quoteText">
+        "সাফল্যের কোনো শর্টকাট নেই, প্রতিটি কঠিন মুহূর্তই তোমাকে আরও শক্তিশালী করে তোলে।"
+      </div>
+    </div>
 
   </main>
 
-  <!-- Auto Reload on Reconnect -->
+  <!-- Auto-Reconnect & Ping Engine -->
   <script>
-    window.addEventListener('online', () => {
-      document.getElementById('statusNotice').textContent = "ইন্টারনেট সংযোগ সফল! পেজে ফিরে যাওয়া হচ্ছে...";
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 800);
-    });
-  </script>
+    (function initOfflinePage() {
+      var retryBtn = document.getElementById('retryBtn');
+      var retryIcon = document.getElementById('retryIcon');
+      var retryText = document.getElementById('retryText');
+      var statusPill = document.getElementById('statusPill');
+      var statusText = document.getElementById('statusText');
+      var offlineTitle = document.getElementById('offlineTitle');
+      var offlineDesc = document.getElementById('offlineDesc');
+      var radarCenter = document.getElementById('radarCenter');
 
+      var quotes = [
+        '"সাফল্যের কোনো শর্টকাট নেই, প্রতিটি কঠিন মুহূর্তই তোমাকে আরও শক্তিশালী করে তোলে।"',
+        '"পরিশ্রম আর আত্মবিশ্বাস যেখানে থাকে, সেখানে অসম্ভব বলে কিছু থাকে না।"',
+        '"আজকের ছোট ছোট প্রচেষ্টাই আগামীকালের বড় সাফল্যের চাবিকাঠি।"',
+        '"ধৈর্য ধরো, ভালো সময় এবং ভালো ফলাফল আসবেই।"',
+        '"পড়াশোনায় ধারাবাহিকতাই সাধারণ ছাত্রকে অসাধারণে রূপান্তর করে।"'
+      ];
+      var quoteIdx = 0;
+
+      document.getElementById('nextQuoteBtn').addEventListener('click', function() {
+        quoteIdx = (quoteIdx + 1) % quotes.length;
+        document.getElementById('quoteText').textContent = quotes[quoteIdx];
+      });
+
+      function handleBackOnline() {
+        statusPill.classList.add('online-restored');
+        statusText.textContent = "ইন্টারনেট সংযোগ সফল! পেজে ফিরে যাওয়া হচ্ছে...";
+        offlineTitle.textContent = "🎉 সংযোগ পুনঃস্থাপিত হয়েছে!";
+        offlineDesc.textContent = "আপনার ইন্টারনেট পুনরায় চালু হয়েছে। আপনাকে স্বয়ংক্রিয়ভাবে পেজে নিয়ে যাওয়া হচ্ছে...";
+        if (radarCenter) {
+          radarCenter.innerHTML = '<i class="fa-solid fa-wifi" style="color:#10B981;"></i>';
+          radarCenter.style.borderColor = '#10B981';
+          radarCenter.style.boxShadow = '0 10px 30px rgba(16, 185, 129, 0.4)';
+        }
+
+        setTimeout(function() {
+          var referrer = document.referrer;
+          if (referrer && referrer.indexOf(window.location.host) !== -1 && referrer.indexOf('offline') === -1) {
+            window.location.href = referrer;
+          } else {
+            window.location.href = '/';
+          }
+        }, 1200);
+      }
+
+      function checkConnection() {
+        return fetch('/favicon.ico?v=' + Date.now(), { method: 'HEAD', cache: 'no-store' })
+          .then(function() { return true; })
+          .catch(function() { return false; });
+      }
+
+      retryBtn.addEventListener('click', function() {
+        retryBtn.disabled = true;
+        retryIcon.classList.add('fa-spin');
+        retryText.textContent = "পরীক্ষা করা হচ্ছে...";
+
+        checkConnection().then(function(isOnline) {
+          retryIcon.classList.remove('fa-spin');
+          retryBtn.disabled = false;
+
+          if (isOnline || navigator.onLine) {
+            retryText.textContent = "সংযোগ পাওয়া গেছে!";
+            handleBackOnline();
+          } else {
+            retryText.textContent = "এখনও অফলাইন!";
+            retryBtn.classList.add('shake');
+            setTimeout(function() {
+              retryBtn.classList.remove('shake');
+              retryText.textContent = "আবার চেষ্টা করুন";
+            }, 1500);
+          }
+        });
+      });
+
+      // Browser online event
+      window.addEventListener('online', function() {
+        checkConnection().then(function(isOnline) {
+          if (isOnline) handleBackOnline();
+        });
+      });
+
+      // Background periodic polling every 4 seconds to test if internet returned silently
+      setInterval(function() {
+        if (navigator.onLine) {
+          checkConnection().then(function(isOnline) {
+            if (isOnline) handleBackOnline();
+          });
+        }
+      }, 4000);
+
+    })();
+  </script>
 </body>
 </html>

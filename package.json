@@ -9,7 +9,8 @@
     "build:ui": "node build-otp.js",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/ --ext .js",
-    "test": "jest --detectOpenHandles --forceExit --passWithNoTests"
+    "test": "jest --detectOpenHandles --forceExit --passWithNoTests",
+    "backup": "node scripts/backup-db.js"
   },
   "keywords": [
     "edtech",
@@ -25,9 +26,12 @@
   "author": "Dipu & Principal Systems Engineering Architecture Team",
   "license": "UNLICENSED",
   "dependencies": {
+    "@radix-ui/react-avatar": "^1.3.1",
+    "@radix-ui/react-slot": "^1.5.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "bcryptjs": "^2.4.3",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "compression": "^1.8.2",
     "cors": "^2.8.5",

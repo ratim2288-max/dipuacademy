@@ -18,27 +18,33 @@
   <link rel="stylesheet" href="/css/style.css?v=2.4">
 
   <style>
-    /* 10 Minute School Standard & Luxury Dark Layout Architecture */
+    /* Dipu Academy Standard — Luxury High-Contrast White Theme Architecture */
     :root {
-      --cd-bg: #090A10;
-      --cd-surface: #11131F;
-      --cd-surface-elevated: #181B2B;
-      --cd-border: rgba(255, 255, 255, 0.08);
-      --cd-border-glow: rgba(16, 185, 129, 0.35);
+      --cd-bg: #F8FAFD;
+      --cd-surface: #FFFFFF;
+      --cd-surface-elevated: #F1F5F9;
+      --cd-border: #E2E8F0;
+      --cd-border-glow: rgba(22, 101, 216, 0.25);
+      --cd-primary: #1665D8;
+      --cd-primary-hover: #0F52B3;
       --cd-green: #10B981;
       --cd-green-hover: #059669;
       --cd-orange: #FF7A1A;
-      --cd-amber: #FFB347;
-      --cd-blue: #3B82F6;
+      --cd-amber: #D97706;
+      --cd-blue: #2563EB;
+      --cd-text-title: #0D1B36;
+      --cd-text-body: #334155;
+      --cd-text-muted: #64748B;
     }
 
     body {
       background-color: var(--cd-bg);
-      color: #E2E8F0;
-      font-family: 'Inter', 'Hind Siliguri', -apple-system, sans-serif;
+      color: var(--cd-text-body);
+      font-family: 'Hind Siliguri', 'Inter', -apple-system, sans-serif;
       overflow-x: hidden;
       margin: 0;
       padding: 0;
+      -webkit-font-smoothing: antialiased;
     }
 
     *, *::before, *::after {
@@ -49,8 +55,8 @@
       position: relative;
       width: 100%;
       min-height: 100vh;
-      background: radial-gradient(circle at 10% 10%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
-                  radial-gradient(circle at 90% 20%, rgba(255, 122, 26, 0.05) 0%, transparent 50%),
+      background: radial-gradient(circle at 10% 10%, rgba(22, 101, 216, 0.04) 0%, transparent 50%),
+                  radial-gradient(circle at 90% 20%, rgba(2, 132, 199, 0.04) 0%, transparent 50%),
                   var(--cd-bg);
     }
 
@@ -94,19 +100,19 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.85rem;
-      color: #94A3B8;
+      font-size: 0.88rem;
+      color: var(--cd-text-muted);
       flex-wrap: wrap;
     }
 
     .breadcrumb-bar a {
-      color: #94A3B8;
+      color: var(--cd-text-muted);
       text-decoration: none;
       transition: color 0.2s;
     }
 
     .breadcrumb-bar a:hover {
-      color: var(--cd-green);
+      color: var(--cd-primary);
     }
 
     /* Header Hero Badges */
@@ -122,44 +128,91 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 12px;
+      padding: 5px 14px;
       border-radius: 9999px;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 700;
     }
 
     .pill-level {
-      background: rgba(16, 185, 129, 0.15);
-      color: #10B981;
-      border: 1px solid rgba(16, 185, 129, 0.35);
+      background: #EFF6FF;
+      color: #1D4ED8;
+      border: 1px solid #BFDBFE;
     }
 
     .pill-subject {
-      background: rgba(255, 179, 71, 0.12);
-      color: var(--cd-amber);
-      border: 1px solid rgba(255, 179, 71, 0.3);
+      background: #FFFBEB;
+      color: #B45309;
+      border: 1px solid #FDE68A;
     }
 
     .pill-live {
-      background: rgba(59, 130, 246, 0.15);
-      color: #60A5FA;
-      border: 1px solid rgba(59, 130, 246, 0.3);
+      background: #ECFDF5;
+      color: #047857;
+      border: 1px solid #A7F3D0;
+    }
+
+    /* Back Button & Top Action Pills */
+    .btn-back-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      border-radius: 9999px;
+      background: #FFFFFF;
+      border: 1.5px solid #CBD5E1;
+      color: #0D1B36;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      text-decoration: none;
+    }
+
+    .btn-back-pill:hover {
+      background: #F0F6FF;
+      border-color: #1665D8;
+      color: #1665D8;
+      transform: translateX(-3px);
+      box-shadow: 0 4px 14px rgba(22, 101, 216, 0.15);
+    }
+
+    .btn-mycourses-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 18px;
+      border-radius: 9999px;
+      background: #ECFDF5;
+      border: 1.5px solid #A7F3D0;
+      color: #047857;
+      font-size: 13.5px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-mycourses-pill:hover {
+      background: #D1FAE5;
+      border-color: #6EE7B7;
+      transform: translateY(-1px);
     }
 
     /* Course Main Title & Pitch */
     .course-hero-title {
-      font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
       font-weight: 900;
-      color: #FFFFFF;
+      color: #0D1B36;
       line-height: 1.25;
       margin: 0.25rem 0 0.75rem;
       letter-spacing: -0.015em;
     }
 
     .course-hero-desc {
-      font-size: 1.08rem;
-      color: #CBD5E1;
-      line-height: 1.7;
+      font-size: 1.05rem;
+      color: #475569;
+      line-height: 1.75;
       margin-bottom: 1.5rem;
     }
 
@@ -169,11 +222,11 @@
       align-items: center;
       gap: 1.25rem;
       flex-wrap: wrap;
-      font-size: 0.9rem;
-      color: #94A3B8;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 1rem 0;
+      font-size: 0.92rem;
+      color: #64748B;
+      border-top: 1.5px solid #E8EEF7;
+      border-bottom: 1.5px solid #E8EEF7;
+      padding: 1.1rem 0;
     }
 
     .meta-chip-item {
@@ -183,7 +236,8 @@
     }
 
     .meta-chip-item strong {
-      color: #FFFFFF;
+      color: #0D1B36;
+      font-weight: 700;
     }
 
     /* 10MS Style Sticky Tab Bar */
@@ -191,18 +245,18 @@
       position: sticky;
       top: 80px;
       z-index: 40;
-      background: rgba(17, 19, 31, 0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--cd-border);
-      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid #E2E8F0;
+      border-radius: 16px;
       padding: 6px;
       display: flex;
       align-items: center;
       gap: 6px;
       overflow-x: auto;
       scrollbar-width: none;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 6px 20px rgba(13, 27, 54, 0.06);
     }
 
     .course-tab-bar::-webkit-scrollbar {
@@ -210,37 +264,38 @@
     }
 
     .tab-nav-btn {
-      padding: 8px 16px;
-      border-radius: 10px;
+      padding: 9px 18px;
+      border-radius: 11px;
       font-size: 0.88rem;
       font-weight: 700;
-      color: #94A3B8;
+      color: #64748B;
       text-decoration: none;
       white-space: nowrap;
       transition: all 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
     }
 
     .tab-nav-btn:hover {
-      color: #FFFFFF;
-      background: rgba(255, 255, 255, 0.05);
+      color: #0D1B36;
+      background: #F1F5F9;
     }
 
     .tab-nav-btn.active {
-      background: rgba(16, 185, 129, 0.2);
-      color: #10B981;
-      border: 1px solid rgba(16, 185, 129, 0.4);
+      background: #1665D8;
+      color: #FFFFFF;
+      box-shadow: 0 3px 12px rgba(22, 101, 216, 0.3);
+      border: 1px solid #1665D8;
     }
 
     /* Course Section Cards */
     .course-section-card {
-      background: var(--cd-surface);
-      border: 1px solid var(--cd-border);
-      border-radius: 18px;
-      padding: 2rem;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+      background: #FFFFFF;
+      border: 1.5px solid #E8EEF7;
+      border-radius: 20px;
+      padding: 2.2rem;
+      box-shadow: 0 4px 24px rgba(13, 27, 54, 0.04);
       scroll-margin-top: 150px;
     }
 
@@ -248,8 +303,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 1rem;
+      border-bottom: 1.5px solid #F1F5F9;
+      padding-bottom: 1.1rem;
       margin-bottom: 1.5rem;
       flex-wrap: wrap;
       gap: 10px;
@@ -258,7 +313,7 @@
     .section-title {
       font-size: 1.35rem;
       font-weight: 800;
-      color: #FFFFFF;
+      color: #0D1B36;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -282,74 +337,77 @@
     }
 
     .feature-point-box {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 12px;
-      padding: 1.1rem;
+      background: #F8FAFD;
+      border: 1.5px solid #E8EEF7;
+      border-radius: 14px;
+      padding: 1.2rem;
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      transition: all 0.25s ease;
+      gap: 14px;
+      transition: all 0.22s ease;
     }
 
     .feature-point-box:hover {
-      border-color: rgba(16, 185, 129, 0.35);
-      background: rgba(16, 185, 129, 0.03);
+      border-color: #BAE6FD;
+      background: #F0F7FF;
       transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(2, 132, 199, 0.08);
     }
 
     .feat-icon-badge {
-      width: 34px;
-      height: 34px;
+      width: 38px;
+      height: 38px;
       border-radius: 10px;
-      background: rgba(16, 185, 129, 0.15);
-      color: #10B981;
+      background: #E0F2FE;
+      color: #0284C7;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.95rem;
+      font-size: 1rem;
       flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.15);
     }
 
     .feat-text {
-      font-size: 0.95rem;
-      color: #E2E8F0;
-      line-height: 1.55;
-      font-weight: 500;
+      font-size: 0.96rem;
+      color: #0D1B36;
+      line-height: 1.6;
+      font-weight: 600;
     }
 
     /* Syllabus & Curriculum Accordion */
     .syllabus-chapter {
-      border: 1px solid var(--cd-border);
-      border-radius: 14px;
+      border: 1.5px solid #E8EEF7;
+      border-radius: 16px;
       margin-bottom: 1rem;
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.02);
+      background: #FFFFFF;
       transition: border-color 0.2s;
     }
 
     .syllabus-chapter:hover {
-      border-color: rgba(255, 255, 255, 0.15);
+      border-color: #CBD5E1;
     }
 
     .chapter-header {
-      padding: 1.1rem 1.35rem;
+      padding: 1.15rem 1.4rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
-      background: rgba(255, 255, 255, 0.03);
+      background: #F8FAFD;
       user-select: none;
       transition: background 0.2s;
+      border-bottom: 1px solid #F1F5F9;
     }
 
     .chapter-header:hover {
-      background: rgba(255, 255, 255, 0.06);
+      background: #F1F5F9;
     }
 
     .chapter-title-text {
       font-weight: 700;
-      color: #FFFFFF;
+      color: #0D1B36;
       font-size: 1.05rem;
       display: flex;
       align-items: center;
@@ -358,25 +416,27 @@
 
     .chapter-lessons-list {
       padding: 1rem 1.25rem;
-      border-top: 1px solid var(--cd-border);
       display: flex;
       flex-direction: column;
       gap: 10px;
+      background: #FFFFFF;
     }
 
     .lesson-row-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 14px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.02);
-      transition: background 0.2s;
+      padding: 11px 16px;
+      border-radius: 12px;
+      background: #F8FAFD;
+      border: 1px solid #F1F5F9;
+      transition: all 0.2s;
       gap: 10px;
     }
 
     .lesson-row-item:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: #F0F6FF;
+      border-color: #E2E8F0;
     }
 
     .lesson-title-meta {
@@ -384,29 +444,30 @@
       align-items: center;
       gap: 10px;
       font-size: 0.95rem;
-      color: #E2E8F0;
+      color: #1E293B;
+      font-weight: 500;
       flex: 1;
       min-width: 0;
     }
 
     .badge-free-demo {
-      background: rgba(16, 185, 129, 0.15);
-      color: #10B981;
-      border: 1px solid rgba(16, 185, 129, 0.35);
+      background: #DCFCE7;
+      color: #15803D;
+      border: 1px solid #86EFAC;
       font-size: 0.78rem;
       font-weight: 700;
-      padding: 3px 10px;
+      padding: 4px 10px;
       border-radius: 6px;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
       transition: all 0.2s;
     }
 
     .badge-free-demo:hover {
-      background: #10B981;
-      color: #0A0A0F;
+      background: #15803D;
+      color: #FFFFFF;
     }
 
     /* Routine Banner Card */
@@ -418,9 +479,9 @@
       position: relative;
       border-radius: 16px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: #080B14;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      border: 1.5px solid #E2E8F0;
+      background: #FFFFFF;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
       cursor: pointer;
     }
 
@@ -438,7 +499,7 @@
     .routine-banner-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(8, 11, 20, 0.92) 0%, rgba(8, 11, 20, 0.2) 60%, transparent 100%);
+      background: linear-gradient(to top, rgba(13, 27, 54, 0.9) 0%, rgba(13, 27, 54, 0.2) 60%, transparent 100%);
       opacity: 0;
       transition: opacity 0.3s ease;
       display: flex;
@@ -462,8 +523,8 @@
       width: 95px;
       height: 95px;
       border-radius: 50%;
-      border: 3px solid var(--cd-green);
-      box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
+      border: 3px solid #10B981;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
       object-fit: cover;
       flex-shrink: 0;
     }
@@ -471,13 +532,13 @@
     .mentor-name {
       font-size: 1.35rem;
       font-weight: 800;
-      color: #FFFFFF;
+      color: #0D1B36;
       margin: 0 0 4px;
     }
 
     .mentor-inst {
       font-size: 0.92rem;
-      color: var(--cd-amber);
+      color: #D97706;
       font-weight: 700;
       margin-bottom: 8px;
     }
@@ -510,9 +571,9 @@
     }
 
     .faq-badge-shimmer {
-      background: linear-gradient(90deg, #FF7A1A, #FFB347, #FF923C, #FF7A1A);
+      background: linear-gradient(90deg, #1665D8, #00C2FF, #1665D8);
       background-size: 200% auto;
-      color: #0A0A0F;
+      color: #FFFFFF;
       animation: faqBadgeShimmer 3s linear infinite;
       display: inline-flex;
       align-items: center;
@@ -522,28 +583,28 @@
       font-weight: 800;
       font-size: 0.76rem;
       letter-spacing: 0.5px;
-      box-shadow: 0 2px 10px rgba(255, 122, 26, 0.3);
+      box-shadow: 0 2px 8px rgba(22, 101, 216, 0.25);
     }
 
     /* FAQ Accordion */
     .faq-accordion-item {
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
+      border: 1.5px solid #E8EEF7;
+      border-radius: 16px;
       margin-bottom: 0.85rem;
       overflow: hidden;
-      background: rgba(15, 23, 42, 0.45);
-      transition: all 0.3s ease;
+      background: #FFFFFF;
+      transition: all 0.25s ease;
     }
 
     .faq-accordion-item:hover {
-      border-color: rgba(255, 122, 26, 0.4);
-      background: rgba(15, 23, 42, 0.65);
+      border-color: #CBD5E1;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
     }
 
     .faq-accordion-item.active {
-      border-color: rgba(255, 122, 26, 0.55);
-      background: rgba(255, 122, 26, 0.04);
-      box-shadow: 0 8px 24px rgba(255, 122, 26, 0.12);
+      border-color: #1665D8;
+      background: #F0F6FF;
+      box-shadow: 0 6px 20px rgba(22, 101, 216, 0.08);
     }
 
     .faq-accordion-header {
@@ -562,34 +623,33 @@
       align-items: center;
       gap: 12px;
       font-weight: 700;
-      color: #FFFFFF;
+      color: #0D1B36;
       font-size: 1.02rem;
       transition: color 0.25s ease, transform 0.25s ease;
     }
 
     .faq-accordion-item.active .faq-question-wrap {
-      color: #FFB347;
+      color: #1665D8;
       transform: translateX(2px);
     }
 
     .faq-chevron-badge {
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255, 255, 255, 0.05);
-      color: #94A3B8;
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease, color 0.25s ease;
+      background: #F1F5F9;
+      color: #64748B;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease, color 0.25s ease;
       flex-shrink: 0;
     }
 
     .faq-accordion-item.active .faq-chevron-badge {
-      transform: rotate(180deg) scale(1.08);
-      background: rgba(255, 122, 26, 0.2);
-      color: #FF7A1A;
-      border: 1px solid rgba(255, 122, 26, 0.4);
+      transform: rotate(180deg) scale(1.06);
+      background: #1665D8;
+      color: #FFFFFF;
     }
 
     .faq-answer-content {
@@ -597,8 +657,8 @@
       opacity: 0;
       padding: 0 1.35rem;
       overflow: hidden;
-      color: #CBD5E1;
-      font-size: 0.95rem;
+      color: #334155;
+      font-size: 0.96rem;
       line-height: 1.75;
       border-top: 1px solid transparent;
       transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, padding 0.35s ease, border-top-color 0.3s ease;
@@ -609,12 +669,12 @@
       max-height: 450px;
       opacity: 1;
       padding: 1.1rem 1.35rem 1.35rem 1.35rem;
-      border-top-color: rgba(255, 255, 255, 0.08);
+      border-top-color: #E2E8F0;
       pointer-events: auto;
     }
 
     /* ==========================================================================
-       RIGHT STICKY CHECKOUT SIDEBAR CARD (10MS Master Pattern)
+       RIGHT STICKY CHECKOUT SIDEBAR CARD (10MS Master Pattern — White Theme)
        ========================================================================== */
     .course-right-col {
       position: sticky;
@@ -623,16 +683,17 @@
     }
 
     .checkout-sticky-card {
-      background: #121422;
-      border: 1.5px solid rgba(255, 255, 255, 0.12);
-      border-radius: 20px;
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 22px;
       overflow: hidden;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(16, 185, 129, 0.08);
-      transition: border-color 0.3s;
+      box-shadow: 0 16px 40px rgba(13, 27, 54, 0.08);
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
 
     .checkout-sticky-card:hover {
-      border-color: rgba(16, 185, 129, 0.4);
+      border-color: #1665D8;
+      box-shadow: 0 20px 50px rgba(22, 101, 216, 0.12);
     }
 
     /* Banner Thumbnail Preview */
@@ -640,7 +701,7 @@
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      background: #0A0D18;
+      background: #F1F5F9;
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -663,17 +724,17 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 56px;
-      height: 56px;
+      width: 58px;
+      height: 58px;
       border-radius: 50%;
-      background: rgba(16, 185, 129, 0.95);
-      color: #0A0A0F;
+      background: #1665D8;
+      color: #FFFFFF;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.3rem;
       cursor: pointer;
-      box-shadow: 0 0 25px rgba(16, 185, 129, 0.8);
+      box-shadow: 0 0 25px rgba(22, 101, 216, 0.6);
       text-decoration: none;
       transition: all 0.25s ease;
       z-index: 2;
@@ -681,7 +742,8 @@
 
     .thumb-play-overlay:hover {
       transform: translate(-50%, -50%) scale(1.12);
-      background: #34D399;
+      background: #00C2FF;
+      box-shadow: 0 0 30px rgba(0, 194, 255, 0.7);
     }
 
     .checkout-card-body {
@@ -691,7 +753,7 @@
     .card-pitch-title {
       font-size: 1.15rem;
       font-weight: 800;
-      color: #FFFFFF;
+      color: #0D1B36;
       margin: 0 0 1rem;
       line-height: 1.4;
     }
@@ -707,33 +769,33 @@
     .course-main-price {
       font-size: 2.3rem;
       font-weight: 900;
-      color: #FFFFFF;
-      font-family: 'JetBrains Mono', monospace;
+      color: #0D1B36;
+      font-family: 'Inter', sans-serif;
       letter-spacing: -0.02em;
     }
 
     .course-strike-price {
       font-size: 1.2rem;
-      color: #64748B;
+      color: #94A3B8;
       text-decoration: line-through;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
     }
 
     .course-discount-pill {
-      background: rgba(16, 185, 129, 0.18);
-      color: #10B981;
+      background: #DCFCE7;
+      color: #15803D;
       font-weight: 800;
       font-size: 0.85rem;
       padding: 4px 10px;
       border-radius: 8px;
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      border: 1px solid #86EFAC;
     }
 
     .offer-urgent-pill {
-      background: rgba(239, 68, 68, 0.12);
-      border: 1px solid rgba(239, 68, 68, 0.28);
-      color: #F87171;
-      font-size: 0.82rem;
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      color: #DC2626;
+      font-size: 0.84rem;
       font-weight: 700;
       padding: 6px 12px;
       border-radius: 8px;
@@ -749,35 +811,36 @@
     .btn-buy-course-primary {
       width: 100%;
       padding: 14px 18px;
-      background: #10B981;
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
       color: #FFFFFF;
-      font-size: 1.12rem;
+      font-size: 1.08rem;
       font-weight: 800;
       border: none;
-      border-radius: 12px;
+      border-radius: 14px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
       margin-bottom: 10px;
       text-decoration: none;
+      font-family: inherit;
     }
 
     .btn-buy-course-primary:hover {
-      background: #059669;
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
       transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.5);
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.45);
     }
 
     .btn-demo-video-secondary {
       width: 100%;
       padding: 12px 16px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1.5px solid rgba(255, 255, 255, 0.15);
-      color: #FFFFFF;
+      background: #F0FDF4;
+      border: 1.5px solid #A7F3D0;
+      color: #047857;
       font-size: 0.95rem;
       font-weight: 700;
       border-radius: 12px;
@@ -789,19 +852,21 @@
       text-decoration: none;
       transition: all 0.2s ease;
       margin-bottom: 10px;
+      font-family: inherit;
     }
 
     .btn-demo-video-secondary:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.3);
+      background: #DCFCE7;
+      border-color: #6EE7B7;
+      transform: translateY(-1px);
     }
 
     .btn-download-routine {
       width: 100%;
       padding: 11px 16px;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: #10B981;
+      background: #F8FAFD;
+      border: 1.5px solid #E2E8F0;
+      color: #0D1B36;
       font-size: 0.92rem;
       font-weight: 700;
       border-radius: 12px;
@@ -811,20 +876,21 @@
       justify-content: center;
       gap: 8px;
       text-decoration: none;
-      transition: all 0.25s ease;
+      transition: all 0.22s ease;
       margin-bottom: 1.25rem;
+      font-family: inherit;
     }
 
     .btn-download-routine:hover {
-      background: #10B981;
-      color: #0A0A0F;
-      transform: translateY(-2px);
+      background: #F1F5F9;
+      border-color: #CBD5E1;
+      transform: translateY(-1px);
     }
 
     .includes-header-title {
       font-size: 0.98rem;
       font-weight: 800;
-      color: #FFFFFF;
+      color: #0D1B36;
       margin: 1.5rem 0 1rem;
       display: flex;
       align-items: center;
@@ -838,18 +904,19 @@
       display: flex;
       flex-direction: column;
       gap: 11px;
-      font-size: 0.9rem;
-      color: #CBD5E1;
+      font-size: 0.92rem;
+      color: #334155;
     }
 
     .includes-checklist li {
       display: flex;
       align-items: center;
       gap: 10px;
+      font-weight: 500;
     }
 
     .includes-checklist i {
-      color: var(--cd-green);
+      color: #10B981;
       font-size: 0.95rem;
       width: 18px;
       text-align: center;
@@ -858,15 +925,15 @@
     .helpline-box {
       margin-top: 1.5rem;
       padding-top: 1.25rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1.5px solid #F1F5F9;
       font-size: 0.88rem;
-      color: #94A3B8;
+      color: #64748B;
       text-align: center;
       line-height: 1.5;
     }
 
     .helpline-phone-link {
-      color: #FFFFFF;
+      color: #0D1B36;
       font-size: 1.05rem;
       font-weight: 800;
       text-decoration: none;
@@ -878,7 +945,7 @@
     }
 
     .helpline-phone-link:hover {
-      color: var(--cd-green);
+      color: #1665D8;
     }
 
     /* Checkout Modal Overlay */
@@ -888,8 +955,9 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(5, 5, 8, 0.88);
+      background: rgba(13, 27, 54, 0.65);
       backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       z-index: 9999;
       display: none;
       align-items: center;
@@ -902,12 +970,12 @@
     }
 
     .checkout-modal-card {
-      background: #141624;
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      border-radius: 20px;
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 22px;
       width: 100%;
       max-width: 520px;
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9);
+      box-shadow: 0 25px 70px rgba(13, 27, 54, 0.25);
       overflow: hidden;
       animation: modalScaleIn 0.3s ease;
     }
@@ -919,30 +987,30 @@
 
     .modal-topbar {
       padding: 1.25rem 1.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid #E2E8F0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(255, 255, 255, 0.02);
+      background: #F8FAFD;
     }
 
     .modal-title {
       font-size: 1.2rem;
       font-weight: 800;
-      color: #FFFFFF;
+      color: #0D1B36;
     }
 
     .modal-close-icon {
       background: transparent;
       border: none;
-      color: #94A3B8;
+      color: #64748B;
       font-size: 1.2rem;
       cursor: pointer;
       transition: color 0.2s;
     }
 
     .modal-close-icon:hover {
-      color: #FFFFFF;
+      color: #0D1B36;
     }
 
     .modal-inner-body {
@@ -957,10 +1025,10 @@
     }
 
     .gateway-btn {
-      border: 2px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
+      border: 2px solid #E2E8F0;
+      border-radius: 14px;
       padding: 12px 8px;
-      background: rgba(255, 255, 255, 0.02);
+      background: #FFFFFF;
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -970,15 +1038,15 @@
     }
 
     .gateway-btn.active {
-      border-color: var(--cd-green);
-      background: rgba(16, 185, 129, 0.12);
-      box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+      border-color: #1665D8;
+      background: #F0F6FF;
+      box-shadow: 0 0 15px rgba(22, 101, 216, 0.15);
     }
 
     .gateway-name {
       font-size: 0.8rem;
       font-weight: 700;
-      color: #FFFFFF;
+      color: #0D1B36;
     }
 
     .coupon-input-group {
@@ -989,41 +1057,42 @@
 
     .coupon-text-input {
       flex: 1;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
+      background: #F8FAFD;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 10px;
       padding: 10px 14px;
-      color: #FFFFFF;
-      font-size: 0.9rem;
+      color: #0D1B36;
+      font-size: 0.92rem;
       outline: none;
+      transition: border-color 0.2s;
     }
 
     .coupon-text-input:focus {
-      border-color: var(--cd-green);
+      border-color: #1665D8;
+      background: #FFFFFF;
     }
 
     .btn-apply-coupon {
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid var(--cd-green);
-      color: var(--cd-green);
+      background: #1665D8;
+      border: none;
+      color: #FFFFFF;
       font-weight: 700;
-      padding: 0 16px;
-      border-radius: 8px;
+      padding: 0 18px;
+      border-radius: 10px;
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       transition: all 0.2s;
     }
 
     .btn-apply-coupon:hover {
-      background: var(--cd-green);
-      color: #0A0A0F;
+      background: #0F52B3;
     }
 
     .order-calc-table {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      padding: 12px 16px;
+      background: #F8FAFD;
+      border: 1.5px solid #E8EEF7;
+      border-radius: 12px;
+      padding: 14px 18px;
       margin-bottom: 1.5rem;
     }
 
@@ -1031,18 +1100,38 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.9rem;
-      color: #94A3B8;
+      font-size: 0.92rem;
+      color: #475569;
       padding: 6px 0;
     }
 
     .calc-row.total-row {
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1.5px solid #E2E8F0;
       margin-top: 6px;
       padding-top: 10px;
-      font-size: 1.15rem;
+      font-size: 1.18rem;
       font-weight: 800;
-      color: #FFFFFF;
+      color: #0D1B36;
+    }
+
+    /* Lightbox Modal for Routine */
+    .routine-lightbox-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(13, 27, 54, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .routine-lightbox-overlay.active {
+      display: flex;
     }
 
     /* ==========================================================================
@@ -1054,18 +1143,12 @@
         gap: 1.5rem !important;
         padding: 1.25rem 1rem 5rem !important;
       }
-      .course-tabs-nav {
-        display: flex !important;
+      .course-tab-bar {
         overflow-x: auto !important;
         white-space: nowrap !important;
-        gap: 8px !important;
-        padding-bottom: 8px !important;
-        -webkit-overflow-scrolling: touch !important;
+        gap: 6px !important;
       }
-      .course-tabs-nav::-webkit-scrollbar {
-        height: 3px !important;
-      }
-      .course-tab-btn {
+      .tab-nav-btn {
         flex-shrink: 0 !important;
         padding: 8px 14px !important;
         font-size: 0.85rem !important;
@@ -1090,13 +1173,12 @@
         gap: 2rem !important;
         padding: 1.75rem 1.25rem 5rem !important;
       }
-      .course-tabs-nav {
+      .course-tab-bar {
         overflow-x: auto !important;
         white-space: nowrap !important;
-        gap: 8px !important;
-        -webkit-overflow-scrolling: touch !important;
+        gap: 6px !important;
       }
-      .course-tab-btn {
+      .tab-nav-btn {
         flex-shrink: 0 !important;
       }
       .course-right-col {
@@ -1133,14 +1215,12 @@
               onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = '/#courses'; }"
               aria-label="পেছনে যান"
               title="পেছনে যান"
-              style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 9999px; background: rgba(255, 255, 255, 0.06); border: 1.5px solid rgba(0, 194, 255, 0.35); color: #00C2FF; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px);"
-              onmouseenter="this.style.background='rgba(0, 194, 255, 0.18)'; this.style.borderColor='#00C2FF'; this.style.transform='translateX(-3px)'; this.style.boxShadow='0 6px 20px rgba(0, 194, 255, 0.35)';"
-              onmouseleave="this.style.background='rgba(255, 255, 255, 0.06)'; this.style.borderColor='rgba(0, 194, 255, 0.35)'; this.style.transform='translateX(0)'; this.style.boxShadow='0 4px 16px rgba(0, 0, 0, 0.4)';"
+              class="btn-back-pill"
             >
-              <i class="fas fa-arrow-left"></i>
+              <i class="fas fa-arrow-left" style="color: #1665D8;"></i>
               <span>পেছনে যান (সকল কোর্স)</span>
             </button>
-            <a href="/my-courses.html" style="display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 9999px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #10B981; font-size: 13.5px; font-weight: 700; text-decoration: none; transition: all 0.2s ease;">
+            <a href="/my-courses.html" class="btn-mycourses-pill">
               <i class="fas fa-graduation-cap"></i> <span>আমার কোর্সসমূহ</span>
             </a>
           </div>
@@ -1158,7 +1238,7 @@
             <div class="meta-chip-item" style="color: #FFB347;">
               <i class="fas fa-star"></i>
               <strong id="courseRatingText">4.92</strong>
-              <span id="courseEnrolledSpan" style="color: #94A3B8;">(৯২০+ শিক্ষার্থী ভর্তি হয়েছে)</span>
+              <span id="courseEnrolledSpan" style="color: #64748B;">(৯২০+ শিক্ষার্থী ভর্তি হয়েছে)</span>
             </div>
             <div class="meta-chip-item">
               <i class="fas fa-chalkboard-user" style="color: var(--cd-green);"></i>
@@ -1192,7 +1272,7 @@
             <h2 class="section-title">
               <i class="fas fa-sparkles" style="color: var(--cd-green);"></i> এই কোর্সে যা যা শিখবেন
             </h2>
-            <span style="font-size: 0.85rem; color: #94A3B8;">বিশেষায়িত ফিচারসমূহ</span>
+            <span style="font-size: 0.85rem; color: #64748B;">বিশেষায়িত ফিচারসমূহ</span>
           </div>
           
           <div class="features-rich-grid" id="courseFeaturesGrid">
@@ -1229,7 +1309,7 @@
             <h2 class="section-title">
               <i class="fas fa-layer-group" style="color: var(--cd-amber);"></i> কোর্স কারিকুলাম ও সিলেবাস
             </h2>
-            <span style="font-size: 0.88rem; color: #94A3B8;" id="totalLecturesCount">১০টি অধ্যায় • ৬০+ ক্লাস</span>
+            <span style="font-size: 0.88rem; color: #64748B;" id="totalLecturesCount">১০টি অধ্যায় • ৬০+ ক্লাস</span>
           </div>
 
           <div id="courseSyllabusContainer">
@@ -1242,17 +1322,17 @@
           <div class="routine-banner-container">
             <div class="section-heading-wrap">
               <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(16, 185, 129, 0.15); color: #10B981; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+                <div style="width: 38px; height: 38px; border-radius: 10px; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
                   <i class="fas fa-calendar-days"></i>
                 </div>
                 <div>
                   <h2 class="section-title">সাপ্তাহিক ক্লাস রুটিন ও সময়সূচী</h2>
-                  <p style="font-size: 0.82rem; color: #94A3B8; margin: 2px 0 0;">প্রতি সপ্তাহের লাইভ ক্লাস ও এক্সামের অফিসিয়াল অনুমোদিত রুটিন</p>
+                  <p style="font-size: 0.82rem; color: #64748B; margin: 2px 0 0;">প্রতি সপ্তাহের লাইভ ক্লাস ও এক্সামের অফিসিয়াল অনুমোদিত রুটিন</p>
                 </div>
               </div>
               
               <div style="display: flex; align-items: center; gap: 10px;">
-                <button type="button" onclick="openRoutineLightbox()" style="padding: 8px 14px; font-size: 0.85rem; cursor: pointer; border-radius: 10px; background: rgba(255,255,255,0.06); border: 1px solid var(--cd-border); color: #FFF;" title="রুটিন বড় করে দেখুন">
+                <button type="button" onclick="openRoutineLightbox()" style="padding: 8px 14px; font-size: 0.85rem; cursor: pointer; border-radius: 10px; background: #FFFFFF; border: 1.5px solid #CBD5E1; color: #0D1B36; font-weight: 700; box-shadow: 0 1px 4px rgba(0,0,0,0.04);" title="রুটিন বড় করে দেখুন">
                   <i class="fas fa-expand mr-1"></i> <span>জুম করুন</span>
                 </button>
                 <a id="downloadRoutineSectionBtn" href="#" download="Class-Routine.jpg" class="btn-download-routine" style="width: auto; padding: 8px 16px; margin: 0;" title="রুটিন ও ব্যানার ইমেজ ফ্রিতে ডাউনলোড করুন">
@@ -1283,7 +1363,7 @@
             <h2 class="section-title">
               <i class="fas fa-user-tie" style="color: var(--cd-green);"></i> কোর্স শিক্ষক পরিচিতি
             </h2>
-            <span style="font-size: 0.85rem; color: #94A3B8;">দক্ষ ও অভিজ্ঞ শিক্ষক প্যানেল</span>
+            <span style="font-size: 0.85rem; color: #64748B;">দক্ষ ও অভিজ্ঞ শিক্ষক প্যানেল</span>
           </div>
 
           <div class="mentor-profile-wrap">
@@ -1291,7 +1371,7 @@
             <div>
               <h3 class="mentor-name" id="courseMentorFullName">দীপু স্যার</h3>
               <div class="mentor-inst" id="courseMentorDept">বুয়েট ইঞ্জিনিয়ারিং • ৮+ বছরের শিক্ষকতা</div>
-              <p style="font-size: 0.92rem; color: #94A3B8; line-height: 1.65; margin: 0;">
+              <p style="font-size: 0.92rem; color: #334155; line-height: 1.65; margin: 0;">
                 গত ৮ বছর ধরে হাজারো শিক্ষার্থীকে বুয়েট, মেডিকেল ও বোর্ড পরীক্ষায় সফল হতে পথ দেখিয়েছেন। প্রতিটি বিষয় আনন্দের সাথে এবং বাস্তবসম্মত উদাহরণ ও অ্যানিমেশনের মাধ্যমে বুঝিয়ে দেওয়াই তাঁর বিশেষত্ব।
               </p>
             </div>
@@ -1304,7 +1384,7 @@
             <h2 class="section-title">
               <i class="fas fa-circle-question" style="color: var(--cd-amber);"></i> সচরাচর জিজ্ঞাসিত প্রশ্নাবলী (FAQ)
             </h2>
-            <span style="font-size: 0.85rem; color: #94A3B8;">কোর্স সম্পর্কিত যেকোনো প্রশ্ন</span>
+            <span style="font-size: 0.85rem; color: #64748B;">কোর্স সম্পর্কিত যেকোনো প্রশ্ন</span>
           </div>
 
           <div id="courseFaqList">
@@ -1508,16 +1588,16 @@
       <div class="modal-inner-body" id="modalStepCheckout">
         
         <!-- Course Mini Info -->
-        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 12px; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 12px;">
+        <div style="background: #F8FAFD; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 12px; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 12px;">
           <img src="/images/courses/class5-full-course.jpg" id="modalCourseThumb" style="width: 55px; height: 55px; border-radius: 10px; object-fit: cover;">
           <div>
-            <div id="modalCourseTitle" style="font-size: 0.98rem; font-weight: 700; color: #FFFFFF;">কোর্সের নাম</div>
-            <div style="font-size: 0.8rem; color: #10B981; font-weight: 600;">ইনস্ট্যান্ট অটোমেটেড এক্সেস</div>
+            <div id="modalCourseTitle" style="font-size: 0.98rem; font-weight: 800; color: #0D1B36;">কোর্সের নাম</div>
+            <div style="font-size: 0.8rem; color: #059669; font-weight: 700;">ইনস্ট্যান্ট অটোমেটেড এক্সেস</div>
           </div>
         </div>
 
         <!-- Payment Method Selection -->
-        <div style="font-size: 0.88rem; font-weight: 700; color: #CBD5E1; margin-bottom: 8px;">
+        <div style="font-size: 0.88rem; font-weight: 800; color: #0D1B36; margin-bottom: 8px;">
           পেমেন্ট মাধ্যম বেছে নিন:
         </div>
         <div class="gateway-options-grid" id="gatewayButtons">
@@ -1530,35 +1610,35 @@
             <span class="gateway-name" style="color: #F7921E;">Nagad নগদ</span>
           </div>
           <div class="gateway-btn" data-gateway="card">
-            <i class="fas fa-credit-card" style="font-size: 22px; color: #3B82F6;"></i>
-            <span class="gateway-name" style="color: #60A5FA;">Card / Bank</span>
+            <i class="fas fa-credit-card" style="font-size: 22px; color: #2563EB;"></i>
+            <span class="gateway-name" style="color: #1D4ED8;">Card / Bank</span>
           </div>
         </div>
 
         <!-- Active Account Link Card (নম্বর দিতে হবে না, অ্যাকাউন্ট থেকে সরাসরি ক্রয় হবে) -->
-        <div style="margin-bottom: 1rem; padding: 12px 14px; background: rgba(0, 194, 255, 0.08); border: 1.5px solid rgba(0, 194, 255, 0.3); border-radius: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <div style="margin-bottom: 1rem; padding: 12px 14px; background: #EFF6FF; border: 1.5px solid #BFDBFE; border-radius: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
           <div style="display: flex; align-items: center; gap: 10px;">
-            <div style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #0084FF, #00C2FF); color: #050B17; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0;" id="checkoutUserAvatar">
+            <div style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #1665D8, #00C2FF); color: #FFFFFF; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0;" id="checkoutUserAvatar">
               <i class="fas fa-user-check"></i>
             </div>
             <div>
-              <div style="font-size: 0.88rem; font-weight: 700; color: #FFFFFF;" id="checkoutAccountName">আমার অ্যাকাউন্ট</div>
-              <div style="font-size: 0.8rem; font-weight: 600; color: #00C2FF;" id="checkoutAccountPhone">লগইন করা মোবাইল নম্বর</div>
+              <div style="font-size: 0.88rem; font-weight: 800; color: #0D1B36;" id="checkoutAccountName">আমার অ্যাকাউন্ট</div>
+              <div style="font-size: 0.8rem; font-weight: 700; color: #1D4ED8;" id="checkoutAccountPhone">লগইন করা মোবাইল নম্বর</div>
             </div>
           </div>
-          <span style="font-size: 11px; font-weight: 800; background: rgba(16, 185, 129, 0.18); border: 1px solid rgba(16, 185, 129, 0.4); color: #10B981; padding: 4px 10px; border-radius: 999px; white-space: nowrap;">
+          <span style="font-size: 11px; font-weight: 800; background: #DCFCE7; border: 1px solid #86EFAC; color: #15803D; padding: 4px 10px; border-radius: 999px; white-space: nowrap;">
             <i class="fas fa-check-circle mr-1"></i> এই অ্যাকাউন্টে ক্রয় হবে
           </span>
         </div>
 
         <!-- Coupon Input -->
         <div style="margin-bottom: 0.5rem;">
-          <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #CBD5E1; margin-bottom: 6px;">ডিসকাউন্ট কুপন কোড (যদি থাকে)</label>
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0D1B36; margin-bottom: 6px;">ডিসকাউন্ট কুপন কোড (যদি থাকে)</label>
           <div class="coupon-input-group">
             <input type="text" id="couponCodeInput" class="coupon-text-input" placeholder="কুপন কোড (উদা: WELCOME50)">
             <button type="button" id="applyCouponBtn" class="btn-apply-coupon">প্রয়োগ</button>
           </div>
-          <div style="font-size: 0.75rem; color: #94A3B8;">
+          <div style="font-size: 0.75rem; color: #64748B;">
             ডেমো কুপন: <button type="button" onclick="applyQuickCoupon('WELCOME50')" style="background:none; border:none; color:var(--cd-green); cursor:pointer; font-weight:700; text-decoration:underline;">WELCOME50</button> বা <button type="button" onclick="applyQuickCoupon('DIPU100')" style="background:none; border:none; color:var(--cd-green); cursor:pointer; font-weight:700; text-decoration:underline;">DIPU100</button>
           </div>
         </div>
@@ -1573,15 +1653,15 @@
           </div>
           <div class="calc-row">
             <span>স্পেশাল অফার ছাড়</span>
-            <span style="color: #10B981;" id="calcOfferDiscount">-৳৪৩১</span>
+            <span style="color: #059669; font-weight: 700;" id="calcOfferDiscount">-৳৪৩১</span>
           </div>
           <div class="calc-row" id="calcCouponRow" style="display: none;">
             <span>কুপন ডিসকাউন্ট</span>
-            <span style="color: #10B981;" id="calcCouponDiscount">-৳০</span>
+            <span style="color: #059669; font-weight: 700;" id="calcCouponDiscount">-৳০</span>
           </div>
           <div class="calc-row total-row">
             <span>সর্বমোট প্রদেয় ফি</span>
-            <span style="color: #10B981;" id="calcFinalTotal">৳৪১৯</span>
+            <span style="color: #1665D8;" id="calcFinalTotal">৳৪১৯</span>
           </div>
         </div>
 
@@ -1595,15 +1675,15 @@
 
       <!-- Success Screen in Modal -->
       <div class="modal-inner-body" id="modalStepSuccess" style="display: none; text-align: center; padding: 2.5rem 1.5rem;">
-        <div style="width: 70px; height: 70px; border-radius: 50%; background: rgba(16, 185, 129, 0.2); color: #10B981; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.25rem; border: 2px solid #10B981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);">
+        <div style="width: 70px; height: 70px; border-radius: 50%; background: #DCFCE7; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.25rem; border: 2px solid #86EFAC; box-shadow: 0 4px 16px rgba(16, 185, 129, 0.2);">
           <i class="fas fa-check"></i>
         </div>
-        <h3 style="font-size: 1.4rem; font-weight: 800; color: #FFFFFF; margin-bottom: 8px;">অভিনন্দন! আপনার ভর্তি সম্পন্ন হয়েছে</h3>
-        <p style="font-size: 0.95rem; color: #CBD5E1; line-height: 1.6; margin-bottom: 1.5rem;">
+        <h3 style="font-size: 1.4rem; font-weight: 800; color: #0D1B36; margin-bottom: 8px;">অভিনন্দন! আপনার ভর্তি সম্পন্ন হয়েছে</h3>
+        <p style="font-size: 0.95rem; color: #334155; line-height: 1.6; margin-bottom: 1.5rem;">
           আপনার পেমেন্ট সফলভাবে গৃহীত হয়েছে। আপনার অ্যাকাউন্টে কোর্সটি সক্রিয় করা হয়েছে এবং ১০০ EduCoins রিওয়ার্ড যোগ হয়েছে!
         </p>
-        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px; margin-bottom: 1.5rem; font-size: 0.85rem; color: #94A3B8;">
-          ট্রানজেকশন আইডি: <strong style="color: #FFFFFF;" id="successTrxId">TXN-8492019</strong>
+        <div style="background: #F8FAFD; border: 1.5px solid #E2E8F0; border-radius: 10px; padding: 10px; margin-bottom: 1.5rem; font-size: 0.85rem; color: #64748B;">
+          ট্রানজেকশন আইডি: <strong style="color: #0D1B36;" id="successTrxId">TXN-8492019</strong>
         </div>
         <a href="/player" class="btn-buy-course-primary" style="text-decoration: none;">
           <i class="fas fa-play-circle mr-2"></i> ক্লাসরুমে যান ও পড়া শুরু করুন
@@ -2073,7 +2153,7 @@
         classLevel: "SSC '২৮",
         price: 4500,
         discountPrice: 2999,
-        thumbnail: "/images/courses/class10-business-studies.jpg",
+        thumbnail: "/images/courses/ssc-28-prep.jpg",
         routineImage: "/images/courses/routine-banner.jpg",
         rating: 4.95,
         enrolledText: "৯৫০+ শিক্ষার্থী ভর্তি হয়েছে",
@@ -2098,6 +2178,288 @@
             chapterTitle: { bn: "অধ্যায় ১: গতি ও বলের প্রাথমিক ধারণা" },
             lessons: [
               { lessonTitle: { bn: "লেকচার ১: গতির সমীকরণ ও গ্রাফিক্যাল বিশ্লেষণ" }, durationMinutes: 50, isFree: true }
+            ]
+          }
+        ]
+      },
+
+      "ssc-27-science": {
+        slug: "ssc-27-science",
+        title: { bn: "SSC '২৭ বিজ্ঞান পূর্ণাঙ্গ প্রস্তুতি কোর্স" },
+        subject: "বিজ্ঞান বিভাগ (পদার্থ, রসায়ন, উচ্চতর গণিত ও জীব)",
+        classLevel: "SSC '২৭",
+        price: 5500,
+        discountPrice: 3950,
+        thumbnail: "/images/courses/ssc-27-prep.jpg",
+        routineImage: "/images/courses/routine-banner.jpg",
+        rating: 4.97,
+        enrolledText: "১,৬৪০+ শিক্ষার্থী ভর্তি হয়েছে",
+        pitchTitle: "বোর্ড পরীক্ষায় গোল্ডেন A+ অর্জনে বিজ্ঞান ৪টি বিষয়ের ফুল সিলেবাস",
+        instructor: {
+          name: "দীপু স্যার (BUET) ও বিজ্ঞান টিম",
+          institution: "বুয়েট ইঞ্জিনিয়ারিং • লিড মেন্টর",
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%230084FF'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৭</text></svg>"
+        },
+        description: {
+          bn: "এসএসসি ২০২৭ ব্যাচের শিক্ষার্থীদের পদার্থবিজ্ঞান, রসায়ন, উচ্চতর গণিত এবং জীববিজ্ঞানের শতভাগ বেসিক ও বোর্ড পরীক্ষায় নিশ্চিত গোল্ডেন A+ অর্জনের লক্ষ্যে সাজানো পূর্ণাঙ্গ মাস্টারকোর্স।"
+        },
+        features: [
+          "অনলাইন লাইভ ক্লাস ও ২৪/৭ ডাউট সলভ সাপোর্ট",
+          "অধ্যায়ভিত্তিক CQ ও MCQ শর্টকাট টেকনিক ক্লাস",
+          "বোর্ড স্ট্যান্ডার্ড পূর্ণাঙ্গ মক টেস্ট সিরিজ",
+          "রঙিন প্রিন্ট-উপযোগী পিডিএফ লেকচার নোটস",
+          "বোর্ড পরীক্ষায় গোল্ডেন A+ নিশ্চিতকরণ রোডম্যাপ"
+        ],
+        chapters: [
+          {
+            chapterTitle: { bn: "অধ্যায় ১: গতি ও বলের সৃজনশীল সমাধান" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: গতির সমীকরণ ও গ্রাফিক্যাল প্রশ্ন সমাধান" }, durationMinutes: 48, isFree: true }
+            ]
+          }
+        ]
+      },
+
+      "ssc-27-humanities": {
+        slug: "ssc-27-humanities",
+        title: { bn: "SSC '২৭ মানবিক পূর্ণাঙ্গ প্রস্তুতি কোর্স" },
+        subject: "মানবিক বিভাগ (পৌরনীতি, ভূগোল, ইতিহাস ও অর্থনীতি)",
+        classLevel: "SSC '২৭",
+        price: 4200,
+        discountPrice: 2950,
+        thumbnail: "/images/courses/class7-full-course.jpg",
+        routineImage: "/images/courses/routine-banner.jpg",
+        rating: 4.93,
+        enrolledText: "৭২০+ শিক্ষার্থী ভর্তি হয়েছে",
+        pitchTitle: "মানবিক সকল বিষয়ের সহজ সৃজনশীল বিশ্লেষণ ও কালারফুল নোটস",
+        instructor: {
+          name: "মানবিক স্পেশালিস্ট প্যানেল",
+          institution: "ঢাকা বিশ্ববিদ্যালয় ও সিনিয়র শিক্ষক প্যানেল",
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%238B5CF6'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>মান</text></svg>"
+        },
+        description: {
+          bn: "এসএসসি ২০২৭ মানবিক বিভাগের শিক্ষার্থীদের জন্য পৌরনীতি ও নাগরিকতা, বাংলাদেশের ইতিহাস, ভূগোল ও অর্থনীতির প্রতিটি অধ্যায়ের সহজ বিশ্লেষণ, রঙিন চার্ট ও বোর্ড পরীক্ষার হ্যান্ডনোট।"
+        },
+        features: [
+          "সহজ ভাষায় মানবিক সকল বিষয়ের অনলাইন লাইভ ক্লাস",
+          "সৃজনশীল প্রশ্নের কাঠামো ও লেখার স্পেশাল টেকনিক",
+          "অধ্যায়ভিত্তিক মডেল টেস্ট ও বিস্তারিত উত্তরপত্র"
+        ],
+        chapters: [
+          {
+            chapterTitle: { bn: "অধ্যায় ১: নাগরিক ও নাগরিকতা বেসিক" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: নাগরিকের অধিকার ও দায়িত্ব বিশ্লেষণ" }, durationMinutes: 42, isFree: true }
+            ]
+          }
+        ]
+      },
+
+      "ssc-28-business": {
+        slug: "ssc-28-business",
+        title: { bn: "SSC '২৮ ব্যবসায় শিক্ষা ফাউন্ডেশন কোর্স" },
+        subject: "ব্যবসায় শিক্ষা (হিসাববিজ্ঞান ও ব্যবসায় উদ্যোগ বেসিক)",
+        classLevel: "SSC '২৮",
+        price: 4000,
+        discountPrice: 2750,
+        thumbnail: "/images/courses/class10-business-studies.jpg",
+        routineImage: "/images/courses/routine-banner.jpg",
+        rating: 4.91,
+        enrolledText: "৫৮০+ শিক্ষার্থী ভর্তি হয়েছে",
+        pitchTitle: "হিসাববিজ্ঞান ও ফিন্যান্সের বেসিক মাস্টারি শুরু থেকেই",
+        instructor: {
+          name: "কমার্স মেন্টর টিম",
+          institution: "ব্যবসায় শিক্ষা বিশেষজ্ঞ ফ্যাকাল্টি",
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23F59E0B'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
+        },
+        description: {
+          bn: "এসএসসি ২০২৮ ব্যাচের কমার্স শিক্ষার্থীদের জন্য হিসাববিজ্ঞান, ফিন্যান্স এবং ব্যবসায় উদ্যোগের প্রাথমিক ধারণা থেকে শুরু করে বোর্ড পরীক্ষার আগাম প্রস্তুতি।"
+        },
+        features: [
+          "হিসাববিজ্ঞানের গোল্ডেন রুলস ও সহজ কৌশল",
+          "নিয়মিত লাইভ ক্লাস ও কুইজ প্র্যাকটিস",
+          "অধ্যায়ভিত্তিক স্মার্ট নোট শিট"
+        ],
+        chapters: [
+          {
+            chapterTitle: { bn: "অধ্যায় ১: হিসাববিজ্ঞানের প্রাথমিক পরিচিতি" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: হিসাববিজ্ঞান কী ও কেন প্রয়োজন" }, durationMinutes: 40, isFree: true }
+            ]
+          }
+        ]
+      },
+
+      "ssc-28-humanities": {
+        slug: "ssc-28-humanities",
+        title: { bn: "SSC '২৮ মানবিক ফাউন্ডেশন কোর্স" },
+        subject: "মানবিক বিভাগ (বাংলাদেশ ও বিশ্বপরিচয় এবং সাধারণ বিজ্ঞান)",
+        classLevel: "SSC '২৮",
+        price: 3800,
+        discountPrice: 2500,
+        thumbnail: "/images/courses/class5-full-course.jpg",
+        routineImage: "/images/courses/routine-banner.jpg",
+        rating: 4.89,
+        enrolledText: "৫১০+ শিক্ষার্থী ভর্তি হয়েছে",
+        pitchTitle: "মানবিক বিভাগের মূল বিষয়সমূহের চমৎকার বেসিক ফাউন্ডেশন",
+        instructor: {
+          name: "মানবিক মেন্টরস",
+          institution: "দীপু একাডেমি মানবিক বিভাগ",
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%236366F1'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
+        },
+        description: {
+          bn: "এসএসসি ২০২৮ মানবিক শিক্ষার্থীদের জন্য বাংলাদেশ ও বিশ্বপরিচয়, ইতিহাস এবং সাধারণ বিজ্ঞান বিষয়ের শক্ত ভিত্তি গড়ে তোলার স্পেশাল ফাউন্ডেশন কোর্স।"
+        },
+        features: [
+          "অধ্যায়ভিত্তিক ইন্টারেক্টিভ ক্লাস",
+          "রঙিন মানচিত্র ও চার্টসহ হ্যান্ডনোট",
+          "সাপ্তাহিক কুইজ ও অগ্রগতি মূল্যায়ন"
+        ],
+        chapters: [
+          {
+            chapterTitle: { bn: "অধ্যায় ১: বাংলার প্রাচীন ইতিহাস ও ঐতিহ্য" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: প্রাচীন জনপদ ও ভৌগোলিক বৈশিষ্ট্য" }, durationMinutes: 38, isFree: true }
+            ]
+          }
+        ]
+      },
+
+      "hsc-27-business": {
+        slug: "hsc-27-business",
+        title: { bn: "HSC '২৭ পূর্ণাঙ্গ ব্যবসায় শিক্ষা কোর্স" },
+        subject: "ব্যবসায় শিক্ষা (হিসাববিজ্ঞান, ব্যবসায় সংগঠন ও ফিন্যান্স)",
+        classLevel: "HSC '২৭",
+        price: 5500,
+        discountPrice: 3950,
+        thumbnail: "/images/courses/class10-business-studies.jpg",
+        routineImage: "/images/courses/routine-banner.jpg",
+        rating: 4.94,
+        enrolledText: "৮৯০+ শিক্ষার্থী ভর্তি হয়েছে",
+        pitchTitle: "বোর্ড পরীক্ষায় গোল্ডেন A+ ও ঢাবি সি-ইউনিট এডমিশন প্রস্তুতি",
+        instructor: {
+          name: "ব্যবসায় শিক্ষা ফ্যাকাল্টি",
+          institution: "ঢাকা বিশ্ববিদ্যালয় বাণিজ্য অনুষদ টপার্স",
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23F59E0B'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৭</text></svg>"
+        },
+        description: {
+          bn: "এইচএসসি ২০২৭ ব্যাচের হিসাববিজ্ঞান ১ম ও ২য় পত্র, ব্যবসায় সংগঠন ও ব্যবস্থাপনা এবং ফিন্যান্স বিষয়ের প্রতিটি কনসেপ্টের পুঙ্খানুপুঙ্খ ব্যাখ্যা ও বোর্ড সলভিং।"
+        },
+        features: [
+          "অনলাইন লাইভ ক্লাস ও রেকর্ডেড ক্লাস আর্কাইভ",
+          "বোর্ড স্ট্যান্ডার্ড CQ ও MCQ মক টেস্ট সিরিজ",
+          "প্রিমিয়াম কালারফুল হ্যান্ডনোট ও প্রশ্নব্যাংক"
+        ],
+        chapters: [
+          {
+            chapterTitle: { bn: "অধ্যায় ১: হিসাববিজ্ঞান পরিচিতি ও সমন্বয় দাখিলা" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: সমন্বয় দাখিলার জাদুকরী নিয়ম ও CQ হ্যাকস" }, durationMinutes: 52, isFree: true }
+            ]
+          }
+        ]
+      },
+
+      "hsc-27-humanities": {
+        slug: "hsc-27-humanities",
+        title: { bn: "HSC '২৭ পূর্ণাঙ্গ মানবিক কোর্স" },
+        subject: "মানবিক বিভাগ (অর্থনীতি, পৌরনীতি ও যুক্তিবিদ্যা)",
+        classLevel: "HSC '২৭",
+        price: 5000,
+        discountPrice: 3500,
+        thumbnail: "/images/courses/class7-full-course.jpg",
+        routineImage: "/images/courses/routine-banner.jpg",
+        rating: 4.92,
+        enrolledText: "৬৪০+ শিক্ষার্থী ভর্তি হয়েছে",
+        pitchTitle: "মানবিক ৩টি আবশ্যিক বিষয়ের শতভাগ সিলেবাস কভারেজ",
+        instructor: {
+          name: "মানবিক মেন্টর টিম",
+          institution: "সিনিয়র বিসিএস ও বিশ্ববিদ্যালয় মেন্টর প্যানেল",
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%238B5CF6'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৭</text></svg>"
+        },
+        description: {
+          bn: "এইচএসসি ২০২৭ ব্যাচের শিক্ষার্থীদের অর্থনীতি, পৌরনীতি ও সুশাসন এবং যুক্তিবিদ্যা বিষয়ে সহজ বিশ্লেষণ, গ্রাফ সমাধান ও বোর্ড পরীক্ষায় গোল্ডেন A+ পাওয়ার পূর্ণাঙ্গ প্যাকেজ।"
+        },
+        features: [
+          "অর্থনীতির গ্রাফ ও গানিতিক ব্যাখ্যার বিশেষ ক্লাস",
+          "বোর্ড স্ট্যান্ডার্ড হ্যান্ডনোট ও পূর্ণাঙ্গ সাজেশন",
+          "অধ্যায়ভিত্তিক মডেল টেস্ট ও সৃজনশীল খাতা মূল্যায়ন"
+        ],
+        chapters: [
+          {
+            chapterTitle: { bn: "অধ্যায় ১: চাহিদা, যোগান ও স্থিতিস্থাপকতা" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: চাহিদা রেখা অঙ্কন ও গাণিতিক সমীকরণ সমাধান" }, durationMinutes: 50, isFree: true }
+            ]
+          }
+        ]
+      },
+
+      "hsc-28-business": {
+        slug: "hsc-28-business",
+        title: { bn: "HSC '২৮ ব্যবসায় শিক্ষা পূর্ণাঙ্গ কোর্স" },
+        subject: "ব্যবসায় শিক্ষা (১ম বর্ষের পূর্ণাঙ্গ সিলেবাস)",
+        classLevel: "HSC '২৮",
+        price: 5500,
+        discountPrice: 3950,
+        thumbnail: "/images/courses/class10-business-studies.jpg",
+        routineImage: "/images/courses/routine-banner.jpg",
+        rating: 4.93,
+        enrolledText: "৭৩০+ শিক্ষার্থী ভর্তি হয়েছে",
+        pitchTitle: "১ম বর্ষ থেকেই নিখুঁত হিসাববিজ্ঞান ও ব্যবসায়িক জ্ঞান অর্জন",
+        instructor: {
+          name: "সিনিয়র কমার্স টিম",
+          institution: "বাণিজ্য শিক্ষা বিশেষজ্ঞ মেন্টরস",
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23FF7A1A'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
+        },
+        description: {
+          bn: "এইচএসসি ২০২৮ ব্যাচের শিক্ষার্থীদের শুরু থেকেই কমার্সের মূল বিষয়গুলো পুঙ্খানুপুঙ্খভাবে আত্মস্থ করার জন্য সাজানো পূর্ণাঙ্গ একাডেমি কোর্স।"
+        },
+        features: [
+          "১ম বর্ষের প্রতিটি অধ্যায়ের পুঙ্খানুপুঙ্খ বেসিক ক্লাস",
+          "সাপ্তাহিক অনলাইন পরীক্ষা ও লিডারবোর্ড র‍্যাঙ্কিং",
+          "রঙিন হ্যান্ডনোটস ও প্র্যাকটিস শিট"
+        ],
+        chapters: [
+          {
+            chapterTitle: { bn: "অধ্যায় ১: হিসাববিজ্ঞানের মূল ভিত্তি" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: দুতরফা দাখিলা ও জাবেদা ভুক্তিকরণ" }, durationMinutes: 45, isFree: true }
+            ]
+          }
+        ]
+      },
+
+      "hsc-28-humanities": {
+        slug: "hsc-28-humanities",
+        title: { bn: "HSC '২৮ মানবিক পূর্ণাঙ্গ প্রস্তুতি কোর্স" },
+        subject: "মানবিক বিভাগ (১ম বর্ষের পূর্ণাঙ্গ প্রস্তুতি)",
+        classLevel: "HSC '২৮",
+        price: 5000,
+        discountPrice: 3500,
+        thumbnail: "/images/courses/class5-full-course.jpg",
+        routineImage: "/images/courses/routine-banner.jpg",
+        rating: 4.91,
+        enrolledText: "৫৬০+ শিক্ষার্থী ভর্তি হয়েছে",
+        pitchTitle: "১ম বর্ষের অর্থনীতি ও পৌরনীতির কনসেপচুয়াল ক্লাস",
+        instructor: {
+          name: "মানবিক ফ্যাকাল্টি",
+          institution: "দীপু একাডেমি মানবিক বিভাগ",
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%2310B981'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
+        },
+        description: {
+          bn: "এইচএসসি ২০২৮ মানবিক শিক্ষার্থীদের জন্য অর্থনীতি, পৌরনীতি ও যুক্তিবিদ্যা ১ম পত্রের প্রতিটি বিষয়ের সহজবোধ্য ব্যাখ্যা ও বেসিক ফাউন্ডেশন কোর্স।"
+        },
+        features: [
+          "১ম বর্ষের সকল অধ্যায়ের সহজ বিশ্লেষণ ক্লাস",
+          "অধ্যায়ভিত্তিক অনলাইন পরীক্ষা ও প্র্যাকটিস নোটস",
+          "পরীক্ষায় সর্বোচ্চ নম্বর পাওয়ার টিপস ও ট্রিকস"
+        ],
+        chapters: [
+          {
+            chapterTitle: { bn: "অধ্যায় ১: মৌলিক অর্থনৈতিক সমস্যা ও এর সমাধান" },
+            lessons: [
+              { lessonTitle: { bn: "লেকচার ১: দুষ্প্রাপ্যতা ও অসীম অভাবের বিশ্লেষণ" }, durationMinutes: 42, isFree: true }
             ]
           }
         ]
@@ -2298,7 +2660,7 @@
                 <span class="chapter-title-text">
                   <i class="fas fa-folder-open" style="color: var(--cd-green);"></i> ${ch.chapterTitle?.bn || ch.chapterTitle?.en || `অধ্যায় ${idx + 1}`}
                 </span>
-                <span style="font-size: 0.82rem; color: #94A3B8;">${ch.lessons?.length || 1}টি লেকচার</span>
+                <span style="font-size: 0.82rem; color: #64748B; font-weight: 600;">${ch.lessons?.length || 1}টি লেকচার</span>
               </div>
               <div class="chapter-lessons-list">
                 ${(ch.lessons || []).map(les => `
@@ -2308,7 +2670,7 @@
                       <span>${les.lessonTitle?.bn || les.lessonTitle?.en}</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 10px;">
-                      <span style="font-size: 0.8rem; color: #94A3B8;">${les.durationMinutes || 40} মিনিট</span>
+                      <span style="font-size: 0.82rem; color: #64748B; font-weight: 600;">${les.durationMinutes || 40} মিনিট</span>
                       ${les.isFree ? `<a href="/player" class="badge-free-demo"><i class="fas fa-eye"></i> ফ্রি দেখুন</a>` : ''}
                     </div>
                   </div>
@@ -2561,6 +2923,5 @@
   <script src="/js/navbar-bundle.js?v=4.0"></script>
   <script src="/js/site-animations.js" defer></script>
   <script src="/js/app.js"></script>
-
 </body>
 </html>

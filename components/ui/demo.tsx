@@ -179,3 +179,9 @@ export default function InteractiveShowcase() {
     </div>
   );
 }
+import { NotFound } from "./not-found-2";
+export { NotFound };
+export function DemoOne() {
+  return <NotFound />;
+}
+

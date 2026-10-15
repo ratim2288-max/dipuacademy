@@ -1,0 +1,156 @@
+{
+  "banners": [
+    {
+      "id": "banner-1",
+      "title": "সেরা বইয়ের সংগ্রহ — Dipu Academy Bookshop",
+      "subtitle": "HSC, SSC ও স্কুল লেভেলের সেরা মাস্টারবুক কালেকশন",
+      "image": "/images/shop-banner-1.jpg",
+      "link": "/shop",
+      "active": true,
+      "order": 1
+    },
+    {
+      "id": "banner-2",
+      "title": "লিমিটেড অফার — ২৫% বিশেষ ছাড়",
+      "subtitle": "এইচএসসি ও এসএসসি মাস্টারবুক বান্ডেলে পাচ্ছেন বিশেষ ক্যাশব্যাক অফার",
+      "image": "/images/shop-banner-2.jpg",
+      "link": "/shop",
+      "active": true,
+      "order": 2
+    },
+    {
+      "id": "banner-3",
+      "title": "ডিজিটাল ই-বুক — সাথে সাথে ডাউনলোড",
+      "subtitle": "মোবাইল ও ল্যাপটপে পড়ার সুবিধার্থে হাই-কোয়ালিটি কালারফুল PDF ই-বুক",
+      "image": "/images/shop-banner-3.jpg",
+      "link": "/ebooks",
+      "active": true,
+      "order": 3
+    }
+  ],
+  "books": [
+    {
+      "id": "book-hsc-biology",
+      "title": "জীববিজ্ঞান Masterbook",
+      "subtitle": "HSC • ১ম ও ২য় পত্র",
+      "category": "hsc",
+      "price": 460,
+      "originalPrice": 570,
+      "discount": "19% ছাড়",
+      "rating": 4.9,
+      "reviews": 185,
+      "image": "/images/books/book-hsc-biology.jpg",
+      "type": "book",
+      "inStock": true,
+      "description": "সম্পূর্ণ সিলেবাস কভার করা জীববিজ্ঞান মাস্টারবুক। মেডিকেল ও বোর্ড পরীক্ষার সেরা প্রস্তুতি।"
+    },
+    {
+      "id": "book-hsc-english",
+      "title": "English Masterbook",
+      "subtitle": "HSC • Grammar & Literature",
+      "category": "hsc",
+      "price": 440,
+      "originalPrice": 540,
+      "discount": "19% ছাড়",
+      "rating": 4.8,
+      "reviews": 162,
+      "image": "/images/books/book-hsc-english.jpg",
+      "type": "book",
+      "inStock": true,
+      "description": "সহজ ট্রিকস ও প্র্যাকটিস সহ ইংরেজি ১ম ও ২য় পত্রের পূর্ণাঙ্গ গাইড।"
+    },
+    {
+      "id": "book-ssc-bangla",
+      "title": "বাংলা মাস্টারবুক",
+      "subtitle": "SSC • সাহিত্য ও ব্যাকরণ",
+      "category": "ssc",
+      "price": 330,
+      "originalPrice": 420,
+      "discount": "21% ছাড়",
+      "rating": 4.8,
+      "reviews": 204,
+      "image": "/images/books/book-ssc-bangla.jpg",
+      "type": "book",
+      "inStock": true,
+      "description": "এসএসসি শিক্ষার্থীদের জন্য বাংলা ১ম ও ২য় পত্রের অধ্যায়ভিত্তিক নির্ভুল সমাধান।"
+    },
+    {
+      "id": "book-ssc-physics",
+      "title": "পদার্থবিজ্ঞান Physics Guide",
+      "subtitle": "SSC • পদার্থবিজ্ঞান সমাধান",
+      "category": "ssc",
+      "price": 340,
+      "originalPrice": 430,
+      "discount": "21% ছাড়",
+      "rating": 4.7,
+      "reviews": 178,
+      "image": "/images/books/book-ssc-physics.jpg",
+      "type": "book",
+      "inStock": true,
+      "description": "পদার্থবিজ্ঞানের কঠিন গাণিতিক সমস্যাবলীর সহজ ও শর্টকাট সমাধান বই।"
+    },
+    {
+      "id": "book-class9-math",
+      "title": "গণিত মাস্টারবুক",
+      "subtitle": "নবম শ্রেণি • গণিত সমাধান",
+      "category": "9",
+      "price": 300,
+      "originalPrice": 380,
+      "discount": "21% ছাড়",
+      "rating": 4.8,
+      "reviews": 143,
+      "image": "/images/books/book-class9-math.jpg",
+      "type": "book",
+      "inStock": true,
+      "description": "নতুন শিক্ষাক্রম অনুযায়ী নবম শ্রেণির গণিত সমাধান ও ক্রিয়েটিভ প্র্যাকটিস বুক।"
+    },
+    {
+      "id": "book-english-mastery-1st",
+      "title": "Dipu's English Mastery 1st Paper",
+      "subtitle": "SSC • Class 9 & 10 • 2026 & Beyond",
+      "category": "ssc",
+      "price": 380,
+      "originalPrice": 480,
+      "discount": "21% ছাড়",
+      "rating": 4.9,
+      "reviews": 267,
+      "image": "/images/books/english-mastery-1st.jpg",
+      "type": "book",
+      "inStock": true,
+      "description": "ইংরেজি ১ম পত্রের প্যাসেজ, ভোকাবুলারি ও রাইটিং স্কিল বাড়ানোর মাস্টারবুক।"
+    },
+    {
+      "id": "book-english-mastery-2nd",
+      "title": "Dipu's English Mastery 2nd Paper",
+      "subtitle": "SSC • Class 9 & 10 • 2026 & Beyond",
+      "category": "ssc",
+      "price": 380,
+      "originalPrice": 480,
+      "discount": "21% ছাড়",
+      "rating": 4.9,
+      "reviews": 241,
+      "image": "/images/books/english-mastery-2nd.jpg",
+      "type": "book",
+      "inStock": true,
+      "description": "রুলস মুখস্থ ছাড়া প্র্যাকটিক্যাল উদাহরণ দিয়ে ব্যাকরণ শেখার সেরা বই।"
+    }
+  ],
+  "ebooks": [
+    {
+      "id": "ebook-hsc-physics-pdf",
+      "title": "পদার্থবিজ্ঞান PDF E-Book",
+      "subtitle": "HSC • ইনস্ট্যান্ট ডাউনলোড",
+      "category": "ebook",
+      "price": 199,
+      "originalPrice": 350,
+      "discount": "43% ছাড়",
+      "rating": 4.9,
+      "reviews": 312,
+      "image": "/images/books/ebook-hsc-physics.jpg",
+      "type": "ebook",
+      "pdfUrl": "/downloads/hsc-physics-demo.pdf",
+      "pages": 280,
+      "description": "সম্পূর্ণ রঙিন ডিজিটাল PDF বই। মোবাইল ও ট্যাবে খুব সহজে পড়া ও নোট করার সুবিধা।"
+    }
+  ]
+}

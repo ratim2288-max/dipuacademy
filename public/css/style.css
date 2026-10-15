@@ -3485,55 +3485,50 @@ h2:hover, .section-title:hover {
 .reveal-init {
   opacity: 0;
   transform: translateY(-24px) scale(0.97);
-  filter: blur(3px);
+  filter: none;
   transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform, filter;
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 /* Box sliding in from the Left (বাহির থেকে একপাশ দিয়ে আসবে) */
 .reveal-left {
   opacity: 0;
   transform: translateX(-70px) scale(0.95);
-  filter: blur(4px);
+  filter: none;
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform, filter;
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 /* Box sliding in from the Right (বাহির থেকে পরের পাশ দিয়ে আসবে) */
 .reveal-right {
   opacity: 0;
   transform: translateX(70px) scale(0.95);
-  filter: blur(4px);
+  filter: none;
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform, filter;
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 /* Box sliding up from Bottom (বাহির থেকে নিচ থেকে উঠে এসে বসবে) */
 .reveal-up {
   opacity: 0;
   transform: translateY(60px) scale(0.95);
-  filter: blur(4px);
+  filter: none;
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform, filter;
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 /* Scale & Pop from Center (ছোট থেকে বড় হয়ে বসবে) */
 .reveal-pop {
   opacity: 0;
   transform: scale(0.92);
-  filter: blur(4px);
+  filter: none;
   transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform, filter;
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 /* When in view: restore full opacity, translation, scale, and clarity */
@@ -3783,12 +3778,25 @@ html, body {
     text-align: center !important;
   }
 
-  /* Floating WhatsApp / Live Chat on Phone: Positioned for safe thumb reach */
+  /* Floating WhatsApp / Live Chat on Phone: Positioned for safe thumb reach above bottom dock */
   .floating-whatsapp-btn,
-  .floating-live-chat-btn {
-    bottom: 20px !important;
-    right: 16px !important;
-    transform: scale(0.9) !important;
+  .floating-live-chat-btn,
+  .whatsapp-float-btn {
+    bottom: 78px !important;
+    right: 14px !important;
+    transform: scale(0.88) !important;
+    z-index: 9989 !important;
+  }
+
+  /* Safe tap targets and touch highlight cleanup for mobile phones */
+  button, a, input, select {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Fluid typography helper for small mobile viewports */
+  h1, h2, h3 {
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 }
 

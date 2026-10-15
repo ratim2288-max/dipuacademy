@@ -44,6 +44,7 @@ const enrollmentSchema = new mongoose.Schema({
   trxID: {
     type: String,
     required: true,
+    unique: true,
     index: true,
     trim: true,
   },

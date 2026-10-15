@@ -18,5 +18,5 @@
     }
   },
   "include": ["components/**/*", "lib/**/*"],
-  "exclude": ["node_modules", "public", "src"]
+  "exclude": ["node_modules", "public", "src", "docs", "docs/**/*", "**/*.md", "*.md"]
 }

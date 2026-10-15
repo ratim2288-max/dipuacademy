@@ -1,98 +1,2622 @@
 <!DOCTYPE html>
-<html lang="bn" class="dark">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>Dipu Academy — একাডেমিক থেকে এডমিশন, দেশ সেরা অনলাইন লার্নিং প্ল্যাটফর্ম</title>
-  
-  <meta name="description" content="৬ষ্ঠ শ্রেণি থেকে এইচএসসি ও এডমিশন পর্যন্ত সম্পূর্ণ প্রস্তুতি এক প্ল্যাটফর্মে। অ্যানিমেটেড লেকচার, লাইভ ক্লাস, স্মার্ট নোটস ও এআই টিউটর।">
+  <title>Dipu Academy — স্বপ্নকে বাস্তবে রূপ দিতে শুরু হোক আজই!</title>
+  <meta name="description" content="Dipu Academy হলো তোমার অনলাইন পড়াশোনার নির্ভরযোগ্য সঙ্গী। এখানে পাবে অভিজ্ঞ শিক্ষক, সহজবোধ্য ক্লাস ও আধুনিক লার্নিং পদ্ধতি।">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="/images/dipu-logo.png?v=5">
   <link rel="shortcut icon" href="/favicon.ico?v=5">
   <link rel="apple-touch-icon" href="/images/dipu-logo.png?v=5">
 
-  <!-- Google Fonts: Hind Siliguri, Inter, Poppins, JetBrains Mono -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(regs) {
+        for (var r of regs) r.unregister();
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(function(keys) {
+        for (var k of keys) caches.delete(k);
+      });
+    }
+  </script>
+
+  <!-- Google Fonts: Hind Siliguri for Bengali + Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <!-- Font Awesome 6.5.1 -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  
-  <!-- Main Stylesheet with Cache Busting -->
-  <link rel="stylesheet" href="/css/style.css?v=3.6">
-  
-  <script>
-    (function() {
-      try {
-        if ('scrollRestoration' in history) {
-          history.scrollRestoration = 'manual';
-        }
-        window.scrollTo(0, 0);
-        var theme = localStorage.getItem('dipu_theme') || 'dark';
-        if (theme === 'light') {
-          document.documentElement.classList.add('light-theme');
-          document.documentElement.classList.remove('dark');
-        } else {
-          document.documentElement.classList.remove('light-theme');
-          document.documentElement.classList.add('dark');
-        }
-      } catch (e) {}
-    })();
-  </script>
+
+  <style>
+    /* ===== CSS RESET & VARIABLES ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    :root {
+      --font-bn: 'Hind Siliguri', 'Noto Sans Bengali', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-en: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      
+      --color-brand-blue: #1665D8;
+      --color-brand-blue-hover: #0F52B3;
+      --color-brand-dark: #0D1B36;
+      --color-brand-navy: #15254A;
+      
+      --color-text-title: #0D1B36;
+      --color-text-body: #475569;
+      --color-text-muted: #64748B;
+      
+      --bg-white: #FFFFFF;
+      --bg-hero: linear-gradient(180deg, #F0F6FF 0%, #F5F9FF 65%, #FFFFFF 100%);
+      --bg-card: #F8FAFD;
+      --border-card: #E8EEF7;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-card: 18px;
+      --radius-full: 9999px;
+      
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    body {
+      font-family: var(--font-bn);
+      background: var(--bg-white);
+      color: var(--color-text-title);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ===== NAVBAR ===== */
+    .da-navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      height: 72px;
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .da-navbar-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .da-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .da-brand-badge {
+      width: 38px;
+      height: 38px;
+      background: #0B172E;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #38BDF8;
+      font-size: 18px;
+      box-shadow: 0 2px 8px rgba(11, 23, 46, 0.2);
+    }
+
+    .da-brand-text {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0D1B36;
+      letter-spacing: -0.02em;
+      font-family: var(--font-en);
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .da-brand-text span {
+      color: var(--color-brand-blue);
+    }
+
+    .da-nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      list-style: none;
+    }
+
+    .da-nav-item a {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #334155;
+      padding: 8px 16px;
+      border-radius: 10px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .da-nav-item a:hover {
+      background: #F1F5F9;
+      color: var(--color-brand-blue);
+    }
+
+    /* dipusedo AI pill */
+    .da-nav-ai {
+      background: #E0F2FE !important;
+      border: 1px solid #BAE6FD;
+      color: #0284C7 !important;
+      border-radius: var(--radius-full) !important;
+      padding: 6px 16px !important;
+      font-weight: 700 !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+    }
+
+    .da-nav-ai:hover {
+      background: #BAE6FD !important;
+      transform: translateY(-1px);
+    }
+
+    .da-nav-ai .ai-tag {
+      background: #0284C7;
+      color: #FFFFFF;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .da-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Language Switcher */
+    .da-lang-switch {
+      display: flex;
+      background: #F1F5F9;
+      padding: 3px;
+      border-radius: var(--radius-full);
+      border: 1px solid #E2E8F0;
+    }
+
+    .da-lang-btn {
+      border: none;
+      background: transparent;
+      font-size: 0.78rem;
+      font-weight: 700;
+      font-family: var(--font-en);
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      color: #64748B;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .da-lang-btn.active {
+      background: var(--color-brand-blue);
+      color: #FFFFFF;
+      box-shadow: 0 2px 6px rgba(22, 101, 216, 0.3);
+    }
+
+    /* Navbar Auth Area (User Account with Name or Login Button) */
+    .da-nav-auth-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    /* Logged In Account Pill */
+    .da-nav-user-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 4px 14px 4px 5px;
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.22s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      user-select: none;
+      font-family: inherit;
+    }
+
+    .da-nav-user-btn:hover {
+      border-color: #0284C7;
+      background: #F0F9FF;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .da-user-avatar-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0284C7 0%, #00C2FF 100%);
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 13.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);
+      overflow: hidden;
+    }
+
+    .da-user-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .da-user-name-text {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #0F172A;
+      max-width: 110px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .da-user-arrow {
+      font-size: 10px;
+      color: #64748B;
+      transition: transform 0.22s ease;
+    }
+
+    /* Floating Account Dropdown */
+    .da-user-dropdown {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: 270px;
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 18px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px) scale(0.97);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+    }
+
+    .da-user-dropdown.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .da-user-dropdown-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .da-user-avatar-large {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0284C7 0%, #00C2FF 100%);
+      color: #FFFFFF;
+      font-weight: 900;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+      overflow: hidden;
+    }
+
+    .da-user-dropdown-info {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .da-user-dropdown-name {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #0F172A;
+      margin: 0 0 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .da-user-dropdown-phone {
+      font-size: 0.78rem;
+      color: #64748B;
+      margin-bottom: 4px;
+    }
+
+    .da-user-dropdown-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #0284C7;
+      background: #E0F2FE;
+      padding: 2px 8px;
+      border-radius: 999px;
+      width: fit-content;
+    }
+
+    .da-user-dropdown-divider {
+      height: 1px;
+      background: #F1F5F9;
+      margin: 10px 0;
+    }
+
+    .da-user-dropdown-links {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .da-dropdown-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.18s ease;
+    }
+
+    .da-dropdown-link:hover {
+      background: #F8FAFD;
+      transform: translateX(3px);
+    }
+
+    .da-dd-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .da-dd-icon-blue {
+      background: #E0F2FE;
+    }
+
+    .da-dd-icon-green {
+      background: #DCFCE7;
+    }
+
+    .da-dd-icon-purple {
+      background: #EDE9FE;
+    }
+
+    .da-dd-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .da-dd-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #0F172A;
+    }
+
+    .da-dd-desc {
+      font-size: 0.72rem;
+      color: #94A3B8;
+    }
+
+    .da-user-logout-btn {
+      width: 100%;
+      border: none;
+      background: #FEF2F2;
+      color: #DC2626;
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .da-user-logout-btn:hover {
+      background: #DC2626;
+      color: #FFFFFF;
+    }
+
+    /* Not Logged In Button */
+    .da-nav-login-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #1665D8 0%, #0084FF 100%);
+      color: #FFFFFF;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(22, 101, 216, 0.25);
+    }
+
+    .da-nav-login-btn:hover {
+      background: linear-gradient(135deg, #0284C7 0%, #00C2FF 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
+      color: #FFFFFF;
+    }
+
+    .da-mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 22px;
+      color: #0D1B36;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    /* ===== HERO SECTION ===== */
+    .da-hero-section {
+      background: var(--bg-hero);
+      padding: 120px 24px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .da-hero-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      align-items: center;
+      gap: 40px;
+    }
+
+    /* Left: Hero Content */
+    .da-hero-content {
+      padding-top: 10px;
+    }
+
+    /* Green Tag Badge */
+    .da-tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #E8F7EE;
+      border: 1px solid #BCE9CD;
+      border-radius: var(--radius-full);
+      padding: 5px 16px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #15803D;
+      margin-bottom: 22px;
+    }
+
+    .da-tag-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #16A34A;
+      display: inline-block;
+      box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
+    }
+
+    /* Hero Heading */
+    .da-hero-h1 {
+      margin-bottom: 20px;
+    }
+
+    .da-hero-line1 {
+      display: block;
+      font-size: clamp(2.2rem, 4.2vw, 3.35rem);
+      font-weight: 800;
+      color: #0D1B36;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .da-hero-line2 {
+      display: block;
+      font-size: clamp(2.4rem, 4.6vw, 3.6rem);
+      font-weight: 800;
+      color: var(--color-brand-blue);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin-top: 4px;
+    }
+
+    /* Hero Description */
+    .da-hero-paragraph {
+      font-size: 1.05rem;
+      color: #475569;
+      line-height: 1.75;
+      max-width: 530px;
+      margin-bottom: 34px;
+    }
+
+    /* Hero Action Buttons */
+    .da-hero-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Primary Solid Blue Button */
+    .da-btn-blue {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--color-brand-blue);
+      color: #FFFFFF;
+      font-family: var(--font-bn);
+      font-size: 1.02rem;
+      font-weight: 700;
+      padding: 13px 32px;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--color-brand-blue);
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 8px 24px rgba(22, 101, 216, 0.32);
+    }
+
+    .da-btn-blue:hover {
+      background: var(--color-brand-blue-hover);
+      border-color: var(--color-brand-blue-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(22, 101, 216, 0.42);
+      color: #FFFFFF;
+    }
+
+    .da-btn-blue i {
+      font-size: 0.95rem;
+      transition: transform 0.2s ease;
+    }
+
+    .da-btn-blue:hover i {
+      transform: translateX(3px);
+    }
+
+    /* Secondary White/Outline Button */
+    .da-btn-outline-blue {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #FFFFFF;
+      color: #0D1B36;
+      font-family: var(--font-bn);
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 11px 26px;
+      border-radius: var(--radius-full);
+      border: 1.5px solid #2563EB;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .da-btn-outline-blue:hover {
+      background: #F0F6FF;
+      border-color: var(--color-brand-blue-hover);
+      color: var(--color-brand-blue);
+      transform: translateY(-2px);
+    }
+
+    .da-play-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1.5px solid #2563EB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2563EB;
+      font-size: 11px;
+      padding-left: 2px;
+      transition: var(--transition);
+    }
+
+    .da-btn-outline-blue:hover .da-play-circle {
+      background: #2563EB;
+      color: #FFFFFF;
+    }
+
+    /* Right: Hero Image Container */
+    .da-hero-image-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .da-hero-student-img {
+      width: 100%;
+      max-width: 530px;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ===== 4 FEATURE CARDS SECTION ===== */
+    .da-features-section {
+      background: var(--bg-white);
+      padding: 24px 24px 64px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .da-features-container {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .da-features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .da-feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-card);
+      padding: 30px 20px;
+      text-align: center;
+      transition: var(--transition);
+      cursor: default;
+    }
+
+    .da-feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 36px rgba(22, 101, 216, 0.08);
+      border-color: #D6E3F7;
+      background: #FFFFFF;
+    }
+
+    /* Squircles for icons */
+    .da-icon-squircle {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      transition: var(--transition);
+    }
+
+    .da-feature-card:hover .da-icon-squircle {
+      transform: scale(1.08);
+    }
+
+    /* Color variations matching the reference mockup */
+    .da-icon-purple {
+      background: #EDE9FE;
+      color: #7C3AED;
+    }
+
+    .da-icon-green {
+      background: #DCFCE7;
+      color: #16A34A;
+    }
+
+    .da-icon-blue {
+      background: #DBEAFE;
+      color: #2563EB;
+    }
+
+    .da-icon-orange {
+      background: #FFEDD5;
+      color: #EA580C;
+    }
+
+    .da-card-title {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: #0D1B36;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .da-card-desc {
+      font-size: 0.88rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    /* ===== YOUTUBE VIDEO SECTION ===== */
+    .da-video-section {
+      padding: 60px 24px 80px;
+      background: #F8FAFD;
+      border-top: 1px solid #EDF2F7;
+    }
+
+    .da-video-container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .da-section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--color-brand-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+      background: #EFF6FF;
+      padding: 4px 14px;
+      border-radius: var(--radius-full);
+      border: 1px solid #DBEAFE;
+    }
+
+    .da-section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      font-weight: 800;
+      color: #0D1B36;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .da-section-sub {
+      font-size: 1.02rem;
+      color: var(--color-text-body);
+      max-width: 620px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+
+    .da-yt-player-box {
+      position: relative;
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 16px 44px rgba(13, 27, 54, 0.12);
+      aspect-ratio: 16/9;
+      background: #000;
+      border: 3px solid #FFFFFF;
+    }
+
+    .da-yt-player-box iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ===== AI TEACHER SECTION (বাংলাদেশের প্রথম এআই শিক্ষক — WHITE / LIGHT THEME MATCHING) ===== */
+    .da-ai-teacher-section {
+      padding: 90px 24px 100px;
+      background: radial-gradient(circle at 10% 20%, rgba(249, 115, 22, 0.06) 0%, transparent 45%),
+                  radial-gradient(circle at 90% 80%, rgba(22, 101, 216, 0.06) 0%, transparent 45%),
+                  linear-gradient(180deg, #FFFFFF 0%, #F8FAFD 55%, #F0F6FF 100%);
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid #E8EEF7;
+      border-bottom: 1px solid #E8EEF7;
+    }
+
+    .da-ai-teacher-section::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      left: -80px;
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.12) 0%, rgba(249, 115, 22, 0) 70%);
+      pointer-events: none;
+      border-radius: 50%;
+    }
+
+    .da-ai-teacher-section::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      right: -80px;
+      width: 460px;
+      height: 460px;
+      background: radial-gradient(circle, rgba(22, 101, 216, 0.1) 0%, rgba(22, 101, 216, 0) 70%);
+      pointer-events: none;
+      border-radius: 50%;
+    }
+
+    .da-ai-teacher-container {
+      max-width: 1220px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      align-items: center;
+      gap: 50px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Left Column */
+    .da-ai-pill-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #FFF7ED;
+      border: 1px solid #FED7AA;
+      border-radius: 999px;
+      padding: 6px 16px 6px 7px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 10px rgba(234, 88, 12, 0.08);
+    }
+
+    .da-ai-pill-chip {
+      background: linear-gradient(135deg, #EA580C 0%, #F97316 100%);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 6px rgba(234, 88, 12, 0.3);
+    }
+
+    .da-ai-pill-text {
+      color: #C2410C;
+      font-size: 13.5px;
+      font-weight: 700;
+    }
+
+    .da-ai-title {
+      font-size: clamp(2.3rem, 4.2vw, 3.5rem);
+      font-weight: 900;
+      color: #0D1B36;
+      line-height: 1.25;
+      margin-bottom: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .da-ai-orange-text {
+      color: #EA580C;
+      background: linear-gradient(135deg, #EA580C 0%, #F97316 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .da-ai-desc {
+      font-size: 1.05rem;
+      color: #475569;
+      line-height: 1.85;
+      margin-bottom: 30px;
+      max-width: 540px;
+    }
+
+    .da-ai-features-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 34px;
+    }
+
+    .da-ai-feature-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    .da-ai-feature-pill i {
+      color: #EA580C;
+      font-size: 12px;
+    }
+
+    .da-ai-action-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .da-ai-install-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #EA580C 0%, #F97316 100%);
+      color: #FFFFFF;
+      font-size: 15.5px;
+      font-weight: 800;
+      padding: 16px 36px;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 10px 25px rgba(234, 88, 12, 0.35);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .da-ai-install-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 36px rgba(234, 88, 12, 0.5);
+      color: #FFFFFF;
+    }
+
+    /* Right Column Visuals */
+    .da-ai-right-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      position: relative;
+    }
+
+    /* Teacher Photo Card (White Theme with Golden-Orange Accent) */
+    .da-ai-teacher-card {
+      position: relative;
+      flex: 0 0 240px;
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.1), 0 0 25px rgba(249, 115, 22, 0.12);
+      border: 2px solid #FED7AA;
+      background: #FFFFFF;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .da-ai-teacher-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 26px 55px rgba(15, 23, 42, 0.14), 0 0 35px rgba(249, 115, 22, 0.2);
+    }
+
+    .da-ai-teacher-img-wrap {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      background: #F8FAFD;
+    }
+
+    .da-ai-teacher-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .da-ai-teacher-glow {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0) 40%, rgba(13, 27, 54, 0.9) 100%);
+    }
+
+    .da-ai-teacher-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid #A7F3D0;
+      color: #047857;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    .da-ai-pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #10B981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10B981;
+    }
+
+    .da-ai-subject-pill {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      color: #0D1B36;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 9px 12px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.3;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .da-ai-subject-pill i {
+      color: #EA580C;
+      font-size: 14px;
+    }
+
+    /* Smartphone Mockup (White / Silver Flagship UI/UX) */
+    .da-phone-mockup {
+      flex: 0 0 280px;
+      background: #FFFFFF;
+      border: 4px solid #CBD5E1;
+      border-radius: 36px;
+      padding: 16px 14px;
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.1), 0 0 35px rgba(22, 101, 216, 0.08);
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .da-phone-mockup:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 30px 70px rgba(15, 23, 42, 0.14), 0 0 45px rgba(22, 101, 216, 0.12);
+    }
+
+    .da-phone-notch {
+      width: 70px;
+      height: 14px;
+      background: #0D1B36;
+      border-radius: 0 0 10px 10px;
+      margin: -16px auto 10px;
+    }
+
+    .da-phone-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748B;
+      padding: 0 8px;
+      margin-bottom: 12px;
+    }
+
+    .da-phone-app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 8px 12px;
+      border-bottom: 1px solid #E8EEF7;
+      margin-bottom: 14px;
+    }
+
+    .da-phone-app-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0D1B36;
+      margin: 0;
+    }
+
+    .da-phone-app-status {
+      font-size: 11px;
+      font-weight: 700;
+      color: #047857;
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      padding: 3px 8px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .da-green-dot {
+      width: 6px;
+      height: 6px;
+      background: #10B981;
+      border-radius: 50%;
+    }
+
+    .da-phone-chat-body {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+      background: #F8FAFD;
+      padding: 12px 10px;
+      border-radius: 18px;
+      border: 1px solid #E8EEF7;
+    }
+
+    .da-chat-msg {
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .da-chat-msg p {
+      margin: 0;
+    }
+
+    .da-chat-ai {
+      background: #FFFFFF;
+      color: #1E293B;
+      border-bottom-left-radius: 4px;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+
+    .da-msg-orange {
+      color: #EA580C;
+      font-weight: 700;
+    }
+
+    .da-chat-user {
+      background: #0D1B36;
+      border: 1px solid #1E293B;
+      color: #FFFFFF;
+      border-bottom-right-radius: 4px;
+      align-self: flex-end;
+      box-shadow: 0 3px 10px rgba(13, 27, 54, 0.15);
+    }
+
+    .da-phone-input-bar {
+      background: #FFFFFF;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 999px;
+      padding: 6px 8px 6px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+
+    .da-phone-input-placeholder {
+      font-size: 12px;
+      color: #94A3B8;
+    }
+
+    .da-phone-send-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #EA580C 0%, #F97316 100%);
+      color: #FFFFFF;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(234, 88, 12, 0.35);
+      transition: transform 0.2s ease;
+    }
+
+    .da-phone-send-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* Responsive rules */
+    @media (max-width: 991px) {
+      .da-ai-teacher-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 40px;
+      }
+
+      .da-ai-pill-tag {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .da-ai-desc {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .da-ai-features-row {
+        justify-content: center;
+      }
+
+      .da-ai-action-wrap {
+        justify-content: center;
+      }
+
+      .da-ai-right-col {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .da-ai-teacher-card {
+        flex: 0 0 100%;
+        max-width: 300px;
+      }
+
+      .da-phone-mockup {
+        flex: 0 0 100%;
+        max-width: 300px;
+      }
+    }
+
+    /* ===== PREVIOUS MASTER FOOTER (DIPU ACADEMY 5-COLUMN ENTERPRISE FOOTER) ===== */
+    .master-footer {
+      background: #06070B;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 4.5rem 0 2.5rem;
+      color: #94A3B8;
+      font-size: 0.875rem;
+      position: relative;
+      z-index: 20;
+    }
+
+    .master-footer .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .footer-top-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+      font-family: var(--font-en);
+    }
+
+    .footer-desc {
+      font-size: 0.875rem;
+      color: #94A3B8;
+      line-height: 1.65;
+      max-width: 320px;
+      margin-bottom: 1.5rem;
+    }
+
+    .app-download-badges {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .app-badge-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: 12px;
+      background: #0C1019;
+      border: 1.5px solid rgba(255, 255, 255, 0.14);
+      color: #FFFFFF;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    }
+
+    .app-badge-btn:hover {
+      background: #141924;
+      border-color: rgba(66, 133, 244, 0.6);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(66, 133, 244, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .app-badge-sub {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #94A3B8;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .app-badge-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .footer-social-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .social-icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .social-icon-btn:hover {
+      transform: translateY(-3px) scale(1.08);
+    }
+
+    .social-icon-btn.social-fb:hover {
+      background: rgba(24, 119, 242, 0.15);
+      border-color: #1877F2;
+      box-shadow: 0 8px 20px rgba(24, 119, 242, 0.35);
+    }
+
+    .social-icon-btn.social-yt:hover {
+      background: rgba(255, 0, 0, 0.15);
+      border-color: #FF0000;
+      box-shadow: 0 8px 20px rgba(255, 0, 0, 0.35);
+    }
+
+    .social-icon-btn.social-insta:hover {
+      background: rgba(225, 48, 108, 0.15);
+      border-color: #E1306C;
+      box-shadow: 0 8px 20px rgba(225, 48, 108, 0.35);
+    }
+
+    .social-icon-btn.social-in:hover {
+      background: rgba(10, 102, 194, 0.15);
+      border-color: #0A66C2;
+      box-shadow: 0 8px 20px rgba(10, 102, 194, 0.35);
+    }
+
+    .social-icon-btn.social-tiktok:hover {
+      background: rgba(0, 0, 0, 0.75);
+      border-color: #25F4EE;
+      box-shadow: -2px -2px 14px rgba(37, 244, 238, 0.5), 2px 2px 14px rgba(254, 44, 85, 0.5);
+    }
+
+    .social-icon-btn.social-whatsapp:hover {
+      background: rgba(37, 211, 102, 0.15);
+      border-color: #25D366;
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.35);
+    }
+
+    .social-icon-btn.social-telegram:hover {
+      background: rgba(34, 158, 217, 0.15);
+      border-color: #229ED9;
+      box-shadow: 0 8px 20px rgba(34, 158, 217, 0.35);
+    }
+
+    .footer-col-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-link-item {
+      color: #94A3B8;
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-link-item:hover {
+      color: #00C2FF;
+      padding-left: 2px;
+    }
+
+    .footer-legal-bar {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 2rem;
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      font-size: 0.85rem;
+      color: #94A3B8;
+    }
+
+    @media (max-width: 1024px) {
+      .footer-top-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .footer-top-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .footer-legal-bar {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* ===== RESPONSIVE BREAKPOINTS ===== */
+    @media (max-width: 1024px) {
+      .da-hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 36px;
+      }
+      .da-hero-content {
+        padding-top: 10px;
+      }
+      .da-hero-paragraph {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .da-hero-btn-group {
+        justify-content: center;
+      }
+      .da-hero-student-img {
+        max-width: 440px;
+        margin: 0 auto;
+      }
+      .da-features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .da-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .da-footer-top {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      /* Prevent horizontal scrolling & body shift */
+      body {
+        padding-bottom: 74px !important;
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+      }
+
+      /* Navbar on Mobile */
+      .da-navbar {
+        height: 60px;
+        padding: 0 14px;
+      }
+      .da-brand-name {
+        font-size: 1.15rem;
+      }
+      .da-brand-badge {
+        font-size: 9px;
+        padding: 2px 5px;
+      }
+      .da-nav-menu {
+        display: none;
+      }
+      .da-mobile-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        border: 1px solid #E2E8F0;
+        background: #F8FAFD;
+        color: #0F172A;
+        font-size: 1.05rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .da-mobile-toggle:active {
+        transform: scale(0.92);
+      }
+
+      /* Hero Section on Phone */
+      .da-hero-section {
+        padding: 76px 16px 24px !important;
+      }
+      .da-tag-badge {
+        font-size: 0.78rem;
+        padding: 4px 12px;
+        margin-bottom: 12px;
+      }
+      .da-hero-line1 {
+        font-size: clamp(1.65rem, 6.8vw, 2.25rem) !important;
+        line-height: 1.25 !important;
+      }
+      .da-hero-line2 {
+        font-size: clamp(1.9rem, 7.8vw, 2.5rem) !important;
+        line-height: 1.2 !important;
+      }
+      .da-hero-paragraph {
+        font-size: 0.92rem !important;
+        line-height: 1.6 !important;
+        margin: 0 auto 1.4rem !important;
+      }
+      .da-hero-btn-group {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 10px !important;
+      }
+      .da-hero-btn-group a {
+        width: 100% !important;
+        min-height: 48px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 0.95rem !important;
+        border-radius: 14px !important;
+      }
+      .da-hero-student-img {
+        max-width: 100% !important;
+        width: 100% !important;
+        height: auto !important;
+        border-radius: 16px !important;
+        margin-top: 12px;
+      }
+
+      /* Features 2x2 Clean Grid on Phone */
+      .da-features-section {
+        padding: 12px 14px 36px !important;
+      }
+      .da-features-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+      }
+      .da-feature-card {
+        padding: 16px 12px !important;
+        border-radius: 14px !important;
+      }
+      .da-icon-squircle {
+        width: 44px !important;
+        height: 44px !important;
+        border-radius: 12px !important;
+        margin-bottom: 10px !important;
+        font-size: 1.1rem !important;
+      }
+      .da-feature-title {
+        font-size: 0.92rem !important;
+        margin-bottom: 4px !important;
+      }
+      .da-feature-desc {
+        font-size: 0.78rem !important;
+        line-height: 1.4 !important;
+      }
+
+      /* Video Section on Phone */
+      .da-video-section {
+        padding: 36px 16px 48px !important;
+      }
+      .da-section-title {
+        font-size: clamp(1.4rem, 5.2vw, 1.85rem) !important;
+      }
+      .da-section-sub {
+        font-size: 0.88rem !important;
+        margin-bottom: 22px !important;
+      }
+      .da-yt-player-box {
+        border-radius: 14px !important;
+      }
+
+      /* Courses Section on Phone */
+      .da-courses-section {
+        padding: 2.75rem 14px 4rem !important;
+      }
+      .da-courses-title {
+        font-size: clamp(1.4rem, 5.2vw, 1.85rem) !important;
+        line-height: 1.3 !important;
+      }
+      .da-courses-subtitle {
+        font-size: 0.88rem !important;
+        line-height: 1.5 !important;
+        margin-bottom: 1.5rem !important;
+      }
+      .da-courses-controls {
+        gap: 12px !important;
+        width: 100% !important;
+        margin-bottom: 1.8rem !important;
+      }
+      .da-program-tabs {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        display: flex !important;
+        justify-content: flex-start !important;
+        padding: 4px !important;
+        gap: 4px !important;
+      }
+      .da-program-tabs::-webkit-scrollbar {
+        display: none !important;
+      }
+      .da-prog-tab {
+        padding: 8px 14px !important;
+        font-size: 0.84rem !important;
+        white-space: nowrap !important;
+        flex: 1 0 auto !important;
+        justify-content: center !important;
+      }
+      .da-filter-row {
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        justify-content: flex-start !important;
+      }
+      .da-filter-row::-webkit-scrollbar {
+        display: none !important;
+      }
+      .da-pill-group {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        padding: 4px 2px !important;
+        gap: 8px !important;
+        justify-content: flex-start !important;
+        width: max-content !important;
+      }
+      .da-pill-group::-webkit-scrollbar {
+        display: none !important;
+      }
+      .da-filter-pill {
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        padding: 6px 14px !important;
+        font-size: 0.82rem !important;
+      }
+      .da-course-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+      .da-ccard {
+        border-radius: 16px !important;
+      }
+
+      /* Statistics on Phone */
+      .da-stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+      }
+      .da-stat-card {
+        padding: 16px 10px !important;
+      }
+      .da-stat-num {
+        font-size: 1.5rem !important;
+      }
+      .da-stat-label {
+        font-size: 0.82rem !important;
+      }
+
+      /* Footer on Phone */
+      .master-footer {
+        padding: 3rem 0 1.5rem !important;
+      }
+      .footer-top-grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+      }
+      .footer-legal-bar {
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: 10px !important;
+      }
+
+      /* Floating buttons positioned above the bottom dock */
+      .floating-whatsapp-btn,
+      .floating-live-chat-btn,
+      .whatsapp-float-btn {
+        bottom: 76px !important;
+        right: 14px !important;
+        transform: scale(0.9) !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .da-features-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+      }
+      .da-stats-grid {
+        grid-template-columns: 1fr 1fr !important;
+      }
+    }
+
+    /* ===== NATIVE APP MOBILE BOTTOM DOCK ===== */
+    .da-mobile-bottom-dock {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .da-mobile-bottom-dock {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 64px;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(226, 232, 240, 0.95);
+        box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.08);
+        z-index: 9990;
+        align-items: center;
+        justify-content: space-around;
+        padding: 0 4px max(4px, env(safe-area-inset-bottom));
+      }
+
+      .da-bottom-tab {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        flex: 1;
+        color: #64748B;
+        text-decoration: none;
+        font-size: 10.5px;
+        font-weight: 700;
+        padding: 6px 0;
+        border-radius: 12px;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .da-bottom-tab i {
+        font-size: 17px;
+        transition: transform 0.2s ease;
+      }
+
+      .da-bottom-tab:active {
+        transform: scale(0.92);
+      }
+
+      .da-bottom-tab.active,
+      .da-bottom-tab:hover {
+        color: #0084FF;
+      }
+
+      .da-bottom-tab.active i {
+        transform: translateY(-2px);
+        color: #0084FF;
+      }
+
+      /* Mobile Drawer Backdrop */
+      .da-mobile-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 998;
+        display: none;
+        animation: daFadeIn 0.2s ease both;
+      }
+      .da-mobile-backdrop.show {
+        display: block;
+      }
+
+      @keyframes daFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    }
+
+    /* ===== COURSES SHOWCASE SECTION (SSC 27/28 & HSC 27/28 EXCLUSIVE) ===== */
+    .da-courses-section {
+      padding: 5rem 1.25rem 6.5rem;
+      background: #FFFFFF;
+      position: relative;
+      border-top: 1px solid #E8EEF7;
+      overflow: hidden;
+    }
+    .da-courses-container {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+    .da-courses-header {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 2.5rem;
+    }
+    .da-courses-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #EFF6FF;
+      border: 1px solid #DBEAFE;
+      color: #1D4ED8;
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+    .da-courses-title {
+      font-size: clamp(2rem, 3.8vw, 2.75rem);
+      font-weight: 800;
+      color: #0D1B36;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.85rem;
+    }
+    .da-courses-gradient {
+      background: linear-gradient(135deg, #1665D8 0%, #00C2FF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .da-courses-subtitle {
+      font-size: 1.05rem;
+      color: #64748B;
+      line-height: 1.6;
+    }
+    /* Controls Bar */
+    .da-courses-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+      align-items: center;
+    }
+    /* Program Tabs (SSC vs HSC) */
+    .da-program-tabs {
+      display: inline-flex;
+      background: #F1F5F9;
+      padding: 5px;
+      border-radius: 999px;
+      border: 1px solid #E2E8F0;
+      gap: 4px;
+    }
+    .da-prog-tab {
+      border: none;
+      background: transparent;
+      padding: 10px 24px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: inherit;
+    }
+    .da-prog-tab.active {
+      background: #FFFFFF;
+      color: #1665D8;
+      box-shadow: 0 4px 14px rgba(22, 101, 216, 0.15);
+    }
+    .da-prog-tab .tab-count {
+      font-size: 0.75rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #E2E8F0;
+      color: #475569;
+      font-weight: 800;
+    }
+    .da-prog-tab.active .tab-count {
+      background: #DBEAFE;
+      color: #1D4ED8;
+    }
+    /* Direct Batch Pills Row */
+    .da-filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+    }
+    .da-pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+    }
+    .da-filter-pill {
+      padding: 7px 18px;
+      border-radius: 999px;
+      border: 1px solid #E2E8F0;
+      background: #FFFFFF;
+      color: #475569;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+    }
+    .da-filter-pill:hover {
+      border-color: #CBD5E1;
+      background: #F8FAFD;
+      color: #0D1B36;
+    }
+    .da-filter-pill.active {
+      background: #1665D8;
+      color: #FFFFFF;
+      border-color: #1665D8;
+      box-shadow: 0 4px 12px rgba(22, 101, 216, 0.25);
+    }
+    /* Course Grid (4-Column Responsive Layout) */
+    .da-course-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      align-items: stretch;
+      width: 100%;
+    }
+    @media (max-width: 1160px) {
+      .da-course-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+    }
+    @media (max-width: 640px) {
+      .da-course-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+    }
+    /* Course Card */
+    .da-ccard {
+      background: #FFFFFF;
+      border: 1.5px solid #E8EEF7;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(13, 27, 54, 0.05);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+    }
+    .da-ccard:hover {
+      transform: translateY(-6px);
+      border-color: #0084FF;
+      box-shadow: 0 18px 40px rgba(0, 132, 255, 0.14);
+    }
+    .da-ccard-thumb {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      background: #F1F5F9;
+      overflow: hidden;
+    }
+    .da-ccard-thumb img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+    .da-ccard:hover .da-ccard-thumb img {
+      transform: scale(1.06);
+    }
+    /* Badges on thumb */
+    .da-batch-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      color: #FFFFFF;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      z-index: 2;
+    }
+    .da-group-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      color: #0D1B36;
+      font-size: 0.72rem;
+      font-weight: 700;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+      z-index: 2;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .da-ccard-body {
+      padding: 18px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .da-ccard-subject {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #64748B;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      line-height: 1.3;
+    }
+    .da-ccard-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0D1B36;
+      line-height: 1.4;
+      margin-bottom: 12px;
+      min-height: 48px;
+    }
+    .da-ccard-mentor {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-top: 1px solid #F1F5F9;
+      border-bottom: 1px solid #F1F5F9;
+      margin-bottom: 12px;
+    }
+    .da-ccard-mentor-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #EFF6FF;
+      border: 1.5px solid #DBEAFE;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1665D8;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .da-ccard-mentor-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+    .da-ccard-mentor-name {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #0D1B36;
+    }
+    .da-ccard-mentor-sub {
+      font-size: 0.72rem;
+      color: #64748B;
+    }
+    /* Stats */
+    .da-ccard-stats {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: #64748B;
+      margin-bottom: 14px;
+    }
+    .da-ccard-students {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: #10B981;
+      font-weight: 600;
+    }
+    .da-ccard-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #F59E0B;
+      font-weight: 700;
+    }
+    /* Footer / Price & Button */
+    .da-ccard-footer {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid #F8FAFD;
+      gap: 6px;
+    }
+    .da-price-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .da-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .da-price-current {
+      font-size: 1.22rem;
+      font-weight: 800;
+      color: #1665D8;
+      font-family: 'Outfit', sans-serif;
+    }
+    .da-price-orig {
+      font-size: 0.8rem;
+      color: #94A3B8;
+      text-decoration: line-through;
+    }
+    .da-discount-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #EF4444;
+      background: #FEF2F2;
+      padding: 1px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-top: 2px;
+    }
+    .da-btn-enroll {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #EFF6FF;
+      border: 1px solid #DBEAFE;
+      color: #1665D8;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: 999px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .da-ccard:hover .da-btn-enroll {
+      background: #1665D8;
+      color: #FFFFFF;
+      border-color: #1665D8;
+      box-shadow: 0 4px 12px rgba(22, 101, 216, 0.3);
+    }
+    .da-ccard:hover .da-btn-enroll i {
+      transform: translateX(3px);
+    }
+    .da-btn-enroll i {
+      transition: transform 0.2s ease;
+      font-size: 0.75rem;
+    }
+    .da-courses-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3.5rem 1rem;
+      background: #F8FAFD;
+      border-radius: 20px;
+      border: 1.5px dashed #CBD5E1;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Ambient Glowing Orbs -->
-  <div class="bg-glow-orb bg-glow-hero"></div>
+  <!-- ===== NAVBAR ===== -->
+  <nav class="da-navbar" id="mainNavbar">
+    <div class="da-navbar-inner">
+      <a href="/" class="da-brand">
+        <div class="da-brand-badge">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div class="da-brand-text">
+          Dipu <span>Academy</span>
+        </div>
+      </a>
 
-  <!-- ============================================================================
-       1. REACT TYPESCRIPT NAVBAR (Sticky, Realtime Dark/Light Mode, BN/EN, Profile, Mobile Drawer)
-       ============================================================================ -->
-  <div id="site-navbar-root"></div>
+      <ul class="da-nav-menu">
+        <li class="da-nav-item">
+          <a href="#courses"><i class="fa-solid fa-graduation-cap" style="color: #1665D8;"></i> কোর্সসমূহ</a>
+        </li>
+        <li class="da-nav-item">
+          <a href="/shop"><i class="fa-solid fa-store" style="color: #64748B;"></i> Shop <i class="fa-solid fa-angle-down" style="font-size: 11px; opacity: 0.6;"></i></a>
+        </li>
+        <li class="da-nav-item">
+          <a href="/ai" class="da-nav-ai">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> dipusedo <span class="ai-tag">AI</span>
+          </a>
+        </li>
+        <li class="da-nav-item">
+          <a href="/login.html"><i class="fa-solid fa-headset" style="color: #10B981;"></i> যোগাযোগ</a>
+        </li>
+        <li class="da-nav-item">
+          <a href="/my-courses.html"><i class="fa-solid fa-graduation-cap" style="color: #10B981;"></i> আমার কোর্স</a>
+        </li>
+      </ul>
 
+      <div class="da-nav-actions">
+        <div class="da-lang-switch">
+          <button class="da-lang-btn active">BN</button>
+          <button class="da-lang-btn">EN</button>
+        </div>
+        <!-- Dynamic User Auth Account Area -->
+        <div class="da-nav-auth-wrap" id="navAuthArea">
+          <a href="/login.html" class="da-nav-login-btn" title="লগইন করুন">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+            <span>লগইন</span>
+          </a>
+        </div>
+        <button class="da-mobile-toggle" id="mobileNavToggle" aria-label="মেনু খুলুন">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
 
-  <!-- ============================================================================
-       1. HERO SECTION (TypeScript React Component)
-       ============================================================================ -->
-  <section class="hero-section" id="hero" style="padding: 0; min-height: 92vh; display: flex; flex-direction: column; justify-content: flex-start; position: relative;">
-    <div id="home-hero-root">
-      <div style="position: relative; padding: 3.5rem 1rem 4rem; text-align: center; max-width: 1140px; margin: 0 auto; display: flex; flex-direction: column; align-items: center;">
+  <!-- ===== HERO SECTION ===== -->
+  <section class="da-hero-section" id="hero">
+    <div class="da-hero-container">
+      
+      <!-- Left: Content Matching Image Exactly -->
+      <div class="da-hero-content">
+        <!-- Tag Badge -->
+        <div class="da-tag-badge">
+          <span class="da-tag-dot"></span>
+          অনলাইন শিক্ষা প্ল্যাটফর্ম
+        </div>
 
-        <h1 class="hero-main-title" style="font-size: clamp(2.1rem, 4.8vw, 3.6rem); font-weight: 800; line-height: 1.28; color: #FFFFFF; margin: 0.2rem 0 1.5rem; letter-spacing: -0.02em;">
-          <span style="display: block; color: #FFFFFF; margin-bottom: 8px;">একাডেমিক থেকে এডমিশন —</span>
-          <span class="hero-gradient-text" style="display: inline-block; background: linear-gradient(135deg, #0084FF 0%, #00C2FF 50%, #0070F3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: #00C2FF;">প্রস্তুতি নাও দেশ সেরা শিক্ষক ও প্রযুক্তির সাথে।</span>
+        <!-- Heading -->
+        <h1 class="da-hero-h1">
+          <span class="da-hero-line1">স্বপ্নকে বাস্তবে রূপ দিতে</span>
+          <span class="da-hero-line2">শুরু হোক আজই!</span>
         </h1>
-        <p style="font-size: clamp(1rem, 1.8vw, 1.15rem); line-height: 1.7; color: #CBD5E1; max-width: 780px; margin: 0 auto 2.2rem;">
-          ৬ষ্ঠ শ্রেণি থেকে দ্বাদশ ও এডমিশন পর্যন্ত সম্পূর্ণ ডিজিটাল অ্যাকাডেমিক প্ল্যাটফর্ম। অভিজ্ঞ মেন্টরদের লাইভ ক্লাস, অ্যানিমেটেড কনসেপ্ট ও ইন্টারেক্টিভ নোটস।
+
+        <!-- Subtitle -->
+        <p class="da-hero-paragraph">
+          Dipu Academy হলো তোমার অনলাইন পড়াশোনার নির্ভরযোগ্য সঙ্গী। এখানে পাবে অভিজ্ঞ শিক্ষক, সহজবোধ্য ক্লাস ও আধুনিক লার্নিং পদ্ধতি।
         </p>
+
+        <!-- CTA Buttons -->
+        <div class="da-hero-btn-group">
+          <a href="#courses" class="da-btn-blue">
+            এখনই কোর্সসমূহ দেখুন <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="#about-video" class="da-btn-outline-blue">
+            <span class="da-play-circle"><i class="fa-solid fa-play"></i></span>
+            আমাদের সম্পর্কে জানুন
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Students Graphic Matching Image Exactly -->
+      <div class="da-hero-image-wrap">
+        <img 
+          src="/images/hero-students.png" 
+          alt="Dipu Academy Students — ভালো পড়ো বড় হও"
+          class="da-hero-student-img"
+        >
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 4 FEATURE CARDS ===== -->
+  <section class="da-features-section" id="features">
+    <div class="da-features-container">
+      <div class="da-features-grid">
+
+        <!-- Card 1: লাইভ ও রেকর্ড ক্লাস -->
+        <div class="da-feature-card">
+          <div class="da-icon-squircle da-icon-purple">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="15" rx="3"></rect>
+              <polygon points="10 8 16 11.5 10 15 10 8" fill="#7C3AED" stroke="none"></polygon>
+            </svg>
+          </div>
+          <h3 class="da-card-title">লাইভ ও রেকর্ড ক্লাস</h3>
+          <p class="da-card-desc">যেকোনো সময়, যেকোনো জায়গা থেকে ক্লাস দেখুন।</p>
+        </div>
+
+        <!-- Card 2: অভিজ্ঞ শিক্ষক মণ্ডলী -->
+        <div class="da-feature-card">
+          <div class="da-icon-squircle da-icon-green">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="7" r="4"></circle>
+              <path d="M6 20v-1a6 6 0 0 1 12 0v1"></path>
+            </svg>
+          </div>
+          <h3 class="da-card-title">অভিজ্ঞ শিক্ষক মণ্ডলী</h3>
+          <p class="da-card-desc">বিষয়ভিত্তিক অভিজ্ঞ ও দক্ষ শিক্ষক দ্বারা পাঠদান।</p>
+        </div>
+
+        <!-- Card 3: স্মার্ট লার্নিং সিস্টেম -->
+        <div class="da-feature-card">
+          <div class="da-icon-squircle da-icon-blue">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="11" height="16" rx="2"></rect>
+              <rect x="16" y="8" width="5.5" height="12" rx="1.5"></rect>
+            </svg>
+          </div>
+          <h3 class="da-card-title">স্মার্ট লার্নিং সিস্টেম</h3>
+          <p class="da-card-desc">সহজে পড়াশোনা, সহজে বোঝা।</p>
+        </div>
+
+        <!-- Card 4: ২৪/৭ সাপোর্ট -->
+        <div class="da-feature-card">
+          <div class="da-icon-squircle da-icon-orange">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+              <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+            </svg>
+          </div>
+          <h3 class="da-card-title">২৪/৭ সাপোর্ট</h3>
+          <p class="da-card-desc">যেকোনো সমস্যায় পাশে আছে আমাদের টিম।</p>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- ============================================================================
-       3. FEATURE STRIP (Interactive Tabbed Showcase - TypeScript React Component)
-       ============================================================================ -->
-  <section class="features-section" id="features" style="padding: 2.5rem 1rem 3.5rem;">
-    <div class="container" style="max-width: 1200px; margin: 0 auto; width: 100%;">
-      <div id="home-features-root"></div>
+  <!-- ===== YOUTUBE VIDEO SECTION ===== -->
+  <section class="da-video-section" id="about-video">
+    <div class="da-video-container">
+      <div class="da-section-badge">
+        <i class="fa-solid fa-circle-play"></i> আমাদের পরিচয়
+      </div>
+      <h2 class="da-section-title">Dipu Academy সম্পর্কে জানুন</h2>
+      <p class="da-section-sub">আমরা কীভাবে শিক্ষার্থীদের স্বপ্ন পূরণে সহায়তা করি, দেখুন এই পরিচিতি ভিডিওতে।</p>
+      
+      <div class="da-yt-player-box">
+        <iframe 
+          src="https://www.youtube.com/embed/gzhi2X6tpmg" 
+          title="Dipu Academy পরিচিতি ভিডিও" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AI TEACHER SECTION (বাংলাদেশের প্রথম এআই শিক্ষক) ===== -->
+  <section class="da-ai-teacher-section" id="ai-teacher">
+    <div class="da-ai-teacher-container">
+      
+      <!-- Left Content -->
+      <div class="da-ai-left-col">
+        <!-- AI Pill Tag -->
+        <div class="da-ai-pill-tag">
+          <span class="da-ai-pill-chip">AI টিউটর</span>
+          <span class="da-ai-pill-text">Dipu Academy AI</span>
+        </div>
+
+        <!-- Headline -->
+        <h2 class="da-ai-title">
+          বাংলাদেশের প্রথম <span class="da-ai-orange-text">Dipu Academy</span><br>
+          <span class="da-ai-orange-text">এআই শিক্ষক</span>
+        </h2>
+
+        <!-- Description -->
+        <p class="da-ai-desc">
+          <strong>Dipu Academy AI</strong> হলো বাংলাদেশের প্রথম সম্পূর্ণ NCTB সিলেবাসভিত্তিক স্মার্ট AI টিউটর প্ল্যাটফর্ম। বাংলায় স্বাভাবিক কথোপকথনের মাধ্যমে যেকোনো বিষয়ের প্রশ্নের তাৎক্ষণিক, সঠিক ও সহজবোধ্য উত্তর পান – ঠিক যেন আপনার পড়ার টেবিলে ২৪ ঘণ্টা একজন অভিজ্ঞ শিক্ষক বসে আছেন!
+        </p>
+
+        <!-- Feature Highlights Row -->
+        <div class="da-ai-features-row">
+          <span class="da-ai-feature-pill"><i class="fa-solid fa-check"></i> ২৪/৭ ইনস্ট্যান্ট টিউটর</span>
+          <span class="da-ai-feature-pill"><i class="fa-solid fa-check"></i> NCTB ফুল সিলেবাস</span>
+          <span class="da-ai-feature-pill"><i class="fa-solid fa-check"></i> বাংলায় সহজ সমাধান</span>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="da-ai-action-wrap">
+          <a href="/ai" class="da-ai-install-btn">
+            <i class="fa-solid fa-robot"></i>
+            <span>Dipu Academy AI শুরু করো</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Visual (AI Teacher Photo Card + High-Tech Smartphone Chat Mockup) -->
+      <div class="da-ai-right-col">
+        
+        <!-- Generated Premium AI Teacher Showcase Card -->
+        <div class="da-ai-teacher-card">
+          <div class="da-ai-teacher-img-wrap">
+            <img src="/images/ai-teacher.jpg" alt="Dipu Academy AI Teacher" class="da-ai-teacher-img">
+            <div class="da-ai-teacher-glow"></div>
+            
+            <!-- Live Badge Overlay -->
+            <div class="da-ai-teacher-badge">
+              <span class="da-ai-pulse-dot"></span>
+              <span>২৪/৭ Dipu Academy AI টিউটর</span>
+            </div>
+
+            <!-- Subject Pill Overlay -->
+            <div class="da-ai-subject-pill">
+              <i class="fa-solid fa-brain"></i>
+              <span>NCTB গণিত ও পদার্থবিজ্ঞান স্পেশালিস্ট</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Smartphone Mockup Matching Image 1 -->
+        <div class="da-phone-mockup">
+          <div class="da-phone-notch"></div>
+          
+          <!-- Screen Header -->
+          <div class="da-phone-status-bar">
+            <span>9:41</span>
+            <span>100% <i class="fa-solid fa-bolt" style="font-size: 10px; margin-left: 2px;"></i></span>
+          </div>
+
+          <div class="da-phone-app-header">
+            <h3 class="da-phone-app-title">Dipu Academy AI</h3>
+            <span class="da-phone-app-status"><span class="da-green-dot"></span> সক্রিয়</span>
+          </div>
+
+          <!-- Chat Messages Body -->
+          <div class="da-phone-chat-body">
+            
+            <!-- Message 1 (AI) -->
+            <div class="da-chat-msg da-chat-ai">
+              <p>সুপ্রভাত Mizan! ✨<br>আজ আমি কীভাবে <span class="da-msg-orange">সাহায্য</span> করতে পারি?</p>
+            </div>
+
+            <!-- Message 2 (Student) -->
+            <div class="da-chat-msg da-chat-user">
+              <p>অধ্যায় ৫ এর গণিতের ৩ নং প্রশ্নটা বুঝতে পারছি না...</p>
+            </div>
+
+            <!-- Message 3 (AI) -->
+            <div class="da-chat-msg da-chat-ai">
+              <p>ঠিক আছে! চলো একসাথে ধাপে ধাপে সমাধান করি।<br>প্রথমে... যোগফলের নিয়মটা মনে করো...</p>
+            </div>
+
+          </div>
+
+          <!-- Phone Input Bar -->
+          <div class="da-phone-input-bar">
+            <span class="da-phone-input-placeholder">আপনার প্রশ্ন লিখুন...</span>
+            <button type="button" class="da-phone-send-btn" aria-label="পাঠান">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </section>
 
   <!-- ============================================================================
-       4. VIDEO LESSONS & COURSE EXPLORER (TypeScript React Component)
+       COURSES SHOWCASE SECTION (SSC 27/28 & HSC 27/28 EXCLUSIVE - 4 COURSES)
        ============================================================================ -->
-  <section class="video-lessons-section" id="courses" style="padding: 1rem 0 3rem;">
-    <div id="home-courses-root"></div>
-  </section>
+  <section class="da-courses-section" id="courses">
+    <div class="da-courses-container">
+      
+      <!-- Section Header -->
+      <div class="da-courses-header">
+        <div class="da-courses-badge">
+          <i class="fa-solid fa-graduation-cap"></i> আমাদের স্পেশাল কোর্সসমূহ
+        </div>
+        <h2 class="da-courses-title">
+          সেরা মেন্টরদের পরিচালিত <span class="da-courses-gradient">এসএসসি ও এইচএসসি কোর্স</span>
+        </h2>
+        <p class="da-courses-subtitle">
+          বোর্ড পরীক্ষা ও এডমিশন ফাউন্ডেশনের পূর্ণাঙ্গ প্রস্তুতি — তোমার প্রয়োজনীয় ব্যাচটি বেছে নাও।
+        </p>
+      </div>
 
-  <!-- ============================================================================
-       5. TRUST & TESTIMONIALS (TypeScript React Component)
-       ============================================================================ -->
-  <section id="trust-reviews-section">
-    <div id="home-trust-testimonials-root"></div>
+      <!-- Controls & Filter Engine -->
+      <div class="da-courses-controls">
+        
+        <!-- Primary Program Switcher (SSC vs HSC) -->
+        <div class="da-program-tabs" id="programTabs">
+          <button type="button" class="da-prog-tab active" data-prog="all">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>সকল কোর্স</span>
+            <span class="tab-count">৪</span>
+          </button>
+          <button type="button" class="da-prog-tab" data-prog="ssc">
+            <i class="fa-solid fa-award"></i>
+            <span>এসএসসি (SSC)</span>
+            <span class="tab-count">২</span>
+          </button>
+          <button type="button" class="da-prog-tab" data-prog="hsc">
+            <i class="fa-solid fa-medal"></i>
+            <span>এইচএসসি (HSC)</span>
+            <span class="tab-count">২</span>
+          </button>
+        </div>
+
+        <!-- Direct Batch Filter Pills -->
+        <div class="da-filter-row">
+          <div class="da-pill-group" id="batchPillsContainer">
+            <button type="button" class="da-filter-pill active" data-batch="all">সব ব্যাচ (৪টি)</button>
+            <button type="button" class="da-filter-pill" data-batch="ssc-27" data-prog-target="ssc"><i class="fa-solid fa-graduation-cap" style="color: #0084FF;"></i> SSC '২৭</button>
+            <button type="button" class="da-filter-pill" data-batch="ssc-28" data-prog-target="ssc"><i class="fa-solid fa-graduation-cap" style="color: #6366F1;"></i> SSC '২৮</button>
+            <button type="button" class="da-filter-pill" data-batch="hsc-27" data-prog-target="hsc"><i class="fa-solid fa-graduation-cap" style="color: #E11D48;"></i> HSC '২৭</button>
+            <button type="button" class="da-filter-pill" data-batch="hsc-28" data-prog-target="hsc"><i class="fa-solid fa-graduation-cap" style="color: #FF7A1A;"></i> HSC '২৮</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Course Cards Grid -->
+      <div class="da-course-grid" id="courseCardsGrid">
+        <!-- Rendered by JavaScript -->
+      </div>
+
+    </div>
   </section>
 
   <!-- ============================================================================
@@ -150,7 +2674,7 @@
 
             <!-- Real Official Instagram Logo -->
             <a href="https://instagram.com" id="footerInstaLink" target="_blank" rel="noreferrer" class="social-icon-btn social-insta" title="Instagram" aria-label="Instagram">
-              <svg width="19" height="19" viewBox="0 0 24 24">
+              <svg width="20" height="20" viewBox="0 0 24 24">
                 <defs>
                   <linearGradient id="instaFooterGrad" x1="0%" y1="100%" x2="100%" y2="0%">
                     <stop offset="0%" stop-color="#FFDC80"/>
@@ -239,7 +2763,6 @@
           </ul>
         </div>
 
-
       </div>
 
       <!-- Legal Bottom Bar -->
@@ -259,21 +2782,718 @@
     </div>
   </footer>
 
-<!-- JavaScript Engine & React TypeScript Bundles -->
-  <script src="/js/navbar-bundle.js?v=4.0"></script>
-  <script src="/js/hero-bundle.js"></script>
-  <script src="/js/features-bundle.js"></script>
-  <script src="/js/course-explorer-bundle.js"></script>
-  <script src="/js/trust-testimonials-bundle.js"></script>
-  <script src="/js/app.js"></script>
-  <script src="/js/site-animations.js" defer></script>
+  <!-- ============================================================================
+       NATIVE APP MOBILE BOTTOM DOCK (Visible on Smartphones < 768px)
+       ============================================================================ -->
+  <nav class="da-mobile-bottom-dock" id="mobileBottomDock" aria-label="Mobile Navigation">
+    <a href="/" class="da-bottom-tab active" id="tabHome">
+      <i class="fa-solid fa-house"></i>
+      <span>হোম</span>
+    </a>
+    <a href="/#courses" class="da-bottom-tab" id="tabCourses">
+      <i class="fa-solid fa-graduation-cap"></i>
+      <span>কোর্সসমূহ</span>
+    </a>
+    <a href="/shop" class="da-bottom-tab" id="tabShop">
+      <i class="fa-solid fa-book-open"></i>
+      <span>বই ও শপ</span>
+    </a>
+    <a href="/ai" class="da-bottom-tab" id="tabAi">
+      <i class="fa-solid fa-robot"></i>
+      <span>AI শিক্ষক</span>
+    </a>
+    <a href="/dashboard" class="da-bottom-tab" id="tabDashboard">
+      <i class="fa-solid fa-user-graduate"></i>
+      <span id="tabUserLabel">ড্যাশবোর্ড</span>
+    </a>
+  </nav>
+
+  <!-- Mobile Drawer Backdrop Overlay -->
+  <div class="da-mobile-backdrop" id="mobileBackdrop"></div>
+
+  <!-- Live Authentication & User Profile Navbar Script -->
   <script>
-    // Smoothly reveal footer only after interactive bundles mount
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(function() {
-        document.body.classList.add('site-mounted');
-      }, 150);
-    });
+    (function initNavAuth() {
+      function getLoggedInUser() {
+        var isLoggedIn = localStorage.getItem('dipu_logged_in') === 'true' || !!localStorage.getItem('dipu_auth_token');
+        var name = localStorage.getItem('da_user_name');
+        var phone = localStorage.getItem('dipu_user_phone');
+        var batch = localStorage.getItem('da_user_target') || "SSC '২৭ ব্যাচ";
+        var avatar = localStorage.getItem('dipu_user_avatar');
+
+        try {
+          var rawProfile = localStorage.getItem('dipu_user_profile');
+          if (rawProfile) {
+            var prof = JSON.parse(rawProfile);
+            if (prof.fullName && !name) name = prof.fullName;
+            if (prof.phone && !phone) phone = prof.phone;
+            if (prof.classLabel || prof.batch) batch = prof.classLabel || prof.batch;
+            if (prof.avatar && !avatar) avatar = prof.avatar;
+          }
+        } catch(e) {}
+
+        // Fallback: If any student session exists, consider logged in
+        if (!isLoggedIn && (name || phone)) {
+          isLoggedIn = true;
+        }
+
+        if (!isLoggedIn) return null;
+
+        if (!name) name = "ratim";
+        return {
+          name: name,
+          phone: phone || "০১৭১২৩৪৫৬৭৮",
+          batch: batch,
+          avatar: avatar
+        };
+      }
+
+      function renderAuthUI() {
+        var authContainer = document.getElementById('navAuthArea');
+        if (!authContainer) return;
+
+        var user = getLoggedInUser();
+
+        if (user) {
+          var initial = (user.name.charAt(0) || 'R').toUpperCase();
+          var avatarContent = user.avatar && user.avatar.startsWith('http') 
+            ? '<img src="' + user.avatar + '" alt="' + user.name + '" class="da-user-avatar-img">'
+            : '<span class="da-user-avatar-letter">' + initial + '</span>';
+
+          authContainer.innerHTML = 
+            '<button type="button" class="da-nav-user-btn" id="navUserBtn" aria-expanded="false" title="অ্যাকাউন্ট মেনু">' +
+              '<div class="da-user-avatar-circle">' + avatarContent + '</div>' +
+              '<span class="da-user-name-text">' + user.name + '</span>' +
+              '<i class="fa-solid fa-angle-down da-user-arrow" id="navUserArrow"></i>' +
+            '</button>' +
+            
+            '<div class="da-user-dropdown" id="navUserDropdown">' +
+              '<div class="da-user-dropdown-header">' +
+                '<div class="da-user-avatar-large">' + avatarContent + '</div>' +
+                '<div class="da-user-dropdown-info">' +
+                  '<h4 class="da-user-dropdown-name">' + user.name + '</h4>' +
+                  '<span class="da-user-dropdown-phone">' + user.phone + '</span>' +
+                  '<span class="da-user-dropdown-badge">' + user.batch + '</span>' +
+                '</div>' +
+              '</div>' +
+              
+              '<div class="da-user-dropdown-divider"></div>' +
+              
+              '<div class="da-user-dropdown-links">' +
+                '<a href="/dashboard.html" class="da-dropdown-link">' +
+                  '<div class="da-dd-icon da-dd-icon-blue"><i class="fa-solid fa-chart-pie" style="color: #0284C7;"></i></div>' +
+                  '<div class="da-dd-text">' +
+                    '<span class="da-dd-title">ড্যাশবোর্ড</span>' +
+                    '<span class="da-dd-desc">লার্নিং পোর্টাল ও প্রগ্রেস</span>' +
+                  '</div>' +
+                '</a>' +
+                '<a href="/my-courses.html" class="da-dropdown-link">' +
+                  '<div class="da-dd-icon da-dd-icon-green"><i class="fa-solid fa-graduation-cap" style="color: #10B981;"></i></div>' +
+                  '<div class="da-dd-text">' +
+                    '<span class="da-dd-title">আমার কোর্সসমূহ</span>' +
+                    '<span class="da-dd-desc">চলমান ভিডিও ক্লাস ও লেকচার</span>' +
+                  '</div>' +
+                '</a>' +
+                '<a href="/profile.html" class="da-dropdown-link">' +
+                  '<div class="da-dd-icon da-dd-icon-purple"><i class="fa-solid fa-user-gear" style="color: #8B5CF6;"></i></div>' +
+                  '<div class="da-dd-text">' +
+                    '<span class="da-dd-title">প্রোফাইল সেটিংস</span>' +
+                    '<span class="da-dd-desc">ব্যক্তিগত তথ্য ও ব্যাচ</span>' +
+                  '</div>' +
+                '</a>' +
+              '</div>' +
+              
+              '<div class="da-user-dropdown-divider"></div>' +
+              
+              '<button type="button" class="da-user-logout-btn" id="navLogoutBtn">' +
+                '<i class="fa-solid fa-arrow-right-from-bracket"></i>' +
+                '<span>লগআউট করুন</span>' +
+              '</button>' +
+            '</div>';
+
+          var userBtn = document.getElementById('navUserBtn');
+          var dropdown = document.getElementById('navUserDropdown');
+          var arrow = document.getElementById('navUserArrow');
+          var logoutBtn = document.getElementById('navLogoutBtn');
+
+          if (userBtn && dropdown) {
+            userBtn.addEventListener('click', function(e) {
+              e.stopPropagation();
+              var isOpen = dropdown.classList.contains('show');
+              if (isOpen) {
+                dropdown.classList.remove('show');
+                if (arrow) arrow.style.transform = 'rotate(0deg)';
+              } else {
+                dropdown.classList.add('show');
+                if (arrow) arrow.style.transform = 'rotate(180deg)';
+              }
+            });
+
+            document.addEventListener('click', function(e) {
+              if (!authContainer.contains(e.target)) {
+                dropdown.classList.remove('show');
+                if (arrow) arrow.style.transform = 'rotate(0deg)';
+              }
+            });
+          }
+
+          if (logoutBtn) {
+            logoutBtn.addEventListener('click', function() {
+              if (confirm('আপনি কি নিশ্চিত যে অ্যাকাউন্ট থেকে লগআউট করতে চান?')) {
+                try {
+                  localStorage.removeItem('dipu_logged_in');
+                  localStorage.removeItem('dipu_auth_token');
+                  localStorage.removeItem('dipu_user_profile');
+                  localStorage.removeItem('dipu_user_phone');
+                  localStorage.removeItem('da_user_name');
+                  window.dispatchEvent(new Event('dipu_auth_changed'));
+                } catch(e) {}
+                renderAuthUI();
+              }
+            });
+          }
+        } else {
+          authContainer.innerHTML = 
+            '<a href="/login.html" class="da-nav-login-btn" title="লগইন করুন">' +
+              '<i class="fa-solid fa-arrow-right-to-bracket"></i>' +
+              '<span>লগইন</span>' +
+            '</a>';
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', renderAuthUI);
+      } else {
+        renderAuthUI();
+      }
+
+      window.addEventListener('storage', renderAuthUI);
+      window.addEventListener('dipu_auth_changed', renderAuthUI);
+    })();
+
+    // Enhanced Mobile Menu Toggle with Backdrop & Auto-Close
+    (function() {
+      var toggleBtn = document.getElementById('mobileNavToggle');
+      var menu = document.querySelector('.da-nav-menu');
+      var backdrop = document.getElementById('mobileBackdrop');
+
+      function closeMenu() {
+        if (!menu) return;
+        menu.style.display = 'none';
+        if (backdrop) backdrop.classList.remove('show');
+        if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      }
+
+      function openMenu() {
+        if (!menu) return;
+        menu.style.display = 'flex';
+        menu.style.position = 'fixed';
+        menu.style.top = '60px';
+        menu.style.left = '0';
+        menu.style.right = '0';
+        menu.style.background = '#FFFFFF';
+        menu.style.flexDirection = 'column';
+        menu.style.padding = '18px 20px 24px';
+        menu.style.borderBottom = '1px solid #E2E8F0';
+        menu.style.boxShadow = '0 16px 36px rgba(15, 23, 42, 0.12)';
+        menu.style.zIndex = '999';
+        menu.style.animation = 'daFadeIn 0.22s ease both';
+        if (backdrop) backdrop.classList.add('show');
+        if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+      }
+
+      if (toggleBtn && menu) {
+        toggleBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var isOpen = menu.style.display === 'flex';
+          if (isOpen) closeMenu();
+          else openMenu();
+        });
+
+        if (backdrop) {
+          backdrop.addEventListener('click', closeMenu);
+        }
+
+        // Auto close when clicking any menu link
+        menu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', closeMenu);
+        });
+
+        window.addEventListener('resize', function() {
+          if (window.innerWidth > 768) closeMenu();
+        });
+      }
+
+      // Sync Bottom Dock Active States
+      function syncBottomDock() {
+        var path = window.location.pathname;
+        var hash = window.location.hash;
+        var tabs = document.querySelectorAll('.da-bottom-tab');
+        tabs.forEach(function(t) { t.classList.remove('active'); });
+
+        if (path === '/shop' || path === '/shop.html' || path === '/book' || path === '/books') {
+          var t = document.getElementById('tabShop');
+          if (t) t.classList.add('active');
+        } else if (path === '/ai' || path === '/dipus-ai') {
+          var t = document.getElementById('tabAi');
+          if (t) t.classList.add('active');
+        } else if (path === '/dashboard' || path === '/profile' || path === '/dashboard.html' || path === '/profile.html') {
+          var t = document.getElementById('tabDashboard');
+          if (t) t.classList.add('active');
+        } else if (hash === '#courses') {
+          var t = document.getElementById('tabCourses');
+          if (t) t.classList.add('active');
+        } else {
+          var t = document.getElementById('tabHome');
+          if (t) t.classList.add('active');
+        }
+      }
+      syncBottomDock();
+      window.addEventListener('hashchange', syncBottomDock);
+    })();
   </script>
+
+  <!-- Course Showcase Interactive Filter Script -->
+  <script>
+    (function() {
+      var COURSES_DATA = [
+        // 1. SSC 27
+        {
+          id: "ssc-27-sci",
+          slug: "ssc-27-science",
+          program: "ssc",
+          batch: "ssc-27",
+          batchLabel: "SSC '২৭",
+          batchBg: "#0084FF",
+          group: "science",
+          groupLabel: "বিজ্ঞান",
+          groupColor: "#10B981",
+          title: "SSC '২৭ পূর্ণাঙ্গ প্রস্তুতি ও টেস্ট পেপার সলভিং কোর্স",
+          subject: "পদার্থবিজ্ঞান, রসায়ন, উচ্চতর গণিত ও জীববিজ্ঞান",
+          mentor: "দীপু স্যার (BUET) ও বিজ্ঞান টিম",
+          mentorSub: "বুয়েট ইঞ্জিনিয়ারিং • লিড মেন্টর",
+          students: "১,৬৪০+ শিক্ষার্থী",
+          rating: "৪.৯৭",
+          priceCurrent: "৳৩,৯৫০",
+          priceOrig: "৳৫,৫০০",
+          discount: "২৮% ছাড়",
+          thumb: "/images/courses/ssc-27-prep.jpg"
+        },
+        // 2. SSC 28
+        {
+          id: "ssc-28-sci",
+          slug: "ssc-28-full-prep",
+          program: "ssc",
+          batch: "ssc-28",
+          batchLabel: "SSC '২৮",
+          batchBg: "#6366F1",
+          group: "science",
+          groupLabel: "বিজ্ঞান",
+          groupColor: "#10B981",
+          title: "SSC '২৮ বিজ্ঞান ও বেসিক ফাউন্ডেশন কোর্স",
+          subject: "বিজ্ঞান ৪টি মূল বিষয় ও সাধারণ গণিত বেসিক",
+          mentor: "দীপু স্যার ও মেন্টর প্যানেল",
+          mentorSub: "এসএসসি স্পেশালিস্ট ফ্যাকাল্টি",
+          students: "১,১৫০+ শিক্ষার্থী",
+          rating: "৪.৯৫",
+          priceCurrent: "৳২,৯৯৯",
+          priceOrig: "৳৪,৫০০",
+          discount: "৩৩% ছাড়",
+          thumb: "/images/courses/ssc-28-prep.jpg"
+        },
+        // 3. HSC 27
+        {
+          id: "hsc-27-sci",
+          slug: "hsc-27-full-prep",
+          program: "hsc",
+          batch: "hsc-27",
+          batchLabel: "HSC '২৭",
+          batchBg: "#E11D48",
+          group: "science",
+          groupLabel: "বিজ্ঞান",
+          groupColor: "#10B981",
+          title: "HSC '২৭ পূর্ণাঙ্গ প্রস্তুতি ও বোর্ড রিভিশন কোর্স",
+          subject: "পদার্থবিজ্ঞান, রসায়ন ও উচ্চতর গণিত ১ম ও ২য় পত্র",
+          mentor: "দীপু স্যার (BUET)",
+          mentorSub: "বুয়েট সিভিল ইঞ্জিনিয়ারিং • লিড মেন্টর",
+          students: "১,৭৮০+ শিক্ষার্থী",
+          rating: "৪.৯৮",
+          priceCurrent: "৳৪,৫০০",
+          priceOrig: "৳৬,০০০",
+          discount: "২৫% ছাড়",
+          thumb: "/images/courses/hsc-27-prep.jpg"
+        },
+        // 4. HSC 28
+        {
+          id: "hsc-28-sci",
+          slug: "hsc-28-full-prep",
+          program: "hsc",
+          batch: "hsc-28",
+          batchLabel: "HSC '২৮",
+          batchBg: "#FF7A1A",
+          group: "science",
+          groupLabel: "বিজ্ঞান",
+          groupColor: "#10B981",
+          title: "HSC '২৮ পূর্ণাঙ্গ বিজ্ঞান প্রস্তুতি ও বেসিক কোর্স",
+          subject: "পদার্থ, রসায়ন, গণিত ও বায়োলজি ১ম বর্ষ",
+          mentor: "দীপু স্যার (BUET) ও স্পেশালিস্ট টিম",
+          mentorSub: "বুয়েট ইঞ্জিনিয়ারিং • ৮+ বছরের শিক্ষকতা",
+          students: "১,২৮০+ শিক্ষার্থী",
+          rating: "৪.৯৬",
+          priceCurrent: "৳৪,৫০০",
+          priceOrig: "৳৬,৫০০",
+          discount: "৩১% ছাড়",
+          thumb: "/images/courses/hsc-28-prep.jpg"
+        }
+      ];
+
+      var state = {
+        prog: 'all',
+        batch: 'all'
+      };
+
+      var grid = document.getElementById('courseCardsGrid');
+
+      function render() {
+        if (!grid) return;
+
+        var filtered = COURSES_DATA.filter(function(item) {
+          if (state.prog !== 'all' && item.program !== state.prog) {
+            return false;
+          }
+          if (state.batch !== 'all' && item.batch !== state.batch) {
+            return false;
+          }
+          return true;
+        });
+
+        if (filtered.length === 0) {
+          grid.innerHTML = '<div class="da-courses-empty">' +
+            '<i class="fa-solid fa-graduation-cap" style="font-size: 2.5rem; color: #94A3B8; margin-bottom: 12px; display: block;"></i>' +
+            '<h3 style="color: #0D1B36; font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;">কোনো কোর্স পাওয়া যায়নি</h3>' +
+            '<p style="color: #64748B; font-size: 0.95rem; margin-bottom: 18px;">ফিল্টার পরিবর্তন করুন বা সব কোর্স দেখুন।</p>' +
+            '<button type="button" id="resetCoursesFilterBtn" style="background: #1665D8; color: #FFFFFF; border: none; padding: 9px 24px; border-radius: 999px; font-weight: 700; cursor: pointer;">সব ফিল্টার রিসেট করুন</button>' +
+          '</div>';
+
+          var resetBtn = document.getElementById('resetCoursesFilterBtn');
+          if (resetBtn) {
+            resetBtn.onclick = function() {
+              state.prog = 'all';
+              state.batch = 'all';
+              updatePillsUI();
+              render();
+            };
+          }
+          return;
+        }
+
+        var html = '';
+        filtered.forEach(function(c) {
+          html += '<a href="/course.html?slug=' + c.slug + '" class="da-ccard" data-id="' + c.id + '">' +
+            '<div class="da-ccard-thumb">' +
+              '<img src="' + c.thumb + '" alt="' + c.title + '" loading="lazy" onerror="this.src=\'/images/courses/routine-banner.jpg\'">' +
+              '<span class="da-batch-badge" style="background: ' + c.batchBg + ';">' + c.batchLabel + '</span>' +
+              '<span class="da-group-badge" style="border-left: 3px solid ' + c.groupColor + ';">' + c.groupLabel + '</span>' +
+            '</div>' +
+            '<div class="da-ccard-body">' +
+              '<div class="da-ccard-subject">' +
+                '<i class="fa-solid fa-book-open" style="color: #1665D8; font-size: 0.78rem;"></i>' +
+                '<span>' + c.subject + '</span>' +
+              '</div>' +
+              '<h3 class="da-ccard-title">' + c.title + '</h3>' +
+              '<div class="da-ccard-mentor">' +
+                '<div class="da-ccard-mentor-avatar"><i class="fa-solid fa-chalkboard-user"></i></div>' +
+                '<div class="da-ccard-mentor-info">' +
+                  '<span class="da-ccard-mentor-name">' + c.mentor + '</span>' +
+                  '<span class="da-ccard-mentor-sub">' + c.mentorSub + '</span>' +
+                '</div>' +
+              '</div>' +
+              '<div class="da-ccard-stats">' +
+                '<span class="da-ccard-students"><i class="fa-solid fa-user-check"></i> ' + c.students + '</span>' +
+                '<span class="da-ccard-rating"><i class="fa-solid fa-star"></i> ' + c.rating + '</span>' +
+              '</div>' +
+              '<div class="da-ccard-footer">' +
+                '<div class="da-price-group">' +
+                  '<div class="da-price-row">' +
+                    '<span class="da-price-current">' + c.priceCurrent + '</span>' +
+                    '<span class="da-price-orig">' + c.priceOrig + '</span>' +
+                  '</div>' +
+                  '<span class="da-discount-tag">' + c.discount + '</span>' +
+                '</div>' +
+                '<span class="da-btn-enroll">' +
+                  '<span>এনরোল করো</span>' +
+                  '<i class="fa-solid fa-arrow-right"></i>' +
+                '</span>' +
+              '</div>' +
+            '</div>' +
+          '</a>';
+        });
+
+        grid.innerHTML = html;
+      }
+
+      function updatePillsUI() {
+        // Program tabs
+        document.querySelectorAll('#programTabs .da-prog-tab').forEach(function(tab) {
+          if (tab.getAttribute('data-prog') === state.prog) {
+            tab.classList.add('active');
+          } else {
+            tab.classList.remove('active');
+          }
+        });
+
+        // Batch pills filter & visibility based on program
+        document.querySelectorAll('#batchPillsContainer .da-filter-pill').forEach(function(pill) {
+          var targetProg = pill.getAttribute('data-prog-target');
+          if (state.prog === 'all') {
+            pill.style.display = 'inline-flex';
+          } else if (!targetProg || targetProg === state.prog) {
+            pill.style.display = 'inline-flex';
+          } else {
+            pill.style.display = 'none';
+          }
+
+          if (pill.getAttribute('data-batch') === state.batch) {
+            pill.classList.add('active');
+          } else {
+            pill.classList.remove('active');
+          }
+        });
+      }
+
+      // Program Tab Click
+      document.querySelectorAll('#programTabs .da-prog-tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          var p = this.getAttribute('data-prog');
+          state.prog = p;
+          if (p === 'ssc' && state.batch.indexOf('hsc') !== -1) state.batch = 'all';
+          if (p === 'hsc' && state.batch.indexOf('ssc') !== -1) state.batch = 'all';
+          updatePillsUI();
+          render();
+        });
+      });
+
+      // Batch Pill Click
+      document.querySelectorAll('#batchPillsContainer .da-filter-pill').forEach(function(pill) {
+        pill.addEventListener('click', function() {
+          var b = this.getAttribute('data-batch');
+          state.batch = b;
+          if (b.indexOf('ssc') !== -1 && state.prog === 'hsc') state.prog = 'all';
+          if (b.indexOf('hsc') !== -1 && state.prog === 'ssc') state.prog = 'all';
+          updatePillsUI();
+          render();
+        });
+      });
+
+      // URL parameters
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var fParam = params.get('filter') || params.get('program');
+        if (fParam === 'ssc' || fParam === 'hsc') {
+          state.prog = fParam;
+        }
+        var bParam = params.get('batch');
+        if (bParam && ['ssc-27', 'ssc-28', 'hsc-27', 'hsc-28'].indexOf(bParam) !== -1) {
+          state.batch = bParam;
+          if (bParam.indexOf('ssc') !== -1) state.prog = 'ssc';
+          if (bParam.indexOf('hsc') !== -1) state.prog = 'hsc';
+        }
+      } catch(e) {}
+
+      // Initial Render
+      updatePillsUI();
+      render();
+
+      window.filterCoursesProgram = function(prog) {
+        state.prog = prog || 'all';
+        state.batch = 'all';
+        updatePillsUI();
+        render();
+        var el = document.getElementById('courses');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      };
+    })();
+
+    // ===== NAVBAR AUTH CONTROLLER (Show user's name when logged in) =====
+    (function initNavAuth() {
+      var authWrap = document.getElementById('navAuthArea');
+      if (!authWrap) return;
+
+      function checkIsLoggedIn() {
+        try {
+          if (localStorage.getItem('dipu_logged_in') === 'true') return true;
+          var token = localStorage.getItem('dipu_auth_token');
+          if (token && token.trim().length > 0 && token !== 'null' && token !== 'undefined') return true;
+          var phone = localStorage.getItem('dipu_user_phone');
+          if (phone && phone.trim().length > 0 && phone !== 'null' && phone !== 'undefined') return true;
+          var name = localStorage.getItem('da_user_name');
+          if (name && name.trim().length > 0 && name !== 'null' && name !== 'undefined') return true;
+          var rawProfile = localStorage.getItem('dipu_user_profile');
+          if (rawProfile && rawProfile.trim().length > 0 && rawProfile !== 'null' && rawProfile !== 'undefined' && rawProfile !== '{}') {
+            var parsed = JSON.parse(rawProfile);
+            if (parsed && (parsed.phone || parsed.fullName || parsed.name)) return true;
+          }
+        } catch(e) {}
+        return false;
+      }
+
+      function getUserInfo() {
+        var name = '';
+        var phone = '';
+        var avatar = '';
+        var target = '';
+
+        try {
+          name = localStorage.getItem('da_user_name') || '';
+          phone = localStorage.getItem('dipu_user_phone') || '';
+          avatar = localStorage.getItem('dipu_user_avatar') || '';
+          target = localStorage.getItem('da_user_target') || '';
+
+          var rawProfile = localStorage.getItem('dipu_user_profile');
+          if (rawProfile) {
+            var p = JSON.parse(rawProfile);
+            if (!name && p.fullName) name = p.fullName;
+            if (!name && p.name) name = p.name;
+            if (!phone && p.phone) phone = p.phone;
+            if (!avatar && p.avatar) avatar = p.avatar;
+            if (!target && p.target) target = p.target;
+            if (!target && p.classLevel) target = p.classLevel;
+          }
+        } catch(e) {}
+
+        if (!name && phone) {
+          name = phone.length >= 4 ? 'User ' + phone.slice(-4) : 'শিক্ষার্থী';
+        }
+        if (!name) name = 'শিক্ষার্থী';
+
+        var initial = (name.charAt(0) || 'D').toUpperCase();
+
+        return {
+          name: name,
+          phone: phone,
+          avatar: avatar,
+          target: target || 'SSC / HSC শিক্ষার্থী',
+          initial: initial
+        };
+      }
+
+      function renderNavAuth() {
+        var isLoggedIn = checkIsLoggedIn();
+
+        if (!isLoggedIn) {
+          authWrap.innerHTML = 
+            '<a href="/login.html" class="da-nav-login-btn" title="লগইন করুন">' +
+              '<i class="fa-solid fa-arrow-right-to-bracket"></i>' +
+              '<span>লগইন</span>' +
+            '</a>';
+          return;
+        }
+
+        var user = getUserInfo();
+        var avatarInner = user.avatar
+          ? '<img src="' + user.avatar + '" alt="' + user.name + '" class="da-user-avatar-img" onerror="this.style.display=\'none\';this.parentNode.innerHTML=\'' + user.initial + '\';">'
+          : user.initial;
+
+        var largeAvatarInner = user.avatar
+          ? '<img src="' + user.avatar + '" alt="' + user.name + '" class="da-user-avatar-img" onerror="this.style.display=\'none\';this.parentNode.innerHTML=\'' + user.initial + '\';">'
+          : user.initial;
+
+        authWrap.innerHTML = 
+          '<button type="button" class="da-nav-user-btn" id="daNavUserBtn" title="' + user.name + ' — অ্যাকাউন্ট" aria-expanded="false">' +
+            '<div class="da-user-avatar-circle">' + avatarInner + '</div>' +
+            '<span class="da-user-name-text">' + user.name + '</span>' +
+            '<i class="fa-solid fa-chevron-down da-user-arrow" id="daUserArrow"></i>' +
+          '</button>' +
+          '<div class="da-user-dropdown" id="daUserDropdown">' +
+            '<div class="da-user-dropdown-header">' +
+              '<div class="da-user-avatar-large">' + largeAvatarInner + '</div>' +
+              '<div class="da-user-dropdown-info">' +
+                '<h4 class="da-user-dropdown-name">' + user.name + '</h4>' +
+                (user.phone ? '<p class="da-user-dropdown-phone">' + user.phone + '</p>' : '') +
+                '<span class="da-user-dropdown-badge">' + user.target + '</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="da-user-dropdown-divider"></div>' +
+            '<div class="da-user-dropdown-links">' +
+              '<a href="/dashboard.html" class="da-dropdown-link">' +
+                '<div class="da-dd-icon da-dd-icon-blue"><i class="fa-solid fa-gauge-high" style="color:#0284C7;"></i></div>' +
+                '<div class="da-dd-text">' +
+                  '<span class="da-dd-title">আমার ড্যাশবোর্ড</span>' +
+                  '<span class="da-dd-desc">কোর্স ও পড়াশোনার অগ্রগতি</span>' +
+                '</div>' +
+              '</a>' +
+              '<a href="/my-courses.html" class="da-dropdown-link">' +
+                '<div class="da-dd-icon da-dd-icon-green"><i class="fa-solid fa-book-open" style="color:#16A34A;"></i></div>' +
+                '<div class="da-dd-text">' +
+                  '<span class="da-dd-title">আমার কোর্সসমূহ</span>' +
+                  '<span class="da-dd-desc">ভর্তিকৃত ক্লাস ও পরীক্ষা</span>' +
+                '</div>' +
+              '</a>' +
+              '<a href="/profile.html" class="da-dropdown-link">' +
+                '<div class="da-dd-icon da-dd-icon-purple"><i class="fa-solid fa-user-pen" style="color:#7C3AED;"></i></div>' +
+                '<div class="da-dd-text">' +
+                  '<span class="da-dd-title">প্রোফাইল সেটিংস</span>' +
+                  '<span class="da-dd-desc">নাম ও ব্যক্তিগত তথ্য পরিবর্তন</span>' +
+                '</div>' +
+              '</a>' +
+            '</div>' +
+            '<div class="da-user-dropdown-divider"></div>' +
+            '<button type="button" class="da-user-logout-btn" id="daLogoutBtn">' +
+              '<i class="fa-solid fa-right-from-bracket"></i>' +
+              '<span>লগআউট করুন</span>' +
+            '</button>' +
+          '</div>';
+
+        var userBtn = document.getElementById('daNavUserBtn');
+        var dropdown = document.getElementById('daUserDropdown');
+        var arrow = document.getElementById('daUserArrow');
+        var logoutBtn = document.getElementById('daLogoutBtn');
+
+        if (userBtn && dropdown) {
+          userBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var isOpen = dropdown.classList.contains('show');
+            if (isOpen) {
+              dropdown.classList.remove('show');
+              if (arrow) arrow.style.transform = 'rotate(0deg)';
+              userBtn.setAttribute('aria-expanded', 'false');
+            } else {
+              dropdown.classList.add('show');
+              if (arrow) arrow.style.transform = 'rotate(180deg)';
+              userBtn.setAttribute('aria-expanded', 'true');
+            }
+          });
+
+          document.addEventListener('click', function(e) {
+            if (!authWrap.contains(e.target)) {
+              dropdown.classList.remove('show');
+              if (arrow) arrow.style.transform = 'rotate(0deg)';
+              if (userBtn) userBtn.setAttribute('aria-expanded', 'false');
+            }
+          });
+        }
+
+        if (logoutBtn) {
+          logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('dipu_logged_in');
+            localStorage.removeItem('dipu_auth_token');
+            localStorage.removeItem('dipu_user_phone');
+            localStorage.removeItem('da_user_name');
+            localStorage.removeItem('dipu_user_profile');
+            localStorage.removeItem('dipu_user_avatar');
+            localStorage.removeItem('da_user_target');
+            localStorage.removeItem('da_user_batch');
+            localStorage.removeItem('da_user_group');
+            window.location.reload();
+          });
+        }
+      }
+
+      renderNavAuth();
+      window.addEventListener('storage', renderNavAuth);
+    })();
+  </script>
+
 </body>
 </html>

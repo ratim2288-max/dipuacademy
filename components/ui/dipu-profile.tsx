@@ -508,13 +508,13 @@ export const DipuProfileApp: React.FC = () => {
   const studentId = `STU-2026-${userPhone.slice(-4) || userRoll || "8812"}`;
 
   return (
-    <div className="da-app-wrapper" style={{ minHeight: "100vh", backgroundColor: "#050B17", color: "#F1F5F9" }}>
+    <div className="da-app-wrapper" style={{ minHeight: "100vh", backgroundColor: "#F8FAFC", color: "#0F172A" }}>
       {/* ─── SCOPED LUXURY CSS ─── */}
       <style>{`
         .dp-tab-btn {
-          background: rgba(255, 255, 255, 0.03);
-          color: #94A3B8;
-          border: 1px solid rgba(0, 194, 255, 0.1);
+          background: #FFFFFF;
+          color: #475569;
+          border: 1px solid #E2E8F0;
           padding: 10px 16px;
           border-radius: 12px;
           font-weight: 700;
@@ -527,25 +527,25 @@ export const DipuProfileApp: React.FC = () => {
           white-space: nowrap;
         }
         .dp-tab-btn:hover {
-          color: #FFFFFF;
-          background: rgba(0, 194, 255, 0.08);
-          border-color: rgba(0, 194, 255, 0.3);
+          color: #0284C7;
+          background: #F1F5F9;
+          border-color: #CBD5E1;
           transform: translateY(-1px);
         }
         .dp-tab-btn.active {
-          background: linear-gradient(135deg, #0070F3 0%, #00C2FF 100%);
+          background: linear-gradient(135deg, #0284C7 0%, #2563EB 100%);
           color: #FFFFFF;
-          border-color: #00C2FF;
-          box-shadow: 0 4px 18px rgba(0, 194, 255, 0.35);
+          border-color: #0284C7;
+          box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
         }
 
         .dp-input-field {
           width: 100%;
-          background: rgba(10, 21, 48, 0.7);
-          border: 1.5px solid rgba(0, 194, 255, 0.18);
+          background: #FFFFFF;
+          border: 1.5px solid #CBD5E1;
           border-radius: 12px;
           padding: 11px 14px;
-          color: #FFFFFF;
+          color: #0F172A;
           font-size: 14px;
           outline: none;
           transition: all 0.2s ease;
@@ -553,21 +553,22 @@ export const DipuProfileApp: React.FC = () => {
           font-family: inherit;
         }
         .dp-input-field:focus {
-          border-color: #00C2FF;
-          box-shadow: 0 0 14px rgba(0, 194, 255, 0.28);
-          background: rgba(13, 27, 62, 0.95);
+          border-color: #0284C7;
+          box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+          background: #FFFFFF;
         }
         .dp-input-field:disabled, .dp-input-field[readonly] {
-          opacity: 0.75;
+          opacity: 0.85;
           cursor: not-allowed;
-          background: rgba(255, 255, 255, 0.03);
+          background: #F1F5F9;
+          color: #64748B;
         }
 
         .dp-label {
           display: block;
           font-size: 12.5px;
           font-weight: 700;
-          color: #CBD5E1;
+          color: #334155;
           margin-bottom: 6px;
         }
 
@@ -576,7 +577,7 @@ export const DipuProfileApp: React.FC = () => {
           align-items: center;
           justify-content: center;
           gap: 8px;
-          background: linear-gradient(135deg, #0070F3 0%, #00C2FF 100%);
+          background: linear-gradient(135deg, #0284C7 0%, #2563EB 100%);
           color: #FFFFFF;
           border: none;
           padding: 12px 24px;
@@ -585,17 +586,17 @@ export const DipuProfileApp: React.FC = () => {
           font-weight: 800;
           cursor: pointer;
           transition: all 0.22s ease;
-          box-shadow: 0 4px 16px rgba(0, 194, 255, 0.35);
+          box-shadow: 0 4px 16px rgba(2, 132, 199, 0.25);
         }
         .dp-save-btn:hover {
           transform: translateY(-2px);
-          box-shadow: 0 6px 24px rgba(0, 194, 255, 0.5);
-          filter: brightness(1.08);
+          box-shadow: 0 6px 20px rgba(2, 132, 199, 0.35);
+          filter: brightness(1.05);
         }
 
         .dp-course-card {
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid rgba(0, 194, 255, 0.12);
+          background: #FFFFFF;
+          border: 1px solid #E2E8F0;
           border-radius: 16px;
           padding: 16px;
           display: flex;
@@ -604,15 +605,14 @@ export const DipuProfileApp: React.FC = () => {
           transition: all 0.25s ease;
         }
         .dp-course-card:hover {
-          background: rgba(255, 255, 255, 0.04);
-          border-color: rgba(0, 194, 255, 0.35);
+          border-color: #0284C7;
           transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
         }
 
         .dp-cert-card {
-          background: linear-gradient(145deg, rgba(9, 20, 47, 0.8), rgba(6, 13, 32, 0.95));
-          border: 1.5px solid rgba(0, 194, 255, 0.2);
+          background: #FFFFFF;
+          border: 1.5px solid #E2E8F0;
           border-radius: 18px;
           padding: 22px;
           transition: all 0.25s ease;
@@ -620,22 +620,22 @@ export const DipuProfileApp: React.FC = () => {
           overflow: hidden;
         }
         .dp-cert-card:hover {
-          border-color: #00C2FF;
-          box-shadow: 0 10px 30px rgba(0, 194, 255, 0.25);
+          border-color: #0284C7;
+          box-shadow: 0 10px 25px rgba(2, 132, 199, 0.12);
           transform: translateY(-3px);
         }
 
         .dp-badge-item {
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          background: #FFFFFF;
+          border: 1px solid #E2E8F0;
           border-radius: 14px;
           padding: 16px;
           text-align: center;
           transition: all 0.25s ease;
         }
         .dp-badge-item:hover {
-          background: rgba(0, 194, 255, 0.06);
-          border-color: rgba(0, 194, 255, 0.35);
+          background: #F8FAFC;
+          border-color: #0284C7;
           transform: translateY(-3px);
         }
 
@@ -647,18 +647,18 @@ export const DipuProfileApp: React.FC = () => {
         .dp-table th {
           text-align: left;
           padding: 12px 14px;
-          background: rgba(255, 255, 255, 0.03);
-          color: #94A3B8;
+          background: #F8FAFC;
+          color: #475569;
           font-weight: 700;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          border-bottom: 1px solid #E2E8F0;
         }
         .dp-table td {
           padding: 13px 14px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-          color: #FFFFFF;
+          border-bottom: 1px solid #F1F5F9;
+          color: #0F172A;
         }
         .dp-table tr:hover td {
-          background: rgba(0, 194, 255, 0.04);
+          background: #F8FAFC;
         }
 
         @media (max-width: 768px) {
@@ -691,9 +691,9 @@ export const DipuProfileApp: React.FC = () => {
               display: "inline-flex",
               alignItems: "center",
               gap: "8px",
-              background: "rgba(255, 255, 255, 0.05)",
-              border: "1px solid rgba(0, 194, 255, 0.2)",
-              color: "#FFFFFF",
+              background: "#F1F5F9",
+              border: "1px solid #E2E8F0",
+              color: "#334155",
               padding: "7px 14px",
               borderRadius: "999px",
               textDecoration: "none",
@@ -701,7 +701,7 @@ export const DipuProfileApp: React.FC = () => {
               fontWeight: 600,
             }}
           >
-            <i className="fas fa-home" style={{ color: "#00C2FF" }} />
+            <i className="fas fa-home" style={{ color: "#0284C7" }} />
             <span>ড্যাশবোর্ড</span>
           </a>
           <a
@@ -710,9 +710,9 @@ export const DipuProfileApp: React.FC = () => {
               display: "inline-flex",
               alignItems: "center",
               gap: "8px",
-              background: "rgba(255, 255, 255, 0.05)",
-              border: "1px solid rgba(0, 194, 255, 0.2)",
-              color: "#FFFFFF",
+              background: "#F1F5F9",
+              border: "1px solid #E2E8F0",
+              color: "#334155",
               padding: "7px 14px",
               borderRadius: "999px",
               textDecoration: "none",
@@ -730,7 +730,7 @@ export const DipuProfileApp: React.FC = () => {
               width: "38px",
               height: "38px",
               borderRadius: "50%",
-              border: "2px solid #00C2FF",
+              border: "2px solid #0284C7",
               overflow: "hidden",
               padding: 0,
               cursor: "pointer",
@@ -747,20 +747,20 @@ export const DipuProfileApp: React.FC = () => {
       <main style={{ maxWidth: "1080px", margin: "0 auto", padding: "24px 16px 100px", width: "100%" }}>
         {/* Breadcrumb Navigation */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" }}>
-          <div style={{ fontSize: "13.5px", color: "var(--da-text-muted)", display: "flex", alignItems: "center", gap: "8px" }}>
-            <a href="/dashboard.html" style={{ color: "#94A3B8", textDecoration: "none" }}>হোম</a>
+          <div style={{ fontSize: "13.5px", color: "#64748B", display: "flex", alignItems: "center", gap: "8px" }}>
+            <a href="/dashboard.html" style={{ color: "#64748B", textDecoration: "none" }}>হোম</a>
             <span>/</span>
-            <span style={{ color: "#00C2FF", fontWeight: 700 }}>শিক্ষার্থী প্রোফাইল ও সেটিংস</span>
+            <span style={{ color: "#0284C7", fontWeight: 700 }}>শিক্ষার্থী প্রোফাইল ও সেটিংস</span>
           </div>
           <span
             style={{
               fontSize: "12px",
               fontWeight: 700,
-              color: "#00C2FF",
-              background: "rgba(0, 194, 255, 0.12)",
+              color: "#0284C7",
+              background: "#E0F2FE",
               padding: "5px 12px",
               borderRadius: "999px",
-              border: "1px solid rgba(0, 194, 255, 0.25)",
+              border: "1px solid #BAE6FD",
             }}
           >
             আইডি: {studentId}
@@ -770,15 +770,15 @@ export const DipuProfileApp: React.FC = () => {
         {/* ─── HERO PROFILE IDENTITY CARD ─── */}
         <section
           style={{
-            background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
-            border: "1px solid rgba(0, 194, 255, 0.2)",
+            background: "#FFFFFF",
+            border: "1px solid #E2E8F0",
             borderRadius: "20px",
             padding: "26px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             gap: "24px",
-            boxShadow: "0 10px 32px rgba(0, 0, 0, 0.55), 0 0 20px rgba(0, 194, 255, 0.08)",
+            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.04)",
             marginBottom: "24px",
             flexWrap: "wrap",
           }}
@@ -793,9 +793,9 @@ export const DipuProfileApp: React.FC = () => {
                   height: "88px",
                   borderRadius: "50%",
                   overflow: "hidden",
-                  border: "3px solid #00C2FF",
-                  boxShadow: "0 4px 22px rgba(0, 194, 255, 0.4)",
-                  background: "#0A1530",
+                  border: "3px solid #0284C7",
+                  boxShadow: "0 4px 14px rgba(2, 132, 199, 0.25)",
+                  background: "#F8FAFC",
                 }}
               >
                 <img
@@ -815,15 +815,15 @@ export const DipuProfileApp: React.FC = () => {
                   width: "28px",
                   height: "28px",
                   borderRadius: "50%",
-                  background: "#00C2FF",
-                  color: "#050B17",
+                  background: "#0284C7",
+                  color: "#FFFFFF",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   fontSize: "12px",
-                  border: "2px solid #050B17",
+                  border: "2px solid #FFFFFF",
                   cursor: "pointer",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
                 }}
               >
                 <i className="fas fa-camera" />
@@ -833,7 +833,7 @@ export const DipuProfileApp: React.FC = () => {
             {/* Name, Badges & Quick Details */}
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
-                <h1 style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", margin: 0 }}>
+                <h1 style={{ fontSize: "24px", fontWeight: 800, color: "#0F172A", margin: 0 }}>
                   {userName}
                 </h1>
                 <span
@@ -842,9 +842,9 @@ export const DipuProfileApp: React.FC = () => {
                     fontWeight: 700,
                     padding: "3px 10px",
                     borderRadius: "999px",
-                    background: "rgba(16, 185, 129, 0.15)",
-                    color: "#10B981",
-                    border: "1px solid rgba(16, 185, 129, 0.35)",
+                    background: "rgba(16, 185, 129, 0.12)",
+                    color: "#059669",
+                    border: "1px solid rgba(16, 185, 129, 0.25)",
                     display: "inline-flex",
                     alignItems: "center",
                     gap: "5px",
@@ -861,9 +861,9 @@ export const DipuProfileApp: React.FC = () => {
                     fontWeight: 600,
                     padding: "3px 10px",
                     borderRadius: "999px",
-                    background: "rgba(0, 194, 255, 0.12)",
-                    color: "#00C2FF",
-                    border: "1px solid rgba(0, 194, 255, 0.25)",
+                    background: "#E0F2FE",
+                    color: "#0284C7",
+                    border: "1px solid #BAE6FD",
                   }}
                 >
                   <i className="fas fa-graduation-cap" /> {userTarget}
@@ -874,9 +874,9 @@ export const DipuProfileApp: React.FC = () => {
                     fontWeight: 600,
                     padding: "3px 10px",
                     borderRadius: "999px",
-                    background: "rgba(139, 92, 246, 0.15)",
-                    color: "#A78BFA",
-                    border: "1px solid rgba(139, 92, 246, 0.3)",
+                    background: "#F3E8FF",
+                    color: "#7C3AED",
+                    border: "1px solid #E9D5FF",
                   }}
                 >
                   <i className="fas fa-atom" /> {userGroup}
@@ -887,9 +887,9 @@ export const DipuProfileApp: React.FC = () => {
                     fontWeight: 600,
                     padding: "3px 10px",
                     borderRadius: "999px",
-                    background: "rgba(245, 158, 11, 0.15)",
-                    color: "#FBBF24",
-                    border: "1px solid rgba(245, 158, 11, 0.3)",
+                    background: "#FEF3C7",
+                    color: "#D97706",
+                    border: "1px solid #FDE68A",
                   }}
                 >
                   <i className="fas fa-school" /> {userInstitution}
@@ -900,7 +900,7 @@ export const DipuProfileApp: React.FC = () => {
               <div
                 style={{
                   fontSize: "12.5px",
-                  color: "#94A3B8",
+                  color: "#64748B",
                   marginTop: "10px",
                   display: "flex",
                   gap: "16px",
@@ -908,19 +908,19 @@ export const DipuProfileApp: React.FC = () => {
                 }}
               >
                 <span>
-                  <i className="fas fa-phone" style={{ color: "#00C2FF", marginRight: "5px" }} />
+                  <i className="fas fa-phone" style={{ color: "#0284C7", marginRight: "5px" }} />
                   {userPhone}
                 </span>
                 <span>
-                  <i className="fas fa-envelope" style={{ color: "#00C2FF", marginRight: "5px" }} />
+                  <i className="fas fa-envelope" style={{ color: "#0284C7", marginRight: "5px" }} />
                   {userEmail}
                 </span>
                 <span>
-                  <i className="fas fa-location-dot" style={{ color: "#00C2FF", marginRight: "5px" }} />
+                  <i className="fas fa-location-dot" style={{ color: "#0284C7", marginRight: "5px" }} />
                   {userDistrict}
                 </span>
                 <span>
-                  <i className="fas fa-id-badge" style={{ color: "#00C2FF", marginRight: "5px" }} />
+                  <i className="fas fa-id-badge" style={{ color: "#0284C7", marginRight: "5px" }} />
                   রোল: {userRoll}
                 </span>
               </div>
@@ -931,21 +931,21 @@ export const DipuProfileApp: React.FC = () => {
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             <div
               style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(0, 194, 255, 0.15)",
+                background: "#F8FAFC",
+                border: "1px solid #E2E8F0",
                 borderRadius: "14px",
                 padding: "12px 18px",
                 textAlign: "center",
                 minWidth: "82px",
               }}
             >
-              <div style={{ fontSize: "20px", fontWeight: 800, color: "#00C2FF" }}>৪ টি</div>
-              <div style={{ fontSize: "11px", color: "#94A3B8", marginTop: "2px" }}>মোট কোর্স</div>
+              <div style={{ fontSize: "20px", fontWeight: 800, color: "#0284C7" }}>৪ টি</div>
+              <div style={{ fontSize: "11px", color: "#64748B", marginTop: "2px" }}>মোট কোর্স</div>
             </div>
             <div
               style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(16, 185, 129, 0.2)",
+                background: "#F8FAFC",
+                border: "1px solid #E2E8F0",
                 borderRadius: "14px",
                 padding: "12px 18px",
                 textAlign: "center",
@@ -953,33 +953,33 @@ export const DipuProfileApp: React.FC = () => {
               }}
             >
               <div style={{ fontSize: "20px", fontWeight: 800, color: "#10B981" }}>🔥 ৭ দিন</div>
-              <div style={{ fontSize: "11px", color: "#94A3B8", marginTop: "2px" }}>লার্নিং স্ট্রিক</div>
+              <div style={{ fontSize: "11px", color: "#64748B", marginTop: "2px" }}>লার্নিং স্ট্রিক</div>
             </div>
             <div
               style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(245, 158, 11, 0.2)",
+                background: "#F8FAFC",
+                border: "1px solid #E2E8F0",
                 borderRadius: "14px",
                 padding: "12px 18px",
                 textAlign: "center",
                 minWidth: "82px",
               }}
             >
-              <div style={{ fontSize: "20px", fontWeight: 800, color: "#F59E0B" }}>🪙 ২৫০</div>
-              <div style={{ fontSize: "11px", color: "#94A3B8", marginTop: "2px" }}>EduCoins</div>
+              <div style={{ fontSize: "20px", fontWeight: 800, color: "#D97706" }}>🪙 ২৫০</div>
+              <div style={{ fontSize: "11px", color: "#64748B", marginTop: "2px" }}>EduCoins</div>
             </div>
             <div
               style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(139, 92, 246, 0.2)",
+                background: "#F8FAFC",
+                border: "1px solid #E2E8F0",
                 borderRadius: "14px",
                 padding: "12px 18px",
                 textAlign: "center",
                 minWidth: "82px",
               }}
             >
-              <div style={{ fontSize: "20px", fontWeight: 800, color: "#A78BFA" }}>📜 ২ টি</div>
-              <div style={{ fontSize: "11px", color: "#94A3B8", marginTop: "2px" }}>সার্টিফিকেট</div>
+              <div style={{ fontSize: "20px", fontWeight: 800, color: "#7C3AED" }}>📜 ২ টি</div>
+              <div style={{ fontSize: "11px", color: "#64748B", marginTop: "2px" }}>সার্টিফিকেট</div>
             </div>
           </div>
         </section>
@@ -987,8 +987,8 @@ export const DipuProfileApp: React.FC = () => {
         {/* Profile Completion Meter */}
         <div
           style={{
-            background: "rgba(255, 255, 255, 0.02)",
-            border: "1px solid rgba(0, 194, 255, 0.12)",
+            background: "#FFFFFF",
+            border: "1px solid #E2E8F0",
             borderRadius: "14px",
             padding: "14px 20px",
             marginBottom: "24px",
@@ -997,21 +997,22 @@ export const DipuProfileApp: React.FC = () => {
             justifyContent: "space-between",
             flexWrap: "wrap",
             gap: "12px",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <i className="fas fa-shield-heart" style={{ color: "#00C2FF", fontSize: "18px" }} />
+            <i className="fas fa-shield-heart" style={{ color: "#0284C7", fontSize: "18px" }} />
             <div>
-              <span style={{ fontSize: "13px", fontWeight: 700, color: "#FFFFFF" }}>
+              <span style={{ fontSize: "13px", fontWeight: 700, color: "#0F172A" }}>
                 প্রোফাইল সম্পূর্ণতা: ৯২%
               </span>
-              <span style={{ fontSize: "12px", color: "#94A3B8", marginLeft: "8px" }}>
+              <span style={{ fontSize: "12px", color: "#64748B", marginLeft: "8px" }}>
                 (অভিভাবক ও প্রাতিষ্ঠানিক তথ্য হালনাগাদ রয়েছে)
               </span>
             </div>
           </div>
-          <div style={{ width: "200px", height: "8px", background: "rgba(255, 255, 255, 0.1)", borderRadius: "999px", overflow: "hidden" }}>
-            <div style={{ width: "92%", height: "100%", background: "linear-gradient(90deg, #0070F3, #00C2FF)", borderRadius: "999px" }} />
+          <div style={{ width: "200px", height: "8px", background: "#E2E8F0", borderRadius: "999px", overflow: "hidden" }}>
+            <div style={{ width: "92%", height: "100%", background: "linear-gradient(90deg, #0284C7, #00C2FF)", borderRadius: "999px" }} />
           </div>
         </div>
 
@@ -1023,7 +1024,7 @@ export const DipuProfileApp: React.FC = () => {
             marginBottom: "24px",
             overflowX: "auto",
             paddingBottom: "8px",
-            borderBottom: "1px solid rgba(0, 194, 255, 0.15)",
+            borderBottom: "1px solid #E2E8F0",
           }}
         >
           <button
@@ -1094,19 +1095,19 @@ export const DipuProfileApp: React.FC = () => {
         {activeTab === "personal" && (
           <div
             style={{
-              background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
-              border: "1px solid rgba(0, 194, 255, 0.18)",
+              background: "#FFFFFF",
+              border: "1px solid #E2E8F0",
               borderRadius: "20px",
               padding: "28px",
-              boxShadow: "0 8px 30px rgba(0,0,0,0.45)",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", flexWrap: "wrap", gap: "10px" }}>
-              <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#FFFFFF", margin: 0, display: "flex", alignItems: "center", gap: "10px" }}>
-                <i className="fas fa-user-pen" style={{ color: "#00C2FF" }} />
+              <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#0F172A", margin: 0, display: "flex", alignItems: "center", gap: "10px" }}>
+                <i className="fas fa-user-pen" style={{ color: "#0284C7" }} />
                 <span>ব্যক্তিগত ও অভিভাবকের তথ্য</span>
               </h3>
-              <span style={{ fontSize: "12px", color: "#94A3B8" }}>
+              <span style={{ fontSize: "12px", color: "#64748B" }}>
                 * চিহ্নিত তথ্যগুলো অ্যাকাউন্টের ভেরিফিকেশনের জন্য প্রয়োজন
               </span>
             </div>
@@ -1241,7 +1242,7 @@ export const DipuProfileApp: React.FC = () => {
               {/* Guardian Section Header */}
               <div
                 style={{
-                  borderTop: "1px solid rgba(0, 194, 255, 0.15)",
+                  borderTop: "1px solid #E2E8F0",
                   paddingTop: "20px",
                   marginBottom: "16px",
                   display: "flex",
@@ -1251,10 +1252,10 @@ export const DipuProfileApp: React.FC = () => {
               >
                 <i className="fas fa-hands-holding-child" style={{ color: "#10B981", fontSize: "18px" }} />
                 <div>
-                  <h4 style={{ fontSize: "15px", fontWeight: 800, color: "#FFFFFF", margin: 0 }}>
+                  <h4 style={{ fontSize: "15px", fontWeight: 800, color: "#0F172A", margin: 0 }}>
                     অভিভাবকের তথ্য (Guardian Information)
                   </h4>
-                  <span style={{ fontSize: "12px", color: "#94A3B8" }}>
+                  <span style={{ fontSize: "12px", color: "#64748B" }}>
                     পরীক্ষার রেজাল্ট ও ক্লাসের অগ্রগতি অভিভাবককে এসএমএসে জানানো হবে
                   </span>
                 </div>
@@ -1306,9 +1307,9 @@ export const DipuProfileApp: React.FC = () => {
                   type="button"
                   onClick={() => setIsAvatarModalOpen(true)}
                   style={{
-                    background: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid rgba(0, 194, 255, 0.25)",
-                    color: "#00C2FF",
+                    background: "#F0F9FF",
+                    border: "1px solid #BAE6FD",
+                    color: "#0284C7",
                     padding: "12px 18px",
                     borderRadius: "12px",
                     fontWeight: 700,
@@ -1331,23 +1332,23 @@ export const DipuProfileApp: React.FC = () => {
         {activeTab === "academic" && (
           <div
             style={{
-              background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
-              border: "1px solid rgba(0, 194, 255, 0.18)",
+              background: "#FFFFFF",
+              border: "1px solid #E2E8F0",
               borderRadius: "20px",
               padding: "28px",
-              boxShadow: "0 8px 30px rgba(0,0,0,0.45)",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
             }}
           >
-            <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#FFFFFF", marginBottom: "20px", display: "flex", alignItems: "center", gap: "10px" }}>
-              <i className="fas fa-graduation-cap" style={{ color: "#00C2FF" }} />
+            <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#0F172A", marginBottom: "20px", display: "flex", alignItems: "center", gap: "10px" }}>
+              <i className="fas fa-graduation-cap" style={{ color: "#0284C7" }} />
               <span>একাডেমিক তথ্য, রোল ও সিলেবাস প্রস্তুতি</span>
             </h3>
 
             {/* Overall Syllabus Meter */}
             <div
               style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(0, 194, 255, 0.15)",
+                background: "#F8FAFC",
+                border: "1px solid #E2E8F0",
                 borderRadius: "14px",
                 padding: "20px",
                 marginBottom: "24px",
@@ -1355,8 +1356,8 @@ export const DipuProfileApp: React.FC = () => {
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
                 <div>
-                  <div style={{ fontSize: "12.5px", color: "#94A3B8" }}>সার্বিক সিলেবাস অগ্রগতি ও প্রস্তুতি সূচক</div>
-                  <div style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", marginTop: "2px" }}>
+                  <div style={{ fontSize: "12.5px", color: "#64748B" }}>সার্বিক সিলেবাস অগ্রগতি ও প্রস্তুতি সূচক</div>
+                  <div style={{ fontSize: "24px", fontWeight: 800, color: "#0F172A", marginTop: "2px" }}>
                     ৭৫% সিলেবাস সম্পন্ন
                   </div>
                 </div>
@@ -1364,18 +1365,18 @@ export const DipuProfileApp: React.FC = () => {
                   style={{
                     fontSize: "13px",
                     fontWeight: 700,
-                    color: "#00C2FF",
-                    background: "rgba(0,194,255,0.15)",
+                    color: "#0284C7",
+                    background: "#E0F2FE",
                     padding: "6px 16px",
                     borderRadius: "999px",
-                    border: "1px solid rgba(0,194,255,0.3)",
+                    border: "1px solid #BAE6FD",
                   }}
                 >
                   🎯 টার্গেট গোল: {userDreamTarget}
                 </div>
               </div>
-              <div style={{ height: "10px", background: "rgba(255,255,255,0.1)", borderRadius: "999px", marginTop: "14px", overflow: "hidden" }}>
-                <div style={{ width: "75%", height: "100%", background: "linear-gradient(90deg, #0070F3, #00C2FF)", borderRadius: "999px" }} />
+              <div style={{ height: "10px", background: "#E2E8F0", borderRadius: "999px", marginTop: "14px", overflow: "hidden" }}>
+                <div style={{ width: "75%", height: "100%", background: "linear-gradient(90deg, #0284C7, #00C2FF)", borderRadius: "999px" }} />
               </div>
             </div>
 
@@ -1497,32 +1498,33 @@ export const DipuProfileApp: React.FC = () => {
 
               {/* Subject Breakdown Checklist */}
               <div style={{ marginBottom: "24px" }}>
-                <h4 style={{ fontSize: "14px", fontWeight: 700, color: "#FFFFFF", marginBottom: "12px" }}>
+                <h4 style={{ fontSize: "14px", fontWeight: 700, color: "#0F172A", marginBottom: "12px" }}>
                   বিষয়ভিত্তিক প্রস্তুতি ট্র্যাকার:
                 </h4>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "10px" }}>
                   {[
-                    { name: "পদার্থবিজ্ঞান ১ম ও ২য় পত্র", pct: "৮৫%", color: "#00C2FF", icon: "fa-atom" },
-                    { name: "উচ্চতর গণিত ১ম ও ২য় পত্র", pct: "৯০%", color: "#8B5CF6", icon: "fa-calculator" },
+                    { name: "পদার্থবিজ্ঞান ১ম ও ২য় পত্র", pct: "৮৫%", color: "#0284C7", icon: "fa-atom" },
+                    { name: "উচ্চতর গণিত ১ম ও ২য় পত্র", pct: "৯০%", color: "#7C3AED", icon: "fa-calculator" },
                     { name: "রসায়ন ১ম ও ২য় পত্র", pct: "৭৫%", color: "#10B981", icon: "fa-flask" },
-                    { name: "বাংলা ও ইংরেজি", pct: "৮০%", color: "#F59E0B", icon: "fa-book-open" },
-                    { name: "তথ্য ও যোগাযোগ প্রযুক্তি (ICT)", pct: "৭০%", color: "#EC4899", icon: "fa-laptop-code" },
+                    { name: "বাংলা ও ইংরেজি", pct: "৮০%", color: "#D97706", icon: "fa-book-open" },
+                    { name: "তথ্য ও যোগাযোগ প্রযুক্তি (ICT)", pct: "৭০%", color: "#DB2777", icon: "fa-laptop-code" },
                   ].map((s, idx) => (
                     <div
                       key={idx}
                       style={{
-                        background: "rgba(255,255,255,0.02)",
-                        border: "1px solid rgba(255,255,255,0.08)",
+                        background: "#FFFFFF",
+                        border: "1px solid #E2E8F0",
                         borderRadius: "12px",
                         padding: "12px 14px",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
+                        boxShadow: "0 2px 6px rgba(0,0,0,0.02)",
                       }}
                     >
                       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                         <i className={`fas ${s.icon}`} style={{ color: s.color, fontSize: "14px" }} />
-                        <span style={{ fontSize: "12.5px", fontWeight: 600, color: "#FFFFFF" }}>{s.name}</span>
+                        <span style={{ fontSize: "12.5px", fontWeight: 600, color: "#0F172A" }}>{s.name}</span>
                       </div>
                       <span style={{ fontSize: "12px", fontWeight: 700, color: s.color }}>{s.pct}</span>
                     </div>
@@ -1543,11 +1545,11 @@ export const DipuProfileApp: React.FC = () => {
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "18px", flexWrap: "wrap", gap: "12px" }}>
               <div>
-                <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#FFFFFF", margin: 0, display: "flex", alignItems: "center", gap: "10px" }}>
-                  <i className="fas fa-book-open" style={{ color: "#00C2FF" }} />
+                <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#0F172A", margin: 0, display: "flex", alignItems: "center", gap: "10px" }}>
+                  <i className="fas fa-book-open" style={{ color: "#0284C7" }} />
                   <span>আমার এনরোল্ড কোর্সসমূহ</span>
                 </h3>
-                <span style={{ fontSize: "13px", color: "#94A3B8" }}>
+                <span style={{ fontSize: "13px", color: "#64748B" }}>
                   আপনার চলমান ব্যাচ ও সরাসরি ক্লাসে প্রবেশের লিংক
                 </span>
               </div>
@@ -1557,14 +1559,14 @@ export const DipuProfileApp: React.FC = () => {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "8px",
-                  background: "linear-gradient(135deg, #0070F3 0%, #00C2FF 100%)",
+                  background: "linear-gradient(135deg, #0284C7 0%, #2563EB 100%)",
                   color: "#FFFFFF",
                   padding: "9px 18px",
                   borderRadius: "10px",
                   textDecoration: "none",
                   fontSize: "13px",
                   fontWeight: 700,
-                  boxShadow: "0 4px 14px rgba(0, 194, 255, 0.3)",
+                  boxShadow: "0 4px 14px rgba(2, 132, 199, 0.25)",
                 }}
               >
                 <i className="fas fa-plus" />
@@ -1585,7 +1587,7 @@ export const DipuProfileApp: React.FC = () => {
                       overflow: "hidden",
                       flexShrink: 0,
                       position: "relative",
-                      background: "#071024",
+                      background: "#F1F5F9",
                     }}
                   >
                     <img
@@ -1613,33 +1615,33 @@ export const DipuProfileApp: React.FC = () => {
                   {/* Course Details */}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "4px" }}>
-                      <span style={{ fontSize: "12px", color: "#00C2FF", fontWeight: 700 }}>{c.subject}</span>
-                      <span style={{ color: "rgba(255,255,255,0.2)" }}>•</span>
-                      <span style={{ fontSize: "12px", color: "#94A3B8" }}>{c.mentor}</span>
+                      <span style={{ fontSize: "12px", color: "#0284C7", fontWeight: 700 }}>{c.subject}</span>
+                      <span style={{ color: "#CBD5E1" }}>•</span>
+                      <span style={{ fontSize: "12px", color: "#64748B" }}>{c.mentor}</span>
                     </div>
 
-                    <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 8px 0" }}>
+                    <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#0F172A", margin: "0 0 8px 0" }}>
                       {c.title}
                     </h4>
 
                     {/* Progress Bar */}
                     <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "6px" }}>
-                      <div style={{ flex: 1, height: "7px", background: "rgba(255,255,255,0.1)", borderRadius: "999px", overflow: "hidden" }}>
+                      <div style={{ flex: 1, height: "7px", background: "#E2E8F0", borderRadius: "999px", overflow: "hidden" }}>
                         <div
                           style={{
                             width: `${c.progress}%`,
                             height: "100%",
-                            background: "linear-gradient(90deg, #0070F3, #00C2FF)",
+                            background: "linear-gradient(90deg, #0284C7, #00C2FF)",
                             borderRadius: "999px",
                           }}
                         />
                       </div>
-                      <span style={{ fontSize: "12px", fontWeight: 700, color: "#00C2FF" }}>
+                      <span style={{ fontSize: "12px", fontWeight: 700, color: "#0284C7" }}>
                         {c.progress}% সম্পন্ন ({c.completedLessons}/{c.totalLessons} ক্লাস)
                       </span>
                     </div>
 
-                    <div style={{ fontSize: "12px", color: "#CBD5E1", display: "flex", alignItems: "center", gap: "6px" }}>
+                    <div style={{ fontSize: "12px", color: "#475569", display: "flex", alignItems: "center", gap: "6px" }}>
                       <i className="fas fa-play-circle" style={{ color: "#10B981" }} />
                       <span>পরবর্তী ক্লাস: {c.nextClass}</span>
                     </div>
@@ -1653,9 +1655,9 @@ export const DipuProfileApp: React.FC = () => {
                         display: "inline-flex",
                         alignItems: "center",
                         gap: "8px",
-                        background: "rgba(0, 194, 255, 0.15)",
-                        border: "1px solid rgba(0, 194, 255, 0.35)",
-                        color: "#00C2FF",
+                        background: "#E0F2FE",
+                        border: "1px solid #BAE6FD",
+                        color: "#0284C7",
                         padding: "10px 18px",
                         borderRadius: "12px",
                         textDecoration: "none",
@@ -1679,11 +1681,11 @@ export const DipuProfileApp: React.FC = () => {
         {activeTab === "certificates" && (
           <div>
             <div style={{ marginBottom: "24px" }}>
-              <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: "10px" }}>
-                <i className="fas fa-award" style={{ color: "#00C2FF" }} />
+              <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#0F172A", margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: "10px" }}>
+                <i className="fas fa-award" style={{ color: "#0284C7" }} />
                 <span>অর্জিত সনদপত্র ও কৃতিত্ব (Verifiable Certificates)</span>
               </h3>
-              <p style={{ fontSize: "13px", color: "#94A3B8", margin: 0 }}>
+              <p style={{ fontSize: "13px", color: "#64748B", margin: 0 }}>
                 Dipu Academy হতে ১০০% কোর্স ও মডেল টেস্ট সফলভাবে সম্পন্ন করার মাধ্যমে অর্জিত ডিজিটাল ভেরিফায়েড সনদ।
               </p>
             </div>
@@ -1698,13 +1700,13 @@ export const DipuProfileApp: React.FC = () => {
                         width: "44px",
                         height: "44px",
                         borderRadius: "12px",
-                        background: "rgba(0, 194, 255, 0.15)",
-                        color: "#00C2FF",
+                        background: "rgba(2, 132, 199, 0.12)",
+                        color: "#0284C7",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         fontSize: "20px",
-                        border: "1px solid rgba(0, 194, 255, 0.3)",
+                        border: "1px solid rgba(2, 132, 199, 0.25)",
                       }}
                     >
                       <i className="fas fa-file-certificate" />
@@ -1713,9 +1715,9 @@ export const DipuProfileApp: React.FC = () => {
                       style={{
                         fontSize: "11px",
                         fontWeight: 700,
-                        background: "rgba(16, 185, 129, 0.15)",
-                        color: "#10B981",
-                        border: "1px solid rgba(16, 185, 129, 0.3)",
+                        background: "rgba(16, 185, 129, 0.12)",
+                        color: "#059669",
+                        border: "1px solid rgba(16, 185, 129, 0.25)",
                         padding: "3px 10px",
                         borderRadius: "999px",
                       }}
@@ -1724,29 +1726,29 @@ export const DipuProfileApp: React.FC = () => {
                     </span>
                   </div>
 
-                  <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#FFFFFF", marginBottom: "6px" }}>
+                  <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#0F172A", marginBottom: "6px" }}>
                     {cert.title}
                   </h4>
-                  <div style={{ fontSize: "12.5px", color: "#00C2FF", marginBottom: "12px" }}>
+                  <div style={{ fontSize: "12.5px", color: "#0284C7", fontWeight: 600, marginBottom: "12px" }}>
                     {cert.courseName}
                   </div>
 
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", fontSize: "12px", color: "#94A3B8", marginBottom: "16px" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", fontSize: "12px", color: "#64748B", marginBottom: "16px" }}>
                     <div>
                       <span>সনদ আইডি:</span>{" "}
-                      <strong style={{ color: "#FFFFFF" }}>{cert.certCode}</strong>
+                      <strong style={{ color: "#0F172A" }}>{cert.certCode}</strong>
                     </div>
                     <div>
                       <span>ইস্যুর তারিখ:</span>{" "}
-                      <strong style={{ color: "#FFFFFF" }}>{cert.issueDate}</strong>
+                      <strong style={{ color: "#0F172A" }}>{cert.issueDate}</strong>
                     </div>
                     <div>
                       <span>প্রাপ্ত গ্রেড:</span>{" "}
-                      <strong style={{ color: "#10B981" }}>{cert.grade}</strong>
+                      <strong style={{ color: "#059669" }}>{cert.grade}</strong>
                     </div>
                     <div>
                       <span>স্কোর:</span>{" "}
-                      <strong style={{ color: "#F59E0B" }}>{cert.score}</strong>
+                      <strong style={{ color: "#D97706" }}>{cert.score}</strong>
                     </div>
                   </div>
 
@@ -1756,7 +1758,7 @@ export const DipuProfileApp: React.FC = () => {
                       onClick={() => setSelectedCertificate(cert)}
                       style={{
                         flex: 1,
-                        background: "linear-gradient(135deg, #0070F3 0%, #00C2FF 100%)",
+                        background: "linear-gradient(135deg, #0284C7 0%, #2563EB 100%)",
                         color: "#FFFFFF",
                         border: "none",
                         padding: "9px 14px",
@@ -1768,6 +1770,7 @@ export const DipuProfileApp: React.FC = () => {
                         alignItems: "center",
                         justifyContent: "center",
                         gap: "6px",
+                        boxShadow: "0 2px 8px rgba(2, 132, 199, 0.25)",
                       }}
                     >
                       <i className="fas fa-eye" />
@@ -1780,9 +1783,9 @@ export const DipuProfileApp: React.FC = () => {
                         showToast(`🔍 সনদ আইডি: ${cert.certCode} ১০০% ডিজিটাল ভেরিফায়েড!`);
                       }}
                       style={{
-                        background: "rgba(255,255,255,0.05)",
-                        border: "1px solid rgba(255,255,255,0.15)",
-                        color: "#FFFFFF",
+                        background: "#F1F5F9",
+                        border: "1px solid #CBD5E1",
+                        color: "#0F172A",
                         padding: "9px 14px",
                         borderRadius: "10px",
                         fontSize: "12.5px",
@@ -1804,8 +1807,8 @@ export const DipuProfileApp: React.FC = () => {
 
             {/* Achievement Badges Showcase */}
             <div style={{ marginBottom: "24px" }}>
-              <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#FFFFFF", marginBottom: "14px", display: "flex", alignItems: "center", gap: "8px" }}>
-                <i className="fas fa-shield-cat" style={{ color: "#F59E0B" }} />
+              <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#0F172A", marginBottom: "14px", display: "flex", alignItems: "center", gap: "8px" }}>
+                <i className="fas fa-shield-cat" style={{ color: "#D97706" }} />
                 <span>অর্জন ও গ্যামিফিকেশন ব্যাজসমূহ</span>
               </h4>
 
@@ -1815,17 +1818,17 @@ export const DipuProfileApp: React.FC = () => {
                   { title: "Quiz Master", icon: "🎯", desc: "মডেল টেস্টে ৯০%+ স্কোর", color: "#10B981" },
                   { title: "Early Bird Learner", icon: "⚡", desc: "ভোরের লাইভ ক্লাসে উপস্থিতি", color: "#F59E0B" },
                   { title: "Class Topper", icon: "🏅", desc: "ব্যাচের শীর্ষ ৩ মেধা তালিকায়", color: "#8B5CF6" },
-                  { title: "AI Doubt Solver", icon: "💡", desc: "৫০+ প্রশ্ন এআই মেন্টরে সমাধান", color: "#00C2FF" },
+                  { title: "AI Doubt Solver", icon: "💡", desc: "৫০+ প্রশ্ন এআই মেন্টরে সমাধান", color: "#0284C7" },
                   { title: "Formula Maestro", icon: "📐", desc: "১০০% ফর্মুলা কার্ড মুখস্থ", color: "#EC4899" },
                   { title: "Bookworm Student", icon: "📚", desc: "২টি হ্যান্ডবুক সম্পূর্ণ পাঠ", color: "#14B8A6" },
                   { title: "Academy Star", icon: "⭐", desc: "অল-রাউন্ডার পারফর্ম্যান্স", color: "#FBBF24" },
                 ].map((b, idx) => (
                   <div key={idx} className="dp-badge-item">
                     <div style={{ fontSize: "32px", marginBottom: "8px" }}>{b.icon}</div>
-                    <div style={{ fontSize: "13.5px", fontWeight: 800, color: "#FFFFFF", marginBottom: "4px" }}>
+                    <div style={{ fontSize: "13.5px", fontWeight: 800, color: "#0F172A", marginBottom: "4px" }}>
                       {b.title}
                     </div>
-                    <div style={{ fontSize: "11px", color: "#94A3B8" }}>{b.desc}</div>
+                    <div style={{ fontSize: "11px", color: "#64748B" }}>{b.desc}</div>
                   </div>
                 ))}
               </div>
@@ -1834,8 +1837,8 @@ export const DipuProfileApp: React.FC = () => {
             {/* EduCoins Reward Balance Box */}
             <div
               style={{
-                background: "linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(9, 20, 47, 0.8) 100%)",
-                border: "1.5px solid rgba(245, 158, 11, 0.35)",
+                background: "linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)",
+                border: "1.5px solid #FDE68A",
                 borderRadius: "16px",
                 padding: "20px 24px",
                 display: "flex",
@@ -1843,6 +1846,7 @@ export const DipuProfileApp: React.FC = () => {
                 justifyContent: "space-between",
                 flexWrap: "wrap",
                 gap: "14px",
+                boxShadow: "0 4px 16px rgba(245, 158, 11, 0.08)",
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
@@ -1852,21 +1856,22 @@ export const DipuProfileApp: React.FC = () => {
                     height: "52px",
                     borderRadius: "50%",
                     background: "#F59E0B",
-                    color: "#050B17",
+                    color: "#FFFFFF",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     fontSize: "26px",
                     fontWeight: 900,
+                    boxShadow: "0 4px 12px rgba(245, 158, 11, 0.3)",
                   }}
                 >
                   🪙
                 </div>
                 <div>
-                  <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#FFFFFF", margin: 0 }}>
+                  <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#78350F", margin: 0 }}>
                     EduCoins ব্যালেন্স: ২৫০ কয়েন
                   </h4>
-                  <p style={{ fontSize: "12.5px", color: "#CBD5E1", margin: "4px 0 0" }}>
+                  <p style={{ fontSize: "12.5px", color: "#92400E", margin: "4px 0 0" }}>
                     পরবর্তী যেকোনো কোর্স ভর্তি বা হ্যান্ডবুক অর্ডারে প্রতি ১০০ কয়েনে ৫০ টাকা পর্যন্ত ডিসকাউন্ট পান!
                   </p>
                 </div>
@@ -1875,14 +1880,15 @@ export const DipuProfileApp: React.FC = () => {
                 type="button"
                 onClick={() => showToast("🎁 আপনার ২৫০ EduCoins ব্যবহার করে কোর্সে ছাড় পেতে চেকআউটে কয়েন অপশন চালু করুন!")}
                 style={{
-                  background: "#F59E0B",
-                  color: "#050B17",
+                  background: "linear-gradient(135deg, #D97706 0%, #F59E0B 100%)",
+                  color: "#FFFFFF",
                   border: "none",
                   padding: "10px 20px",
                   borderRadius: "10px",
                   fontSize: "13px",
                   fontWeight: 800,
                   cursor: "pointer",
+                  boxShadow: "0 4px 12px rgba(217, 119, 6, 0.25)",
                 }}
               >
                 রিডিম করার নিয়ম
@@ -1896,11 +1902,11 @@ export const DipuProfileApp: React.FC = () => {
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", flexWrap: "wrap", gap: "12px" }}>
               <div>
-                <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#FFFFFF", margin: 0, display: "flex", alignItems: "center", gap: "10px" }}>
-                  <i className="fas fa-chart-line" style={{ color: "#00C2FF" }} />
+                <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#0F172A", margin: 0, display: "flex", alignItems: "center", gap: "10px" }}>
+                  <i className="fas fa-chart-line" style={{ color: "#0284C7" }} />
                   <span>রিপোর্ট কার্ড ও পরীক্ষার ফলাফল</span>
                 </h3>
-                <span style={{ fontSize: "13px", color: "#94A3B8" }}>
+                <span style={{ fontSize: "13px", color: "#64748B" }}>
                   আপনার অংশগ্রহণকৃত সকল সাপ্তাহিক ও অধ্যায়ভিত্তিক মডেল টেস্টের বিস্তারিত ফলাফল
                 </span>
               </div>
@@ -1911,9 +1917,9 @@ export const DipuProfileApp: React.FC = () => {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "8px",
-                  background: "rgba(16, 185, 129, 0.15)",
-                  border: "1px solid rgba(16, 185, 129, 0.35)",
-                  color: "#10B981",
+                  background: "rgba(16, 185, 129, 0.12)",
+                  border: "1px solid rgba(16, 185, 129, 0.3)",
+                  color: "#059669",
                   padding: "10px 18px",
                   borderRadius: "12px",
                   fontSize: "13px",
@@ -1928,39 +1934,39 @@ export const DipuProfileApp: React.FC = () => {
 
             {/* Performance Summary Cards */}
             <div className="dp-grid-4" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px", marginBottom: "24px" }}>
-              <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(0, 194, 255, 0.15)", borderRadius: "14px", padding: "16px" }}>
-                <div style={{ fontSize: "12px", color: "#94A3B8" }}>সার্বিক গড় স্কোর</div>
-                <div style={{ fontSize: "22px", fontWeight: 800, color: "#00C2FF", marginTop: "4px" }}>৮৮.৫%</div>
-                <div style={{ fontSize: "11px", color: "#10B981", marginTop: "4px" }}>গ্রেড: A+ (Outstanding)</div>
+              <div style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", borderRadius: "14px", padding: "16px", boxShadow: "0 2px 10px rgba(0,0,0,0.03)" }}>
+                <div style={{ fontSize: "12px", color: "#64748B" }}>সার্বিক গড় স্কোর</div>
+                <div style={{ fontSize: "22px", fontWeight: 800, color: "#0284C7", marginTop: "4px" }}>৮৮.৫%</div>
+                <div style={{ fontSize: "11px", color: "#059669", marginTop: "4px" }}>গ্রেড: A+ (Outstanding)</div>
               </div>
 
-              <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(16, 185, 129, 0.15)", borderRadius: "14px", padding: "16px" }}>
-                <div style={{ fontSize: "12px", color: "#94A3B8" }}>ব্যাচে মেধা অবস্থান</div>
-                <div style={{ fontSize: "22px", fontWeight: 800, color: "#10B981", marginTop: "4px" }}>#৩</div>
-                <div style={{ fontSize: "11px", color: "#94A3B8", marginTop: "4px" }}>৮৫০ জন শিক্ষার্থীর মধ্যে</div>
+              <div style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", borderRadius: "14px", padding: "16px", boxShadow: "0 2px 10px rgba(0,0,0,0.03)" }}>
+                <div style={{ fontSize: "12px", color: "#64748B" }}>ব্যাচে মেধা অবস্থান</div>
+                <div style={{ fontSize: "22px", fontWeight: 800, color: "#059669", marginTop: "4px" }}>#৩</div>
+                <div style={{ fontSize: "11px", color: "#64748B", marginTop: "4px" }}>৮৫০ জন শিক্ষার্থীর মধ্যে</div>
               </div>
 
-              <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(245, 158, 11, 0.15)", borderRadius: "14px", padding: "16px" }}>
-                <div style={{ fontSize: "12px", color: "#94A3B8" }}>সম্পন্ন পরীক্ষা</div>
-                <div style={{ fontSize: "22px", fontWeight: 800, color: "#F59E0B", marginTop: "4px" }}>১২ টি</div>
-                <div style={{ fontSize: "11px", color: "#94A3B8", marginTop: "4px" }}>১০০% উপস্থিতি হার</div>
+              <div style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", borderRadius: "14px", padding: "16px", boxShadow: "0 2px 10px rgba(0,0,0,0.03)" }}>
+                <div style={{ fontSize: "12px", color: "#64748B" }}>সম্পন্ন পরীক্ষা</div>
+                <div style={{ fontSize: "22px", fontWeight: 800, color: "#D97706", marginTop: "4px" }}>১২ টি</div>
+                <div style={{ fontSize: "11px", color: "#64748B", marginTop: "4px" }}>১০০% উপস্থিতি হার</div>
               </div>
 
-              <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(139, 92, 246, 0.15)", borderRadius: "14px", padding: "16px" }}>
-                <div style={{ fontSize: "12px", color: "#94A3B8" }}>মোট ওয়াচ টাইম</div>
-                <div style={{ fontSize: "22px", fontWeight: 800, color: "#A78BFA", marginTop: "4px" }}>৪২ ঘণ্টা</div>
-                <div style={{ fontSize: "11px", color: "#94A3B8", marginTop: "4px" }}>রেকর্ডেড ও লাইভ ক্লাস</div>
+              <div style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", borderRadius: "14px", padding: "16px", boxShadow: "0 2px 10px rgba(0,0,0,0.03)" }}>
+                <div style={{ fontSize: "12px", color: "#64748B" }}>মোট ওয়াচ টাইম</div>
+                <div style={{ fontSize: "22px", fontWeight: 800, color: "#7C3AED", marginTop: "4px" }}>৪২ ঘণ্টা</div>
+                <div style={{ fontSize: "11px", color: "#64748B", marginTop: "4px" }}>রেকর্ডেড ও লাইভ ক্লাস</div>
               </div>
             </div>
 
             {/* Exam Results Table */}
             <div
               style={{
-                background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
-                border: "1px solid rgba(0, 194, 255, 0.15)",
+                background: "#FFFFFF",
+                border: "1px solid #E2E8F0",
                 borderRadius: "16px",
                 overflow: "hidden",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
               }}
             >
               <div style={{ overflowX: "auto" }}>
@@ -1981,19 +1987,19 @@ export const DipuProfileApp: React.FC = () => {
                     {examResults.map((ex) => (
                       <tr key={ex.id}>
                         <td>
-                          <div style={{ fontWeight: 700, color: "#FFFFFF" }}>{ex.title}</div>
-                          <div style={{ fontSize: "11.5px", color: "#00C2FF" }}>{ex.subject}</div>
+                          <div style={{ fontWeight: 700, color: "#0F172A" }}>{ex.title}</div>
+                          <div style={{ fontSize: "11.5px", color: "#0284C7", fontWeight: 600 }}>{ex.subject}</div>
                         </td>
-                        <td style={{ color: "#94A3B8" }}>{ex.date}</td>
-                        <td style={{ fontWeight: 800 }}>
+                        <td style={{ color: "#64748B" }}>{ex.date}</td>
+                        <td style={{ fontWeight: 800, color: "#0F172A" }}>
                           {ex.score} / {ex.total}
                         </td>
-                        <td style={{ fontWeight: 800, color: "#00C2FF" }}>{ex.percentage}%</td>
+                        <td style={{ fontWeight: 800, color: "#0284C7" }}>{ex.percentage}%</td>
                         <td>
                           <span
                             style={{
-                              background: "rgba(16, 185, 129, 0.15)",
-                              color: "#10B981",
+                              background: "rgba(16, 185, 129, 0.12)",
+                              color: "#059669",
                               padding: "2px 8px",
                               borderRadius: "6px",
                               fontWeight: 700,
@@ -2003,12 +2009,12 @@ export const DipuProfileApp: React.FC = () => {
                             {ex.grade}
                           </span>
                         </td>
-                        <td style={{ color: "#F59E0B", fontWeight: 700 }}>{ex.rank}</td>
+                        <td style={{ color: "#D97706", fontWeight: 700 }}>{ex.rank}</td>
                         <td>
                           <span
                             style={{
-                              background: ex.status === "শীর্ষ মেধা" ? "rgba(0,194,255,0.15)" : "rgba(16,185,129,0.15)",
-                              color: ex.status === "শীর্ষ মেধা" ? "#00C2FF" : "#10B981",
+                              background: ex.status === "শীর্ষ মেধা" ? "rgba(2,132,199,0.12)" : "rgba(16,185,129,0.12)",
+                              color: ex.status === "শীর্ষ মেধা" ? "#0284C7" : "#059669",
                               padding: "2px 8px",
                               borderRadius: "999px",
                               fontSize: "11px",
@@ -2025,7 +2031,7 @@ export const DipuProfileApp: React.FC = () => {
                             style={{
                               background: "none",
                               border: "none",
-                              color: "#00C2FF",
+                              color: "#0284C7",
                               cursor: "pointer",
                               fontSize: "12px",
                               fontWeight: 700,
@@ -2050,22 +2056,22 @@ export const DipuProfileApp: React.FC = () => {
         {activeTab === "billing" && (
           <div>
             <div style={{ marginBottom: "20px" }}>
-              <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: "10px" }}>
-                <i className="fas fa-receipt" style={{ color: "#00C2FF" }} />
+              <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#0F172A", margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: "10px" }}>
+                <i className="fas fa-receipt" style={{ color: "#0284C7" }} />
                 <span>পেমেন্ট ও অর্ডার হিস্ট্রি</span>
               </h3>
-              <p style={{ fontSize: "13px", color: "#94A3B8", margin: 0 }}>
+              <p style={{ fontSize: "13px", color: "#64748B", margin: 0 }}>
                 আপনার কোর্স এনরোলমেন্ট ও হ্যান্ডবুক অর্ডারের ডিজিটাল ইনভয়েস তালিকা
               </p>
             </div>
 
             <div
               style={{
-                background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
-                border: "1px solid rgba(0, 194, 255, 0.15)",
+                background: "#FFFFFF",
+                border: "1px solid #E2E8F0",
                 borderRadius: "16px",
                 overflow: "hidden",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
               }}
             >
               <div style={{ overflowX: "auto" }}>
@@ -2084,18 +2090,18 @@ export const DipuProfileApp: React.FC = () => {
                   <tbody>
                     {transactions.map((tx) => (
                       <tr key={tx.id}>
-                        <td style={{ fontFamily: "monospace", color: "#00C2FF", fontWeight: 700 }}>
+                        <td style={{ fontFamily: "monospace", color: "#0284C7", fontWeight: 700 }}>
                           {tx.trxId}
                         </td>
-                        <td style={{ fontWeight: 700, color: "#FFFFFF" }}>{tx.item}</td>
-                        <td style={{ color: "#CBD5E1" }}>{tx.method}</td>
-                        <td style={{ color: "#94A3B8" }}>{tx.date}</td>
-                        <td style={{ fontWeight: 800, color: "#10B981" }}>{tx.amount}</td>
+                        <td style={{ fontWeight: 700, color: "#0F172A" }}>{tx.item}</td>
+                        <td style={{ color: "#475569" }}>{tx.method}</td>
+                        <td style={{ color: "#64748B" }}>{tx.date}</td>
+                        <td style={{ fontWeight: 800, color: "#059669" }}>{tx.amount}</td>
                         <td>
                           <span
                             style={{
-                              background: "rgba(16, 185, 129, 0.15)",
-                              color: "#10B981",
+                              background: "rgba(16, 185, 129, 0.12)",
+                              color: "#059669",
                               padding: "2px 8px",
                               borderRadius: "999px",
                               fontSize: "11px",
@@ -2110,9 +2116,9 @@ export const DipuProfileApp: React.FC = () => {
                             type="button"
                             onClick={() => showToast(`📄 ইনভয়েস ${tx.trxId} পিডিএফ ডাউনলোড শুরু হয়েছে!`)}
                             style={{
-                              background: "rgba(255,255,255,0.05)",
-                              border: "1px solid rgba(255,255,255,0.15)",
-                              color: "#FFFFFF",
+                              background: "#F1F5F9",
+                              border: "1px solid #CBD5E1",
+                              color: "#0F172A",
                               padding: "5px 12px",
                               borderRadius: "8px",
                               cursor: "pointer",
@@ -2141,14 +2147,15 @@ export const DipuProfileApp: React.FC = () => {
             {/* Change Password Card */}
             <div
               style={{
-                background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
-                border: "1px solid rgba(0, 194, 255, 0.18)",
+                background: "#FFFFFF",
+                border: "1px solid #E2E8F0",
                 borderRadius: "20px",
                 padding: "26px",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
               }}
             >
-              <h3 style={{ fontSize: "17px", fontWeight: 800, color: "#FFFFFF", marginBottom: "18px", display: "flex", alignItems: "center", gap: "10px" }}>
-                <i className="fas fa-key" style={{ color: "#00C2FF" }} />
+              <h3 style={{ fontSize: "17px", fontWeight: 800, color: "#0F172A", marginBottom: "18px", display: "flex", alignItems: "center", gap: "10px" }}>
+                <i className="fas fa-key" style={{ color: "#0284C7" }} />
                 <span>পাসওয়ার্ড পরিবর্তন করুন</span>
               </h3>
 
@@ -2199,19 +2206,20 @@ export const DipuProfileApp: React.FC = () => {
             {/* Active Devices & Sessions Card */}
             <div
               style={{
-                background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
-                border: "1px solid rgba(0, 194, 255, 0.18)",
+                background: "#FFFFFF",
+                border: "1px solid #E2E8F0",
                 borderRadius: "20px",
                 padding: "26px",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "18px", flexWrap: "wrap", gap: "10px" }}>
                 <div>
-                  <h3 style={{ fontSize: "17px", fontWeight: 800, color: "#FFFFFF", margin: 0, display: "flex", alignItems: "center", gap: "10px" }}>
-                    <i className="fas fa-laptop-mobile" style={{ color: "#00C2FF" }} />
+                  <h3 style={{ fontSize: "17px", fontWeight: 800, color: "#0F172A", margin: 0, display: "flex", alignItems: "center", gap: "10px" }}>
+                    <i className="fas fa-laptop-mobile" style={{ color: "#0284C7" }} />
                     <span>সক্রিয় ডিভাইস ও সেশন তালিকা</span>
                   </h3>
-                  <span style={{ fontSize: "12px", color: "#94A3B8" }}>
+                  <span style={{ fontSize: "12px", color: "#64748B" }}>
                     যেসব ডিভাইসে আপনার Dipu Academy স্টুডেন্ট অ্যাকাউন্টটি লগইন করা রয়েছে
                   </span>
                 </div>
@@ -2237,8 +2245,8 @@ export const DipuProfileApp: React.FC = () => {
                 {/* Session 1 */}
                 <div
                   style={{
-                    background: "rgba(255,255,255,0.02)",
-                    border: "1px solid rgba(16, 185, 129, 0.25)",
+                    background: "#F8FAFC",
+                    border: "1px solid rgba(16, 185, 129, 0.3)",
                     borderRadius: "14px",
                     padding: "16px",
                     display: "flex",
@@ -2252,8 +2260,8 @@ export const DipuProfileApp: React.FC = () => {
                         width: "40px",
                         height: "40px",
                         borderRadius: "10px",
-                        background: "rgba(0, 194, 255, 0.15)",
-                        color: "#00C2FF",
+                        background: "rgba(2, 132, 199, 0.12)",
+                        color: "#0284C7",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -2263,10 +2271,10 @@ export const DipuProfileApp: React.FC = () => {
                       <i className="fas fa-display" />
                     </div>
                     <div>
-                      <div style={{ fontWeight: 700, color: "#FFFFFF", fontSize: "14px" }}>
+                      <div style={{ fontWeight: 700, color: "#0F172A", fontSize: "14px" }}>
                         Google Chrome • Windows 11
                       </div>
-                      <div style={{ fontSize: "12px", color: "#94A3B8" }}>
+                      <div style={{ fontSize: "12px", color: "#64748B" }}>
                         বর্তমান ডিভাইস • অনলাইন সেশন • ঢাকা, বাংলাদেশ
                       </div>
                     </div>
@@ -2275,11 +2283,11 @@ export const DipuProfileApp: React.FC = () => {
                     style={{
                       fontSize: "11.5px",
                       fontWeight: 700,
-                      color: "#10B981",
-                      background: "rgba(16,185,129,0.15)",
+                      color: "#059669",
+                      background: "rgba(16,185,129,0.12)",
                       padding: "4px 12px",
                       borderRadius: "999px",
-                      border: "1px solid rgba(16,185,129,0.3)",
+                      border: "1px solid rgba(16,185,129,0.25)",
                     }}
                   >
                     🟢 বর্তমান ডিভাইস
@@ -2289,8 +2297,8 @@ export const DipuProfileApp: React.FC = () => {
                 {/* Session 2 */}
                 <div
                   style={{
-                    background: "rgba(255,255,255,0.02)",
-                    border: "1px solid rgba(255,255,255,0.08)",
+                    background: "#F8FAFC",
+                    border: "1px solid #E2E8F0",
                     borderRadius: "14px",
                     padding: "16px",
                     display: "flex",
@@ -2304,8 +2312,8 @@ export const DipuProfileApp: React.FC = () => {
                         width: "40px",
                         height: "40px",
                         borderRadius: "10px",
-                        background: "rgba(139, 92, 246, 0.15)",
-                        color: "#A78BFA",
+                        background: "rgba(139, 92, 246, 0.12)",
+                        color: "#7C3AED",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -2315,10 +2323,10 @@ export const DipuProfileApp: React.FC = () => {
                       <i className="fas fa-mobile-screen-button" />
                     </div>
                     <div>
-                      <div style={{ fontWeight: 700, color: "#FFFFFF", fontSize: "14px" }}>
+                      <div style={{ fontWeight: 700, color: "#0F172A", fontSize: "14px" }}>
                         Dipu Academy Android App
                       </div>
-                      <div style={{ fontSize: "12px", color: "#94A3B8" }}>
+                      <div style={{ fontSize: "12px", color: "#64748B" }}>
                         সক্রিয় সেশন • শেষ সক্রিয়: ২ ঘণ্টা আগে
                       </div>
                     </div>
@@ -2327,8 +2335,8 @@ export const DipuProfileApp: React.FC = () => {
                     style={{
                       fontSize: "11px",
                       fontWeight: 700,
-                      color: "#94A3B8",
-                      background: "rgba(255,255,255,0.05)",
+                      color: "#64748B",
+                      background: "#E2E8F0",
                       padding: "4px 10px",
                       borderRadius: "999px",
                     }}
@@ -2339,35 +2347,35 @@ export const DipuProfileApp: React.FC = () => {
               </div>
 
               {/* Notification Toggles */}
-              <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "18px", marginBottom: "20px" }}>
-                <h4 style={{ fontSize: "14px", fontWeight: 700, color: "#FFFFFF", marginBottom: "12px" }}>
+              <div style={{ borderTop: "1px solid #E2E8F0", paddingTop: "18px", marginBottom: "20px" }}>
+                <h4 style={{ fontSize: "14px", fontWeight: 700, color: "#0F172A", marginBottom: "12px" }}>
                   নোটিফিকেশন ও অ্যালার্ট প্রেফারেন্স:
                 </h4>
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                  <label style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer", fontSize: "13px", color: "#CBD5E1" }}>
+                  <label style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer", fontSize: "13px", color: "#334155" }}>
                     <input
                       type="checkbox"
                       checked={smsClassAlert}
                       onChange={(e) => setSmsClassAlert(e.target.checked)}
-                      style={{ accentColor: "#00C2FF", width: "16px", height: "16px" }}
+                      style={{ accentColor: "#0284C7", width: "16px", height: "16px" }}
                     />
                     <span>লাইভ ক্লাস শুরুর ১৫ মিনিট আগে এসএমএস রিমাইন্ডার পাঠান</span>
                   </label>
-                  <label style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer", fontSize: "13px", color: "#CBD5E1" }}>
+                  <label style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer", fontSize: "13px", color: "#334155" }}>
                     <input
                       type="checkbox"
                       checked={smsReportAlert}
                       onChange={(e) => setSmsReportAlert(e.target.checked)}
-                      style={{ accentColor: "#00C2FF", width: "16px", height: "16px" }}
+                      style={{ accentColor: "#0284C7", width: "16px", height: "16px" }}
                     />
                     <span>মডেল টেস্ট পরীক্ষার ফল প্রকাশের পর অভিভাবকের ফোনে এসএমএস রিপোর্ট পাঠান</span>
                   </label>
-                  <label style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer", fontSize: "13px", color: "#00C2FF" }}>
+                  <label style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer", fontSize: "13px", color: "#0284C7", fontWeight: 600 }}>
                     <input
                       type="checkbox"
                       checked={examNotify}
                       onChange={(e) => setExamNotify(e.target.checked)}
-                      style={{ accentColor: "#00C2FF", width: "16px", height: "16px" }}
+                      style={{ accentColor: "#0284C7", width: "16px", height: "16px" }}
                     />
                     <span>নতুন হ্যান্ডবুক ও ফ্রি রিসোর্স নোটিফিকেশন গ্রহণ করুন</span>
                   </label>
@@ -2375,13 +2383,13 @@ export const DipuProfileApp: React.FC = () => {
               </div>
 
               {/* Account Logout Danger Zone */}
-              <div style={{ borderTop: "1px solid rgba(239, 68, 68, 0.2)", paddingTop: "18px" }}>
+              <div style={{ borderTop: "1px solid #FEE2E2", paddingTop: "18px" }}>
                 <button
                   type="button"
                   onClick={handleLogout}
                   style={{
-                    background: "rgba(239, 68, 68, 0.15)",
-                    border: "1.5px solid rgba(239, 68, 68, 0.35)",
+                    background: "rgba(239, 68, 68, 0.1)",
+                    border: "1.5px solid rgba(239, 68, 68, 0.3)",
                     color: "#EF4444",
                     padding: "12px 24px",
                     borderRadius: "12px",
@@ -2403,14 +2411,13 @@ export const DipuProfileApp: React.FC = () => {
         )}
       </main>
 
-      {/* ─── AVATAR PICKER MODAL ─── */}
+      {/* ─── AVATAR PICKER MODAL (NO BLUR, CRISP LIGHT) ─── */}
       {isAvatarModalOpen && (
         <div
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(5, 11, 23, 0.85)",
-            backdropFilter: "blur(10px)",
+            background: "rgba(15, 23, 42, 0.6)",
             zIndex: 99999,
             display: "flex",
             alignItems: "center",
@@ -2421,31 +2428,31 @@ export const DipuProfileApp: React.FC = () => {
         >
           <div
             style={{
-              background: "#09142F",
-              border: "1.5px solid rgba(0, 194, 255, 0.3)",
+              background: "#FFFFFF",
+              border: "1px solid #E2E8F0",
               borderRadius: "20px",
               padding: "26px",
               maxWidth: "520px",
               width: "100%",
-              boxShadow: "0 25px 60px rgba(0, 0, 0, 0.75)",
+              boxShadow: "0 25px 60px rgba(0, 0, 0, 0.2)",
             }}
             onClick={(e) => e.stopPropagation()}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "18px" }}>
-              <h3 style={{ fontSize: "17px", fontWeight: 800, color: "#FFFFFF", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
-                <i className="fas fa-camera" style={{ color: "#00C2FF" }} />
+              <h3 style={{ fontSize: "17px", fontWeight: 800, color: "#0F172A", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+                <i className="fas fa-camera" style={{ color: "#0284C7" }} />
                 <span>প্রোফাইল ছবি বা অবতার নির্বাচন করুন</span>
               </h3>
               <button
                 type="button"
                 onClick={() => setIsAvatarModalOpen(false)}
-                style={{ background: "none", border: "none", color: "#94A3B8", fontSize: "20px", cursor: "pointer" }}
+                style={{ background: "none", border: "none", color: "#64748B", fontSize: "20px", cursor: "pointer" }}
               >
                 <i className="fas fa-xmark" />
               </button>
             </div>
 
-            <p style={{ fontSize: "13px", color: "#94A3B8", marginBottom: "18px" }}>
+            <p style={{ fontSize: "13px", color: "#64748B", marginBottom: "18px" }}>
               তালিকাবদ্ধ যেকোনো অবতার বেছে নিন অথবা আপনার পছন্দমতো ছবি আপলোড করুন:
             </p>
 
@@ -2461,8 +2468,8 @@ export const DipuProfileApp: React.FC = () => {
                     borderRadius: "50%",
                     overflow: "hidden",
                     cursor: "pointer",
-                    border: userAvatar === url ? "3px solid #00C2FF" : "2px solid rgba(255,255,255,0.1)",
-                    boxShadow: userAvatar === url ? "0 0 16px rgba(0, 194, 255, 0.5)" : "none",
+                    border: userAvatar === url ? "3px solid #0284C7" : "2px solid #E2E8F0",
+                    boxShadow: userAvatar === url ? "0 0 16px rgba(2, 132, 199, 0.4)" : "none",
                     transition: "all 0.2s ease",
                     margin: "0 auto",
                   }}
@@ -2473,16 +2480,16 @@ export const DipuProfileApp: React.FC = () => {
             </div>
 
             {/* Custom Photo Upload */}
-            <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "16px", marginBottom: "16px" }}>
+            <div style={{ borderTop: "1px solid #E2E8F0", paddingTop: "16px", marginBottom: "16px" }}>
               <label
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   gap: "8px",
-                  background: "rgba(0, 194, 255, 0.12)",
-                  border: "1px dashed rgba(0, 194, 255, 0.4)",
-                  color: "#00C2FF",
+                  background: "#F0F9FF",
+                  border: "1.5px dashed #0284C7",
+                  color: "#0284C7",
                   padding: "12px",
                   borderRadius: "12px",
                   cursor: "pointer",
@@ -2513,14 +2520,13 @@ export const DipuProfileApp: React.FC = () => {
         </div>
       )}
 
-      {/* ─── DIGITAL CERTIFICATE MODAL ─── */}
+      {/* ─── DIGITAL CERTIFICATE MODAL (NO BLUR, CRISP LIGHT) ─── */}
       {selectedCertificate && (
         <div
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(5, 11, 23, 0.9)",
-            backdropFilter: "blur(12px)",
+            background: "rgba(15, 23, 42, 0.7)",
             zIndex: 99999,
             display: "flex",
             alignItems: "center",
@@ -2531,13 +2537,13 @@ export const DipuProfileApp: React.FC = () => {
         >
           <div
             style={{
-              background: "#081026",
-              border: "3px solid #00C2FF",
+              background: "#FFFFFF",
+              border: "3px solid #0284C7",
               borderRadius: "20px",
               padding: "36px",
               maxWidth: "680px",
               width: "100%",
-              boxShadow: "0 25px 70px rgba(0, 0, 0, 0.8), 0 0 35px rgba(0, 194, 255, 0.3)",
+              boxShadow: "0 25px 70px rgba(0, 0, 0, 0.25), 0 0 35px rgba(2, 132, 199, 0.15)",
               textAlign: "center",
               position: "relative",
             }}
@@ -2552,7 +2558,7 @@ export const DipuProfileApp: React.FC = () => {
                 right: "16px",
                 background: "none",
                 border: "none",
-                color: "#94A3B8",
+                color: "#64748B",
                 fontSize: "22px",
                 cursor: "pointer",
               }}
@@ -2564,28 +2570,28 @@ export const DipuProfileApp: React.FC = () => {
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", marginBottom: "16px" }}>
               <img src="/images/dipu-logo.png" alt="Dipu Academy" style={{ width: "42px", height: "42px" }} />
               <div style={{ textAlign: "left" }}>
-                <div style={{ fontSize: "20px", fontWeight: 900, color: "#FFFFFF" }}>
-                  Dipu <span style={{ color: "#00C2FF" }}>Academy</span>
+                <div style={{ fontSize: "20px", fontWeight: 900, color: "#0F172A" }}>
+                  Dipu <span style={{ color: "#0284C7" }}>Academy</span>
                 </div>
-                <div style={{ fontSize: "11px", color: "#94A3B8", letterSpacing: "1px" }}>
+                <div style={{ fontSize: "11px", color: "#64748B", letterSpacing: "1px" }}>
                   OFFICIAL DIGITAL MERIT CERTIFICATE
                 </div>
               </div>
             </div>
 
-            <div style={{ fontSize: "13px", color: "#00C2FF", fontWeight: 700, letterSpacing: "2px", marginBottom: "10px", textTransform: "uppercase" }}>
+            <div style={{ fontSize: "13px", color: "#0284C7", fontWeight: 700, letterSpacing: "2px", marginBottom: "10px", textTransform: "uppercase" }}>
               {selectedCertificate.type}
             </div>
 
-            <p style={{ fontSize: "13.5px", color: "#94A3B8", margin: "0 0 14px 0" }}>
+            <p style={{ fontSize: "13.5px", color: "#64748B", margin: "0 0 14px 0" }}>
               এই সনদপত্রটি সগৌরবে প্রদান করা হলো:
             </p>
 
-            <h2 style={{ fontSize: "28px", fontWeight: 900, color: "#FFFFFF", margin: "0 0 12px 0", borderBottom: "1px solid rgba(0,194,255,0.25)", paddingBottom: "10px", display: "inline-block" }}>
+            <h2 style={{ fontSize: "28px", fontWeight: 900, color: "#0F172A", margin: "0 0 12px 0", borderBottom: "1px solid rgba(2, 132, 199, 0.25)", paddingBottom: "10px", display: "inline-block" }}>
               {userName}
             </h2>
 
-            <p style={{ fontSize: "14px", color: "#CBD5E1", lineHeight: 1.6, maxWidth: "520px", margin: "0 auto 20px" }}>
+            <p style={{ fontSize: "14px", color: "#334155", lineHeight: 1.6, maxWidth: "520px", margin: "0 auto 20px" }}>
               সফলভাবে <strong>{selectedCertificate.courseName}</strong> কোর্স এবং ফাইনাল মূল্যায়নে অংশগ্রহণ করে অসাধারণ কৃতিত্বের সাথে <strong>{selectedCertificate.grade} ({selectedCertificate.score})</strong> অর্জন করার স্বীকৃতিস্বরূপ।
             </p>
 
@@ -2595,26 +2601,26 @@ export const DipuProfileApp: React.FC = () => {
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr 1fr",
                 gap: "14px",
-                borderTop: "1px solid rgba(255,255,255,0.1)",
+                borderTop: "1px solid #E2E8F0",
                 paddingTop: "20px",
                 marginBottom: "24px",
                 fontSize: "12px",
-                color: "#94A3B8",
+                color: "#64748B",
               }}
             >
               <div>
                 <div>সনদ আইডি:</div>
-                <strong style={{ color: "#00C2FF", fontFamily: "monospace", fontSize: "13px" }}>
+                <strong style={{ color: "#0284C7", fontFamily: "monospace", fontSize: "13px" }}>
                   {selectedCertificate.certCode}
                 </strong>
               </div>
               <div>
                 <div>ইস্যুর তারিখ:</div>
-                <strong style={{ color: "#FFFFFF" }}>{selectedCertificate.issueDate}</strong>
+                <strong style={{ color: "#0F172A" }}>{selectedCertificate.issueDate}</strong>
               </div>
               <div>
                 <div>স্বাক্ষর:</div>
-                <strong style={{ color: "#10B981" }}>দীপু স্যার (BUET)</strong>
+                <strong style={{ color: "#059669" }}>দীপু স্যার (BUET)</strong>
                 <div style={{ fontSize: "10px", color: "#64748B" }}>প্রতিষ্ঠাতা ও মেন্টর</div>
               </div>
             </div>
@@ -2636,9 +2642,9 @@ export const DipuProfileApp: React.FC = () => {
                 type="button"
                 onClick={() => setSelectedCertificate(null)}
                 style={{
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.15)",
-                  color: "#FFFFFF",
+                  background: "#F1F5F9",
+                  border: "1px solid #CBD5E1",
+                  color: "#0F172A",
                   padding: "10px 20px",
                   borderRadius: "12px",
                   cursor: "pointer",
@@ -2680,10 +2686,10 @@ export const DipuProfileApp: React.FC = () => {
             position: "fixed",
             bottom: "80px",
             right: "20px",
-            background: "#0A1530",
+            background: "#0F172A",
             color: "#FFFFFF",
-            border: "1.5px solid #00C2FF",
-            boxShadow: "0 10px 32px rgba(0,0,0,0.7), 0 0 20px rgba(0,194,255,0.35)",
+            border: "1px solid #334155",
+            boxShadow: "0 10px 32px rgba(15, 23, 42, 0.35)",
             padding: "14px 22px",
             borderRadius: "14px",
             fontSize: "13.5px",

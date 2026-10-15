@@ -10,8 +10,12 @@ type DropdownKey = "school" | "ssc" | "hsc" | "shop" | null;
 
 interface UserProfile {
   fullName?: string;
+  name?: string;
   avatar?: string;
   email?: string;
+  phone?: string;
+  target?: string;
+  classLevel?: string;
 }
 
 // ─── Inline Keyframe Animations & Responsive Navbar CSS ───────────────────────
@@ -269,6 +273,20 @@ export const Navbar: React.FC = () => {
     return null;
   });
 
+  const [isUserMenuOpen, setIsUserMenuOpen] = React.useState(false);
+  const userMenuRef = React.useRef<HTMLDivElement>(null);
+
+  // Close user menu on outside click
+  React.useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+
   // ─── Apply Theme Function (Core Dark / Light Switcher) ───────────────────────
   const applyTheme = React.useCallback((newTheme: ThemeMode) => {
     setTheme(newTheme);
@@ -442,7 +460,63 @@ export const Navbar: React.FC = () => {
   const dropdownBorder = isLight ? "1px solid rgba(226, 232, 240, 0.95)" : "1px solid rgba(255, 255, 255, 0.12)";
 
   const defaultAvatar = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120";
-  const currentAvatar = userProfile?.avatar || defaultAvatar;
+
+  const userName = React.useMemo(() => {
+    if (typeof window === "undefined") return "শিক্ষার্থী";
+    try {
+      const explicitName = localStorage.getItem("da_user_name");
+      if (explicitName && explicitName.trim()) return explicitName.trim();
+      if (userProfile?.fullName && userProfile.fullName.trim()) return userProfile.fullName.trim();
+      if (userProfile?.name && userProfile.name.trim()) return userProfile.name.trim();
+      const phone = localStorage.getItem("dipu_user_phone");
+      if (phone && phone.trim().length >= 4) return `User ${phone.trim().slice(-4)}`;
+    } catch {}
+    return "শিক্ষার্থী";
+  }, [userProfile]);
+
+  const userPhone = React.useMemo(() => {
+    if (typeof window === "undefined") return "";
+    try {
+      return localStorage.getItem("dipu_user_phone") || userProfile?.phone || "";
+    } catch {}
+    return "";
+  }, [userProfile]);
+
+  const userTarget = React.useMemo(() => {
+    if (typeof window === "undefined") return "SSC / HSC শিক্ষার্থী";
+    try {
+      return localStorage.getItem("da_user_target") || userProfile?.target || userProfile?.classLevel || "SSC / HSC শিক্ষার্থী";
+    } catch {}
+    return "SSC / HSC শিক্ষার্থী";
+  }, [userProfile]);
+
+  const currentAvatar = React.useMemo(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const storedAvatar = localStorage.getItem("dipu_user_avatar");
+        if (storedAvatar && storedAvatar.trim()) return storedAvatar.trim();
+      } catch {}
+    }
+    return userProfile?.avatar || defaultAvatar;
+  }, [userProfile]);
+
+  const handleLogout = React.useCallback(() => {
+    try {
+      localStorage.removeItem("dipu_logged_in");
+      localStorage.removeItem("dipu_auth_token");
+      localStorage.removeItem("dipu_user_phone");
+      localStorage.removeItem("da_user_name");
+      localStorage.removeItem("dipu_user_profile");
+      localStorage.removeItem("dipu_user_avatar");
+      localStorage.removeItem("da_user_target");
+      localStorage.removeItem("da_user_batch");
+      localStorage.removeItem("da_user_group");
+    } catch {}
+    setIsLoggedIn(false);
+    setUserProfile(null);
+    setIsUserMenuOpen(false);
+    window.location.reload();
+  }, []);
 
   return (
     <>
@@ -1441,67 +1515,350 @@ export const Navbar: React.FC = () => {
 
             {/* 3. Profile Avatar Button or Login Button */}
             {isLoggedIn ? (
-              <a
-                href="/dashboard.html"
-                id="openDashboardAvatarBtn"
-                title="আমার ড্যাশবোর্ড"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "38px",
-                  height: "38px",
-                  minWidth: "38px",
-                  maxWidth: "38px",
-                  minHeight: "38px",
-                  maxHeight: "38px",
-                  borderRadius: "50%",
-                  padding: "2px",
-                  background: "linear-gradient(135deg, #0084FF, #0084FF)",
-                  boxShadow: "0 2px 12px rgba(0, 194, 255, 0.4)",
-                  cursor: "pointer",
-                  textDecoration: "none",
-                  flexShrink: 0,
-                  boxSizing: "border-box",
-                  position: "relative",
-                  transition: "transform 0.2s ease, box-shadow 0.2s ease",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.08)")}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-              >
-                <img
-                  src={currentAvatar}
-                  alt="Profile"
+              <div ref={userMenuRef} style={{ position: "relative", display: "inline-flex", alignItems: "center" }}>
+                <button
+                  type="button"
+                  id="openDashboardAvatarBtn"
+                  onClick={() => setIsUserMenuOpen((prev) => !prev)}
+                  title={`${userName} — অ্যাকাউন্ট মেনু`}
                   style={{
-                    width: "32px",
-                    height: "32px",
-                    minWidth: "32px",
-                    maxWidth: "32px",
-                    minHeight: "32px",
-                    maxHeight: "32px",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                    border: isLight ? "2px solid #FFFFFF" : "2px solid #0D0E17",
-                    display: "block",
-                    pointerEvents: "none",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    padding: "4px 12px 4px 5px",
+                    background: isLight ? "#FFFFFF" : "#131722",
+                    border: isLight ? "1.5px solid #E2E8F0" : "1.5px solid rgba(255, 255, 255, 0.14)",
+                    borderRadius: "9999px",
+                    cursor: "pointer",
+                    boxShadow: isLight ? "0 2px 6px rgba(0, 0, 0, 0.04)" : "0 2px 10px rgba(0, 0, 0, 0.4)",
+                    transition: "all 0.22s ease",
+                    textDecoration: "none",
+                    userSelect: "none",
+                    fontFamily: "inherit",
                   }}
-                />
-                <span
-                  style={{
-                    position: "absolute",
-                    bottom: "1px",
-                    right: "1px",
-                    width: "9px",
-                    height: "9px",
-                    background: "#10B981",
-                    border: isLight ? "1.5px solid #FFFFFF" : "1.5px solid #0D0E17",
-                    borderRadius: "50%",
-                    boxShadow: "0 0 8px rgba(16, 185, 129, 0.9)",
-                    pointerEvents: "none",
-                    animation: "pulseOnline 2.2s infinite",
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = "#0084FF";
+                    e.currentTarget.style.transform = "translateY(-1px)";
+                    e.currentTarget.style.boxShadow = isLight ? "0 4px 14px rgba(0, 132, 255, 0.16)" : "0 4px 16px rgba(0, 132, 255, 0.35)";
                   }}
-                />
-              </a>
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = isLight ? "#E2E8F0" : "rgba(255, 255, 255, 0.14)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow = isLight ? "0 2px 6px rgba(0, 0, 0, 0.04)" : "0 2px 10px rgba(0, 0, 0, 0.4)";
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "relative",
+                      width: "30px",
+                      height: "30px",
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                      flexShrink: 0,
+                      background: "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#FFFFFF",
+                      fontWeight: 800,
+                      fontSize: "13px",
+                    }}
+                  >
+                    <img
+                      src={currentAvatar}
+                      alt={userName}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        display: "block",
+                      }}
+                      onError={(e) => {
+                        (e.currentTarget as HTMLElement).style.display = "none";
+                      }}
+                    />
+                    <span
+                      style={{
+                        position: "absolute",
+                        bottom: "1px",
+                        right: "1px",
+                        width: "7.5px",
+                        height: "7.5px",
+                        background: "#10B981",
+                        border: isLight ? "1.5px solid #FFFFFF" : "1.5px solid #131722",
+                        borderRadius: "50%",
+                        boxShadow: "0 0 6px rgba(16, 185, 129, 0.9)",
+                        pointerEvents: "none",
+                      }}
+                    />
+                  </div>
+                  <span
+                    style={{
+                      fontSize: "0.9rem",
+                      fontWeight: 700,
+                      color: isLight ? "#0F172A" : "#FFFFFF",
+                      maxWidth: "110px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    {userName}
+                  </span>
+                  <i
+                    className="fas fa-chevron-down"
+                    style={{
+                      fontSize: "10px",
+                      color: isLight ? "#64748B" : "#94A3B8",
+                      transform: isUserMenuOpen ? "rotate(180deg)" : "rotate(0deg)",
+                      transition: "transform 0.22s ease",
+                    }}
+                  />
+                </button>
+
+                {/* Dropdown Menu */}
+                {isUserMenuOpen && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "calc(100% + 10px)",
+                      right: 0,
+                      width: "260px",
+                      background: isLight ? "#FFFFFF" : "#12141F",
+                      border: isLight ? "1.5px solid #E2E8F0" : "1.5px solid rgba(255, 255, 255, 0.12)",
+                      borderRadius: "18px",
+                      boxShadow: isLight
+                        ? "0 16px 40px rgba(15, 23, 42, 0.14)"
+                        : "0 16px 40px rgba(0, 0, 0, 0.6)",
+                      padding: "16px",
+                      zIndex: 10000,
+                      animation: "dropdownSlideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) both",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+                      <div
+                        style={{
+                          width: "42px",
+                          height: "42px",
+                          borderRadius: "50%",
+                          overflow: "hidden",
+                          flexShrink: 0,
+                          background: "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "#FFFFFF",
+                          fontWeight: 800,
+                          fontSize: "17px",
+                        }}
+                      >
+                        <img
+                          src={currentAvatar}
+                          alt={userName}
+                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                          onError={(e) => {
+                            (e.currentTarget as HTMLElement).style.display = "none";
+                          }}
+                        />
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", overflow: "hidden" }}>
+                        <div
+                          style={{
+                            fontSize: "0.98rem",
+                            fontWeight: 800,
+                            color: isLight ? "#0F172A" : "#FFFFFF",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {userName}
+                        </div>
+                        {userPhone && (
+                          <div style={{ fontSize: "0.78rem", color: isLight ? "#64748B" : "#94A3B8" }}>
+                            {userPhone}
+                          </div>
+                        )}
+                        <span
+                          style={{
+                            display: "inline-block",
+                            fontSize: "0.7rem",
+                            fontWeight: 700,
+                            color: "#0284C7",
+                            background: isLight ? "#E0F2FE" : "rgba(2, 132, 199, 0.2)",
+                            padding: "2px 8px",
+                            borderRadius: "999px",
+                            marginTop: "3px",
+                            width: "fit-content",
+                          }}
+                        >
+                          {userTarget}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        height: "1px",
+                        background: isLight ? "#F1F5F9" : "rgba(255, 255, 255, 0.08)",
+                        margin: "10px 0",
+                      }}
+                    />
+
+                    <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                      <a
+                        href="/dashboard.html"
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                          padding: "8px 10px",
+                          borderRadius: "12px",
+                          textDecoration: "none",
+                          color: isLight ? "#0F172A" : "#F8FAFC",
+                          transition: "all 0.18s ease",
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.background = isLight ? "#F8FAFD" : "rgba(255, 255, 255, 0.06)")}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                      >
+                        <div
+                          style={{
+                            width: "32px",
+                            height: "32px",
+                            borderRadius: "10px",
+                            background: isLight ? "#E0F2FE" : "rgba(0, 132, 255, 0.18)",
+                            color: "#0084FF",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: "13px",
+                          }}
+                        >
+                          <i className="fas fa-gauge-high" />
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                          <span style={{ fontSize: "0.88rem", fontWeight: 700 }}>আমার ড্যাশবোর্ড</span>
+                          <span style={{ fontSize: "0.72rem", color: isLight ? "#64748B" : "#94A3B8" }}>কোর্স ও পড়াশোনার অগ্রগতি</span>
+                        </div>
+                      </a>
+
+                      <a
+                        href="/my-courses.html"
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                          padding: "8px 10px",
+                          borderRadius: "12px",
+                          textDecoration: "none",
+                          color: isLight ? "#0F172A" : "#F8FAFC",
+                          transition: "all 0.18s ease",
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.background = isLight ? "#F8FAFD" : "rgba(255, 255, 255, 0.06)")}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                      >
+                        <div
+                          style={{
+                            width: "32px",
+                            height: "32px",
+                            borderRadius: "10px",
+                            background: isLight ? "#DCFCE7" : "rgba(16, 185, 129, 0.18)",
+                            color: "#16A34A",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: "13px",
+                          }}
+                        >
+                          <i className="fas fa-book-open" />
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                          <span style={{ fontSize: "0.88rem", fontWeight: 700 }}>আমার কোর্সসমূহ</span>
+                          <span style={{ fontSize: "0.72rem", color: isLight ? "#64748B" : "#94A3B8" }}>ভর্তিকৃত ক্লাস ও পরীক্ষা</span>
+                        </div>
+                      </a>
+
+                      <a
+                        href="/profile.html"
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                          padding: "8px 10px",
+                          borderRadius: "12px",
+                          textDecoration: "none",
+                          color: isLight ? "#0F172A" : "#F8FAFC",
+                          transition: "all 0.18s ease",
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.background = isLight ? "#F8FAFD" : "rgba(255, 255, 255, 0.06)")}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                      >
+                        <div
+                          style={{
+                            width: "32px",
+                            height: "32px",
+                            borderRadius: "10px",
+                            background: isLight ? "#EDE9FE" : "rgba(124, 58, 237, 0.18)",
+                            color: "#7C3AED",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: "13px",
+                          }}
+                        >
+                          <i className="fas fa-user-gear" />
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                          <span style={{ fontSize: "0.88rem", fontWeight: 700 }}>প্রোফাইল সেটিংস</span>
+                          <span style={{ fontSize: "0.72rem", color: isLight ? "#64748B" : "#94A3B8" }}>নাম ও তথ্য পরিবর্তন</span>
+                        </div>
+                      </a>
+                    </div>
+
+                    <div
+                      style={{
+                        height: "1px",
+                        background: isLight ? "#F1F5F9" : "rgba(255, 255, 255, 0.08)",
+                        margin: "10px 0",
+                      }}
+                    />
+
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      style={{
+                        width: "100%",
+                        border: "none",
+                        background: isLight ? "#FEF2F2" : "rgba(220, 38, 38, 0.14)",
+                        color: "#DC2626",
+                        fontSize: "0.84rem",
+                        fontWeight: 700,
+                        padding: "9px 12px",
+                        borderRadius: "10px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "8px",
+                        transition: "all 0.2s ease",
+                        fontFamily: "inherit",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = "#DC2626";
+                        e.currentTarget.style.color = "#FFFFFF";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = isLight ? "#FEF2F2" : "rgba(220, 38, 38, 0.14)";
+                        e.currentTarget.style.color = "#DC2626";
+                      }}
+                    >
+                      <i className="fas fa-right-from-bracket" />
+                      <span>লগআউট করুন</span>
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               <a
                 href="/login.html"

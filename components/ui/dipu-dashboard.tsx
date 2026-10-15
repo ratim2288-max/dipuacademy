@@ -46,7 +46,7 @@ const injectDashboardKeyframes = () => {
       animation: daTabFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
     .da-shimmer-headline {
-      background: linear-gradient(90deg, #00C2FF 0%, #FFFFFF 25%, #0084FF 50%, #10B981 75%, #00C2FF 100%);
+      background: linear-gradient(90deg, #0284C7 0%, #0F172A 30%, #2563EB 60%, #10B981 85%, #0284C7 100%);
       background-size: 250% 100%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -59,22 +59,24 @@ const injectDashboardKeyframes = () => {
       animation: daGlowPulse 3s infinite ease-in-out;
     }
     .da-nav-item.active a {
-      background: linear-gradient(135deg, rgba(0, 194, 255, 0.22) 0%, rgba(0, 132, 255, 0.12) 100%) !important;
-      color: #00C2FF !important;
-      border: 1px solid rgba(0, 194, 255, 0.45) !important;
-      box-shadow: 0 4px 18px rgba(0, 194, 255, 0.25) !important;
+      background: linear-gradient(135deg, #0284C7 0%, #0EA5E9 100%) !important;
+      color: #FFFFFF !important;
+      border: 1px solid #0284C7 !important;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35) !important;
     }
     .da-nav-item.active a i {
-      color: #00C2FF !important;
+      color: #FFFFFF !important;
       transform: scale(1.1);
     }
     .da-interactive-card {
       transition: all 0.25s ease;
+      background: #FFFFFF !important;
+      border: 1px solid #E2E8F0 !important;
     }
     .da-interactive-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(0, 194, 255, 0.45) !important;
-      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.55), 0 0 24px rgba(0, 194, 255, 0.2) !important;
+      transform: translateY(-3px);
+      border-color: #0284C7 !important;
+      box-shadow: 0 10px 25px rgba(2, 132, 199, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04) !important;
     }
   `;
   document.head.appendChild(style);
@@ -239,7 +241,7 @@ export const DipuDashboardApp: React.FC = () => {
     subtitle: "Dipu Academy - তোমার স্বপ্ন পূরণের জন্য সঠিক শিক্ষা, সঠিক পথে।",
     image: "/images/dashboard-hero.jpg",
     ctaText: "এখনই পড়া শুরু করুন →",
-    ctaLink: "#video-classes",
+    ctaLink: "#my-courses",
   });
 
   const [promoConfig, setPromoConfig] = useState<PromoConfig>({
@@ -791,17 +793,6 @@ export const DipuDashboardApp: React.FC = () => {
           </a>
         </div>
 
-        {/* Search Input */}
-        <div className="da-search-wrap">
-          <i className="fas fa-magnifying-glass da-search-icon" />
-          <input
-            type="text"
-            className="da-search-input"
-            placeholder="কোনো কিছু খুঁজুন..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
 
         {/* Right Actions */}
         <div className="da-topbar-actions">
@@ -823,10 +814,10 @@ export const DipuDashboardApp: React.FC = () => {
                 top: "74px",
                 right: "70px",
                 width: "290px",
-                background: "#0A1530",
-                border: "1px solid rgba(0,194,255,0.25)",
+                background: "#FFFFFF",
+                border: "1px solid #E2E8F0",
                 borderRadius: "14px",
-                boxShadow: "0 15px 35px rgba(0,0,0,0.6)",
+                boxShadow: "0 15px 35px rgba(0,0,0,0.1)",
                 padding: "16px",
                 zIndex: 1000,
               }}
@@ -839,21 +830,21 @@ export const DipuDashboardApp: React.FC = () => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  color: "#FFFFFF",
+                  color: "#0F172A",
                 }}
               >
                 <span>🔔 নোটিফিকেশন</span>
                 <span
-                  style={{ fontSize: "11px", color: "#00C2FF", cursor: "pointer" }}
+                  style={{ fontSize: "11px", color: "#0284C7", cursor: "pointer", fontWeight: 700 }}
                   onClick={() => setNotificationsOpen(false)}
                 >
                   বন্ধ
                 </span>
               </div>
-              <div style={{ fontSize: "12px", color: "#94A3B8", padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+              <div style={{ fontSize: "12px", color: "#475569", padding: "8px 0", borderBottom: "1px solid #F1F5F9" }}>
                 🔥 <strong>স্বাগতম, {userName}!</strong> আজকের পড়ালেখা চালিয়ে যান।
               </div>
-              <div style={{ fontSize: "12px", color: "#94A3B8", padding: "8px 0" }}>
+              <div style={{ fontSize: "12px", color: "#475569", padding: "8px 0" }}>
                 🎉 <strong>নতুন ক্লাস:</strong> গণিতের সৃজনশীল সমাধান ক্লাস যুক্ত হয়েছে।
               </div>
             </div>
@@ -879,17 +870,17 @@ export const DipuDashboardApp: React.FC = () => {
                   top: "125%",
                   right: 0,
                   width: "230px",
-                  background: "#09142F",
-                  border: "1.5px solid rgba(0, 194, 255, 0.35)",
+                  background: "#FFFFFF",
+                  border: "1.5px solid #E2E8F0",
                   borderRadius: "14px",
-                  boxShadow: "0 15px 45px rgba(0,0,0,0.85)",
+                  boxShadow: "0 15px 45px rgba(0,0,0,0.1)",
                   padding: "10px",
                   zIndex: 9999,
                 }}
               >
-                <div style={{ padding: "8px 10px", borderBottom: "1px solid rgba(255,255,255,0.08)", marginBottom: "6px" }}>
-                  <div style={{ fontSize: "14px", fontWeight: 800, color: "#FFFFFF" }}>{userName}</div>
-                  <div style={{ fontSize: "11px", color: "#00C2FF", marginTop: "2px" }}>{userTarget}</div>
+                <div style={{ padding: "8px 10px", borderBottom: "1px solid #F1F5F9", marginBottom: "6px" }}>
+                  <div style={{ fontSize: "14px", fontWeight: 800, color: "#0F172A" }}>{userName}</div>
+                  <div style={{ fontSize: "11px", color: "#0284C7", marginTop: "2px", fontWeight: 600 }}>{userTarget}</div>
                 </div>
 
                 <a
@@ -900,15 +891,15 @@ export const DipuDashboardApp: React.FC = () => {
                     gap: "10px",
                     padding: "9px 12px",
                     borderRadius: "8px",
-                    color: "#FFFFFF",
+                    color: "#1E293B",
                     textDecoration: "none",
                     fontSize: "13px",
                     fontWeight: 600,
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(0,194,255,0.12)")}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = "#F0F9FF")}
                   onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                 >
-                  <i className="fas fa-user-gear" style={{ color: "#00C2FF" }} />
+                  <i className="fas fa-user-gear" style={{ color: "#0284C7" }} />
                   <span>আমার প্রোফাইল</span>
                 </a>
 
@@ -925,19 +916,19 @@ export const DipuDashboardApp: React.FC = () => {
                     gap: "10px",
                     padding: "9px 12px",
                     borderRadius: "8px",
-                    color: "#FFFFFF",
+                    color: "#1E293B",
                     textDecoration: "none",
                     fontSize: "13px",
                     fontWeight: 600,
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(0,194,255,0.12)")}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = "#F0F9FF")}
                   onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                 >
                   <i className="fas fa-gear" style={{ color: "#10B981" }} />
                   <span>সেটিংস</span>
                 </a>
 
-                <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", marginTop: "6px", paddingTop: "6px" }}>
+                <div style={{ borderTop: "1px solid #F1F5F9", marginTop: "6px", paddingTop: "6px" }}>
                   <button
                     type="button"
                     onClick={() => {
@@ -957,13 +948,12 @@ export const DipuDashboardApp: React.FC = () => {
                       fontSize: "13px",
                       fontWeight: 700,
                       cursor: "pointer",
-                      textAlign: "left",
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(239,68,68,0.15)")}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "#FEF2F2")}
                     onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                   >
                     <i className="fas fa-arrow-right-from-bracket" />
-                    <span>লগআউট করুন</span>
+                    <span>লগআউট</span>
                   </button>
                 </div>
               </div>
@@ -981,8 +971,8 @@ export const DipuDashboardApp: React.FC = () => {
         <div className="da-drawer-header">
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <img src={logoConfig.image || "/images/dipu-logo.png"} alt={logoConfig.name || "Dipu Academy"} style={{ width: "34px", height: "34px", borderRadius: "8px", objectFit: "cover" }} />
-            <span style={{ fontSize: "16px", fontWeight: 800, color: "#FFFFFF" }}>
-              {logoConfig.name || "Dipu"} <span style={{ color: "#00C2FF" }}>{logoConfig.accent || "Academy"}</span>
+            <span style={{ fontSize: "16px", fontWeight: 800, color: "#0F172A" }}>
+              {logoConfig.name || "Dipu"} <span style={{ color: "#0284C7" }}>{logoConfig.accent || "Academy"}</span>
             </span>
           </div>
           <button type="button" className="da-drawer-close-btn" onClick={() => setMobileDrawerOpen(false)}>
@@ -1018,19 +1008,6 @@ export const DipuDashboardApp: React.FC = () => {
               <span>আমার কোর্স ও স্টাডি হাব</span>
             </a>
           </li>
-          <li className={`da-nav-item ${activeTab === "video-classes" ? "active" : ""}`}>
-            <a
-              href="#video-classes"
-              onClick={(e) => {
-                e.preventDefault();
-                setActiveTab("video-classes");
-                setMobileDrawerOpen(false);
-              }}
-            >
-              <i className="fas fa-circle-play" />
-              <span>ভিডিও ক্লাস</span>
-            </a>
-          </li>
           <li className={`da-nav-item ${activeTab === "notes" ? "active" : ""}`}>
             <a
               href="#notes"
@@ -1055,19 +1032,6 @@ export const DipuDashboardApp: React.FC = () => {
             >
               <i className="fas fa-book" />
               <span>বুকশপ</span>
-            </a>
-          </li>
-          <li className={`da-nav-item ${activeTab === "groups" ? "active" : ""}`}>
-            <a
-              href="#groups"
-              onClick={(e) => {
-                e.preventDefault();
-                setActiveTab("groups");
-                setMobileDrawerOpen(false);
-              }}
-            >
-              <i className="fas fa-user-group" />
-              <span>গ্রুপ</span>
             </a>
           </li>
           <li className={`da-nav-item ${activeTab === "performance" ? "active" : ""}`}>
@@ -1159,18 +1123,6 @@ export const DipuDashboardApp: React.FC = () => {
                 <span>আমার কোর্স ও স্টাডি হাব</span>
               </a>
             </li>
-            <li className={`da-nav-item ${activeTab === "video-classes" ? "active" : ""}`}>
-              <a
-                href="#video-classes"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveTab("video-classes");
-                }}
-              >
-                <i className="fas fa-circle-play" />
-                <span>ভিডিও ক্লাস</span>
-              </a>
-            </li>
             <li className={`da-nav-item ${activeTab === "notes" ? "active" : ""}`}>
               <a
                 href="#notes"
@@ -1193,18 +1145,6 @@ export const DipuDashboardApp: React.FC = () => {
               >
                 <i className="fas fa-book" />
                 <span>বুকশপ</span>
-              </a>
-            </li>
-            <li className={`da-nav-item ${activeTab === "groups" ? "active" : ""}`}>
-              <a
-                href="#groups"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveTab("groups");
-                }}
-              >
-                <i className="fas fa-user-group" />
-                <span>গ্রুপ</span>
               </a>
             </li>
             <li className={`da-nav-item ${activeTab === "performance" ? "active" : ""}`}>
@@ -1288,9 +1228,9 @@ export const DipuDashboardApp: React.FC = () => {
                     className="da-hero-btn"
                     onClick={() => {
                       if (heroConfig.ctaLink?.startsWith("#")) {
-                        setActiveTab(heroConfig.ctaLink.replace("#", "") || "video-classes");
+                        setActiveTab(heroConfig.ctaLink.replace("#", "") || "my-courses");
                       } else {
-                        window.location.href = heroConfig.ctaLink || "#video-classes";
+                        window.location.href = heroConfig.ctaLink || "#my-courses";
                       }
                     }}
                   >
@@ -1338,8 +1278,8 @@ export const DipuDashboardApp: React.FC = () => {
                   </div>
                   <div
                     className="da-stat-arrow da-arrow-green"
-                    onClick={() => setActiveTab("video-classes")}
-                    title="ভিডিও ক্লাস দেখুন"
+                    onClick={() => setActiveTab("my-courses")}
+                    title="আমার কোর্স দেখুন"
                   >
                     <i className="fas fa-chevron-right" />
                   </div>
@@ -1389,11 +1329,11 @@ export const DipuDashboardApp: React.FC = () => {
               {/* ─── YOUR CLASS EXCLUSIVE RESOURCE HUB (ANIMATED) ─── */}
               <section className="da-section" style={{ marginTop: "24px", marginBottom: "28px" }}>
                 <div style={{
-                  background: "linear-gradient(145deg, #071228 0%, #050B17 100%)",
-                  border: "1.5px solid rgba(0, 194, 255, 0.3)",
+                  background: "linear-gradient(145deg, #FFFFFF 0%, #F0F9FF 100%)",
+                  border: "1.5px solid #BAE6FD",
                   borderRadius: "20px",
                   padding: "24px 20px",
-                  boxShadow: "0 15px 35px rgba(0,0,0,0.6), 0 0 25px rgba(0, 194, 255, 0.12)",
+                  boxShadow: "0 4px 20px rgba(2, 132, 199, 0.08)",
                   position: "relative",
                   overflow: "hidden"
                 }}>
@@ -1404,7 +1344,7 @@ export const DipuDashboardApp: React.FC = () => {
                     right: "-40px",
                     width: "220px",
                     height: "220px",
-                    background: "radial-gradient(circle, rgba(0,194,255,0.18) 0%, transparent 70%)",
+                    background: "radial-gradient(circle, rgba(2,132,199,0.1) 0%, transparent 70%)",
                     pointerEvents: "none"
                   }} />
 
@@ -1426,12 +1366,12 @@ export const DipuDashboardApp: React.FC = () => {
                           <i className={currentClassDef.icon} />
                           {currentClassDef.gradeBadge}
                         </span>
-                        <span style={{ fontSize: "12px", color: "#94A3B8" }}>তোমার নির্বাচিত শ্রেণি ও পাঠ্যক্রম</span>
+                        <span style={{ fontSize: "12px", color: "#64748B" }}>তোমার নির্বাচিত শ্রেণি ও পাঠ্যক্রম</span>
                       </div>
                       <h3 className="da-shimmer-headline" style={{ fontSize: "22px", fontWeight: 900, margin: 0, display: "flex", alignItems: "center", gap: "10px" }}>
                         <span>{currentClassDef.label} — এক্সক্লুসিভ স্টাডি হাব</span>
                       </h3>
-                      <p style={{ fontSize: "13px", color: "#CBD5E1", margin: "4px 0 0" }}>
+                      <p style={{ fontSize: "13px", color: "#475569", margin: "4px 0 0" }}>
                         {currentClassDef.description}
                       </p>
                     </div>
@@ -1440,9 +1380,9 @@ export const DipuDashboardApp: React.FC = () => {
                       type="button"
                       onClick={() => setClassModalOpen(true)}
                       style={{
-                        background: "linear-gradient(135deg, rgba(0,194,255,0.2) 0%, rgba(0,132,255,0.1) 100%)",
-                        border: "1px solid rgba(0,194,255,0.4)",
-                        color: "#00C2FF",
+                        background: "#EFF6FF",
+                        border: "1px solid #BAE6FD",
+                        color: "#0284C7",
                         padding: "8px 16px",
                         borderRadius: "10px",
                         fontWeight: 700,
@@ -1453,7 +1393,7 @@ export const DipuDashboardApp: React.FC = () => {
                         gap: "8px",
                         transition: "all 0.2s ease"
                       }}
-                      onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 0 15px rgba(0,194,255,0.3)")}
+                      onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 0 15px rgba(2,132,199,0.2)")}
                       onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
                     >
                       <i className="fas fa-arrows-rotate" />
@@ -1738,12 +1678,12 @@ export const DipuDashboardApp: React.FC = () => {
               {/* TOP BANNER WITH TEXT ANIMATION & CLASS SELECTOR */}
               <div
                 style={{
-                  background: "linear-gradient(145deg, #071228 0%, #050B17 100%)",
-                  border: "1.5px solid rgba(0, 194, 255, 0.3)",
+                  background: "linear-gradient(145deg, #FFFFFF 0%, #F0F9FF 100%)",
+                  border: "1.5px solid #BAE6FD",
                   borderRadius: "20px",
                   padding: "24px",
                   marginBottom: "24px",
-                  boxShadow: "0 15px 35px rgba(0,0,0,0.6), 0 0 25px rgba(0, 194, 255, 0.12)",
+                  boxShadow: "0 4px 20px rgba(2, 132, 199, 0.08)",
                   position: "relative",
                   overflow: "hidden",
                 }}
@@ -1756,7 +1696,7 @@ export const DipuDashboardApp: React.FC = () => {
                     right: "-30px",
                     width: "200px",
                     height: "200px",
-                    background: "radial-gradient(circle, rgba(0,194,255,0.18) 0%, transparent 70%)",
+                    background: "radial-gradient(circle, rgba(2,132,199,0.1) 0%, transparent 70%)",
                     pointerEvents: "none",
                   }}
                 />
@@ -1780,7 +1720,7 @@ export const DipuDashboardApp: React.FC = () => {
                         <i className={currentClassDef.icon} />
                         {currentClassDef.gradeBadge}
                       </span>
-                      <span style={{ fontSize: "12px", color: "#94A3B8" }}>আমার নির্বাচিত শ্রেণি</span>
+                      <span style={{ fontSize: "12px", color: "#64748B" }}>আমার নির্বাচিত শ্রেণি</span>
                     </div>
 
                     {/* Animated Shimmering Text Headline */}
@@ -1796,14 +1736,14 @@ export const DipuDashboardApp: React.FC = () => {
                         flexWrap: "wrap",
                       }}
                     >
-                      <i className="fas fa-book-open" style={{ color: "#00C2FF" }} />
+                      <i className="fas fa-book-open" style={{ color: "#0284C7" }} />
                       <span>{currentClassDef.label} — রিসোর্স ও কোর্স হাব</span>
                     </h2>
 
                     {/* Revolving Dynamic Ticker Line */}
-                    <div style={{ fontSize: "13px", color: "#CBD5E1", marginTop: "8px", display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
+                    <div style={{ fontSize: "13px", color: "#475569", marginTop: "8px", display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
                       {classTickerIdx === 0 && (
-                        <span>✨ তোমার শ্রেণি: <strong style={{ color: "#00C2FF" }}>{currentClassDef.label}</strong> — ১০০% সিলেবাস অনুযায়ী সাজানো স্টাডি মেটেরিয়াল!</span>
+                        <span>✨ তোমার শ্রেণি: <strong style={{ color: "#0284C7" }}>{currentClassDef.label}</strong> — ১০০% সিলেবাস অনুযায়ী সাজানো স্টাডি মেটেরিয়াল!</span>
                       )}
                       {classTickerIdx === 1 && (
                         <span>🎓 কোর্সসমূহ: <strong style={{ color: "#10B981" }}>{classResources.courses.length}টি স্পেশাল কোর্স</strong> তোমার প্রস্তুতির জন্য প্রস্তুত!</span>
@@ -1812,7 +1752,7 @@ export const DipuDashboardApp: React.FC = () => {
                         <span>📖 প্রিন্টেড বই ও 📱 ই-বুক: <strong style={{ color: "#8B5CF6" }}>{classResources.books.length}টি বই ও {classResources.ebooks.length}টি ই-বুক</strong> ইনস্ট্যান্ট সংগ্রহ করো!</span>
                       )}
                       {classTickerIdx === 3 && (
-                        <span>🎁 ফ্রি অ্যাক্সেস: <strong style={{ color: "#00C2FF" }}>{classResources.freeItems.length}টি সম্পূর্ণ ফ্রি ক্লাস ও নোটস</strong> উন্মুক্ত করা হয়েছে!</span>
+                        <span>🎁 ফ্রি অ্যাক্সেস: <strong style={{ color: "#0284C7" }}>{classResources.freeItems.length}টি সম্পূর্ণ ফ্রি ক্লাস ও নোটস</strong> উন্মুক্ত করা হয়েছে!</span>
                       )}
                     </div>
                   </div>
@@ -1824,9 +1764,9 @@ export const DipuDashboardApp: React.FC = () => {
                       style={{
                         padding: "8px 16px",
                         borderRadius: "10px",
-                        background: "linear-gradient(135deg, rgba(0, 194, 255, 0.22) 0%, rgba(0, 132, 255, 0.12) 100%)",
-                        border: "1px solid rgba(0, 194, 255, 0.45)",
-                        color: "#00C2FF",
+                        background: "#EFF6FF",
+                        border: "1px solid #BAE6FD",
+                        color: "#0284C7",
                         fontWeight: 700,
                         fontSize: "12.5px",
                         cursor: "pointer",
@@ -1844,9 +1784,9 @@ export const DipuDashboardApp: React.FC = () => {
                       style={{
                         padding: "8px 16px",
                         borderRadius: "10px",
-                        background: "rgba(255,255,255,0.06)",
-                        border: "1px solid rgba(255,255,255,0.15)",
-                        color: "#CBD5E1",
+                        background: "#F8FAFC",
+                        border: "1px solid #E2E8F0",
+                        color: "#475569",
                         fontWeight: 700,
                         fontSize: "12.5px",
                         textDecoration: "none",
@@ -1863,7 +1803,7 @@ export const DipuDashboardApp: React.FC = () => {
                 </div>
 
                 {/* QUICK CLASS SELECTOR PILLS BAR */}
-                <div style={{ marginTop: "14px", paddingTop: "14px", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                <div style={{ marginTop: "14px", paddingTop: "14px", borderTop: "1px solid #E2E8F0" }}>
                   <div style={{ fontSize: "11px", fontWeight: 700, color: "#94A3B8", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
                     দ্রুত শ্রেণি পরিবর্তন করুন:
                   </div>
@@ -2102,22 +2042,22 @@ export const DipuDashboardApp: React.FC = () => {
                         key={res.id}
                         className="da-interactive-card"
                         style={{
-                          background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
+                          background: "#FFFFFF",
                           border: isFree
-                            ? "1.5px solid rgba(16, 185, 129, 0.45)"
+                            ? "1.5px solid #10B981"
                             : isCourse && !isEnrolled
-                            ? "1.5px solid rgba(239, 68, 68, 0.45)"
-                            : "1px solid rgba(0, 194, 255, 0.2)",
+                            ? "1.5px solid #EF4444"
+                            : "1px solid #E2E8F0",
                           borderRadius: "18px",
                           overflow: "hidden",
                           display: "flex",
                           flexDirection: "column",
-                          boxShadow: isFree ? "0 10px 25px rgba(0,0,0,0.5), 0 0 15px rgba(16,185,129,0.15)" : "0 10px 25px rgba(0,0,0,0.5)",
+                          boxShadow: isFree ? "0 4px 18px rgba(16,185,129,0.15)" : "0 2px 10px rgba(0,0,0,0.03)",
                           position: "relative",
                         }}
                       >
                         {/* Card Image Cover */}
-                        <div style={{ position: "relative", width: "100%", height: isBook ? "180px" : "145px", overflow: "hidden", background: "#050B17" }}>
+                        <div style={{ position: "relative", width: "100%", height: isBook ? "180px" : "145px", overflow: "hidden", background: "#F8FAFC" }}>
                           <img
                             src={res.thumbnail}
                             alt={res.title}
@@ -2141,15 +2081,15 @@ export const DipuDashboardApp: React.FC = () => {
                               left: "10px",
                               background: isCourse
                                 ? isEnrolled
-                                  ? isFree ? "#10B981" : "#00C2FF"
+                                  ? isFree ? "#10B981" : "#0284C7"
                                   : "#EF4444"
-                                : res.badgeColor || (isBook ? "#0084FF" : isEbook ? "#8B5CF6" : "#10B981"),
+                                : res.badgeColor || (isBook ? "#0284C7" : isEbook ? "#8B5CF6" : "#10B981"),
                               color: "#FFF",
                               fontSize: "11px",
                               fontWeight: 800,
                               padding: "4px 10px",
                               borderRadius: "999px",
-                              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+                              boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
                               display: "inline-flex",
                               alignItems: "center",
                               gap: "4px",
@@ -2202,15 +2142,15 @@ export const DipuDashboardApp: React.FC = () => {
 
                         {/* Card Body */}
                         <div style={{ padding: "16px", display: "flex", flexDirection: "column", flexGrow: 1 }}>
-                          <div style={{ fontSize: "12px", color: isCourse && !isEnrolled ? "#EF4444" : "#00C2FF", fontWeight: 700, marginBottom: "4px" }}>
+                          <div style={{ fontSize: "12px", color: isCourse && !isEnrolled ? "#EF4444" : "#0284C7", fontWeight: 700, marginBottom: "4px" }}>
                             {isCourse && !isEnrolled ? "🔒 পেইড কোর্স • এনরোলমেন্ট প্রয়োজন" : res.subtitle}
                           </div>
 
-                          <h4 style={{ fontSize: "15px", fontWeight: 800, color: "#FFFFFF", lineHeight: 1.35, marginBottom: "8px" }}>
+                          <h4 style={{ fontSize: "15px", fontWeight: 800, color: "#0F172A", lineHeight: 1.35, marginBottom: "8px" }}>
                             {res.title}
                           </h4>
 
-                          <div style={{ fontSize: "12px", color: "#94A3B8", marginBottom: "12px", display: "flex", alignItems: "center", gap: "6px" }}>
+                          <div style={{ fontSize: "12px", color: "#64748B", marginBottom: "12px", display: "flex", alignItems: "center", gap: "6px" }}>
                             <i className={isBook ? "fas fa-user-pen" : "fas fa-chalkboard-user"} style={{ color: "#F59E0B" }} />
                             <span>{res.mentorOrAuthor}</span>
                           </div>
@@ -2218,12 +2158,12 @@ export const DipuDashboardApp: React.FC = () => {
                           {/* Progress bar for course */}
                           {isCourse && typeof res.progress === "number" && res.progress > 0 && (
                             <div style={{ marginTop: "auto", marginBottom: "14px" }}>
-                              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", color: "#CBD5E1", marginBottom: "6px", fontWeight: 600 }}>
+                              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", color: "#475569", marginBottom: "6px", fontWeight: 600 }}>
                                 <span>অগ্রগতি: {res.completedLessons}/{res.totalLessonsOrPages} ক্লাস</span>
-                                <span style={{ color: "#00C2FF", fontWeight: 800 }}>{res.progress}%</span>
+                                <span style={{ color: "#0284C7", fontWeight: 800 }}>{res.progress}%</span>
                               </div>
-                              <div style={{ width: "100%", height: "6px", background: "rgba(255,255,255,0.08)", borderRadius: "999px", overflow: "hidden" }}>
-                                <div style={{ width: `${res.progress}%`, height: "100%", background: "linear-gradient(90deg, #0084FF, #00C2FF)", borderRadius: "999px" }} />
+                              <div style={{ width: "100%", height: "6px", background: "#E2E8F0", borderRadius: "999px", overflow: "hidden" }}>
+                                <div style={{ width: `${res.progress}%`, height: "100%", background: "linear-gradient(90deg, #0284C7, #00C2FF)", borderRadius: "999px" }} />
                               </div>
                             </div>
                           )}
@@ -2408,8 +2348,8 @@ export const DipuDashboardApp: React.FC = () => {
               </div>
 
               {/* Lecture Playlist Grid */}
-              <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#FFFFFF", marginBottom: "14px", display: "flex", alignItems: "center", gap: "8px" }}>
-                <i className="fas fa-list-check" style={{ color: "#00C2FF" }} />
+              <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#0F172A", marginBottom: "14px", display: "flex", alignItems: "center", gap: "8px" }}>
+                <i className="fas fa-list-check" style={{ color: "#0284C7" }} />
                 <span>পরবর্তী ক্লাসসমূহ (Playlist)</span>
               </h3>
 
@@ -2423,14 +2363,15 @@ export const DipuDashboardApp: React.FC = () => {
                       showToast(`🎬 লোড হচ্ছে: ${item.title}`);
                     }}
                     style={{
-                      background: currentVideoTitle === item.title ? "rgba(0, 194, 255, 0.12)" : "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
-                      border: currentVideoTitle === item.title ? "1.5px solid #00C2FF" : "1px solid rgba(255,255,255,0.08)",
+                      background: currentVideoTitle === item.title ? "#F0F9FF" : "#FFFFFF",
+                      border: currentVideoTitle === item.title ? "1.5px solid #0284C7" : "1px solid #E2E8F0",
                       borderRadius: "14px",
                       padding: "14px",
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
                       gap: "12px",
+                      boxShadow: currentVideoTitle === item.title ? "0 4px 14px rgba(2, 132, 199, 0.15)" : "0 2px 6px rgba(0,0,0,0.03)",
                     }}
                   >
                     <div
@@ -2438,8 +2379,8 @@ export const DipuDashboardApp: React.FC = () => {
                         width: "36px",
                         height: "36px",
                         borderRadius: "10px",
-                        background: currentVideoTitle === item.title ? "#00C2FF" : "rgba(255,255,255,0.06)",
-                        color: currentVideoTitle === item.title ? "#000" : "#00C2FF",
+                        background: currentVideoTitle === item.title ? "#0284C7" : "#F1F5F9",
+                        color: currentVideoTitle === item.title ? "#FFFFFF" : "#0284C7",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -2451,15 +2392,15 @@ export const DipuDashboardApp: React.FC = () => {
                       {idx + 1}
                     </div>
                     <div style={{ flexGrow: 1, overflow: "hidden" }}>
-                      <div style={{ fontSize: "11px", color: "#F59E0B", fontWeight: 700, marginBottom: "2px" }}>
+                      <div style={{ fontSize: "11px", color: "#D97706", fontWeight: 700, marginBottom: "2px" }}>
                         {item.subject} • {item.duration}
                       </div>
-                      <div style={{ fontSize: "13px", color: "#FFFFFF", fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                      <div style={{ fontSize: "13px", color: "#0F172A", fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                         {item.title}
                       </div>
-                      <div style={{ fontSize: "11px", color: "#94A3B8" }}>{item.mentor}</div>
+                      <div style={{ fontSize: "11px", color: "#64748B" }}>{item.mentor}</div>
                     </div>
-                    <i className="fas fa-play" style={{ color: "#00C2FF", fontSize: "11px" }} />
+                    <i className="fas fa-play" style={{ color: "#0284C7", fontSize: "11px" }} />
                   </div>
                 ))}
               </div>
@@ -2472,11 +2413,11 @@ export const DipuDashboardApp: React.FC = () => {
           {activeTab === "notes" && (
             <div className="da-tab-pane">
               <div style={{ marginBottom: "24px" }}>
-                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
+                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#0F172A", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
                   <i className="far fa-file-lines" style={{ color: "#8B5CF6" }} />
                   <span>স্মার্ট হ্যান্ডনোটস ও রিভিশন শিট</span>
                 </h2>
-                <p style={{ fontSize: "14px", color: "#94A3B8", margin: 0 }}>
+                <p style={{ fontSize: "14px", color: "#64748B", margin: 0 }}>
                   অভিজ্ঞ মেন্টরদের হাতে লেখা অধ্যায়ভিত্তিক পূর্ণাঙ্গ নোটস ও রিভিশন শিট সংগ্রহ করুন।
                 </p>
               </div>
@@ -2487,13 +2428,13 @@ export const DipuDashboardApp: React.FC = () => {
                     key={n.id}
                     className="da-interactive-card"
                     style={{
-                      background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
-                      border: "1px solid rgba(139, 92, 246, 0.25)",
+                      background: "#FFFFFF",
+                      border: "1px solid #E2E8F0",
                       borderRadius: "16px",
                       padding: "18px",
                       display: "flex",
                       flexDirection: "column",
-                      boxShadow: "0 10px 25px rgba(0,0,0,0.5)",
+                      boxShadow: "0 4px 16px rgba(0,0,0,0.04)",
                     }}
                   >
                     <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
@@ -2517,13 +2458,13 @@ export const DipuDashboardApp: React.FC = () => {
                         <span style={{ fontSize: "11px", color: n.color, fontWeight: 800, textTransform: "uppercase" }}>
                           {n.subject}
                         </span>
-                        <div style={{ fontSize: "11px", color: "#94A3B8" }}>
+                        <div style={{ fontSize: "11px", color: "#64748B" }}>
                           {n.pages} পৃষ্ঠা • {n.size}
                         </div>
                       </div>
                     </div>
 
-                    <h4 style={{ fontSize: "14px", fontWeight: 800, color: "#FFFFFF", lineHeight: 1.4, marginBottom: "16px", flexGrow: 1 }}>
+                    <h4 style={{ fontSize: "14px", fontWeight: 800, color: "#0F172A", lineHeight: 1.4, marginBottom: "16px", flexGrow: 1 }}>
                       {n.title}
                     </h4>
 
@@ -2535,9 +2476,9 @@ export const DipuDashboardApp: React.FC = () => {
                           flex: 1,
                           padding: "8px 12px",
                           borderRadius: "10px",
-                          background: "rgba(255,255,255,0.06)",
-                          border: "1px solid rgba(255,255,255,0.15)",
-                          color: "#FFFFFF",
+                          background: "#F1F5F9",
+                          border: "1px solid #E2E8F0",
+                          color: "#1E293B",
                           fontWeight: 700,
                           fontSize: "12px",
                           cursor: "pointer",
@@ -2557,7 +2498,7 @@ export const DipuDashboardApp: React.FC = () => {
                           flex: 1,
                           padding: "8px 12px",
                           borderRadius: "10px",
-                          background: "linear-gradient(135deg, #0070F3 0%, #00C2FF 100%)",
+                          background: "linear-gradient(135deg, #0284C7 0%, #2563EB 100%)",
                           color: "#FFFFFF",
                           border: 0,
                           fontWeight: 800,
@@ -2567,6 +2508,7 @@ export const DipuDashboardApp: React.FC = () => {
                           alignItems: "center",
                           justifyContent: "center",
                           gap: "6px",
+                          boxShadow: "0 2px 8px rgba(2, 132, 199, 0.25)",
                         }}
                       >
                         <i className="fas fa-download" />
@@ -2585,11 +2527,11 @@ export const DipuDashboardApp: React.FC = () => {
           {activeTab === "bookshop" && (
             <div className="da-tab-pane">
               <div style={{ marginBottom: "24px" }}>
-                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
-                  <i className="fas fa-book" style={{ color: "#F59E0B" }} />
+                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#0F172A", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
+                  <i className="fas fa-book" style={{ color: "#D97706" }} />
                   <span>বুকশপ ও একাডেমি হ্যান্ডবুক</span>
                 </h2>
-                <p style={{ fontSize: "14px", color: "#94A3B8", margin: 0 }}>
+                <p style={{ fontSize: "14px", color: "#64748B", margin: 0 }}>
                   পরীক্ষার চূড়ান্ত প্রস্তুতির জন্য প্রিন্টেড প্র্যাকটিস বুক, টেস্ট পেপার সলভার ও হ্যান্ডবুক সরাসরি অর্ডার করুন।
                 </p>
               </div>
@@ -2600,24 +2542,24 @@ export const DipuDashboardApp: React.FC = () => {
                     key={b.id}
                     className="da-interactive-card"
                     style={{
-                      background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
-                      border: "1px solid rgba(245, 158, 11, 0.25)",
+                      background: "#FFFFFF",
+                      border: "1px solid #E2E8F0",
                       borderRadius: "18px",
                       overflow: "hidden",
                       display: "flex",
                       flexDirection: "column",
-                      boxShadow: "0 10px 25px rgba(0,0,0,0.5)",
+                      boxShadow: "0 4px 16px rgba(0,0,0,0.04)",
                     }}
                   >
-                    <div style={{ position: "relative", width: "100%", height: "150px", overflow: "hidden" }}>
+                    <div style={{ position: "relative", width: "100%", height: "150px", overflow: "hidden", background: "#F1F5F9" }}>
                       <img src={b.image} alt={b.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       <span
                         style={{
                           position: "absolute",
                           top: "10px",
                           left: "10px",
-                          background: "#F59E0B",
-                          color: "#000",
+                          background: "#D97706",
+                          color: "#FFFFFF",
                           fontSize: "11px",
                           fontWeight: 800,
                           padding: "4px 10px",
@@ -2629,17 +2571,17 @@ export const DipuDashboardApp: React.FC = () => {
                     </div>
 
                     <div style={{ padding: "16px", display: "flex", flexDirection: "column", flexGrow: 1 }}>
-                      <h4 style={{ fontSize: "15px", fontWeight: 800, color: "#FFFFFF", marginBottom: "6px", lineHeight: 1.35 }}>
+                      <h4 style={{ fontSize: "15px", fontWeight: 800, color: "#0F172A", marginBottom: "6px", lineHeight: 1.35 }}>
                         {b.title}
                       </h4>
-                      <p style={{ fontSize: "12px", color: "#94A3B8", margin: "0 0 14px" }}>
+                      <p style={{ fontSize: "12px", color: "#64748B", margin: "0 0 14px" }}>
                         লেখক: {b.author}
                       </p>
 
                       <div style={{ marginTop: "auto", display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
                         <div>
-                          <span style={{ fontSize: "18px", fontWeight: 800, color: "#00C2FF" }}>৳{b.price}</span>
-                          <span style={{ fontSize: "12px", color: "#64748B", textDecoration: "line-through", marginLeft: "6px" }}>৳{b.originalPrice}</span>
+                          <span style={{ fontSize: "18px", fontWeight: 800, color: "#0284C7" }}>৳{b.price}</span>
+                          <span style={{ fontSize: "12px", color: "#94A3B8", textDecoration: "line-through", marginLeft: "6px" }}>৳{b.originalPrice}</span>
                         </div>
                         <span style={{ fontSize: "11px", color: "#10B981", fontWeight: 700 }}>হোম ডেলিভারি উপলব্ধ</span>
                       </div>
@@ -2651,8 +2593,8 @@ export const DipuDashboardApp: React.FC = () => {
                           width: "100%",
                           padding: "10px",
                           borderRadius: "10px",
-                          background: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)",
-                          color: "#000000",
+                          background: "linear-gradient(135deg, #0284C7 0%, #2563EB 100%)",
+                          color: "#FFFFFF",
                           border: 0,
                           fontWeight: 800,
                           fontSize: "13px",
@@ -2661,6 +2603,7 @@ export const DipuDashboardApp: React.FC = () => {
                           alignItems: "center",
                           justifyContent: "center",
                           gap: "8px",
+                          boxShadow: "0 2px 8px rgba(2, 132, 199, 0.25)",
                         }}
                       >
                         <i className="fas fa-cart-shopping" />
@@ -2679,11 +2622,11 @@ export const DipuDashboardApp: React.FC = () => {
           {activeTab === "groups" && (
             <div className="da-tab-pane">
               <div style={{ marginBottom: "20px" }}>
-                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
-                  <i className="fas fa-user-group" style={{ color: "#00C2FF" }} />
+                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#0F172A", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
+                  <i className="fas fa-user-group" style={{ color: "#0284C7" }} />
                   <span>শিক্ষার্থী কমিউনিটি ও স্টাডি গ্রুপ</span>
                 </h2>
-                <p style={{ fontSize: "14px", color: "#94A3B8", margin: 0 }}>
+                <p style={{ fontSize: "14px", color: "#64748B", margin: 0 }}>
                   সহপাঠীদের সাথে আলোচনা ও মেন্টরদের কাছ থেকে দ্রুত ডাউট সলভ নেওয়ার উন্মুক্ত প্ল্যাটফর্ম।
                 </p>
               </div>
@@ -2691,16 +2634,16 @@ export const DipuDashboardApp: React.FC = () => {
               {/* Ask Question Card */}
               <div
                 style={{
-                  background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
-                  border: "1.5px solid rgba(0, 194, 255, 0.35)",
+                  background: "#FFFFFF",
+                  border: "1px solid #E2E8F0",
                   borderRadius: "18px",
                   padding: "18px",
                   marginBottom: "24px",
-                  boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.04)",
                 }}
               >
-                <h4 style={{ fontSize: "15px", fontWeight: 800, color: "#FFFFFF", marginBottom: "10px", display: "flex", alignItems: "center", gap: "8px" }}>
-                  <i className="fas fa-pen-to-square" style={{ color: "#00C2FF" }} />
+                <h4 style={{ fontSize: "15px", fontWeight: 800, color: "#0F172A", marginBottom: "10px", display: "flex", alignItems: "center", gap: "8px" }}>
+                  <i className="fas fa-pen-to-square" style={{ color: "#0284C7" }} />
                   <span>পড়ালেখা নিয়ে যেকোনো প্রশ্ন জিজ্ঞাসা করুন</span>
                 </h4>
                 <form onSubmit={handleAddForumPost}>
@@ -2712,27 +2655,28 @@ export const DipuDashboardApp: React.FC = () => {
                     style={{
                       width: "100%",
                       boxSizing: "border-box",
-                      background: "rgba(5, 11, 23, 0.8)",
-                      border: "1px solid rgba(255, 255, 255, 0.15)",
+                      background: "#F8FAFC",
+                      border: "1.5px solid #CBD5E1",
                       borderRadius: "12px",
                       padding: "12px",
-                      color: "#FFFFFF",
+                      color: "#0F172A",
                       fontSize: "13px",
                       outline: "none",
                       resize: "vertical",
                       marginBottom: "12px",
+                      fontFamily: "inherit",
                     }}
                   />
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div style={{ fontSize: "12px", color: "#94A3B8" }}>
-                      পোস্টকারী: <strong style={{ color: "#00C2FF" }}>{userName}</strong>
+                    <div style={{ fontSize: "12px", color: "#64748B" }}>
+                      পোস্টকারী: <strong style={{ color: "#0284C7" }}>{userName}</strong>
                     </div>
                     <button
                       type="submit"
                       style={{
                         padding: "8px 20px",
                         borderRadius: "999px",
-                        background: "linear-gradient(135deg, #0070F3 0%, #00C2FF 100%)",
+                        background: "linear-gradient(135deg, #0284C7 0%, #2563EB 100%)",
                         color: "#FFFFFF",
                         border: 0,
                         fontWeight: 800,
@@ -2741,6 +2685,7 @@ export const DipuDashboardApp: React.FC = () => {
                         display: "flex",
                         alignItems: "center",
                         gap: "6px",
+                        boxShadow: "0 2px 8px rgba(2, 132, 199, 0.25)",
                       }}
                     >
                       <i className="fas fa-paper-plane" />
@@ -2751,8 +2696,8 @@ export const DipuDashboardApp: React.FC = () => {
               </div>
 
               {/* Discussion Feed */}
-              <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#FFFFFF", marginBottom: "14px", display: "flex", alignItems: "center", gap: "8px" }}>
-                <i className="fas fa-comments" style={{ color: "#00C2FF" }} />
+              <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#0F172A", marginBottom: "14px", display: "flex", alignItems: "center", gap: "8px" }}>
+                <i className="fas fa-comments" style={{ color: "#0284C7" }} />
                 <span>সাম্প্রতিক আলোচনা ও প্রশ্নোত্তর</span>
               </h3>
 
@@ -2761,10 +2706,11 @@ export const DipuDashboardApp: React.FC = () => {
                   <div
                     key={post.id}
                     style={{
-                      background: "rgba(10, 21, 48, 0.6)",
-                      border: "1px solid rgba(255, 255, 255, 0.08)",
+                      background: "#FFFFFF",
+                      border: "1px solid #E2E8F0",
                       borderRadius: "14px",
                       padding: "16px",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
                     }}
                   >
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
@@ -2774,7 +2720,7 @@ export const DipuDashboardApp: React.FC = () => {
                             width: "30px",
                             height: "30px",
                             borderRadius: "50%",
-                            background: "linear-gradient(135deg, #0070F3, #00C2FF)",
+                            background: "linear-gradient(135deg, #0284C7, #00C2FF)",
                             color: "#FFF",
                             display: "flex",
                             alignItems: "center",
@@ -2785,14 +2731,14 @@ export const DipuDashboardApp: React.FC = () => {
                         >
                           {post.author.charAt(0)}
                         </div>
-                        <span style={{ fontSize: "13px", fontWeight: 800, color: "#FFFFFF" }}>{post.author}</span>
+                        <span style={{ fontSize: "13px", fontWeight: 800, color: "#0F172A" }}>{post.author}</span>
                       </div>
                       <span style={{ fontSize: "11px", color: "#64748B" }}>{post.time}</span>
                     </div>
-                    <p style={{ fontSize: "13px", color: "#CBD5E1", lineHeight: 1.5, margin: "0 0 10px" }}>
+                    <p style={{ fontSize: "13px", color: "#334155", lineHeight: 1.5, margin: "0 0 10px" }}>
                       {post.text}
                     </p>
-                    <div style={{ display: "flex", gap: "16px", fontSize: "12px", color: "#00C2FF" }}>
+                    <div style={{ display: "flex", gap: "16px", fontSize: "12px", color: "#0284C7", fontWeight: 600 }}>
                       <span style={{ cursor: "pointer" }} onClick={() => showToast("👍 লাইক যুক্ত হয়েছে!")}>
                         <i className="far fa-thumbs-up" style={{ marginRight: "4px" }} /> সহমত
                       </span>
@@ -2812,55 +2758,56 @@ export const DipuDashboardApp: React.FC = () => {
           {activeTab === "performance" && (
             <div className="da-tab-pane">
               <div style={{ marginBottom: "24px" }}>
-                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
+                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#0F172A", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
                   <i className="fas fa-chart-simple" style={{ color: "#F97316" }} />
                   <span>শিক্ষার্থী পারফরম্যান্স ও অগ্রগতি বিশ্লেষণ</span>
                 </h2>
-                <p style={{ fontSize: "14px", color: "#94A3B8", margin: 0 }}>
+                <p style={{ fontSize: "14px", color: "#64748B", margin: 0 }}>
                   আপনার সামগ্রিক অগ্রগতি, সাপ্তাহিক পড়ার সময় এবং কুইজ নির্ভুলতার লাইভ রিপোর্ট।
                 </p>
               </div>
 
               {/* 4 Performance Metric Cards */}
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: "14px", marginBottom: "24px" }}>
-                <div style={{ background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)", border: "1px solid rgba(0, 194, 255, 0.2)", borderRadius: "16px", padding: "18px" }}>
-                  <div style={{ fontSize: "12px", color: "#00C2FF", fontWeight: 700, marginBottom: "6px" }}>🏆 সার্বিক অগ্রগতি</div>
-                  <div style={{ fontSize: "28px", fontWeight: 900, color: "#FFFFFF", marginBottom: "4px" }}>৭৫%</div>
-                  <div style={{ fontSize: "11px", color: "#10B981" }}>সিলেবাসের শীর্ষ ২৫% শিক্ষার্থীর মধ্যে</div>
+                <div style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", borderRadius: "16px", padding: "18px", boxShadow: "0 4px 14px rgba(0,0,0,0.03)" }}>
+                  <div style={{ fontSize: "12px", color: "#0284C7", fontWeight: 700, marginBottom: "6px" }}>🏆 সার্বিক অগ্রগতি</div>
+                  <div style={{ fontSize: "28px", fontWeight: 900, color: "#0F172A", marginBottom: "4px" }}>৭৫%</div>
+                  <div style={{ fontSize: "11px", color: "#10B981", fontWeight: 600 }}>সিলেবাসের শীর্ষ ২৫% শিক্ষার্থীর মধ্যে</div>
                 </div>
-                <div style={{ background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)", border: "1px solid rgba(249, 115, 22, 0.2)", borderRadius: "16px", padding: "18px" }}>
+                <div style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", borderRadius: "16px", padding: "18px", boxShadow: "0 4px 14px rgba(0,0,0,0.03)" }}>
                   <div style={{ fontSize: "12px", color: "#F97316", fontWeight: 700, marginBottom: "6px" }}>🔥 ডেইলি লার্নিং স্ট্রিক</div>
-                  <div style={{ fontSize: "28px", fontWeight: 900, color: "#FFFFFF", marginBottom: "4px" }}>৭ দিন</div>
-                  <div style={{ fontSize: "11px", color: "#94A3B8" }}>সর্বোচ্চ রেকর্ড: ২১ দিন</div>
+                  <div style={{ fontSize: "28px", fontWeight: 900, color: "#0F172A", marginBottom: "4px" }}>৭ দিন</div>
+                  <div style={{ fontSize: "11px", color: "#64748B" }}>সর্বোচ্চ রেকর্ড: ২১ দিন</div>
                 </div>
-                <div style={{ background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)", border: "1px solid rgba(245, 158, 11, 0.2)", borderRadius: "16px", padding: "18px" }}>
-                  <div style={{ fontSize: "12px", color: "#F59E0B", fontWeight: 700, marginBottom: "6px" }}>🪙 অর্জিত EduCoins</div>
-                  <div style={{ fontSize: "28px", fontWeight: 900, color: "#FFFFFF", marginBottom: "4px" }}>২৫০</div>
-                  <div style={{ fontSize: "11px", color: "#F59E0B" }}>রিওয়ার্ড শপে ব্যবহারের উপযোগী</div>
+                <div style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", borderRadius: "16px", padding: "18px", boxShadow: "0 4px 14px rgba(0,0,0,0.03)" }}>
+                  <div style={{ fontSize: "12px", color: "#D97706", fontWeight: 700, marginBottom: "6px" }}>🪙 অর্জিত EduCoins</div>
+                  <div style={{ fontSize: "28px", fontWeight: 900, color: "#0F172A", marginBottom: "4px" }}>২৫০</div>
+                  <div style={{ fontSize: "11px", color: "#D97706", fontWeight: 600 }}>রিওয়ার্ড শপে ব্যবহারের উপযোগী</div>
                 </div>
-                <div style={{ background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)", border: "1px solid rgba(16, 185, 129, 0.2)", borderRadius: "16px", padding: "18px" }}>
+                <div style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", borderRadius: "16px", padding: "18px", boxShadow: "0 4px 14px rgba(0,0,0,0.03)" }}>
                   <div style={{ fontSize: "12px", color: "#10B981", fontWeight: 700, marginBottom: "6px" }}>🎯 প্র্যাকটিস নির্ভুলতা</div>
-                  <div style={{ fontSize: "28px", fontWeight: 900, color: "#FFFFFF", marginBottom: "4px" }}>৯২%</div>
-                  <div style={{ fontSize: "11px", color: "#10B981" }}>বিগত ১৪টি কুইজে উচ্চ স্কোর</div>
+                  <div style={{ fontSize: "28px", fontWeight: 900, color: "#0F172A", marginBottom: "4px" }}>৯২%</div>
+                  <div style={{ fontSize: "11px", color: "#10B981", fontWeight: 600 }}>বিগত ১৪টি কুইজে উচ্চ স্কোর</div>
                 </div>
               </div>
 
               {/* Weekly Study Hours Chart */}
               <div
                 style={{
-                  background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
-                  border: "1px solid rgba(255, 255, 255, 0.1)",
+                  background: "#FFFFFF",
+                  border: "1px solid #E2E8F0",
                   borderRadius: "18px",
                   padding: "20px",
                   marginBottom: "24px",
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.04)",
                 }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "18px" }}>
-                  <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#FFFFFF", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
-                    <i className="fas fa-chart-line" style={{ color: "#00C2FF" }} />
+                  <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#0F172A", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+                    <i className="fas fa-chart-line" style={{ color: "#0284C7" }} />
                     <span>সাপ্তাহিক পড়ার সময় (ঘণ্টা)</span>
                   </h4>
-                  <span style={{ fontSize: "12px", color: "#00C2FF", fontWeight: 700 }}>মোট: ২৪.৫ ঘণ্টা</span>
+                  <span style={{ fontSize: "12px", color: "#0284C7", fontWeight: 700 }}>মোট: ২৪.৫ ঘণ্টা</span>
                 </div>
 
                 <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "10px", height: "140px", padding: "0 10px 10px" }}>
@@ -2874,18 +2821,18 @@ export const DipuDashboardApp: React.FC = () => {
                     { day: "শুক্র", hours: "৫.০", height: "100%" },
                   ].map((bar, i) => (
                     <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: 1, height: "100%", justifyContent: "flex-end" }}>
-                      <span style={{ fontSize: "10px", color: "#94A3B8", marginBottom: "4px" }}>{bar.hours}h</span>
+                      <span style={{ fontSize: "10px", color: "#64748B", marginBottom: "4px" }}>{bar.hours}h</span>
                       <div
                         style={{
                           width: "100%",
                           maxWidth: "32px",
                           height: bar.height,
-                          background: i === 6 ? "linear-gradient(180deg, #00C2FF, #0070F3)" : "rgba(0, 194, 255, 0.35)",
+                          background: i === 6 ? "linear-gradient(180deg, #0284C7, #2563EB)" : "#BAE6FD",
                           borderRadius: "6px 6px 0 0",
                           transition: "height 0.5s ease",
                         }}
                       />
-                      <span style={{ fontSize: "11px", color: "#CBD5E1", marginTop: "6px", fontWeight: 700 }}>{bar.day}</span>
+                      <span style={{ fontSize: "11px", color: "#334155", marginTop: "6px", fontWeight: 700 }}>{bar.day}</span>
                     </div>
                   ))}
                 </div>
@@ -2899,47 +2846,47 @@ export const DipuDashboardApp: React.FC = () => {
           {activeTab === "settings" && (
             <div className="da-tab-pane">
               <div style={{ marginBottom: "24px" }}>
-                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
-                  <i className="fas fa-gear" style={{ color: "#00C2FF" }} />
+                <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#0F172A", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "10px" }}>
+                  <i className="fas fa-gear" style={{ color: "#0284C7" }} />
                   <span>প্রোফাইল ও অ্যাকাউন্ট সেটিংস</span>
                 </h2>
-                <p style={{ fontSize: "14px", color: "#94A3B8", margin: 0 }}>
+                <p style={{ fontSize: "14px", color: "#64748B", margin: 0 }}>
                   আপনার ব্যক্তিগত তথ্য, টার্গেট ব্যাচ ও অ্যাকাউন্টের সেটিংস পরিবর্তন করুন।
                 </p>
               </div>
 
               <div
                 style={{
-                  background: "linear-gradient(145deg, #09142F 0%, #060D20 100%)",
-                  border: "1.5px solid rgba(0, 194, 255, 0.3)",
+                  background: "#FFFFFF",
+                  border: "1px solid #E2E8F0",
                   borderRadius: "20px",
                   padding: "24px",
-                  boxShadow: "0 15px 35px rgba(0,0,0,0.6)",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
                   maxWidth: "680px",
                   marginBottom: "2rem",
                 }}
               >
                 <form onSubmit={handleProfileSave}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "20px", paddingBottom: "18px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "20px", paddingBottom: "18px", borderBottom: "1px solid #E2E8F0" }}>
                     <div
                       style={{
                         width: "60px",
                         height: "60px",
                         borderRadius: "50%",
-                        background: "linear-gradient(135deg, #0084FF, #00C2FF)",
+                        background: "linear-gradient(135deg, #0284C7, #0EA5E9)",
                         color: "#FFF",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         fontSize: "24px",
                         fontWeight: 900,
-                        boxShadow: "0 8px 20px rgba(0, 194, 255, 0.4)",
+                        boxShadow: "0 4px 14px rgba(2, 132, 199, 0.35)",
                       }}
                     >
                       {firstLetter}
                     </div>
                     <div>
-                      <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 4px" }}>{userName}</h3>
+                      <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#0F172A", margin: "0 0 4px" }}>{userName}</h3>
                       <p style={{ fontSize: "12px", color: "#10B981", margin: 0, fontWeight: 700 }}>
                         <i className="fas fa-circle-check" style={{ marginRight: "4px" }} /> ভেরিফাইড শিক্ষার্থী অ্যাকাউন্ট
                       </p>
@@ -2948,7 +2895,7 @@ export const DipuDashboardApp: React.FC = () => {
 
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "14px" }}>
                     <div>
-                      <label style={{ display: "block", fontSize: "12px", color: "#94A3B8", fontWeight: 700, marginBottom: "6px" }}>
+                      <label style={{ display: "block", fontSize: "12px", color: "#334155", fontWeight: 700, marginBottom: "6px" }}>
                         শিক্ষার্থীর নাম
                       </label>
                       <input
@@ -2958,18 +2905,19 @@ export const DipuDashboardApp: React.FC = () => {
                         style={{
                           width: "100%",
                           boxSizing: "border-box",
-                          background: "#050B17",
-                          border: "1px solid rgba(255,255,255,0.15)",
+                          background: "#FFFFFF",
+                          border: "1.5px solid #CBD5E1",
                           borderRadius: "10px",
                           padding: "10px 14px",
-                          color: "#FFF",
+                          color: "#0F172A",
                           fontSize: "13px",
                           outline: "none",
+                          fontFamily: "inherit",
                         }}
                       />
                     </div>
                     <div>
-                      <label style={{ display: "block", fontSize: "12px", color: "#94A3B8", fontWeight: 700, marginBottom: "6px" }}>
+                      <label style={{ display: "block", fontSize: "12px", color: "#334155", fontWeight: 700, marginBottom: "6px" }}>
                         ফোন নম্বর (রেজিস্টার্ড)
                       </label>
                       <input
@@ -2979,13 +2927,14 @@ export const DipuDashboardApp: React.FC = () => {
                         style={{
                           width: "100%",
                           boxSizing: "border-box",
-                          background: "rgba(255,255,255,0.04)",
-                          border: "1px solid rgba(255,255,255,0.1)",
+                          background: "#F1F5F9",
+                          border: "1px solid #E2E8F0",
                           borderRadius: "10px",
                           padding: "10px 14px",
                           color: "#64748B",
                           fontSize: "13px",
                           outline: "none",
+                          cursor: "not-allowed",
                         }}
                       />
                     </div>
@@ -2993,7 +2942,7 @@ export const DipuDashboardApp: React.FC = () => {
 
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "18px" }}>
                     <div>
-                      <label style={{ display: "block", fontSize: "12px", color: "#94A3B8", fontWeight: 700, marginBottom: "6px" }}>
+                      <label style={{ display: "block", fontSize: "12px", color: "#334155", fontWeight: 700, marginBottom: "6px" }}>
                         টার্গেট ব্যাচ / শ্রেণি
                       </label>
                       <select
@@ -3002,13 +2951,14 @@ export const DipuDashboardApp: React.FC = () => {
                         style={{
                           width: "100%",
                           boxSizing: "border-box",
-                          background: "#050B17",
-                          border: "1px solid rgba(255,255,255,0.15)",
+                          background: "#FFFFFF",
+                          border: "1.5px solid #CBD5E1",
                           borderRadius: "10px",
                           padding: "10px 14px",
-                          color: "#FFF",
+                          color: "#0F172A",
                           fontSize: "13px",
                           outline: "none",
+                          fontFamily: "inherit",
                         }}
                       >
                         <option value="SSC 2026">SSC 2026</option>
@@ -3019,7 +2969,7 @@ export const DipuDashboardApp: React.FC = () => {
                       </select>
                     </div>
                     <div>
-                      <label style={{ display: "block", fontSize: "12px", color: "#94A3B8", fontWeight: 700, marginBottom: "6px" }}>
+                      <label style={{ display: "block", fontSize: "12px", color: "#334155", fontWeight: 700, marginBottom: "6px" }}>
                         শিক্ষা বিভাগ
                       </label>
                       <select
@@ -3028,13 +2978,14 @@ export const DipuDashboardApp: React.FC = () => {
                         style={{
                           width: "100%",
                           boxSizing: "border-box",
-                          background: "#050B17",
-                          border: "1px solid rgba(255,255,255,0.15)",
+                          background: "#FFFFFF",
+                          border: "1.5px solid #CBD5E1",
                           borderRadius: "10px",
                           padding: "10px 14px",
-                          color: "#FFF",
+                          color: "#0F172A",
                           fontSize: "13px",
                           outline: "none",
+                          fontFamily: "inherit",
                         }}
                       >
                         <option value="বিজ্ঞান বিভাগ (Science)">বিজ্ঞান বিভাগ (Science)</option>
@@ -3050,7 +3001,7 @@ export const DipuDashboardApp: React.FC = () => {
                       width: "100%",
                       padding: "12px",
                       borderRadius: "12px",
-                      background: "linear-gradient(135deg, #0070F3 0%, #00C2FF 100%)",
+                      background: "linear-gradient(135deg, #0284C7 0%, #2563EB 100%)",
                       color: "#FFFFFF",
                       border: 0,
                       fontWeight: 800,
@@ -3060,7 +3011,7 @@ export const DipuDashboardApp: React.FC = () => {
                       alignItems: "center",
                       justifyContent: "center",
                       gap: "8px",
-                      boxShadow: "0 8px 24px rgba(0, 194, 255, 0.35)",
+                      boxShadow: "0 4px 16px rgba(2, 132, 199, 0.3)",
                     }}
                   >
                     <i className="fas fa-floppy-disk" />
@@ -3073,14 +3024,14 @@ export const DipuDashboardApp: React.FC = () => {
                   style={{
                     marginTop: "24px",
                     paddingTop: "20px",
-                    borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+                    borderTop: "1px solid #E2E8F0",
                   }}
                 >
-                  <h4 style={{ fontSize: "14px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: "8px" }}>
+                  <h4 style={{ fontSize: "14px", fontWeight: 800, color: "#0F172A", margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: "8px" }}>
                     <i className="fas fa-shield-halved" style={{ color: "#EF4444" }} />
                     <span>অ্যাকাউন্ট সিকিউরিটি ও সাইন আউট</span>
                   </h4>
-                  <p style={{ fontSize: "12px", color: "#94A3B8", margin: "0 0 16px 0" }}>
+                  <p style={{ fontSize: "12px", color: "#64748B", margin: "0 0 16px 0" }}>
                     বর্তমান ডিভাইস অথবা ব্রাউজার সেশন থেকে নিরাপদে প্রস্থান করতে লগআউট বাটনে ক্লিক করুন।
                   </p>
 
@@ -3091,9 +3042,9 @@ export const DipuDashboardApp: React.FC = () => {
                       style={{
                         padding: "12px 18px",
                         borderRadius: "12px",
-                        background: "rgba(239, 68, 68, 0.15)",
-                        border: "1.5px solid rgba(239, 68, 68, 0.45)",
-                        color: "#EF4444",
+                        background: "rgba(239, 68, 68, 0.1)",
+                        border: "1.5px solid rgba(239, 68, 68, 0.3)",
+                        color: "#DC2626",
                         fontWeight: 800,
                         fontSize: "13.5px",
                         cursor: "pointer",
@@ -3104,12 +3055,12 @@ export const DipuDashboardApp: React.FC = () => {
                         transition: "all 0.2s ease",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "#EF4444";
+                        e.currentTarget.style.background = "#DC2626";
                         e.currentTarget.style.color = "#FFFFFF";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "rgba(239, 68, 68, 0.15)";
-                        e.currentTarget.style.color = "#EF4444";
+                        e.currentTarget.style.background = "rgba(239, 68, 68, 0.1)";
+                        e.currentTarget.style.color = "#DC2626";
                       }}
                     >
                       <i className="fas fa-arrow-right-from-bracket" />
@@ -3121,9 +3072,9 @@ export const DipuDashboardApp: React.FC = () => {
                       style={{
                         padding: "12px 18px",
                         borderRadius: "12px",
-                        background: "rgba(0, 194, 255, 0.1)",
-                        border: "1px solid rgba(0, 194, 255, 0.3)",
-                        color: "#00C2FF",
+                        background: "#F0F9FF",
+                        border: "1px solid #BAE6FD",
+                        color: "#0284C7",
                         fontWeight: 700,
                         fontSize: "13px",
                         textDecoration: "none",
@@ -3162,9 +3113,7 @@ export const DipuDashboardApp: React.FC = () => {
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(3, 7, 18, 0.82)",
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
+            background: "rgba(15, 23, 42, 0.5)",
             zIndex: 9999,
             display: "flex",
             alignItems: "center",
@@ -3175,15 +3124,15 @@ export const DipuDashboardApp: React.FC = () => {
         >
           <div
             style={{
-              background: "linear-gradient(145deg, #0A1530 0%, #060D20 100%)",
-              border: "1.5px solid rgba(0, 194, 255, 0.35)",
+              background: "#FFFFFF",
+              border: "1.5px solid #E2E8F0",
               borderRadius: "24px",
               padding: "26px",
               maxWidth: "640px",
               width: "100%",
               maxHeight: "85vh",
               overflowY: "auto",
-              boxShadow: "0 25px 60px rgba(0,0,0,0.85), 0 0 35px rgba(0, 194, 255, 0.2)",
+              boxShadow: "0 25px 60px rgba(0,0,0,0.15)",
               position: "relative",
             }}
             onClick={(e) => e.stopPropagation()}
@@ -3193,7 +3142,7 @@ export const DipuDashboardApp: React.FC = () => {
                 <h3 className="da-shimmer-headline" style={{ fontSize: "22px", fontWeight: 900, margin: 0 }}>
                   তোমার শ্রেণি / পাঠ্যক্রম নির্বাচন করো
                 </h3>
-                <p style={{ fontSize: "13px", color: "#94A3B8", margin: "4px 0 0" }}>
+                <p style={{ fontSize: "13px", color: "#64748B", margin: "4px 0 0" }}>
                   তোমার ক্লাসের স্পেশাল কোর্স, বই, ই-বুক ও ফ্রি রিসোর্স স্বয়ংক্রিয়ভাবে ফিল্টার হবে।
                 </p>
               </div>
@@ -3201,9 +3150,9 @@ export const DipuDashboardApp: React.FC = () => {
                 type="button"
                 onClick={() => setClassModalOpen(false)}
                 style={{
-                  background: "rgba(255,255,255,0.08)",
+                  background: "#F1F5F9",
                   border: 0,
-                  color: "#CBD5E1",
+                  color: "#64748B",
                   width: "36px",
                   height: "36px",
                   borderRadius: "50%",
@@ -3226,13 +3175,13 @@ export const DipuDashboardApp: React.FC = () => {
                     key={cDef.key}
                     onClick={() => handleClassChange(cDef.key)}
                     style={{
-                      background: isSelected ? "rgba(0, 194, 255, 0.15)" : "rgba(255, 255, 255, 0.03)",
-                      border: isSelected ? "1.5px solid #00C2FF" : "1px solid rgba(255, 255, 255, 0.1)",
+                      background: isSelected ? "#F0F9FF" : "#F8FAFC",
+                      border: isSelected ? "1.5px solid #0284C7" : "1px solid #E2E8F0",
                       borderRadius: "16px",
                       padding: "16px",
                       cursor: "pointer",
                       transition: "all 0.2s ease",
-                      boxShadow: isSelected ? "0 4px 18px rgba(0, 194, 255, 0.25)" : "none",
+                      boxShadow: isSelected ? "0 4px 14px rgba(2, 132, 199, 0.2)" : "none",
                     }}
                   >
                     <div
@@ -3251,10 +3200,10 @@ export const DipuDashboardApp: React.FC = () => {
                     >
                       <i className={cDef.icon} />
                     </div>
-                    <div style={{ fontSize: "14px", fontWeight: 800, color: isSelected ? "#00C2FF" : "#FFF", marginBottom: "4px" }}>
+                    <div style={{ fontSize: "14px", fontWeight: 800, color: isSelected ? "#0284C7" : "#0F172A", marginBottom: "4px" }}>
                       {cDef.shortName}
                     </div>
-                    <div style={{ fontSize: "11px", color: "#94A3B8", lineHeight: 1.35 }}>
+                    <div style={{ fontSize: "11px", color: "#64748B", lineHeight: 1.35 }}>
                       {cDef.label}
                     </div>
                   </div>

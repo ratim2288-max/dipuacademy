@@ -15,6 +15,9 @@ const adminRoutes = require('./routes/adminRoutes');
 const notesRoutes = require('./routes/notesRoutes');
 const gamificationRoutes = require('./routes/gamificationRoutes');
 const studentRoutes = require('./routes/studentRoutes');
+const { sanitizeInput } = require('./middleware/sanitizeInput');
+const { globalApiLimiter } = require('./middleware/rateLimiter');
+const { verifyAuth, requireRole } = require('./middleware/auth');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,23 +25,73 @@ const PORT = process.env.PORT || 5000;
 // Connect to MongoDB Atlas or Local instance
 connectDB();
 
+// Admin Authentication Middleware for sensitive site configuration mutations
+const adminAuthMiddleware = (req, res, next) => {
+  if (process.env.NODE_ENV === 'development' && !req.headers.authorization && !req.cookies?.session_token) {
+    return next();
+  }
+  return verifyAuth(req, res, () => requireRole('admin', 'super_admin')(req, res, next));
+};
+
 // Security & Utility Middlewares
+// 1. Hardened Helmet Headers (HSTS, X-Content-Type-Options, FrameGuard, Referrer-Policy)
 app.use(helmet({
-  contentSecurityPolicy: false, // Allows embedding YouTube & Canvas elements
+  contentSecurityPolicy: false, // Allows embedding YouTube player & interactive Canvas elements
   crossOriginEmbedderPolicy: false,
   crossOriginResourcePolicy: false,
   referrerPolicy: { policy: "strict-origin-when-cross-origin" },
+  xContentTypeOptions: true,
+  xFrameOptions: { action: 'sameorigin' },
+  dnsPrefetchControl: { allow: false },
+  hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
 }));
+
 app.use((req, res, next) => {
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
   next();
 });
+
+// 2. Controlled CORS Policy
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map(s => s.trim())
+  : ['http://localhost:5000', 'http://localhost:3000', 'https://dipuacademy.com'];
+
 app.use(cors({
-  origin: '*',
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (process.env.NODE_ENV !== 'production' || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('CORS policy: Access restricted to authorized domains'));
+  },
   credentials: true,
 }));
+
+// 3. Native Cookie Parser (Reads HttpOnly JWT session cookies without external package bloat)
+app.use((req, res, next) => {
+  req.cookies = req.cookies || {};
+  if (req.headers && req.headers.cookie) {
+    req.headers.cookie.split(';').forEach(pair => {
+      const parts = pair.trim().split('=');
+      if (parts.length >= 2) {
+        const key = parts[0].trim();
+        const val = decodeURIComponent(parts.slice(1).join('='));
+        req.cookies[key] = val;
+      }
+    });
+  }
+  next();
+});
+
+// 4. Request Body Parsers & Input Sanitizer (Prevents NoSQL Injection & Stored XSS)
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(sanitizeInput);
+
+// 5. Global API Rate Limiter (DDoS and abuse defense)
+app.use('/api/', globalApiLimiter);
+
 app.use(morgan('dev'));
 
 // NFR-01: Performance — Compression middleware
@@ -198,7 +251,7 @@ app.get('/api/features', (req, res) => {
   return res.status(200).json({ success: true, features: feats, data: feats });
 });
 
-app.post('/api/features', (req, res) => {
+app.post('/api/features', adminAuthMiddleware, (req, res) => {
   const { features } = req.body;
   if (Array.isArray(features) && features.length > 0) {
     adminRoutes.FEATURES_CONFIG = features;
@@ -210,7 +263,7 @@ app.post('/api/features', (req, res) => {
   return res.status(400).json({ success: false, message: 'Invalid features array' });
 });
 
-app.post('/api/features/new', (req, res) => {
+app.post('/api/features/new', adminAuthMiddleware, (req, res) => {
   const newFeature = req.body;
   if (!newFeature || !newFeature.id || !newFeature.tabLabel) {
     return res.status(400).json({ success: false, message: 'ফিচার আইডি ও ট্যাব নাম প্রয়োজন।' });
@@ -233,7 +286,7 @@ app.post('/api/features/new', (req, res) => {
   return res.status(201).json({ success: true, message: 'নতুন ফিচার সফলভাবে যোগ করা হয়েছে!', feature: newFeature, features: feats });
 });
 
-app.delete('/api/features/:id', (req, res) => {
+app.delete('/api/features/:id', adminAuthMiddleware, (req, res) => {
   const { id } = req.params;
   const feats = adminRoutes.FEATURES_CONFIG || [];
   if (feats.length <= 1) {
@@ -301,8 +354,38 @@ app.get('/book/:slug', (req, res) => res.sendFile(path.join(__dirname, '../publi
 app.get('/book-details', (req, res) => res.sendFile(path.join(__dirname, '../public/book.html')));
 app.get('/ai', (req, res) => res.sendFile(path.join(__dirname, '../public/ai.html')));
 app.get('/dipus-ai', (req, res) => res.sendFile(path.join(__dirname, '../public/ai.html')));
-app.get('/depus-ai', (req, res) => res.sendFile(path.join(__dirname, '../public/ai.html')));
 app.get('/report', (req, res) => res.redirect('/dashboard'));
+
+// Public Shop Catalog API
+app.get('/api/shop/catalog', (req, res) => {
+  try {
+    if (adminRoutes && adminRoutes.SHOP_DATA) {
+      return res.status(200).json({ success: true, ...adminRoutes.SHOP_DATA });
+    }
+    const shopDataFile = path.join(__dirname, 'config/shop-data.json');
+    if (fs.existsSync(shopDataFile)) {
+      const data = JSON.parse(fs.readFileSync(shopDataFile, 'utf8'));
+      return res.status(200).json({ success: true, ...data });
+    }
+  } catch (e) {
+    console.error('Error reading shop-data.json in /api/shop/catalog:', e.message);
+  }
+  return res.status(200).json({ success: true, banners: [], books: [], ebooks: [] });
+});
+
+// Service Worker route
+app.get('/sw.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.setHeader('Service-Worker-Allowed', '/');
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.sendFile(path.join(__dirname, '../public/sw.js'));
+});
+
+// Offline & 404 Dedicated Fallback Routes
+app.get('/offline', (req, res) => res.sendFile(path.join(__dirname, '../public/offline.html')));
+app.get('/offline.html', (req, res) => res.sendFile(path.join(__dirname, '../public/offline.html')));
+app.get('/404', (req, res) => res.status(404).sendFile(path.join(__dirname, '../public/404.html')));
+app.get('/404.html', (req, res) => res.status(404).sendFile(path.join(__dirname, '../public/404.html')));
 
 // Single Page Application Fallback
 app.get('*', (req, res) => {
