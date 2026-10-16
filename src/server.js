@@ -15,12 +15,16 @@ const adminRoutes = require('./routes/adminRoutes');
 const notesRoutes = require('./routes/notesRoutes');
 const gamificationRoutes = require('./routes/gamificationRoutes');
 const studentRoutes = require('./routes/studentRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
 const { sanitizeInput } = require('./middleware/sanitizeInput');
 const { globalApiLimiter } = require('./middleware/rateLimiter');
 const { verifyAuth, requireRole } = require('./middleware/auth');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Trust reverse proxy (Nginx / Cloudflare) to read client IP and Host header
+app.set('trust proxy', true);
 
 // Connect to MongoDB Atlas or Local instance
 connectDB();
@@ -53,14 +57,27 @@ app.use((req, res, next) => {
 });
 
 // 2. Controlled CORS Policy
+const defaultAllowedOrigins = [
+  'http://localhost:5000',
+  'http://localhost:3000',
+  'https://ratim.tech',
+  'https://www.ratim.tech',
+  'https://dipu990.ratim.tech',
+  'https://dipuacademy.com'
+];
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map(s => s.trim())
-  : ['http://localhost:5000', 'http://localhost:3000', 'https://dipuacademy.com'];
+  : defaultAllowedOrigins;
 
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
-    if (process.env.NODE_ENV !== 'production' || allowedOrigins.includes(origin)) {
+    if (
+      process.env.NODE_ENV !== 'production' ||
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.ratim.tech') ||
+      origin === 'https://ratim.tech'
+    ) {
       return callback(null, true);
     }
     return callback(new Error('CORS policy: Access restricted to authorized domains'));
@@ -102,6 +119,47 @@ try {
   console.warn('[Server] compression package not found, skipping.');
 }
 
+// Subdomain & Admin Isolation Helper
+const isAdminHost = (req) => {
+  const host = (req.hostname || req.headers.host || '').toLowerCase();
+  // Allow dipu990 subdomain in production & staging
+  if (host.startsWith('dipu990.') || host.includes('dipu990')) return true;
+  // Allow local development
+  if (process.env.NODE_ENV !== 'production' && (host.includes('localhost') || host.includes('127.0.0.1'))) return true;
+  return false;
+};
+
+// Dynamic robots.txt handler (Block search indexing on admin subdomain completely)
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  if (isAdminHost(req)) {
+    return res.send("User-agent: *\nDisallow: /\n");
+  }
+  return res.send("User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\n");
+});
+
+// Admin Subdomain Routing & Website Isolation Guard
+app.use((req, res, next) => {
+  const isSubAdmin = isAdminHost(req);
+
+  if (isSubAdmin) {
+    // Search engine crawler deterrent header for admin subdomain
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet');
+
+    // On dipu990.ratim.tech, visiting root '/' serves Admin Panel directly
+    if (req.path === '/' || req.path === '/admin' || req.path === '/admin.html') {
+      return res.sendFile(path.join(__dirname, '../public/admin.html'));
+    }
+  } else {
+    // On main domain (ratim.tech):
+    // Completely OFF and block /admin, /admin.html, /admin/*
+    if (req.path === '/admin' || req.path === '/admin.html' || req.path.startsWith('/admin/')) {
+      return res.status(404).sendFile(path.join(__dirname, '../public/404.html'));
+    }
+  }
+  next();
+});
+
 // Static assets (Frontend UI) with cache headers for performance
 app.use(express.static(path.join(__dirname, '../public'), {
   maxAge: process.env.NODE_ENV === 'production' ? '7d' : 0,
@@ -120,6 +178,7 @@ app.use('/api/admin/courses', courseRoutes);
 app.use('/api/notes', notesRoutes);
 app.use('/api/gamification', gamificationRoutes);
 app.use('/api/student', studentRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Public Student Reviews Endpoint (Feeds Homepage Testimonials Carousel)
 app.get('/api/reviews', async (req, res) => {
@@ -334,7 +393,12 @@ app.get(['/exam', '/exam/:slug', '/exam.html'], (req, res) => res.redirect('/'))
 app.get('/login', (req, res) => res.sendFile(path.join(__dirname, '../public/login.html')));
 app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, '../public/dashboard.html')));
 app.get('/profile', (req, res) => res.sendFile(path.join(__dirname, '../public/dashboard.html')));
-app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, '../public/admin.html')));
+app.get(['/admin', '/admin.html'], (req, res) => {
+  if (isAdminHost(req)) {
+    return res.sendFile(path.join(__dirname, '../public/admin.html'));
+  }
+  return res.status(404).sendFile(path.join(__dirname, '../public/404.html'));
+});
 app.get(['/notes', '/notes.html', '/notes/:classLevel/:subject'], (req, res) => res.redirect('/'));
 app.get('/player', (req, res) => res.sendFile(path.join(__dirname, '../public/player.html')));
 app.get('/player/:lessonId', (req, res) => res.sendFile(path.join(__dirname, '../public/player.html')));
