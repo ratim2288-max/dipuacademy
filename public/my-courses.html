@@ -790,19 +790,183 @@
       gap: 1rem;
     }
 
+    /* Mobile 3-Dot Button & Drawer */
+    .da-3dot-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 132, 255, 0.25);
+      background: rgba(0, 132, 255, 0.08);
+      color: #0084FF;
+      font-size: 1.15rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .da-3dot-btn:hover {
+      background: rgba(0, 132, 255, 0.16);
+      transform: scale(1.05);
+    }
+    [data-theme="dark"] .da-3dot-btn {
+      border-color: rgba(0, 194, 255, 0.35);
+      background: rgba(0, 194, 255, 0.12);
+      color: #00C2FF;
+    }
+
+    .da-mobile-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 998;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .da-mobile-backdrop.open {
+      display: block;
+      opacity: 1;
+    }
+
+    .da-mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 290px;
+      max-width: 86vw;
+      background: var(--card-bg);
+      border-left: 1px solid var(--card-border);
+      box-shadow: -8px 0 32px rgba(0, 0, 0, 0.18);
+      z-index: 999;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      padding: 1.25rem 1rem;
+    }
+    .da-mobile-drawer.open {
+      transform: translateX(0);
+    }
+
+    .da-drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 1rem;
+    }
+    .da-drawer-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .da-drawer-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+      background: rgba(148, 163, 184, 0.08);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+    .da-drawer-close:hover {
+      color: #EF4444;
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .da-drawer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      overflow-y: auto;
+    }
+    .da-drawer-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: 10px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .da-drawer-link i {
+      width: 20px;
+      text-align: center;
+      color: #0084FF;
+      font-size: 1rem;
+    }
+    .da-drawer-link:hover {
+      background: rgba(0, 132, 255, 0.08);
+      color: #0084FF;
+    }
+    .da-drawer-link.active {
+      background: linear-gradient(135deg, rgba(0, 132, 255, 0.14) 0%, rgba(0, 194, 255, 0.14) 100%);
+      color: #0084FF;
+      font-weight: 700;
+      border-left: 3px solid #0084FF;
+    }
+    .da-drawer-footer {
+      padding-top: 1rem;
+      border-top: 1px solid var(--card-border);
+    }
+    .da-drawer-logout-btn {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      background: rgba(239, 68, 68, 0.08);
+      color: #EF4444;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .da-drawer-logout-btn:hover {
+      background: #EF4444;
+      color: #FFFFFF;
+    }
+
     @media (max-width: 900px) {
-      .header-nav { display: none; }
+      .header-nav { display: none !important; }
       .search-box { width: 140px; }
       .footer-container { grid-template-columns: 1fr 1fr; }
     }
+    @media (max-width: 768px) {
+      .da-3dot-btn { display: inline-flex !important; }
+      .hotline-btn { display: none !important; }
+      .user-pill { display: none !important; }
+    }
     @media (max-width: 650px) {
+      .header-container { padding: 0.6rem 0.85rem; }
+      .main-wrapper { padding: 1.25rem 0.85rem; }
       .card-top-row { flex-direction: column; align-items: flex-start; }
       .course-thumb-box { width: 100%; height: 160px; }
       .card-bottom-row { flex-direction: column; align-items: stretch; gap: 1rem; }
       .action-btn-group { justify-content: stretch; }
       .action-btn-group a, .action-btn-group button { flex: 1; text-align: center; justify-content: center; }
       .footer-container { grid-template-columns: 1fr; }
-      .search-box { display: none; }
+      .search-box { display: none !important; }
+      .page-title { font-size: 1.6rem !important; }
     }
   </style>
 </head>
@@ -861,6 +1025,11 @@
           <span class="user-name" id="userNameLabel">শিক্ষার্থী</span>
           <i class="fas fa-chevron-down" style="font-size: 0.65rem; color: var(--text-muted);"></i>
         </a>
+
+        <!-- Mobile 3-Dot Menu Button -->
+        <button type="button" class="da-3dot-btn" id="myCourses3DotBtn" onclick="toggleMobileDrawer()" aria-label="মেন্যু খুলুন" title="মেন্যু">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
       </div>
 
     </div>
@@ -1043,33 +1212,6 @@
         description: "নতুন শিক্ষাক্রমের বিস্তারিত কনসেপ্ট, গণিত, বিজ্ঞান ও মূল্যায়ন প্রস্তুতি"
       },
       {
-        key: "class8",
-        label: "অষ্টম শ্রেণি",
-        shortName: "Class 8",
-        gradeBadge: "৮ম শ্রেণি",
-        color: "#06B6D4",
-        icon: "fas fa-shapes",
-        description: "অষ্টম শ্রেণির বার্ষিক পরীক্ষা, প্যাটার্ন ও গণিত-বিজ্ঞান প্রস্তুতি"
-      },
-      {
-        key: "class7",
-        label: "৭ম শ্রেণি",
-        shortName: "Class 7",
-        gradeBadge: "৭ম শ্রেণি",
-        color: "#EC4899",
-        icon: "fas fa-puzzle-piece",
-        description: "সপ্তম শ্রেণির এক্টিভিটি ও হ্যান্ডস-অন প্র্যাকটিস ভিত্তিক শিক্ষা"
-      },
-      {
-        key: "class6",
-        label: "৬ষ্ঠ শ্রেণি",
-        shortName: "Class 6",
-        gradeBadge: "৬ষ্ঠ শ্রেণি",
-        color: "#3B82F6",
-        icon: "fas fa-seedling",
-        description: "প্রাথমিক পর্যায় থেকে নতুন মাধ্যমিক শিক্ষাক্রমে প্রবেশের আত্মবিশ্বাস"
-      },
-      {
         key: "admission",
         label: "ভার্সিটি ও ইঞ্জিনিয়ারিং এডমিশন",
         shortName: "Admission",
@@ -1112,23 +1254,23 @@
         homeUrl: "/course-home.html?course=graphic-design-photoshop"
       },
       {
-        id: "class-5-full-course",
-        slug: "class-5-full-course",
+        id: "ssc-science-full-course",
+        slug: "ssc-science-full-course",
         classKey: "all",
         categoryKey: "academic",
         categoryLabel: "একাডেমিক",
         type: "course",
-        title: "৫ম শ্রেণীর পূর্ণাঙ্গ কোর্স",
-        subtitle: "একাডেমিক • সব বিষয়ের সম্পূর্ণ সিলেবাস ও বার্ষিক পরীক্ষা প্রস্তুতি",
-        mentor: "দীপু এডু একাডেমি",
-        thumbnail: "/images/courses/class5-full-course.jpg",
-        progress: 0,
-        completedLessons: 0,
-        totalLessons: 60,
-        badge: "একাডেমিক",
+        title: "এসএসসি বিজ্ঞান ও গণিত পূর্ণাঙ্গ প্রস্তুতি",
+        subtitle: "একাডেমিক • ৯ম ও ১০ম শ্রেণির সম্পূর্ণ সিলেবাস ও বোর্ড পরীক্ষা প্রস্তুতি",
+        mentor: "দীপু স্যার (BUET)",
+        thumbnail: "/images/courses/class10-business-studies.jpg",
+        progress: 35,
+        completedLessons: 14,
+        totalLessons: 48,
+        badge: "একাডেমিক (SSC)",
         badgeColor: "#00C2FF",
-        playerUrl: "/player.html?course=class-5-full-course",
-        homeUrl: "/course-home.html?course=class-5-full-course"
+        playerUrl: "/player.html?course=ssc-science-full-course",
+        homeUrl: "/course-home.html?course=ssc-science-full-course"
       },
       {
         id: "hsc-physics-1st-paper",
@@ -1506,103 +1648,6 @@
         homeUrl: "/dashboard.html#video-classes"
       },
 
-      // CLASS 8
-      {
-        id: "c-c8-prep",
-        classKey: "class8",
-        type: "course",
-        title: "৮ম শ্রেণি পূর্ণাঙ্গ বার্ষিক ও বোর্ড প্রস্তুতি কোর্স",
-        subtitle: "গণিত, বিজ্ঞান ও ইংরেজি ফাউন্ডেশন বিল্ডআপ",
-        mentor: "দীপু একাডেমি জুনিয়র টিম",
-        thumbnail: "/images/courses/class5-full-course.jpg",
-        progress: 25,
-        completedLessons: 6,
-        totalLessons: 24,
-        badge: "৮ম শ্রেণি স্পেশাল",
-        badgeColor: "#06B6D4",
-        playerUrl: "/player.html",
-        homeUrl: "/course.html?id=class8-prep"
-      },
-      {
-        id: "free-c8-vid",
-        classKey: "class8",
-        type: "free",
-        title: "অষ্টম শ্রেণি গণিত: জ্যামিতি ও প্যাটার্ন সহজ সমাধান",
-        subtitle: "বোর্ডের সবচেয়ে গুরুত্বপূর্ণ প্রশ্ন সমাধান",
-        mentor: "দীপু একাডেমি",
-        thumbnail: "/images/courses/class5-full-course.jpg",
-        isFree: true,
-        duration: "৩৫ মিনিট",
-        badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
-        badgeColor: "#10B981",
-        playerUrl: "/player.html",
-        homeUrl: "/dashboard.html#video-classes"
-      },
-
-      // CLASS 7 & 6
-      {
-        id: "c-c7-program",
-        classKey: "class7",
-        type: "course",
-        title: "৭ম শ্রেণি সম্পূর্ণ নতুন কারিকুলাম লার্নিং প্রোগ্রাম",
-        subtitle: "মজার গণিত, আবিষ্কারমুখী বিজ্ঞান ও স্পোকেন ইংলিশ",
-        mentor: "দীপু একাডেমি কিডস টিম",
-        thumbnail: "/images/courses/class7-full-course.jpg",
-        progress: 18,
-        completedLessons: 4,
-        totalLessons: 22,
-        badge: "৭ম শ্রেণি",
-        badgeColor: "#EC4899",
-        playerUrl: "/player.html",
-        homeUrl: "/course.html?id=class7-full"
-      },
-      {
-        id: "free-c7-vid",
-        classKey: "class7",
-        type: "free",
-        title: "৭ম শ্রেণি গণিত: ভগ্নাংশের খেলা ও জ্যামিতিক নকশা",
-        subtitle: "নতুন বইয়ের মজার অংক সহজ উপায়ে শেখা",
-        mentor: "দীপু একাডেমি",
-        thumbnail: "/images/courses/class7-full-course.jpg",
-        isFree: true,
-        duration: "২৮ মিনিট",
-        badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
-        badgeColor: "#10B981",
-        playerUrl: "/player.html",
-        homeUrl: "/dashboard.html#video-classes"
-      },
-      {
-        id: "c-c6-program",
-        classKey: "class6",
-        type: "course",
-        title: "৬ষ্ঠ শ্রেণি সম্পূর্ণ নতুন কারিকুলাম লার্নিং প্রোগ্রাম",
-        subtitle: "মাধ্যমিকের ভিত্তি মজবুত করার পরিপূর্ণ গাইড",
-        mentor: "দীপু একাডেমি",
-        thumbnail: "/images/courses/class5-full-course.jpg",
-        progress: 15,
-        completedLessons: 3,
-        totalLessons: 20,
-        badge: "৬ষ্ঠ শ্রেণি",
-        badgeColor: "#3B82F6",
-        playerUrl: "/player.html",
-        homeUrl: "/course.html?id=class6-full"
-      },
-      {
-        id: "free-c6-vid",
-        classKey: "class6",
-        type: "free",
-        title: "৬ষ্ঠ শ্রেণি গণিত: সংখ্যার গল্প ও মজার কুইজ",
-        subtitle: "রোমান সংখ্যা ও প্রাচীন সংখ্যার রহস্য উন্মোচন",
-        mentor: "দীপু একাডেমি",
-        thumbnail: "/images/courses/class5-full-course.jpg",
-        isFree: true,
-        duration: "৩০ মিনিট",
-        badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
-        badgeColor: "#10B981",
-        playerUrl: "/player.html",
-        homeUrl: "/dashboard.html#video-classes"
-      },
-
       // ADMISSION
       {
         id: "c-adm-buet",
@@ -1728,15 +1773,21 @@
     function initProfile() {
       try {
         const stored = JSON.parse(localStorage.getItem('dipu_user_profile') || '{}');
-        if (stored.fullName) {
-          document.getElementById('userNameLabel').textContent = stored.fullName;
-        } else {
-          const authName = localStorage.getItem('da_user_name');
-          if (authName) document.getElementById('userNameLabel').textContent = authName;
-        }
-        if (stored.avatar) {
-          document.getElementById('userAvatarImg').src = stored.avatar;
-        }
+        const phone = localStorage.getItem('dipu_user_phone') || localStorage.getItem('da_user_phone') || '';
+        const name = stored.fullName || localStorage.getItem('da_user_name') || 'শিক্ষার্থী';
+        const avatar = stored.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150';
+
+        const nameEl = document.getElementById('userNameLabel');
+        if (nameEl) nameEl.textContent = name;
+        const avatarEl = document.getElementById('userAvatarImg');
+        if (avatarEl) avatarEl.src = avatar;
+
+        const dName = document.getElementById('drawerUserName');
+        if (dName) dName.textContent = name;
+        const dPhone = document.getElementById('drawerUserPhone');
+        if (dPhone) dPhone.textContent = phone ? `+৮৮${phone}` : 'dipu.academy';
+        const dAvatar = document.getElementById('drawerAvatarImg');
+        if (dAvatar) dAvatar.src = avatar;
 
         const storedTarget = localStorage.getItem('da_user_target') || 'SSC 2026';
         currentClassKey = normalizeKey(storedTarget);
@@ -2044,6 +2095,37 @@
       }
     });
 
+    // Mobile Drawer Handlers
+    function toggleMobileDrawer(forceState) {
+      const drawer = document.getElementById('myCoursesMobileDrawer');
+      const backdrop = document.getElementById('myCoursesMobileBackdrop');
+      if (!drawer || !backdrop) return;
+
+      const shouldOpen = typeof forceState === 'boolean' ? forceState : !drawer.classList.contains('open');
+      if (shouldOpen) {
+        initProfile();
+        backdrop.classList.add('open');
+        drawer.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      } else {
+        backdrop.classList.remove('open');
+        drawer.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function handleDrawerLogout() {
+      if (confirm('আপনি কি নিশ্চিত যে লগআউট করতে চান?')) {
+        localStorage.removeItem('dipu_auth_token');
+        localStorage.removeItem('dipu_user_phone');
+        localStorage.removeItem('dipu_logged_in');
+        localStorage.removeItem('da_user_name');
+        localStorage.removeItem('da_user_phone');
+        localStorage.removeItem('dipu_user_profile');
+        window.location.href = '/login.html';
+      }
+    }
+
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
       initProfile();
@@ -2052,5 +2134,62 @@
       loadEnrolledCoursesFromDB();
     });
   </script>
+
+  <!-- Mobile Drawer Backdrop -->
+  <div class="da-mobile-backdrop" id="myCoursesMobileBackdrop" onclick="toggleMobileDrawer(false)"></div>
+
+  <!-- Mobile Drawer Panel -->
+  <aside class="da-mobile-drawer" id="myCoursesMobileDrawer" aria-label="Mobile Navigation">
+    <div class="da-drawer-header">
+      <div class="da-drawer-user">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150" id="drawerAvatarImg" alt="Profile" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid #0084FF;">
+        <div>
+          <div id="drawerUserName" style="font-weight: 700; font-size: 1rem; color: var(--text-main);">শিক্ষার্থী</div>
+          <div id="drawerUserPhone" style="font-size: 0.8rem; color: var(--text-muted);">+৮৮০...</div>
+        </div>
+      </div>
+      <button type="button" class="da-drawer-close" onclick="toggleMobileDrawer(false)" aria-label="বন্ধ করুন">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <nav class="da-drawer-nav">
+      <a href="/" class="da-drawer-link">
+        <i class="fa-solid fa-house"></i>
+        <span>হোম</span>
+      </a>
+      <a href="/dashboard.html" class="da-drawer-link">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>ড্যাশবোর্ড</span>
+      </a>
+      <a href="/my-courses.html" class="da-drawer-link active">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>আমার কোর্সসমূহ</span>
+      </a>
+      <a href="/course.html" class="da-drawer-link">
+        <i class="fa-solid fa-book-open"></i>
+        <span>সকল কোর্স</span>
+      </a>
+      <a href="/shop.html" class="da-drawer-link">
+        <i class="fa-solid fa-store"></i>
+        <span>বুকশপ</span>
+      </a>
+      <a href="/ai.html" class="da-drawer-link">
+        <i class="fa-solid fa-robot"></i>
+        <span>এআই অ্যাসিস্ট্যান্ট</span>
+      </a>
+      <a href="/profile.html" class="da-drawer-link">
+        <i class="fa-solid fa-user-gear"></i>
+        <span>প্রোফাইল সেটিংস</span>
+      </a>
+    </nav>
+
+    <div class="da-drawer-footer">
+      <button type="button" class="da-drawer-logout-btn" onclick="handleDrawerLogout()">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span>লগআউট করুন</span>
+      </button>
+    </div>
+  </aside>
 </body>
 </html>

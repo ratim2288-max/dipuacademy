@@ -636,29 +636,21 @@ function initProfileFormRealtimeValidation() {
 // 9. Class Categories & Batches Engine (School 5-8, SSC 27 & 28, HSC 26 & 27)
 // ==============================================================================
 const CLASS_CATEGORIES = {
-  school: {
-    label: "স্কুল (৫ম - ৮ম)",
-    batches: [
-      { id: "৫ম শ্রেণি", label: "৫ম শ্রেণি" },
-      { id: "৬ষ্ঠ শ্রেণি", label: "৬ষ্ঠ শ্রেণি" },
-      { id: "৭ম শ্রেণি", label: "৭ম শ্রেণি" },
-      { id: "৮ম শ্রেণি", label: "৮ম শ্রেণি" }
-    ]
-  },
   ssc: {
-    label: "এসএসসি (SSC)",
+    label: "এসএসসি (৯ম-১০ম শ্রেণি)",
     batches: [
+      { id: "৯ম শ্রেণি", label: "৯ম শ্রেণি (নতুন কারিকুলাম)" },
+      { id: "১০ম শ্রেণি / SSC ২০২৬", label: "১০ম শ্রেণি / SSC ২০২৬" },
       { id: "SSC ২০২৭ (ব্যাচ ২৭)", label: "SSC ২০২৭ (ব্যাচ '২৭)" },
-      { id: "SSC ২০২৮ (ব্যাচ ২৮)", label: "SSC ২০২৮ (ব্যাচ '২৮)" },
-      { id: "SSC ২০২৬", label: "SSC ২০২৬" }
+      { id: "SSC ২০২৮ (ব্যাচ ২৮)", label: "SSC ২০২৮ (ব্যাচ '২৮)" }
     ]
   },
   hsc: {
-    label: "এইচএসসি (HSC)",
+    label: "এইচএসসি (একাদশ-দ্বাদশ)",
     batches: [
-      { id: "HSC ২০২৬", label: "HSC ২০২৬ (ব্যাচ '২৬)" },
-      { id: "HSC ২০২৭", label: "HSC ২০২৭ (ব্যাচ '২৭)" },
-      { id: "HSC ২০২৫", label: "HSC ২০২৫" }
+      { id: "একাদশ শ্রেণি (HSC '২৭)", label: "একাদশ শ্রেণি (HSC '২৭)" },
+      { id: "দ্বাদশ শ্রেণি (HSC '২৬)", label: "দ্বাদশ শ্রেণি (HSC '২৬)" },
+      { id: "HSC ২০২৮", label: "HSC ২০২৮" }
     ]
   },
   admission: {

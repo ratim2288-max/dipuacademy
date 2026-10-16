@@ -131,23 +131,34 @@ body {
   gap: 14px;
 }
 
-/* Mobile Hamburger Menu Button */
-.da-menu-btn {
+/* Mobile Menu & Side 3-Dot Button */
+.da-menu-btn,
+.da-3dot-btn {
   display: none;
   background: #F1F5F9;
   border: 1px solid var(--da-border-subtle);
   color: #0F172A;
-  font-size: 18px;
+  font-size: 19px;
   cursor: pointer;
   padding: 8px 12px;
-  border-radius: 10px;
-  transition: all 0.2s;
+  border-radius: 11px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  -webkit-tap-highlight-color: transparent;
 }
 
-.da-menu-btn:hover {
+.da-menu-btn:hover,
+.da-3dot-btn:hover,
+.da-menu-btn:active,
+.da-3dot-btn:active {
   background: #E0F2FE;
   color: var(--da-blue);
   border-color: var(--da-blue);
+  transform: scale(1.05);
 }
 
 /* Brand Logo */
@@ -1368,49 +1379,15 @@ body {
   color: var(--da-blue);
 }
 
-/* Mobile Bottom Navigation Bar */
+/* Mobile Bottom Navigation Bar (Removed as per user specification in favor of side 3-dot menu) */
 .da-bottom-nav {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 64px;
-  background: #FFFFFF;
-  border-top: 1px solid var(--da-border-subtle);
-  z-index: 1500;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-  align-items: center;
-  justify-content: space-around;
-  padding: 0 6px;
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 .da-bottom-nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  color: var(--da-text-muted);
-  text-decoration: none;
-  font-size: 11px;
-  font-weight: 600;
-  flex: 1;
-  height: 100%;
-  cursor: pointer;
-  transition: all 0.2s;
-  background: none;
-  border: none;
-  padding: 0;
-}
-
-.da-bottom-nav-item i {
-  font-size: 18px;
-}
-
-.da-bottom-nav-item.active,
-.da-bottom-nav-item:hover {
-  color: var(--da-blue);
+  display: none !important;
 }
 
 /* ==============================================================================
@@ -1592,8 +1569,9 @@ body {
     height: 64px;
   }
 
-  .da-menu-btn {
-    display: block;
+  .da-menu-btn,
+  .da-3dot-btn {
+    display: inline-flex !important;
   }
 
   .da-brand-tagline {
@@ -1623,7 +1601,7 @@ body {
   }
 
   .da-main-content {
-    padding: 16px 14px 84px;
+    padding: 16px 14px 28px;
     max-height: none;
   }
 
@@ -1722,9 +1700,9 @@ body {
     gap: 10px;
   }
 
-  /* Bottom Navigation Visible on Phone */
+  /* Bottom Navigation Removed as per user specification */
   .da-bottom-nav {
-    display: flex;
+    display: none !important;
   }
 
   .da-footer {

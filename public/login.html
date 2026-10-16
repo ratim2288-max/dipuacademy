@@ -46,11 +46,12 @@ html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 body {
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 24px 20px;
+  justify-content: flex-start;
+  padding: 18px 14px 40px;
   overflow-x: hidden;
   font-family: "Inter", "Hind Siliguri", system-ui, -apple-system, sans-serif;
   color: var(--text);
@@ -284,6 +285,7 @@ body.light-theme .brand-link span {
 .wrap {
   width: 100%;
   max-width: 1020px;
+  margin: auto 0;
   background: #FFFFFF;
   border: 1.5px solid #E2E8F0;
   border-radius: 24px;
@@ -747,32 +749,139 @@ input::placeholder {
   animation: flo 4s -1s ease-in-out infinite;
 }
 
-@media (max-width: 640px) {
-  body { padding: 14px 12px; }
-  .top-nav-bar { margin-bottom: 14px; }
-  .wrap { grid-template-columns: 1fr; padding: 26px 16px; border-radius: 16px; width: 100%; }
-  .stage { display: none; }
-  h1 { font-size: 1.75rem; margin-bottom: 16px; }
-  .form { max-width: 100%; }
-  .box input { padding: 12px 10px; font-size: 0.9rem; }
-  .btn { padding: 12px; font-size: 0.92rem; }
-  .home-btn { padding: 6px 12px; font-size: 0.78rem; }
+.da-login-3dot-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  color: #475569;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  -webkit-tap-highlight-color: transparent;
 }
 
-@media (min-width: 641px) and (max-width: 860px) {
-  body { padding: 20px 16px; }
-  .wrap { grid-template-columns: 1fr; padding: 36px 28px; max-width: 500px; }
-  .stage { display: none; }
-  h1 { font-size: 2.1rem; }
-  .form { max-width: 100%; }
+.da-login-3dot-btn:hover,
+.da-login-3dot-btn:active {
+  color: #0084FF;
+  border-color: var(--g);
+  background: #F0F9FF;
+  transform: scale(1.05);
 }
 
-@media (min-width: 861px) and (max-width: 1040px) {
-  .wrap { grid-template-columns: 1fr 1fr; padding: 36px 28px; gap: 16px; }
-  .stage svg { width: min(100%, 340px); }
-  .rings i:nth-child(1) { width: 360px; height: 360px; }
-  .rings i:nth-child(2) { width: 300px; height: 300px; }
-  .rings i:nth-child(3) { width: 420px; height: 420px; }
+@media (max-width: 768px) {
+  body {
+    padding: 12px 14px 32px;
+    justify-content: flex-start;
+  }
+  .top-nav-bar {
+    margin-bottom: 14px;
+    gap: 8px;
+  }
+  .home-btn {
+    padding: 7px 12px;
+    font-size: 0.8rem;
+    gap: 5px;
+  }
+  .wrap {
+    grid-template-columns: 1fr;
+    padding: 24px 18px 28px;
+    border-radius: 20px;
+    max-width: 440px;
+    margin: 8px auto 20px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+    border: 1px solid #E2E8F0;
+  }
+  .stage {
+    display: none !important;
+  }
+  .form {
+    max-width: 100%;
+    width: 100%;
+  }
+  h1 {
+    font-size: 1.65rem;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  #mainSub {
+    font-size: 0.82rem;
+    margin-bottom: 16px;
+  }
+  .box input {
+    padding: 13px 12px;
+    font-size: 0.95rem;
+  }
+  .btn {
+    padding: 13px;
+    font-size: 0.95rem;
+    border-radius: 12px;
+    min-height: 48px;
+  }
+  .otp {
+    display: flex;
+    gap: 6px;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .otp input {
+    flex: 1;
+    min-width: 0;
+    max-width: 46px;
+    height: 50px;
+    padding: 0;
+    font-size: 1.25rem;
+    border-radius: 10px;
+  }
+  .chip {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 0.78rem;
+    padding: 8px 12px;
+    box-sizing: border-box;
+  }
+  .row {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0 18px;
+  }
+  .row .lk {
+    font-size: 0.78rem;
+  }
+  #phoneBadge {
+    padding: 8px 12px;
+    font-size: 0.84rem;
+  }
+  .note {
+    font-size: 0.72rem;
+    line-height: 1.45;
+  }
+}
+
+@media (max-width: 360px) {
+  body {
+    padding: 10px 10px 24px;
+  }
+  .wrap {
+    padding: 20px 14px;
+  }
+  h1 {
+    font-size: 1.45rem;
+  }
+  .otp input {
+    max-width: 40px;
+    height: 44px;
+    font-size: 1.15rem;
+  }
+  .home-btn-text {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -790,17 +899,52 @@ input::placeholder {
   <a href="/" class="brand-link">
     <img src="/images/dipu-logo.png" alt="Dipu Academy Logo" style="width:40px;height:40px;border-radius:11px;object-fit:cover;box-shadow:0 4px 16px rgba(0,194,255,0.4);border:1.5px solid rgba(0,194,255,0.25);">
     <div style="display:flex;flex-direction:column;line-height:1.15;">
-      <span style="color:#FFFFFF;font-weight:800;font-size:1.15rem;letter-spacing:-0.01em;">Dipu</span>
+      <span style="color:#0D1B36;font-weight:800;font-size:1.15rem;letter-spacing:-0.01em;">Dipu</span>
       <span style="background:linear-gradient(135deg, #0084FF 0%, #00C2FF 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;font-size:1.15rem;letter-spacing:-0.01em;">Academy</span>
     </div>
   </a>
-  <div style="display:flex;align-items:center;gap:12px;">
+  <div style="display:flex;align-items:center;gap:8px;">
     <div class="nav-lang-toggle" id="navLangToggle" role="group" aria-label="Language selector">
       <button type="button" class="lang-option active" data-lang="bn">BN</button>
       <button type="button" class="lang-option" data-lang="en">EN</button>
     </div>
     <a href="/" class="home-btn">
-      <i class="fas fa-arrow-left"></i> হোমে ফিরুন
+      <i class="fas fa-arrow-left"></i> <span class="home-btn-text">হোমে ফিরুন</span>
+    </a>
+    <!-- Side 3-Dot Menu Button -->
+    <button type="button" class="da-login-3dot-btn" id="loginMenuToggle" aria-label="মেনু খুলুন" title="মেনু খুলুন">
+      <i class="fas fa-ellipsis-vertical"></i>
+    </button>
+  </div>
+</div>
+
+<!-- Mobile Quick Navigation Drawer for Login Page -->
+<div id="loginDrawerBackdrop" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.6); z-index:9998; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);"></div>
+<div id="loginSideDrawer" style="display:none; position:fixed; top:0; right:0; bottom:0; width:280px; background:#FFFFFF; z-index:9999; box-shadow:-10px 0 35px rgba(0,0,0,0.15); flex-direction:column; padding:20px 16px; overflow-y:auto; animation:slideInRight 0.25s ease both;">
+  <div style="display:flex; align-items:center; justify-content:space-between; padding-bottom:14px; border-bottom:1px solid #E2E8F0; margin-bottom:16px;">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <img src="/images/dipu-logo.png" alt="Logo" style="width:32px; height:32px; border-radius:8px;">
+      <span style="font-weight:800; font-size:15px; color:#0F172A;">Dipu <span style="color:#0084FF;">Academy</span></span>
+    </div>
+    <button type="button" id="closeLoginDrawer" style="background:none; border:none; font-size:18px; color:#64748B; cursor:pointer; padding:4px;" title="বন্ধ করুন">
+      <i class="fas fa-xmark"></i>
+    </button>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:6px;">
+    <a href="/" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; text-decoration:none; color:#0F172A; font-weight:700; font-size:13.5px; transition:background 0.2s;" onmouseenter="this.style.background='#F0F9FF'" onmouseleave="this.style.background='transparent'">
+      <i class="fas fa-home" style="color:#0084FF; width:20px; text-align:center;"></i> <span>মূল হোম পেজ</span>
+    </a>
+    <a href="/course.html" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; text-decoration:none; color:#0F172A; font-weight:700; font-size:13.5px; transition:background 0.2s;" onmouseenter="this.style.background='#F0F9FF'" onmouseleave="this.style.background='transparent'">
+      <i class="fas fa-graduation-cap" style="color:#10B981; width:20px; text-align:center;"></i> <span>কোর্সসমূহ</span>
+    </a>
+    <a href="/dashboard.html" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; text-decoration:none; color:#0F172A; font-weight:700; font-size:13.5px; transition:background 0.2s;" onmouseenter="this.style.background='#F0F9FF'" onmouseleave="this.style.background='transparent'">
+      <i class="fas fa-gauge-high" style="color:#8B5CF6; width:20px; text-align:center;"></i> <span>ড্যাশবোর্ড</span>
+    </a>
+    <a href="/shop.html" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; text-decoration:none; color:#0F172A; font-weight:700; font-size:13.5px; transition:background 0.2s;" onmouseenter="this.style.background='#F0F9FF'" onmouseleave="this.style.background='transparent'">
+      <i class="fas fa-store" style="color:#F59E0B; width:20px; text-align:center;"></i> <span>বই ও শপ</span>
+    </a>
+    <a href="/ai.html" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; text-decoration:none; color:#0F172A; font-weight:700; font-size:13.5px; transition:background 0.2s;" onmouseenter="this.style.background='#F0F9FF'" onmouseleave="this.style.background='transparent'">
+      <i class="fas fa-robot" style="color:#0284C7; width:20px; text-align:center;"></i> <span>AI শিক্ষক (dipusedo)</span>
     </a>
   </div>
 </div>
@@ -1424,6 +1568,31 @@ document.querySelectorAll('.lang-option').forEach(function(btn) {
     document.querySelectorAll('.lang-option').forEach(function(b) {
       b.classList.toggle('active', b.dataset.lang === l);
     });
+  };
+});
+
+// Mobile Quick Navigation Drawer Toggle
+(function initLoginDrawer() {
+  var toggleBtn = document.getElementById('loginMenuToggle');
+  var drawer = document.getElementById('loginSideDrawer');
+  var backdrop = document.getElementById('loginDrawerBackdrop');
+  var closeBtn = document.getElementById('closeLoginDrawer');
+
+  function openDrawer() {
+    if (drawer) drawer.style.display = 'flex';
+    if (backdrop) backdrop.style.display = 'block';
+  }
+
+  function closeDrawer() {
+    if (drawer) drawer.style.display = 'none';
+    if (backdrop) backdrop.style.display = 'none';
+  }
+
+  if (toggleBtn) toggleBtn.addEventListener('click', openDrawer);
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (backdrop) backdrop.addEventListener('click', closeDrawer);
+})();
+
 // Cloudflare Turnstile Callback
 window.onloadTurnstileCallback = function() {
   if (window.turnstile && document.getElementById('turnstile-container')) {

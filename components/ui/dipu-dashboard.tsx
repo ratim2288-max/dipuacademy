@@ -444,18 +444,35 @@ export const DipuDashboardApp: React.FC = () => {
   const handleProfileSave = (e: React.FormEvent) => {
     e.preventDefault();
     const finalName = editName.trim() || "ratim";
+    const matchedKey = normalizeClassKey(editTarget);
     setUserName(finalName);
     setUserTarget(editTarget);
+    setSelectedClassKey(matchedKey);
     setUserGroup(editGroup);
     try {
       localStorage.setItem("da_user_name", finalName);
       localStorage.setItem("da_user_target", editTarget);
+      localStorage.setItem("da_user_class_key", matchedKey);
       localStorage.setItem("da_user_group", editGroup);
       localStorage.setItem("dipu_theme", editTheme);
       localStorage.setItem("dipu_lang", editLang);
+
+      const rawProfile = localStorage.getItem("dipu_user_profile");
+      if (rawProfile) {
+        try {
+          const profObj = JSON.parse(rawProfile);
+          profObj.fullName = finalName;
+          profObj.classLevel = editTarget;
+          profObj.classLabel = editTarget;
+          localStorage.setItem("dipu_user_profile", JSON.stringify(profObj));
+        } catch (err) {}
+      }
+
+      window.dispatchEvent(new Event("dipu_auth_changed"));
+      window.dispatchEvent(new Event("dipu_class_changed"));
     } catch (err) {}
     setProfileModalOpen(false);
-    showToast("✅ সেটিংস সফলভাবে সংরক্ষিত হয়েছে!");
+    showToast("🎯 প্রোফাইল ও শ্রেণি সফলভাবে পরিবর্তন করা হয়েছে!");
   };
 
   // Class Switch Handler
@@ -763,14 +780,15 @@ export const DipuDashboardApp: React.FC = () => {
       {/* ─── 1. TOPBAR HEADER ─── */}
       <header className="da-topbar">
         <div className="da-topbar-left">
-          {/* Mobile Menu Toggle Button */}
+          {/* Mobile 3-Dot Side Menu Toggle Button */}
           <button
             type="button"
-            className="da-menu-btn"
+            className="da-menu-btn da-3dot-btn"
             onClick={() => setMobileDrawerOpen(true)}
             title="মেনু খুলুন"
+            aria-label="মেনু খুলুন"
           >
-            <i className="fas fa-bars" />
+            <i className="fas fa-ellipsis-vertical" />
           </button>
 
           {/* Official Brand Logo */}
@@ -1060,7 +1078,37 @@ export const DipuDashboardApp: React.FC = () => {
               <span>সেটিংস</span>
             </a>
           </li>
-          <li className="da-nav-item" style={{ marginTop: "4px" }}>
+          <li className="da-nav-item">
+            <a href="/profile.html" onClick={() => setMobileDrawerOpen(false)}>
+              <i className="fas fa-user-gear" style={{ color: "#7C3AED" }} />
+              <span>আমার প্রোফাইল সেটিংস</span>
+            </a>
+          </li>
+          <li className="da-nav-item">
+            <a href="/course.html" onClick={() => setMobileDrawerOpen(false)}>
+              <i className="fas fa-graduation-cap" style={{ color: "#0284C7" }} />
+              <span>সকল কোর্স এক্সপ্লোর</span>
+            </a>
+          </li>
+          <li className="da-nav-item">
+            <a href="/shop.html" onClick={() => setMobileDrawerOpen(false)}>
+              <i className="fas fa-store" style={{ color: "#D97706" }} />
+              <span>বই ও বুকশপ</span>
+            </a>
+          </li>
+          <li className="da-nav-item">
+            <a href="/ai.html" onClick={() => setMobileDrawerOpen(false)}>
+              <i className="fas fa-robot" style={{ color: "#0284C7" }} />
+              <span>AI শিক্ষক (dipusedo)</span>
+            </a>
+          </li>
+          <li className="da-nav-item">
+            <a href="/" onClick={() => setMobileDrawerOpen(false)}>
+              <i className="fas fa-home" style={{ color: "#64748B" }} />
+              <span>মূল হোম পেজ</span>
+            </a>
+          </li>
+          <li className="da-nav-item" style={{ marginTop: "6px" }}>
             <a
               href="#logout"
               onClick={(e) => {
@@ -1074,7 +1122,6 @@ export const DipuDashboardApp: React.FC = () => {
               <span style={{ color: "#EF4444", fontWeight: 700 }}>লগআউট (Log Out)</span>
             </a>
           </li>
-
         </ul>
 
         {/* Promo card in mobile drawer */}
@@ -1376,29 +1423,6 @@ export const DipuDashboardApp: React.FC = () => {
                       </p>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => setClassModalOpen(true)}
-                      style={{
-                        background: "#EFF6FF",
-                        border: "1px solid #BAE6FD",
-                        color: "#0284C7",
-                        padding: "8px 16px",
-                        borderRadius: "10px",
-                        fontWeight: 700,
-                        fontSize: "13px",
-                        cursor: "pointer",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        transition: "all 0.2s ease"
-                      }}
-                      onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 0 15px rgba(2,132,199,0.2)")}
-                      onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
-                    >
-                      <i className="fas fa-arrows-rotate" />
-                      <span>শ্রেণি পরিবর্তন করুন ▾</span>
-                    </button>
                   </div>
 
                   {/* 4 Category Quick Cards Row */}
@@ -1758,27 +1782,6 @@ export const DipuDashboardApp: React.FC = () => {
                   </div>
 
                   <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                    <button
-                      type="button"
-                      onClick={() => setClassModalOpen(true)}
-                      style={{
-                        padding: "8px 16px",
-                        borderRadius: "10px",
-                        background: "#EFF6FF",
-                        border: "1px solid #BAE6FD",
-                        color: "#0284C7",
-                        fontWeight: 700,
-                        fontSize: "12.5px",
-                        cursor: "pointer",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                      }}
-                    >
-                      <i className="fas fa-arrows-rotate" />
-                      <span>শ্রেণি পরিবর্তন করুন ▾</span>
-                    </button>
-
                     <a
                       href="/user/courses"
                       style={{
@@ -1799,56 +1802,6 @@ export const DipuDashboardApp: React.FC = () => {
                       <i className="fas fa-arrow-up-right-from-square" />
                       <span>ফুলস্ক্রিন কোর্স পেজ ↗</span>
                     </a>
-                  </div>
-                </div>
-
-                {/* QUICK CLASS SELECTOR PILLS BAR */}
-                <div style={{ marginTop: "14px", paddingTop: "14px", borderTop: "1px solid #E2E8F0" }}>
-                  <div style={{ fontSize: "11px", fontWeight: 700, color: "#94A3B8", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-                    দ্রুত শ্রেণি পরিবর্তন করুন:
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "8px",
-                      overflowX: "auto",
-                      paddingBottom: "4px",
-                      scrollbarWidth: "none",
-                    }}
-                  >
-                    {CLASS_DEFINITIONS.map((cDef) => {
-                      const isActive = selectedClassKey === cDef.key;
-                      return (
-                        <button
-                          key={cDef.key}
-                          type="button"
-                          onClick={() => handleClassChange(cDef.key)}
-                          style={{
-                            padding: "6px 14px",
-                            borderRadius: "999px",
-                            background: isActive
-                              ? cDef.accentGradient
-                              : "rgba(255, 255, 255, 0.05)",
-                            color: isActive ? "#FFFFFF" : "#CBD5E1",
-                            border: isActive
-                              ? "1px solid rgba(255,255,255,0.4)"
-                              : "1px solid rgba(255, 255, 255, 0.1)",
-                            fontSize: "12px",
-                            fontWeight: isActive ? 800 : 600,
-                            cursor: "pointer",
-                            whiteSpace: "nowrap",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
-                            boxShadow: isActive ? "0 4px 14px rgba(0,0,0,0.4)" : "none",
-                            transition: "all 0.2s ease",
-                          }}
-                        >
-                          <i className={cDef.icon} style={{ fontSize: "11px" }} />
-                          <span>{cDef.shortName}</span>
-                        </button>
-                      );
-                    })}
                   </div>
                 </div>
               </div>
@@ -2940,59 +2893,95 @@ export const DipuDashboardApp: React.FC = () => {
                     </div>
                   </div>
 
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "18px" }}>
-                    <div>
-                      <label style={{ display: "block", fontSize: "12px", color: "#334155", fontWeight: 700, marginBottom: "6px" }}>
-                        টার্গেট ব্যাচ / শ্রেণি
-                      </label>
-                      <select
-                        value={editTarget}
-                        onChange={(e) => setEditTarget(e.target.value)}
-                        style={{
-                          width: "100%",
-                          boxSizing: "border-box",
-                          background: "#FFFFFF",
-                          border: "1.5px solid #CBD5E1",
-                          borderRadius: "10px",
-                          padding: "10px 14px",
-                          color: "#0F172A",
-                          fontSize: "13px",
-                          outline: "none",
-                          fontFamily: "inherit",
-                        }}
-                      >
-                        <option value="SSC 2026">SSC 2026</option>
-                        <option value="HSC 2026">HSC 2026</option>
-                        <option value="HSC 2027">HSC 2027</option>
-                        <option value="BUET Admission">BUET Admission</option>
-                        <option value="Medical Admission">Medical Admission</option>
-                      </select>
+                  {/* Visual Class Switcher inside Profile Edit */}
+                  <div style={{ marginBottom: "22px" }}>
+                    <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", color: "#0F172A", fontWeight: 800, marginBottom: "6px" }}>
+                      <i className="fas fa-arrows-rotate" style={{ color: "#0284C7" }} />
+                      <span>শ্রেণি পরিবর্তন করুন (টার্গেট ব্যাচ / শ্রেণি) *</span>
+                    </label>
+                    <p style={{ fontSize: "12px", color: "#64748B", margin: "0 0 12px 0" }}>
+                      আপনার বর্তমান শ্রেণি পরিবর্তন করুন। পরিবর্তন করলে ড্যাশবোর্ডের কোর্স, বই ও ফ্রি রিসোর্স স্বয়ংক্রিয়ভাবে আপডেট হবে।
+                    </p>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "10px", marginBottom: "14px" }}>
+                      {CLASS_DEFINITIONS.map((cDef) => {
+                        const isSelected = editTarget === cDef.shortName || selectedClassKey === cDef.key;
+                        return (
+                          <div
+                            key={cDef.key}
+                            onClick={() => {
+                              setEditTarget(cDef.shortName);
+                              setSelectedClassKey(cDef.key);
+                            }}
+                            style={{
+                              background: isSelected ? "#F0F9FF" : "#F8FAFC",
+                              border: isSelected ? "2px solid #0284C7" : "1px solid #E2E8F0",
+                              borderRadius: "14px",
+                              padding: "12px 14px",
+                              cursor: "pointer",
+                              transition: "all 0.2s ease",
+                              boxShadow: isSelected ? "0 4px 14px rgba(2, 132, 199, 0.2)" : "none",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "10px",
+                            }}
+                          >
+                            <div
+                              style={{
+                                width: "34px",
+                                height: "34px",
+                                borderRadius: "8px",
+                                background: cDef.accentGradient,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                color: "#FFF",
+                                fontSize: "14px",
+                                flexShrink: 0,
+                              }}
+                            >
+                              <i className={cDef.icon} />
+                            </div>
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                              <div style={{ fontSize: "13px", fontWeight: 700, color: isSelected ? "#0284C7" : "#0F172A", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                                {cDef.shortName}
+                              </div>
+                              <div style={{ fontSize: "11px", color: "#64748B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                                {cDef.gradeBadge}
+                              </div>
+                            </div>
+                            {isSelected && (
+                              <i className="fas fa-check-circle" style={{ color: "#0284C7", fontSize: "15px" }} />
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
-                    <div>
-                      <label style={{ display: "block", fontSize: "12px", color: "#334155", fontWeight: 700, marginBottom: "6px" }}>
-                        শিক্ষা বিভাগ
-                      </label>
-                      <select
-                        value={editGroup}
-                        onChange={(e) => setEditGroup(e.target.value)}
-                        style={{
-                          width: "100%",
-                          boxSizing: "border-box",
-                          background: "#FFFFFF",
-                          border: "1.5px solid #CBD5E1",
-                          borderRadius: "10px",
-                          padding: "10px 14px",
-                          color: "#0F172A",
-                          fontSize: "13px",
-                          outline: "none",
-                          fontFamily: "inherit",
-                        }}
-                      >
-                        <option value="বিজ্ঞান বিভাগ (Science)">বিজ্ঞান বিভাগ (Science)</option>
-                        <option value="ব্যবসায় শিক্ষা (Commerce)">ব্যবসায় শিক্ষা (Commerce)</option>
-                        <option value="মানবিক বিভাগ (Humanities)">মানবিক বিভাগ (Humanities)</option>
-                      </select>
-                    </div>
+                  </div>
+
+                  <div style={{ marginBottom: "18px" }}>
+                    <label style={{ display: "block", fontSize: "12px", color: "#334155", fontWeight: 700, marginBottom: "6px" }}>
+                      শিক্ষা বিভাগ
+                    </label>
+                    <select
+                      value={editGroup}
+                      onChange={(e) => setEditGroup(e.target.value)}
+                      style={{
+                        width: "100%",
+                        boxSizing: "border-box",
+                        background: "#FFFFFF",
+                        border: "1.5px solid #CBD5E1",
+                        borderRadius: "10px",
+                        padding: "10px 14px",
+                        color: "#0F172A",
+                        fontSize: "13px",
+                        outline: "none",
+                        fontFamily: "inherit",
+                      }}
+                    >
+                      <option value="বিজ্ঞান বিভাগ (Science)">বিজ্ঞান বিভাগ (Science)</option>
+                      <option value="ব্যবসায় শিক্ষা (Commerce)">ব্যবসায় শিক্ষা (Commerce)</option>
+                      <option value="মানবিক বিভাগ (Humanities)">মানবিক বিভাগ (Humanities)</option>
+                    </select>
                   </div>
 
                   <button
@@ -3107,112 +3096,7 @@ export const DipuDashboardApp: React.FC = () => {
 
       </div>
 
-      {/* ─── 3. CLASS SELECTION MODAL ─── */}
-      {classModalOpen && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(15, 23, 42, 0.5)",
-            zIndex: 9999,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "20px",
-          }}
-          onClick={() => setClassModalOpen(false)}
-        >
-          <div
-            style={{
-              background: "#FFFFFF",
-              border: "1.5px solid #E2E8F0",
-              borderRadius: "24px",
-              padding: "26px",
-              maxWidth: "640px",
-              width: "100%",
-              maxHeight: "85vh",
-              overflowY: "auto",
-              boxShadow: "0 25px 60px rgba(0,0,0,0.15)",
-              position: "relative",
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-              <div>
-                <h3 className="da-shimmer-headline" style={{ fontSize: "22px", fontWeight: 900, margin: 0 }}>
-                  তোমার শ্রেণি / পাঠ্যক্রম নির্বাচন করো
-                </h3>
-                <p style={{ fontSize: "13px", color: "#64748B", margin: "4px 0 0" }}>
-                  তোমার ক্লাসের স্পেশাল কোর্স, বই, ই-বুক ও ফ্রি রিসোর্স স্বয়ংক্রিয়ভাবে ফিল্টার হবে।
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setClassModalOpen(false)}
-                style={{
-                  background: "#F1F5F9",
-                  border: 0,
-                  color: "#64748B",
-                  width: "36px",
-                  height: "36px",
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "14px",
-                }}
-              >
-                <i className="fas fa-times" />
-              </button>
-            </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "12px" }}>
-              {CLASS_DEFINITIONS.map((cDef) => {
-                const isSelected = selectedClassKey === cDef.key;
-                return (
-                  <div
-                    key={cDef.key}
-                    onClick={() => handleClassChange(cDef.key)}
-                    style={{
-                      background: isSelected ? "#F0F9FF" : "#F8FAFC",
-                      border: isSelected ? "1.5px solid #0284C7" : "1px solid #E2E8F0",
-                      borderRadius: "16px",
-                      padding: "16px",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
-                      boxShadow: isSelected ? "0 4px 14px rgba(2, 132, 199, 0.2)" : "none",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "38px",
-                        height: "38px",
-                        borderRadius: "10px",
-                        background: cDef.accentGradient,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: "#FFF",
-                        fontSize: "16px",
-                        marginBottom: "10px",
-                      }}
-                    >
-                      <i className={cDef.icon} />
-                    </div>
-                    <div style={{ fontSize: "14px", fontWeight: 800, color: isSelected ? "#0284C7" : "#0F172A", marginBottom: "4px" }}>
-                      {cDef.shortName}
-                    </div>
-                    <div style={{ fontSize: "11px", color: "#64748B", lineHeight: 1.35 }}>
-                      {cDef.label}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* ─── 4. FLOATING TOAST NOTIFICATION ─── */}
       {toastMessage && (

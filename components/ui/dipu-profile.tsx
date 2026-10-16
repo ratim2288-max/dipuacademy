@@ -125,6 +125,7 @@ export const DipuProfileApp: React.FC = () => {
 
   // Modals & UI States
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState<boolean>(false);
+  const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState<boolean>(false);
   const [customAvatarInput, setCustomAvatarInput] = useState<string>("");
   const [selectedCertificate, setSelectedCertificate] = useState<CertificateItem | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -220,6 +221,8 @@ export const DipuProfileApp: React.FC = () => {
     try {
       localStorage.setItem("da_user_name", userName);
       localStorage.setItem("da_user_target", userTarget);
+      const matchedKey = userTarget.toLowerCase().includes("28") ? "hsc28" : userTarget.toLowerCase().includes("27") ? "hsc27" : userTarget.toLowerCase().includes("9") ? "class9" : userTarget.toLowerCase().includes("admis") ? "admission" : userTarget.toLowerCase().includes("skill") ? "skill" : "ssc";
+      localStorage.setItem("da_user_class_key", matchedKey);
       localStorage.setItem("da_user_group", userGroup);
       localStorage.setItem("dipu_user_phone", userPhone);
       localStorage.setItem("dipu_user_avatar", userAvatar);
@@ -227,6 +230,7 @@ export const DipuProfileApp: React.FC = () => {
 
       // Dispatch event to update navbar and other listeners across all pages
       window.dispatchEvent(new Event("dipu_auth_changed"));
+      window.dispatchEvent(new Event("dipu_class_changed"));
 
       // Sync with backend API
       fetch("/api/student/track", {
@@ -667,12 +671,54 @@ export const DipuProfileApp: React.FC = () => {
           .dp-grid-4 { grid-template-columns: 1fr 1fr !important; }
           .dp-course-card { flex-direction: column; align-items: flex-start; }
           .dp-course-thumb { width: 100% !important; height: 160px !important; }
+          .dp-desktop-only { display: none !important; }
+          .dp-counters-wrap {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            width: 100% !important;
+            gap: 8px !important;
+          }
+          .dp-counter-box {
+            padding: 10px 8px !important;
+            min-width: 0 !important;
+            width: 100% !important;
+          }
+          .dp-cert-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
+          .dp-cert-box { padding: 22px 16px !important; }
+          .da-brand-tagline { display: none !important; }
+        }
+
+        @keyframes dpSlideInRight {
+          from { transform: translateX(100%); }
+          to { transform: translateX(0); }
+        }
+
+        .dp-drawer-link {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 12px 14px;
+          border-radius: 12px;
+          text-decoration: none;
+          color: #1E293B;
+          font-weight: 700;
+          font-size: 13.5px;
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .dp-drawer-link:hover {
+          background: #F1F5F9;
+          color: #0284C7;
+        }
+        .dp-drawer-link.active {
+          background: #E0F2FE;
+          color: #0284C7;
+          border: 1px solid #BAE6FD;
         }
       `}</style>
 
       {/* ─── TOPBAR ─── */}
-      <header className="da-topbar">
-        <div className="da-topbar-left">
+      <header className="da-topbar" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 14px" }}>
+        <div className="da-topbar-left" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <a href="/dashboard.html" className="da-brand" title="ড্যাশবোর্ডে ফিরে যান">
             <img src="/images/dipu-logo.png" alt="Dipu Academy Logo" className="da-brand-logo-img" />
             <div className="da-brand-text">
@@ -684,9 +730,10 @@ export const DipuProfileApp: React.FC = () => {
           </a>
         </div>
 
-        <div className="da-topbar-actions" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <div className="da-topbar-actions" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <a
             href="/dashboard.html"
+            className="dp-desktop-only"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -706,6 +753,7 @@ export const DipuProfileApp: React.FC = () => {
           </a>
           <a
             href="/course.html"
+            className="dp-desktop-only"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -723,6 +771,8 @@ export const DipuProfileApp: React.FC = () => {
             <i className="fas fa-book-open" style={{ color: "#10B981" }} />
             <span>কোর্সসমূহ</span>
           </a>
+
+          {/* User Avatar */}
           <button
             type="button"
             onClick={() => setIsAvatarModalOpen(true)}
@@ -735,16 +785,44 @@ export const DipuProfileApp: React.FC = () => {
               padding: 0,
               cursor: "pointer",
               background: "none",
+              flexShrink: 0,
             }}
             title="অবতার পরিবর্তন করুন"
           >
             <img src={userAvatar} alt="Profile" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           </button>
+
+          {/* Side 3-Dot Navigation Menu Button */}
+          <button
+            type="button"
+            className="da-menu-btn da-3dot-btn"
+            onClick={() => setIsMobileDrawerOpen(true)}
+            title="মেনু খুলুন"
+            aria-label="মেনু খুলুন"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "38px",
+              height: "38px",
+              borderRadius: "11px",
+              background: "#F1F5F9",
+              border: "1px solid #E2E8F0",
+              color: "#0F172A",
+              cursor: "pointer",
+              fontSize: "19px",
+              flexShrink: 0,
+              padding: 0,
+              transition: "all 0.2s",
+            }}
+          >
+            <i className="fas fa-ellipsis-vertical" />
+          </button>
         </div>
       </header>
 
       {/* ─── MAIN PROFILE CONTENT ─── */}
-      <main style={{ maxWidth: "1080px", margin: "0 auto", padding: "24px 16px 100px", width: "100%" }}>
+      <main style={{ maxWidth: "1080px", margin: "0 auto", padding: "20px 14px 40px", width: "100%" }}>
         {/* Breadcrumb Navigation */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" }}>
           <div style={{ fontSize: "13.5px", color: "#64748B", display: "flex", alignItems: "center", gap: "8px" }}>
@@ -928,8 +1006,9 @@ export const DipuProfileApp: React.FC = () => {
           </div>
 
           {/* Quick Counter Badges */}
-          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+          <div className="dp-counters-wrap" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
             <div
+              className="dp-counter-box"
               style={{
                 background: "#F8FAFC",
                 border: "1px solid #E2E8F0",
@@ -943,6 +1022,7 @@ export const DipuProfileApp: React.FC = () => {
               <div style={{ fontSize: "11px", color: "#64748B", marginTop: "2px" }}>মোট কোর্স</div>
             </div>
             <div
+              className="dp-counter-box"
               style={{
                 background: "#F8FAFC",
                 border: "1px solid #E2E8F0",
@@ -956,6 +1036,7 @@ export const DipuProfileApp: React.FC = () => {
               <div style={{ fontSize: "11px", color: "#64748B", marginTop: "2px" }}>লার্নিং স্ট্রিক</div>
             </div>
             <div
+              className="dp-counter-box"
               style={{
                 background: "#F8FAFC",
                 border: "1px solid #E2E8F0",
@@ -969,6 +1050,7 @@ export const DipuProfileApp: React.FC = () => {
               <div style={{ fontSize: "11px", color: "#64748B", marginTop: "2px" }}>EduCoins</div>
             </div>
             <div
+              className="dp-counter-box"
               style={{
                 background: "#F8FAFC",
                 border: "1px solid #E2E8F0",
@@ -1381,36 +1463,87 @@ export const DipuProfileApp: React.FC = () => {
             </div>
 
             <form onSubmit={handleAcademicSubmit}>
-              {/* Row 1: Class Batch & Group */}
-              <div className="dp-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "16px" }}>
-                <div>
-                  <label className="dp-label">বর্তমান শ্রেণি / ব্যাচ *</label>
-                  <select
-                    className="dp-input-field"
-                    value={userTarget}
-                    onChange={(e) => setUserTarget(e.target.value)}
-                    required
-                  >
-                    <option value="HSC 2026">HSC 2026 (দ্বাদশ শ্রেণি)</option>
-                    <option value="HSC 2027">HSC 2027 (একাদশ শ্রেণি)</option>
-                    <option value="SSC 2026">SSC 2026 (১০ম শ্রেণি)</option>
-                    <option value="SSC 2027">SSC 2027 (৯ম শ্রেণি)</option>
-                    <option value="Class 8">৮ম শ্রেণি (Junior Batch)</option>
-                    <option value="Admission Prep">বিশ্ববিদ্যালয় ভর্তি প্রস্তুতি (BUET/Medical/DU)</option>
-                  </select>
+              {/* Visual Class Switcher inside Profile Edit */}
+              <div style={{ marginBottom: "22px" }}>
+                <label className="dp-label" style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13.5px", fontWeight: 800 }}>
+                  <i className="fas fa-arrows-rotate" style={{ color: "#0284C7" }} />
+                  <span>শ্রেণি পরিবর্তন করুন (টার্গেট ব্যাচ / শ্রেণি) *</span>
+                </label>
+                <p style={{ fontSize: "12px", color: "#64748B", margin: "2px 0 12px 0" }}>
+                  আপনার বর্তমান শ্রেণি বা ব্যাচ নির্বাচন করুন। নির্বাচন অনুযায়ী আপনার স্টাডি ম্যাটেরিয়াল ফিল্টার হবে।
+                </p>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "10px" }}>
+                  {[
+                    { key: "ssc", shortName: "SSC 2026", badge: "SSC / ১০ম", icon: "fas fa-graduation-cap", gradient: "linear-gradient(135deg, #10B981 0%, #059669 100%)" },
+                    { key: "hsc27", shortName: "HSC 2027", badge: "HSC '27", icon: "fas fa-atom", gradient: "linear-gradient(135deg, #0084FF 0%, #00C2FF 100%)" },
+                    { key: "hsc28", shortName: "HSC 2028", badge: "HSC '28", icon: "fas fa-microscope", gradient: "linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%)" },
+                    { key: "class9", shortName: "Class 9", badge: "৯ম শ্রেণি", icon: "fas fa-book-bookmark", gradient: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)" },
+                    { key: "admission", shortName: "Admission", badge: "এডমিশন", icon: "fas fa-university", gradient: "linear-gradient(135deg, #EF4444 0%, #DC2626 100%)" },
+                    { key: "skill", shortName: "Skill", badge: "স্কিল", icon: "fas fa-laptop-code", gradient: "linear-gradient(135deg, #14B8A6 0%, #0D9488 100%)" },
+                  ].map((c) => {
+                    const isSelected = userTarget.toLowerCase().includes(c.shortName.toLowerCase()) || userTarget.toLowerCase().includes(c.key);
+                    return (
+                      <div
+                        key={c.key}
+                        onClick={() => setUserTarget(c.shortName)}
+                        style={{
+                          background: isSelected ? "#F0F9FF" : "#F8FAFC",
+                          border: isSelected ? "2px solid #0284C7" : "1px solid #E2E8F0",
+                          borderRadius: "14px",
+                          padding: "12px 14px",
+                          cursor: "pointer",
+                          transition: "all 0.2s ease",
+                          boxShadow: isSelected ? "0 4px 14px rgba(2, 132, 199, 0.2)" : "none",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: "34px",
+                            height: "34px",
+                            borderRadius: "8px",
+                            background: c.gradient,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            color: "#FFF",
+                            fontSize: "14px",
+                            flexShrink: 0,
+                          }}
+                        >
+                          <i className={c.icon} />
+                        </div>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ fontSize: "13px", fontWeight: 700, color: isSelected ? "#0284C7" : "#0F172A", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                            {c.shortName}
+                          </div>
+                          <div style={{ fontSize: "11px", color: "#64748B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                            {c.badge}
+                          </div>
+                        </div>
+                        {isSelected && (
+                          <i className="fas fa-check-circle" style={{ color: "#0284C7", fontSize: "15px" }} />
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
-                <div>
-                  <label className="dp-label">গ্রুপ / বিভাগ</label>
-                  <select
-                    className="dp-input-field"
-                    value={userGroup}
-                    onChange={(e) => setUserGroup(e.target.value)}
-                  >
-                    <option value="বিজ্ঞান বিভাগ (Science)">বিজ্ঞান বিভাগ (Science)</option>
-                    <option value="ব্যবসায় শিক্ষা (Commerce)">ব্যবসায় শিক্ষা (Commerce)</option>
-                    <option value="মানবিক বিভাগ (Humanities)">মানবিক বিভাগ (Humanities)</option>
-                  </select>
-                </div>
+              </div>
+
+              {/* Row 1: Group / Department */}
+              <div style={{ marginBottom: "16px" }}>
+                <label className="dp-label">গ্রুপ / বিভাগ</label>
+                <select
+                  className="dp-input-field"
+                  value={userGroup}
+                  onChange={(e) => setUserGroup(e.target.value)}
+                >
+                  <option value="বিজ্ঞান বিভাগ (Science)">বিজ্ঞান বিভাগ (Science)</option>
+                  <option value="ব্যবসায় শিক্ষা (Commerce)">ব্যবসায় শিক্ষা (Commerce)</option>
+                  <option value="মানবিক বিভাগ (Humanities)">মানবিক বিভাগ (Humanities)</option>
+                </select>
               </div>
 
               {/* Row 2: Institution & Class Roll */}
@@ -2457,14 +2590,15 @@ export const DipuProfileApp: React.FC = () => {
             </p>
 
             {/* Presets Grid */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "20px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px", marginBottom: "20px" }}>
               {PRESET_AVATARS.map((url, idx) => (
                 <div
                   key={idx}
                   onClick={() => handlePickAvatar(url)}
                   style={{
-                    width: "74px",
-                    height: "74px",
+                    width: "100%",
+                    maxWidth: "68px",
+                    aspectRatio: "1/1",
                     borderRadius: "50%",
                     overflow: "hidden",
                     cursor: "pointer",
@@ -2531,21 +2665,24 @@ export const DipuProfileApp: React.FC = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: "20px",
+            padding: "14px",
           }}
           onClick={() => setSelectedCertificate(null)}
         >
           <div
+            className="dp-cert-box"
             style={{
               background: "#FFFFFF",
               border: "3px solid #0284C7",
               borderRadius: "20px",
-              padding: "36px",
+              padding: "32px 24px",
               maxWidth: "680px",
               width: "100%",
               boxShadow: "0 25px 70px rgba(0, 0, 0, 0.25), 0 0 35px rgba(2, 132, 199, 0.15)",
               textAlign: "center",
               position: "relative",
+              maxHeight: "92vh",
+              overflowY: "auto",
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -2554,8 +2691,8 @@ export const DipuProfileApp: React.FC = () => {
               onClick={() => setSelectedCertificate(null)}
               style={{
                 position: "absolute",
-                top: "16px",
-                right: "16px",
+                top: "14px",
+                right: "14px",
                 background: "none",
                 border: "none",
                 color: "#64748B",
@@ -2587,16 +2724,17 @@ export const DipuProfileApp: React.FC = () => {
               এই সনদপত্রটি সগৌরবে প্রদান করা হলো:
             </p>
 
-            <h2 style={{ fontSize: "28px", fontWeight: 900, color: "#0F172A", margin: "0 0 12px 0", borderBottom: "1px solid rgba(2, 132, 199, 0.25)", paddingBottom: "10px", display: "inline-block" }}>
+            <h2 style={{ fontSize: "26px", fontWeight: 900, color: "#0F172A", margin: "0 0 12px 0", borderBottom: "1px solid rgba(2, 132, 199, 0.25)", paddingBottom: "10px", display: "inline-block" }}>
               {userName}
             </h2>
 
-            <p style={{ fontSize: "14px", color: "#334155", lineHeight: 1.6, maxWidth: "520px", margin: "0 auto 20px" }}>
+            <p style={{ fontSize: "13.5px", color: "#334155", lineHeight: 1.6, maxWidth: "520px", margin: "0 auto 20px" }}>
               সফলভাবে <strong>{selectedCertificate.courseName}</strong> কোর্স এবং ফাইনাল মূল্যায়নে অংশগ্রহণ করে অসাধারণ কৃতিত্বের সাথে <strong>{selectedCertificate.grade} ({selectedCertificate.score})</strong> অর্জন করার স্বীকৃতিস্বরূপ।
             </p>
 
             {/* Details Footer */}
             <div
+              className="dp-cert-grid"
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr 1fr",
@@ -2659,25 +2797,119 @@ export const DipuProfileApp: React.FC = () => {
         </div>
       )}
 
-      {/* ─── MOBILE BOTTOM NAV BAR ─── */}
-      <nav className="da-bottom-nav">
-        <a href="/dashboard.html" className="da-bottom-nav-item">
-          <i className="fas fa-house" />
-          <span>হোম</span>
-        </a>
-        <a href="/course.html" className="da-bottom-nav-item">
-          <i className="fas fa-book-open" />
-          <span>কোর্স</span>
-        </a>
-        <a href="/player.html" className="da-bottom-nav-item">
-          <i className="fas fa-circle-play" />
-          <span>ক্লাস</span>
-        </a>
-        <a href="/profile.html" className="da-bottom-nav-item active">
-          <i className="fas fa-user-graduate" />
-          <span>প্রোফাইল</span>
-        </a>
-      </nav>
+      {/* ─── MOBILE SIDE DRAWER (3-Dot Menu) ─── */}
+      {isMobileDrawerOpen && (
+        <div style={{ position: "fixed", inset: 0, zIndex: 99999 }}>
+          {/* Backdrop */}
+          <div
+            onClick={() => setIsMobileDrawerOpen(false)}
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "rgba(15, 23, 42, 0.6)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+              animation: "fadeIn 0.2s ease both",
+            }}
+          />
+          {/* Slide-over Drawer from Right */}
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              bottom: 0,
+              width: "100%",
+              maxWidth: "320px",
+              background: "#FFFFFF",
+              boxShadow: "-10px 0 35px rgba(0, 0, 0, 0.15)",
+              display: "flex",
+              flexDirection: "column",
+              padding: "20px 18px",
+              overflowY: "auto",
+              animation: "dpSlideInRight 0.28s cubic-bezier(0.16, 1, 0.3, 1) both",
+              zIndex: 2,
+            }}
+          >
+            {/* Drawer Header with User Profile Summary & Close Button */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingBottom: "16px", borderBottom: "1px solid #E2E8F0", marginBottom: "16px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <img src={userAvatar} alt={userName} style={{ width: "42px", height: "42px", borderRadius: "50%", objectFit: "cover", border: "2px solid #0284C7" }} />
+                <div>
+                  <div style={{ fontWeight: 800, fontSize: "15px", color: "#0F172A" }}>{userName}</div>
+                  <div style={{ fontSize: "11px", color: "#64748B" }}>{userTarget}</div>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsMobileDrawerOpen(false)}
+                style={{ background: "#F1F5F9", border: "none", width: "32px", height: "32px", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", color: "#64748B", fontSize: "16px", cursor: "pointer" }}
+                title="বন্ধ করুন"
+              >
+                <i className="fas fa-xmark" />
+              </button>
+            </div>
+
+            {/* Navigation Links */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "6px", flex: 1 }}>
+              <a href="/dashboard.html" className="dp-drawer-link">
+                <i className="fas fa-gauge-high" style={{ color: "#0284C7" }} />
+                <span>আমার ড্যাশবোর্ড</span>
+              </a>
+              <a href="/my-courses.html" className="dp-drawer-link">
+                <i className="fas fa-book-open" style={{ color: "#16A34A" }} />
+                <span>আমার কোর্সসমূহ</span>
+              </a>
+              <a href="/course.html" className="dp-drawer-link">
+                <i className="fas fa-graduation-cap" style={{ color: "#2563EB" }} />
+                <span>সকল কোর্স এক্সপ্লোর</span>
+              </a>
+              <a href="/profile.html" className="dp-drawer-link active">
+                <i className="fas fa-user-gear" style={{ color: "#7C3AED" }} />
+                <span>প্রোফাইল সেটিংস</span>
+              </a>
+              <a href="/shop.html" className="dp-drawer-link">
+                <i className="fas fa-store" style={{ color: "#D97706" }} />
+                <span>বই ও শপ</span>
+              </a>
+              <a href="/ai.html" className="dp-drawer-link">
+                <i className="fas fa-robot" style={{ color: "#0284C7" }} />
+                <span>AI শিক্ষক (dipusedo)</span>
+              </a>
+              <a href="/" className="dp-drawer-link">
+                <i className="fas fa-home" style={{ color: "#64748B" }} />
+                <span>হোম পেজ</span>
+              </a>
+            </div>
+
+            {/* Bottom Action: Logout */}
+            <div style={{ paddingTop: "16px", borderTop: "1px solid #E2E8F0", marginTop: "auto" }}>
+              <button
+                type="button"
+                onClick={handleLogout}
+                style={{
+                  width: "100%",
+                  padding: "11px",
+                  borderRadius: "12px",
+                  background: "#FEF2F2",
+                  border: "1px solid #FECACA",
+                  color: "#DC2626",
+                  fontWeight: 700,
+                  fontSize: "13.5px",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
+                }}
+              >
+                <i className="fas fa-right-from-bracket" />
+                <span>লগআউট করুন</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ─── TOAST NOTIFICATION ─── */}
       {toastMessage && (

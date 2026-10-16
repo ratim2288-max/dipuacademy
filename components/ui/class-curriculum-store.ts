@@ -14,9 +14,6 @@ export type ClassCategoryKey =
   | "hsc27"
   | "hsc28"
   | "class9"
-  | "class8"
-  | "class7"
-  | "class6"
   | "admission"
   | "skill";
 
@@ -107,36 +104,6 @@ export const CLASS_DEFINITIONS: ClassDefinition[] = [
     description: "নতুন শিক্ষাক্রমের বিস্তারিত কনসেপ্ট, গণিত, বিজ্ঞান ও মূল্যায়ন প্রস্তুতি",
   },
   {
-    key: "class8",
-    label: "অষ্টম শ্রেণি",
-    shortName: "Class 8",
-    gradeBadge: "৮ম শ্রেণি",
-    color: "#06B6D4",
-    accentGradient: "linear-gradient(135deg, #06B6D4 0%, #0891B2 100%)",
-    icon: "fas fa-shapes",
-    description: "অষ্টম শ্রেণির বার্ষিক পরীক্ষা, প্যাটার্ন ও গণিত-বিজ্ঞান প্রস্তুতি",
-  },
-  {
-    key: "class7",
-    label: "৭ম শ্রেণি",
-    shortName: "Class 7",
-    gradeBadge: "৭ম শ্রেণি",
-    color: "#EC4899",
-    accentGradient: "linear-gradient(135deg, #EC4899 0%, #DB2777 100%)",
-    icon: "fas fa-puzzle-piece",
-    description: "সপ্তম শ্রেণির এক্টিভিটি ও হ্যান্ডস-অন প্র্যাকটিস ভিত্তিক শিক্ষা",
-  },
-  {
-    key: "class6",
-    label: "৬ষ্ঠ শ্রেণি",
-    shortName: "Class 6",
-    gradeBadge: "৬ষ্ঠ শ্রেণি",
-    color: "#3B82F6",
-    accentGradient: "linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)",
-    icon: "fas fa-seedling",
-    description: "প্রাথমিক পর্যায় থেকে নতুন মাধ্যমিক শিক্ষাক্রমে প্রবেশের আত্মবিশ্বাস",
-  },
-  {
     key: "admission",
     label: "ভার্সিটি ও ইঞ্জিনিয়ারিং এডমিশন",
     shortName: "Admission",
@@ -167,9 +134,6 @@ export function normalizeClassKey(input: string | null | undefined): ClassCatego
   if (s.includes("hsc") || s.includes("এইচএসসি")) return "hsc27";
   if (s.includes("10") || s.includes("১০") || s.includes("ssc") || s.includes("এসএসসি")) return "ssc";
   if (s.includes("9") || s.includes("৯")) return "class9";
-  if (s.includes("8") || s.includes("৮")) return "class8";
-  if (s.includes("7") || s.includes("৭")) return "class7";
-  if (s.includes("6") || s.includes("৬")) return "class6";
   if (s.includes("admis") || s.includes("ভর্তি") || s.includes("এডমিশন")) return "admission";
   if (s.includes("skill") || s.includes("গ্রাফিক") || s.includes("স্কিল")) return "skill";
   return "ssc";

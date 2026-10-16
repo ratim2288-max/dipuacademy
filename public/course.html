@@ -1730,7 +1730,7 @@
             <span>Dipu Academy</span>
           </div>
           <p class="footer-desc">
-            বাংলাদেশের অগ্রণী ডিজিটাল লার্নিং প্ল্যাটফর্ম। ৬ষ্ঠ থেকে দ্বাদশ ও এডমিশন শিক্ষার্থীদের জন্য উন্নতমানের শিক্ষা নিশ্চিত করাই আমাদের অঙ্গীকার।
+            বাংলাদেশের অগ্রণী ডিজিটাল লার্নিং প্ল্যাটফর্ম। ৯ম-১০ম (SSC), একাদশ-দ্বাদশ (HSC) ও এডমিশন শিক্ষার্থীদের জন্য উন্নতমানের শিক্ষা নিশ্চিত করাই আমাদের অঙ্গীকার।
           </p>
 
           <div class="app-download-badges">
@@ -1823,30 +1823,7 @@
           </ul>
         </div>
 
-        <!-- Col 3: ক্যারিয়ার -->
-        <div>
-          <h4 class="footer-col-title">ক্যারিয়ার</h4>
-          <ul class="footer-links-list">
-            <li><a href="#" class="footer-link-item">উন্মুক্ত পদসমূহ (Hiring)</a></li>
-            <li><a href="#" class="footer-link-item">শিক্ষক নিয়োগ বিজ্ঞপ্তি</a></li>
-            <li><a href="#" class="footer-link-item">আমাদের ওয়ার্ক কালচার</a></li>
-            <li><a href="#" class="footer-link-item">ইন্টার্নশিপ প্রোগ্রাম</a></li>
-          </ul>
-        </div>
-
-        <!-- Col 4: স্কিলস ও প্রোগ্রাম -->
-        <div>
-          <h4 class="footer-col-title">কোর্স ও প্রোগ্রাম</h4>
-          <ul class="footer-links-list">
-            <li><a href="/course?slug=hsc-27-full-prep" class="footer-link-item">এইচএসসি ২০২৬/২৭</a></li>
-            <li><a href="/course?slug=ssc-28-full-prep" class="footer-link-item">এসএসসি ২০২৬/২৭</a></li>
-            <li><a href="/course?slug=class-5-full-course" class="footer-link-item">৫ম থেকে ৮ম শ্রেণি</a></li>
-            <li><a href="/notes" class="footer-link-item">স্মার্ট নোটস লাইব্রেরি</a></li>
-            <li><a href="/book" class="footer-link-item">বুকশপ ও গাইড</a></li>
-          </ul>
-        </div>
-
-        <!-- Col 5: টিচার পোর্টাল ও হেল্পলাইন -->
+        <!-- Col 3: যোগাযোগ ও হেল্প -->
         <div>
           <h4 class="footer-col-title">যোগাযোগ ও হেল্প</h4>
           <ul class="footer-links-list">
@@ -2478,7 +2455,7 @@
         }
       }
 
-      if (!slug) slug = "class-5-full-course"; // default to the course user asked about
+      if (!slug) slug = "hsc-27-full-prep";
 
       // Automatic Redirect: If student already purchased this course, take them to Course Home
       try {
@@ -2554,13 +2531,13 @@
       } catch (err) {}
 
       if (!currentCourse) {
-        currentCourse = AUTHENTIC_COURSES["class-5-full-course"];
+        currentCourse = AUTHENTIC_COURSES["hsc-27-full-prep"] || Object.values(AUTHENTIC_COURSES)[0];
         renderCourseData(currentCourse);
       }
     }
 
     function renderCourseData(c) {
-      const title = c.title?.bn || c.title?.en || (typeof c.title === 'string' ? c.title : "৫ম শ্রেণীর পূর্ণাঙ্গ কোর্স");
+      const title = c.title?.bn || c.title?.en || (typeof c.title === 'string' ? c.title : "HSC ও SSC পূর্ণাঙ্গ কোর্স");
       const desc = c.description?.bn || c.description?.en || (typeof c.description === 'string' ? c.description : "");
       const price = Number(c.price) || 850;
       const discountPrice = Number(c.discountPrice) || 419;

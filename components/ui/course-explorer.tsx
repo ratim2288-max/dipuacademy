@@ -18,6 +18,32 @@ function injectCourseKeyframes() {
       0% { opacity: 0; transform: translateY(10px); }
       100% { opacity: 1; transform: translateY(0); }
     }
+    .da-course-explorer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    @media (max-width: 768px) {
+      .da-course-explorer-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+      }
+      .da-course-explorer-grid .da-course-card {
+        border-radius: 14px !important;
+      }
+      .da-course-explorer-grid .da-course-card h3 {
+        font-size: 0.84rem !important;
+        margin: 0 0 6px !important;
+        min-height: 38px !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+      }
+      .da-course-explorer-grid .da-course-card > div:last-child {
+        padding: 10px 8px 12px !important;
+      }
+    }
   `;
   document.head.appendChild(style);
 }
@@ -124,62 +150,61 @@ export const ALL_COURSES: CourseItem[] = [
     filterStyle: { filter: "hue-rotate(45deg)" },
   },
   {
-    id: "class-8",
-    slug: "class-8-full-course",
-    title: "৮ম শ্রেণীর পূর্ণাঙ্গ প্রস্তুতি ও জুনিয়র বৃত্তি কোর্স",
-    subject: "জুনিয়র বৃত্তি ও গণিত-বিজ্ঞান একাডেমি",
-    mentor: "মেধা অন্বেষণ টিম",
-    studentsCount: "১,০৫০ জন শিক্ষার্থী",
-    priceCurrent: "৳৮৯৯",
-    priceOriginal: "৳১,৬০০",
-    tag: "স্কুল (৮ম শ্রেণি)",
-    tagBg: "#8B5CF6",
-    categories: ["school", "class-8"],
+    id: "ssc-science-9",
+    slug: "class-9-full-course",
+    title: "৯ম শ্রেণি বিজ্ঞান পূর্ণাঙ্গ কোর্স (নতুন কারিকুলাম)",
+    subject: "বিজ্ঞান বিভাগ • গণিত, বিজ্ঞান ও মূল্যায়ন",
+    mentor: "দীপু স্যার ও এক্সপার্ট টিম",
+    studentsCount: "১,৩৫০ জন শিক্ষার্থী",
+    priceCurrent: "৳২,৯৯৯",
+    priceOriginal: "৳৪,৫০০",
+    tag: "৯ম শ্রেণি (SSC)",
+    tagBg: "#F59E0B",
+    categories: ["ssc", "class-9", "ssc-28"],
     thumbnail: "/images/courses/class7-full-course.jpg",
+  },
+  {
+    id: "ssc-math-cq",
+    slug: "ssc-math-mastery",
+    title: "১০ম শ্রেণি ও SSC সাধারণ ও উচ্চতর গণিত মাস্টারক্লাস",
+    subject: "বোর্ড প্রশ্ন সমাধান ও টেস্ট পেপার সলভিং হ্যাকস",
+    mentor: "দীপু স্যার (BUET)",
+    studentsCount: "১,৮২০ জন শিক্ষার্থী",
+    priceCurrent: "৳৩,২০০",
+    priceOriginal: "৳৪,৮০০",
+    tag: "১০ম শ্রেণি / SSC '২৭",
+    tagBg: "#10B981",
+    categories: ["ssc", "ssc-27"],
+    thumbnail: "/images/courses/class10-business-studies.jpg",
+  },
+  {
+    id: "hsc-ict-full",
+    slug: "hsc-ict-full-prep",
+    title: "HSC আইসিটি ও বিজ্ঞান ডিজিটাল প্রোগ্রাম",
+    subject: "এইচএসসি সকল বোর্ডের সম্পূর্ণ আইসিটি ও প্র্যাকটিক্যাল",
+    mentor: "দীপু একাডেমি আইসিটি টিম",
+    studentsCount: "১,৪৬০ জন শিক্ষার্থী",
+    priceCurrent: "৳২,৫০০",
+    priceOriginal: "৳৩,৮০০",
+    tag: "HSC ICT",
+    tagBg: "#8B5CF6",
+    categories: ["hsc", "hsc-27", "hsc-28"],
+    thumbnail: "/images/courses/hsc-27-prep.jpg",
     filterStyle: { filter: "hue-rotate(90deg)" },
   },
   {
-    id: "class-7",
-    slug: "class-7-full-course",
-    title: "৭ম শ্রেণীর পূর্ণাঙ্গ কোর্স",
-    subject: "স্কুল সাধারণ গণিত ও বিজ্ঞান",
-    mentor: "দীপু এডু একাডেমি",
-    studentsCount: "১,১৪০ জন শিক্ষার্থী",
-    priceCurrent: "৳৭৯৯",
-    priceOriginal: "৳১,৫০০",
-    tag: "স্কুল (৭ম শ্রেণি)",
-    tagBg: "#10B981",
-    categories: ["school", "class-7"],
-    thumbnail: "/images/courses/class7-full-course.jpg",
-  },
-  {
-    id: "class-6",
-    slug: "class-6-full-course",
-    title: "৬ষ্ঠ শ্রেণীর পূর্ণাঙ্গ প্রস্তুতি কোর্স",
-    subject: "নতুন শিক্ষাক্রম • গণিত ও বিজ্ঞান",
-    mentor: "দীপু এডু স্কুল",
-    studentsCount: "৭৬০ জন শিক্ষার্থী",
-    priceCurrent: "৳৬৯৯",
-    priceOriginal: "৳১,২০০",
-    tag: "স্কুল (৬ষ্ঠ শ্রেণি)",
-    tagBg: "#0D9488",
-    categories: ["school", "class-6"],
-    thumbnail: "/images/courses/class7-full-course.jpg",
-    filterStyle: { filter: "hue-rotate(180deg)" },
-  },
-  {
-    id: "class-5",
-    slug: "class-5-full-course",
-    title: "৫ম শ্রেণীর পূর্ণাঙ্গ কোর্স",
-    subject: "প্রাথমিক গণিত, বিজ্ঞান ও ইংরেজি",
-    mentor: "দীপু এডু প্রাইমারি",
-    studentsCount: "৯২০ জন শিক্ষার্থী",
-    priceCurrent: "৳৪১৯",
-    priceOriginal: "৳৮৫০",
-    tag: "স্কুল (৫ম শ্রেণি)",
+    id: "hsc-chem-master",
+    slug: "hsc-chemistry-mastery",
+    title: "HSC রসায়ন ১ম ও ২য় পত্র প্রিমিয়াম মাস্টারকোর্স",
+    subject: "গুণগত রসায়ন, জৈব যৌগ ও রাসায়নিক পরিবর্তন",
+    mentor: "দীপু আহমেদ (BUET)",
+    studentsCount: "১,২৯০ জন শিক্ষার্থী",
+    priceCurrent: "৳৪,২০০",
+    priceOriginal: "৳৫,৮০০",
+    tag: "HSC '২৭/'২৮",
     tagBg: "#0284C7",
-    categories: ["school", "class-5"],
-    thumbnail: "/images/courses/class5-full-course.jpg",
+    categories: ["hsc", "hsc-27", "hsc-28"],
+    thumbnail: "/images/courses/hsc-28-prep.jpg",
   },
 ];
 
@@ -191,18 +216,20 @@ export interface CategoryFilter {
 
 export const CATEGORY_FILTERS_BN: CategoryFilter[] = [
   { id: "all", label: "সকল কোর্স" },
-  { id: "school", label: "স্কুল (৬ষ্ঠ - ৮ম)" },
+  { id: "ssc", label: "৯ম-১০ম শ্রেণি (SSC)" },
   { id: "ssc-27", label: "SSC '২৭" },
   { id: "ssc-28", label: "SSC '২৮" },
+  { id: "hsc", label: "একাদশ-দ্বাদশ (HSC)" },
   { id: "hsc-27", label: "HSC '২৭" },
   { id: "hsc-28", label: "HSC '২৮" },
 ];
 
 export const CATEGORY_FILTERS_EN: CategoryFilter[] = [
   { id: "all", label: "All Courses" },
-  { id: "school", label: "School (6th - 8th)" },
+  { id: "ssc", label: "SSC (Class 9-10)" },
   { id: "ssc-27", label: "SSC '27" },
   { id: "ssc-28", label: "SSC '28" },
+  { id: "hsc", label: "HSC (Class 11-12)" },
   { id: "hsc-27", label: "HSC '27" },
   { id: "hsc-28", label: "HSC '28" },
 ];
@@ -261,11 +288,9 @@ export const CourseExplorer: React.FC = () => {
       if (activeFilter === "all") {
         matchCat = true;
       } else if (activeFilter === "ssc") {
-        matchCat = course.categories.some((c) => c.startsWith("ssc"));
+        matchCat = course.categories.some((c) => c === "ssc" || c.startsWith("ssc") || c.startsWith("class-9") || c.startsWith("class-10"));
       } else if (activeFilter === "hsc") {
-        matchCat = course.categories.some((c) => c.startsWith("hsc"));
-      } else if (activeFilter === "school") {
-        matchCat = course.categories.some((c) => c === "school" || c.startsWith("class-"));
+        matchCat = course.categories.some((c) => c === "hsc" || c.startsWith("hsc"));
       } else {
         matchCat = course.categories.includes(activeFilter);
       }
@@ -497,13 +522,7 @@ export const CourseExplorer: React.FC = () => {
           </button>
         </div>
       ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-            gap: "24px",
-          }}
-        >
+        <div className="da-course-explorer-grid">
           {filteredCourses.map((course, idx) => (
             <a
               key={course.id}

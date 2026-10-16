@@ -217,11 +217,9 @@ const I18N_TRANSLATIONS = {
     course_btn_details: "বিস্তারিত ও ভর্তি",
     reviews_heading: "শিক্ষার্থীদের সাফল্যগাথা",
     reviews_subtext: "আমাদের প্ল্যাটফর্মে পড়ে যারা নিজেদের স্বপ্ন পূরণ করেছে তাদের মুখ থেকেই শুনো।",
-    footer_desc: "বাংলাদেশের অগ্রণী ডিজিটাল লার্নিং প্ল্যাটফর্ম। ৬ষ্ঠ থেকে দ্বাদশ ও এডমিশন শিক্ষার্থীদের জন্য উন্নতমানের শিক্ষা নিশ্চিত করাই আমাদের অঙ্গীকার।",
+    footer_desc: "বাংলাদেশের অগ্রণী ডিজিটাল লার্নিং প্ল্যাটফর্ম। ৯ম-১০ম (SSC), একাদশ-দ্বাদশ (HSC) ও এডমিশন শিক্ষার্থীদের জন্য উন্নতমানের শিক্ষা নিশ্চিত করাই আমাদের অঙ্গীকার।",
     footer_col1: "আমাদের সম্পর্কে",
-    footer_col2: "ক্যারিয়ার",
-    footer_col3: "স্কিলস ও প্রোগ্রাম",
-    footer_col4: "টিচার পোর্টাল ও হেল্প",
+    footer_col4: "যোগাযোগ ও হেল্প",
     footer_copyright: "© ২০২৬ Dipu Academy. সর্বস্বত্ব সংরক্ষিত।"
   },
   en: {
@@ -272,11 +270,9 @@ const I18N_TRANSLATIONS = {
     course_btn_details: "Details & Enroll",
     reviews_heading: "Student Success Stories",
     reviews_subtext: "Hear directly from the students who achieved their dreams with our platform.",
-    footer_desc: "Dipu Academy is Bangladesh's premier AI-powered digital learning platform, ensuring high quality education for Class 6 to 12 and Admission aspirants.",
+    footer_desc: "Dipu Academy is Bangladesh's premier AI-powered digital learning platform, ensuring high quality education for SSC (Class 9-10), HSC and Admission aspirants.",
     footer_col1: "About Us",
-    footer_col2: "Careers",
-    footer_col3: "Skills & Programs",
-    footer_col4: "Teacher Portal & Support",
+    footer_col4: "Contact & Support",
     footer_copyright: "© 2026 Dipu Academy. All Rights Reserved."
   }
 };

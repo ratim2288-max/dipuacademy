@@ -55,7 +55,7 @@
       --color-text-muted: #64748B;
       
       --bg-white: #FFFFFF;
-      --bg-hero: linear-gradient(180deg, #F0F6FF 0%, #F5F9FF 65%, #FFFFFF 100%);
+      --bg-hero: radial-gradient(ellipse 65% 85% at 76% 50%, #E8F5FF 0%, #EEF7FF 42%, #F6FAFF 75%, #FFFFFF 100%), #FFFFFF;
       --bg-card: #F8FAFD;
       --border-card: #E8EEF7;
       
@@ -125,17 +125,15 @@
       text-decoration: none;
     }
 
-    .da-brand-badge {
-      width: 38px;
-      height: 38px;
-      background: #0B172E;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #38BDF8;
-      font-size: 18px;
-      box-shadow: 0 2px 8px rgba(11, 23, 46, 0.2);
+    .da-brand-logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 11px;
+      object-fit: cover;
+      box-shadow: 0 4px 14px rgba(0, 132, 255, 0.35);
+      border: 1.5px solid rgba(0, 132, 255, 0.25);
+      flex-shrink: 0;
+      display: block;
     }
 
     .da-brand-text {
@@ -158,6 +156,31 @@
       align-items: center;
       gap: 10px;
       list-style: none;
+    }
+
+    /* Desktop Navbar Lock - Absolutely locked, never disappears */
+    @media (min-width: 769px) {
+      .da-navbar .da-nav-menu,
+      .da-nav-menu {
+        display: flex !important;
+        position: static !important;
+        background: transparent !important;
+        flex-direction: row !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        z-index: auto !important;
+        transform: none !important;
+      }
+      .da-mobile-toggle {
+        display: none !important;
+      }
+      .da-mobile-backdrop {
+        display: none !important;
+      }
     }
 
     .da-nav-item a {
@@ -515,7 +538,7 @@
     /* ===== HERO SECTION ===== */
     .da-hero-section {
       background: var(--bg-hero);
-      padding: 120px 24px 40px;
+      padding: 120px 24px 44px;
       position: relative;
       overflow: hidden;
     }
@@ -526,7 +549,8 @@
       display: grid;
       grid-template-columns: 1.08fr 0.92fr;
       align-items: center;
-      gap: 40px;
+      gap: 36px;
+      position: relative;
     }
 
     /* Left: Hero Content */
@@ -685,6 +709,15 @@
       align-items: flex-end;
     }
 
+    .da-hero-image-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -10% -20% -5% -25%;
+      background: radial-gradient(ellipse at 65% 55%, rgba(234, 245, 255, 0.95) 0%, rgba(234, 245, 255, 0.75) 45%, transparent 72%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
     .da-hero-student-img {
       width: 100%;
       max-width: 530px;
@@ -693,6 +726,9 @@
       display: block;
       position: relative;
       z-index: 2;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 3.5%, rgba(0, 0, 0, 0.75) 10%, #000 18%);
+      mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 3.5%, rgba(0, 0, 0, 0.75) 10%, #000 18%);
+      filter: drop-shadow(0 14px 34px rgba(37, 99, 235, 0.07));
     }
 
     /* ===== 4 FEATURE CARDS SECTION ===== */
@@ -1316,8 +1352,8 @@
 
     .footer-top-grid {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-      gap: 2.5rem;
+      grid-template-columns: 2fr 1.1fr 1.3fr;
+      gap: 3rem;
       margin-bottom: 3rem;
     }
 
@@ -1514,10 +1550,13 @@
 
     /* ===== RESPONSIVE BREAKPOINTS ===== */
     @media (max-width: 1024px) {
+      .da-hero-section {
+        background: linear-gradient(180deg, #FFFFFF 0%, #F5F9FF 32%, #EBF6FF 68%, #E2F0FE 100%) !important;
+      }
       .da-hero-container {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: 36px;
+        gap: 24px;
       }
       .da-hero-content {
         padding-top: 10px;
@@ -1529,9 +1568,15 @@
       .da-hero-btn-group {
         justify-content: center;
       }
+      .da-hero-image-wrap::before {
+        inset: -20px -10px -10px -10px;
+      }
       .da-hero-student-img {
         max-width: 440px;
         margin: 0 auto;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.15) 3.5%, rgba(0, 0, 0, 0.8) 11%, #000 18%) !important;
+        mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.15) 3.5%, rgba(0, 0, 0, 0.8) 11%, #000 18%) !important;
+        border-radius: 0 !important;
       }
       .da-features-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1547,7 +1592,7 @@
     @media (max-width: 768px) {
       /* Prevent horizontal scrolling & body shift */
       body {
-        padding-bottom: 74px !important;
+        padding-bottom: 0 !important;
         overflow-x: hidden !important;
         width: 100% !important;
         max-width: 100vw !important;
@@ -1561,15 +1606,32 @@
       .da-brand-name {
         font-size: 1.15rem;
       }
-      .da-brand-badge {
-        font-size: 9px;
-        padding: 2px 5px;
+      .da-brand-logo-img {
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
       }
+      .da-navbar .da-nav-menu,
       .da-nav-menu {
         display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: #FFFFFF;
+        flex-direction: column;
+        padding: 18px 20px 24px;
+        border-bottom: 1px solid #E2E8F0;
+        box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+        z-index: 999;
+      }
+      .da-navbar .da-nav-menu.is-mobile-open,
+      .da-nav-menu.is-mobile-open {
+        display: flex !important;
+        animation: daFadeIn 0.22s ease both;
       }
       .da-mobile-toggle {
-        display: inline-flex;
+        display: inline-flex !important;
         align-items: center;
         justify-content: center;
         width: 38px;
@@ -1588,7 +1650,8 @@
 
       /* Hero Section on Phone */
       .da-hero-section {
-        padding: 76px 16px 24px !important;
+        padding: 76px 16px 20px !important;
+        background: linear-gradient(180deg, #FFFFFF 0%, #F6FAFF 28%, #EBF6FF 58%, #E2F0FE 100%) !important;
       }
       .da-tag-badge {
         font-size: 0.78rem;
@@ -1622,12 +1685,21 @@
         font-size: 0.95rem !important;
         border-radius: 14px !important;
       }
+      .da-hero-container {
+        gap: 16px !important;
+      }
+      .da-hero-image-wrap {
+        width: 100% !important;
+        margin-top: 6px !important;
+      }
       .da-hero-student-img {
-        max-width: 100% !important;
+        max-width: 360px !important;
         width: 100% !important;
         height: auto !important;
-        border-radius: 16px !important;
-        margin-top: 12px;
+        border-radius: 0 !important;
+        margin: 0 auto !important;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.15) 3.5%, rgba(0, 0, 0, 0.85) 12%, #000 18%) !important;
+        mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.15) 3.5%, rgba(0, 0, 0, 0.85) 12%, #000 18%) !important;
       }
 
       /* Features 2x2 Clean Grid on Phone */
@@ -1743,11 +1815,100 @@
         font-size: 0.82rem !important;
       }
       .da-course-grid {
-        grid-template-columns: 1fr !important;
-        gap: 16px !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
       }
       .da-ccard {
-        border-radius: 16px !important;
+        border-radius: 14px !important;
+      }
+      .da-batch-badge {
+        top: 6px !important;
+        left: 6px !important;
+        padding: 3px 8px !important;
+        font-size: 0.62rem !important;
+      }
+      .da-group-badge {
+        top: 6px !important;
+        right: 6px !important;
+        padding: 2px 7px !important;
+        font-size: 0.6rem !important;
+      }
+      .da-ccard-body {
+        padding: 10px 8px 12px !important;
+      }
+      .da-ccard-subject {
+        font-size: 0.68rem !important;
+        margin-bottom: 3px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+      .da-ccard-title {
+        font-size: 0.82rem !important;
+        line-height: 1.3 !important;
+        margin-bottom: 6px !important;
+        min-height: 38px !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+      }
+      .da-ccard-mentor {
+        padding: 6px 0 !important;
+        gap: 6px !important;
+        margin-bottom: 6px !important;
+      }
+      .da-ccard-mentor-avatar {
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 0.7rem !important;
+      }
+      .da-ccard-mentor-name {
+        font-size: 0.7rem !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: 95px !important;
+      }
+      .da-ccard-mentor-sub {
+        display: none !important;
+      }
+      .da-ccard-stats {
+        font-size: 0.68rem !important;
+        margin-bottom: 8px !important;
+      }
+      .da-ccard-students {
+        font-size: 0.68rem !important;
+        gap: 3px !important;
+      }
+      .da-ccard-rating {
+        font-size: 0.68rem !important;
+        gap: 2px !important;
+      }
+      .da-ccard-footer {
+        padding-top: 8px !important;
+        gap: 6px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+      }
+      .da-price-row {
+        gap: 4px !important;
+      }
+      .da-price-current {
+        font-size: 0.98rem !important;
+      }
+      .da-price-orig {
+        font-size: 0.72rem !important;
+      }
+      .da-discount-tag {
+        font-size: 0.62rem !important;
+        padding: 1px 4px !important;
+      }
+      .da-btn-enroll {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 5px 8px !important;
+        font-size: 0.72rem !important;
       }
 
       /* Statistics on Phone */
@@ -1779,13 +1940,13 @@
         gap: 10px !important;
       }
 
-      /* Floating buttons positioned above the bottom dock */
+      /* Floating buttons positioned on mobile */
       .floating-whatsapp-btn,
       .floating-live-chat-btn,
       .whatsapp-float-btn {
-        bottom: 76px !important;
-        right: 14px !important;
-        transform: scale(0.9) !important;
+        bottom: 20px !important;
+        right: 16px !important;
+        transform: scale(0.95) !important;
       }
     }
 
@@ -1799,65 +1960,10 @@
       }
     }
 
-    /* ===== NATIVE APP MOBILE BOTTOM DOCK ===== */
+    /* Bottom dock removed as per user specification in favor of side 3-dot menu */
     .da-mobile-bottom-dock {
-      display: none;
+      display: none !important;
     }
-
-    @media (max-width: 768px) {
-      .da-mobile-bottom-dock {
-        display: flex;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 64px;
-        background: rgba(255, 255, 255, 0.96);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-top: 1px solid rgba(226, 232, 240, 0.95);
-        box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.08);
-        z-index: 9990;
-        align-items: center;
-        justify-content: space-around;
-        padding: 0 4px max(4px, env(safe-area-inset-bottom));
-      }
-
-      .da-bottom-tab {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 3px;
-        flex: 1;
-        color: #64748B;
-        text-decoration: none;
-        font-size: 10.5px;
-        font-weight: 700;
-        padding: 6px 0;
-        border-radius: 12px;
-        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        -webkit-tap-highlight-color: transparent;
-      }
-
-      .da-bottom-tab i {
-        font-size: 17px;
-        transition: transform 0.2s ease;
-      }
-
-      .da-bottom-tab:active {
-        transform: scale(0.92);
-      }
-
-      .da-bottom-tab.active,
-      .da-bottom-tab:hover {
-        color: #0084FF;
-      }
-
-      .da-bottom-tab.active i {
-        transform: translateY(-2px);
-        color: #0084FF;
-      }
 
       /* Mobile Drawer Backdrop */
       .da-mobile-backdrop {
@@ -2035,8 +2141,8 @@
     }
     @media (max-width: 640px) {
       .da-course-grid {
-        grid-template-columns: 1fr;
-        gap: 18px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
       }
     }
     /* Course Card */
@@ -2273,9 +2379,7 @@
   <nav class="da-navbar" id="mainNavbar">
     <div class="da-navbar-inner">
       <a href="/" class="da-brand">
-        <div class="da-brand-badge">
-          <i class="fa-solid fa-graduation-cap"></i>
-        </div>
+        <img src="/images/dipu-logo.png" alt="Dipu Academy Logo" class="da-brand-logo-img">
         <div class="da-brand-text">
           Dipu <span>Academy</span>
         </div>
@@ -2313,8 +2417,8 @@
             <span>লগইন</span>
           </a>
         </div>
-        <button class="da-mobile-toggle" id="mobileNavToggle" aria-label="মেনু খুলুন">
-          <i class="fa-solid fa-bars"></i>
+        <button class="da-mobile-toggle da-3dots-btn" id="mobileNavToggle" aria-label="মেনু খুলুন" title="মেনু খুলুন">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
         </button>
       </div>
     </div>
@@ -2326,12 +2430,6 @@
       
       <!-- Left: Content Matching Image Exactly -->
       <div class="da-hero-content">
-        <!-- Tag Badge -->
-        <div class="da-tag-badge">
-          <span class="da-tag-dot"></span>
-          অনলাইন শিক্ষা প্ল্যাটফর্ম
-        </div>
-
         <!-- Heading -->
         <h1 class="da-hero-h1">
           <span class="da-hero-line1">স্বপ্নকে বাস্তবে রূপ দিতে</span>
@@ -2637,7 +2735,7 @@
             </div>
           </a>
           <p class="footer-desc" data-i18n-key="footer_desc">
-            বাংলাদেশের অগ্রণী ডিজিটাল লার্নিং প্ল্যাটফর্ম। ৬ষ্ঠ থেকে দ্বাদশ ও এডমিশন শিক্ষার্থীদের জন্য উন্নতমানের শিক্ষা নিশ্চিত করাই আমাদের অঙ্গীকার।
+            বাংলাদেশের অগ্রণী ডিজিটাল লার্নিং প্ল্যাটফর্ম। ৯ম-১০ম (SSC), একাদশ-দ্বাদশ (HSC) ও এডমিশন শিক্ষার্থীদের জন্য উন্নতমানের শিক্ষা নিশ্চিত করাই আমাদের অঙ্গীকার।
           </p>
 
           <div class="app-download-badges">
@@ -2729,31 +2827,9 @@
           </ul>
         </div>
 
-        <!-- Col 3: ক্যারিয়ার -->
+        <!-- Col 3: যোগাযোগ ও হেল্প -->
         <div>
-          <h4 class="footer-col-title" data-i18n-key="footer_col2">ক্যারিয়ার</h4>
-          <ul class="footer-links-list">
-            <li><a href="#" class="footer-link-item">উন্মুক্ত পদসমূহ (Hiring)</a></li>
-            <li><a href="#" class="footer-link-item">শিক্ষক নিয়োগ বিজ্ঞপ্তি</a></li>
-            <li><a href="#" class="footer-link-item">আমাদের ওয়ার্ক কালচার</a></li>
-            <li><a href="#" class="footer-link-item">ইন্টার্নশিপ প্রোগ্রাম</a></li>
-          </ul>
-        </div>
-
-        <!-- Col 4: স্কিলস ও প্রোগ্রাম -->
-        <div>
-          <h4 class="footer-col-title" data-i18n-key="footer_col3">স্কিলস ও প্রোগ্রাম</h4>
-          <ul class="footer-links-list">
-            <li><a href="/course" class="footer-link-item">এইচএসসি ২০২৬/২৭</a></li>
-            <li><a href="/course" class="footer-link-item">এসএসসি ২০২৬/২৭</a></li>
-            <li><a href="/course" class="footer-link-item">ভিডিও ও লেকচার ক্লাস</a></li>
-            <li><a href="/dashboard" class="footer-link-item">লাইভ মডেল টেস্ট</a></li>
-          </ul>
-        </div>
-
-        <!-- Col 5: টিচার পোর্টাল ও হেল্প -->
-        <div>
-          <h4 class="footer-col-title" data-i18n-key="footer_col4">টিচার পোর্টাল ও হেল্প</h4>
+          <h4 class="footer-col-title" data-i18n-key="footer_col4">যোগাযোগ ও হেল্প</h4>
           <ul class="footer-links-list">
             <li><a href="tel:16910" id="footerHotlineLink" class="footer-link-item"><span style="color:#FF7A1A; margin-right:4px;">🎧</span> ২৪/৭ হেল্প ও সাপোর্ট</a></li>
             <li><a href="#" class="footer-link-item">লেকচার গাইডলাইন</a></li>
@@ -2781,32 +2857,6 @@
 
     </div>
   </footer>
-
-  <!-- ============================================================================
-       NATIVE APP MOBILE BOTTOM DOCK (Visible on Smartphones < 768px)
-       ============================================================================ -->
-  <nav class="da-mobile-bottom-dock" id="mobileBottomDock" aria-label="Mobile Navigation">
-    <a href="/" class="da-bottom-tab active" id="tabHome">
-      <i class="fa-solid fa-house"></i>
-      <span>হোম</span>
-    </a>
-    <a href="/#courses" class="da-bottom-tab" id="tabCourses">
-      <i class="fa-solid fa-graduation-cap"></i>
-      <span>কোর্সসমূহ</span>
-    </a>
-    <a href="/shop" class="da-bottom-tab" id="tabShop">
-      <i class="fa-solid fa-book-open"></i>
-      <span>বই ও শপ</span>
-    </a>
-    <a href="/ai" class="da-bottom-tab" id="tabAi">
-      <i class="fa-solid fa-robot"></i>
-      <span>AI শিক্ষক</span>
-    </a>
-    <a href="/dashboard" class="da-bottom-tab" id="tabDashboard">
-      <i class="fa-solid fa-user-graduate"></i>
-      <span id="tabUserLabel">ড্যাশবোর্ড</span>
-    </a>
-  </nav>
 
   <!-- Mobile Drawer Backdrop Overlay -->
   <div class="da-mobile-backdrop" id="mobileBackdrop"></div>
@@ -2971,33 +3021,27 @@
       window.addEventListener('dipu_auth_changed', renderAuthUI);
     })();
 
-    // Enhanced Mobile Menu Toggle with Backdrop & Auto-Close
+    // Enhanced Mobile Menu Toggle with Backdrop & Auto-Close (Desktop Permanently Locked)
     (function() {
       var toggleBtn = document.getElementById('mobileNavToggle');
       var menu = document.querySelector('.da-nav-menu');
       var backdrop = document.getElementById('mobileBackdrop');
 
-      function closeMenu() {
-        if (!menu) return;
-        menu.style.display = 'none';
-        if (backdrop) backdrop.classList.remove('show');
-        if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      function isMobile() {
+        return window.innerWidth <= 768;
       }
 
-      function openMenu() {
+      function closeMobileMenu() {
         if (!menu) return;
-        menu.style.display = 'flex';
-        menu.style.position = 'fixed';
-        menu.style.top = '60px';
-        menu.style.left = '0';
-        menu.style.right = '0';
-        menu.style.background = '#FFFFFF';
-        menu.style.flexDirection = 'column';
-        menu.style.padding = '18px 20px 24px';
-        menu.style.borderBottom = '1px solid #E2E8F0';
-        menu.style.boxShadow = '0 16px 36px rgba(15, 23, 42, 0.12)';
-        menu.style.zIndex = '999';
-        menu.style.animation = 'daFadeIn 0.22s ease both';
+        menu.classList.remove('is-mobile-open');
+        menu.removeAttribute('style'); // Clear inline styles so desktop menu stays permanently locked by CSS
+        if (backdrop) backdrop.classList.remove('show');
+        if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-ellipsis-vertical"></i>';
+      }
+
+      function openMobileMenu() {
+        if (!menu || !isMobile()) return;
+        menu.classList.add('is-mobile-open');
         if (backdrop) backdrop.classList.add('show');
         if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
       }
@@ -3005,24 +3049,34 @@
       if (toggleBtn && menu) {
         toggleBtn.addEventListener('click', function(e) {
           e.stopPropagation();
-          var isOpen = menu.style.display === 'flex';
-          if (isOpen) closeMenu();
-          else openMenu();
+          if (!isMobile()) return;
+          if (menu.classList.contains('is-mobile-open')) {
+            closeMobileMenu();
+          } else {
+            openMobileMenu();
+          }
         });
 
         if (backdrop) {
-          backdrop.addEventListener('click', closeMenu);
+          backdrop.addEventListener('click', closeMobileMenu);
         }
 
-        // Auto close when clicking any menu link
+        // Auto close when clicking any menu link ONLY on mobile
         menu.querySelectorAll('a').forEach(function(link) {
-          link.addEventListener('click', closeMenu);
+          link.addEventListener('click', function() {
+            if (isMobile()) {
+              closeMobileMenu();
+            }
+          });
         });
 
         window.addEventListener('resize', function() {
-          if (window.innerWidth > 768) closeMenu();
+          if (!isMobile()) {
+            closeMobileMenu();
+          }
         });
       }
+    })();
 
       // Sync Bottom Dock Active States
       function syncBottomDock() {

@@ -6,7 +6,7 @@ import { createRoot } from "react-dom/client";
 // ─── Types ────────────────────────────────────────────────────────────────────
 type ThemeMode = "dark" | "light";
 type LangMode = "bn" | "en";
-type DropdownKey = "school" | "ssc" | "hsc" | "shop" | null;
+type DropdownKey = "ssc" | "hsc" | "shop" | null;
 
 interface UserProfile {
   fullName?: string;
@@ -600,217 +600,10 @@ export const Navbar: React.FC = () => {
 
           {/* ── Center: Desktop Navigation Links ────────────────────────────── */}
           <nav className="dipu-nav-desktop-links" style={{ display: "flex", alignItems: "center", gap: "1.8rem" }}>
-            {/* If NOT logged in, show Category Dropdowns: স্কুল, SSC, HSC */}
+            {/* If NOT logged in, show Category Dropdowns: SSC (9-10) and HSC (11-12) */}
             {!isLoggedIn && (
               <>
-            {/* Dropdown 1: স্কুল (৬ষ্ঠ - ৮ম) - Stacked 2 Lines like Screenshot */}
-            <div
-              className="dipu-nav-dropdown-container"
-              style={{ position: "relative" }}
-              onMouseEnter={() => handleMouseEnterDropdown("school")}
-              onMouseLeave={handleMouseLeaveDropdown}
-            >
-              <button
-                type="button"
-                onClick={() => setActiveDropdown(activeDropdown === "school" ? null : "school")}
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: activeDropdown === "school" ? "#00C2FF" : textColor,
-                  cursor: "pointer",
-                  padding: "4px 8px",
-                  borderRadius: "8px",
-                  transition: "color 0.15s",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  lineHeight: 1.2,
-                }}
-                className="dipu-nav-link"
-              >
-                <span style={{ fontSize: "0.95rem", fontWeight: 700 }}>
-                  {lang === "en" ? "School" : "স্কুল"}
-                </span>
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    fontSize: "0.82rem",
-                    fontWeight: 600,
-                    opacity: 0.9,
-                  }}
-                >
-                  {lang === "en" ? "(6-8)" : "(৬-৮)"}
-                  <i
-                    className="fas fa-chevron-down"
-                    style={{
-                      fontSize: "0.65rem",
-                      transition: "transform 0.2s",
-                      transform: activeDropdown === "school" ? "rotate(180deg)" : "rotate(0deg)",
-                    }}
-                  />
-                </span>
-              </button>
-
-              {activeDropdown === "school" && (
-                <div
-                  className="dipu-nav-dropdown-menu"
-                  style={{
-                    position: "absolute",
-                    top: "calc(100% + 8px)",
-                    left: 0,
-                    width: "260px",
-                    background: dropdownBg,
-                    border: dropdownBorder,
-                    borderRadius: "14px",
-                    padding: "10px",
-                    boxShadow: isLight
-                      ? "0 15px 35px rgba(0,0,0,0.1)"
-                      : "0 15px 35px rgba(0,0,0,0.55)",
-                    animation: "dropdownSlideIn 0.2s ease both",
-                    zIndex: 1100,
-                  }}
-                >
-                  <a
-                    href="#courses"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigateToCourse("class-6");
-                      setActiveDropdown(null);
-                    }}
-                    className="dipu-nav-dropdown-item"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                      padding: "8px 12px",
-                      borderRadius: "8px",
-                      textDecoration: "none",
-                      color: textColor,
-                      fontSize: "0.9rem",
-                      fontWeight: 600,
-                      transition: "all 0.15s",
-                    }}
-                  >
-                    <span
-                      style={{
-                        padding: "2px 8px",
-                        borderRadius: "6px",
-                        background: "rgba(16, 185, 129, 0.15)",
-                        color: "#10B981",
-                        fontSize: "0.75rem",
-                        fontWeight: 700,
-                      }}
-                    >
-                      {lang === "en" ? "Class 6" : "৬ষ্ঠ"}
-                    </span>
-                    <span>{lang === "en" ? "Class 6 Complete Preparation" : "৬ষ্ঠ শ্রেণি পূর্ণাঙ্গ প্রস্তুতি"}</span>
-                  </a>
-
-                  <a
-                    href="#courses"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigateToCourse("class-7");
-                      setActiveDropdown(null);
-                    }}
-                    className="dipu-nav-dropdown-item"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                      padding: "8px 12px",
-                      borderRadius: "8px",
-                      textDecoration: "none",
-                      color: textColor,
-                      fontSize: "0.9rem",
-                      fontWeight: 600,
-                      transition: "all 0.15s",
-                    }}
-                  >
-                    <span
-                      style={{
-                        padding: "2px 8px",
-                        borderRadius: "6px",
-                        background: "rgba(16, 185, 129, 0.15)",
-                        color: "#10B981",
-                        fontSize: "0.75rem",
-                        fontWeight: 700,
-                      }}
-                    >
-                      {lang === "en" ? "Class 7" : "৭ম"}
-                    </span>
-                    <span>{lang === "en" ? "Class 7 Complete Course" : "৭ম শ্রেণি পূর্ণাঙ্গ কোর্স"}</span>
-                  </a>
-
-                  <a
-                    href="#courses"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigateToCourse("class-8");
-                      setActiveDropdown(null);
-                    }}
-                    className="dipu-nav-dropdown-item"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                      padding: "8px 12px",
-                      borderRadius: "8px",
-                      textDecoration: "none",
-                      color: textColor,
-                      fontSize: "0.9rem",
-                      fontWeight: 600,
-                      transition: "all 0.15s",
-                    }}
-                  >
-                    <span
-                      style={{
-                        padding: "2px 8px",
-                        borderRadius: "6px",
-                        background: "rgba(16, 185, 129, 0.15)",
-                        color: "#10B981",
-                        fontSize: "0.75rem",
-                        fontWeight: 700,
-                      }}
-                    >
-                      {lang === "en" ? "Class 8" : "৮ম"}
-                    </span>
-                    <span>{lang === "en" ? "Class 8 Preparation Course" : "৮ম শ্রেণি প্রস্তুতি কোর্স"}</span>
-                  </a>
-
-                  <div style={{ height: "1px", background: isLight ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.08)", margin: "6px 0" }} />
-
-                  <a
-                    href="#courses"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigateToCourse("school");
-                      setActiveDropdown(null);
-                    }}
-                    className="dipu-nav-dropdown-item"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      padding: "8px 12px",
-                      borderRadius: "8px",
-                      textDecoration: "none",
-                      color: "#00C2FF",
-                      fontSize: "0.9rem",
-                      fontWeight: 700,
-                      transition: "all 0.15s",
-                    }}
-                  >
-                    <span>{lang === "en" ? "All School Courses (Class 5-8)" : "সব স্কুল কোর্স (৫ম-৮ম)"}</span>
-                    <i className="fas fa-arrow-right" style={{ fontSize: "0.75rem" }} />
-                  </a>
-                </div>
-              )}
-            </div>
-
-            {/* Dropdown 2: SSC */}
+            {/* Dropdown 1: SSC (৯ম-১০ম) */}
             <div
               className="dipu-nav-dropdown-container"
               style={{ position: "relative" }}
@@ -836,7 +629,7 @@ export const Navbar: React.FC = () => {
                 }}
                 className="dipu-nav-link"
               >
-                <span>SSC</span>
+                <span>{lang === "en" ? "SSC (Class 9-10)" : "SSC (৯ম-১০ম)"}</span>
                 <i
                   className="fas fa-chevron-down"
                   style={{
@@ -994,7 +787,7 @@ export const Navbar: React.FC = () => {
                 }}
                 className="dipu-nav-link"
               >
-                <span>HSC</span>
+                <span>{lang === "en" ? "HSC (Class 11-12)" : "HSC (একাদশ-দ্বাদশ)"}</span>
                 <i
                   className="fas fa-chevron-down"
                   style={{
@@ -2025,196 +1818,10 @@ export const Navbar: React.FC = () => {
                 </a>
               )}
 
-              {/* If NOT logged in, show School, SSC, HSC in drawer */}
+              {/* If NOT logged in, show SSC (9-10) and HSC (11-12) in drawer */}
               {!isLoggedIn && (
                 <>
-              {/* Category 1: School */}
-              <div
-                className="dipu-drawer-card"
-                style={{
-                  borderRadius: "14px",
-                  background: mobileOpenDropdown === "school"
-                    ? isLight ? "rgba(16, 185, 129, 0.08)" : "rgba(16, 185, 129, 0.1)"
-                    : isLight ? "#F8FAFC" : "rgba(255, 255, 255, 0.03)",
-                  border: mobileOpenDropdown === "school"
-                    ? "1px solid rgba(16, 185, 129, 0.35)"
-                    : isLight ? "1px solid #E2E8F0" : "1px solid rgba(255, 255, 255, 0.06)",
-                  overflow: "hidden",
-                }}
-              >
-                <button
-                  type="button"
-                  onClick={() => setMobileOpenDropdown(mobileOpenDropdown === "school" ? null : "school")}
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    background: "none",
-                    border: "none",
-                    padding: "10px 12px",
-                    cursor: "pointer",
-                    textAlign: "left",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <div
-                      style={{
-                        width: "34px",
-                        height: "34px",
-                        borderRadius: "10px",
-                        background: "linear-gradient(135deg, #10B981, #059669)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: "#FFFFFF",
-                        fontSize: "0.95rem",
-                        boxShadow: "0 2px 8px rgba(16, 185, 129, 0.3)",
-                        flexShrink: 0,
-                      }}
-                    >
-                      <i className="fas fa-school" />
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <span style={{ fontWeight: 700, fontSize: "0.92rem", color: textColor }}>
-                        স্কুল (৬ষ্ঠ - ৮ম)
-                      </span>
-                      <span style={{ fontSize: "0.72rem", color: isLight ? "#64748B" : "#94A3B8" }}>
-                        ৬ষ্ঠ, ৭ম ও ৮ম পূর্ণাঙ্গ প্রস্তুতি
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "26px",
-                      height: "26px",
-                      borderRadius: "8px",
-                      background: mobileOpenDropdown === "school" ? "#10B981" : isLight ? "rgba(0,0,0,0.04)" : "rgba(255, 255, 255, 0.06)",
-                      color: mobileOpenDropdown === "school" ? "#FFFFFF" : isLight ? "#64748B" : "#94A3B8",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "0.72rem",
-                      transition: "transform 0.2s ease, background 0.2s ease",
-                      transform: mobileOpenDropdown === "school" ? "rotate(180deg)" : "rotate(0deg)",
-                    }}
-                  >
-                    <i className="fas fa-chevron-down" />
-                  </div>
-                </button>
-                {mobileOpenDropdown === "school" && (
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "6px",
-                      padding: "8px 12px 12px",
-                      borderTop: isLight ? "1px solid rgba(16, 185, 129, 0.15)" : "1px solid rgba(16, 185, 129, 0.2)",
-                    }}
-                  >
-                    <a
-                      href="#courses"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        navigateToCourse("class-6");
-                        setIsMobileOpen(false);
-                      }}
-                      style={{
-                        color: textColor,
-                        textDecoration: "none",
-                        fontSize: "0.86rem",
-                        fontWeight: 600,
-                        padding: "7px 10px",
-                        borderRadius: "8px",
-                        background: isLight ? "#FFFFFF" : "rgba(255, 255, 255, 0.04)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        transition: "all 0.15s ease",
-                      }}
-                    >
-                      <span>৬ষ্ঠ শ্রেণি পূর্ণাঙ্গ প্রস্তুতি</span>
-                      <span style={{ fontSize: "0.72rem", color: "#10B981", fontWeight: 700, background: "rgba(16, 185, 129, 0.12)", padding: "2px 8px", borderRadius: "9999px" }}>৬ষ্ঠ</span>
-                    </a>
-                    <a
-                      href="#courses"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        navigateToCourse("class-7");
-                        setIsMobileOpen(false);
-                      }}
-                      style={{
-                        color: textColor,
-                        textDecoration: "none",
-                        fontSize: "0.86rem",
-                        fontWeight: 600,
-                        padding: "7px 10px",
-                        borderRadius: "8px",
-                        background: isLight ? "#FFFFFF" : "rgba(255, 255, 255, 0.04)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        transition: "all 0.15s ease",
-                      }}
-                    >
-                      <span>৭ম শ্রেণি পূর্ণাঙ্গ কোর্স</span>
-                      <span style={{ fontSize: "0.72rem", color: "#10B981", fontWeight: 700, background: "rgba(16, 185, 129, 0.12)", padding: "2px 8px", borderRadius: "9999px" }}>৭ম</span>
-                    </a>
-                    <a
-                      href="#courses"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        navigateToCourse("class-8");
-                        setIsMobileOpen(false);
-                      }}
-                      style={{
-                        color: textColor,
-                        textDecoration: "none",
-                        fontSize: "0.86rem",
-                        fontWeight: 600,
-                        padding: "7px 10px",
-                        borderRadius: "8px",
-                        background: isLight ? "#FFFFFF" : "rgba(255, 255, 255, 0.04)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        transition: "all 0.15s ease",
-                      }}
-                    >
-                      <span>৮ম শ্রেণি প্রস্তুতি কোর্স</span>
-                      <span style={{ fontSize: "0.72rem", color: "#10B981", fontWeight: 700, background: "rgba(16, 185, 129, 0.12)", padding: "2px 8px", borderRadius: "9999px" }}>৮ম</span>
-                    </a>
-                    <a
-                      href="#courses"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        navigateToCourse("school");
-                        setIsMobileOpen(false);
-                      }}
-                      style={{
-                        color: "#FFFFFF",
-                        textDecoration: "none",
-                        fontSize: "0.84rem",
-                        fontWeight: 700,
-                        padding: "8px 12px",
-                        borderRadius: "9px",
-                        background: "linear-gradient(135deg, #10B981, #059669)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "6px",
-                        marginTop: "2px",
-                        boxShadow: "0 2px 8px rgba(16, 185, 129, 0.3)",
-                      }}
-                    >
-                      <span>সব স্কুল কোর্স দেখুন</span>
-                      <i className="fas fa-arrow-right" style={{ fontSize: "0.75rem" }} />
-                    </a>
-                  </div>
-                )}
-              </div>
-
-              {/* Category 2: SSC */}
+              {/* Category 1: SSC (৯ম-১০ম শ্রেণি) */}
               <div
                 className="dipu-drawer-card"
                 style={{
