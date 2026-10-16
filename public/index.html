@@ -3354,9 +3354,79 @@
         }
       } catch(e) {}
 
-      // Initial Render
+      // Initial Render (Cached/Defaults)
       updatePillsUI();
       render();
+
+      // Dynamic Real-Time Course Sync from Backend/MongoDB
+      function syncLiveCourses() {
+        fetch('/api/courses')
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+            var list = (data && data.courses && Array.isArray(data.courses)) ? data.courses : (Array.isArray(data) ? data : []);
+            if (!list || list.length === 0) return;
+
+            var mapped = list.map(function(c) {
+              var title = (typeof c.title === 'object' && c.title) ? (c.title.bn || c.title.en || '') : String(c.title || '');
+              var classLevel = String(c.classLevel || c.category || '').toUpperCase();
+              var isSSC = classLevel.includes('SSC') || classLevel.includes('10') || classLevel.includes('9') || (c.batch && c.batch.includes('ssc'));
+              var program = isSSC ? 'ssc' : 'hsc';
+
+              var batch = c.batch || (isSSC ? (title.includes('২৮') || title.includes('28') ? 'ssc-28' : 'ssc-27') : (title.includes('২৮') || title.includes('28') ? 'hsc-28' : 'hsc-27'));
+              var batchLabel = c.batchLabel || (batch === 'ssc-28' ? "SSC '২৮" : batch === 'ssc-27' ? "SSC '২৭" : batch === 'hsc-28' ? "HSC '২৮" : "HSC '২৭");
+              var batchBg = c.batchBg || (batch === 'ssc-27' ? '#0084FF' : batch === 'ssc-28' ? '#6366F1' : batch === 'hsc-27' ? '#E11D48' : '#FF7A1A');
+
+              var currentPrice = c.discountPrice || c.price || 0;
+              var origPrice = (c.originalPrice || c.price || currentPrice);
+              var discountText = '';
+              if (origPrice > currentPrice) {
+                var pct = Math.round(((origPrice - currentPrice) / origPrice) * 100);
+                if (pct > 0) discountText = pct + '% ছাড়';
+              }
+
+              return {
+                id: c._id || c.id || c.slug,
+                slug: c.slug || c._id || c.id,
+                program: program,
+                batch: batch,
+                batchLabel: batchLabel,
+                batchBg: batchBg,
+                group: c.group || 'science',
+                groupLabel: c.groupLabel || (c.group === 'arts' ? 'মানবিক' : (c.group === 'commerce' ? 'ব্যবসায় শিক্ষা' : 'বিজ্ঞান')),
+                groupColor: '#10B981',
+                title: title,
+                subject: c.subject || (typeof c.description === 'object' ? (c.description.bn || '') : '') || 'পূর্ণাঙ্গ একাডেমিক কোর্স',
+                mentor: (c.instructor && c.instructor.name) ? c.instructor.name : (c.mentor || 'দীপু স্যার (BUET)'),
+                mentorSub: (c.instructor && c.instructor.institution) ? c.instructor.institution : (c.mentorSub || 'বুয়েট ইঞ্জিনিয়ারিং'),
+                students: (c.enrolledStudentsCount || c.enrolledCount || 1200) + '+ শিক্ষার্থী',
+                rating: String(c.rating || '4.95'),
+                priceCurrent: '৳' + Number(currentPrice).toLocaleString('bn-BD'),
+                priceOrig: origPrice > currentPrice ? ('৳' + Number(origPrice).toLocaleString('bn-BD')) : '',
+                discount: discountText || 'স্পেশাল ছাড়',
+                thumb: c.thumbnail || c.coverImage || '/images/courses/routine-banner.jpg'
+              };
+            });
+
+            if (mapped.length > 0) {
+              COURSES_DATA = mapped;
+
+              // Dynamically update program counters
+              var sscCount = mapped.filter(function(x) { return x.program === 'ssc'; }).length;
+              var hscCount = mapped.filter(function(x) { return x.program === 'hsc'; }).length;
+              var allTabCount = document.querySelector('#programTabs [data-prog="all"] .tab-count');
+              if (allTabCount) allTabCount.textContent = mapped.length;
+              var sscTabCount = document.querySelector('#programTabs [data-prog="ssc"] .tab-count');
+              if (sscTabCount) sscTabCount.textContent = sscCount;
+              var hscTabCount = document.querySelector('#programTabs [data-prog="hsc"] .tab-count');
+              if (hscTabCount) hscTabCount.textContent = hscCount;
+
+              updatePillsUI();
+              render();
+            }
+          })
+          .catch(function(e) {});
+      }
+      syncLiveCourses();
 
       window.filterCoursesProgram = function(prog) {
         state.prog = prog || 'all';
@@ -3366,6 +3436,65 @@
         var el = document.getElementById('courses');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       };
+    })();
+
+    // ===== LIVE SITE DATA SYNC (Hero Video, Social Links, Helpline & Stats) =====
+    (function initSiteDynamicSync() {
+      // 1. Sync Hero YouTube Video
+      fetch('/api/hero-video')
+        .then(function(r) { return r.json(); })
+        .then(function(res) {
+          if (!res || !res.data) return;
+          var videoUrl = res.data.videoUrl;
+          if (videoUrl) {
+            var iframe = document.querySelector('.da-yt-player-box iframe');
+            if (iframe) {
+              var vid = '';
+              if (videoUrl.includes('embed/')) vid = videoUrl.split('embed/')[1].split('?')[0];
+              else if (videoUrl.includes('watch?v=')) vid = videoUrl.split('watch?v=')[1].split('&')[0];
+              else if (videoUrl.includes('youtu.be/')) vid = videoUrl.split('youtu.be/')[1].split('?')[0];
+              if (vid) iframe.src = 'https://www.youtube.com/embed/' + vid;
+            }
+          }
+          if (res.data.title) {
+            var titleEl = document.querySelector('.da-video-section .da-section-title');
+            if (titleEl) titleEl.textContent = res.data.title;
+          }
+        })
+        .catch(function() {});
+
+      // 2. Sync Social Links & Contact
+      fetch('/api/social-links')
+        .then(function(r) { return r.json(); })
+        .then(function(res) {
+          var links = (res && res.links) ? res.links : ((res && res.data) ? res.data : null);
+          if (!links) return;
+          if (links.fb) document.querySelectorAll('a[href*="facebook.com"]').forEach(function(a) { a.href = links.fb; });
+          if (links.yt) document.querySelectorAll('a[href*="youtube.com"], a[href*="youtu.be"]').forEach(function(a) { a.href = links.yt; });
+          if (links.whatsapp) document.querySelectorAll('a[href*="wa.me"]').forEach(function(a) { a.href = links.whatsapp; });
+          if (links.telegram) document.querySelectorAll('a[href*="t.me"]').forEach(function(a) { a.href = links.telegram; });
+          if (links.hotline) {
+            document.querySelectorAll('a[href*="tel:"]').forEach(function(a) { 
+              a.href = 'tel:' + links.hotline.replace(/[^0-9+]/g, '');
+            });
+          }
+        })
+        .catch(function() {});
+
+      // 3. Sync Helpline
+      fetch('/api/helpline')
+        .then(function(r) { return r.json(); })
+        .then(function(res) {
+          var h = (res && res.config) ? res.config : ((res && res.data) ? res.data : null);
+          if (!h) return;
+          if (h.hotlineNumber) {
+            document.querySelectorAll('.hotline-number').forEach(function(el) { el.textContent = h.hotlineNumber; });
+          }
+          if (h.whatsappNumber) {
+            document.querySelectorAll('.whatsapp-number').forEach(function(el) { el.textContent = h.whatsappNumber; });
+          }
+        })
+        .catch(function() {});
     })();
 
     // ===== NAVBAR AUTH CONTROLLER (Show user's name when logged in) =====

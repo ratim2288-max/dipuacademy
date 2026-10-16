@@ -321,41 +321,14 @@
     <main class="admin-main-content">
       
       <!-- Top Navigation Bar -->
-      <header class="careplus-topbar">
-        <!-- Search Pill -->
-        <div class="dribbble-top-search">
-          <i class="fas fa-search dribbble-search-icon"></i>
-          <input type="text" id="adminGlobalSearchInput" placeholder="Search / অনুসন্ধান করুন..." oninput="handleAdminGlobalSearch(this.value)">
-          <button type="button" id="adminSearchClearBtn" onclick="clearAdminGlobalSearch()" style="display:none;" class="search-clear-btn" title="মুছুন">
-            <i class="fas fa-times"></i>
-          </button>
+      <header class="careplus-topbar" style="display: flex; align-items: center; justify-content: space-between; min-height: 56px;">
+        <div style="font-size: 15px; font-weight: 700; color: #1E293B; display: flex; align-items: center; gap: 8px;">
+          <span style="color: #64748B; font-weight: 500;">অ্যাডমিন কনসোল</span>
+          <span style="color: #CBD5E1;">/</span>
+          <span id="currentBreadcrumb" style="color: #0084FF;">ড্যাশবোর্ড</span>
         </div>
 
         <div class="careplus-topbar-right">
-          <!-- Notification Bell with Dot -->
-          <div class="dribbble-circle-btn" title="বিজ্ঞপ্তি ও আপডেট">
-            <i class="far fa-bell"></i>
-            <span class="dribbble-notif-pulse-dot"></span>
-          </div>
-
-          <!-- Date / Status Chip -->
-          <div class="dribbble-balance-chip">
-            <span class="dribbble-chip-lbl">সিস্টেম স্ট্যাটাস</span>
-            <span class="dribbble-chip-val" id="careplusTodayDate">আজ, ১৬ অক্টোবর ২০২৬</span>
-          </div>
-
-          <!-- Admin Avatar & Greeting -->
-          <div class="dribbble-admin-profile-chip">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop" alt="Dipu Sir" class="dribbble-profile-avatar">
-            <span class="dribbble-profile-greeting">Hi, <strong>Dipu Sir</strong></span>
-          </div>
-
-          <!-- Green Action Button -->
-          <button class="btn-careplus-green-cta" onclick="openCourseModal()">
-            <i class="fas fa-plus"></i>
-            <span class="topbar-btn-text">নতুন কোর্স</span>
-          </button>
-
           <!-- Mobile 3-Dots Menu Button (উপরে ৩ ডট মেনু) -->
           <button class="admin-mobile-3dots-btn" id="adminMobileMenuBtn" aria-label="মেনু খুলুন" onclick="toggleMobileSidebar()" title="মেনু খুলুন">
             <i class="fas fa-ellipsis-vertical"></i>
@@ -386,10 +359,6 @@
                 <span>This Month / চলতি মাস</span>
                 <i class="fas fa-chevron-down" style="font-size: 11px; margin-left: 4px;"></i>
               </div>
-              <button class="btn-dribbble-download-report" onclick="window.print()">
-                <i class="fas fa-cloud-arrow-down"></i>
-                <span>Download Report</span>
-              </button>
             </div>
           </div>
 
@@ -559,30 +528,8 @@
               </div>
             </div>
 
-            <!-- Right Column: Stacked Promo Card + Semi-Circular Gauge Meter Card -->
+            <!-- Right Column: Semi-Circular Gauge Meter Card -->
             <div class="dribbble-right-stack">
-              
-              <!-- Card 1: Need More Stats? / Promo Banner Card -->
-              <div class="dribbble-promo-card">
-                <div class="dribbble-promo-text-wrap">
-                  <h4 class="dribbble-promo-title">Need More Stats?</h4>
-                  <p class="dribbble-promo-desc">Upgrade to pro for added benefits. লাইভ ক্লাসরুম ও স্মার্ট এনালিটিক্স।</p>
-                  <button type="button" class="btn-dribbble-gopro-cta" onclick="openCourseModal()">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>Go Pro Now</span>
-                  </button>
-                </div>
-                <!-- Decorative Graphic -->
-                <div class="dribbble-promo-floating-art">
-                  <svg width="110" height="100" viewBox="0 0 110 100" fill="none">
-                    <path d="M15 70C15 62 21 56 29 56C30.5 56 32 56.3 33.4 56.7C36.5 50.8 42.8 46.8 50 46.8C59.2 46.8 66.6 54.2 66.6 63.4C66.6 64 66.5 64.6 66.4 65.2C69.3 66.2 71.4 69 71.4 72.3C71.4 76.2 68.3 79.3 64.5 79.3H24.2C19.1 79.3 15 75.2 15 70Z" fill="white" fill-opacity="0.22"/>
-                    <path d="M55 16L69 38L55 34L41 38L55 16Z" fill="white" fill-opacity="0.95"/>
-                    <line x1="55" y1="34" x2="55" y2="62" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="3 3"/>
-                    <circle cx="86" cy="30" r="3.5" fill="white" fill-opacity="0.7"/>
-                    <circle cx="76" cy="18" r="2" fill="white" fill-opacity="0.5"/>
-                  </svg>
-                </div>
-              </div>
 
               <!-- Card 2: Conversion / Semi-Circular Progress Gauge Card -->
               <div class="dribbble-gauge-card">

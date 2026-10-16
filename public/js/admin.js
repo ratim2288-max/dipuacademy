@@ -592,6 +592,34 @@ function initCoursesManagement() {
   // Curated High-Definition Bengali Academic Courses (Using Real Banners)
   const defaultCourses = [
     {
+      _id: "course-ssc27-sci",
+      slug: "ssc-27-science",
+      title: { bn: "SSC '২৭ পূর্ণাঙ্গ প্রস্তুতি ও টেস্ট পেপার সলভিং কোর্স" },
+      classLevel: "SSC",
+      subject: "পদার্থবিজ্ঞান, রসায়ন, উচ্চতর গণিত ও জীববিজ্ঞান",
+      instructor: { name: "দীপু স্যার (BUET) ও বিজ্ঞান টিম" },
+      price: 5500,
+      discountPrice: 3950,
+      thumbnail: "/images/courses/ssc-27-prep.jpg",
+      enrolledStudentsCount: 1640,
+      rating: 4.97,
+      description: { bn: "এসএসসি ২০২৭ ব্যাচের শিক্ষার্থীদের পদার্থবিজ্ঞান, রসায়ন, উচ্চতর গণিত এবং জীববিজ্ঞানের শতভাগ বেসিক ও বোর্ড পরীক্ষায় নিশ্চিত গোল্ডেন A+ অর্জনের লক্ষ্যে সাজানো পূর্ণাঙ্গ মাস্টারকোর্স।" }
+    },
+    {
+      _id: "course-user-ssc28",
+      slug: "ssc-28-full-prep",
+      title: { bn: "SSC '২৮ বিজ্ঞান ও বেসিক ফাউন্ডেশন কোর্স" },
+      classLevel: "SSC",
+      subject: "বিজ্ঞান ৪টি মূল বিষয় ও সাধারণ গণিত বেসিক",
+      instructor: { name: "দীপু স্যার ও মেন্টর প্যানেল" },
+      price: 4500,
+      discountPrice: 2999,
+      thumbnail: "/images/courses/ssc-28-prep.jpg",
+      enrolledStudentsCount: 1150,
+      rating: 4.95,
+      description: { bn: "এসএসসি ২০২৮ ব্যাচের শিক্ষার্থীদের জন্য বিজ্ঞান বিভাগের ৪টি মূল বিষয় (পদার্থ, রসায়ন, গণিত ও জীব)-এর পুঙ্খানুপুঙ্খ বেসিক গঠন ও বোর্ড পরীক্ষার জন্য আগাম পূর্ণাঙ্গ প্রস্তুতি।" }
+    },
+    {
       _id: "course-user-c10-biz",
       slug: "class-10-business-studies",
       title: { bn: "১০ম শ্রেণীর পূর্ণাঙ্গ ব্যবসায় শিক্ষা কোর্স" },
