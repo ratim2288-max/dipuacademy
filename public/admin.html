@@ -38,30 +38,41 @@
         <i class="fas fa-shield-halved"></i> সুপার অ্যাডমিন কনসোল
       </div>
       <p style="color: #94A3B8; font-size: 0.86rem; line-height: 1.5; margin: 0 0 1.25rem;">
-        লোগো ও সিকিউরিটি ভেরিফিকেশন। অনুমোদিত অ্যাডমিন পাসকোড বা পিন দিন।
+        নিরাপত্তা ভেরিফিকেশন। অনুগ্রহ করে অনুমোদিত অ্যাডমিন ফোন নম্বর ও পাসওয়ার্ড দিন।
       </p>
       
-      <form id="adminGateForm" onsubmit="handleAdminGateSubmit(event)" style="display: flex; flex-direction: column; gap: 12px;">
-        <div style="position: relative;">
-          <input type="password" id="adminGatePin" placeholder="অ্যাডমিন সিকিউরিটি পিন দিন..." required autocomplete="off" style="width: 100%; padding: 13px 44px 13px 16px; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(0,194,255,0.3); color: #FFFFFF; font-size: 1rem; font-family: inherit; outline: none; box-sizing: border-box; text-align: center; letter-spacing: 2px; transition: border-color 0.2s;">
-          <button type="button" onclick="toggleGatePasswordEye()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #94A3B8; cursor: pointer; font-size: 15px; padding: 4px;" title="পাসওয়ার্ড দেখুন">
-            <i class="fas fa-eye" id="gateEyeIcon"></i>
-          </button>
-        </div>
-        
-        <!-- Quick PIN Helper for Developer/Owner -->
-        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin: -2px 0 4px;">
-          <span style="font-size: 11px; color: #64748B;">কুইক পিন:</span>
-          <button type="button" onclick="fillAdminPin('dipu2026')" style="font-size: 11px; padding: 3px 10px; border-radius: 6px; background: rgba(0,194,255,0.15); border: 1px solid rgba(0,194,255,0.35); color: #00C2FF; font-weight: 700; cursor: pointer;">dipu2026</button>
-          <button type="button" onclick="fillAdminPin('admin2026')" style="font-size: 11px; padding: 3px 10px; border-radius: 6px; background: rgba(0,194,255,0.15); border: 1px solid rgba(0,194,255,0.35); color: #00C2FF; font-weight: 700; cursor: pointer;">admin2026</button>
+      <form id="adminGateForm" onsubmit="handleAdminGateSubmit(event)" style="display: flex; flex-direction: column; gap: 14px;">
+        <!-- Phone Input -->
+        <div style="position: relative; text-align: left;">
+          <label for="adminGatePhone" style="display: block; font-size: 11px; font-weight: 700; color: #00C2FF; margin-bottom: 6px; letter-spacing: 0.3px;">
+            <i class="fas fa-phone" style="margin-right: 5px;"></i> অ্যাডমিন মোবাইল নম্বর
+          </label>
+          <div style="position: relative;">
+            <i class="fas fa-mobile-screen" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #64748B; font-size: 14px;"></i>
+            <input type="tel" id="adminGatePhone" placeholder="01892176425" required autocomplete="tel" style="width: 100%; padding: 12px 14px 12px 40px; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(0,194,255,0.3); color: #FFFFFF; font-size: 0.95rem; font-family: inherit; outline: none; box-sizing: border-box; transition: border-color 0.2s;">
+          </div>
         </div>
 
-        <div id="adminGateError" style="color: #F43F5E; font-size: 0.82rem; font-weight: 600; display: none; margin-top: -4px;"></div>
+        <!-- Password Input -->
+        <div style="position: relative; text-align: left;">
+          <label for="adminGatePass" style="display: block; font-size: 11px; font-weight: 700; color: #00C2FF; margin-bottom: 6px; letter-spacing: 0.3px;">
+            <i class="fas fa-lock" style="margin-right: 5px;"></i> সিক্রেট পাসওয়ার্ড
+          </label>
+          <div style="position: relative;">
+            <i class="fas fa-key" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #64748B; font-size: 14px;"></i>
+            <input type="password" id="adminGatePass" placeholder="পাসওয়ার্ড দিন..." required autocomplete="current-password" style="width: 100%; padding: 12px 42px 12px 40px; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(0,194,255,0.3); color: #FFFFFF; font-size: 0.95rem; font-family: inherit; outline: none; box-sizing: border-box; transition: border-color 0.2s;">
+            <button type="button" onclick="toggleGatePasswordEye()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #94A3B8; cursor: pointer; font-size: 15px; padding: 4px;" title="পাসওয়ার্ড দেখুন">
+              <i class="fas fa-eye" id="gateEyeIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="adminGateError" style="color: #F43F5E; font-size: 0.84rem; font-weight: 600; display: none; margin-top: -2px; padding: 8px 12px; border-radius: 8px; background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.3); text-align: left;"></div>
         
-        <button type="submit" style="width: 100%; padding: 13px; border-radius: 12px; background: linear-gradient(135deg, #0084FF, #00C2FF); border: none; color: #050B17; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(0,194,255,0.4);">
-          <i class="fas fa-key" style="margin-right: 6px;"></i> আনলক করুন
+        <button type="submit" style="width: 100%; padding: 13px; border-radius: 12px; background: linear-gradient(135deg, #0084FF, #00C2FF); border: none; color: #050B17; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(0,194,255,0.4); margin-top: 4px;">
+          <i class="fas fa-right-to-bracket" style="margin-right: 6px;"></i> আনলক ও প্রবেশ করুন
         </button>
-        <a href="/" style="display: inline-block; color: #94A3B8; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-top: 6px; transition: color 0.15s;">
+        <a href="/" style="display: inline-block; color: #94A3B8; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-top: 4px; transition: color 0.15s;">
           <i class="fas fa-arrow-left" style="margin-right: 5px;"></i> মূল ওয়েবসাইটে ফিরে যান
         </a>
       </form>
@@ -82,45 +93,58 @@
     })();
 
     function toggleGatePasswordEye() {
-      const pinInput = document.getElementById("adminGatePin");
+      const passInput = document.getElementById("adminGatePass");
       const eye = document.getElementById("gateEyeIcon");
-      if (!pinInput || !eye) return;
-      if (pinInput.type === "password") {
-        pinInput.type = "text";
+      if (!passInput || !eye) return;
+      if (passInput.type === "password") {
+        passInput.type = "text";
         eye.className = "fas fa-eye-slash";
       } else {
-        pinInput.type = "password";
+        passInput.type = "password";
         eye.className = "fas fa-eye";
-      }
-    }
-
-    function fillAdminPin(pin) {
-      const pinInput = document.getElementById("adminGatePin");
-      if (pinInput) {
-        pinInput.value = pin;
-        document.getElementById("adminGateForm")?.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
       }
     }
 
     function handleAdminGateSubmit(e) {
       e.preventDefault();
-      const pin = document.getElementById("adminGatePin").value.trim();
+      const phoneInput = document.getElementById("adminGatePhone");
+      const passInput = document.getElementById("adminGatePass");
       const err = document.getElementById("adminGateError");
-      // Accepted admin pins
-      if (pin === "dipu2026" || pin === "admin2026" || pin === "dipuedu" || pin === "16910") {
+
+      // Normalize phone number (remove spaces/dashes, strip +88/88, convert Bengali digits)
+      let phone = (phoneInput?.value || "").trim().replace(/[\s\-]/g, "");
+      const bnDigits = {'০':'0','১':'1','২':'2','৩':'3','৪':'4','৫':'5','৬':'6','৭':'7','৮':'8','৯':'9'};
+      phone = phone.replace(/[০-৯]/g, d => bnDigits[d]);
+      if (phone.startsWith("+88")) phone = phone.slice(3);
+      else if (phone.startsWith("88")) phone = phone.slice(2);
+
+      const pass = (passInput?.value || "").trim();
+
+      // Authorized credentials: Phone 01892176425 and Password ratim76908
+      if (phone === "01892176425" && pass === "ratim76908") {
         sessionStorage.setItem("dipu_admin_authorized", "true");
+        sessionStorage.setItem("dipu_admin_phone", "01892176425");
         localStorage.setItem("adminToken", "dipu_admin_super_token_2026");
         const gate = document.getElementById("adminSecurityGate");
         if (gate) gate.style.display = "none";
         const layout = document.querySelector(".admin-layout-container");
         if (layout) layout.style.display = "grid";
+        if (err) err.style.display = "none";
       } else {
         if (err) {
-          err.textContent = "❌ ভুল সিকিউরিটি পিন! সঠিক অ্যাডমিন পিন দিন।";
+          err.innerHTML = '<i class="fas fa-circle-exclamation" style="margin-right: 5px;"></i> ভুল ফোন নম্বর বা পাসওয়ার্ড! অনুগ্রহ করে সঠিক তথ্য দিন।';
           err.style.display = "block";
         }
-        document.getElementById("adminGatePin").value = "";
+        if (passInput) passInput.value = "";
       }
+    }
+
+    function adminLogout(e) {
+      if (e) e.preventDefault();
+      sessionStorage.removeItem("dipu_admin_authorized");
+      sessionStorage.removeItem("dipu_admin_phone");
+      localStorage.removeItem("adminToken");
+      window.location.reload();
     }
   </script>
 
@@ -257,7 +281,7 @@
 
       <!-- Sidebar Bottom Section -->
       <div class="careplus-sidebar-bottom">
-        <a href="/" class="nav-item dribbble-logout-link" title="লগআউট / লাইভ সাইটে যান">
+        <a href="javascript:void(0)" onclick="adminLogout(event)" class="nav-item dribbble-logout-link" title="লগআউট / লাইভ সাইটে যান">
           <i class="fas fa-arrow-right-from-bracket nav-icon"></i>
           <span>Logout</span>
         </a>
