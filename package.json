@@ -46,6 +46,7 @@
     "motion": "^12.43.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
+    "ssh2": "^1.17.0",
     "tailwind-merge": "^3.7.0",
     "typescript": "^7.0.2",
     "uuid": "^9.0.1"
