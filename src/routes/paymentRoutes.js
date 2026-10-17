@@ -687,6 +687,14 @@ router.post('/zinipay/create', async (req, res) => {
     const host = req.headers['x-forwarded-host'] || req.get('host') || 'localhost:5000';
     const baseUrl = `${protocol}://${host}`;
 
+    // ZiniPay requires redirect_url and cancel_url domains to strictly match the registered brand website domain.
+    // The brand 'dipuacademy' is registered with domain 'https://dipuacademy.com'.
+    // If the request comes from dipuacademy.com, use baseUrl; otherwise use https://dipuacademy.com
+    // and attach origin=${encodeURIComponent(baseUrl)} so the user returns to their current portal seamlessly.
+    const isBrandDomain = host.includes('dipuacademy.com');
+    const brandBaseUrl = isBrandDomain ? baseUrl.replace(/\/+$/, '') : 'https://dipuacademy.com';
+    const originParam = `&origin=${encodeURIComponent(baseUrl)}`;
+
     const phone = (studentPhone || '01712345678').trim();
     const name = (studentName || 'Student').trim();
     const email = (studentEmail || `${phone.replace(/[^0-9]/g, '')}@dipuacademy.com`).trim();
@@ -702,30 +710,35 @@ router.post('/zinipay/create', async (req, res) => {
       const bTitle = bookTitle || bookId || 'বই অর্ডার';
       itemTitle = bTitle;
       amount = amount || 450;
-      redirect_url = `${baseUrl}/payment-success.html?type=${orderType}&item=${encodeURIComponent(bTitle)}&id=${encodeURIComponent(bookId || '')}&phone=${encodeURIComponent(phone)}`;
-      cancel_url = `${baseUrl}/book.html?id=${encodeURIComponent(bookId || '')}&payment_cancelled=1`;
+      redirect_url = `${brandBaseUrl}/payment-success.html?type=${orderType}&item=${encodeURIComponent(bTitle)}&id=${encodeURIComponent(bookId || '')}&phone=${encodeURIComponent(phone)}${originParam}`;
+      cancel_url = `${brandBaseUrl}/book.html?id=${encodeURIComponent(bookId || '')}&payment_cancelled=1${originParam}`;
     } else if (orderType === 'ai_subscription') {
       const pTitle = planName || planId || 'AI সাবস্ক্রিপশন';
       itemTitle = pTitle;
       amount = amount || 490;
-      redirect_url = `${baseUrl}/payment-success.html?type=ai_subscription&item=${encodeURIComponent(pTitle)}&phone=${encodeURIComponent(phone)}`;
-      cancel_url = `${baseUrl}/ai?payment_cancelled=1`;
+      redirect_url = `${brandBaseUrl}/payment-success.html?type=ai_subscription&item=${encodeURIComponent(pTitle)}&phone=${encodeURIComponent(phone)}${originParam}`;
+      cancel_url = `${brandBaseUrl}/ai?payment_cancelled=1${originParam}`;
     } else {
       // Default: Course
       const targetIdOrSlug = courseSlug || courseId;
-      if (targetIdOrSlug) {
-        course = await Course.findOne({
-          $or: [
-            { slug: targetIdOrSlug.toString().toLowerCase() },
-            ...(mongoose.Types.ObjectId.isValid(targetIdOrSlug) ? [{ _id: targetIdOrSlug }] : [])
-          ]
-        });
+      if (targetIdOrSlug && mongoose.connection.readyState === 1) {
+        try {
+          course = await Course.findOne({
+            $or: [
+              { slug: targetIdOrSlug.toString().toLowerCase() },
+              ...(mongoose.Types.ObjectId.isValid(targetIdOrSlug) ? [{ _id: targetIdOrSlug }] : [])
+            ]
+          }).maxTimeMS(2500);
+        } catch (dbErr) {
+          console.warn('[Course find non-blocking note]:', dbErr.message);
+          course = null;
+        }
       }
       amount = amount || (course ? (course.discountPrice || course.price) : 850);
-      cSlug = course ? course.slug : (courseSlug || courseId || 'course-enrolled');
+      cSlug = course ? course.slug : (courseSlug || courseId || 'hsc-27-full-prep');
       itemTitle = course ? (course.title?.bn || course.title?.en || course.slug) : cSlug;
-      redirect_url = `${baseUrl}/payment-success.html?type=course&course=${encodeURIComponent(cSlug)}&phone=${encodeURIComponent(phone)}`;
-      cancel_url = `${baseUrl}/course.html?slug=${encodeURIComponent(cSlug)}&payment_cancelled=1`;
+      redirect_url = `${brandBaseUrl}/payment-success.html?type=course&course=${encodeURIComponent(cSlug)}&phone=${encodeURIComponent(phone)}${originParam}`;
+      cancel_url = `${brandBaseUrl}/course.html?slug=${encodeURIComponent(cSlug)}&payment_cancelled=1${originParam}`;
     }
 
     if (couponCode) {
@@ -772,19 +785,21 @@ router.post('/zinipay/create', async (req, res) => {
       });
     }
 
-    // Log the initiation
-    await PaymentAuditLog.create({
-      trxID: result.data.val_id || result.data.invoice_id || `INIT_${Date.now()}`,
-      userPhone: phone,
-      courseId: course ? course._id : null,
-      courseSlug: itemTitle,
-      amount,
-      paymentGateway: 'zinipay',
-      status: 'INITIATED',
-      ipAddress: req.ip || req.headers['x-forwarded-for'] || '',
-      userAgent: req.headers['user-agent'] || '',
-      gatewayResponse: result.data
-    }).catch(() => {});
+    // Log the initiation safely
+    if (mongoose.connection.readyState === 1) {
+      PaymentAuditLog.create({
+        trxID: result.data.val_id || result.data.invoice_id || `INIT_${Date.now()}`,
+        userPhone: phone,
+        courseId: course ? course._id : null,
+        courseSlug: itemTitle,
+        amount,
+        paymentGateway: 'zinipay',
+        status: 'INITIATED',
+        ipAddress: req.ip || req.headers['x-forwarded-for'] || '',
+        userAgent: req.headers['user-agent'] || '',
+        gatewayResponse: result.data
+      }).catch(() => {});
+    }
 
     return res.status(200).json({
       success: true,
