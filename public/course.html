@@ -201,19 +201,24 @@
 
     /* Course Main Title & Pitch */
     .course-hero-title {
-      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
-      font-weight: 900;
-      color: #0D1B36;
-      line-height: 1.25;
-      margin: 0.25rem 0 0.75rem;
-      letter-spacing: -0.015em;
+      font-size: clamp(1.9rem, 3.4vw, 2.75rem) !important;
+      font-weight: 900 !important;
+      color: #0B192C !important;
+      -webkit-text-fill-color: #0B192C !important;
+      background: none !important;
+      line-height: 1.28 !important;
+      margin: 0.35rem 0 0.85rem !important;
+      letter-spacing: -0.015em !important;
+      text-shadow: 0 1px 2px rgba(11, 25, 44, 0.05);
     }
 
     .course-hero-desc {
-      font-size: 1.05rem;
-      color: #475569;
-      line-height: 1.75;
-      margin-bottom: 1.5rem;
+      font-size: 1.08rem !important;
+      color: #334155 !important;
+      -webkit-text-fill-color: #334155 !important;
+      line-height: 1.8 !important;
+      margin-bottom: 1.5rem !important;
+      font-weight: 500 !important;
     }
 
     /* Meta Chips Bar */
@@ -222,10 +227,10 @@
       align-items: center;
       gap: 1.25rem;
       flex-wrap: wrap;
-      font-size: 0.92rem;
-      color: #64748B;
-      border-top: 1.5px solid #E8EEF7;
-      border-bottom: 1.5px solid #E8EEF7;
+      font-size: 0.95rem;
+      color: #334155;
+      border-top: 1.5px solid #E2E8F0;
+      border-bottom: 1.5px solid #E2E8F0;
       padding: 1.1rem 0;
     }
 
@@ -264,11 +269,13 @@
     }
 
     .tab-nav-btn {
-      padding: 9px 18px;
-      border-radius: 11px;
-      font-size: 0.88rem;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 0.92rem;
       font-weight: 700;
-      color: #64748B;
+      color: #334155;
+      background: #F8FAFD;
+      border: 1px solid #E2E8F0;
       text-decoration: none;
       white-space: nowrap;
       transition: all 0.2s ease;
@@ -311,9 +318,11 @@
     }
 
     .section-title {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: #0D1B36;
+      font-size: 1.4rem !important;
+      font-weight: 800 !important;
+      color: #0B192C !important;
+      -webkit-text-fill-color: #0B192C !important;
+      background: none !important;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -369,10 +378,10 @@
     }
 
     .feat-text {
-      font-size: 0.96rem;
-      color: #0D1B36;
-      line-height: 1.6;
-      font-weight: 600;
+      font-size: 1rem !important;
+      color: #0B192C !important;
+      line-height: 1.55 !important;
+      font-weight: 700 !important;
     }
 
     /* Syllabus & Curriculum Accordion */
@@ -1225,7 +1234,7 @@
             </a>
           </div>
 
-          <h1 class="course-hero-title" id="courseHeaderTitle">
+          <h1 class="course-hero-title no-shimmer" id="courseHeaderTitle">
             ৫ম শ্রেণীর পূর্ণাঙ্গ কোর্স
           </h1>
 
@@ -1636,19 +1645,49 @@
           </span>
         </div>
 
-        <!-- Coupon Input -->
-        <div style="margin-bottom: 0.5rem;">
-          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #0D1B36; margin-bottom: 6px;">ডিসকাউন্ট কুপন কোড (যদি থাকে)</label>
-          <div class="coupon-input-group">
-            <input type="text" id="couponCodeInput" class="coupon-text-input" placeholder="কুপন কোড (উদা: WELCOME50)">
-            <button type="button" id="applyCouponBtn" class="btn-apply-coupon">প্রয়োগ</button>
-          </div>
-          <div style="font-size: 0.75rem; color: #64748B;">
-            ডেমো কুপন: <button type="button" onclick="applyQuickCoupon('WELCOME50')" style="background:none; border:none; color:var(--cd-green); cursor:pointer; font-weight:700; text-decoration:underline;">WELCOME50</button> বা <button type="button" onclick="applyQuickCoupon('DIPU100')" style="background:none; border:none; color:var(--cd-green); cursor:pointer; font-weight:700; text-decoration:underline;">DIPU100</button>
+                <!-- Interactive Promocode Accordion (চাপ দিলে প্রমোকোড বক্স খুলবে) -->
+        <div class="promocode-box-wrapper" style="margin-bottom: 1rem;">
+          <button type="button" id="togglePromoBtn" class="btn-toggle-promocode" onclick="togglePromocodeBox()" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; background: #F8FAFD; border: 1.5px solid #CBD5E1; border-radius: 12px; cursor: pointer; transition: all 0.22s ease;">
+            <span style="display: flex; align-items: center; gap: 9px; font-size: 0.92rem; font-weight: 700; color: #0D1B36;">
+              <i class="fas fa-ticket-simple" style="color: #1665D8; font-size: 1rem;"></i>
+              <span>প্রমোকোড বা কুপন কোড আছে?</span>
+            </span>
+            <span style="display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 800; color: #1665D8;">
+              <span id="promoToggleLabel">কোড যোগ করুন</span>
+              <i class="fas fa-chevron-down" id="promoToggleIcon" style="transition: transform 0.25s ease;"></i>
+            </span>
+          </button>
+
+          <!-- Collapsible Promocode Input Area -->
+          <div id="promoInputContainer" style="display: none; margin-top: 8px; padding: 14px; background: #FFFFFF; border: 1.5px dashed #93C5FD; border-radius: 14px; box-shadow: 0 4px 14px rgba(22, 101, 216, 0.05); transition: all 0.3s ease;">
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="couponCodeInput" class="coupon-text-input" placeholder="কুপন কোড (যেমন: WELCOME50, DIPU100)" style="flex: 1; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #CBD5E1;">
+              <button type="button" id="applyCouponBtn" class="btn-apply-coupon" onclick="applyEnteredCoupon()" style="padding: 10px 20px; font-weight: 800; border-radius: 10px; background: #1665D8; color: #fff; border: none; cursor: pointer; white-space: nowrap;">
+                প্রয়োগ করুন
+              </button>
+            </div>
+            
+            <div id="couponStatusMsg" style="font-size: 0.82rem; margin-top: 8px; font-weight: 600;"></div>
+
+            <!-- Applied Coupon Success Card -->
+            <div id="appliedPromoBadge" style="display: none; margin-top: 8px; padding: 8px 12px; background: #ECFDF5; border: 1.5px solid #6EE7B7; border-radius: 10px; justify-content: space-between; align-items: center;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-circle-check" style="color: #059669; font-size: 1rem;"></i>
+                <span style="color: #065F46; font-size: 0.88rem; font-weight: 800;" id="appliedPromoCodeText">WELCOME50 প্রয়োগ হয়েছে</span>
+              </div>
+              <button type="button" onclick="removeAppliedCoupon()" style="background: none; border: none; color: #DC2626; font-size: 0.82rem; font-weight: 800; cursor: pointer; text-decoration: underline; padding: 0;">
+                <i class="fas fa-trash-can mr-1"></i> মুছে ফেলুন
+              </button>
+            </div>
+
+            <!-- Quick Demo Promos Chips -->
+            <div style="font-size: 0.78rem; color: #64748B; margin-top: 10px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+              <span>জনপ্রিয় অফার:</span>
+              <button type="button" onclick="applyQuickCoupon('WELCOME50')" style="background: #EFF6FF; border: 1px solid #BFDBFE; color: #1D4ED8; cursor: pointer; font-weight: 700; font-size: 0.75rem; padding: 2px 8px; border-radius: 6px;">WELCOME50</button>
+              <button type="button" onclick="applyQuickCoupon('DIPU100')" style="background: #EFF6FF; border: 1px solid #BFDBFE; color: #1D4ED8; cursor: pointer; font-weight: 700; font-size: 0.75rem; padding: 2px 8px; border-radius: 6px;">DIPU100</button>
+            </div>
           </div>
         </div>
-
-        <div id="couponStatusMsg" style="font-size: 0.8rem; margin-bottom: 1rem;"></div>
 
         <!-- Order Summary Calc -->
         <div class="order-calc-table">
@@ -2287,38 +2326,131 @@
       updateTotalDisplay();
     }
 
+        let isPromoBoxOpen = false;
+    let appliedCouponCode = "";
+
+    function togglePromocodeBox(forceState) {
+      const container = document.getElementById("promoInputContainer");
+      const icon = document.getElementById("promoToggleIcon");
+      const label = document.getElementById("promoToggleLabel");
+      if (!container) return;
+
+      isPromoBoxOpen = typeof forceState === "boolean" ? forceState : !isPromoBoxOpen;
+      if (isPromoBoxOpen) {
+        container.style.display = "block";
+        if (icon) icon.style.transform = "rotate(180deg)";
+        if (label) label.textContent = "বন্ধ করুন";
+        document.getElementById("couponCodeInput")?.focus();
+      } else {
+        container.style.display = "none";
+        if (icon) icon.style.transform = "rotate(0deg)";
+        if (label) label.textContent = appliedCouponCode ? "কোড পরিবর্তন" : "কোড যোগ করুন";
+      }
+    }
+
     function applyQuickCoupon(code) {
-      document.getElementById("couponCodeInput").value = code;
+      const input = document.getElementById("couponCodeInput");
+      if (input) input.value = code;
+      togglePromocodeBox(true);
       applyCoupon(code);
     }
 
-    function applyCoupon(code) {
+    function applyEnteredCoupon() {
+      const input = document.getElementById("couponCodeInput");
+      const code = input ? input.value.trim() : "";
+      applyCoupon(code);
+    }
+
+    async function applyCoupon(code) {
       const msg = document.getElementById("couponStatusMsg");
+      const applyBtn = document.getElementById("applyCouponBtn");
       if (!code) {
-        msg.innerHTML = `<span style="color:#F87171;"><i class="fas fa-circle-exclamation"></i> দয়া করে একটি কুপন কোড লিখুন।</span>`;
+        if (msg) msg.innerHTML = '<span style="color:#DC2626;"><i class="fas fa-circle-exclamation mr-1"></i> দয়া করে একটি কুপন কোড লিখুন।</span>';
         return;
       }
 
-      if (code === "WELCOME50") {
-        appliedCouponDiscount = 100;
-        msg.innerHTML = `<span style="color:#10B981;"><i class="fas fa-circle-check"></i> WELCOME50 গৃহীত! ১০০ টাকা বিশেষ ছাড় যুক্ত হয়েছে।</span>`;
-      } else if (code === "DIPU100") {
-        appliedCouponDiscount = 100;
-        msg.innerHTML = `<span style="color:#10B981;"><i class="fas fa-circle-check"></i> DIPU100 গৃহীত! ১০০ টাকা ডিসকাউন্ট যুক্ত হয়েছে।</span>`;
-      } else {
-        appliedCouponDiscount = 50;
-        msg.innerHTML = `<span style="color:#10B981;"><i class="fas fa-circle-check"></i> ${code} কুপন সফল! ৫০ টাকা ছাড়।</span>`;
+      if (applyBtn) {
+        applyBtn.disabled = true;
+        applyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
       }
+      if (msg) msg.innerHTML = '<span style="color:#1665D8;"><i class="fas fa-spinner fa-spin mr-1"></i> কুপন যাচাই করা হচ্ছে...</span>';
 
-      document.getElementById("calcCouponRow").style.display = "flex";
-      document.getElementById("calcCouponDiscount").textContent = `-${formatBDT(appliedCouponDiscount)}`;
+      try {
+        const coursePrice = Number(currentCourse?.discountPrice) || Number(currentCourse?.price) || 850;
+        const res = await fetch("/api/payment/validate-coupon", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code, coursePrice })
+        });
+        const data = await res.json();
+
+        if (data.success && data.coupon) {
+          appliedCouponDiscount = Number(data.coupon.discountAmountBDT) || 0;
+          appliedCouponCode = data.coupon.code || code.toUpperCase();
+
+          if (msg) {
+            msg.innerHTML = `<span style="color:#059669;"><i class="fas fa-circle-check mr-1"></i> ${data.message || 'কুপন সফলভাবে প্রয়োগ হয়েছে!'}</span>`;
+          }
+
+          const badge = document.getElementById("appliedPromoBadge");
+          const badgeText = document.getElementById("appliedPromoCodeText");
+          if (badge && badgeText) {
+            badgeText.textContent = `${appliedCouponCode} প্রয়োগ হয়েছে (-৳${appliedCouponDiscount})`;
+            badge.style.display = "flex";
+          }
+
+          const label = document.getElementById("promoToggleLabel");
+          if (label) label.textContent = "কোড পরিবর্তন";
+
+          document.getElementById("calcCouponRow").style.display = "flex";
+          document.getElementById("calcCouponDiscount").textContent = `-${formatBDT(appliedCouponDiscount)}`;
+          updateTotalDisplay();
+        } else {
+          appliedCouponDiscount = 0;
+          appliedCouponCode = "";
+          if (msg) {
+            msg.innerHTML = `<span style="color:#DC2626;"><i class="fas fa-circle-xmark mr-1"></i> ${data.message || 'কুপনটি সঠিক নয় বা মেয়াদ শেষ।'}</span>`;
+          }
+          const badge = document.getElementById("appliedPromoBadge");
+          if (badge) badge.style.display = "none";
+          document.getElementById("calcCouponRow").style.display = "none";
+          updateTotalDisplay();
+        }
+      } catch (err) {
+        if (msg) {
+          msg.innerHTML = '<span style="color:#DC2626;"><i class="fas fa-triangle-exclamation mr-1"></i> কুপন যাচাই করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।</span>';
+        }
+      } finally {
+        if (applyBtn) {
+          applyBtn.disabled = false;
+          applyBtn.innerHTML = 'প্রয়োগ করুন';
+        }
+      }
+    }
+
+    function removeAppliedCoupon() {
+      appliedCouponDiscount = 0;
+      appliedCouponCode = "";
+      const input = document.getElementById("couponCodeInput");
+      if (input) input.value = "";
+      const msg = document.getElementById("couponStatusMsg");
+      if (msg) msg.innerHTML = "";
+      const badge = document.getElementById("appliedPromoBadge");
+      if (badge) badge.style.display = "none";
+      const label = document.getElementById("promoToggleLabel");
+      if (label) label.textContent = "কোড যোগ করুন";
+      document.getElementById("calcCouponRow").style.display = "none";
       updateTotalDisplay();
     }
 
     function updateTotalDisplay() {
       const discPrice = Number(currentCourse?.discountPrice) || 419;
-      const total = Math.max(0, discPrice - appliedCouponDiscount);
+      const total = Math.max(10, discPrice - appliedCouponDiscount);
       document.getElementById("calcFinalTotal").textContent = formatBDT(total);
+      const confirmPayBtnText = document.getElementById("confirmPayBtnText");
+      if (confirmPayBtnText) {
+        confirmPayBtnText.textContent = `৳${total} পেমেন্ট সম্পন্ন করে ভর্তি নিশ্চিত করুন`;
+      }
     }
 
 

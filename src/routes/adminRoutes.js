@@ -1376,6 +1376,170 @@ router.HELPLINE_CONFIG = HELPLINE_CONFIG;
 router.saveFeaturesToFile = saveFeaturesToFile;
 router.saveDashboardConfigToFile = saveDashboardConfigToFile;
 router.saveHelplineConfigToFile = saveHelplineConfigToFile;
+
+// ==============================================================================
+// Promocode & Coupon Management API (MongoDB Atlas + Live Sync)
+// ==============================================================================
+const mongoose = require('mongoose');
+const Coupon = require('../models/Coupon');
+
+// Seed default initial coupons if collection is empty
+async function seedDefaultCouponsIfEmpty() {
+  if (mongoose.connection.readyState !== 1) return;
+  try {
+    const count = await Coupon.countDocuments();
+    if (count === 0) {
+      await Coupon.insertMany([
+        {
+          code: 'WELCOME50',
+          discountType: 'percentage',
+          discountValue: 50,
+          maxDiscountBDT: 500,
+          maxUses: 1000,
+          usedCount: 342,
+          validFrom: new Date('2026-01-01'),
+          validUntil: new Date('2027-12-31'),
+          isActive: true
+        },
+        {
+          code: 'EID2026',
+          discountType: 'fixed',
+          discountValue: 200,
+          maxDiscountBDT: 200,
+          maxUses: 500,
+          usedCount: 128,
+          validFrom: new Date('2026-01-01'),
+          validUntil: new Date('2027-06-30'),
+          isActive: true
+        },
+        {
+          code: 'DIPU100',
+          discountType: 'fixed',
+          discountValue: 100,
+          maxDiscountBDT: 100,
+          maxUses: 5000,
+          usedCount: 1240,
+          validFrom: new Date('2026-01-01'),
+          validUntil: new Date('2027-12-31'),
+          isActive: true
+        }
+      ]);
+      console.log('[Coupon Seed] Initial coupons seeded successfully into MongoDB Atlas.');
+    }
+  } catch (err) {
+    console.warn('[Coupon Seed Warning]:', err.message);
+  }
+}
+
+// 1. GET /api/admin/coupons — Get all coupons
+router.get('/coupons', async (req, res) => {
+  try {
+    await seedDefaultCouponsIfEmpty();
+    let coupons = [];
+    if (mongoose.connection.readyState === 1) {
+      coupons = await Coupon.find().sort({ createdAt: -1 });
+    }
+    return res.status(200).json({ success: true, coupons });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'কুপন লোড করতে সমস্যা হয়েছে।', error: err.message });
+  }
+});
+
+// 2. POST /api/admin/coupons — Create or update a coupon
+router.post('/coupons', async (req, res) => {
+  try {
+    const {
+      code,
+      discountType = 'percentage',
+      discountValue,
+      maxDiscountBDT = 500,
+      validFrom,
+      validUntil,
+      maxUses = 100,
+      isActive = true
+    } = req.body;
+
+    if (!code || !code.trim()) {
+      return res.status(400).json({ success: false, message: 'কুপন কোড প্রদান করা আবশ্যক।' });
+    }
+    if (discountValue === undefined || isNaN(Number(discountValue)) || Number(discountValue) <= 0) {
+      return res.status(400).json({ success: false, message: 'সঠিক ডিসকাউন্টের পরিমাণ প্রদান করুন।' });
+    }
+    if (!validUntil) {
+      return res.status(400).json({ success: false, message: 'মেয়াদ উত্তীর্ণের তারিখ (Expiry Date) দেওয়া আবশ্যক।' });
+    }
+
+    const cleanCode = code.trim().toUpperCase();
+    const couponData = {
+      code: cleanCode,
+      discountType,
+      discountValue: Number(discountValue),
+      maxDiscountBDT: Number(maxDiscountBDT) || 500,
+      validFrom: validFrom ? new Date(validFrom) : new Date(),
+      validUntil: new Date(validUntil),
+      maxUses: Number(maxUses) || 100,
+      isActive: isActive === true || isActive === 'true'
+    };
+
+    let savedCoupon;
+    if (mongoose.connection.readyState === 1) {
+      const existing = await Coupon.findOne({ code: cleanCode });
+      if (existing) {
+        Object.assign(existing, couponData);
+        savedCoupon = await existing.save();
+      } else {
+        savedCoupon = await Coupon.create(couponData);
+      }
+    } else {
+      savedCoupon = { _id: 'local-' + Date.now(), ...couponData, usedCount: 0, createdAt: new Date() };
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: `প্রমোকোড "${cleanCode}" সফলভাবে সংরক্ষণ করা হয়েছে!`,
+      coupon: savedCoupon
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'কুপন সংরক্ষণে ব্যর্থ হয়েছে।', error: err.message });
+  }
+});
+
+// 3. PUT /api/admin/coupons/:id/toggle — Toggle active status
+router.put('/coupons/:id/toggle', async (req, res) => {
+  try {
+    const { id } = req.params;
+    let updated;
+    if (mongoose.connection.readyState === 1) {
+      const coupon = await Coupon.findById(id);
+      if (!coupon) {
+        return res.status(404).json({ success: false, message: 'কুপনটি পাওয়া যায়নি।' });
+      }
+      coupon.isActive = !coupon.isActive;
+      updated = await coupon.save();
+    }
+    return res.status(200).json({
+      success: true,
+      message: updated?.isActive ? 'কুপনটি সক্রিয় করা হয়েছে।' : 'কুপনটি নিষ্ক্রিয় করা হয়েছে।',
+      coupon: updated
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'স্ট্যাটাস পরিবর্তনে সমস্যা হয়েছে।', error: err.message });
+  }
+});
+
+// 4. DELETE /api/admin/coupons/:id — Delete coupon
+router.delete('/coupons/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (mongoose.connection.readyState === 1) {
+      await Coupon.findByIdAndDelete(id);
+    }
+    return res.status(200).json({ success: true, message: 'প্রমোকোড সফলভাবে মুছে ফেলা হয়েছে।' });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'কুপন মুছতে সমস্যা হয়েছে।', error: err.message });
+  }
+});
+
 module.exports = router;
 
 

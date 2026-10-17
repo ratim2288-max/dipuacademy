@@ -6,6 +6,7 @@ const User = require('../models/User');
 const Course = require('../models/Course');
 const Enrollment = require('../models/Enrollment');
 const PaymentAuditLog = require('../models/PaymentAuditLog');
+const Coupon = require('../models/Coupon');
 const { verifyAuth } = require('../middleware/auth');
 const zinipayService = require('../services/zinipayService');
 
@@ -53,30 +54,49 @@ const activeCoupons = [
   },
 ];
 
+
+// Helper to find and validate coupon against MongoDB (with in-memory fallback)
+async function findCouponByCode(rawCode) {
+  if (!rawCode) return null;
+  const code = rawCode.trim().toUpperCase();
+  let coupon = null;
+  if (mongoose.connection.readyState === 1) {
+    try {
+      coupon = await Coupon.findOne({ code });
+    } catch (e) {
+      console.warn('[Coupon DB Error]:', e.message);
+    }
+  }
+  if (!coupon) {
+    coupon = activeCoupons.find(c => c.code === code);
+  }
+  return coupon;
+}
+
 // POST /api/payment/validate-coupon & POST /api/payment/apply-coupon
 const handleCoupon = async (req, res) => {
   try {
     const { code, coursePrice } = req.body;
     if (!code) {
-      return res.status(400).json({ success: false, message: 'Coupon code is required.' });
+      return res.status(400).json({ success: false, message: 'কুপন কোড প্রদান করা আবশ্যক।' });
     }
 
-    const coupon = activeCoupons.find(c => c.code === code.toUpperCase());
+    const coupon = await findCouponByCode(code);
 
     if (!coupon) {
-      return res.status(404).json({ success: false, message: 'Invalid coupon code.' });
+      return res.status(404).json({ success: false, message: 'প্রদত্ত কুপন কোডটি সঠিক নয়।' });
     }
 
     if (!coupon.isActive) {
-      return res.status(400).json({ success: false, message: 'This coupon is no longer active.' });
+      return res.status(400).json({ success: false, message: 'এই কুপনটি বর্তমানে নিষ্ক্রিয় রয়েছে।' });
     }
 
     if (new Date() > new Date(coupon.validUntil)) {
-      return res.status(400).json({ success: false, message: 'This coupon has expired.' });
+      return res.status(400).json({ success: false, message: 'এই কুপনটির মেয়াদের সময় শেষ হয়ে গেছে।' });
     }
 
     if (coupon.usedCount >= coupon.maxUses) {
-      return res.status(400).json({ success: false, message: 'This coupon has reached its usage limit.' });
+      return res.status(400).json({ success: false, message: 'এই কুপনটির সর্বোচ্চ ব্যবহারের সীমা শেষ হয়ে গেছে।' });
     }
 
     // Calculate discount
@@ -124,8 +144,8 @@ const handleCheckout = async (req, res) => {
     // Apply coupon if provided
     let couponDiscount = 0;
     if (couponCode) {
-      const coupon = activeCoupons.find(c => c.code === couponCode.toUpperCase() && c.isActive);
-      if (coupon && new Date() <= new Date(coupon.validUntil)) {
+      const coupon = await findCouponByCode(couponCode);
+      if (coupon && coupon.isActive && new Date() <= new Date(coupon.validUntil)) {
         if (coupon.discountType === 'percentage') {
           couponDiscount = Math.min(Math.round(amount * (coupon.discountValue / 100)), coupon.maxDiscountBDT);
         } else {

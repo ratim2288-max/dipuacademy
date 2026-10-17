@@ -255,12 +255,21 @@
             </a>
           </li>
 
-          <!-- 8. পেমেন্ট গেটওয়ে (ZiniPay) -->
+                    <!-- 8. পেমেন্ট গেটওয়ে (ZiniPay) -->
           <li>
             <a href="#payment-gateway" class="nav-item" data-tab="payment-gateway">
               <i class="fas fa-credit-card nav-icon"></i>
               <span>পেমেন্ট গেটওয়ে (ZiniPay)</span>
               <span class="dribbble-menu-badge-green" style="background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 10px; padding: 2px 6px; border-radius: 6px;">Live</span>
+            </a>
+          </li>
+
+          <!-- 8b. প্রমোকোড ও ডিসকাউন্ট কুপন -->
+          <li>
+            <a href="#promocodes" class="nav-item" data-tab="promocodes">
+              <i class="fas fa-ticket-simple nav-icon"></i>
+              <span>প্রমোকোড ও কুপন</span>
+              <span class="dribbble-menu-badge-green" style="background: rgba(22, 101, 216, 0.15); color: #1665D8; border: 1px solid rgba(22, 101, 216, 0.3); font-size: 10px; padding: 2px 6px; border-radius: 6px;">New</span>
             </a>
           </li>
         </ul>
@@ -1904,6 +1913,117 @@
         </section>
 
         <!-- ====================================================================
+             VIEW: PROMOCODES & COUPONS CONTROLLER (প্রমোকোড ও ডিসকাউন্ট কুপন)
+             ==================================================================== -->
+        <section id="view-promocodes" class="admin-view hidden">
+          <!-- Header Banner -->
+          <div class="helpline-header-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div class="helpline-header-left">
+              <div class="helpline-header-badge" style="background: rgba(22, 101, 216, 0.12); color: #1665D8;">
+                <span class="helpline-pulse-dot" style="background: #1665D8;"></span>
+                <span>প্রমোকোড ও ডিসকাউন্ট কুপন কন্ট্রোলার</span>
+              </div>
+              <h2 class="helpline-header-title" style="margin-top: 8px;">কুপন কোড ও বিশেষ অফার ম্যানেজমেন্ট</h2>
+              <p class="helpline-header-subtitle">
+                কোর্সের জন্য বিশেষ ছাড়ের কুপন কোড তৈরি করুন, মেয়াদ নির্ধারণ ও রিয়েল-টাইম ব্যবহার ট্র্যাক করুন।
+              </p>
+            </div>
+            <div>
+              <button type="button" class="btn-careplus-primary" onclick="openNewCouponModal()" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 12px; font-weight: 800; font-size: 14px; background: linear-gradient(135deg, #1665D8, #00C2FF); color: #fff; border: none; cursor: pointer; box-shadow: 0 4px 16px rgba(22, 101, 216, 0.25);">
+                <i class="fas fa-plus"></i>
+                <span>নতুন প্রমোকোড তৈরি করুন</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Metrics Row (4 Cards) -->
+          <div class="careplus-metrics-grid" style="margin: 24px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+            <div class="stat-card-careplus">
+              <div class="metric-top">
+                <span class="metric-label">মোট প্রমোকোড</span>
+                <span class="metric-icon-bubble" style="background: rgba(22, 101, 216, 0.12); color: #1665D8;"><i class="fas fa-ticket-simple"></i></span>
+              </div>
+              <div class="metric-value-row">
+                <span class="metric-val" id="statTotalCoupons">0</span>
+              </div>
+              <div class="metric-foot-badge" style="color: #64748B;">তৈরিকৃত সকল কুপন</div>
+            </div>
+
+            <div class="stat-card-careplus">
+              <div class="metric-top">
+                <span class="metric-label">সক্রিয় কুপন</span>
+                <span class="metric-icon-bubble" style="background: rgba(16, 185, 129, 0.12); color: #10B981;"><i class="fas fa-circle-check"></i></span>
+              </div>
+              <div class="metric-value-row">
+                <span class="metric-val" id="statActiveCoupons" style="color: #10B981;">0</span>
+              </div>
+              <div class="metric-foot-badge" style="color: #10B981;">বর্তমানে লাইভ ও কার্যকরী</div>
+            </div>
+
+            <div class="stat-card-careplus">
+              <div class="metric-top">
+                <span class="metric-label">মোট ব্যবহারকারী সংখ্যা</span>
+                <span class="metric-icon-bubble" style="background: rgba(245, 158, 11, 0.12); color: #F59E0B;"><i class="fas fa-users"></i></span>
+              </div>
+              <div class="metric-value-row">
+                <span class="metric-val" id="statTotalCouponUses">0</span>
+              </div>
+              <div class="metric-foot-badge" style="color: #F59E0B;">সফল ডিসকাউন্ট উপভোগ</div>
+            </div>
+
+            <div class="stat-card-careplus">
+              <div class="metric-top">
+                <span class="metric-label">মোট ছাড় প্রদান</span>
+                <span class="metric-icon-bubble" style="background: rgba(139, 92, 246, 0.12); color: #8B5CF6;"><i class="fas fa-bangladeshi-taka-sign"></i></span>
+              </div>
+              <div class="metric-value-row">
+                <span class="metric-val" id="statTotalDiscountGiven">৳০</span>
+              </div>
+              <div class="metric-foot-badge" style="color: #8B5CF6;">মোট সাশ্রয় করা অর্থ</div>
+            </div>
+          </div>
+
+          <!-- Promocodes List Card & Table -->
+          <div class="admin-card-base" style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <h3 style="font-size: 1.25rem; font-weight: 800; color: #0D1B36; margin: 0;">সকল প্রমোকোড ও অফার তালিকা</h3>
+                <p style="font-size: 0.88rem; color: #64748B; margin: 4px 0 0;">ক্লিক করে সক্রিয়/নিষ্ক্রিয় করুন অথবা নতুন কোড যোগ করুন।</p>
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <input type="text" id="couponSearchInput" oninput="filterCouponsList()" placeholder="কোড দিয়ে খুঁজুন..." style="padding: 9px 14px; border-radius: 10px; border: 1.5px solid #CBD5E1; font-size: 13px; width: 220px;">
+                <button type="button" class="btn-helpline-outline" onclick="loadPromocodesView()" title="রিফ্রেশ করুন">
+                  <i class="fas fa-rotate"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive-wrapper" style="overflow-x: auto;">
+              <table class="dribbble-student-table" style="width: 100%; border-collapse: separate; border-spacing: 0;">
+                <thead>
+                  <tr style="background: #F8FAFD; border-bottom: 1.5px solid #E2E8F0;">
+                    <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 800; color: #64748B; text-transform: uppercase;">কুপন কোড</th>
+                    <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 800; color: #64748B; text-transform: uppercase;">ছাড়ের পরিমাণ</th>
+                    <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 800; color: #64748B; text-transform: uppercase;">তৈরি ও শুরু</th>
+                    <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 800; color: #64748B; text-transform: uppercase;">মেয়াদ উত্তীর্ণের তারিখ</th>
+                    <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 800; color: #64748B; text-transform: uppercase;">ব্যবহার হিসেব</th>
+                    <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 800; color: #64748B; text-transform: uppercase;">স্ট্যাটাস</th>
+                    <th style="padding: 14px 16px; text-align: right; font-size: 12px; font-weight: 800; color: #64748B; text-transform: uppercase;">অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="couponsTableBody">
+                  <tr>
+                    <td colspan="7" style="text-align: center; padding: 36px; color: #94A3B8;">
+                      <i class="fas fa-spinner fa-spin mr-2"></i> প্রমোকোড লোড হচ্ছে...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
              VIEW 10: SHOP BANNERS CONTROLLER (শপ ব্যানার স্লাইডার)
              ==================================================================== -->
         <section id="view-shop-banners" class="admin-view hidden">
@@ -2837,6 +2957,86 @@
             <button type="button" class="btn-helpline-outline" onclick="closeEbookModal()">বাতিল</button>
             <button type="submit" class="btn-helpline-save" style="background: linear-gradient(135deg, #10B981, #059669);">
               <i class="fas fa-check mr-1"></i> ই-বুক সংরক্ষণ করুন
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================================
+       MODAL: CREATE / EDIT PROMOCODE (নতুন প্রমোকোড তৈরি ও এডিট মোডাল)
+       ============================================================================ -->
+  <div class="admin-modal-overlay" id="couponModal" style="display: none;">
+    <div class="admin-modal-box" style="max-width: 580px;">
+      <div class="admin-modal-header">
+        <h3 id="couponModalTitle" style="font-weight: 800; font-size: 1.15rem; color: #0D1B36; margin: 0;">
+          <i class="fas fa-ticket-simple text-blue mr-2" style="color: #1665D8;"></i> নতুন প্রমোকোড তৈরি করুন
+        </h3>
+        <button type="button" class="modal-close-btn" onclick="closeCouponModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="admin-modal-body" style="padding: 20px;">
+        <form id="couponModalForm" onsubmit="saveCouponForm(event)">
+          <input type="hidden" id="couponEditId" value="">
+
+          <div class="form-group-mb" style="margin-bottom: 16px;">
+            <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13px; color: #0D1B36;">কুপন কোড (Code) *</label>
+            <input type="text" id="couponInputCode" class="form-input" placeholder="যেমন: EID2026, SUMMER50, DIPU100" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #CBD5E1; text-transform: uppercase; font-weight: 800; letter-spacing: 1px;" required>
+            <small style="color: #64748B; font-size: 11px; display: block; margin-top: 4px;">শিক্ষার্থীরা চেকআউটের সময় এই কোডটি লিখবে (স্বয়ংক্রিয়ভাবে বড় হাতের অক্ষরে হবে)।</small>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+            <div>
+              <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13px; color: #0D1B36;">ছাড়ের ধরণ (Type) *</label>
+              <select id="couponInputType" class="form-input" onchange="handleCouponTypeChange()" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #CBD5E1; font-weight: 600;">
+                <option value="percentage">শতকরা (%) ছাড়</option>
+                <option value="fixed">নির্দিষ্ট টাকা (৳ Fixed)</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13px; color: #0D1B36;" id="couponValueLabel">ডিসকাউন্ট হার (%) *</label>
+              <input type="number" id="couponInputValue" class="form-input" placeholder="যেমন: 50" min="1" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #CBD5E1; font-weight: 700;" required>
+            </div>
+          </div>
+
+          <div class="form-group-mb" id="couponMaxDiscountWrap" style="margin-bottom: 16px;">
+            <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13px; color: #0D1B36;">সর্বোচ্চ ছাড়ের সীমা (Max Discount ৳)</label>
+            <input type="number" id="couponInputMaxDiscount" class="form-input" placeholder="500" value="500" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #CBD5E1;">
+            <small style="color: #64748B; font-size: 11px; display: block; margin-top: 4px;">শতকরা ছাড়ের ক্ষেত্রে একজন শিক্ষার্থী সর্বোচ্চ কত টাকা ছাড় পাবে।</small>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+            <div>
+              <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13px; color: #0D1B36;">তৈরি / শুরুর তারিখ</label>
+              <input type="date" id="couponInputValidFrom" class="form-input" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #CBD5E1;">
+            </div>
+            <div>
+              <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13px; color: #0D1B36;">মেয়াদ উত্তীর্ণের তারিখ *</label>
+              <input type="date" id="couponInputValidUntil" class="form-input" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #CBD5E1;" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;">
+            <div>
+              <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13px; color: #0D1B36;">ব্যবহারের সর্বোচ্চ সীমা (Max Uses)</label>
+              <input type="number" id="couponInputMaxUses" class="form-input" placeholder="1000" value="1000" min="1" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #CBD5E1;">
+            </div>
+            <div>
+              <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13px; color: #0D1B36;">প্রাথমিক স্ট্যাটাস</label>
+              <select id="couponInputIsActive" class="form-input" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #CBD5E1; font-weight: 600;">
+                <option value="true">সক্রিয় (Active)</option>
+                <option value="false">নিষ্ক্রিয় (Inactive)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid #ECEEF5; padding-top: 16px;">
+            <button type="button" class="btn-helpline-outline" onclick="closeCouponModal()" style="padding: 10px 20px; border-radius: 10px; border: 1.5px solid #CBD5E1; background: #fff; cursor: pointer; font-weight: 700;">বাতিল</button>
+            <button type="submit" id="couponSubmitBtn" class="btn-careplus-primary" style="background: linear-gradient(135deg, #1665D8, #00C2FF); color: #fff; font-weight: 800; padding: 10px 24px; border-radius: 10px; border: none; cursor: pointer;">
+              <i class="fas fa-check mr-1"></i> প্রমোকোড সংরক্ষণ করুন
             </button>
           </div>
         </form>

@@ -3239,13 +3239,13 @@ body.light-theme .mockup-pill-val-white {
 
 /* --- 1. TEXT ANIMATION ENGINE --- */
 
-/* Shimmering Dynamic Text Gradient (Depus AI Heading Glow) */
-.anim-text-shimmer,
-.hero-title,
-.shop-banner-title,
-.course-hero-title,
-.section-title em,
-.shimmer-text {
+/* Shimmering Dynamic Text Gradient (Dipu AI Heading Glow) */
+/* 1A. Dark Mode / Hero Dark Sections: White base with Amber/Orange Shimmer */
+.dark-theme .anim-text-shimmer,
+.hero-dark .anim-text-shimmer,
+#home-hero-root .anim-text-shimmer,
+.dark-theme .shimmer-text,
+.hero-dark .shimmer-text {
   background: linear-gradient(
     115deg,
     #FFFFFF 0%,
@@ -3261,6 +3261,37 @@ body.light-theme .mockup-pill-val-white {
   -webkit-text-fill-color: transparent;
   animation: textShimmerSweep 7s ease-in-out infinite;
   display: inline-block;
+}
+
+/* 1B. Light Mode / General Pages: Deep High-Contrast Navy Base (#0B192C) with Royal Blue / Amber Accent */
+.anim-text-shimmer,
+.shop-banner-title,
+.section-title em,
+.shimmer-text {
+  background: linear-gradient(
+    115deg,
+    #0B192C 0%,
+    #0D1B36 38%,
+    #1665D8 52%,
+    #FF7A1A 58%,
+    #0D1B36 72%,
+    #0B192C 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmerSweep 7s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* Explicit Ultra High-Contrast Rule for Course Page Hero & Headings */
+.course-hero-title,
+.course-section-card .section-title {
+  color: #0B192C !important;
+  -webkit-text-fill-color: #0B192C !important;
+  background: none !important;
+  font-weight: 900 !important;
 }
 
 @keyframes textShimmerSweep {

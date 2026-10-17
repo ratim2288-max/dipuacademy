@@ -243,8 +243,11 @@
         el.classList.add('reveal-init');
 
         if (!el.classList.contains('no-shimmer') && !el.querySelector('.hero-gradient-text')) {
-          if (el.tagName === 'H1' || el.classList.contains('section-title') || el.classList.contains('course-hero-title')) {
-            el.classList.add('anim-text-shimmer');
+          const isCoursePage = !!document.querySelector('.course-page-wrapper');
+          if (!isCoursePage && !el.classList.contains('course-hero-title')) {
+            if (el.tagName === 'H1' || el.classList.contains('section-title')) {
+              el.classList.add('anim-text-shimmer');
+            }
           }
         }
         observer.observe(el);
