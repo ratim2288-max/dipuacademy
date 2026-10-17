@@ -2968,7 +2968,7 @@
   <!-- ============================================================================
        MODAL: CREATE / EDIT PROMOCODE (নতুন প্রমোকোড তৈরি ও এডিট মোডাল)
        ============================================================================ -->
-  <div class="admin-modal-overlay" id="couponModal" style="display: none;">
+  <div class="admin-modal-overlay" id="couponModal">
     <div class="admin-modal-box" style="max-width: 580px;">
       <div class="admin-modal-header">
         <h3 id="couponModalTitle" style="font-weight: 800; font-size: 1.15rem; color: #0D1B36; margin: 0;">
@@ -3045,6 +3045,17 @@
   </div>
 
   <!-- JavaScript Engine -->
-  <script src="/js/admin.js?v=5.0"></script>
+  <script src="/js/admin.js?v=6.0"></script>
+  <script>
+    if (window.location.hash === '#promocodes') {
+      window.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+          if (typeof window.loadPromocodesView === 'function') {
+            window.loadPromocodesView();
+          }
+        }, 120);
+      });
+    }
+  </script>
 </body>
 </html>

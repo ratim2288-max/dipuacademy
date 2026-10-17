@@ -1483,7 +1483,14 @@ router.post('/coupons', async (req, res) => {
 
     let savedCoupon;
     if (mongoose.connection.readyState === 1) {
-      const existing = await Coupon.findOne({ code: cleanCode });
+      const { id } = req.body;
+      let existing = null;
+      if (id && mongoose.Types.ObjectId.isValid(id)) {
+        existing = await Coupon.findById(id);
+      }
+      if (!existing) {
+        existing = await Coupon.findOne({ code: cleanCode });
+      }
       if (existing) {
         Object.assign(existing, couponData);
         savedCoupon = await existing.save();

@@ -4388,7 +4388,7 @@ window.loadPromocodesView = async function() {
   tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 36px; color: #94A3B8;"><i class="fas fa-spinner fa-spin mr-2"></i> প্রমোকোড লোড হচ্ছে...</td></tr>';
 
   try {
-    const res = await fetch("/api/admin/coupons");
+    const res = await fetch("/api/admin/coupons?t=" + Date.now());
     const data = await res.json();
 
     if (data.success && Array.isArray(data.coupons)) {
@@ -4494,7 +4494,10 @@ function renderCouponsTable(coupons) {
         </td>
         <td style="padding: 14px 16px;">${statusBadge}</td>
         <td style="padding: 14px 16px; text-align: right;">
-          <div style="display: inline-flex; gap: 8px;">
+          <div style="display: inline-flex; gap: 6px;">
+            <button type="button" onclick="openEditCouponModal('${c._id}')" class="btn-helpline-outline" style="padding: 6px 10px; font-size: 12px;" title="এডিট করুন">
+              <i class="fas fa-pen-to-square"></i>
+            </button>
             <button type="button" onclick="toggleCouponStatus('${c._id}')" class="btn-helpline-outline" style="padding: 6px 10px; font-size: 12px;" title="${c.isActive ? 'নিষ্ক্রিয় করুন' : 'সক্রিয় করুন'}">
               <i class="fas ${c.isActive ? 'fa-pause' : 'fa-play'} mr-1"></i> ${c.isActive ? 'বন্ধ' : 'চালু'}
             </button>
@@ -4526,8 +4529,13 @@ window.openNewCouponModal = function() {
   if (!modal || !form) return;
 
   form.reset();
-  document.getElementById("couponEditId").value = "";
-  document.getElementById("couponModalTitle").innerHTML = '<i class="fas fa-ticket-simple text-blue mr-2" style="color: #1665D8;"></i> নতুন প্রমোকোড তৈরি করুন';
+  const idEl = document.getElementById("couponEditId");
+  if (idEl) idEl.value = "";
+  
+  const titleEl = document.getElementById("couponModalTitle");
+  if (titleEl) {
+    titleEl.innerHTML = '<i class="fas fa-ticket-simple text-blue mr-2" style="color: #1665D8;"></i> নতুন প্রমোকোড তৈরি করুন';
+  }
 
   const today = new Date().toISOString().split("T")[0];
   const nextMonth = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
@@ -4538,12 +4546,60 @@ window.openNewCouponModal = function() {
   if (validUntilInput) validUntilInput.value = nextMonth;
 
   window.handleCouponTypeChange();
+  modal.classList.add("active");
+  modal.style.display = "flex";
+};
+
+window.openEditCouponModal = function(id) {
+  const coupon = loadedCouponsData.find(c => String(c._id) === String(id) || c.code === id);
+  if (!coupon) return alert("কুপন পাওয়া যায়নি।");
+
+  const modal = document.getElementById("couponModal");
+  const form = document.getElementById("couponModalForm");
+  if (!modal || !form) return;
+
+  form.reset();
+  const idEl = document.getElementById("couponEditId");
+  if (idEl) idEl.value = coupon._id;
+
+  const titleEl = document.getElementById("couponModalTitle");
+  if (titleEl) {
+    titleEl.innerHTML = '<i class="fas fa-pen-to-square text-blue mr-2" style="color: #1665D8;"></i> প্রমোকোড এডিট করুন';
+  }
+
+  const codeInput = document.getElementById("couponInputCode");
+  const typeInput = document.getElementById("couponInputType");
+  const valInput = document.getElementById("couponInputValue");
+  const maxInput = document.getElementById("couponInputMaxDiscount");
+  const validFromInput = document.getElementById("couponInputValidFrom");
+  const validUntilInput = document.getElementById("couponInputValidUntil");
+  const maxUsesInput = document.getElementById("couponInputMaxUses");
+  const activeInput = document.getElementById("couponInputIsActive");
+
+  if (codeInput) codeInput.value = coupon.code || "";
+  if (typeInput) typeInput.value = coupon.discountType || "percentage";
+  if (valInput) valInput.value = coupon.discountValue || "";
+  if (maxInput) maxInput.value = coupon.maxDiscountBDT || 500;
+  if (validFromInput && coupon.validFrom) {
+    validFromInput.value = new Date(coupon.validFrom).toISOString().split("T")[0];
+  }
+  if (validUntilInput && coupon.validUntil) {
+    validUntilInput.value = new Date(coupon.validUntil).toISOString().split("T")[0];
+  }
+  if (maxUsesInput) maxUsesInput.value = coupon.maxUses || 1000;
+  if (activeInput) activeInput.value = coupon.isActive ? "true" : "false";
+
+  window.handleCouponTypeChange();
+  modal.classList.add("active");
   modal.style.display = "flex";
 };
 
 window.closeCouponModal = function() {
   const modal = document.getElementById("couponModal");
-  if (modal) modal.style.display = "none";
+  if (modal) {
+    modal.classList.remove("active");
+    modal.style.display = "none";
+  }
 };
 
 window.handleCouponTypeChange = function() {
@@ -4571,6 +4627,7 @@ window.saveCouponForm = async function(event) {
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> সংরক্ষণ হচ্ছে...';
   }
 
+  const editId = document.getElementById("couponEditId")?.value;
   const code = document.getElementById("couponInputCode")?.value.trim().toUpperCase();
   const discountType = document.getElementById("couponInputType")?.value || "percentage";
   const discountValue = Number(document.getElementById("couponInputValue")?.value);
@@ -4585,6 +4642,7 @@ window.saveCouponForm = async function(event) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        id: editId || undefined,
         code,
         discountType,
         discountValue,
@@ -4644,3 +4702,12 @@ window.deleteCoupon = async function(id, code) {
     alert("কুপন মুছতে সমস্যা হয়েছে।");
   }
 };
+
+// Immediate invocation if loaded directly with #promocodes
+if (typeof window !== "undefined" && window.location && window.location.hash === "#promocodes") {
+  setTimeout(() => {
+    if (typeof window.loadPromocodesView === "function") {
+      window.loadPromocodesView();
+    }
+  }, 100);
+}

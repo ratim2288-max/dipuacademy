@@ -147,6 +147,9 @@ app.use((req, res, next) => {
 
     // On dipu990.ratim.tech, visiting root '/' serves Admin Panel directly
     if (req.path === '/' || req.path === '/admin' || req.path === '/admin.html') {
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
       return res.sendFile(path.join(__dirname, '../public/admin.html'));
     }
   } else {
@@ -172,8 +175,13 @@ app.use((req, res, next) => {
 
 // Static assets (Frontend UI) with cache headers for performance
 app.use(express.static(path.join(__dirname, '../public'), {
-  maxAge: process.env.NODE_ENV === 'production' ? '7d' : 0,
+  maxAge: process.env.NODE_ENV === 'production' ? '1d' : 0,
   etag: true,
+  setHeaders: (res, filePath) => {
+    if (filePath.includes('admin') || filePath.endsWith('.html')) {
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+    }
+  }
 }));
 
 // API Routes
