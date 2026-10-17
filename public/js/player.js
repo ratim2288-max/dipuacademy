@@ -5,539 +5,8 @@
  * Right: Course Syllabus Card with Connected Vertical Timeline
  */
 
-// Comprehensive Course Database
-const COURSES_DATABASE = {
-  // Course 1: Graphic Designing with Photoshop (Exact match to Image 2!)
-  "graphic-design-photoshop": {
-    courseId: "graphic-design-photoshop",
-    title: {
-      en: "Graphic Designing with Photoshop",
-      bn: "Graphic Designing with Photoshop"
-    },
-    instructor: "সাদমান সাদিক ও ক্রিয়েটিভ মেন্টর প্যানেল",
-    chapters: [
-      {
-        id: "ch_gd_1",
-        title: {
-          en: "Basics of Photoshop for Graphic Designing",
-          bn: "গ্রাফিক ডিজাইনিং-এর জন্য Photoshop-এর বেসিক"
-        },
-        lessons: [
-          {
-            id: "gd_1_1",
-            number: "1.1",
-            title: {
-              en: "Video: Everything about Photoshop and what you can learn",
-              bn: "Video: Photoshop-এ যা কিছু আছে এবং যা কিছু শেখা সম্ভব"
-            },
-            type: "video",
-            duration: "1:03",
-            durationSeconds: 63,
-            isFree: true,
-            watched: true,
-            fileUrl: "/notes/photoshop_intro.pdf",
-            description: "Photoshop-এ যা কিছু আছে এবং যা কিছু শেখা সম্ভব"
-          },
-          {
-            id: "gd_1_2",
-            number: "1.2",
-            title: {
-              en: "Video: How to open custom files in Photoshop",
-              bn: "Video: Photoshop-এ Custom ফাইল Open করার নিয়মাবলী"
-            },
-            type: "video",
-            duration: "14:20",
-            durationSeconds: 860,
-            isFree: false,
-            watched: false,
-            fileUrl: "/notes/photoshop_open_files.pdf",
-            description: "ফটোশপে প্রি-সেট ডকুমেন্ট সাইজ তৈরি, আর্টবোর্ড ও রেজোলিউশন সেটআপ।"
-          },
-          {
-            id: "gd_1_3",
-            number: "1.3",
-            title: {
-              en: "Video: How to import images into Photoshop",
-              bn: "Video: কীভাবে Photoshop-এর মধ্যে আপনার ইমেজ ইমপোর্ট করবেন"
-            },
-            type: "video",
-            duration: "18:45",
-            durationSeconds: 1125,
-            isFree: false,
-            watched: false,
-            fileUrl: "/notes/photoshop_import.pdf",
-            description: "ফটোশপ ক্যানভাসে ছবি ড্র্যাগ এন্ড ড্রপ এবং প্লেস এমবেডেড করার নিয়ম।"
-          },
-          {
-            id: "gd_1_m1",
-            number: "1.M1",
-            title: {
-              en: "How to organize your artwork in Photoshop (Guide)",
-              bn: "কীভাবে Photoshop-এর মধ্যে আপনার কাজের ছবি সাজাবেন (ম্যাটেরিয়াল গাইড)"
-            },
-            type: "material",
-            duration: "হ্যান্ডনোট",
-            isFree: false,
-            fileSize: "2.4 MB",
-            fileUrl: "/notes/photoshop_workspace.pdf",
-            description: "ওয়ার্কস্পেস সেটআপ ও আর্টবোর্ড অর্গানাইজেশন অফিসিয়াল গাইড শিট।"
-          },
-          {
-            id: "gd_1_4",
-            number: "1.4",
-            title: {
-              en: "Video: Where to get resources for Graphic Design",
-              bn: "Video: গ্রাফিক ডিজাইন করার জন্য কোথা থেকে রিসোর্স নিবেন"
-            },
-            type: "video",
-            duration: "22:15",
-            durationSeconds: 1335,
-            isFree: false,
-            watched: false,
-            fileUrl: "/notes/photoshop_resources.pdf",
-            description: "ফ্রি ভেক্টর, আইকন, মকআপ ও কালার প্যালেট সংগ্রহের সেরা ওয়েবসাইটসমূহ।"
-          },
-          {
-            id: "gd_1_5",
-            number: "1.5",
-            title: {
-              en: "Video: Understanding Layers | Multiple Layers Workflow",
-              bn: "Video: Understanding Layers | একাধিক লেয়ারে কাজ করার নিয়ম"
-            },
-            type: "video",
-            duration: "26:30",
-            durationSeconds: 1590,
-            isFree: false,
-            watched: false,
-            fileUrl: "/notes/photoshop_layers.pdf",
-            description: "লেয়ার মাস্কিং, ব্লেন্ডিং মোড ও এডজাস্টমেন্ট লেয়ারের মাস্টারক্লাস।"
-          },
-          {
-            id: "gd_1_m2",
-            number: "1.M2",
-            title: {
-              en: "Understanding Layers | Complete Layer Hierarchy (PDF Sheet)",
-              bn: "Understanding Layers | একাধিক লেয়ারে কীভাবে কাজ করতে হয় (PDF শিট)"
-            },
-            type: "material",
-            duration: "PDF শিট",
-            isFree: false,
-            fileSize: "3.1 MB",
-            fileUrl: "/notes/layers_guide.pdf",
-            description: "লেয়ার হাইর্যার্কি ও নন-ডিস্ট্রাক্টিভ এডিটিং নিয়মাবলী।"
-          },
-          {
-            id: "gd_1_6",
-            number: "1.6",
-            title: {
-              en: "Video: Adjustment Tool | Fast Image Editing Hacks",
-              bn: "Video: Adjustment Tool | ছবি দ্রুত এডিট কীভাবে করবেন"
-            },
-            type: "video",
-            duration: "31:10",
-            durationSeconds: 1870,
-            isFree: false,
-            watched: false,
-            fileUrl: "/notes/photoshop_adjustments.pdf",
-            description: "কার্ভস, লেভেলস ও হিউ-স্যাচুরেশন দিয়ে ছবির লাইটিং কারেকশন।"
-          },
-          {
-            id: "gd_1_m3",
-            number: "1.M3",
-            title: {
-              en: "Adjustment Tool | Quick Image Editing Guide",
-              bn: "Adjustment Tool | ছবি দ্রুত এডিট করার গাইড"
-            },
-            type: "material",
-            duration: "ফর্মুলা শিট",
-            isFree: false,
-            fileSize: "1.8 MB",
-            fileUrl: "/notes/adjustment_tools.pdf",
-            description: "কালার গ্রেডিং ও টোন ব্যালেন্সিং শর্টকাট শিট।"
-          },
-          {
-            id: "gd_1_7",
-            number: "1.7",
-            title: {
-              en: "Video: How to Save and Export Photoshop Files",
-              bn: "Video: কীভাবে Photoshop File Save করতে হয়"
-            },
-            type: "video",
-            duration: "15:40",
-            durationSeconds: 940,
-            isFree: false,
-            watched: false,
-            fileUrl: "/notes/photoshop_export.pdf",
-            description: "PSD, PNG, JPG ও ওয়েব ফরম্যাটে হাই-কোয়ালিটি এক্সপোর্ট টেকনিক।"
-          },
-          {
-            id: "gd_1_m4",
-            number: "1.M4",
-            title: {
-              en: "How to Save Photoshop Files (Practice Project Files)",
-              bn: "কীভাবে Photoshop File Save করতে হয় (প্র্যাকটিস ফাইল)"
-            },
-            type: "material",
-            duration: "প্র্যাকটিস ফাইল",
-            isFree: false,
-            fileSize: "4.5 MB",
-            fileUrl: "/notes/save_export_practice.pdf",
-            description: "ক্লাস প্রজেক্টের র' সোর্স ফাইল ও এক্সপোর্ট চিটশিট।"
-          }
-        ]
-      }
-    ]
-  },
-
-  // Course 2: HSC Physics 1st Paper
-  "hsc-physics-1st-paper": {
-    courseId: "hsc-physics-1st-paper",
-    title: {
-      en: "HSC Physics 1st Paper: Vectors & Dynamics Masterclass",
-      bn: "HSC পদার্থবিজ্ঞান ১ম পত্র: ভেক্টর ও গতিবিদ্যা পূর্ণাঙ্গ মাস্টারক্লাস"
-    },
-    instructor: "দীপু স্যার (Dipu Sir - BUET)",
-    chapters: [
-      {
-        id: "ch_phy_1",
-        title: {
-          en: "Chapter 1: Vectors & Mathematical Mechanics",
-          bn: "অধ্যায় ১: ভেক্টর ও গাণিতিক মেকানিক্স"
-        },
-        lessons: [
-          {
-            id: "les_1_1",
-            number: "1.1",
-            title: {
-              en: "Video: Vector Addition & Parallelogram Law Geometric Analysis",
-              bn: "Video: ভেক্টর যোগ ও সামান্তরিক সূত্রের নিখুঁত জ্যামিতিক বিশ্লেষণ"
-            },
-            type: "video",
-            duration: "12:45",
-            durationSeconds: 765,
-            isFree: true,
-            watched: true,
-            fileUrl: "/notes/vector_basics.pdf",
-            description: "ভেক্টর লব্ধির মান ও দিক নির্ণয়ের সামান্তরিক সূত্র এবং বাস্তব কণা বল প্রয়োগ।"
-          },
-          {
-            id: "les_1_2",
-            number: "1.2",
-            title: {
-              en: "Video: Dot & Cross Product Foundation & Orthogonality",
-              bn: "Video: ডট ও ক্রস গুণনের ভিত্তি এবং লম্ব ভেক্টরের শর্ত"
-            },
-            type: "video",
-            duration: "45:10",
-            durationSeconds: 2710,
-            isFree: false,
-            watched: false,
-            fileUrl: "/notes/vector_products.pdf",
-            description: "স্কেলার ও ভেক্টর গুণনের গাণিতিক রূপান্তর এবং লম্ব ও সমান্তরাল ভেক্টরের প্রমাণ।"
-          },
-          {
-            id: "les_1_m1",
-            number: "1.M1",
-            title: {
-              en: "Vector Dot & Cross Product Formulas & Handnotes",
-              bn: "ভেক্টর ডট ও ক্রস গুণনের হ্যান্ডনোট ও ফর্মুলা শিট"
-            },
-            type: "material",
-            duration: "হ্যান্ডনোট",
-            isFree: false,
-            fileSize: "2.8 MB",
-            fileUrl: "/notes/vector_formulas.pdf",
-            description: "বুয়েট ও মেডিকেল স্ট্যান্ডার্ড ভেক্টর শর্টকাট ফর্মুলা সংকলন।"
-          },
-          {
-            id: "les_1_3",
-            number: "1.3",
-            title: {
-              en: "Video: 3D Coordinate System & Direction Cosines",
-              bn: "Video: ত্রিমাত্রিক স্থানাঙ্ক ব্যবস্থা ও দিক কোসাইন"
-            },
-            type: "video",
-            duration: "34:48",
-            durationSeconds: 2088,
-            isFree: false,
-            watched: false,
-            fileUrl: "/notes/vector_3d.pdf",
-            description: "আই, জে, কে একক ভেক্টর এবং ত্রিমাত্রিক তলে ভেক্টরের প্রক্ষেপণ।"
-          },
-          {
-            id: "les_1_4",
-            number: "1.4",
-            title: {
-              en: "Video: Vector Calculus in Dynamics — Gradient & Divergence",
-              bn: "Video: ভেক্টর গতিবিদ্যায় ক্যালকুলাস — গ্র্যাডিয়েন্ট ও ডাইভারজেন্স"
-            },
-            type: "video",
-            duration: "31:54",
-            durationSeconds: 1914,
-            isFree: false,
-            watched: false,
-            fileUrl: "/notes/vector_calc.pdf",
-            description: "ডেল অপারেটর, স্কেলার ক্ষেত্রের গ্র্যাডিয়েন্ট ও ভেক্টর ক্ষেত্রের কার্ল।"
-          },
-          {
-            id: "les_1_m2",
-            number: "1.M2",
-            title: {
-              en: "Vector Calculus Special Practice Problem Set (PDF)",
-              bn: "ভেক্টর ক্যালকুলাস স্পেশাল প্র্যাকটিস শিট (PDF)"
-            },
-            type: "material",
-            duration: "PDF শিট",
-            isFree: false,
-            fileSize: "3.5 MB",
-            fileUrl: "/notes/vector_calculus_practice.pdf",
-            description: "শীর্ষ কলেজসমূহের টেস্ট পেপার ও বোর্ড সৃজনশীল প্রশ্নব্যাংক।"
-          },
-          {
-            id: "les_1_5",
-            number: "1.5",
-            title: {
-              en: "Video: Relative Velocity & Rain Umbrella Problem Solving",
-              bn: "Video: আপেক্ষিক বেগ ও বৃষ্টির ছাতা সমস্যা সমাধান"
-            },
-            type: "video",
-            duration: "21:38",
-            durationSeconds: 1298,
-            isFree: false,
-            watched: false,
-            fileUrl: "/notes/relative_velocity.pdf",
-            description: "চলন্ত সাইকেল আরোহী ও বাতাসের প্রভাবে ছাতা কত কোণে ধরতে হবে তার ম্যাজিক ট্রিকস।"
-          },
-          {
-            id: "les_1_6",
-            number: "1.6",
-            title: {
-              en: "Video: River Current & Boat Crossing Shortcuts",
-              bn: "Video: নৌকা ও নদীর স্রোত পারাপারের নিখুঁত শর্টকাট"
-            },
-            type: "video",
-            duration: "29:12",
-            durationSeconds: 1752,
-            isFree: false,
-            watched: false,
-            fileUrl: "/notes/river_boat.pdf",
-            description: "নূন্যতম দূরত্বে ও নূন্যতম সময়ে নদী পারাপারের গাণিতিক শর্টকাট।"
-          },
-          {
-            id: "les_1_m3",
-            number: "1.M3",
-            title: {
-              en: "River-Boat & Rain Velocity Shortcuts Compilation",
-              bn: "নদী-নৌকা ও বৃষ্টির বেগ শর্টকাট হ্যাকস সংকলন"
-            },
-            type: "material",
-            duration: "ফর্মুলা শিট",
-            isFree: false,
-            fileSize: "1.9 MB",
-            fileUrl: "/notes/river_shortcuts.pdf",
-            description: "এডমিশন স্পেশাল শর্টকাট টেকনিক ও বিগত ২০ বছরের বুয়েট প্রশ্ন সলভিং।"
-          }
-        ]
-      }
-    ]
-  },
-
-  "class-5-full-course": {
-    courseId: "class-5-full-course",
-    title: {
-      en: "Class 5 Full Course: Primary Math & Science",
-      bn: "৫ম শ্রেণীর পূর্ণাঙ্গ কোর্স"
-    },
-    instructor: "দীপু এডু প্রাইমারি একাডেমি",
-    chapters: [
-      {
-        id: "ch_c5_1",
-        title: {
-          en: "Primary Mathematics Chapter-wise Solutions",
-          bn: "প্রাথমিক গণিত সম্পূর্ণ অধ্যায়ভিত্তিক সমাধান"
-        },
-        lessons: [
-          {
-            id: "c5_1_1",
-            number: "1.1",
-            title: {
-              en: "Chapter 1: Four Operations & Unitary Method",
-              bn: "অধ্যায় ১: চার প্রক্রিয়া সম্পর্কিত সমস্যাবলি ও ঐকিক নিয়ম"
-            },
-            type: "video",
-            duration: "28:10",
-            durationSeconds: 1690,
-            isFree: true,
-            watched: true,
-            fileUrl: "/notes/class5_math_ch1.pdf",
-            description: "ঐকিক নিয়মের সহজ সমাধান কৌশল ও ৫ম শ্রেণির বোর্ড সৃজনশীল অংক।"
-          },
-          {
-            id: "c5_1_2",
-            number: "1.2",
-            title: {
-              en: "Chapter 2: LCM & HCF Magic Tricks",
-              bn: "অধ্যায় ২: লসাগু ও গসাগু এর সহজ ট্রিকস ও বোর্ড সৃজনশীল"
-            },
-            type: "video",
-            duration: "32:15",
-            durationSeconds: 1935,
-            isFree: false,
-            watched: false,
-            fileUrl: "/notes/class5_math_ch2.pdf",
-            description: "ভাগ প্রক্রিয়া ও মৌলিক গুণনীয়ক পদ্ধতিতে লসাগু-গসাগুর সমাধান।"
-          },
-          {
-            id: "c5_1_m1",
-            number: "1.M1",
-            title: {
-              en: "Class 5 Math All Chapters Colorful Handnotes (PDF)",
-              bn: "৫ম শ্রেণির গণিত সকল অধ্যায়ের রঙিন হ্যান্ডনোট (PDF)"
-            },
-            type: "material",
-            duration: "হ্যান্ডনোট",
-            isFree: false,
-            fileSize: "4.2 MB",
-            fileUrl: "/notes/class5_math_notes.pdf",
-            description: "পরীক্ষার শতভাগ প্রস্তুতি উপযোগী রঙিন ও সাজানো হ্যান্ডনোট।"
-          }
-        ]
-      },
-      {
-        id: "ch_c5_2",
-        title: {
-          en: "Primary Science & Environment",
-          bn: "প্রাথমিক বিজ্ঞান ও চারপাশের পরিবেশ"
-        },
-        lessons: [
-          {
-            id: "c5_2_1",
-            number: "2.1",
-            title: {
-              en: "Our Environment & Living vs Non-Living Organisms",
-              bn: "আমাদের পরিবেশ ও জীব-জড়ের পারস্পরিক সম্পর্ক"
-            },
-            type: "video",
-            duration: "22:00",
-            durationSeconds: 1320,
-            isFree: false,
-            watched: false,
-            fileUrl: "/notes/class5_science_ch1.pdf",
-            description: "বাস্তুতন্ত্র, খাদ্য শৃঙ্খল ও পরিবেশ সংরক্ষণের মূল ভিত্তি।"
-          }
-        ]
-      }
-    ]
-  },
-
-  "class-10-business-studies": {
-    courseId: "class-10-business-studies",
-    title: {
-      en: "Class 10 Business Studies Full Course",
-      bn: "১০ম শ্রেণীর পূর্ণাঙ্গ ব্যবসায় শিক্ষা কোর্স"
-    },
-    instructor: "দীপু স্যার ও কমার্স মেন্টর প্যানেল",
-    chapters: [
-      {
-        id: "ch_c10_1",
-        title: {
-          en: "Accounting: Double Entry & Transaction Analysis",
-          bn: "হিসাববিজ্ঞান: দু'তরফা দাখিলা ও লেনদেন বিশ্লেষণ"
-        },
-        lessons: [
-          {
-            id: "c10_1_1",
-            number: "1.1",
-            title: {
-              en: "Accounting Equation (A = L + E) Concept",
-              bn: "লেনদেনের প্রকৃতি ও হিসাব সমীকরণ (A = L + E)"
-            },
-            type: "video",
-            duration: "28:20",
-            durationSeconds: 1700,
-            isFree: true,
-            watched: true,
-            fileUrl: "/notes/c10_accounting_ch1.pdf",
-            description: "হিসাববিজ্ঞানের ভিত্তি ও আধুনিক সমীকরণ পদ্ধতির সহজ ব্যাখ্যা।"
-          }
-        ]
-      }
-    ]
-  },
-
-  "hsc-28-full-prep": {
-    courseId: "hsc-28-full-prep",
-    title: {
-      en: "HSC 2028 Full Preparation Course",
-      bn: "HSC '২৮ পূর্ণাঙ্গ প্রস্তুতি কোর্স"
-    },
-    instructor: "দীপু স্যার (BUET) ও স্পেশালিস্ট টিম",
-    chapters: [
-      {
-        id: "ch_h28_1",
-        title: {
-          en: "Physics 1st Paper Basic to Pro",
-          bn: "পদার্থবিজ্ঞান ১ম পত্র বেসিক টু প্রো"
-        },
-        lessons: [
-          {
-            id: "h28_1_1",
-            number: "1.1",
-            title: {
-              en: "Vector Geometry & River Boat Problem Solving",
-              bn: "ভেক্টরের জ্যামিতিক যোগ ও নদী-নৌকা প্রবলেম সলভিং"
-            },
-            type: "video",
-            duration: "35:00",
-            durationSeconds: 2100,
-            isFree: true,
-            watched: true,
-            fileUrl: "/notes/hsc28_physics.pdf",
-            description: "এইচএসসি ২০২৮ বুয়েট ও বোর্ড স্ট্যান্ডার্ড ভেক্টর মাস্টারক্লাস।"
-          }
-        ]
-      }
-    ]
-  },
-
-  "hsc-27-full-prep": {
-    courseId: "hsc-27-full-prep",
-    title: {
-      en: "HSC 2027 Full Preparation Course",
-      bn: "HSC '২৭ পূর্ণাঙ্গ প্রস্তুতি কোর্স"
-    },
-    instructor: "দীপু স্যার (BUET)",
-    chapters: [
-      {
-        id: "ch_h27_1",
-        title: {
-          en: "Physics 1st & 2nd Paper Revision",
-          bn: "পদার্থবিজ্ঞান ১ম ও ২য় পত্র রিভিশন ও সৃজনশীল"
-        },
-        lessons: [
-          {
-            id: "h27_1_1",
-            number: "1.1",
-            title: {
-              en: "Work Power Energy & Harmonic Motion",
-              bn: "কাজ, শক্তি, ক্ষমতা ও সরল ছন্দিত স্পন্দন"
-            },
-            type: "video",
-            duration: "36:00",
-            durationSeconds: 2160,
-            isFree: true,
-            watched: true,
-            fileUrl: "/notes/hsc27_physics.pdf",
-            description: "বোর্ড ও এডমিশন স্পেশাল থিওরি ও সৃজনশীল সমাধান।"
-          }
-        ]
-      }
-    ]
-  }
-};
-
 // Global State
-let COURSE_DATA = COURSES_DATABASE["graphic-design-photoshop"];
+let COURSE_DATA = null;
 let currentLang = localStorage.getItem('dipu_lang') || 'bn';
 let currentLesson = COURSE_DATA.chapters[0].lessons[0];
 let isPlaying = false;
@@ -566,11 +35,11 @@ window.handlePlayerBack = function() {
 };
 
 // Initialize studio on DOM ready
-document.addEventListener("DOMContentLoaded", () => {
-  initPlayerStudio();
+document.addEventListener("DOMContentLoaded", async () => {
+  await initPlayerStudio();
 });
 
-function initPlayerStudio() {
+async function initPlayerStudio() {
   // Resolve course and lesson from URL parameters or clean pathname
   try {
     const params = new URLSearchParams(window.location.search);
@@ -583,57 +52,115 @@ function initPlayerStudio() {
       courseParam = decodeURIComponent(pathParts[1]).trim();
       lessonParam = decodeURIComponent(pathParts[2]).trim();
     } else if (pathParts.length === 2 && pathParts[0] === 'player') {
-      const seg = decodeURIComponent(pathParts[1]).trim();
-      if (COURSES_DATABASE[seg]) {
-        courseParam = seg;
-      } else {
-        lessonParam = seg;
-      }
+      courseParam = decodeURIComponent(pathParts[1]).trim();
     }
 
-    if (courseParam && COURSES_DATABASE[courseParam]) {
-      COURSE_DATA = COURSES_DATABASE[courseParam];
-    } else if (courseParam) {
-      const keys = Object.keys(COURSES_DATABASE);
-      const matched = keys.find(k => k.toLowerCase() === courseParam.toLowerCase() || courseParam.includes(k) || k.includes(courseParam));
-      if (matched) {
-        COURSE_DATA = COURSES_DATABASE[matched];
-      } else {
-        const cached = JSON.parse(localStorage.getItem('dipu_courses') || '[]');
-        const dbCourse = cached.find(c => c.slug === courseParam || c._id === courseParam);
-        if (dbCourse) {
-          const t = dbCourse.title?.bn || dbCourse.title?.en || (typeof dbCourse.title === 'string' ? dbCourse.title : courseParam);
+    if (!courseParam) {
+      const enrolled = JSON.parse(localStorage.getItem('da_enrolled_courses') || '[]');
+      if (enrolled.length > 0) courseParam = enrolled[0];
+      else courseParam = 'hsc-27-full-prep';
+    }
+
+    // Fetch live course details and chapters from MongoDB
+    try {
+      const res = await fetch(`/api/courses/${encodeURIComponent(courseParam)}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.course) {
+          const c = data.course;
+          const titleBn = c.title?.bn || c.title?.en || (typeof c.title === 'string' ? c.title : courseParam);
+          const titleEn = c.title?.en || titleBn;
+
+          const mappedChapters = (c.chapters && c.chapters.length > 0) ? c.chapters.map((ch, chIdx) => {
+            const chBn = ch.chapterTitle?.bn || ch.chapterTitle?.en || (typeof ch.chapterTitle === 'string' ? ch.chapterTitle : `অধ্যায় ${chIdx + 1}`);
+            const chEn = ch.chapterTitle?.en || chBn;
+            return {
+              id: ch._id || `ch_${chIdx + 1}`,
+              title: { bn: chBn, en: chEn },
+              lessons: (ch.lessons || []).map((les, lIdx) => {
+                const lesBn = les.lessonTitle?.bn || les.lessonTitle?.en || (typeof les.lessonTitle === 'string' ? les.lessonTitle : `লেকচার ${lIdx + 1}`);
+                const lesEn = les.lessonTitle?.en || lesBn;
+                const durationMin = les.durationMinutes || 30;
+                return {
+                  id: les._id || `les_${chIdx + 1}_${lIdx + 1}`,
+                  number: `${chIdx + 1}.${lIdx + 1}`,
+                  title: { bn: lesBn, en: lesEn },
+                  type: "video",
+                  duration: `${durationMin}:00`,
+                  durationSeconds: durationMin * 60,
+                  isFree: !!les.isFree,
+                  watched: false,
+                  videoType: les.videoType || 'youtube',
+                  videoSource: les.videoSource || 'dQw4w9WgXcQ',
+                  fileUrl: les.pdfAttachment?.fileUrl || `/notes/${c.slug}_lecture_${lIdx + 1}.pdf`,
+                  description: lesBn
+                };
+              })
+            };
+          }) : [
+            {
+              id: "ch_1",
+              title: { bn: "অধ্যায় ১: পূর্ণাঙ্গ সিলেবাস", en: "Chapter 1: Full Syllabus" },
+              lessons: [
+                {
+                  id: "les_1_1",
+                  number: "1.1",
+                  title: { bn: `${titleBn} — প্রথম লেকচার`, en: `${titleEn} — First Lecture` },
+                  type: "video",
+                  duration: "30:00",
+                  durationSeconds: 1800,
+                  isFree: true,
+                  watched: false,
+                  videoType: "youtube",
+                  videoSource: "dQw4w9WgXcQ",
+                  fileUrl: `/notes/${courseParam}.pdf`,
+                  description: "কোর্সের ভূমিকা ও প্রথম লেকচার।"
+                }
+              ]
+            }
+          ];
+
           COURSE_DATA = {
-            courseId: courseParam,
-            title: { bn: t, en: t },
-            instructor: dbCourse.instructor?.name || "দীপু একাডেমি মেন্টর টিম",
-            chapters: [
-              {
-                id: "ch_dyn_1",
-                title: { bn: "অধ্যায় ১: পূর্ণাঙ্গ সিলেবাস ও বেসিক ক্লাস", en: "Chapter 1: Full Syllabus" },
-                lessons: [
-                  {
-                    id: "dyn_1_1",
-                    number: "1.1",
-                    title: { bn: `${t} — পরিচিতি ও মূল কনসেপ্ট`, en: `${t} — Introduction` },
-                    type: "video",
-                    duration: "25:00",
-                    durationSeconds: 1500,
-                    isFree: true,
-                    watched: true,
-                    description: "কোর্সের ভূমিকা ও প্রথম লেকচার।"
-                  }
-                ]
-              }
-            ]
+            courseId: c.slug || courseParam,
+            title: { bn: titleBn, en: titleEn },
+            instructor: c.instructor?.name || c.instructorName || "দীপু একাডেমি মেন্টর টিম",
+            chapters: mappedChapters
           };
-        } else {
-          COURSE_DATA = COURSES_DATABASE["graphic-design-photoshop"];
         }
       }
-    } else {
-      COURSE_DATA = COURSES_DATABASE["graphic-design-photoshop"];
+    } catch (apiErr) {
+      console.error('[Player Course Load Error]:', apiErr);
     }
+
+    if (!COURSE_DATA) {
+      COURSE_DATA = {
+        courseId: courseParam,
+        title: { bn: "দীপু একাডেমি কোর্স", en: "Dipu Academy Course" },
+        instructor: "দীপু একাডেমি মেন্টর টিম",
+        chapters: [
+          {
+            id: "ch_1",
+            title: { bn: "অধ্যায় ১: পরিচিতি ও সিলেবাস", en: "Chapter 1: Intro" },
+            lessons: [
+              {
+                id: "les_1_1",
+                number: "1.1",
+                title: { bn: "কোর্স পরিচিতি ও সাধারণ আলোচনা", en: "Course Introduction" },
+                type: "video",
+                duration: "30:00",
+                durationSeconds: 1800,
+                isFree: true,
+                watched: false,
+                videoType: "youtube",
+                videoSource: "dQw4w9WgXcQ",
+                description: "কোর্স পরিচিতি ও সাধারণ আলোচনা"
+              }
+            ]
+          }
+        ]
+      };
+    }
+
     currentLesson = COURSE_DATA.chapters[0].lessons[0];
     if (lessonParam && COURSE_DATA && COURSE_DATA.chapters) {
       for (const ch of COURSE_DATA.chapters) {
@@ -645,8 +172,7 @@ function initPlayerStudio() {
       }
     }
   } catch (e) {
-    COURSE_DATA = COURSES_DATABASE["graphic-design-photoshop"];
-    currentLesson = COURSE_DATA.chapters[0].lessons[0];
+    console.error('[Player Setup Error]:', e);
   }
 
   // Load user profile

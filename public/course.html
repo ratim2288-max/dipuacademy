@@ -1885,569 +1885,6 @@
       setTimeout(() => document.body.removeChild(a), 150);
     }
 
-    // Complete Registry of Authentic Courses with user-uploaded images
-    const AUTHENTIC_COURSES = {
-      "class-5-full-course": {
-        slug: "class-5-full-course",
-        title: { bn: "৫ম শ্রেণীর পূর্ণাঙ্গ কোর্স" },
-        subject: "প্রাথমিক গণিত, প্রাথমিক বিজ্ঞান ও ইংরেজি",
-        classLevel: "স্কুল (৫ম শ্রেণি)",
-        price: 850,
-        discountPrice: 419,
-        thumbnail: "/images/courses/class5-full-course.jpg",
-        routineImage: "/images/courses/routine-banner.jpg",
-        rating: 4.92,
-        enrolledText: "৯২০+ শিক্ষার্থী ভর্তি হয়েছে",
-        pitchTitle: "সহজ ও আনন্দময় পদ্ধতিতে ৫ম শ্রেণির সেরা প্রস্তুতি",
-        instructor: {
-          name: "দীপু এডু প্রাইমারি একাডেমি",
-          institution: "শিশু শিক্ষায় অভিজ্ঞ বিশেষজ্ঞ শিক্ষক",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%230284C7'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>৫ম</text></svg>"
-        },
-        description: {
-          bn: "৫ম শ্রেণির শিক্ষার্থীদের জন্য সহজ ও আনন্দময় পদ্ধতিতে গণিত, বিজ্ঞান ও ইংরেজির প্রতিটি অধ্যায় শেখার পূর্ণাঙ্গ কোর্স। শিশুদের পড়াশোনার ভিত্তি মজবুত করতে স্পেশাল এআই ও লাইভ গাইডেন্স।"
-        },
-        features: [
-          "সহজ ও আকর্ষণীয় অনলাইন ক্লাস",
-          "অধ্যায়ভিত্তিক সহজ মডেল টেস্ট ও লাইভ প্র্যাকটিস",
-          "রঙিন ও প্রিন্ট-উপযোগী প্রিমিয়াম পিডিএফ হ্যান্ডনোট",
-          "গণিত, বিজ্ঞান ও ইংরেজির চমৎকার মজবুত বেসিক গঠন",
-          "২৪/৭ ইনস্ট্যান্ট ডাউট সলভিং এআই টিউটর এক্সেস",
-          "বার্ষিক পরীক্ষায় শতভাগ সেরা সাফল্য নিশ্চিতকরণ"
-        ],
-        chapters: [
-          {
-            chapterTitle: { bn: "অধ্যায় ১: গুণ, ভাগ ও চার প্রক্রিয়া সম্পর্কিত সমস্যা" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: গুণ ও ভাগের সহজ নিয়ম ও শর্টকাট অনুশীলন" }, durationMinutes: 35, isFree: true },
-              { lessonTitle: { bn: "লেকচার ২: বন্ধনীর ব্যবহার ও চার প্রক্রিয়ার জটিল হিসাব" }, durationMinutes: 38, isFree: false }
-            ]
-          },
-          {
-            chapterTitle: { bn: "অধ্যায় ২: ভগ্নাংশ ও দশমিক ভগ্নাংশের জাদুকরী সমাধান" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: সমহর বিশিষ্ট ভগ্নাংশ ও লঘিষ্ঠকরণ ট্রিকস" }, durationMinutes: 40, isFree: false },
-              { lessonTitle: { bn: "লেকচার ২: দশমিকের গুণ ও ভাগ সংক্রান্ত সমস্যা" }, durationMinutes: 45, isFree: false }
-            ]
-          },
-          {
-            chapterTitle: { bn: "অধ্যায় ৩: প্রাথমিক বিজ্ঞান — পদার্থ, শক্তি ও পরিবেশ" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: শক্তির রূপান্তর ও পরিবেশ দূষণ প্রতিরোধ" }, durationMinutes: 42, isFree: true }
-            ]
-          }
-        ]
-      },
-
-      "class-6-full-course": {
-        slug: "class-6-full-course",
-        title: { bn: "৬ষ্ঠ শ্রেণীর পূর্ণাঙ্গ প্রস্তুতি কোর্স" },
-        subject: "নতুন শিক্ষাক্রম • গণিত, বিজ্ঞান ও ইংরেজি",
-        classLevel: "স্কুল (৬ষ্ঠ শ্রেণি)",
-        price: 1200,
-        discountPrice: 699,
-        thumbnail: "/images/courses/class7-full-course.jpg",
-        routineImage: "/images/courses/routine-banner.jpg",
-        rating: 4.91,
-        enrolledText: "৭৬০+ শিক্ষার্থী ভর্তি হয়েছে",
-        pitchTitle: "নতুন কারিকুলামে আত্মবিশ্বাসী হয়ে ওঠার সম্পূর্ণ গাইডলাইন",
-        instructor: {
-          name: "দীপু এডু স্কুল একাডেমি",
-          institution: "নতুন শিক্ষাক্রম বিশেষজ্ঞ শিক্ষকবৃন্দ",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%230D9488'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>৬ষ্ঠ</text></svg>"
-        },
-        description: {
-          bn: "নতুন শিক্ষাক্রমের আলোকে ৬ষ্ঠ শ্রেণির শিক্ষার্থীদের গণিত, বিজ্ঞান ও ইংরেজির প্রতিটি অধ্যায় আনন্দময় উপায়ে শেখার জন্য সম্পূর্ণ কোর্স। বাস্তব অভিজ্ঞতা ও প্রজেক্টভিত্তিক শিখন।"
-        },
-        features: [
-          "অনলাইন ইন্টারঅ্যাক্টিভ লাইভ ও রেকর্ডেড ক্লাস",
-          "অধ্যায়ভিত্তিক প্রজেক্ট ও কুইজ মূল্যায়ন",
-          "রঙিন স্মার্ট পিডিএফ নোটস ও শিট",
-          "নতুন কারিকুলামে শতভাগ আত্মবিশ্বাস",
-          "শ্রেণি মূল্যায়নে সর্বোচ্চ সাফল্য"
-        ],
-        chapters: [
-          {
-            chapterTitle: { bn: "অধ্যায় ১: সংখ্যার গল্প ও বাস্তব সমস্যা" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: সংখ্যার জাদু ও রোমান সংখ্যার ট্রিকস" }, durationMinutes: 40, isFree: true }
-            ]
-          }
-        ]
-      },
-
-      "class-7-full-course": {
-        slug: "class-7-full-course",
-        title: { bn: "৭ম শ্রেণীর পূর্ণাঙ্গ কোর্স" },
-        subject: "সাধারণ গণিত, বিজ্ঞান ও তথ্য প্রযুক্তি",
-        classLevel: "স্কুল (৭ম শ্রেণি)",
-        price: 1500,
-        discountPrice: 799,
-        thumbnail: "/images/courses/class7-full-course.jpg",
-        routineImage: "/images/courses/routine-banner.jpg",
-        rating: 4.94,
-        enrolledText: "১,১৪০+ শিক্ষার্থী ভর্তি হয়েছে",
-        pitchTitle: "গণিত ও বিজ্ঞানের কনসেপ্ট মজবুত করার স্মার্ট প্রস্তুতি",
-        instructor: {
-          name: "দীপু এডু একাডেমি",
-          institution: "মাধ্যমিক স্তর বিশেষজ্ঞ শিক্ষক প্যানেল",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%2310B981'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>৭ম</text></svg>"
-        },
-        description: {
-          bn: "নতুন শিক্ষাক্রমের আলোকে ৭ম শ্রেণির শিক্ষার্থীদের গণিত ও বিজ্ঞানের জটিল সমস্যাগুলো বাস্তব উদাহরণের সাহায্যে সহজে শেখার জন্য তৈরি পূর্ণাঙ্গ কোর্স।"
-        },
-        features: [
-          "সরাসরি অনলাইন ক্লাস ও ইনস্ট্যান্ট প্রশ্নোত্তরের সুবিধা",
-          "নিয়মিত অধ্যায়ভিত্তিক অনলাইন মক টেস্ট",
-          "প্রিন্ট-উপযোগী হ্যান্ডনোট ও সমাধান শিট",
-          "বাস্তবধর্মী প্রজেক্ট ও কুইজ কম্পিটিশন",
-          "শ্রেণি মূল্যায়নে সর্বোচ্চ সাফল্য"
-        ],
-        chapters: [
-          {
-            chapterTitle: { bn: "অধ্যায় ১: সূচকের গল্প ও অজানা রাশির সমীকরণ" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: সূচক ও বীজগাণিতিক মডেল তৈরি" }, durationMinutes: 40, isFree: true },
-              { lessonTitle: { bn: "লেকচার ২: বাস্তব জীবনে সূচক ও সমীকরণের প্রয়োগ" }, durationMinutes: 45, isFree: false }
-            ]
-          }
-        ]
-      },
-
-      "class-10-business-studies": {
-        slug: "class-10-business-studies",
-        title: { bn: "১০ম শ্রেণীর পূর্ণাঙ্গ ব্যবসায় শিক্ষা কোর্স" },
-        subject: "ব্যবসায় শিক্ষা (হিসাববিজ্ঞান ও ফিন্যান্স)",
-        classLevel: "১০ম শ্রেণি / SSC '২৭",
-        price: 5000,
-        discountPrice: 3550,
-        thumbnail: "/images/courses/class10-business-studies.jpg",
-        routineImage: "/images/courses/routine-banner.jpg",
-        rating: 4.95,
-        enrolledText: "৮৪০+ শিক্ষার্থী ভর্তি হয়েছে",
-        pitchTitle: "হিসাববিজ্ঞান ও ফিন্যান্সে ১০০% গোল্ডেন A+ অর্জনের রূপরেখা",
-        instructor: {
-          name: "দীপু স্যার ও কমার্স মেন্টর প্যানেল",
-          institution: "ব্যবসায় শিক্ষা ও হিসাববিজ্ঞান বিশেষজ্ঞ প্যানেল",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%232563EB'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>ব্য</text></svg>"
-        },
-        description: {
-          bn: "১০ম শ্রেণি ও এসএসসি পরীক্ষার্থীদের জন্য হিসাববিজ্ঞান, ফিন্যান্স ও ব্যাংকিং এবং ব্যবসায় উদ্যোগের প্রতিটি অধ্যায়ের পুঙ্খানুপুঙ্খ কনসেপ্ট, বোর্ড প্রশ্ন সমাধান ও স্পেশাল মক টেস্ট সহ পূর্ণাঙ্গ প্রস্তুতি।"
-        },
-        features: [
-          "অনলাইন ইন্টারঅ্যাক্টিভ লাইভ ও ব্যাকআপ ক্লাস",
-          "ব্যবসায় শিক্ষা পূর্ণাঙ্গ মডেল ও মক টেস্ট",
-          "হিসাববিজ্ঞান ও ফিন্যান্সের শতভাগ নির্ভুল সমাধান",
-          "ব্যবসায় শিক্ষা প্রিমিয়াম হ্যান্ডনোট ও কুইজ",
-          "বোর্ড পরীক্ষায় গোল্ডেন A+ নিশ্চিতকরণ"
-        ],
-        chapters: [
-          {
-            chapterTitle: { bn: "অধ্যায় ১: হিসাববিজ্ঞানের মূলনীতি ও দুতরফা দাখিলা" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: দুতরফা দাখিলা পদ্ধতি ও গাণিতিক সৃজনশীল" }, durationMinutes: 45, isFree: true },
-              { lessonTitle: { bn: "লেকচার ২: ডেবিট-ক্রেডিট নির্ণয়ের সোনালী সূত্রাবলী" }, durationMinutes: 48, isFree: false }
-            ]
-          }
-        ]
-      },
-
-      "hsc-27-full-prep": {
-        slug: "hsc-27-full-prep",
-        title: { bn: "HSC '২৭ পূর্ণাঙ্গ প্রস্তুতি কোর্স" },
-        subject: "বিজ্ঞান বিভাগ (পদার্থবিজ্ঞান, রসায়ন ও উচ্চতর গণিত)",
-        classLevel: "HSC '২৭",
-        price: 6000,
-        discountPrice: 4500,
-        thumbnail: "/images/courses/hsc-27-prep.jpg",
-        routineImage: "/images/courses/routine-banner.jpg",
-        rating: 4.96,
-        enrolledText: "১,৫৬০+ শিক্ষার্থী ভর্তি হয়েছে",
-        pitchTitle: "বোর্ড পরীক্ষায় গোল্ডেন A+ ও ভার্সিটি এডমিশন ফাউন্ডেশন",
-        instructor: {
-          name: "দীপু স্যার (BUET)",
-          institution: "বুয়েট সিভিল ইঞ্জিনিয়ারিং • লিড মেন্টর",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23E11D48'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৭</text></svg>"
-        },
-        description: {
-          bn: "এইচএসসি ২০২৭ ব্যাচের বোর্ড পরীক্ষায় নিশ্চিত গোল্ডেন A+ এবং এডমিশনের মূল ভিত শক্ত করতে প্রতিটি অধ্যায়ের বিস্তারিত সৃজনশীল, থিওরি ও প্রশ্ন ব্যাংক সমাধান সংবলিত প্রিমিয়াম কোর্স।"
-        },
-        features: [
-          "অনলাইন লাইভ ক্লাস ও স্মার্ট ডাউট সলভ",
-          "বোর্ড স্ট্যান্ডার্ড পূর্ণাঙ্গ মক টেস্ট সিরিজ",
-          "বিষয়ভিত্তিক রঙিন হ্যান্ডনোট ও অধ্যায় কুইজ",
-          "ক্যালকুলেটর শর্টকাট হ্যাকস ও CQ ট্রিকস",
-          "সর্বোচ্চ নম্বর অর্জনের প্রমাণিত সাফল্য"
-        ],
-        chapters: [
-          {
-            chapterTitle: { bn: "অধ্যায় ১: অন্তরীকরণ ও লিমিট হ্যাকস" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: লিমিট ও অন্তরীকরণের জ্যামিতিক তাৎপর্য" }, durationMinutes: 50, isFree: true },
-              { lessonTitle: { bn: "লেকচার ২: চেইন রুল ও ত্রিকোণমিতিক অন্তরীকরণ ট্রিকস" }, durationMinutes: 54, isFree: false }
-            ]
-          }
-        ]
-      },
-
-      "hsc-28-full-prep": {
-        slug: "hsc-28-full-prep",
-        title: { bn: "HSC '২৮ পূর্ণাঙ্গ প্রস্তুতি কোর্স" },
-        subject: "বিজ্ঞান বিভাগ (পদার্থ, রসায়ন, গণিত ও বায়োলজি)",
-        classLevel: "HSC '২৮",
-        price: 6500,
-        discountPrice: 4500,
-        thumbnail: "/images/courses/hsc-28-prep.jpg",
-        routineImage: "/images/courses/routine-banner.jpg",
-        rating: 4.98,
-        enrolledText: "১,২৮০+ শিক্ষার্থী ভর্তি হয়েছে",
-        pitchTitle: "শুরু থেকেই বুয়েট ও মেডিকেল স্ট্যান্ডার্ড বেসিক প্রস্তুতি",
-        instructor: {
-          name: "দীপু স্যার (BUET) ও স্পেশালিস্ট টিম",
-          institution: "বুয়েট ইঞ্জিনিয়ারিং • ৮+ বছরের শিক্ষকতা",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23FF7A1A'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
-        },
-        description: {
-          bn: "এইচএসসি ২০২৮ ব্যাচের শিক্ষার্থীদের শুরু থেকেই বুয়েট ও মেডিকেল স্ট্যান্ডার্ড সেরা বেসিক ফাউন্ডেশন তৈরি করতে পদার্থ, রসায়ন, উচ্চতর গণিত ও জীববিজ্ঞান পূর্ণাঙ্গ মাস্টারকোর্স।"
-        },
-        features: [
-          "অনলাইন লাইভ ক্লাস ও ২৪/৭ ক্লাস আর্কাইভ",
-          "পূর্ণাঙ্গ মক টেস্ট ও লিডারবোর্ড র‍্যাঙ্কিং",
-          "বিষয়ভিত্তিক প্রিন্ট-উপযোগী নোট ও কুইজ",
-          "বেসিক টু এডভান্সড কনসেপ্ট ক্লিয়ারিং",
-          "বোর্ড ও এডমিশন পরীক্ষায় নিশ্চিত সাফল্য"
-        ],
-        chapters: [
-          {
-            chapterTitle: { bn: "অধ্যায় ১: ভেক্টর মেকানিক্স ও গতিবিদ্যা ফাউন্ডেশন" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: ভেক্টর স্কেলার ও ত্রিমাত্রিক বিশ্লেষণ" }, durationMinutes: 52, isFree: true },
-              { lessonTitle: { bn: "লেকচার ২: ডট গুণন ও ক্রস গুণনের ব্যবহারিক প্রয়োগ" }, durationMinutes: 50, isFree: false }
-            ]
-          }
-        ]
-      },
-
-      "ssc-28-full-prep": {
-        slug: "ssc-28-full-prep",
-        title: { bn: "SSC '২৮ পূর্ণাঙ্গ প্রস্তুতি ও ফাউন্ডেশন কোর্স" },
-        subject: "বিজ্ঞান বিভাগ • পদার্থ, রসায়ন, গণিত ও জীব",
-        classLevel: "SSC '২৮",
-        price: 4500,
-        discountPrice: 2999,
-        thumbnail: "/images/courses/ssc-28-prep.jpg",
-        routineImage: "/images/courses/routine-banner.jpg",
-        rating: 4.95,
-        enrolledText: "৯৫০+ শিক্ষার্থী ভর্তি হয়েছে",
-        pitchTitle: "বিজ্ঞান বিভাগের ৪টি মূল বিষয়ের শক্ত বেসিক ও CQ হ্যাকস",
-        instructor: {
-          name: "দীপু স্যার ও সিনিয়র মেন্টর প্যানেল",
-          institution: "এসএসসি স্পেশালিস্ট ফ্যাকাল্টি",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23FF7A1A'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='32' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
-        },
-        description: {
-          bn: "এসএসসি ২০২৮ ব্যাচের শিক্ষার্থীদের জন্য বিজ্ঞান বিভাগের ৪টি মূল বিষয় (পদার্থ, রসায়ন, উচ্চতর/সাধারণ গণিত ও জীব)-এর পুঙ্খানুপুঙ্খ বেসিক গঠন ও বোর্ড পরীক্ষার জন্য আগাম পূর্ণাঙ্গ প্রস্তুতি।"
-        },
-        features: [
-          "অনলাইন ইন্টারঅ্যাক্টিভ লাইভ ও ব্যাকআপ ক্লাস",
-          "টপিকভিত্তিক অধ্যায় মূল্যায়ন ও মক টেস্ট",
-          "রঙিন স্মার্ট নোটস ও হ্যান্ডরিটেন শিট",
-          "CQ ও MCQ সমাধানের এক্সক্লুসিভ হ্যাকস",
-          "গোল্ডেন A+ নিশ্চিতকরণে পার্সোনালাইজড ট্র্যাকিং"
-        ],
-        chapters: [
-          {
-            chapterTitle: { bn: "অধ্যায় ১: গতি ও বলের প্রাথমিক ধারণা" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: গতির সমীকরণ ও গ্রাফিক্যাল বিশ্লেষণ" }, durationMinutes: 50, isFree: true }
-            ]
-          }
-        ]
-      },
-
-      "ssc-27-science": {
-        slug: "ssc-27-science",
-        title: { bn: "SSC '২৭ বিজ্ঞান পূর্ণাঙ্গ প্রস্তুতি কোর্স" },
-        subject: "বিজ্ঞান বিভাগ (পদার্থ, রসায়ন, উচ্চতর গণিত ও জীব)",
-        classLevel: "SSC '২৭",
-        price: 5500,
-        discountPrice: 3950,
-        thumbnail: "/images/courses/ssc-27-prep.jpg",
-        routineImage: "/images/courses/routine-banner.jpg",
-        rating: 4.97,
-        enrolledText: "১,৬৪০+ শিক্ষার্থী ভর্তি হয়েছে",
-        pitchTitle: "বোর্ড পরীক্ষায় গোল্ডেন A+ অর্জনে বিজ্ঞান ৪টি বিষয়ের ফুল সিলেবাস",
-        instructor: {
-          name: "দীপু স্যার (BUET) ও বিজ্ঞান টিম",
-          institution: "বুয়েট ইঞ্জিনিয়ারিং • লিড মেন্টর",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%230084FF'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৭</text></svg>"
-        },
-        description: {
-          bn: "এসএসসি ২০২৭ ব্যাচের শিক্ষার্থীদের পদার্থবিজ্ঞান, রসায়ন, উচ্চতর গণিত এবং জীববিজ্ঞানের শতভাগ বেসিক ও বোর্ড পরীক্ষায় নিশ্চিত গোল্ডেন A+ অর্জনের লক্ষ্যে সাজানো পূর্ণাঙ্গ মাস্টারকোর্স।"
-        },
-        features: [
-          "অনলাইন লাইভ ক্লাস ও ২৪/৭ ডাউট সলভ সাপোর্ট",
-          "অধ্যায়ভিত্তিক CQ ও MCQ শর্টকাট টেকনিক ক্লাস",
-          "বোর্ড স্ট্যান্ডার্ড পূর্ণাঙ্গ মক টেস্ট সিরিজ",
-          "রঙিন প্রিন্ট-উপযোগী পিডিএফ লেকচার নোটস",
-          "বোর্ড পরীক্ষায় গোল্ডেন A+ নিশ্চিতকরণ রোডম্যাপ"
-        ],
-        chapters: [
-          {
-            chapterTitle: { bn: "অধ্যায় ১: গতি ও বলের সৃজনশীল সমাধান" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: গতির সমীকরণ ও গ্রাফিক্যাল প্রশ্ন সমাধান" }, durationMinutes: 48, isFree: true }
-            ]
-          }
-        ]
-      },
-
-      "ssc-27-humanities": {
-        slug: "ssc-27-humanities",
-        title: { bn: "SSC '২৭ মানবিক পূর্ণাঙ্গ প্রস্তুতি কোর্স" },
-        subject: "মানবিক বিভাগ (পৌরনীতি, ভূগোল, ইতিহাস ও অর্থনীতি)",
-        classLevel: "SSC '২৭",
-        price: 4200,
-        discountPrice: 2950,
-        thumbnail: "/images/courses/class7-full-course.jpg",
-        routineImage: "/images/courses/routine-banner.jpg",
-        rating: 4.93,
-        enrolledText: "৭২০+ শিক্ষার্থী ভর্তি হয়েছে",
-        pitchTitle: "মানবিক সকল বিষয়ের সহজ সৃজনশীল বিশ্লেষণ ও কালারফুল নোটস",
-        instructor: {
-          name: "মানবিক স্পেশালিস্ট প্যানেল",
-          institution: "ঢাকা বিশ্ববিদ্যালয় ও সিনিয়র শিক্ষক প্যানেল",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%238B5CF6'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>মান</text></svg>"
-        },
-        description: {
-          bn: "এসএসসি ২০২৭ মানবিক বিভাগের শিক্ষার্থীদের জন্য পৌরনীতি ও নাগরিকতা, বাংলাদেশের ইতিহাস, ভূগোল ও অর্থনীতির প্রতিটি অধ্যায়ের সহজ বিশ্লেষণ, রঙিন চার্ট ও বোর্ড পরীক্ষার হ্যান্ডনোট।"
-        },
-        features: [
-          "সহজ ভাষায় মানবিক সকল বিষয়ের অনলাইন লাইভ ক্লাস",
-          "সৃজনশীল প্রশ্নের কাঠামো ও লেখার স্পেশাল টেকনিক",
-          "অধ্যায়ভিত্তিক মডেল টেস্ট ও বিস্তারিত উত্তরপত্র"
-        ],
-        chapters: [
-          {
-            chapterTitle: { bn: "অধ্যায় ১: নাগরিক ও নাগরিকতা বেসিক" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: নাগরিকের অধিকার ও দায়িত্ব বিশ্লেষণ" }, durationMinutes: 42, isFree: true }
-            ]
-          }
-        ]
-      },
-
-      "ssc-28-business": {
-        slug: "ssc-28-business",
-        title: { bn: "SSC '২৮ ব্যবসায় শিক্ষা ফাউন্ডেশন কোর্স" },
-        subject: "ব্যবসায় শিক্ষা (হিসাববিজ্ঞান ও ব্যবসায় উদ্যোগ বেসিক)",
-        classLevel: "SSC '২৮",
-        price: 4000,
-        discountPrice: 2750,
-        thumbnail: "/images/courses/class10-business-studies.jpg",
-        routineImage: "/images/courses/routine-banner.jpg",
-        rating: 4.91,
-        enrolledText: "৫৮০+ শিক্ষার্থী ভর্তি হয়েছে",
-        pitchTitle: "হিসাববিজ্ঞান ও ফিন্যান্সের বেসিক মাস্টারি শুরু থেকেই",
-        instructor: {
-          name: "কমার্স মেন্টর টিম",
-          institution: "ব্যবসায় শিক্ষা বিশেষজ্ঞ ফ্যাকাল্টি",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23F59E0B'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
-        },
-        description: {
-          bn: "এসএসসি ২০২৮ ব্যাচের কমার্স শিক্ষার্থীদের জন্য হিসাববিজ্ঞান, ফিন্যান্স এবং ব্যবসায় উদ্যোগের প্রাথমিক ধারণা থেকে শুরু করে বোর্ড পরীক্ষার আগাম প্রস্তুতি।"
-        },
-        features: [
-          "হিসাববিজ্ঞানের গোল্ডেন রুলস ও সহজ কৌশল",
-          "নিয়মিত লাইভ ক্লাস ও কুইজ প্র্যাকটিস",
-          "অধ্যায়ভিত্তিক স্মার্ট নোট শিট"
-        ],
-        chapters: [
-          {
-            chapterTitle: { bn: "অধ্যায় ১: হিসাববিজ্ঞানের প্রাথমিক পরিচিতি" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: হিসাববিজ্ঞান কী ও কেন প্রয়োজন" }, durationMinutes: 40, isFree: true }
-            ]
-          }
-        ]
-      },
-
-      "ssc-28-humanities": {
-        slug: "ssc-28-humanities",
-        title: { bn: "SSC '২৮ মানবিক ফাউন্ডেশন কোর্স" },
-        subject: "মানবিক বিভাগ (বাংলাদেশ ও বিশ্বপরিচয় এবং সাধারণ বিজ্ঞান)",
-        classLevel: "SSC '২৮",
-        price: 3800,
-        discountPrice: 2500,
-        thumbnail: "/images/courses/class5-full-course.jpg",
-        routineImage: "/images/courses/routine-banner.jpg",
-        rating: 4.89,
-        enrolledText: "৫১০+ শিক্ষার্থী ভর্তি হয়েছে",
-        pitchTitle: "মানবিক বিভাগের মূল বিষয়সমূহের চমৎকার বেসিক ফাউন্ডেশন",
-        instructor: {
-          name: "মানবিক মেন্টরস",
-          institution: "দীপু একাডেমি মানবিক বিভাগ",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%236366F1'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
-        },
-        description: {
-          bn: "এসএসসি ২০২৮ মানবিক শিক্ষার্থীদের জন্য বাংলাদেশ ও বিশ্বপরিচয়, ইতিহাস এবং সাধারণ বিজ্ঞান বিষয়ের শক্ত ভিত্তি গড়ে তোলার স্পেশাল ফাউন্ডেশন কোর্স।"
-        },
-        features: [
-          "অধ্যায়ভিত্তিক ইন্টারেক্টিভ ক্লাস",
-          "রঙিন মানচিত্র ও চার্টসহ হ্যান্ডনোট",
-          "সাপ্তাহিক কুইজ ও অগ্রগতি মূল্যায়ন"
-        ],
-        chapters: [
-          {
-            chapterTitle: { bn: "অধ্যায় ১: বাংলার প্রাচীন ইতিহাস ও ঐতিহ্য" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: প্রাচীন জনপদ ও ভৌগোলিক বৈশিষ্ট্য" }, durationMinutes: 38, isFree: true }
-            ]
-          }
-        ]
-      },
-
-      "hsc-27-business": {
-        slug: "hsc-27-business",
-        title: { bn: "HSC '২৭ পূর্ণাঙ্গ ব্যবসায় শিক্ষা কোর্স" },
-        subject: "ব্যবসায় শিক্ষা (হিসাববিজ্ঞান, ব্যবসায় সংগঠন ও ফিন্যান্স)",
-        classLevel: "HSC '২৭",
-        price: 5500,
-        discountPrice: 3950,
-        thumbnail: "/images/courses/class10-business-studies.jpg",
-        routineImage: "/images/courses/routine-banner.jpg",
-        rating: 4.94,
-        enrolledText: "৮৯০+ শিক্ষার্থী ভর্তি হয়েছে",
-        pitchTitle: "বোর্ড পরীক্ষায় গোল্ডেন A+ ও ঢাবি সি-ইউনিট এডমিশন প্রস্তুতি",
-        instructor: {
-          name: "ব্যবসায় শিক্ষা ফ্যাকাল্টি",
-          institution: "ঢাকা বিশ্ববিদ্যালয় বাণিজ্য অনুষদ টপার্স",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23F59E0B'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৭</text></svg>"
-        },
-        description: {
-          bn: "এইচএসসি ২০২৭ ব্যাচের হিসাববিজ্ঞান ১ম ও ২য় পত্র, ব্যবসায় সংগঠন ও ব্যবস্থাপনা এবং ফিন্যান্স বিষয়ের প্রতিটি কনসেপ্টের পুঙ্খানুপুঙ্খ ব্যাখ্যা ও বোর্ড সলভিং।"
-        },
-        features: [
-          "অনলাইন লাইভ ক্লাস ও রেকর্ডেড ক্লাস আর্কাইভ",
-          "বোর্ড স্ট্যান্ডার্ড CQ ও MCQ মক টেস্ট সিরিজ",
-          "প্রিমিয়াম কালারফুল হ্যান্ডনোট ও প্রশ্নব্যাংক"
-        ],
-        chapters: [
-          {
-            chapterTitle: { bn: "অধ্যায় ১: হিসাববিজ্ঞান পরিচিতি ও সমন্বয় দাখিলা" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: সমন্বয় দাখিলার জাদুকরী নিয়ম ও CQ হ্যাকস" }, durationMinutes: 52, isFree: true }
-            ]
-          }
-        ]
-      },
-
-      "hsc-27-humanities": {
-        slug: "hsc-27-humanities",
-        title: { bn: "HSC '২৭ পূর্ণাঙ্গ মানবিক কোর্স" },
-        subject: "মানবিক বিভাগ (অর্থনীতি, পৌরনীতি ও যুক্তিবিদ্যা)",
-        classLevel: "HSC '২৭",
-        price: 5000,
-        discountPrice: 3500,
-        thumbnail: "/images/courses/class7-full-course.jpg",
-        routineImage: "/images/courses/routine-banner.jpg",
-        rating: 4.92,
-        enrolledText: "৬৪০+ শিক্ষার্থী ভর্তি হয়েছে",
-        pitchTitle: "মানবিক ৩টি আবশ্যিক বিষয়ের শতভাগ সিলেবাস কভারেজ",
-        instructor: {
-          name: "মানবিক মেন্টর টিম",
-          institution: "সিনিয়র বিসিএস ও বিশ্ববিদ্যালয় মেন্টর প্যানেল",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%238B5CF6'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৭</text></svg>"
-        },
-        description: {
-          bn: "এইচএসসি ২০২৭ ব্যাচের শিক্ষার্থীদের অর্থনীতি, পৌরনীতি ও সুশাসন এবং যুক্তিবিদ্যা বিষয়ে সহজ বিশ্লেষণ, গ্রাফ সমাধান ও বোর্ড পরীক্ষায় গোল্ডেন A+ পাওয়ার পূর্ণাঙ্গ প্যাকেজ।"
-        },
-        features: [
-          "অর্থনীতির গ্রাফ ও গানিতিক ব্যাখ্যার বিশেষ ক্লাস",
-          "বোর্ড স্ট্যান্ডার্ড হ্যান্ডনোট ও পূর্ণাঙ্গ সাজেশন",
-          "অধ্যায়ভিত্তিক মডেল টেস্ট ও সৃজনশীল খাতা মূল্যায়ন"
-        ],
-        chapters: [
-          {
-            chapterTitle: { bn: "অধ্যায় ১: চাহিদা, যোগান ও স্থিতিস্থাপকতা" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: চাহিদা রেখা অঙ্কন ও গাণিতিক সমীকরণ সমাধান" }, durationMinutes: 50, isFree: true }
-            ]
-          }
-        ]
-      },
-
-      "hsc-28-business": {
-        slug: "hsc-28-business",
-        title: { bn: "HSC '২৮ ব্যবসায় শিক্ষা পূর্ণাঙ্গ কোর্স" },
-        subject: "ব্যবসায় শিক্ষা (১ম বর্ষের পূর্ণাঙ্গ সিলেবাস)",
-        classLevel: "HSC '২৮",
-        price: 5500,
-        discountPrice: 3950,
-        thumbnail: "/images/courses/class10-business-studies.jpg",
-        routineImage: "/images/courses/routine-banner.jpg",
-        rating: 4.93,
-        enrolledText: "৭৩০+ শিক্ষার্থী ভর্তি হয়েছে",
-        pitchTitle: "১ম বর্ষ থেকেই নিখুঁত হিসাববিজ্ঞান ও ব্যবসায়িক জ্ঞান অর্জন",
-        instructor: {
-          name: "সিনিয়র কমার্স টিম",
-          institution: "বাণিজ্য শিক্ষা বিশেষজ্ঞ মেন্টরস",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23FF7A1A'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
-        },
-        description: {
-          bn: "এইচএসসি ২০২৮ ব্যাচের শিক্ষার্থীদের শুরু থেকেই কমার্সের মূল বিষয়গুলো পুঙ্খানুপুঙ্খভাবে আত্মস্থ করার জন্য সাজানো পূর্ণাঙ্গ একাডেমি কোর্স।"
-        },
-        features: [
-          "১ম বর্ষের প্রতিটি অধ্যায়ের পুঙ্খানুপুঙ্খ বেসিক ক্লাস",
-          "সাপ্তাহিক অনলাইন পরীক্ষা ও লিডারবোর্ড র‍্যাঙ্কিং",
-          "রঙিন হ্যান্ডনোটস ও প্র্যাকটিস শিট"
-        ],
-        chapters: [
-          {
-            chapterTitle: { bn: "অধ্যায় ১: হিসাববিজ্ঞানের মূল ভিত্তি" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: দুতরফা দাখিলা ও জাবেদা ভুক্তিকরণ" }, durationMinutes: 45, isFree: true }
-            ]
-          }
-        ]
-      },
-
-      "hsc-28-humanities": {
-        slug: "hsc-28-humanities",
-        title: { bn: "HSC '২৮ মানবিক পূর্ণাঙ্গ প্রস্তুতি কোর্স" },
-        subject: "মানবিক বিভাগ (১ম বর্ষের পূর্ণাঙ্গ প্রস্তুতি)",
-        classLevel: "HSC '২৮",
-        price: 5000,
-        discountPrice: 3500,
-        thumbnail: "/images/courses/class5-full-course.jpg",
-        routineImage: "/images/courses/routine-banner.jpg",
-        rating: 4.91,
-        enrolledText: "৫৬০+ শিক্ষার্থী ভর্তি হয়েছে",
-        pitchTitle: "১ম বর্ষের অর্থনীতি ও পৌরনীতির কনসেপচুয়াল ক্লাস",
-        instructor: {
-          name: "মানবিক ফ্যাকাল্টি",
-          institution: "দীপু একাডেমি মানবিক বিভাগ",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%2310B981'/><text x='50' y='65' fill='%23FFF' font-family='sans-serif' font-size='36' text-anchor='middle' font-weight='bold'>২৮</text></svg>"
-        },
-        description: {
-          bn: "এইচএসসি ২০২৮ মানবিক শিক্ষার্থীদের জন্য অর্থনীতি, পৌরনীতি ও যুক্তিবিদ্যা ১ম পত্রের প্রতিটি বিষয়ের সহজবোধ্য ব্যাখ্যা ও বেসিক ফাউন্ডেশন কোর্স।"
-        },
-        features: [
-          "১ম বর্ষের সকল অধ্যায়ের সহজ বিশ্লেষণ ক্লাস",
-          "অধ্যায়ভিত্তিক অনলাইন পরীক্ষা ও প্র্যাকটিস নোটস",
-          "পরীক্ষায় সর্বোচ্চ নম্বর পাওয়ার টিপস ও ট্রিকস"
-        ],
-        chapters: [
-          {
-            chapterTitle: { bn: "অধ্যায় ১: মৌলিক অর্থনৈতিক সমস্যা ও এর সমাধান" },
-            lessons: [
-              { lessonTitle: { bn: "লেকচার ১: দুষ্প্রাপ্যতা ও অসীম অভাবের বিশ্লেষণ" }, durationMinutes: 42, isFree: true }
-            ]
-          }
-        ]
-      }
-    };
-
     document.addEventListener("DOMContentLoaded", async () => {
       // 1. Get Slug from URL
       const urlParams = new URLSearchParams(window.location.search);
@@ -2500,7 +1937,7 @@
         }
       } catch (e) {}
 
-      // 2. Load Course
+      // 2. Load Course directly from MongoDB Atlas API
       await loadCourseDetails(slug);
 
       // 3. Setup Tab Scrollspy
@@ -2514,46 +1951,29 @@
     });
 
     async function loadCourseDetails(slug) {
-      let candidate = null;
-
-      if (AUTHENTIC_COURSES[slug]) {
-        candidate = AUTHENTIC_COURSES[slug];
-      } else {
-        const keys = Object.keys(AUTHENTIC_COURSES);
-        const matchedKey = keys.find(k => k.toLowerCase() === slug.toLowerCase() || slug.includes(k) || k.includes(slug));
-        if (matchedKey) candidate = AUTHENTIC_COURSES[matchedKey];
-      }
-
       try {
-        const localCourses = JSON.parse(localStorage.getItem("dipu_courses") || "[]");
-        const match = localCourses.find(c => c.slug === slug || c._id === slug || (c.slug && c.slug.toLowerCase() === slug.toLowerCase()));
-        if (match) {
-          candidate = Object.assign({}, candidate || {}, match);
-        }
-      } catch (e) {}
-
-      if (candidate) {
-        currentCourse = candidate;
-        renderCourseData(candidate);
-      }
-
-      try {
-        const res = await fetch(`/api/courses/${slug}`);
+        const res = await fetch(`/api/courses/${encodeURIComponent(slug)}`);
         if (res.ok) {
           const data = await res.json();
           if (data.success && data.course) {
-            currentCourse = Object.assign({}, candidate || {}, data.course);
+            currentCourse = data.course;
             renderCourseData(currentCourse);
             return;
           }
         }
-      } catch (err) {}
-
-      if (!currentCourse) {
-        currentCourse = AUTHENTIC_COURSES["hsc-27-full-prep"] || Object.values(AUTHENTIC_COURSES)[0];
-        renderCourseData(currentCourse);
+      } catch (err) {
+        console.error('[Course Load Error]:', err);
       }
+
+      // Course not found UI state
+      const headerTitle = document.getElementById("courseHeaderTitle");
+      if (headerTitle) headerTitle.textContent = "কোর্সটি পাওয়া যায়নি";
+      const headerDesc = document.getElementById("courseHeaderDesc");
+      if (headerDesc) headerDesc.innerHTML = 'অনুরোধকৃত কোর্সটি ডাটাবেজে পাওয়া যায়নি। অনুগ্রহ করে <a href="/courses" style="color: var(--cd-green); text-decoration: underline;">সকল কোর্সের তালিকা দেখুন</a>।';
+      const buyBtn = document.getElementById("openCheckoutBtn");
+      if (buyBtn) buyBtn.style.display = "none";
     }
+
 
     function renderCourseData(c) {
       const title = c.title?.bn || c.title?.en || (typeof c.title === 'string' ? c.title : "HSC ও SSC পূর্ণাঙ্গ কোর্স");
@@ -2785,17 +2205,18 @@
 
       if (payBtn) {
         payBtn.addEventListener("click", async () => {
+          if (!currentCourse) return;
           payBtn.disabled = true;
           payBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> ZiniPay পেমেন্ট প্রসেসিং হচ্ছে...`;
 
           const token = localStorage.getItem('da_token') || localStorage.getItem('auth_token');
-          const studentPhone = localStorage.getItem('da_user_phone') || localStorage.getItem('user_phone') || '01712345678';
+          const studentPhone = localStorage.getItem('da_user_phone') || localStorage.getItem('user_phone') || '';
           const studentName = localStorage.getItem('da_user_name') || localStorage.getItem('user_name') || 'Student';
           const cSlug = currentCourse.slug || currentCourse._id || 'course-enrolled';
           const finalPayAmount = Math.max(10, (Number(currentCourse.discountPrice) || Number(currentCourse.price) || 850) - appliedCouponDiscount);
           const couponCode = document.getElementById("couponCodeInput")?.value?.trim() || undefined;
 
-          // 1. ZiniPay Gateway Hosted Checkout (Live bKash/Nagad/Card Payment)
+          // ZiniPay Gateway Hosted Checkout (Live bKash/Nagad/Card Payment)
           try {
             const ziniRes = await fetch("/api/payment/zinipay/create", {
               method: "POST",
@@ -2819,60 +2240,18 @@
               // Direct user to secure ZiniPay payment page (bKash/Nagad/Card)
               window.location.href = ziniData.payment_url;
               return;
+            } else {
+              throw new Error(ziniData?.message || 'ZiniPay পেমেন্ট লিঙ্ক তৈরি করা সম্ভব হয়নি');
             }
           } catch (ziniErr) {
-            console.warn('[ZiniPay Checkout Initiation Note]:', ziniErr);
+            console.error('[ZiniPay Checkout Error]:', ziniErr);
+            alert(ziniErr.message || "পেমেন্ট গেটওয়েতে সংযোগ করতে সমস্যা হচ্ছে। অনুগ্রহ করে একটু পর আবার চেষ্টা করুন অথবা হেল্পলাইনে যোগাযোগ করুন।");
+            payBtn.disabled = false;
+            payBtn.innerHTML = `<span>নিশ্চিত করুন ও পেমেন্ট করুন</span> <i class="fas fa-arrow-right ml-2"></i>`;
           }
-
-          // 2. Graceful Instant Fallback
-          const genTrx = `ZINI_${selectedGateway.toUpperCase()}_${Date.now().toString().slice(-6)}`;
-          try {
-            const enrollRes = await fetch("/api/payment/enroll", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                ...(token ? { "Authorization": `Bearer ${token}` } : {})
-              },
-              body: JSON.stringify({
-                courseId: currentCourse._id || cSlug,
-                courseSlug: cSlug,
-                studentPhone,
-                studentName,
-                paymentGateway: `zinipay_${selectedGateway}`,
-                amount: finalPayAmount,
-                trxID: genTrx
-              })
-            });
-            const data = await enrollRes.json();
-            console.log('[Enrollment Synced to DB]', data);
-
-            try {
-              const enrolled = JSON.parse(localStorage.getItem('da_enrolled_courses') || '[]');
-              if (!enrolled.includes(cSlug)) {
-                enrolled.push(cSlug);
-                localStorage.setItem('da_enrolled_courses', JSON.stringify(enrolled));
-              }
-            } catch (e) {}
-          } catch (e) {
-            console.warn('[Enrollment API Note]', e);
-          }
-
-          setTimeout(() => {
-            document.getElementById("modalStepCheckout").style.display = "none";
-            document.getElementById("modalStepSuccess").style.display = "block";
-            document.getElementById("successTrxId").textContent = genTrx;
-
-            const successBtn = document.querySelector("#modalStepSuccess a.btn-buy-course-primary");
-            if (successBtn) {
-              successBtn.href = `/course-home?course=${encodeURIComponent(cSlug)}&justEnrolled=1`;
-              successBtn.innerHTML = `<span>কোর্স হোমে প্রবেশ করুন</span> <i class="fas fa-arrow-right"></i>`;
-            }
-            setTimeout(() => {
-              window.location.href = `/course-home?course=${encodeURIComponent(cSlug)}&justEnrolled=1`;
-            }, 1800);
-          }, 700);
         });
       }
+
     }
 
     function populateModal() {
