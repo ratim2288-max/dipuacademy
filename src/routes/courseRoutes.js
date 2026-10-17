@@ -1127,74 +1127,128 @@ async function handleEditCourse(req, res) {
       descriptionEn
     } = req.body;
 
-    const course = IN_MEMORY_COURSES.find(c => c._id === id || c.slug === id);
-    if (!course) {
+    let dbCourse = null;
+    const mongoose = require('mongoose');
+    if (mongoose.connection.readyState === 1) {
+      try {
+        if (mongoose.Types.ObjectId.isValid(id)) {
+          dbCourse = await Course.findById(id);
+        }
+        if (!dbCourse) {
+          dbCourse = await Course.findOne({ slug: id });
+        }
+        if (!dbCourse && slug) {
+          dbCourse = await Course.findOne({ slug: slug });
+        }
+      } catch (dbErr) {
+        console.error('DB find course error:', dbErr);
+      }
+    }
+
+    let memCourse = IN_MEMORY_COURSES.find(c => c._id === id || c.slug === id || (dbCourse && c.slug === dbCourse.slug));
+
+    if (!dbCourse && !memCourse) {
       return res.status(404).json({ success: false, message: 'কোর্স পাওয়া যায়নি।' });
     }
 
-    if (req.body.title) {
-      course.title = course.title || {};
-      if (typeof req.body.title === 'string') {
-        course.title.bn = req.body.title.trim();
-        course.title.en = req.body.title.trim();
-      } else if (typeof req.body.title === 'object') {
-        course.title = { ...course.title, ...req.body.title };
+    // Resolve title and clean slug
+    let newTitleBn = titleBn || (req.body.title && req.body.title.bn) || (typeof req.body.title === 'string' ? req.body.title : '');
+    let newTitleEn = titleEn || (req.body.title && req.body.title.en) || newTitleBn;
+    let newSlug = slug ? String(slug).toLowerCase().trim().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-') : '';
+
+    if (dbCourse) {
+      if (newTitleBn) {
+        if (typeof dbCourse.title === 'object' && dbCourse.title !== null) {
+          dbCourse.title.bn = newTitleBn;
+          if (newTitleEn) dbCourse.title.en = newTitleEn;
+        } else {
+          dbCourse.title = { bn: newTitleBn, en: newTitleEn || newTitleBn };
+        }
       }
-    }
-    if (titleBn) {
-      course.title = course.title || {};
-      course.title.bn = titleBn.trim();
-    }
-    if (titleEn) {
-      course.title = course.title || {};
-      course.title.en = titleEn.trim();
-    }
-    if (slug) course.slug = slug.trim();
-    if (classLevel) course.classLevel = classLevel.trim();
-    if (subject) course.subject = subject.trim();
-    if (instructorName) {
-      course.instructor = course.instructor || {};
-      course.instructor.name = instructorName.trim();
-    }
-    if (price !== undefined) course.price = Number(price);
-    if (discountPrice !== undefined) course.discountPrice = Number(discountPrice);
-    if (thumbnail) course.thumbnail = thumbnail.trim();
-    const routineImage = req.body.routineImage || req.body.routineImageUrl;
-    if (routineImage !== undefined) course.routineImage = routineImage.trim();
-    if (descriptionBn) {
-      course.description = course.description || {};
-      course.description.bn = descriptionBn.trim();
-    }
-    if (descriptionEn) {
-      course.description = course.description || {};
-      course.description.en = descriptionEn.trim();
+      if (newSlug) dbCourse.slug = newSlug;
+      if (classLevel) dbCourse.classLevel = String(classLevel).trim();
+      if (subject) dbCourse.subject = String(subject).trim();
+      if (instructorName) {
+        if (typeof dbCourse.instructor === 'object' && dbCourse.instructor !== null) {
+          dbCourse.instructor.name = String(instructorName).trim();
+        } else {
+          dbCourse.instructor = { name: String(instructorName).trim(), institution: 'বুয়েট ইঞ্জিনিয়ারিং' };
+        }
+      }
+      if (price !== undefined) dbCourse.price = Number(price);
+      if (discountPrice !== undefined) dbCourse.discountPrice = Number(discountPrice);
+      if (thumbnail) {
+        dbCourse.thumbnail = String(thumbnail).trim();
+        dbCourse.coverImage = String(thumbnail).trim();
+      }
+      const routineImage = req.body.routineImage || req.body.routineImageUrl;
+      if (routineImage !== undefined) dbCourse.routineImage = String(routineImage).trim();
+      if (descriptionBn) {
+        if (typeof dbCourse.description === 'object' && dbCourse.description !== null) {
+          dbCourse.description.bn = String(descriptionBn).trim();
+          if (descriptionEn) dbCourse.description.en = String(descriptionEn).trim();
+        } else {
+          dbCourse.description = { bn: String(descriptionBn).trim(), en: String(descriptionBn).trim() };
+        }
+      }
+      dbCourse.isPublished = true;
+      dbCourse.updatedAt = new Date();
+
+      await dbCourse.save();
+
+      const returnedObj = dbCourse.toObject ? dbCourse.toObject() : dbCourse;
+      returnedObj.coverImage = returnedObj.coverImage || returnedObj.thumbnail;
+      returnedObj.thumbnail = returnedObj.thumbnail || returnedObj.coverImage;
+
+      if (memCourse) {
+        Object.assign(memCourse, returnedObj);
+      } else {
+        IN_MEMORY_COURSES.unshift(returnedObj);
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: 'কোর্স সফলভাবে ডাটাবেসে আপডেট করা হয়েছে!',
+        course: returnedObj,
+        data: returnedObj
+      });
     }
 
-    try {
-      await Course.findByIdAndUpdate(id, {
-        'title.bn': course.title.bn,
-        'title.en': course.title.en,
-        slug: course.slug,
-        classLevel: course.classLevel,
-        subject: course.subject,
-        'instructor.name': course.instructor.name,
-        price: course.price,
-        discountPrice: course.discountPrice,
-        thumbnail: course.thumbnail,
-        routineImage: course.routineImage,
-        'description.bn': course.description.bn,
-      });
-    } catch (e) {
-      // In-memory fallback
+    // If DB is disconnected, fallback to memory
+    if (newTitleBn) {
+      memCourse.title = memCourse.title || {};
+      memCourse.title.bn = newTitleBn;
+      memCourse.title.en = newTitleEn || newTitleBn;
+    }
+    if (newSlug) memCourse.slug = newSlug;
+    if (classLevel) memCourse.classLevel = String(classLevel).trim();
+    if (subject) memCourse.subject = String(subject).trim();
+    if (instructorName) {
+      memCourse.instructor = memCourse.instructor || {};
+      memCourse.instructor.name = String(instructorName).trim();
+    }
+    if (price !== undefined) memCourse.price = Number(price);
+    if (discountPrice !== undefined) memCourse.discountPrice = Number(discountPrice);
+    if (thumbnail) {
+      memCourse.thumbnail = String(thumbnail).trim();
+      memCourse.coverImage = String(thumbnail).trim();
+    }
+    const routineImage = req.body.routineImage || req.body.routineImageUrl;
+    if (routineImage !== undefined) memCourse.routineImage = String(routineImage).trim();
+    if (descriptionBn) {
+      memCourse.description = memCourse.description || {};
+      memCourse.description.bn = String(descriptionBn).trim();
+      memCourse.description.en = descriptionEn ? String(descriptionEn).trim() : String(descriptionBn).trim();
     }
 
     return res.status(200).json({
       success: true,
       message: 'কোর্স সফলভাবে আপডেট করা হয়েছে!',
-      course,
-      data: course
+      course: memCourse,
+      data: memCourse
     });
   } catch (error) {
+    console.error('handleEditCourse error:', error);
     return res.status(500).json({ success: false, message: 'কোর্স আপডেট করতে সমস্যা হয়েছে।', error: error.message });
   }
 }
@@ -1203,10 +1257,16 @@ async function handleEditCourse(req, res) {
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    try {
-      await Course.findByIdAndDelete(id);
-    } catch (dbErr) {
-      // ignore
+    const mongoose = require('mongoose');
+    if (mongoose.connection.readyState === 1) {
+      try {
+        if (mongoose.Types.ObjectId.isValid(id)) {
+          await Course.findByIdAndDelete(id);
+        }
+        await Course.deleteMany({ slug: id });
+      } catch (dbErr) {
+        console.error('Course DB delete error:', dbErr);
+      }
     }
 
     IN_MEMORY_COURSES = IN_MEMORY_COURSES.filter(c => c._id !== id && c.slug !== id);
@@ -1216,7 +1276,7 @@ router.delete('/:id', async (req, res) => {
       message: 'কোর্স সফলভাবে মুছে ফেলা হয়েছে।'
     });
   } catch (error) {
-    return res.status(500).json({ success: false, message: 'কোর্স মুছতে সমস্যা হয়েছে।', error: error.message });
+    return res.status(500).json({ success: false, message: 'কোর্স মুছতে সমস্যা হয়েছে।' });
   }
 });
 

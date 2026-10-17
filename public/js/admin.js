@@ -508,24 +508,24 @@ function initCoursesManagement() {
   };
 
   window.openEditCourseModal = function(id) {
-    const course = loadedCourses.find(c => (c._id === id || c.slug === id));
+    const course = loadedCourses.find(c => (String(c._id) === String(id) || c.slug === id || c.id === id));
     if (!course) return alert("কোর্স পাওয়া যায়নি।");
 
     const modal = document.getElementById("editCourseModal");
     if (!modal) return;
 
     document.getElementById("editCourseId").value = course._id || course.slug;
-    document.getElementById("editCourseTitleBn").value = course.title?.bn || course.title || "";
+    document.getElementById("editCourseTitleBn").value = (typeof course.title === 'object' && course.title) ? (course.title.bn || course.title.en || "") : (course.title || "");
     document.getElementById("editCourseSlug").value = course.slug || "";
     document.getElementById("editCourseLevel").value = course.classLevel || "HSC";
     document.getElementById("editCourseSubject").value = course.subject || "";
     document.getElementById("editCourseInstructor").value = course.instructor?.name || course.instructorName || "দীপু স্যার (BUET)";
     document.getElementById("editCoursePrice").value = course.price || 1500;
-    document.getElementById("editCourseDiscountPrice").value = course.discountPrice || 999;
-    document.getElementById("editCourseDesc").value = course.description?.bn || course.description || "";
+    document.getElementById("editCourseDiscountPrice").value = course.discountPrice || (course.price ? Math.round(course.price * 0.7) : 999);
+    document.getElementById("editCourseDesc").value = (typeof course.description === 'object' && course.description) ? (course.description.bn || course.description.en || "") : (course.description || "");
 
     // Show current cover image in preview box
-    const thumbUrl = course.thumbnail || ACADEMIC_COVER_PRESETS[0].dataUrl;
+    const thumbUrl = course.thumbnail || course.coverImage || ACADEMIC_COVER_PRESETS[0].dataUrl;
     window.setCourseCoverImage(thumbUrl, 'edit');
 
     // Show routine image in preview box
@@ -588,220 +588,33 @@ function initCoursesManagement() {
     if (modal) modal.classList.remove("active");
   };
 
-  // Curated High-Definition Bengali Academic Courses (Using Real Banners)
-  const defaultCourses = [
-    {
-      _id: "course-ssc27-sci",
-      slug: "ssc-27-science",
-      title: { bn: "SSC '২৭ পূর্ণাঙ্গ প্রস্তুতি ও টেস্ট পেপার সলভিং কোর্স" },
-      classLevel: "SSC",
-      subject: "পদার্থবিজ্ঞান, রসায়ন, উচ্চতর গণিত ও জীববিজ্ঞান",
-      instructor: { name: "দীপু স্যার (BUET) ও বিজ্ঞান টিম" },
-      price: 5500,
-      discountPrice: 3950,
-      thumbnail: "/images/courses/ssc-27-prep.jpg",
-      enrolledStudentsCount: 1640,
-      rating: 4.97,
-      description: { bn: "এসএসসি ২০২৭ ব্যাচের শিক্ষার্থীদের পদার্থবিজ্ঞান, রসায়ন, উচ্চতর গণিত এবং জীববিজ্ঞানের শতভাগ বেসিক ও বোর্ড পরীক্ষায় নিশ্চিত গোল্ডেন A+ অর্জনের লক্ষ্যে সাজানো পূর্ণাঙ্গ মাস্টারকোর্স।" }
-    },
-    {
-      _id: "course-user-ssc28",
-      slug: "ssc-28-full-prep",
-      title: { bn: "SSC '২৮ বিজ্ঞান ও বেসিক ফাউন্ডেশন কোর্স" },
-      classLevel: "SSC",
-      subject: "বিজ্ঞান ৪টি মূল বিষয় ও সাধারণ গণিত বেসিক",
-      instructor: { name: "দীপু স্যার ও মেন্টর প্যানেল" },
-      price: 4500,
-      discountPrice: 2999,
-      thumbnail: "/images/courses/ssc-28-prep.jpg",
-      enrolledStudentsCount: 1150,
-      rating: 4.95,
-      description: { bn: "এসএসসি ২০২৮ ব্যাচের শিক্ষার্থীদের জন্য বিজ্ঞান বিভাগের ৪টি মূল বিষয় (পদার্থ, রসায়ন, গণিত ও জীব)-এর পুঙ্খানুপুঙ্খ বেসিক গঠন ও বোর্ড পরীক্ষার জন্য আগাম পূর্ণাঙ্গ প্রস্তুতি।" }
-    },
-    {
-      _id: "course-user-c10-biz",
-      slug: "class-10-business-studies",
-      title: { bn: "১০ম শ্রেণীর পূর্ণাঙ্গ ব্যবসায় শিক্ষা কোর্স" },
-      classLevel: "SSC",
-      subject: "ব্যবসায় শিক্ষা (হিসাববিজ্ঞান ও ফিন্যান্স)",
-      instructor: { name: "দীপু স্যার ও কমার্স মেন্টর প্যানেল" },
-      price: 5000,
-      discountPrice: 3550,
-      thumbnail: "/images/courses/class10-business-studies.jpg",
-      enrolledStudentsCount: 840,
-      rating: 4.95,
-      description: { bn: "১০ম শ্রেণি ও এসএসসি শিক্ষার্থীদের জন্য হিসাববিজ্ঞান, ফিন্যান্স ও ব্যাংকিং এবং ব্যবসায় উদ্যোগের প্রতিটি অধ্যায়ের পুঙ্খানুপুঙ্খ কনসেপ্ট, বোর্ড প্রশ্ন সমাধান ও স্পেশাল মক টেস্ট সহ পূর্ণাঙ্গ প্রস্তুতি।" }
-    },
-    {
-      _id: "course-user-hsc28",
-      slug: "hsc-28-full-prep",
-      title: { bn: "HSC '২৮ পূর্ণাঙ্গ প্রস্তুতি কোর্স" },
-      classLevel: "HSC",
-      subject: "বিজ্ঞান বিভাগ (পদার্থ, রসায়ন, গণিত ও বায়োলজি)",
-      instructor: { name: "দীপু স্যার (BUET) ও স্পেশালিস্ট টিম" },
-      price: 6500,
-      discountPrice: 4500,
-      thumbnail: "/images/courses/hsc-28-prep.jpg",
-      enrolledStudentsCount: 1280,
-      rating: 4.98,
-      description: { bn: "এইচএসসি ২০২৮ ব্যাচের শিক্ষার্থীদের শুরু থেকেই বুয়েট ও মেডিকেল স্ট্যান্ডার্ড সেরা বেসিক ফাউন্ডেশন তৈরি করতে পদার্থ, রসায়ন, উচ্চতর গণিত ও জীববিজ্ঞান পূর্ণাঙ্গ মাস্টারকোর্স।" }
-    },
-    {
-      _id: "course-user-hsc27",
-      slug: "hsc-27-full-prep",
-      title: { bn: "HSC '২৭ পূর্ণাঙ্গ প্রস্তুতি কোর্স" },
-      classLevel: "HSC",
-      subject: "বিজ্ঞান বিভাগ (পদার্থবিজ্ঞান, রসায়ন ও গণিত)",
-      instructor: { name: "দীপু স্যার (BUET)" },
-      price: 6000,
-      discountPrice: 4500,
-      thumbnail: "/images/courses/hsc-27-prep.jpg",
-      enrolledStudentsCount: 1560,
-      rating: 4.96,
-      description: { bn: "এইচএসসি ২০২৭ ব্যাচের বোর্ড পরীক্ষায় নিশ্চিত গোল্ডেন A+ এবং এডমিশনের মূল ভিত শক্ত করতে প্রতিটি অধ্যায়ের বিস্তারিত সৃজনশীল, থিওরি ও প্রশ্ন ব্যাংক সমাধান সংবলিত প্রিমিয়াম কোর্স।" }
-    },
-    {
-      _id: "course-user-c5",
-      slug: "class-5-full-course",
-      title: { bn: "৫ম শ্রেণীর পূর্ণাঙ্গ কোর্স" },
-      classLevel: "School",
-      subject: "প্রাথমিক গণিত, বিজ্ঞান ও ইংরেজি",
-      instructor: { name: "দীপু এডু প্রাইমারি একাডেমি" },
-      price: 850,
-      discountPrice: 419,
-      thumbnail: "/images/courses/class5-full-course.jpg",
-      enrolledStudentsCount: 920,
-      rating: 4.92,
-      description: { bn: "৫ম শ্রেণির শিক্ষার্থীদের জন্য সহজ ও আনন্দময় পদ্ধতিতে গণিত, বিজ্ঞান ও ইংরেজির প্রতিটি অধ্যায় শেখার পূর্ণাঙ্গ কোর্স। শিশুদের পড়াশোনার ভিত্তি মজবুত করতে স্পেশাল এআই ও লাইভ গাইডেন্স।" }
-    },
-    {
-      _id: "course-user-c7",
-      slug: "class-7-full-course",
-      title: { bn: "৭ম শ্রেণীর পূর্ণাঙ্গ কোর্স" },
-      classLevel: "School",
-      subject: "সাধারণ গণিত, বিজ্ঞান ও তথ্য প্রযুক্তি",
-      instructor: { name: "দীপু এডু স্কুল একাডেমি" },
-      price: 1500,
-      discountPrice: 799,
-      thumbnail: "/images/courses/class7-full-course.jpg",
-      enrolledStudentsCount: 1140,
-      rating: 4.94,
-      description: { bn: "নতুন শিক্ষাক্রমের আলোকে ৭ম শ্রেণির শিক্ষার্থীদের গণিত ও বিজ্ঞানের জটিল সমস্যাগুলো বাস্তব উদাহরণের সাহায্যে সহজে শেখার জন্য তৈরি পূর্ণাঙ্গ কোর্স।" }
-    },
-    {
-      _id: "course-user-c6",
-      slug: "class-6-full-course",
-      title: { bn: "৬ষ্ঠ শ্রেণীর পূর্ণাঙ্গ প্রস্তুতি কোর্স" },
-      classLevel: "School",
-      subject: "গণিত, বিজ্ঞান ও ইংরেজি",
-      instructor: { name: "দীপু এডু স্কুল একাডেমি" },
-      price: 1200,
-      discountPrice: 699,
-      thumbnail: "/images/courses/class7-full-course.jpg",
-      enrolledStudentsCount: 760,
-      rating: 4.91
-    },
-    {
-      _id: "course-user-c8",
-      slug: "class-8-full-course",
-      title: { bn: "৮ম শ্রেণীর পূর্ণাঙ্গ প্রস্তুতি ও জুনিয়র বৃত্তি কোর্স" },
-      classLevel: "School",
-      subject: "গণিত ও বিজ্ঞান একাডেমি",
-      instructor: { name: "মেধা অন্বেষণ মেন্টর টিম" },
-      price: 1600,
-      discountPrice: 899,
-      thumbnail: "/images/courses/class7-full-course.jpg",
-      enrolledStudentsCount: 1050,
-      rating: 4.96
-    },
-    {
-      _id: "course-user-ssc28",
-      slug: "ssc-28-full-prep",
-      title: { bn: "SSC '২৮ পূর্ণাঙ্গ প্রস্তুতি ও ফাউন্ডেশন কোর্স" },
-      classLevel: "SSC",
-      subject: "বিজ্ঞান বিভাগ (পদার্থ, রসায়ন, গণিত)",
-      instructor: { name: "দীপু স্যার ও মেন্টরস" },
-      price: 4500,
-      discountPrice: 2999,
-      thumbnail: "/images/courses/class10-business-studies.jpg",
-      enrolledStudentsCount: 950,
-      rating: 4.95
-    },
-    {
-      _id: "crs_1",
-      slug: "hsc-chemistry-1st-paper",
-      title: { bn: "HSC ২০২৬ রসায়ন ১ম পত্র পূর্ণাঙ্গ মাস্টারক্লাস" },
-      classLevel: "HSC",
-      subject: "রসায়ন ১ম পত্র",
-      instructor: { name: "দীপু স্যার (BUET)" },
-      price: 1500,
-      discountPrice: 999,
-      thumbnail: ACADEMIC_COVER_PRESETS[1].dataUrl,
-      enrolledStudentsCount: 342,
-      rating: 5.0
-    },
-    {
-      _id: "crs_2",
-      slug: "hsc-physics-1st-paper",
-      title: { bn: "HSC পদার্থবিজ্ঞান ১ম পত্র — থিওরি ও গাণিতিক সমস্যা" },
-      classLevel: "HSC",
-      subject: "পদার্থবিজ্ঞান",
-      instructor: { name: "দীপু স্যার (BUET)" },
-      price: 1800,
-      discountPrice: 1200,
-      thumbnail: ACADEMIC_COVER_PRESETS[0].dataUrl,
-      enrolledStudentsCount: 285,
-      rating: 4.9
-    },
-    {
-      _id: "crs_3",
-      slug: "hsc-higher-math-admission",
-      title: { bn: "উচ্চতর গণিত ও বুয়েট ভর্তি পরীক্ষা স্পেশাল ক্র্যাশ কোর্স" },
-      classLevel: "Admission",
-      subject: "উচ্চতর গণিত",
-      instructor: { name: "দীপু স্যার (BUET)" },
-      price: 2000,
-      discountPrice: 1450,
-      thumbnail: ACADEMIC_COVER_PRESETS[2].dataUrl,
-      enrolledStudentsCount: 213,
-      rating: 5.0
-    },
-    {
-      _id: "crs_4",
-      slug: "ssc-science-2027-2028",
-      title: { bn: "SSC ২০২৭ ও ২০২৮ সাধারণ বিজ্ঞান ও গণিত ফাউন্ডেশন" },
-      classLevel: "SSC",
-      subject: "সাধারণ বিজ্ঞান",
-      instructor: { name: "দীপু স্যার (BUET)" },
-      price: 1200,
-      discountPrice: 799,
-      thumbnail: ACADEMIC_COVER_PRESETS[4].dataUrl,
-      enrolledStudentsCount: 189,
-      rating: 5.0
-    }
-  ];
-
   async function loadCourses() {
     if (grid) {
-      grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 30px; color: var(--text-muted);"><i class="fas fa-spinner fa-spin mr-2"></i> কোর্স লোড হচ্ছে...</div>`;
+      grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--text-muted);"><i class="fas fa-spinner fa-spin mr-2"></i> ডাটাবেস থেকে সক্রিয় কোর্সসমূহ লোড হচ্ছে...</div>`;
     }
 
     try {
-      const res = await fetch("/api/courses");
+      const res = await fetch("/api/courses?t=" + Date.now());
       if (res.ok) {
         const data = await res.json();
-        if (data.success && Array.isArray(data.courses) && data.courses.length > 0) {
+        if (data.success && Array.isArray(data.courses)) {
           loadedCourses = data.courses;
           try { localStorage.setItem("dipu_courses", JSON.stringify(loadedCourses)); } catch (e) {}
           renderCourses(loadedCourses);
           return;
         }
       }
-    } catch (err) {}
+    } catch (err) {
+      console.error("loadCourses error:", err);
+    }
 
     const cached = JSON.parse(localStorage.getItem("dipu_courses") || "null");
-    loadedCourses = (cached && cached.length > 0) ? cached : defaultCourses;
-    renderCourses(loadedCourses);
+    if (cached && Array.isArray(cached) && cached.length > 0) {
+      loadedCourses = cached;
+      renderCourses(loadedCourses);
+    } else if (grid) {
+      grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: #EF4444;"><i class="fas fa-exclamation-triangle mr-2"></i> ডাটাবেস থেকে কোর্স লোড করা যায়নি। <button class="btn-careplus-green-cta" style="margin-left:10px; padding:4px 12px; font-size:12px;" onclick="loadCourses()">আবার চেষ্টা করুন</button></div>`;
+    }
   }
   window.loadCourses = loadCourses;
 
@@ -892,14 +705,27 @@ function initCoursesManagement() {
   };
 
   window.deleteCourse = async function(id) {
-    if (!confirm("আপনি কি নিশ্চিত এই কোর্সটি মুছে ফেলতে চান?")) return;
+    if (!confirm("আপনি কি নিশ্চিত এই কোর্সটি ডাটাবেস ও ওয়েবসাইট থেকে মুছে ফেলতে চান?")) return;
     try {
-      await fetch(`/api/courses/${id}`, { method: "DELETE" });
-    } catch (e) {}
+      const token = localStorage.getItem("adminToken") || "dipu_admin_super_token_2026";
+      const res = await fetch(`/api/courses/${encodeURIComponent(id)}`, {
+        method: "DELETE",
+        headers: { "Authorization": "Bearer " + token }
+      });
+      const data = await res.json();
+      if (data.success) {
+        showAdminToast("🗑️ কোর্সটি ডাটাবেস থেকে সফলভাবে মুছে ফেলা হয়েছে।");
+        await loadCourses();
+        return;
+      } else {
+        alert("কোর্স মুছতে ব্যর্থ হয়েছে: " + (data.message || "ত্রুটি ঘটেছে"));
+      }
+    } catch (e) {
+      console.error("deleteCourse error:", e);
+      alert("সার্ভারের সাথে যোগাযোগ করা যায়নি।");
+    }
 
-    loadedCourses = loadedCourses.filter(c => c._id !== id && c.slug !== id);
-    localStorage.setItem("dipu_courses", JSON.stringify(loadedCourses));
-    showAdminToast("🗑️ কোর্সটি সফলভাবে মুছে ফেলা হয়েছে।");
+    loadedCourses = loadedCourses.filter(c => String(c._id) !== String(id) && c.slug !== id);
     renderCourses(loadedCourses);
   };
 
@@ -910,14 +736,13 @@ function initCoursesManagement() {
       const submitBtn = document.getElementById("submitCourseBtn");
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1.5"></i> সেভ হচ্ছে...`;
+        submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1.5"></i> ডাটাবেসে সেভ হচ্ছে...`;
       }
 
       const titleBnVal = document.getElementById("courseInputTitleBn").value.trim();
       const thumbVal = document.getElementById("courseInputThumb").value.trim() || ACADEMIC_COVER_PRESETS[0].dataUrl;
 
       const newCourse = {
-        _id: "crs_" + Date.now(),
         title: { bn: titleBnVal, en: titleBnVal },
         titleBn: titleBnVal,
         slug: document.getElementById("courseInputSlug").value.trim(),
@@ -928,33 +753,39 @@ function initCoursesManagement() {
         price: Number(document.getElementById("courseInputPrice").value) || 1500,
         discountPrice: Number(document.getElementById("courseInputDiscountPrice").value) || 999,
         thumbnail: thumbVal,
+        coverImage: thumbVal,
         routineImage: document.getElementById("courseInputRoutineImg")?.value?.trim() || "",
-        description: { bn: document.getElementById("courseInputDesc").value.trim() },
-        descriptionBn: document.getElementById("courseInputDesc").value.trim(),
-        enrolledStudentsCount: 1,
-        rating: 5.0
+        description: { bn: document.getElementById("courseInputDesc").value.trim(), en: document.getElementById("courseInputDesc").value.trim() },
+        descriptionBn: document.getElementById("courseInputDesc").value.trim()
       };
 
       try {
-        await fetch("/api/courses", {
+        const token = localStorage.getItem("adminToken") || "dipu_admin_super_token_2026";
+        const res = await fetch("/api/courses", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+          },
           body: JSON.stringify(newCourse)
         });
-      } catch (err) {}
-
-      loadedCourses.unshift(newCourse);
-      localStorage.setItem("dipu_courses", JSON.stringify(loadedCourses));
-
-      showAdminToast("🎉 নতুন কোর্স সফলভাবে তৈরি ও প্রকাশিত হয়েছে!");
-      window.closeCourseModal();
-      form.reset();
-      // Reset live preview box
-      const previewBox = document.getElementById("newCourseThumbPreviewBox");
-      if (previewBox) previewBox.style.display = "none";
-      const routineBox = document.getElementById("newRoutinePreviewBox");
-      if (routineBox) routineBox.style.display = "none";
-      renderCourses(loadedCourses);
+        const data = await res.json();
+        if (data.success) {
+          showAdminToast("🎉 নতুন কোর্স সফলভাবে ডাটাবেস ও ওয়েবসাইটে তৈরি হয়েছে!");
+          window.closeCourseModal();
+          form.reset();
+          const previewBox = document.getElementById("newCourseThumbPreviewBox");
+          if (previewBox) previewBox.style.display = "none";
+          const routineBox = document.getElementById("newRoutinePreviewBox");
+          if (routineBox) routineBox.style.display = "none";
+          await loadCourses();
+        } else {
+          alert("কোর্স তৈরি ব্যর্থ হয়েছে: " + (data.message || "ত্রুটি ঘটেছে"));
+        }
+      } catch (err) {
+        console.error("Create course error:", err);
+        alert("সার্ভার বা ডাটাবেসের সাথে যোগাযোগ করা যায়নি।");
+      }
 
       if (submitBtn) {
         submitBtn.disabled = false;
@@ -972,42 +803,52 @@ function initCoursesManagement() {
       const submitBtn = document.getElementById("submitEditCourseBtn");
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1.5"></i> সেভ হচ্ছে...`;
+        submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1.5"></i> ডাটাবেসে সেভ হচ্ছে...`;
       }
 
-      const idx = loadedCourses.findIndex(c => c._id === id || c.slug === id);
       const titleBnVal = document.getElementById("editCourseTitleBn").value.trim();
       const thumbVal = document.getElementById("editCourseThumb").value.trim() || ACADEMIC_COVER_PRESETS[0].dataUrl;
       const routineVal = document.getElementById("editCourseRoutineImg")?.value?.trim() || "";
 
-      if (idx !== -1) {
-        loadedCourses[idx].title = { bn: titleBnVal, en: titleBnVal };
-        loadedCourses[idx].titleBn = titleBnVal;
-        loadedCourses[idx].slug = document.getElementById("editCourseSlug").value.trim();
-        loadedCourses[idx].classLevel = document.getElementById("editCourseLevel").value;
-        loadedCourses[idx].subject = document.getElementById("editCourseSubject").value.trim();
-        loadedCourses[idx].instructor = { name: document.getElementById("editCourseInstructor").value.trim() };
-        loadedCourses[idx].instructorName = document.getElementById("editCourseInstructor").value.trim();
-        loadedCourses[idx].price = Number(document.getElementById("editCoursePrice").value) || 1500;
-        loadedCourses[idx].discountPrice = Number(document.getElementById("editCourseDiscountPrice").value) || 999;
-        loadedCourses[idx].thumbnail = thumbVal;
-        loadedCourses[idx].routineImage = routineVal;
-        loadedCourses[idx].description = { bn: document.getElementById("editCourseDesc").value.trim() };
-        loadedCourses[idx].descriptionBn = document.getElementById("editCourseDesc").value.trim();
-      }
+      const payload = {
+        title: { bn: titleBnVal, en: titleBnVal },
+        titleBn: titleBnVal,
+        slug: document.getElementById("editCourseSlug").value.trim(),
+        classLevel: document.getElementById("editCourseLevel").value,
+        subject: document.getElementById("editCourseSubject").value.trim(),
+        instructor: { name: document.getElementById("editCourseInstructor").value.trim() },
+        instructorName: document.getElementById("editCourseInstructor").value.trim(),
+        price: Number(document.getElementById("editCoursePrice").value) || 1500,
+        discountPrice: Number(document.getElementById("editCourseDiscountPrice").value) || 999,
+        thumbnail: thumbVal,
+        coverImage: thumbVal,
+        routineImage: routineVal,
+        description: { bn: document.getElementById("editCourseDesc").value.trim(), en: document.getElementById("editCourseDesc").value.trim() },
+        descriptionBn: document.getElementById("editCourseDesc").value.trim()
+      };
 
       try {
-        await fetch(`/api/courses/${id}`, {
+        const token = localStorage.getItem("adminToken") || "dipu_admin_super_token_2026";
+        const res = await fetch(`/api/courses/${encodeURIComponent(id)}`, {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(loadedCourses[idx] || {})
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+          },
+          body: JSON.stringify(payload)
         });
-      } catch (err) {}
-
-      localStorage.setItem("dipu_courses", JSON.stringify(loadedCourses));
-      showAdminToast("💾 কোর্সের তথ্য সফলভাবে আপডেট করা হয়েছে!");
-      window.closeEditCourseModal();
-      renderCourses(loadedCourses);
+        const data = await res.json();
+        if (data.success) {
+          showAdminToast("💾 কোর্সের তথ্য ডাটাবেস ও ওয়েবসাইটে সফলভাবে আপডেট হয়েছে!");
+          window.closeEditCourseModal();
+          await loadCourses();
+        } else {
+          alert("কোর্স আপডেট ব্যর্থ হয়েছে: " + (data.message || "ত্রুটি ঘটেছে"));
+        }
+      } catch (err) {
+        console.error("Course edit error:", err);
+        alert("সার্ভার বা ডাটাবেসের সাথে যোগাযোগ করা যায়নি।");
+      }
 
       if (submitBtn) {
         submitBtn.disabled = false;
