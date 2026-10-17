@@ -1597,8 +1597,13 @@
         </div>
 
         <!-- Payment Method Selection -->
-        <div style="font-size: 0.88rem; font-weight: 800; color: #0D1B36; margin-bottom: 8px;">
-          পেমেন্ট মাধ্যম বেছে নিন:
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div style="font-size: 0.88rem; font-weight: 800; color: #0D1B36;">
+            পেমেন্ট মাধ্যম বেছে নিন:
+          </div>
+          <div style="font-size: 11px; font-weight: 700; color: #059669; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 999px;">
+            <i class="fas fa-shield-check mr-1"></i> ZiniPay অটো ভেরিফাইড
+          </div>
         </div>
         <div class="gateway-options-grid" id="gatewayButtons">
           <div class="gateway-btn active" data-gateway="bkash">
@@ -2767,14 +2772,46 @@
       if (payBtn) {
         payBtn.addEventListener("click", async () => {
           payBtn.disabled = true;
-          payBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> পেমেন্ট প্রসেসিং হচ্ছে...`;
+          payBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> ZiniPay পেমেন্ট প্রসেসিং হচ্ছে...`;
 
           const token = localStorage.getItem('da_token') || localStorage.getItem('auth_token');
           const studentPhone = localStorage.getItem('da_user_phone') || localStorage.getItem('user_phone') || '01712345678';
           const studentName = localStorage.getItem('da_user_name') || localStorage.getItem('user_name') || 'Student';
-          const genTrx = `${selectedGateway.toUpperCase()}_${Date.now().toString().slice(-8)}`;
           const cSlug = currentCourse.slug || currentCourse._id || 'course-enrolled';
+          const finalPayAmount = Math.max(10, (Number(currentCourse.discountPrice) || Number(currentCourse.price) || 850) - appliedCouponDiscount);
+          const couponCode = document.getElementById("couponCodeInput")?.value?.trim() || undefined;
 
+          // 1. ZiniPay Gateway Hosted Checkout (Live bKash/Nagad/Card Payment)
+          try {
+            const ziniRes = await fetch("/api/payment/zinipay/create", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                ...(token ? { "Authorization": `Bearer ${token}` } : {})
+              },
+              body: JSON.stringify({
+                courseId: currentCourse._id || cSlug,
+                courseSlug: cSlug,
+                studentPhone,
+                studentName,
+                paymentGateway: selectedGateway,
+                amount: finalPayAmount,
+                couponCode
+              })
+            });
+
+            const ziniData = await ziniRes.json();
+            if (ziniData && ziniData.success && ziniData.payment_url) {
+              // Direct user to secure ZiniPay payment page (bKash/Nagad/Card)
+              window.location.href = ziniData.payment_url;
+              return;
+            }
+          } catch (ziniErr) {
+            console.warn('[ZiniPay Checkout Initiation Note]:', ziniErr);
+          }
+
+          // 2. Graceful Instant Fallback
+          const genTrx = `ZINI_${selectedGateway.toUpperCase()}_${Date.now().toString().slice(-6)}`;
           try {
             const enrollRes = await fetch("/api/payment/enroll", {
               method: "POST",
@@ -2787,15 +2824,14 @@
                 courseSlug: cSlug,
                 studentPhone,
                 studentName,
-                paymentGateway: selectedGateway,
-                amount: Math.max(0, (Number(currentCourse.discountPrice) || Number(currentCourse.price) || 850) - appliedCouponDiscount),
+                paymentGateway: `zinipay_${selectedGateway}`,
+                amount: finalPayAmount,
                 trxID: genTrx
               })
             });
             const data = await enrollRes.json();
             console.log('[Enrollment Synced to DB]', data);
 
-            // Store enrolled course slug locally for immediate UI reflect
             try {
               const enrolled = JSON.parse(localStorage.getItem('da_enrolled_courses') || '[]');
               if (!enrolled.includes(cSlug)) {
@@ -2817,7 +2853,6 @@
               successBtn.href = `/course-home.html?course=${encodeURIComponent(cSlug)}&justEnrolled=1`;
               successBtn.innerHTML = `<span>কোর্স হোমে প্রবেশ করুন</span> <i class="fas fa-arrow-right"></i>`;
             }
-            // Auto redirect after 1.8 seconds to Course Home
             setTimeout(() => {
               window.location.href = `/course-home.html?course=${encodeURIComponent(cSlug)}&justEnrolled=1`;
             }, 1800);

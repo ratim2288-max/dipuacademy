@@ -254,6 +254,15 @@
               <span>যোগাযোগ ও হেল্পলাইন</span>
             </a>
           </li>
+
+          <!-- 8. পেমেন্ট গেটওয়ে (ZiniPay) -->
+          <li>
+            <a href="#payment-gateway" class="nav-item" data-tab="payment-gateway">
+              <i class="fas fa-credit-card nav-icon"></i>
+              <span>পেমেন্ট গেটওয়ে (ZiniPay)</span>
+              <span class="dribbble-menu-badge-green" style="background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 10px; padding: 2px 6px; border-radius: 6px;">Live</span>
+            </a>
+          </li>
         </ul>
 
         <!-- Shop Category Label (বুকস্টোর ও শপ ম্যানেজার) -->
@@ -1729,6 +1738,169 @@
             </div>
           </div>
 
+        </section>
+
+        <!-- ====================================================================
+             VIEW 9: PAYMENT GATEWAY (ZINIPAY) INTEGRATION
+             ==================================================================== -->
+        <section id="view-payment-gateway" class="admin-view hidden">
+          <!-- Header Banner -->
+          <div class="helpline-header-card">
+            <div class="helpline-header-left">
+              <div class="helpline-header-badge" style="background: rgba(16, 185, 129, 0.12); color: #059669;">
+                <span class="helpline-pulse-dot" style="background: #10B981;"></span>
+                <span>ZiniPay অটোমেটেড পেমেন্ট গেটওয়ে</span>
+              </div>
+              <h2 class="helpline-header-title">পেমেন্ট গেটওয়ে ও অটো এনরোলমেন্ট কন্ট্রোলার</h2>
+              <p class="helpline-header-desc">
+                ZiniPay (<a href="https://zinipay.com" target="_blank" style="color: #0084FF; text-decoration: underline;">https://zinipay.com</a>) গেটওয়ের মাধ্যমে বিকাশ, নগদ, রকেট এবং ডেবিট/ক্রেডিট কার্ড দিয়ে পেমেন্ট সফল হওয়ার সাথে সাথে শিক্ষার্থী স্বয়ংক্রিয়ভাবে কোর্সে অ্যাক্সেস ও ১০০ EduCoins বোনাস পাবে।
+              </p>
+            </div>
+            <div class="helpline-header-actions">
+              <button type="button" class="btn-helpline-save" style="background: linear-gradient(135deg, #10B981, #059669);" onclick="checkZiniPayGatewayStatus(true)">
+                <i class="fas fa-rotate"></i> সংযোগ পরীক্ষা করুন (Test Connection)
+              </button>
+              <a href="https://zinipay.com" target="_blank" class="btn-helpline-outline">
+                <i class="fas fa-arrow-up-right-from-square"></i> ZiniPay ড্যাশবোর্ড
+              </a>
+            </div>
+          </div>
+
+          <!-- Status Indicator Cards Grid -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-bottom: 24px;">
+            
+            <!-- Card 1: Connection & Brand -->
+            <div class="helpline-card card-accent-emerald" style="padding: 20px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(16, 185, 129, 0.12); color: #10B981; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                    <i class="fas fa-shield-check"></i>
+                  </div>
+                  <div>
+                    <div style="font-size: 11px; text-transform: uppercase; font-weight: 700; color: #64748B;">গেটওয়ে স্ট্যাটাস</div>
+                    <div id="zinipayStatusText" style="font-size: 16px; font-weight: 800; color: #0F172A;">সক্রিয় ও সংযুক্ত (Connected)</div>
+                  </div>
+                </div>
+                <span id="zinipayLiveBadge" style="background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px;">
+                  <i class="fas fa-circle" style="font-size: 8px; margin-right: 4px; color: #10B981;"></i> LIVE
+                </span>
+              </div>
+              <div style="font-size: 13px; color: #475569; display: flex; flex-direction: column; gap: 8px; padding-top: 10px; border-top: 1px solid #F1F5F9;">
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: #64748B;">ব্র্যান্ড পরিচিতি:</span>
+                  <strong style="color: #0F172A; font-family: monospace;">dipuacademy</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: #64748B;">API এন্ডপয়েন্ট:</span>
+                  <strong style="color: #0F172A; font-family: monospace; font-size: 12px;">https://api.zinipay.com</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: #64748B;">API Key:</span>
+                  <strong style="color: #0F172A; font-family: monospace; font-size: 11px;">5afe...4b1a <i class="fas fa-check-circle" style="color: #10B981;"></i></strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: Supported Payment Methods -->
+            <div class="helpline-card card-accent-indigo" style="padding: 20px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(99, 102, 241, 0.12); color: #6366F1; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                    <i class="fas fa-wallet"></i>
+                  </div>
+                  <div>
+                    <div style="font-size: 11px; text-transform: uppercase; font-weight: 700; color: #64748B;">সমর্থিত পেমেন্ট মাধ্যম</div>
+                    <div style="font-size: 16px; font-weight: 800; color: #0F172A;">বিকাশ, নগদ, রকেট, কার্ড</div>
+                  </div>
+                </div>
+                <span style="background: #EEF2FF; color: #4F46E5; border: 1px solid #C7D2FE; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px;">
+                  AUTO-INSTANT
+                </span>
+              </div>
+              <div style="font-size: 13px; color: #475569; display: flex; flex-direction: column; gap: 8px; padding-top: 10px; border-top: 1px solid #F1F5F9;">
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: #64748B;">মোবাইল ফিন্যান্স:</span>
+                  <span style="color: #0F172A; font-weight: 600;">bKash, Nagad, Rocket, Upay</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: #64748B;">কার্ড পেমেন্ট:</span>
+                  <span style="color: #0F172A; font-weight: 600;">Visa, Mastercard, Amex</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: #64748B;">এনরোলমেন্ট ভেরিফিকেশন:</span>
+                  <span style="color: #10B981; font-weight: 700;">স্বয়ংক্রিয় ও রিয়েলটাইম (১০০% সুরক্ষিত)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Webhook & Endpoints -->
+            <div class="helpline-card" style="padding: 20px; border-top: 3px solid #0084FF;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(0, 132, 255, 0.12); color: #0084FF; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                    <i class="fas fa-network-wired"></i>
+                  </div>
+                  <div>
+                    <div style="font-size: 11px; text-transform: uppercase; font-weight: 700; color: #64748B;">ওয়েবহুক ও রিটার্ন লিংক</div>
+                    <div style="font-size: 16px; font-weight: 800; color: #0F172A;">অটো লিসেনার সক্রিয়</div>
+                  </div>
+                </div>
+                <span style="background: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px;">
+                  WEBHOOK OK
+                </span>
+              </div>
+              <div style="font-size: 12px; color: #475569; display: flex; flex-direction: column; gap: 8px; padding-top: 10px; border-top: 1px solid #F1F5F9;">
+                <div>
+                  <span style="color: #64748B; display: block; font-size: 11px; margin-bottom: 2px;">Webhook IPN Listener:</span>
+                  <code style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 2px 6px; border-radius: 4px; color: #0F172A; font-size: 11px;">/api/payment/zinipay/webhook</code>
+                </div>
+                <div>
+                  <span style="color: #64748B; display: block; font-size: 11px; margin-bottom: 2px;">Success Redirect:</span>
+                  <code style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 2px 6px; border-radius: 4px; color: #0F172A; font-size: 11px;">/payment-success.html</code>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Transaction Audit Logs Card -->
+          <div class="helpline-card" style="padding: 24px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <h3 style="font-size: 18px; font-weight: 800; color: #0F172A; margin: 0 0 4px 0;">
+                  <i class="fas fa-receipt text-indigo mr-2" style="color: #6366F1;"></i> পেমেন্ট অডিট লগ ও ট্রানজ্যাকশন হিস্টোরি
+                </h3>
+                <p style="font-size: 13px; color: #64748B; margin: 0;">ZiniPay এর মাধ্যমে সম্পন্ন হওয়া সকল রিয়েলটাইম পেমেন্ট ও এনরোলমেন্টের রেকর্ড</p>
+              </div>
+              <button type="button" class="btn-helpline-outline" onclick="loadZiniPayLogs()" style="padding: 8px 16px;">
+                <i class="fas fa-arrows-rotate"></i> রিফ্রেশ করুন
+              </button>
+            </div>
+
+            <!-- Table Container -->
+            <div style="overflow-x: auto; border: 1px solid #E2E8F0; border-radius: 12px;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+                <thead>
+                  <tr style="background: #F8FAFC; border-bottom: 1px solid #E2E8F0; color: #475569; font-weight: 700;">
+                    <th style="padding: 12px 16px;">তারিখ ও সময়</th>
+                    <th style="padding: 12px 16px;">ট্রানজ্যাকশন ID / Val ID</th>
+                    <th style="padding: 12px 16px;">শিক্ষার্থীর ফোন নম্বর</th>
+                    <th style="padding: 12px 16px;">কোর্স</th>
+                    <th style="padding: 12px 16px;">পরিমাণ (BDT)</th>
+                    <th style="padding: 12px 16px;">মাধ্যম</th>
+                    <th style="padding: 12px 16px;">স্ট্যাটাস</th>
+                  </tr>
+                </thead>
+                <tbody id="zinipayLogsTableBody">
+                  <tr>
+                    <td colspan="7" style="text-align: center; padding: 32px; color: #94A3B8;">
+                      <i class="fas fa-spinner fa-spin mr-2"></i> পেমেন্ট হিস্টোরি লোড হচ্ছে...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </section>
 
         <!-- ====================================================================

@@ -32,12 +32,11 @@ const paymentAuditLogSchema = new mongoose.Schema({
   },
   paymentGateway: {
     type: String,
-    enum: ['bkash', 'nagad', 'rocket', 'manual', 'card', 'unknown'],
-    default: 'bkash',
+    default: 'zinipay',
   },
   status: {
     type: String,
-    enum: ['SUCCESS', 'FAILED', 'DUPLICATE', 'REJECTED_INVALID_SIGNATURE', 'GATEWAY_DECLINED'],
+    enum: ['SUCCESS', 'COMPLETED', 'INITIATED', 'PENDING', 'FAILED', 'DUPLICATE', 'REJECTED_INVALID_SIGNATURE', 'GATEWAY_DECLINED'],
     required: true,
     index: true,
   },

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>পেমেন্ট সফল হয়েছে — দীপু একাডেমি</title>
+  <link rel="icon" type="image/png" href="/images/dipu-logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070D18;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --border: rgba(255, 255, 255, 0.08);
+      --green: #10B981;
+      --green-glow: rgba(16, 185, 129, 0.35);
+      --blue: #0084FF;
+      --text-main: #FFFFFF;
+      --text-muted: #94A3B8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: 'Hind Siliguri', 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, rgba(0, 132, 255, 0.05) 50%, transparent 70%);
+      filter: blur(60px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .success-container {
+      position: relative;
+      z-index: 1;
+      max-width: 520px;
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 24px;
+      padding: 40px 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px var(--green-glow);
+      backdrop-filter: blur(20px);
+      text-align: center;
+      animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.92) translateY(20px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .success-icon-wrap {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #10B981, #059669);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      color: #FFFFFF;
+      box-shadow: 0 0 30px var(--green-glow);
+      animation: bounceCheck 0.7s ease;
+    }
+    @keyframes bounceCheck {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+    .brand-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #CBD5E1;
+      margin-bottom: 16px;
+    }
+    .brand-pill img { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; }
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #FFFFFF, #E2E8F0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.subtitle {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .details-box {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 28px;
+      text-align: left;
+    }
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 14px;
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-label { color: var(--text-muted); font-weight: 500; }
+    .detail-val { color: #FFFFFF; font-weight: 700; }
+    .detail-val.badge {
+      color: var(--green);
+      background: rgba(16, 185, 129, 0.15);
+      padding: 2px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      font-size: 12.5px;
+    }
+    .btn-enter-course {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #10B981, #059669);
+      color: #FFFFFF;
+      font-size: 16px;
+      font-weight: 800;
+      border-radius: 14px;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-enter-course:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.5);
+    }
+    .auto-redirect-note {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 14px;
+    }
+    .auto-redirect-note span { color: var(--green); font-weight: 700; }
+  </style>
+</head>
+<body>
+
+  <div class="success-container">
+    <div class="brand-pill">
+      <img src="/images/dipu-logo.png" alt="Dipu Academy">
+      <span>Dipu Academy • ZiniPay Verified</span>
+    </div>
+
+    <div class="success-icon-wrap">
+      <i class="fas fa-check"></i>
+    </div>
+
+    <h1>পেমেন্ট সফলভাবে সম্পন্ন হয়েছে!</h1>
+    <p class="subtitle">আপনার কোর্সটি সক্রিয় করা হয়েছে এবং অ্যাকাউন্টে এক্সেস যুক্ত হয়েছে। এখন আপনি সরাসরি ক্লাসে যুক্ত হতে পারবেন।</p>
+
+    <div class="details-box">
+      <div class="detail-row">
+        <span class="detail-label">কোর্স:</span>
+        <span class="detail-val" id="dispCourseTitle">অনলাইন কোর্স</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">পেমেন্ট গেটওয়ে:</span>
+        <span class="detail-val badge"><i class="fas fa-shield-halved mr-1"></i> ZiniPay (বিকাশ / নগদ)</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">পরিশোধিত অর্থ:</span>
+        <span class="detail-val" id="dispAmount">৳ ৮৫০</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">ট্রানজাকশন আইডি:</span>
+        <span class="detail-val" id="dispTrxId" style="font-family: monospace; letter-spacing: 0.5px;">ZINI_VERIFIED</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">স্ট্যাটাস:</span>
+        <span class="detail-val badge" style="color: #34D399;"><i class="fas fa-circle-check mr-1"></i> এক্সেস আনলকড</span>
+      </div>
+    </div>
+
+    <a href="/my-courses.html" class="btn-enter-course" id="enterCourseBtn">
+      <span>কোর্স হোমে প্রবেশ করুন</span>
+      <i class="fas fa-arrow-right"></i>
+    </a>
+
+    <div class="auto-redirect-note">
+      <span id="countdownSec">3</span> সেকেন্ডের মধ্যে স্বয়ংক্রিয়ভাবে কোর্স পেজে নিয়ে যাওয়া হচ্ছে...
+    </div>
+  </div>
+
+  <script>
+    (async function() {
+      const params = new URLSearchParams(window.location.search);
+      const val_id = params.get('val_id') || params.get('valid') || params.get('valId');
+      const courseSlug = params.get('course') || params.get('slug') || 'hsc-27-full-prep';
+      const studentPhone = params.get('phone') || localStorage.getItem('da_user_phone') || localStorage.getItem('user_phone') || '';
+
+      // Update local storage
+      try {
+        const enrolled = JSON.parse(localStorage.getItem('da_enrolled_courses') || '[]');
+        if (!enrolled.includes(courseSlug)) {
+          enrolled.push(courseSlug);
+          localStorage.setItem('da_enrolled_courses', JSON.stringify(enrolled));
+        }
+      } catch (e) {}
+
+      // Verify with backend
+      if (val_id) {
+        try {
+          const res = await fetch(`/api/payment/zinipay/verify-status?val_id=${encodeURIComponent(val_id)}&course=${encodeURIComponent(courseSlug)}&phone=${encodeURIComponent(studentPhone)}`);
+          const data = await res.json();
+          if (data && data.success) {
+            if (data.amount && document.getElementById('dispAmount')) {
+              document.getElementById('dispAmount').textContent = `৳ ${data.amount}`;
+            }
+            if (data.transaction_id && data.transaction_id !== 'N/A' && document.getElementById('dispTrxId')) {
+              document.getElementById('dispTrxId').textContent = data.transaction_id;
+            } else if (val_id && document.getElementById('dispTrxId')) {
+              document.getElementById('dispTrxId').textContent = val_id.slice(0, 16);
+            }
+          }
+        } catch (err) {
+          console.warn('[Verify Status Note]:', err);
+        }
+      }
+
+      const targetUrl = `/course-home.html?course=${encodeURIComponent(courseSlug)}&justEnrolled=1`;
+      const btn = document.getElementById('enterCourseBtn');
+      if (btn) btn.href = targetUrl;
+
+      // Countdown redirect
+      let count = 3;
+      const counterEl = document.getElementById('countdownSec');
+      const timer = setInterval(() => {
+        count--;
+        if (counterEl) counterEl.textContent = count;
+        if (count <= 0) {
+          clearInterval(timer);
+          window.location.href = targetUrl;
+        }
+      }, 1000);
+    })();
+  </script>
+</body>
+</html>

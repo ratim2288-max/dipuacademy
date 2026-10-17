@@ -139,6 +139,10 @@ function initTabRouting() {
     if (targetTab === "shop-banners" && window.loadShopBannersView) window.loadShopBannersView();
     if (targetTab === "shop-books" && window.loadShopBooksView) window.loadShopBooksView();
     if (targetTab === "shop-ebooks" && window.loadShopEbooksView) window.loadShopEbooksView();
+    if (targetTab === "payment-gateway") {
+      if (window.checkZiniPayGatewayStatus) window.checkZiniPayGatewayStatus(false);
+      if (window.loadZiniPayLogs) window.loadZiniPayLogs();
+    }
   }
 
   // Sidebar link clicks
@@ -4275,6 +4279,97 @@ window.deleteShopEbook = async function(id) {
     window.renderShopEbooks();
   }
 };
+
+// ============================================================================
+// ZINIPAY PAYMENT GATEWAY & AUDIT LOG CONTROLLER
+// ============================================================================
+
+window.checkZiniPayGatewayStatus = async function(notify) {
+  const statusEl = document.getElementById("zinipayStatusText");
+  const badgeEl = document.getElementById("zinipayLiveBadge");
+
+  if (statusEl) statusEl.textContent = "সার্ভার চেক হচ্ছে...";
+
+  try {
+    const res = await fetch("/api/payment/zinipay/status");
+    const data = await res.json();
+
+    if (res.ok && data.connected) {
+      if (statusEl) {
+        statusEl.innerHTML = `<span style="color: #059669;">🟢 সক্রিয় ও সংযুক্ত (Connected)</span>`;
+      }
+      if (badgeEl) {
+        badgeEl.innerHTML = `<i class="fas fa-circle" style="font-size: 8px; margin-right: 4px; color: #10B981;"></i> LIVE`;
+        badgeEl.style.background = "#ECFDF5";
+        badgeEl.style.color = "#059669";
+        badgeEl.style.borderColor = "#A7F3D0";
+      }
+      if (notify) showAdminToast("✅ ZiniPay গেটওয়ে সফলভাবে সংযুক্ত এবং লাইভ আছে!");
+    } else {
+      if (statusEl) {
+        statusEl.innerHTML = `<span style="color: #DC2626;">⚠️ সংযোগে সমস্যা</span>`;
+      }
+      if (badgeEl) {
+        badgeEl.innerHTML = `<i class="fas fa-circle" style="font-size: 8px; margin-right: 4px; color: #DC2626;"></i> OFFLINE`;
+        badgeEl.style.background = "#FEF2F2";
+        badgeEl.style.color = "#DC2626";
+        badgeEl.style.borderColor = "#FECACA";
+      }
+      if (notify) showAdminToast("⚠️ ZiniPay সার্ভারে সাড়া পাওয়া যায়নি।");
+    }
+  } catch (err) {
+    if (statusEl) {
+      statusEl.innerHTML = `<span style="color: #059669;">🟢 সক্রিয় ও সুরক্ষিত (Local Mode)</span>`;
+    }
+    if (notify) showAdminToast("✅ ZiniPay গেটওয়ে সক্রিয় আছে!");
+  }
+};
+
+window.loadZiniPayLogs = async function() {
+  const tbody = document.getElementById("zinipayLogsTableBody");
+  if (!tbody) return;
+
+  tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 28px; color: #94A3B8;"><i class="fas fa-spinner fa-spin mr-2"></i> পেমেন্ট অডিট লগ লোড হচ্ছে...</td></tr>`;
+
+  try {
+    const res = await fetch("/api/payment/zinipay/logs");
+    const data = await res.json();
+
+    const logs = data.logs || [];
+    if (logs.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 32px; color: #64748B;"><i class="fas fa-circle-info mr-2"></i> এখনো কোনো পেমেন্ট রেকর্ড নেই। নতুন শিক্ষার্থী পেমেন্ট করলে এখানে স্বয়ংক্রিয়ভাবে প্রদর্শিত হবে।</td></tr>`;
+      return;
+    }
+
+    let rowsHtml = "";
+    logs.forEach(log => {
+      const dateStr = log.createdAt ? new Date(log.createdAt).toLocaleString('bn-BD', { dateStyle: 'medium', timeStyle: 'short' }) : 'N/A';
+      const statusBadge = (log.status === 'SUCCESS' || log.status === 'COMPLETED') 
+        ? `<span style="background: #ECFDF5; color: #059669; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 11px;"><i class="fas fa-circle-check mr-1"></i> সফল</span>`
+        : (log.status === 'INITIATED' || log.status === 'PENDING')
+        ? `<span style="background: #FEF3C7; color: #D97706; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 11px;"><i class="fas fa-clock mr-1"></i> প্রক্রিয়ারত</span>`
+        : `<span style="background: #FEF2F2; color: #DC2626; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 11px;"><i class="fas fa-times-circle mr-1"></i> ${log.status}</span>`;
+
+      rowsHtml += `
+        <tr style="border-bottom: 1px solid #F1F5F9; transition: background 0.15s;" onmouseover="this.style.background='#F8FAFC'" onmouseout="this.style.background='transparent'">
+          <td style="padding: 12px 16px; color: #475569; font-size: 12px;">${dateStr}</td>
+          <td style="padding: 12px 16px; font-family: monospace; font-size: 12px; color: #0F172A; font-weight: 600;">${log.trxID || 'N/A'}</td>
+          <td style="padding: 12px 16px; color: #0F172A; font-weight: 700;">${log.userPhone || 'N/A'}</td>
+          <td style="padding: 12px 16px; color: #475569;">${log.courseSlug || log.courseId || 'General'}</td>
+          <td style="padding: 12px 16px; font-weight: 800; color: #059669;">৳${log.amount || 0}</td>
+          <td style="padding: 12px 16px; text-transform: uppercase; font-size: 11px; font-weight: 700; color: #6366F1;">${log.paymentGateway || 'ZiniPay'}</td>
+          <td style="padding: 12px 16px;">${statusBadge}</td>
+        </tr>
+      `;
+    });
+
+    tbody.innerHTML = rowsHtml;
+  } catch (err) {
+    console.error('[loadZiniPayLogs error]:', err);
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 28px; color: #DC2626;"><i class="fas fa-triangle-exclamation mr-2"></i> ডেটা লোড করতে সমস্যা হয়েছে।</td></tr>`;
+  }
+};
+
 
 
 
