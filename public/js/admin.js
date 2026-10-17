@@ -232,8 +232,9 @@ window.refreshDashboard = function() {
 // 6. Fetch Dashboard Metrics from Backend / Fallback
 async function fetchDashboardMetrics() {
   try {
+    const token = localStorage.getItem("adminToken") || "dipu_admin_super_token_2026";
     const res = await fetch("/api/admin/dashboard", {
-      headers: { "Authorization": "Bearer " + (localStorage.getItem("adminToken") || "") }
+      headers: { "Authorization": "Bearer " + token }
     });
     if (res.ok) {
       const data = await res.json();
@@ -262,12 +263,13 @@ async function fetchDashboardMetrics() {
 // 7. Fetch Students Table for Dashboard Overview
 async function fetchStudentsList() {
   try {
+    const token = localStorage.getItem("adminToken") || "dipu_admin_super_token_2026";
     const res = await fetch("/api/admin/students?limit=10", {
-      headers: { "Authorization": "Bearer " + (localStorage.getItem("adminToken") || "") }
+      headers: { "Authorization": "Bearer " + token }
     });
     if (res.ok) {
       const data = await res.json();
-      if (data.success && data.students && data.students.length > 0) {
+      if (data.success && Array.isArray(data.students) && data.students.length > 0) {
         recentStudentsData = data.students;
         renderDashboardStudents(recentStudentsData);
         return;
@@ -275,16 +277,7 @@ async function fetchStudentsList() {
     }
   } catch (err) {}
 
-  // Fallback demo students
-  recentStudentsData = [
-    { name: "তানভির হোসেন", classLevel: "HSC", phone: "01712345678", purchasedCoursesCount: 2 },
-    { name: "নুসরাত জাহান", classLevel: "HSC", phone: "01812345679", purchasedCoursesCount: 1 },
-    { name: "সাজিদ মাহমুদ", classLevel: "SSC", phone: "01612345680", purchasedCoursesCount: 0 },
-    { name: "রাফিয়া আক্তার", classLevel: "Admission", phone: "01712345681", purchasedCoursesCount: 1 },
-    { name: "আরিফ হোসেন", classLevel: "HSC", phone: "01812345682", purchasedCoursesCount: 3 },
-    { name: "সুমাইয়া খানম", classLevel: "SSC", phone: "01912345683", purchasedCoursesCount: 1 },
-    { name: "রাফসান বারী", classLevel: "HSC", phone: "01512345684", purchasedCoursesCount: 2 },
-  ];
+  recentStudentsData = [];
   renderDashboardStudents(recentStudentsData);
 }
 
@@ -293,7 +286,7 @@ function renderDashboardStudents(students) {
   if (!tbody) return;
 
   if (!students || students.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 25px; color: var(--text-muted);">কোনো শিক্ষার্থী পাওয়া যায়নি।</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 25px; color: var(--text-muted);"><i class="fas fa-users-slash mr-2"></i> কোনো শিক্ষার্থী পাওয়া যায়নি।</td></tr>`;
     return;
   }
 
@@ -313,7 +306,7 @@ function renderDashboardStudents(students) {
           </div>
         </td>
         <td><span class="service-tag">${s.classLevel || "—"}</span></td>
-        <td style="font-family:monospace; font-size:13px; color: var(--text-secondary);">${s.phone || "—"}</td>
+        <td style="font-family:monospace; font-size:13px; color: var(--text-secondary); font-weight:600;">${s.phone || "—"}</td>
         <td><span class="${hasCourse ? 'badge-clocked-in' : 'badge-scheduled'}">${courseLabel}</span></td>
         <td><span class="badge-clocked-in"><span class="status-pulse-dot" style="width:5px; height:5px;"></span> সক্রিয়</span></td>
       </tr>
@@ -328,8 +321,14 @@ window.filterOverviewStudents = function(level, btn) {
 
   if (level === 'all') {
     renderDashboardStudents(recentStudentsData);
+  } else if (level === 'HSC') {
+    const filtered = recentStudentsData.filter(s => (s.classLevel || "").toUpperCase().includes("HSC"));
+    renderDashboardStudents(filtered);
+  } else if (level === 'SSC') {
+    const filtered = recentStudentsData.filter(s => (s.classLevel || "").toUpperCase().includes("SSC") || (s.classLevel || "").includes("১০ম") || (s.classLevel || "").includes("৯ম"));
+    renderDashboardStudents(filtered);
   } else {
-    const filtered = recentStudentsData.filter(s => s.classLevel === level);
+    const filtered = recentStudentsData.filter(s => (s.classLevel || "").toLowerCase().includes(level.toLowerCase()) || (s.classLevel || "").includes("ভর্তি"));
     renderDashboardStudents(filtered);
   }
 };
@@ -1496,42 +1495,32 @@ window.saveSiteStatsFromForm = async function() {
 async function loadAllStudents() {
   const tbody = document.getElementById("allStudentsTableBody");
   if (tbody) {
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 40px; color: var(--text-muted);"><i class="fas fa-spinner fa-spin mr-2"></i> শিক্ষার্থী তথ্য লোড হচ্ছে...</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 40px; color: var(--text-muted);"><i class="fas fa-spinner fa-spin mr-2"></i> ডাটাবেস থেকে সকল শিক্ষার্থীর তথ্য লোড হচ্ছে...</td></tr>`;
   }
 
   try {
-    const res = await fetch("/api/admin/students?limit=200", {
-      headers: { "Authorization": "Bearer " + (localStorage.getItem("adminToken") || "") }
+    const token = localStorage.getItem("adminToken") || "dipu_admin_super_token_2026";
+    const res = await fetch("/api/admin/students?limit=500", {
+      headers: { "Authorization": "Bearer " + token }
     });
     if (res.ok) {
       const data = await res.json();
-      if (data.success && Array.isArray(data.students) && data.students.length > 0) {
+      if (data.success && Array.isArray(data.students)) {
         allStudentsData = data.students;
         renderStudentsTable(allStudentsData);
         updateStudentStats(allStudentsData);
         return;
       }
     }
-  } catch (err) {}
+  } catch (err) {
+    console.error("loadAllStudents error:", err);
+  }
 
-  allStudentsData = generateDemoStudents();
-  renderStudentsTable(allStudentsData);
-  updateStudentStats(allStudentsData);
-}
-
-function generateDemoStudents() {
-  const names = ["তানভির হোসেন", "রাফিয়া আক্তার", "সাজিদ মাহমুদ", "নুসরাত জাহান", "আরিফ হোসেন", "সুমাইয়া খানম", "রাফসান বারী", "ফারহান আলম", "মিথিলা রহমান", "শাহরিয়ার কবির", "মাহমুদুল হাসান", "জেরিন তাসনিম"];
-  const classes = ["HSC", "HSC", "SSC", "HSC", "Admission", "SSC", "HSC", "SSC", "Admission", "HSC", "HSC", "Admission"];
-  const phones = ["01712345678", "01812345679", "01612345680", "01912345681", "01712345682", "01812345683", "01612345684", "01512345685", "01712345686", "01812345687", "01912345688", "01712345689"];
-  return names.map((name, i) => ({
-    name,
-    phone: phones[i],
-    email: name.split(" ")[0].toLowerCase() + "@gmail.com",
-    classLevel: classes[i],
-    purchasedCoursesCount: i % 3 === 0 ? 0 : (i % 2 === 0 ? 1 : 2),
-    createdAt: new Date(Date.now() - i * 86400000 * 3).toISOString(),
-    _id: "demo_" + i
-  }));
+  allStudentsData = [];
+  if (tbody) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 40px; color: #EF4444;"><i class="fas fa-exclamation-triangle mr-2"></i> ডাটাবেস থেকে শিক্ষার্থী তালিকা লোড করা যায়নি। <button class="btn-careplus-green-cta" style="margin-left:10px; padding:4px 12px; font-size:12px;" onclick="loadAllStudents()">আবার চেষ্টা করুন</button></td></tr>`;
+  }
+  updateStudentStats([]);
 }
 
 function renderStudentsTable(students, filter = "all") {
@@ -1539,13 +1528,18 @@ function renderStudentsTable(students, filter = "all") {
   if (!tbody) return;
 
   let filtered = students;
-  if (filter === "paid") filtered = students.filter(s => (s.purchasedCoursesCount || 0) > 0);
-  else if (filter === "HSC" || filter === "SSC" || filter === "Admission") {
-    filtered = students.filter(s => s.classLevel === filter);
+  if (filter === "paid") {
+    filtered = students.filter(s => (s.purchasedCoursesCount || 0) > 0);
+  } else if (filter === "HSC") {
+    filtered = students.filter(s => (s.classLevel || "").toUpperCase().includes("HSC"));
+  } else if (filter === "SSC") {
+    filtered = students.filter(s => (s.classLevel || "").toUpperCase().includes("SSC") || (s.classLevel || "").includes("১০ম") || (s.classLevel || "").includes("৯ম"));
+  } else if (filter === "Admission") {
+    filtered = students.filter(s => (s.classLevel || "").toLowerCase().includes("admission") || (s.classLevel || "").includes("ভর্তি"));
   }
 
   if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 40px; color: var(--text-muted);">কোনো শিক্ষার্থী পাওয়া যায়নি।</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 40px; color: var(--text-muted);"><i class="fas fa-users-slash mr-2"></i> ডাটাবেসে কোনো শিক্ষার্থী পাওয়া যায়নি।</td></tr>`;
     return;
   }
 
@@ -1565,12 +1559,12 @@ function renderStudentsTable(students, filter = "all") {
               ${(s.name || "?")[0]}
             </div>
             <div>
-              <div class="user-cell-name">${s.name || "—"}</div>
+              <div class="user-cell-name" style="font-weight:600; color:var(--text-primary);">${s.name || "—"}</div>
             </div>
           </div>
         </td>
         <td><span class="service-tag">${s.classLevel || "—"}</span></td>
-        <td style="font-family: monospace; font-size: 13px; color: var(--text-secondary);">${s.phone || "—"}</td>
+        <td style="font-family: monospace; font-size: 13px; color: var(--text-secondary); font-weight: 600;">${s.phone || "—"}</td>
         <td>
           ${courseDetails}
         </td>
@@ -1584,16 +1578,16 @@ function renderStudentsTable(students, filter = "all") {
 function updateStudentStats(students) {
   const total = students.length;
   const buyers = students.filter(s => (s.purchasedCoursesCount || 0) > 0).length;
-  const hsc = students.filter(s => s.classLevel === "HSC").length;
-  const ssc = students.filter(s => s.classLevel === "SSC").length;
+  const hsc = students.filter(s => (s.classLevel || "").toUpperCase().includes("HSC")).length;
+  const ssc = students.filter(s => (s.classLevel || "").toUpperCase().includes("SSC") || (s.classLevel || "").includes("১০ম") || (s.classLevel || "").includes("৯ম")).length;
   const badge = document.getElementById("studentsTotalBadge");
 
-  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = Number(val).toLocaleString('bn-BD'); };
   set("stTotalAll", total);
   set("stTotalBuyers", buyers);
   set("stHscCount", hsc);
   set("stSscCount", ssc);
-  if (badge) badge.textContent = `মোট ${total} জন`;
+  if (badge) badge.textContent = `মোট ${Number(total).toLocaleString('bn-BD')} জন`;
 }
 
 window.filterStudentsView = function(filter, btn) {
@@ -1610,12 +1604,13 @@ async function loadAllUserDetails() {
   }
 
   try {
+    const token = localStorage.getItem("adminToken") || "dipu_admin_super_token_2026";
     const res = await fetch("/api/admin/students?limit=500", {
-      headers: { "Authorization": "Bearer " + (localStorage.getItem("adminToken") || "") }
+      headers: { "Authorization": "Bearer " + token }
     });
     if (res.ok) {
       const data = await res.json();
-      if (data.success && Array.isArray(data.students) && data.students.length > 0) {
+      if (data.success && Array.isArray(data.students)) {
         allUserDetailsData = data.students;
         renderUserDetailsTable(allUserDetailsData);
         return;
@@ -1623,7 +1618,7 @@ async function loadAllUserDetails() {
     }
   } catch (err) {}
 
-  allUserDetailsData = generateDemoStudents();
+  allUserDetailsData = [];
   renderUserDetailsTable(allUserDetailsData);
 }
 

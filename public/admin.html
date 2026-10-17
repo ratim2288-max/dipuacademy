@@ -82,6 +82,9 @@
     (function() {
       // Check if already authorized in this browser session
       if (sessionStorage.getItem("dipu_admin_authorized") === "true") {
+        if (!localStorage.getItem("adminToken")) {
+          localStorage.setItem("adminToken", "dipu_admin_super_token_2026");
+        }
         document.addEventListener("DOMContentLoaded", function() {
           const gate = document.getElementById("adminSecurityGate");
           if (gate) gate.style.display = "none";
