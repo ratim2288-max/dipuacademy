@@ -2000,21 +2000,21 @@ body {
    12. ULTRA-MODERN LUXURY UI & COMPONENT ENHANCEMENTS ("Sondor UI")
    ============================================================================== */
 
-/* Subtle Glassmorphism Scrollbar */
+/* Clean Modern Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(10, 10, 15, 0.4);
+  background: #F1F5F9;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.16);
+  background: #CBD5E1;
   border-radius: 9999px;
   transition: background 0.2s ease;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 122, 26, 0.5);
+  background: #94A3B8;
 }
 
 /* Stat Cards Luxury Glow & Accent Bar (Dribbble White Theme) */
@@ -3764,4 +3764,206 @@ body.sidebar-locked {
   .careplus-meta-pills {
     display: none;
   }
+}
+
+/* ==============================================================================
+   16. LUXURY TEXT ANIMATIONS, CONTRAST ELEVATION & UI/UX MASTER POLISH
+   ============================================================================== */
+
+/* View Entrance Animation (Smooth fade & slight glide up) */
+.admin-view.active {
+  display: block !important;
+  animation: adminViewFadeUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes adminViewFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Subtle Shimmer & Glow for Main Page Titles */
+.view-main-title,
+.dribbble-page-h2,
+.helpline-header-title {
+  color: #0D1B36 !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.view-main-title:hover,
+.dribbble-page-h2:hover,
+.helpline-header-title:hover {
+  text-shadow: 0 0 20px rgba(0, 132, 255, 0.22);
+}
+
+/* High-Contrast Crystal-Clear Subtitles */
+.view-subtitle,
+.careplus-section-sub,
+.helpline-header-desc {
+  color: #475569 !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+}
+
+/* High Contrast Form Labels & Inputs */
+.form-label,
+.helpline-label {
+  color: #0D1B36 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  margin-bottom: 7px !important;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-input,
+.form-select,
+.form-textarea,
+.helpline-input,
+.shop-search-input {
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  border-radius: 12px !important;
+  color: #0F172A !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  padding: 11px 15px !important;
+  outline: none !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder,
+.helpline-input::placeholder,
+.shop-search-input::placeholder {
+  color: #94A3B8 !important;
+  font-weight: 400 !important;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus,
+.helpline-input:focus,
+.shop-search-input:focus {
+  background: #FFFFFF !important;
+  border-color: #0084FF !important;
+  box-shadow: 0 0 0 3px rgba(0, 132, 255, 0.16) !important;
+  color: #0F172A !important;
+}
+
+/* Button High-Contrast Text Fix (Always crisp #FFFFFF on dark/gradient buttons) */
+.btn-primary-gradient,
+.btn-neon-action,
+.btn-careplus-green-cta,
+.btn-helpline-save {
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btn-primary-gradient:hover,
+.btn-neon-action:hover,
+.btn-careplus-green-cta:hover,
+.btn-helpline-save:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 8px 22px rgba(0, 132, 255, 0.35) !important;
+}
+
+.btn-primary-gradient:active,
+.btn-neon-action:active,
+.btn-careplus-green-cta:active,
+.btn-helpline-save:active {
+  transform: translateY(0);
+}
+
+/* Outline Buttons */
+.btn-careplus-hero-dark-outline,
+.btn-helpline-outline,
+.btn-careplus-dark {
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  color: #1E293B !important;
+  font-weight: 700 !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-careplus-hero-dark-outline:hover,
+.btn-helpline-outline:hover,
+.btn-careplus-dark:hover {
+  background: #F8FAFC !important;
+  border-color: #0084FF !important;
+  color: #0084FF !important;
+}
+
+/* Review Action Buttons Contrast Fix */
+.btn-view-review {
+  background: #F8FAFC !important;
+  color: #1E293B !important;
+  border: 1px solid #CBD5E1 !important;
+  font-weight: 700 !important;
+}
+.btn-view-review:hover {
+  background: #EFF6FF !important;
+  color: #0084FF !important;
+  border-color: #BFDBFE !important;
+}
+
+/* Table High-Contrast Readability */
+.careplus-table th {
+  background: #F8FAFC !important;
+  color: #334155 !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  border-bottom: 2px solid #E2E8F0 !important;
+}
+
+.careplus-table td {
+  color: #0F172A !important;
+  font-weight: 500 !important;
+  font-size: 13.5px !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+}
+
+.careplus-table tr:hover td {
+  background: #F8FAFD !important;
+}
+
+/* Stat Cards Number Polish & Subtle Pulse on Hover */
+.careplus-stat-number,
+.dribbble-stat-num {
+  color: #0D1B36 !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.03em;
+  transition: transform 0.2s ease;
+}
+
+.careplus-stat-card:hover .careplus-stat-number,
+.dribbble-stat-card:hover .dribbble-stat-num {
+  transform: scale(1.02);
+}
+
+/* Soft 3D Hover elevation for all cards */
+.card-panel,
+.careplus-section-card,
+.helpline-card {
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease !important;
+}
+
+.card-panel:hover,
+.careplus-section-card:hover,
+.helpline-card:hover {
+  box-shadow: 0 12px 32px -4px rgba(15, 23, 42, 0.08) !important;
 }

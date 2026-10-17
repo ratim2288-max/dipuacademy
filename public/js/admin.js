@@ -2710,9 +2710,9 @@ function renderAdminSubjects() {
   const subjects = currentDashboardConfig.subjects || [];
   if (subjects.length === 0) {
     container.innerHTML = `
-      <div style="grid-column: 1/-1; text-align: center; padding: 30px; color: #94A3B8; background: #081022; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.1);">
-        <i class="fas fa-layer-group" style="font-size: 28px; color: #00C2FF; margin-bottom: 8px;"></i>
-        <div>কোনো বিষয় যুক্ত করা হয়নি। 'নতুন বিষয় যোগ করুন' বাটনে ক্লিক করুন।</div>
+      <div style="grid-column: 1/-1; text-align: center; padding: 32px; color: #64748B; background: #F8FAFD; border-radius: 14px; border: 1.5px dashed #CBD5E1;">
+        <i class="fas fa-layer-group" style="font-size: 28px; color: #0084FF; margin-bottom: 8px;"></i>
+        <div style="font-weight: 600;">কোনো বিষয় যুক্ত করা হয়নি। 'নতুন বিষয় যোগ করুন' বাটনে ক্লিক করুন।</div>
       </div>
     `;
     return;
@@ -2729,30 +2729,30 @@ function renderAdminSubjects() {
     }
 
     return `
-      <div style="background: #081022; border: 1px solid rgba(0,194,255,0.22); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; transition: all 0.25s ease;">
+      <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; transition: all 0.25s ease; box-shadow: 0 4px 16px -2px rgba(15,23,42,0.04);">
         <div style="display: flex; align-items: flex-start; gap: 14px;">
-          <div class="da-subject-icon-box ${sub.colorClass || 'da-sub-blue'}" style="width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #fff; flex-shrink: 0; box-shadow: 0 4px 14px rgba(0,0,0,0.4);">
+          <div class="da-subject-icon-box ${sub.colorClass || 'da-sub-blue'}" style="width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #fff; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,132,255,0.2);">
             ${iconHtml}
           </div>
           <div style="flex: 1; overflow: hidden;">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px;">
-              <h4 style="font-size: 15px; font-weight: 800; color: #fff; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${sub.name}</h4>
-              <span style="font-size: 10px; font-weight: 700; color: #00C2FF; background: rgba(0,194,255,0.12); padding: 2px 7px; border-radius: 6px; flex-shrink: 0;">${sub.id}</span>
+              <h4 style="font-size: 15px; font-weight: 800; color: #0D1B36; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${sub.name}</h4>
+              <span style="font-size: 10.5px; font-weight: 700; color: #1665D8; background: #EFF6FF; border: 1px solid #BFDBFE; padding: 2px 8px; border-radius: 6px; flex-shrink: 0;">${sub.id}</span>
             </div>
-            <p style="font-size: 11.5px; color: #94A3B8; margin: 4px 0 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${sub.desc || ''}</p>
+            <p style="font-size: 12px; color: #475569; margin: 4px 0 0; line-height: 1.45; font-weight: 500; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${sub.desc || ''}</p>
           </div>
         </div>
 
-        <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #F1F5F9; padding-top: 12px;">
           <div style="display: flex; align-items: center; gap: 6px;">
-            <span style="width: 8px; height: 8px; border-radius: 50%; background: #00C2FF;"></span>
-            <span style="font-size: 11px; color: #64748B;">${sub.colorClass || 'da-sub-blue'}</span>
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: #0084FF;"></span>
+            <span style="font-size: 11.5px; font-weight: 600; color: #64748B;">${sub.colorClass || 'da-sub-blue'}</span>
           </div>
           <div style="display: flex; gap: 8px;">
-            <button type="button" onclick="openSubjectModal('${sub.id}')" style="background: rgba(0,194,255,0.12); border: 1px solid rgba(0,194,255,0.3); color: #00C2FF; border-radius: 8px; padding: 4px 10px; font-size: 11.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" title="এডিট করুন">
+            <button type="button" onclick="openSubjectModal('${sub.id}')" style="background: #EFF6FF; border: 1px solid #BFDBFE; color: #1665D8; border-radius: 8px; padding: 5px 12px; font-size: 11.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" title="এডিট করুন">
               <i class="fas fa-pen-to-square"></i> এডিট
             </button>
-            <button type="button" onclick="deleteSubject('${sub.id}')" style="background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #EF4444; border-radius: 8px; padding: 4px 10px; font-size: 11.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" title="মুছে ফেলুন">
+            <button type="button" onclick="deleteSubject('${sub.id}')" style="background: #FEF2F2; border: 1px solid #FECACA; color: #DC2626; border-radius: 8px; padding: 5px 12px; font-size: 11.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" title="মুছে ফেলুন">
               <i class="fas fa-trash-can"></i> মুছুন
             </button>
           </div>
@@ -2954,9 +2954,9 @@ function renderAdminGroups() {
   const groups = currentDashboardConfig.groups || [];
   if (groups.length === 0) {
     container.innerHTML = `
-      <div style="text-align: center; padding: 24px; color: #94A3B8; background: #081022; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.1);">
-        <i class="fas fa-users" style="font-size: 24px; color: #00C2FF; margin-bottom: 6px;"></i>
-        <div>কোনো স্টাডি গ্রুপ যুক্ত করা হয়নি।</div>
+      <div style="text-align: center; padding: 28px; color: #64748B; background: #F8FAFD; border-radius: 14px; border: 1.5px dashed #CBD5E1;">
+        <i class="fas fa-users" style="font-size: 24px; color: #0084FF; margin-bottom: 6px;"></i>
+        <div style="font-weight: 600;">কোনো স্টাডি গ্রুপ যুক্ত করা হয়নি।</div>
       </div>
     `;
     return;
@@ -2971,22 +2971,22 @@ function renderAdminGroups() {
     }
 
     return `
-      <div style="background: #081022; border: 1px solid rgba(0,194,255,0.22); border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+      <div style="background: #F8FAFD; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; transition: all 0.2s ease;">
         <div style="display: flex; align-items: center; gap: 12px; overflow: hidden;">
-          <div class="da-group-icon-circle ${grp.colorClass || 'da-grp-blue'}" style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; flex-shrink: 0; background: rgba(0,194,255,0.18); border: 1px solid rgba(0,194,255,0.35);">
+          <div class="da-group-icon-circle ${grp.colorClass || 'da-grp-blue'}" style="width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #1665D8; flex-shrink: 0; background: #EFF6FF; border: 1.5px solid #BFDBFE;">
             ${iconHtml}
           </div>
           <div style="overflow: hidden;">
-            <h4 style="font-size: 14px; font-weight: 700; color: #fff; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${grp.title}</h4>
-            <div style="font-size: 11px; color: #94A3B8; margin-top: 2px;">${grp.members}</div>
+            <h4 style="font-size: 14.5px; font-weight: 800; color: #0D1B36; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${grp.title}</h4>
+            <div style="font-size: 12px; color: #64748B; font-weight: 600; margin-top: 2px;">${grp.members}</div>
           </div>
         </div>
 
         <div style="display: flex; gap: 6px; flex-shrink: 0;">
-          <button type="button" onclick="openGroupModal('${grp.id}')" style="background: rgba(0,194,255,0.12); border: 1px solid rgba(0,194,255,0.3); color: #00C2FF; border-radius: 6px; padding: 4px 8px; font-size: 11px; font-weight: 700; cursor: pointer;" title="এডিট">
+          <button type="button" onclick="openGroupModal('${grp.id}')" style="background: #FFFFFF; border: 1px solid #CBD5E1; color: #0D1B36; border-radius: 8px; padding: 5px 10px; font-size: 11.5px; font-weight: 700; cursor: pointer;" title="এডিট">
             <i class="fas fa-pen-to-square"></i>
           </button>
-          <button type="button" onclick="deleteGroup('${grp.id}')" style="background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #EF4444; border-radius: 6px; padding: 4px 8px; font-size: 11px; font-weight: 700; cursor: pointer;" title="মুছুন">
+          <button type="button" onclick="deleteGroup('${grp.id}')" style="background: #FEF2F2; border: 1px solid #FECACA; color: #DC2626; border-radius: 8px; padding: 5px 10px; font-size: 11.5px; font-weight: 700; cursor: pointer;" title="মুছুন">
             <i class="fas fa-trash-can"></i>
           </button>
         </div>
