@@ -2451,7 +2451,7 @@
     document.addEventListener("DOMContentLoaded", async () => {
       // 1. Get Slug from URL
       const urlParams = new URLSearchParams(window.location.search);
-      let slug = urlParams.get("slug");
+      let slug = urlParams.get("slug") || urlParams.get("id") || urlParams.get("course");
       
       if (!slug) {
         const pathParts = window.location.pathname.split("/").filter(Boolean);

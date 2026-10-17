@@ -2027,11 +2027,11 @@
       if (gw === "cod") {
         submitBtn.textContent = "অর্ডার নিশ্চিত করুন (ক্যাশ অন ডেলিভারি)";
       } else {
-        submitBtn.textContent = `${gw.toUpperCase()} পেমেন্টে অর্ডার করুন`;
+        submitBtn.textContent = `${gw.toUpperCase()} দিয়ে পেমেন্ট সম্পন্ন করুন (ZiniPay)`;
       }
     }
 
-    function handleOrderSubmit(e) {
+    async function handleOrderSubmit(e) {
       e.preventDefault();
       const name = document.getElementById("orderCustName").value.trim();
       const phone = document.getElementById("orderCustPhone").value.trim();
@@ -2042,6 +2042,39 @@
         return;
       }
 
+      const submitBtn = document.getElementById("submitOrderBtnText");
+      const isEbook = currentBook.category === "ebook" || currentBook.id.startsWith("ebook");
+
+      // Real automated payment via ZiniPay for bKash, Nagad, Rocket, Cards or eBooks
+      if (selectedGateway !== 'cod' || isEbook) {
+        if (submitBtn) submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> ZiniPay পেমেন্ট প্রসেসিং হচ্ছে...`;
+
+        try {
+          const res = await fetch('/api/payment/zinipay/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              orderType: isEbook ? 'ebook' : 'book',
+              bookId: currentBook.id,
+              bookTitle: currentBook.title,
+              deliveryAddress: address,
+              studentName: name,
+              studentPhone: phone,
+              amount: currentBook.discountPrice || currentBook.price
+            })
+          });
+
+          const data = await res.json();
+          if (data && data.success && data.payment_url) {
+            window.location.href = data.payment_url;
+            return;
+          }
+        } catch (err) {
+          console.warn('[ZiniPay Book Checkout Fallback]:', err);
+        }
+      }
+
+      // COD (Cash on delivery) local flow
       const randomId = "DE-" + Math.floor(10000 + Math.random() * 90000);
       document.getElementById("succOrderId").textContent = randomId;
       document.getElementById("succBookName").textContent = currentBook.title;

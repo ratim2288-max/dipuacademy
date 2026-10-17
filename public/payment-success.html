@@ -181,21 +181,21 @@
       <i class="fas fa-check"></i>
     </div>
 
-    <h1>পেমেন্ট সফলভাবে সম্পন্ন হয়েছে!</h1>
-    <p class="subtitle">আপনার কোর্সটি সক্রিয় করা হয়েছে এবং অ্যাকাউন্টে এক্সেস যুক্ত হয়েছে। এখন আপনি সরাসরি ক্লাসে যুক্ত হতে পারবেন।</p>
+    <h1 id="successHeading">পেমেন্ট সফলভাবে সম্পন্ন হয়েছে!</h1>
+    <p class="subtitle" id="successSub">আপনার অর্ডারটি সক্রিয় করা হয়েছে। বিস্তারিত তথ্য নিচে দেখুন।</p>
 
     <div class="details-box">
       <div class="detail-row">
-        <span class="detail-label">কোর্স:</span>
-        <span class="detail-val" id="dispCourseTitle">অনলাইন কোর্স</span>
+        <span class="detail-label" id="dispItemLabel">আইটেম:</span>
+        <span class="detail-val" id="dispCourseTitle">অনলাইন আইটেম</span>
       </div>
       <div class="detail-row">
         <span class="detail-label">পেমেন্ট গেটওয়ে:</span>
-        <span class="detail-val badge"><i class="fas fa-shield-halved mr-1"></i> ZiniPay (বিকাশ / নগদ)</span>
+        <span class="detail-val badge"><i class="fas fa-shield-halved mr-1"></i> ZiniPay (বিকাশ / নগদ / কার্ড)</span>
       </div>
       <div class="detail-row">
         <span class="detail-label">পরিশোধিত অর্থ:</span>
-        <span class="detail-val" id="dispAmount">৳ ৮৫০</span>
+        <span class="detail-val" id="dispAmount">৳ ০</span>
       </div>
       <div class="detail-row">
         <span class="detail-label">ট্রানজাকশন আইডি:</span>
@@ -203,17 +203,18 @@
       </div>
       <div class="detail-row">
         <span class="detail-label">স্ট্যাটাস:</span>
-        <span class="detail-val badge" style="color: #34D399;"><i class="fas fa-circle-check mr-1"></i> এক্সেস আনলকড</span>
+        <span class="detail-val badge" id="dispStatusBadge" style="color: #34D399;"><i class="fas fa-circle-check mr-1"></i> পেইড ও সক্রিয়</span>
       </div>
     </div>
 
+    <!-- Dynamic Action Button -->
     <a href="/my-courses.html" class="btn-enter-course" id="enterCourseBtn">
-      <span>কোর্স হোমে প্রবেশ করুন</span>
-      <i class="fas fa-arrow-right"></i>
+      <span id="enterBtnText">কোর্স হোমে প্রবেশ করুন</span>
+      <i class="fas fa-arrow-right" id="enterBtnIcon"></i>
     </a>
 
-    <div class="auto-redirect-note">
-      <span id="countdownSec">3</span> সেকেন্ডের মধ্যে স্বয়ংক্রিয়ভাবে কোর্স পেজে নিয়ে যাওয়া হচ্ছে...
+    <div class="auto-redirect-note" id="redirectNote">
+      <span id="countdownSec">4</span> সেকেন্ডের মধ্যে স্বয়ংক্রিয়ভাবে নিয়ে যাওয়া হচ্ছে...
     </div>
   </div>
 
@@ -221,22 +222,79 @@
     (async function() {
       const params = new URLSearchParams(window.location.search);
       const val_id = params.get('val_id') || params.get('valid') || params.get('valId');
-      const courseSlug = params.get('course') || params.get('slug') || 'hsc-27-full-prep';
+      const orderType = params.get('type') || (params.get('course') ? 'course' : (params.get('bookId') ? 'book' : 'course'));
+      const courseSlug = params.get('course') || params.get('slug') || '';
+      const itemTitle = params.get('item') || params.get('title') || courseSlug || 'অর্ডার';
       const studentPhone = params.get('phone') || localStorage.getItem('da_user_phone') || localStorage.getItem('user_phone') || '';
 
-      // Update local storage
-      try {
-        const enrolled = JSON.parse(localStorage.getItem('da_enrolled_courses') || '[]');
-        if (!enrolled.includes(courseSlug)) {
-          enrolled.push(courseSlug);
-          localStorage.setItem('da_enrolled_courses', JSON.stringify(enrolled));
-        }
-      } catch (e) {}
+      const headingEl = document.getElementById('successHeading');
+      const subEl = document.getElementById('successSub');
+      const itemLabelEl = document.getElementById('dispItemLabel');
+      const itemTitleEl = document.getElementById('dispCourseTitle');
+      const btnEl = document.getElementById('enterCourseBtn');
+      const btnTextEl = document.getElementById('enterBtnText');
+      const btnIconEl = document.getElementById('enterBtnIcon');
+      const redirectNoteEl = document.getElementById('redirectNote');
+      const counterEl = document.getElementById('countdownSec');
+
+      let targetUrl = '/';
+      let autoRedirect = true;
+
+      if (orderType === 'book') {
+        headingEl.textContent = 'বইয়ের অর্ডার সফলভাবে সম্পন্ন হয়েছে! 📚';
+        subEl.textContent = 'আপনার পেমেন্ট ZiniPay এর মাধ্যমে যাচাই করা হয়েছে। ২-৩ কার্যদিবসের মধ্যে আপনার দেওয়া ঠিকানায় বই পৌঁছে যাবে।';
+        itemLabelEl.textContent = 'বইয়ের নাম:';
+        itemTitleEl.textContent = itemTitle;
+        targetUrl = '/shop';
+        btnTextEl.textContent = 'বুকশপে ফিরে যান';
+        btnIconEl.className = 'fas fa-store';
+        btnEl.href = targetUrl;
+        autoRedirect = false;
+        if (redirectNoteEl) redirectNoteEl.style.display = 'none';
+      } else if (orderType === 'ebook') {
+        headingEl.textContent = 'ই-বুক পেমেন্ট সফল হয়েছে! 📱';
+        subEl.textContent = 'আপনার ই-বুক PDF ডাউনলোড করার জন্য প্রস্তুত। নিচে ক্লিক করে সাথে সাথে PDF ডাউনলোড করুন।';
+        itemLabelEl.textContent = 'ই-বুকের নাম:';
+        itemTitleEl.textContent = itemTitle;
+        targetUrl = `/downloads/ebook-${params.get('id') || 'sample'}.pdf`;
+        btnTextEl.textContent = '📥 PDF ই-বুক ডাউনলোড করুন';
+        btnIconEl.className = 'fas fa-file-pdf';
+        btnEl.href = targetUrl;
+        btnEl.setAttribute('download', 'true');
+        autoRedirect = false;
+        if (redirectNoteEl) redirectNoteEl.style.display = 'none';
+      } else if (orderType === 'ai_subscription') {
+        headingEl.textContent = 'AI সাবস্ক্রিপশন সক্রিয় হয়েছে! 🤖';
+        subEl.textContent = 'আপনার AI অ্যাকাউন্টে প্রোপ্ল্যান আনলক হয়েছে। এখন আনলিমিটেড প্রশ্ন ও সমাধান পান।';
+        itemLabelEl.textContent = 'প্ল্যান:';
+        itemTitleEl.textContent = itemTitle || 'AI প্রিমিয়াম প্ল্যান';
+        targetUrl = '/ai';
+        btnTextEl.textContent = 'AI মেন্টরে প্রশ্ন করুন';
+        btnIconEl.className = 'fas fa-wand-magic-sparkles';
+        btnEl.href = targetUrl;
+      } else {
+        // Course
+        headingEl.textContent = 'পেমেন্ট সফলভাবে সম্পন্ন হয়েছে! 🎉';
+        subEl.textContent = 'আপনার কোর্সটি সক্রিয় করা হয়েছে এবং অ্যাকাউন্টে এক্সেস যুক্ত হয়েছে।';
+        itemLabelEl.textContent = 'কোর্স:';
+        itemTitleEl.textContent = itemTitle;
+        targetUrl = `/course-home.html?course=${encodeURIComponent(courseSlug)}&justEnrolled=1`;
+        btnTextEl.textContent = 'কোর্স হোমে প্রবেশ করুন';
+        btnEl.href = targetUrl;
+
+        try {
+          const enrolled = JSON.parse(localStorage.getItem('da_enrolled_courses') || '[]');
+          if (courseSlug && !enrolled.includes(courseSlug)) {
+            enrolled.push(courseSlug);
+            localStorage.setItem('da_enrolled_courses', JSON.stringify(enrolled));
+          }
+        } catch (e) {}
+      }
 
       // Verify with backend
       if (val_id) {
         try {
-          const res = await fetch(`/api/payment/zinipay/verify-status?val_id=${encodeURIComponent(val_id)}&course=${encodeURIComponent(courseSlug)}&phone=${encodeURIComponent(studentPhone)}`);
+          const res = await fetch(`/api/payment/zinipay/verify-status?val_id=${encodeURIComponent(val_id)}&type=${encodeURIComponent(orderType)}&course=${encodeURIComponent(courseSlug)}&item=${encodeURIComponent(itemTitle)}&phone=${encodeURIComponent(studentPhone)}`);
           const data = await res.json();
           if (data && data.success) {
             if (data.amount && document.getElementById('dispAmount')) {
@@ -247,27 +305,27 @@
             } else if (val_id && document.getElementById('dispTrxId')) {
               document.getElementById('dispTrxId').textContent = val_id.slice(0, 16);
             }
+            if (data.itemTitle && itemTitleEl) {
+              itemTitleEl.textContent = data.itemTitle;
+            }
           }
         } catch (err) {
           console.warn('[Verify Status Note]:', err);
         }
       }
 
-      const targetUrl = `/course-home.html?course=${encodeURIComponent(courseSlug)}&justEnrolled=1`;
-      const btn = document.getElementById('enterCourseBtn');
-      if (btn) btn.href = targetUrl;
-
-      // Countdown redirect
-      let count = 3;
-      const counterEl = document.getElementById('countdownSec');
-      const timer = setInterval(() => {
-        count--;
-        if (counterEl) counterEl.textContent = count;
-        if (count <= 0) {
-          clearInterval(timer);
-          window.location.href = targetUrl;
-        }
-      }, 1000);
+      // Countdown redirect for courses & AI
+      if (autoRedirect) {
+        let count = 4;
+        const timer = setInterval(() => {
+          count--;
+          if (counterEl) counterEl.textContent = count;
+          if (count <= 0) {
+            clearInterval(timer);
+            window.location.href = targetUrl;
+          }
+        }, 1000);
+      }
     })();
   </script>
 </body>

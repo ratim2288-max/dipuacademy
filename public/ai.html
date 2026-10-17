@@ -498,7 +498,7 @@ footer a:hover{color:var(--mint)}
         <div class="sr"><span><span class="bn">মেয়াদ শেষ</span><span class="en">Valid until</span></span><b id="s-en"></b></div>
         <div class="sr"><span><span class="bn">সর্বমোট</span><span class="en">Total</span></span><b class="tot" id="s-tot"></b></div>
         <button class="btn l big" id="pay" type="button"></button>
-        <p class="demo"><span class="bn">ডেমো মোড: কোনো টাকা কাটা হয় না (ইনস্ট্যান্ট একটিভ)</span><span class="en">Instant activation enabled</span></p>
+        <p class="demo" style="color: #A6F76A; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px;"><i class="fas fa-shield-halved"></i> <span class="bn">ZiniPay সিকিউর গেটওয়ে: বিকাশ, নগদ, রকেট ও কার্ড</span><span class="en">ZiniPay Secured: bKash, Nagad, Rocket & Cards</span></p>
       </aside>
     </div>
   </div>
@@ -884,8 +884,7 @@ else {
         if (nmVal.length < 2) { $('e-nm').textContent = 'নাম লিখুন / Enter your name'; bad = true; }
         if (!/^01[3-9]\d{8}$/.test(phVal)) { $('e-ph').textContent = 'সঠিক ১১ সংখ্যার নম্বর দিন / Enter a valid 11-digit number'; if (!bad) $('ph').focus(); bad = true; }
         if (bad) { if ($('e-nm').textContent) $('nm').focus(); return; }
-        var btn = $('pay'); btn.disabled = true; btn.innerHTML = two('প্রক্রিয়া হচ্ছে…', 'Processing…');
-        setTimeout(function() { done(nmVal, phVal); }, 1500);
+        triggerAiPayment(nmVal, phVal);
       };
     } else {
       if (acctCard) acctCard.style.display = 'none';
@@ -918,13 +917,51 @@ else {
   $('nm').addEventListener('input',function(){$('e-nm').textContent=''});
   $('ph').addEventListener('input',function(){$('e-ph').textContent=''});
 
-  $('pay').onclick=function(){
-    var name=$('nm').value.trim(),ph=$('ph').value.replace(/[\s-]/g,''),bad=false;
-    if(name.length<2){$('e-nm').textContent='নাম লিখুন / Enter your name';bad=true}
-    if(!/^01[3-9]\d{8}$/.test(ph)){$('e-ph').textContent='সঠিক ১১ সংখ্যার নম্বর দিন / Enter a valid 11-digit number';if(!bad)$('ph').focus();bad=true}
-    if(bad){if($('e-nm').textContent)$('nm').focus();return}
-    var btn=$('pay');btn.disabled=true;btn.innerHTML=two('প্রক্রিয়া হচ্ছে…','Processing…');
-    setTimeout(function(){done(name,ph)},1500);
+  function triggerAiPayment(name, ph) {
+    var p = cur;
+    var btn = $('pay');
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> ` + two('ZiniPay সুরক্ষিত গেটওয়ে খোলা হচ্ছে…', 'Opening ZiniPay…');
+    }
+
+    if (p && p.p > 0) {
+      fetch('/api/payment/zinipay/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderType: 'ai_subscription',
+          planId: (p.bn || 'plan').toLowerCase().replace(/\s+/g, '-'),
+          planName: two(p.bn, p.en),
+          duration: p.d || 30,
+          amount: p.p,
+          studentName: name,
+          studentPhone: ph
+        })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data.success && data.payment_url) {
+          window.location.href = data.payment_url;
+        } else {
+          done(name, ph);
+        }
+      })
+      .catch(function(err) {
+        console.warn('[ZiniPay AI Fallback]:', err);
+        done(name, ph);
+      });
+    } else {
+      setTimeout(function() { done(name, ph); }, 1000);
+    }
+  }
+
+  $('pay').onclick = function() {
+    var name = $('nm').value.trim(), ph = $('ph').value.replace(/[\s-]/g, ''), bad = false;
+    if (name.length < 2) { $('e-nm').textContent = 'নাম লিখুন / Enter your name'; bad = true; }
+    if (!/^01[3-9]\d{8}$/.test(ph)) { $('e-ph').textContent = 'সঠিক ১১ সংখ্যার নম্বর দিন / Enter a valid 11-digit number'; if (!bad) $('ph').focus(); bad = true; }
+    if (bad) { if ($('e-nm').textContent) $('nm').focus(); return; }
+    triggerAiPayment(name, ph);
   };
 
   function done(name,ph){

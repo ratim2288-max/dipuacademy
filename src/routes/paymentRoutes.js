@@ -526,6 +526,95 @@ async function activateCourseEnrollment({ phone, name, courseId, courseSlug, amo
   return { user, course, enrollment, finalTrxId, cSlug };
 }
 
+// Universal fulfillment helper for all products (Course, Book, eBook, AI Subscription)
+async function fulfillGenericOrder({ orderType = 'course', meta = {}, verifyData = {}, req }) {
+  const phone = (meta.studentPhone || (verifyData && verifyData.senderNumber) || '01700000000').toString().trim();
+  const name = meta.studentName || (verifyData && verifyData.cus_name) || 'Student';
+  const amount = Number(meta.amount || (verifyData && verifyData.amount) || 0);
+  const valId = verifyData.val_id || meta.valId;
+  const invoiceId = verifyData.invoice_id || meta.invoiceId;
+  const trxID = (verifyData && verifyData.transaction_id && verifyData.transaction_id !== 'N/A')
+    ? verifyData.transaction_id
+    : (valId || `TXN_${Date.now()}`);
+  const paymentMethod = `zinipay_${verifyData.payment_method || 'online'}`;
+
+  let user = await User.findOne({ phone });
+  if (!user && phone) {
+    user = await User.create({
+      phone,
+      name,
+      role: 'student',
+      eduCoins: 50
+    }).catch(() => null);
+  }
+
+  if (orderType === 'book' || orderType === 'ebook') {
+    const bookTitle = meta.bookTitle || meta.bookId || 'বই / ই-বুক';
+    if (user) {
+      user.eduCoins = (user.eduCoins || 0) + 50;
+      await user.save().catch(() => {});
+    }
+
+    await PaymentAuditLog.create({
+      trxID,
+      userId: user ? user._id : null,
+      userPhone: phone,
+      courseSlug: `[বই] ${bookTitle}`,
+      amount,
+      paymentGateway: paymentMethod,
+      status: 'SUCCESS',
+      ipAddress: req ? (req.ip || req.headers['x-forwarded-for'] || '') : '',
+      userAgent: req ? (req.headers['user-agent'] || '') : '',
+      gatewayResponse: { gateway: 'ZiniPay', orderType, bookTitle, valId, invoiceId, timestamp: new Date() }
+    }).catch(() => {});
+
+    return { type: orderType, title: bookTitle, trxID, amount };
+  }
+
+  if (orderType === 'ai_subscription') {
+    const planName = meta.planName || meta.planId || 'AI সাবস্ক্রিপশন';
+    if (user) {
+      user.eduCoins = (user.eduCoins || 0) + 200;
+      user.aiSubscription = {
+        active: true,
+        plan: meta.planId || 'premium',
+        validUntil: new Date(Date.now() + (Number(meta.duration) || 30) * 24 * 60 * 60 * 1000)
+      };
+      await user.save().catch(() => {});
+    }
+
+    await PaymentAuditLog.create({
+      trxID,
+      userId: user ? user._id : null,
+      userPhone: phone,
+      courseSlug: `[AI] ${planName}`,
+      amount,
+      paymentGateway: paymentMethod,
+      status: 'SUCCESS',
+      ipAddress: req ? (req.ip || req.headers['x-forwarded-for'] || '') : '',
+      userAgent: req ? (req.headers['user-agent'] || '') : '',
+      gatewayResponse: { gateway: 'ZiniPay', orderType, planName, valId, invoiceId, timestamp: new Date() }
+    }).catch(() => {});
+
+    return { type: 'ai_subscription', title: planName, trxID, amount };
+  }
+
+  // Course fulfillment
+  const courseSlug = meta.courseSlug || meta.courseId;
+  return await activateCourseEnrollment({
+    phone,
+    name,
+    courseId: meta.courseId,
+    courseSlug,
+    amount,
+    paymentMethod,
+    trxID,
+    valId,
+    invoiceId,
+    req
+  });
+}
+
 // GET /api/payment/zinipay/status — Check gateway connectivity & brand
 router.get('/zinipay/status', async (req, res) => {
   const conn = await zinipayService.checkConnection().catch(() => ({ connected: false, apiKeyValid: false }));
@@ -574,23 +663,70 @@ router.get('/zinipay/logs', async (req, res) => {
   }
 });
 
-// POST /api/payment/zinipay/create — Generate secure hosted payment URL via ZiniPay
+// POST /api/payment/zinipay/create — Generate secure hosted payment URL via ZiniPay for Any Item
 router.post('/zinipay/create', async (req, res) => {
   try {
-    const { courseId, courseSlug, studentPhone, studentName, studentEmail, amount: customAmount, couponCode } = req.body;
+    const {
+      orderType = 'course', // 'course' | 'book' | 'ebook' | 'ai_subscription'
+      courseId,
+      courseSlug,
+      bookId,
+      bookTitle,
+      deliveryAddress,
+      planId,
+      planName,
+      duration,
+      studentPhone,
+      studentName,
+      studentEmail,
+      amount: customAmount,
+      couponCode
+    } = req.body;
 
-    const targetIdOrSlug = courseSlug || courseId;
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'http';
+    const host = req.headers['x-forwarded-host'] || req.get('host') || 'localhost:5000';
+    const baseUrl = `${protocol}://${host}`;
+
+    const phone = (studentPhone || '01712345678').trim();
+    const name = (studentName || 'Student').trim();
+    const email = (studentEmail || `${phone.replace(/[^0-9]/g, '')}@dipuacademy.com`).trim();
+
+    let amount = Number(customAmount) || 0;
+    let redirect_url = '';
+    let cancel_url = '';
+    let cSlug = '';
     let course = null;
-    if (targetIdOrSlug) {
-      course = await Course.findOne({
-        $or: [
-          { slug: targetIdOrSlug.toString().toLowerCase() },
-          ...(mongoose.Types.ObjectId.isValid(targetIdOrSlug) ? [{ _id: targetIdOrSlug }] : [])
-        ]
-      });
-    }
+    let itemTitle = 'Dipu Academy Order';
 
-    let amount = Number(customAmount) || (course ? (course.discountPrice || course.price) : 850);
+    if (orderType === 'book' || orderType === 'ebook') {
+      const bTitle = bookTitle || bookId || 'বই অর্ডার';
+      itemTitle = bTitle;
+      amount = amount || 450;
+      redirect_url = `${baseUrl}/payment-success.html?type=${orderType}&item=${encodeURIComponent(bTitle)}&id=${encodeURIComponent(bookId || '')}&phone=${encodeURIComponent(phone)}`;
+      cancel_url = `${baseUrl}/book.html?id=${encodeURIComponent(bookId || '')}&payment_cancelled=1`;
+    } else if (orderType === 'ai_subscription') {
+      const pTitle = planName || planId || 'AI সাবস্ক্রিপশন';
+      itemTitle = pTitle;
+      amount = amount || 490;
+      redirect_url = `${baseUrl}/payment-success.html?type=ai_subscription&item=${encodeURIComponent(pTitle)}&phone=${encodeURIComponent(phone)}`;
+      cancel_url = `${baseUrl}/ai?payment_cancelled=1`;
+    } else {
+      // Default: Course
+      const targetIdOrSlug = courseSlug || courseId;
+      if (targetIdOrSlug) {
+        course = await Course.findOne({
+          $or: [
+            { slug: targetIdOrSlug.toString().toLowerCase() },
+            ...(mongoose.Types.ObjectId.isValid(targetIdOrSlug) ? [{ _id: targetIdOrSlug }] : [])
+          ]
+        });
+      }
+      amount = amount || (course ? (course.discountPrice || course.price) : 850);
+      cSlug = course ? course.slug : (courseSlug || courseId || 'course-enrolled');
+      itemTitle = course ? (course.title?.bn || course.title?.en || course.slug) : cSlug;
+      redirect_url = `${baseUrl}/payment-success.html?type=course&course=${encodeURIComponent(cSlug)}&phone=${encodeURIComponent(phone)}`;
+      cancel_url = `${baseUrl}/course.html?slug=${encodeURIComponent(cSlug)}&payment_cancelled=1`;
+    }
 
     if (couponCode) {
       const coupon = activeCoupons.find(c => c.code === couponCode.toUpperCase() && c.isActive);
@@ -602,17 +738,6 @@ router.post('/zinipay/create', async (req, res) => {
       }
     }
 
-    const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'http';
-    const host = req.headers['x-forwarded-host'] || req.get('host') || 'localhost:5000';
-    const baseUrl = `${protocol}://${host}`;
-
-    const cSlug = course ? course.slug : (courseSlug || courseId || 'course-enrolled');
-    const phone = (studentPhone || '01712345678').trim();
-    const name = (studentName || 'Student').trim();
-    const email = (studentEmail || `${phone.replace(/[^0-9]/g, '')}@dipuacademy.com`).trim();
-
-    const redirect_url = `${baseUrl}/payment-success.html?course=${encodeURIComponent(cSlug)}&phone=${encodeURIComponent(phone)}`;
-    const cancel_url = `${baseUrl}/course.html?slug=${encodeURIComponent(cSlug)}&payment_cancelled=1`;
     const webhook_url = `${baseUrl}/api/payment/zinipay/webhook`;
 
     const result = await zinipayService.createInvoice({
@@ -620,8 +745,15 @@ router.post('/zinipay/create', async (req, res) => {
       cus_name: name,
       cus_email: email,
       metadata: {
+        orderType,
         courseId: course ? course._id.toString() : cSlug,
         courseSlug: cSlug,
+        bookId,
+        bookTitle,
+        deliveryAddress,
+        planId,
+        planName,
+        duration,
         studentPhone: phone,
         studentName: name,
         amount
@@ -645,7 +777,7 @@ router.post('/zinipay/create', async (req, res) => {
       trxID: result.data.val_id || result.data.invoice_id || `INIT_${Date.now()}`,
       userPhone: phone,
       courseId: course ? course._id : null,
-      courseSlug: cSlug,
+      courseSlug: itemTitle,
       amount,
       paymentGateway: 'zinipay',
       status: 'INITIATED',
@@ -689,31 +821,15 @@ router.post('/zinipay/webhook', async (req, res) => {
 
     if (isCompleted) {
       const meta = (verifyData && verifyData.metadata) || body.metadata || {};
-      const phone = meta.studentPhone || (verifyData && verifyData.senderNumber) || body.customer_phone || body.phone;
-      const courseSlug = meta.courseSlug || meta.courseId;
-      const courseId = meta.courseId;
-      const name = meta.studentName || (verifyData && verifyData.cus_name) || body.customer_name;
-      const amount = (verifyData && verifyData.amount) || body.amount;
-      const trxID = (verifyData && verifyData.transaction_id && verifyData.transaction_id !== 'N/A') 
-        ? verifyData.transaction_id 
-        : (body.transactionId || body.trxID || valId);
-      const paymentMethod = (verifyData && verifyData.payment_method) || 'zinipay';
+      const orderType = meta.orderType || 'course';
 
-      if (phone && (courseSlug || courseId)) {
-        await activateCourseEnrollment({
-          phone,
-          name,
-          courseId,
-          courseSlug,
-          amount,
-          paymentMethod: `zinipay_${paymentMethod}`,
-          trxID,
-          valId,
-          invoiceId: verifyData?.invoice_id,
-          req
-        });
-        console.log(`[ZiniPay Webhook] Activated course "${courseSlug}" for student ${phone}!`);
-      }
+      await fulfillGenericOrder({
+        orderType,
+        meta,
+        verifyData: verifyData || body,
+        req
+      });
+      console.log(`[ZiniPay Webhook] Fulfilled ${orderType} order successfully!`);
     }
 
     return res.status(200).json({ success: true, received: true });
@@ -723,10 +839,10 @@ router.post('/zinipay/webhook', async (req, res) => {
   }
 });
 
-// GET /api/payment/zinipay/verify-status — Verify invoice and activate student on return
+// GET /api/payment/zinipay/verify-status — Verify invoice and fulfill on return
 router.get('/zinipay/verify-status', async (req, res) => {
   try {
-    const { val_id, course: courseSlug, phone: queryPhone } = req.query;
+    const { val_id, course: courseSlug, phone: queryPhone, type: queryType, item: queryItem, id: queryId } = req.query;
     if (!val_id) {
       return res.status(400).json({ success: false, message: 'val_id পাওয়া যায়নি।' });
     }
@@ -739,25 +855,28 @@ router.get('/zinipay/verify-status', async (req, res) => {
     const data = verifyRes.data;
     const isCompleted = data.status === 'COMPLETED' || data.status === 'SUCCESS';
 
-    let enrollmentResult = null;
+    let fulfillmentResult = null;
     const meta = data.metadata || {};
+    const orderType = meta.orderType || queryType || (courseSlug ? 'course' : (queryItem ? 'book' : 'course'));
     const phone = meta.studentPhone || queryPhone || data.senderNumber;
-    const cSlug = meta.courseSlug || courseSlug;
 
-    if (isCompleted && phone && cSlug) {
-      enrollmentResult = await activateCourseEnrollment({
-        phone,
-        name: meta.studentName || data.cus_name,
-        courseId: meta.courseId,
-        courseSlug: cSlug,
-        amount: data.amount,
-        paymentMethod: `zinipay_${data.payment_method || 'online'}`,
-        trxID: data.transaction_id && data.transaction_id !== 'N/A' ? data.transaction_id : val_id,
-        valId: val_id,
-        invoiceId: data.invoice_id,
+    if (isCompleted) {
+      fulfillmentResult = await fulfillGenericOrder({
+        orderType,
+        meta: {
+          ...meta,
+          courseSlug: meta.courseSlug || courseSlug,
+          bookId: meta.bookId || queryId,
+          bookTitle: meta.bookTitle || queryItem,
+          planName: meta.planName || queryItem,
+          studentPhone: phone
+        },
+        verifyData: data,
         req
       });
     }
+
+    const finalItemTitle = meta.bookTitle || meta.planName || meta.courseSlug || courseSlug || queryItem || 'অর্ডারকৃত আইটেম';
 
     return res.status(200).json({
       success: true,
@@ -766,8 +885,9 @@ router.get('/zinipay/verify-status', async (req, res) => {
       transaction_id: data.transaction_id,
       amount: data.amount,
       payment_method: data.payment_method,
-      courseSlug: cSlug,
-      enrolled: !!enrollmentResult
+      orderType,
+      itemTitle: finalItemTitle,
+      fulfilled: !!fulfillmentResult
     });
   } catch (err) {
     console.error('[ZiniPay Verify Status Error]:', err);
