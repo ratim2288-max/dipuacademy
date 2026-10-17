@@ -1301,7 +1301,7 @@ function finish(btn, authData) {
       institution: (authData && authData.user && authData.user.institution) || "শিক্ষা প্রতিষ্ঠান",
       target: selectedLoginClass.includes('HSC') ? "BUET / Engineering" : (selectedLoginClass.includes('SSC') ? "Board Exam GPA 5.0" : "Class Top Rank"),
       district: "ঢাকা",
-      avatar: (authData && authData.user && authData.user.avatar) || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150",
+      avatar: (authData && authData.user && authData.user.avatar) || "/images/dipu-logo.png",
       isOnboarded: authData ? !!authData.isOnboarded : false
     };
   } else {

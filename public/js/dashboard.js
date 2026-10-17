@@ -479,7 +479,7 @@ function loadUserProfile() {
       institution: "নটর ডেম কলেজ, ঢাকা",
       target: "BUET / Engineering",
       district: "ঢাকা",
-      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150"
+      avatar: "/images/dipu-logo.png"
     };
   }
 

@@ -345,45 +345,45 @@ function initCoursesManagement() {
   const ACADEMIC_COVER_PRESETS = [
     {
       id: "physics",
-      title: "পদার্থবিজ্ঞান ১ম ও ২য় পত্র",
+      title: "HSC '27 সাইকেল ১ (পদার্থবিজ্ঞান ও গণিত)",
       icon: "⚛️",
       gradient: "linear-gradient(135deg, #1E1B4B 0%, #065F46 100%)",
-      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_ph' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231E1B4B'/><stop offset='100%25' stop-color='%230F172A'/></linearGradient><linearGradient id='acc_ph' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%230084FF'/><stop offset='100%25' stop-color='%2300C2FF'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_ph)'/><circle cx='490' cy='90' r='130' fill='%2300C2FF' opacity='0.15'/><text x='40' y='70' fill='%2300C2FF' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU ACADEMY • HSC 2026/2027</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>পদার্থবিজ্ঞান ১ম পত্র</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>থিওরি, অ্যানিমেশন ও গাণিতিক সমাধান</text><rect x='40' y='210' width='150' height='36' rx='18' fill='url(%23acc_ph)'/><text x='115' y='234' fill='%23050B17' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>🔥 ফুল সিলেবাস</text><text x='480' y='260' font-size='110' opacity='0.9'>⚛️</text></svg>"
+      dataUrl: "/images/courses/hsc-27-prep.jpg"
     },
     {
       id: "chemistry",
-      title: "রসায়ন ১ম ও ২য় পত্র",
+      title: "HSC '28 মাস্টার কোর্স (পদার্থ ও রসায়ন)",
       icon: "🧪",
       gradient: "linear-gradient(135deg, #064E3B 0%, #022c22 100%)",
-      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_ch' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23064E3B'/><stop offset='100%25' stop-color='%23022c22'/></linearGradient><linearGradient id='acc_ch' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%2310B981'/><stop offset='100%25' stop-color='%2334D399'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_ch)'/><circle cx='500' cy='80' r='140' fill='%2310B981' opacity='0.1'/><text x='40' y='70' fill='%2310B981' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU ACADEMY • HSC 2026</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>রসায়ন ১ম পত্র</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>মাস্টারক্লাস — থিওরি ও সৃজনশীল</text><rect x='40' y='210' width='140' height='36' rx='18' fill='url(%23acc_ch)'/><text x='110' y='234' fill='%23022c22' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>★ A+ মিশন</text><text x='480' y='260' font-size='110' opacity='0.9'>🧪</text></svg>"
+      dataUrl: "/images/courses/hsc-28-prep.jpg"
     },
     {
       id: "math",
-      title: "উচ্চতর গণিত ও এডমিশন",
+      title: "SSC '27 গোল্ডেন ব্যাচ (সাধারণ ও উচ্চতর গণিত)",
       icon: "📐",
       gradient: "linear-gradient(135deg, #311042 0%, #111827 100%)",
-      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_mt' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23311042'/><stop offset='100%25' stop-color='%23111827'/></linearGradient><linearGradient id='acc_mt' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%23EC4899'/><stop offset='100%25' stop-color='%23F43F5E'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_mt)'/><circle cx='480' cy='100' r='140' fill='%23EC4899' opacity='0.12'/><text x='40' y='70' fill='%23F472B6' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU ACADEMY • ADMISSION 2026</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>উচ্চতর গণিত ও এডমিশন</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>BUET ও ভার্সিটি স্পেশাল ক্র্যাশ কোর্স</text><rect x='40' y='210' width='160' height='36' rx='18' fill='url(%23acc_mt)'/><text x='120' y='234' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>🏛️ BUET টপার ব্যাচ</text><text x='480' y='260' font-size='110' opacity='0.9'>📐</text></svg>"
+      dataUrl: "/images/courses/ssc-27-prep.jpg"
     },
     {
       id: "biology",
-      title: "জীববিজ্ঞান (Biology)",
+      title: "SSC '28 ফুল একাডেমি সাইকেল",
       icon: "🧬",
       gradient: "linear-gradient(135deg, #064E3B 0%, #042F2E 100%)",
-      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_bi' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23064E3B'/><stop offset='100%25' stop-color='%23042F2E'/></linearGradient><linearGradient id='acc_bi' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%2314B8A6'/><stop offset='100%25' stop-color='%232DD4BF'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_bi)'/><circle cx='490' cy='100' r='130' fill='%232DD4BF' opacity='0.1'/><text x='40' y='70' fill='%232DD4BF' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU ACADEMY • MEDICAL SPECIAL</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>জীববিজ্ঞান ১ম ও ২য় পত্র</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>মেডিকেল স্ট্যান্ডার্ড ডায়াগ্রাম ও ব্যাখ্যা</text><rect x='40' y='210' width='160' height='36' rx='18' fill='url(%23acc_bi)'/><text x='120' y='234' fill='%23042F2E' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>🩺 মেডিকেল প্রস্তুতি</text><text x='480' y='260' font-size='110' opacity='0.9'>🧬</text></svg>"
+      dataUrl: "/images/courses/ssc-28-prep.jpg"
     },
     {
       id: "ssc",
-      title: "SSC '27 ও '28 ব্যাচ",
+      title: "১০ম শ্রেণি ব্যবসায় শিক্ষা স্পেশাল",
       icon: "🎯",
       gradient: "linear-gradient(135deg, #431407 0%, #1C1917 100%)",
-      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_sc' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23431407'/><stop offset='100%25' stop-color='%231C1917'/></linearGradient><linearGradient id='acc_sc' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%230084FF'/><stop offset='100%25' stop-color='%2300C2FF'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_sc)'/><circle cx='490' cy='90' r='130' fill='%2300C2FF' opacity='0.15'/><text x='40' y='70' fill='%2300C2FF' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU ACADEMY • SSC 2027 &amp; 2028</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>SSC সাধারণ বিজ্ঞান ও গণিত</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>ব্যাচ '২৭ ও '২৮ সম্পূর্ণ একাডেমি কোর্স</text><rect x='40' y='210' width='160' height='36' rx='18' fill='url(%23acc_sc)'/><text x='120' y='234' fill='%23050B17' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>🎯 গোল্ডেন A+ মিশন</text><text x='480' y='260' font-size='110' opacity='0.9'>🎯</text></svg>"
+      dataUrl: "/images/courses/class10-business-studies.jpg"
     },
     {
       id: "hsc-ict",
-      title: "HSC ICT স্পেশাল ব্যাচ",
+      title: "লাইভ ক্লাস রুটিন ও এক্সাম প্রোগ্রাম",
       icon: "💻",
       gradient: "linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%)",
-      dataUrl: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340' width='600' height='340'><defs><linearGradient id='bg_sk' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231E3A8A'/><stop offset='100%25' stop-color='%230F172A'/></linearGradient><linearGradient id='acc_sk' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%2338BDF8'/><stop offset='100%25' stop-color='%23818CF8'/></linearGradient></defs><rect width='600' height='340' fill='url(%23bg_sk)'/><circle cx='490' cy='90' r='130' fill='%2338BDF8' opacity='0.12'/><text x='40' y='70' fill='%2338BDF8' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='20' letter-spacing='2'>DIPU ACADEMY • HSC ICT</text><text x='40' y='130' fill='%23FFFFFF' font-family='system-ui,sans-serif' font-weight='900' font-size='34'>HSC তথ্য ও যোগাযোগ প্রযুক্তি</text><text x='40' y='175' fill='%23E2E8F0' font-family='system-ui,sans-serif' font-weight='600' font-size='20'>HSC '26 ও '27 সম্পূর্ণ ICT মাস্টারক্লাস</text><rect x='40' y='210' width='160' height='36' rx='18' fill='url(%23acc_sk)'/><text x='120' y='234' fill='%230F172A' font-family='system-ui,sans-serif' font-weight='800' font-size='15' text-anchor='middle'>💻 ICT A+ প্রিপারেশন</text><text x='480' y='260' font-size='110' opacity='0.9'>💻</text></svg>"
+      dataUrl: "/images/courses/routine-banner.jpg"
     }
   ];
 
@@ -925,7 +925,7 @@ function initReviewsManagement() {
     {
       _id: "rev_1",
       name: "তানজির আহমেদ",
-      avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150",
+      avatar: "/images/hero-students.png",
       badge: "🏆 BUET CSE • HSC '25",
       rating: 5.0,
       quote: "দীপু স্যারের প্রতিটি লেকচার এত বিস্তারিত আর ক্রিস্টাল ক্লিয়ার যে কনসেপ্ট একদম মাথায় বসে যায়!"
@@ -933,7 +933,7 @@ function initReviewsManagement() {
     {
       _id: "rev_2",
       name: "মেহজাবিন চৌধুরী",
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150",
+      avatar: "/images/hero-students-new.jpg",
       badge: "মেডিকেল ভর্তি পরীক্ষার্থী • HSC '25",
       rating: 5.0,
       quote: "রসায়নের কঠিন বিক্রিয়াগুলো যেভাবে সহজে বুঝিয়ে দেন, পরীক্ষার হলে অনায়াসে উত্তর করা যায়।"
@@ -973,7 +973,7 @@ function initReviewsManagement() {
     tableBody.innerHTML = reviews.map(r => `
       <tr>
         <td>
-          <img src="${r.avatar || 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150'}" alt="${r.name}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--accent-orange);">
+          <img src="${r.avatar || '/images/hero-students.png'}" alt="${r.name}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--accent-orange);">
         </td>
         <td>
           <div style="font-weight: 700; color: #FFFFFF; font-size: 13.5px;">${r.name}</div>
@@ -1022,7 +1022,7 @@ function initReviewsManagement() {
       const newRev = {
         _id: "rev_" + Date.now(),
         name: nameInput.value.trim(),
-        avatar: avatarInput.value.trim() || "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150",
+        avatar: avatarInput.value.trim() || "/images/hero-students.png",
         badge: badgeInput.value.trim() || "🏆 শিক্ষার্থী",
         rating: parseFloat(ratingSelect.value) || 5.0,
         quote: quoteTextarea.value.trim(),
@@ -1604,7 +1604,7 @@ const DEFAULT_ADMIN_FEATURES = [
     ],
     btnText: "অ্যানিমেটেড ক্লাস দেখো →",
     btnHref: "/courses",
-    imageUrl: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=900&auto=format&fit=crop",
+    imageUrl: "/images/ai-teacher.jpg",
     accentColor: "#8B5CF6",
   },
   {
@@ -1621,7 +1621,7 @@ const DEFAULT_ADMIN_FEATURES = [
     ],
     btnText: "ফ্রি প্র্যাকটিস শুরু করো →",
     btnHref: "/exam",
-    imageUrl: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?q=80&w=900&auto=format&fit=crop",
+    imageUrl: "/images/dashboard-hero.jpg",
     accentColor: "#10B981",
   },
   {
@@ -1638,7 +1638,7 @@ const DEFAULT_ADMIN_FEATURES = [
     ],
     btnText: "লাইভ টেস্টে যোগ দাও →",
     btnHref: "/exam",
-    imageUrl: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=900&auto=format&fit=crop",
+    imageUrl: "/images/hero-students-new.jpg",
     accentColor: "#F59E0B",
   },
   {
@@ -1655,7 +1655,7 @@ const DEFAULT_ADMIN_FEATURES = [
     ],
     btnText: "নোট লাইব্রেরি দেখো →",
     btnHref: "/notes",
-    imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=900&auto=format&fit=crop",
+    imageUrl: "/images/sidebar-books.jpg",
     accentColor: "#06B6D4",
   },
   {
@@ -1672,7 +1672,7 @@ const DEFAULT_ADMIN_FEATURES = [
     ],
     btnText: "স্মার্ট নোট ব্যবহার করো →",
     btnHref: "/notes",
-    imageUrl: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=900&auto=format&fit=crop",
+    imageUrl: "/images/shop-banner-1.jpg",
     accentColor: "#EC4899",
   },
   {
@@ -1689,7 +1689,7 @@ const DEFAULT_ADMIN_FEATURES = [
     ],
     btnText: "রিপোর্ট কার্ড দেখো →",
     btnHref: "/report",
-    imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=900&auto=format&fit=crop",
+    imageUrl: "/images/hero-students-banner.jpg",
     accentColor: "#3B82F6",
   },
 ];

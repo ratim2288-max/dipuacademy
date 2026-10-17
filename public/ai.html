@@ -454,7 +454,7 @@ footer a:hover{color:var(--mint)}
             <span>এই অ্যাকাউন্টে সাবস্ক্রিপশন সক্রিয় হবে:</span>
           </div>
           <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-            <img id="aiCheckoutAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150" alt="Student" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--mint); box-shadow: 0 0 12px rgba(166,247,106,0.3);">
+            <img id="aiCheckoutAvatar" src="/images/dipu-logo.png" alt="Student" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--mint); box-shadow: 0 0 12px rgba(166,247,106,0.3);">
             <div>
               <div id="aiCheckoutName" style="font-size: 16px; font-weight: 800; color: #FFFFFF;">শিক্ষার্থী</div>
               <div id="aiCheckoutPhone" style="font-size: 13px; color: #CBD5E1; font-weight: 600;">01XXXXXXXXX</div>
@@ -858,7 +858,7 @@ else {
       try { profile = JSON.parse(localStorage.getItem('dipu_user_profile') || 'null'); } catch(e){}
       var name = (profile && profile.fullName) || localStorage.getItem('da_user_name') || 'শিক্ষার্থী';
       var phone = (profile && profile.phone) || localStorage.getItem('dipu_user_phone') || '';
-      var avatar = (profile && profile.avatar) || localStorage.getItem('dipu_user_avatar') || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150';
+      var avatar = (profile && profile.avatar) || localStorage.getItem('dipu_user_avatar') || '/images/dipu-logo.png';
       var classLvl = (profile && profile.classLevel) || '';
 
       if ($('aiCheckoutAvatar')) $('aiCheckoutAvatar').src = avatar;

@@ -10,7 +10,7 @@ const FEATURES_DATA_BN = {
     badge: "HD 1080P INTERACTIVE",
     title: "স্মার্ট হোয়াইটবোর্ডে দেশের সেরা টিচারদের লাইভ ক্লাস",
     desc: "বুয়েট ও মেডিকেল ফ্যাকাল্টির শিক্ষকদের সাথে সরাসরি টু-ওয়ে ইন্টারঅ্যাকশন। যেকোনো জটিল সূত্র, থিওরি কিংবা সমীকরণ সাথে সাথে প্রশ্ন করে সমাধান নেওয়ার সুযোগ।",
-    img: "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=900&auto=format&fit=crop",
+    img: "/images/student-hero.jpg",
     list: [
       "প্রতি ক্লাসের সাথে ইনস্ট্যান্ট লাইভ পোল ও কুইজ",
       "মিস হওয়া ক্লাসের অটোমেটিক ফুল এইচডি রেকর্ডিং ব্যাকআপ",
@@ -21,7 +21,7 @@ const FEATURES_DATA_BN = {
     badge: "3D VISUAL LEARNING",
     title: "কনসেপ্ট ক্লিয়ারিং আকর্ষণীয় অ্যানিমেটেড ভিডিও",
     desc: "জীববিজ্ঞান, পদার্থবিজ্ঞান ও রসায়নের জটিল বিষয়গুলো মুখস্থ নয়, থ্রিডি অ্যানিমেশনের মাধ্যমে চোখের সামনে জীবন্ত দেখার অনন্য অভিজ্ঞতা।",
-    img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=900&auto=format&fit=crop",
+    img: "/images/ai-teacher.jpg",
     list: [
       "৫-১০ মিনিটের সহজ ও আকর্ষণীয় মাইক্রো-লেকচার",
       "বাস্তব জীবনের উদাহরণের সাহায্যে থিওরিটিক্যাল সিমুলেশন",
@@ -32,7 +32,7 @@ const FEATURES_DATA_BN = {
     badge: "50,000+ QUESTION BANK",
     title: "চ্যাপ্টারভিত্তিক সেলফ প্র্যাকটিস MCQ টেস্ট",
     desc: "প্রতিটি অধ্যায় শেষ করে সাথে সাথে নিজেকে যাচাই করার জন্য রয়েছে ৫০ হাজারেরও বেশি প্রশ্নব্যাংক। প্রতিটি প্রশ্নের সাথে বিস্তারিত ব্যাখ্যা ও ট্রিকস।",
-    img: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=900&auto=format&fit=crop",
+    img: "/images/dashboard-hero.jpg",
     list: [
       "বোর্ড ও শীর্ষ কলেজের বিগত ১০ বছরের প্রশ্ন ব্যাংক",
       "ভুল হওয়া প্রশ্নের আলাদা বুকমার্ক ও রিভিশন তালিকা",
@@ -43,7 +43,7 @@ const FEATURES_DATA_BN = {
     badge: "REAL-TIME LEADERBOARD",
     title: "দেশব্যাপী শিক্ষার্থীদের সাথে লাইভ MCQ টেস্ট",
     desc: "পরীক্ষার হলের আসল আবহ পেতে টাইমারভিত্তিক লাইভ মডেল টেস্ট। পরীক্ষা শেষ হওয়ার সাথে সাথে নিজের দেশব্যাপী মেরিট লিস্ট র‍্যাঙ্ক দেখে নাও।",
-    img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=900&auto=format&fit=crop",
+    img: "/images/hero-students-new.jpg",
     list: [
       "কাউন্টডাউন টাইমার ও নেগেティブ মার্কিং সহ এক্সাম ইঞ্জিন",
       "লাইভ লিডারবোর্ড ও একুরেসি স্পিড অ্যানালাইসিস",
@@ -54,7 +54,7 @@ const FEATURES_DATA_BN = {
     badge: "TEACHER CERTIFIED",
     title: "লেকচারভিত্তিক গোছানো হ্যান্ডনোটস ও শিট",
     desc: "ক্লাসে যা পড়ানো হয় তার প্রতিটি অক্ষরের সুন্দর ডিজিটাল নোট। পরীক্ষায় কীভাবে উপস্থাপন করলে পূর্ণ নম্বর পাওয়া যাবে তার সঠিক দিকনির্দেশনা।",
-    img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=900&auto=format&fit=crop",
+    img: "/images/sidebar-books.jpg",
     list: [
       "ক্লিন হ্যান্ডরাইটিং স্টাইল ও রঙিন হাইলাইটার ব্যবহার",
       "গুরুত্বপূর্ণ বোর্ড প্রশ্নের টাইপভিত্তিক দাগানো তালিকা",
@@ -65,7 +65,7 @@ const FEATURES_DATA_BN = {
     badge: "R2 SMART READER",
     title: "ক্লাউডফ্লেয়ার R2 সাপোর্টেড ইন্টারেক্টিভ স্মার্ট নোটস",
     desc: "অনলাইনে সরাসরি ব্রাউজারে রিড-মোডে নোটস পড়ার সুবিধা। ডার্ক মোড, ফন্ট সাইজ অ্যাডজাস্ট ও চ্যাপ্টারভিত্তিক বুকমার্কিং সুবিধা সম্বলিত।",
-    img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=900&auto=format&fit=crop",
+    img: "/images/shop-banner-1.jpg",
     list: [
       "যেকোনো চ্যাপ্টারে ১-ক্লিকে জাম্প করার সুযোগ",
       "হাইপারলিঙ্কড থিওরি ও সমীকরণ রেফারেন্স",
@@ -76,7 +76,7 @@ const FEATURES_DATA_BN = {
     badge: "AI PERFORMANCE METRICS",
     title: "স্মার্ট অ্যানালিটিক্স ও প্রগ্রেস রিপোর্ট কার্ড",
     desc: "তুমি কোন বিষয়ে শক্তিশালী আর কোথায় দুর্বলতা রয়েছে তা গ্রাফিক্যাল চার্ট ও ডেটার মাধ্যমে ফুটিয়ে তোলার এআই ড্যাশবোর্ড।",
-    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=900&auto=format&fit=crop",
+    img: "/images/hero-students-banner.jpg",
     list: [
       "দৈনিক স্টাডি আওয়ার ও টেস্ট স্কোর ট্র্যাকার",
       "দুর্বল টপিকের ওপর এআই সাজেস্টেড রিভিশন রুটিন",
@@ -90,7 +90,7 @@ const FEATURES_DATA_EN = {
     badge: "HD 1080P INTERACTIVE",
     title: "Live Interactive Classes on Smart Digital Whiteboard",
     desc: "Direct two-way interaction with top mentors from BUET & Medical faculties. Clear any complex formula, theory, or equation on the spot.",
-    img: "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=900&auto=format&fit=crop",
+    img: "/images/student-hero.jpg",
     list: [
       "Instant live polls and interactive quizzes during every class",
       "Automatic Full HD lecture recordings backup for revision",
@@ -101,7 +101,7 @@ const FEATURES_DATA_EN = {
     badge: "3D VISUAL LEARNING",
     title: "Concept-Building Engaging 3D Animated Videos",
     desc: "No rote memorization. Master intricate concepts in Biology, Physics, and Chemistry through stunning 3D simulations that bring science to life.",
-    img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=900&auto=format&fit=crop",
+    img: "/images/ai-teacher.jpg",
     list: [
       "Bite-sized 5-10 minute focused micro-lectures",
       "Real-world physical simulations and animated experiments",
@@ -112,7 +112,7 @@ const FEATURES_DATA_EN = {
     badge: "50,000+ QUESTION BANK",
     title: "Chapter-Wise Self Practice MCQ Engine",
     desc: "Test your understanding immediately after each chapter with a curated bank of 50,000+ questions, accompanied by step-by-step solutions.",
-    img: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=900&auto=format&fit=crop",
+    img: "/images/dashboard-hero.jpg",
     list: [
       "Last 10 years of Board and top college entrance questions",
       "Personalized bookmarking and error log revision list",
@@ -123,7 +123,7 @@ const FEATURES_DATA_EN = {
     badge: "REAL-TIME LEADERBOARD",
     title: "Nationwide Live Timed MCQ Contests",
     desc: "Experience genuine exam hall conditions with timer-based model tests. Instantly see your position on the nationwide real-time merit board.",
-    img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=900&auto=format&fit=crop",
+    img: "/images/hero-students-new.jpg",
     list: [
       "Precision countdown timer with negative marking engine",
       "Live nationwide rank leaderboard with percentile analysis",
@@ -134,7 +134,7 @@ const FEATURES_DATA_EN = {
     badge: "TEACHER CERTIFIED",
     title: "Structured Chapter Lecture Notes & Cheatsheets",
     desc: "High-yield digital handnotes covering every key topic taught in class, with strategic advice on how to secure full marks in board exams.",
-    img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=900&auto=format&fit=crop",
+    img: "/images/sidebar-books.jpg",
     list: [
       "Clean handwriting typography with color-coded highlights",
       "Important question classifications by past exam trends",
@@ -145,7 +145,7 @@ const FEATURES_DATA_EN = {
     badge: "R2 SMART READER",
     title: "Cloudflare R2 Supported Interactive Smart Reader",
     desc: "Read interactive handnotes directly in your browser with built-in dark mode, adjustable typography, and chapter quick-jumping.",
-    img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=900&auto=format&fit=crop",
+    img: "/images/shop-banner-1.jpg",
     list: [
       "1-click fast chapter navigation",
       "Hyperlinked theoretical definitions and formula derivations",
@@ -156,7 +156,7 @@ const FEATURES_DATA_EN = {
     badge: "AI PERFORMANCE METRICS",
     title: "Smart Analytics & Weekly Progress Report Card",
     desc: "An intelligent AI dashboard visualizing your subject strengths, weak spots, and revision milestones with graphical charts.",
-    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=900&auto=format&fit=crop",
+    img: "/images/hero-students-banner.jpg",
     list: [
       "Daily study hours and exam score trends",
       "AI-suggested personalized revision routine",
@@ -284,25 +284,25 @@ const TESTIMONIALS_DATA = [
     quote: `"দীপু স্যারের ভেক্টর আর ক্যালকুলাস ক্লাসগুলো পানির মতো সহজ লেগেছে। লাইভ ক্লাসের হ্যান্ডনোটস আর চ্যাপ্টার টেস্ট আমাকে বুয়েট ভর্তি পরীক্ষায় মেধা তালিকায় শীর্ষস্থান এনে দিয়েছে!"`,
     name: "তানভির হোসেন",
     badge: "🏆 BUET CSE (Rank 14) • HSC '25 (ঢাকা কলেজ)",
-    avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150&auto=format&fit=crop"
+    avatar: "/images/hero-students.png"
   },
   {
     quote: `"বায়োলজি ও রসায়নের রঙিন স্মার্ট নোটস আর ২৪/৭ এআই ডাউট সলভার ছিল আমার জন্য গেম চেঞ্জার! যেকোনো কঠিন প্রশ্নের সমাধান মুহূর্তেই ডায়াগ্রাম সহ পেয়েছি।"`,
     name: "নুসরাত জাহান",
     badge: "🩺 ঢাকা মেডিকেল কলেজ • HSC '25 (ভিকারুননিসা নূন স্কুল ও কলেজ)",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop"
+    avatar: "/images/student-hero.jpg"
   },
   {
     quote: `"এসএসসির টেস্ট পেপার সলভিং এবং লাইভ মডেল টেস্টগুলো অসাধারণ ছিল। চ্যাপ্টারভিত্তিক শর্টকাট ট্রিকস এসএসসি-তে আমাকে বিজ্ঞান বিভাগে গোল্ডেন এ+ এনে দিয়েছে।"`,
     name: "সাদমান সাকিব",
     badge: "⭐ SSC Golden A+ • আইডিয়াল স্কুল অ্যান্ড কলেজ",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop"
+    avatar: "/images/hero-students-new.jpg"
   },
   {
     quote: `"বোর্ড পরীক্ষার টাইমারভিত্তিক মক টেস্ট এবং লাইভ লিডারবোর্ড অন্য যেকোনো প্ল্যাটফর্ম থেকে সেরা। হাইলাইটেড ক্লাসরুম স্লাইড পরীক্ষার আগের রাতের বেস্ট সলিউশন।"`,
     name: "মাহিনুর রহমান",
     badge: "🚀 নটর ডেম কলেজ • HSC '26 টপ স্কোরার",
-    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=150&auto=format&fit=crop"
+    avatar: "/images/dipu-logo.png"
   }
 ];
 

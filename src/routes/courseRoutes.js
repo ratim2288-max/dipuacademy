@@ -1045,11 +1045,11 @@ router.post('/', async (req, res) => {
       instructor: {
         name: instructorName || 'দীপু স্যার (BUET)',
         institution: instructorInst || 'বুয়েট ইঞ্জিনিয়ারিং',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200'
+        avatar: '/images/dipu-logo.png'
       },
       price: Number(price),
       discountPrice: discountPrice ? Number(discountPrice) : Math.round(Number(price) * 0.7),
-      thumbnail: thumbnail && thumbnail.trim() ? thumbnail.trim() : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" width="600" height="340"><rect width="600" height="340" fill="%231E1B4B"/><text x="40" y="170" fill="%23FFFFFF" font-family="sans-serif" font-weight="900" font-size="34">নতুন কোর্স</text></svg>',
+      thumbnail: thumbnail && thumbnail.trim() ? thumbnail.trim() : '/images/courses/routine-banner.jpg',
       routineImage: routineImage && routineImage.trim() ? routineImage.trim() : '',
       enrolledStudentsCount: 1,
       rating: 5.0,

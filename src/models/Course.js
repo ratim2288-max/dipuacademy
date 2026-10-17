@@ -78,7 +78,7 @@ const courseSchema = new mongoose.Schema({
   },
   thumbnail: {
     type: String,
-    default: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600&auto=format&fit=crop',
+    default: '/images/courses/routine-banner.jpg',
   },
   routineImage: {
     type: String,

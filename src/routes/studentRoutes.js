@@ -761,7 +761,7 @@ router.post('/track', async (req, res) => {
       target: target || track.targetDefault,
       institution: institution || 'শিক্ষা প্রতিষ্ঠান',
       district: district || 'ঢাকা',
-      avatar: avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150',
+      avatar: avatar || '/images/dipu-logo.png',
       trackKey: track.trackKey,
       updatedAt: new Date()
     };

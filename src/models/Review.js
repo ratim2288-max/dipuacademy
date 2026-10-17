@@ -8,7 +8,7 @@ const reviewSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=300&auto=format&fit=crop',
+    default: '/images/hero-students.png',
   },
   badge: {
     type: String,

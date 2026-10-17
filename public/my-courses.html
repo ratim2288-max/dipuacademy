@@ -1021,7 +1021,7 @@
 
         <!-- User Profile Pill -->
         <a href="/dashboard.html" class="user-pill" id="userPill">
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150" id="userAvatarImg" class="user-avatar" alt="User">
+          <img src="/images/dipu-logo.png" id="userAvatarImg" class="user-avatar" alt="User">
           <span class="user-name" id="userNameLabel">শিক্ষার্থী</span>
           <i class="fas fa-chevron-down" style="font-size: 0.65rem; color: var(--text-muted);"></i>
         </a>
@@ -1775,7 +1775,7 @@
         const stored = JSON.parse(localStorage.getItem('dipu_user_profile') || '{}');
         const phone = localStorage.getItem('dipu_user_phone') || localStorage.getItem('da_user_phone') || '';
         const name = stored.fullName || localStorage.getItem('da_user_name') || 'শিক্ষার্থী';
-        const avatar = stored.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150';
+        const avatar = stored.avatar || '/images/dipu-logo.png';
 
         const nameEl = document.getElementById('userNameLabel');
         if (nameEl) nameEl.textContent = name;
@@ -2142,7 +2142,7 @@
   <aside class="da-mobile-drawer" id="myCoursesMobileDrawer" aria-label="Mobile Navigation">
     <div class="da-drawer-header">
       <div class="da-drawer-user">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150" id="drawerAvatarImg" alt="Profile" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid #0084FF;">
+        <img src="/images/dipu-logo.png" id="drawerAvatarImg" alt="Profile" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid #0084FF;">
         <div>
           <div id="drawerUserName" style="font-weight: 700; font-size: 1rem; color: var(--text-main);">শিক্ষার্থী</div>
           <div id="drawerUserPhone" style="font-size: 0.8rem; color: var(--text-muted);">+৮৮০...</div>
