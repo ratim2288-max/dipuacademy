@@ -10,7 +10,6 @@ const authRoutes = require('./routes/authRoutes');
 const courseRoutes = require('./routes/courseRoutes');
 const aiRoutes = require('./routes/aiRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
-const examRoutes = require('./routes/examRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const notesRoutes = require('./routes/notesRoutes');
 const gamificationRoutes = require('./routes/gamificationRoutes');
@@ -183,7 +182,6 @@ app.use('/api/courses', courseRoutes);
 app.use('/api/stream', courseRoutes); // Tier 4: Direct alias for /api/stream/token/:lessonId
 app.use('/api/ai', aiRoutes);
 app.use('/api/payment', paymentRoutes);
-app.use('/api/exams', examRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/admin/courses', courseRoutes);
 app.use('/api/notes', notesRoutes);
