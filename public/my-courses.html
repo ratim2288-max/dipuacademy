@@ -25,7 +25,7 @@
                        (localStorage.getItem('dipu_auth_token') && localStorage.getItem('dipu_auth_token') !== 'null') ||
                        (localStorage.getItem('dipu_user_phone') && localStorage.getItem('dipu_user_phone') !== 'null');
         if (!loggedIn) {
-          window.location.replace('/login.html?redirect=' + encodeURIComponent(window.location.pathname));
+          window.location.replace('/login?redirect=' + encodeURIComponent(window.location.pathname));
         }
       } catch(e) {}
     })();
@@ -989,8 +989,8 @@
         </a>
 
         <ul class="header-nav">
-          <li><a href="/dashboard.html" class="nav-link"><i class="fas fa-chart-pie"></i> <span>ড্যাশবোর্ড</span></a></li>
-          <li><a href="/dashboard.html#report" class="nav-link"><i class="fas fa-chart-line"></i> <span>লার্নিং রিপোর্ট</span></a></li>
+          <li><a href="/dashboard" class="nav-link"><i class="fas fa-chart-pie"></i> <span>ড্যাশবোর্ড</span></a></li>
+          <li><a href="/dashboard#report" class="nav-link"><i class="fas fa-chart-line"></i> <span>লার্নিং রিপোর্ট</span></a></li>
           <li><a href="/#courses" class="nav-link"><i class="fas fa-compass"></i> <span>এক্সপ্লোর</span> <i class="fas fa-chevron-down" style="font-size: 0.65rem;"></i></a></li>
         </ul>
       </div>
@@ -1020,7 +1020,7 @@
         </button>
 
         <!-- User Profile Pill -->
-        <a href="/dashboard.html" class="user-pill" id="userPill">
+        <a href="/dashboard" class="user-pill" id="userPill">
           <img src="/images/dipu-logo.png" id="userAvatarImg" class="user-avatar" alt="User">
           <span class="user-name" id="userNameLabel">শিক্ষার্থী</span>
           <i class="fas fa-chevron-down" style="font-size: 0.65rem; color: var(--text-muted);"></i>
@@ -1250,8 +1250,8 @@
         totalLessons: 38,
         badge: "স্কিলস",
         badgeColor: "#10B981",
-        playerUrl: "/player.html?course=graphic-design-photoshop",
-        homeUrl: "/course-home.html?course=graphic-design-photoshop"
+        playerUrl: "/player?course=graphic-design-photoshop",
+        homeUrl: "/course-home?course=graphic-design-photoshop"
       },
       {
         id: "ssc-science-full-course",
@@ -1269,8 +1269,8 @@
         totalLessons: 48,
         badge: "একাডেমিক (SSC)",
         badgeColor: "#00C2FF",
-        playerUrl: "/player.html?course=ssc-science-full-course",
-        homeUrl: "/course-home.html?course=ssc-science-full-course"
+        playerUrl: "/player?course=ssc-science-full-course",
+        homeUrl: "/course-home?course=ssc-science-full-course"
       },
       {
         id: "hsc-physics-1st-paper",
@@ -1288,8 +1288,8 @@
         totalLessons: 28,
         badge: "একাডেমিক",
         badgeColor: "#10B981",
-        playerUrl: "/player.html?course=hsc-physics-1st-paper",
-        homeUrl: "/course-home.html?course=hsc-physics-1st-paper"
+        playerUrl: "/player?course=hsc-physics-1st-paper",
+        homeUrl: "/course-home?course=hsc-physics-1st-paper"
       },
 
       // SSC 2026
@@ -1306,8 +1306,8 @@
         totalLessons: 26,
         badge: "এনরোল করা কোর্স",
         badgeColor: "#10B981",
-        playerUrl: "/player.html?course=c-ssc-chem",
-        homeUrl: "/course.html?id=c-ssc-chem"
+        playerUrl: "/player?course=c-ssc-chem",
+        homeUrl: "/course?id=c-ssc-chem"
       },
       {
         id: "c-ssc-biz",
@@ -1322,8 +1322,8 @@
         totalLessons: 40,
         badge: "এনরোল করা কোর্স",
         badgeColor: "#00C2FF",
-        playerUrl: "/player.html?course=course-user-c10-biz",
-        homeUrl: "/course.html?id=course-user-c10-biz"
+        playerUrl: "/player?course=course-user-c10-biz",
+        homeUrl: "/course?id=course-user-c10-biz"
       },
       {
         id: "c-ssc-math",
@@ -1338,8 +1338,8 @@
         totalLessons: 36,
         badge: "বেস্টসেলার কোর্স ⭐",
         badgeColor: "#F59E0B",
-        playerUrl: "/player.html?course=ssc-math-master",
-        homeUrl: "/course.html?id=ssc-math-master"
+        playerUrl: "/player?course=ssc-math-master",
+        homeUrl: "/course?id=ssc-math-master"
       },
       {
         id: "b-ssc-bangla",
@@ -1418,8 +1418,8 @@
         duration: "৪৫ মিনিট",
         badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
         badgeColor: "#10B981",
-        playerUrl: "/player.html?lessonId=gzhi2X6tpmg",
-        homeUrl: "/dashboard.html#video-classes"
+        playerUrl: "/player?lessonId=gzhi2X6tpmg",
+        homeUrl: "/dashboard#video-classes"
       },
       {
         id: "free-ssc-notes",
@@ -1433,7 +1433,7 @@
         fileSize: "6.4 MB",
         badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
         badgeColor: "#00C2FF",
-        playerUrl: "/dashboard.html#notes",
+        playerUrl: "/dashboard#notes",
         homeUrl: "/shop"
       },
 
@@ -1451,8 +1451,8 @@
         totalLessons: 28,
         badge: "এনরোল করা কোর্স",
         badgeColor: "#EF4444",
-        playerUrl: "/player.html?course=c1",
-        homeUrl: "/course.html?id=c1"
+        playerUrl: "/player?course=c1",
+        homeUrl: "/course?id=c1"
       },
       {
         id: "c-hsc27-math",
@@ -1467,8 +1467,8 @@
         totalLessons: 30,
         badge: "এনরোল করা কোর্স",
         badgeColor: "#8B5CF6",
-        playerUrl: "/player.html?course=c2",
-        homeUrl: "/course.html?id=c2"
+        playerUrl: "/player?course=c2",
+        homeUrl: "/course?id=c2"
       },
       {
         id: "b-hsc-bio",
@@ -1531,8 +1531,8 @@
         duration: "৩৮ মিনিট",
         badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
         badgeColor: "#10B981",
-        playerUrl: "/player.html?lessonId=free-vector",
-        homeUrl: "/dashboard.html#video-classes"
+        playerUrl: "/player?lessonId=free-vector",
+        homeUrl: "/dashboard#video-classes"
       },
       {
         id: "free-hsc-note",
@@ -1546,7 +1546,7 @@
         fileSize: "4.2 MB",
         badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
         badgeColor: "#00C2FF",
-        playerUrl: "/dashboard.html#notes",
+        playerUrl: "/dashboard#notes",
         homeUrl: "/shop"
       },
 
@@ -1564,8 +1564,8 @@
         totalLessons: 40,
         badge: "এনরোল করা কোর্স",
         badgeColor: "#8B5CF6",
-        playerUrl: "/player.html?course=course-user-hsc28",
-        homeUrl: "/course.html?id=course-user-hsc28"
+        playerUrl: "/player?course=course-user-hsc28",
+        homeUrl: "/course?id=course-user-hsc28"
       },
       {
         id: "b-hsc28-math",
@@ -1595,8 +1595,8 @@
         duration: "৫০ মিনিট",
         badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
         badgeColor: "#10B981",
-        playerUrl: "/player.html",
-        homeUrl: "/dashboard.html#video-classes"
+        playerUrl: "/player",
+        homeUrl: "/dashboard#video-classes"
       },
 
       // CLASS 9
@@ -1613,8 +1613,8 @@
         totalLessons: 32,
         badge: "নতুন শিক্ষাক্রম ২০২৩+",
         badgeColor: "#F59E0B",
-        playerUrl: "/player.html",
-        homeUrl: "/course.html?id=class9-full"
+        playerUrl: "/player",
+        homeUrl: "/course?id=class9-full"
       },
       {
         id: "b-c9-math",
@@ -1644,8 +1644,8 @@
         duration: "৪০ মিনিট",
         badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
         badgeColor: "#10B981",
-        playerUrl: "/player.html",
-        homeUrl: "/dashboard.html#video-classes"
+        playerUrl: "/player",
+        homeUrl: "/dashboard#video-classes"
       },
 
       // ADMISSION
@@ -1662,8 +1662,8 @@
         totalLessons: 55,
         badge: "ইঞ্জিনিয়ারিং স্পেশাল",
         badgeColor: "#EF4444",
-        playerUrl: "/player.html",
-        homeUrl: "/course.html?id=adm-buet"
+        playerUrl: "/player",
+        homeUrl: "/course?id=adm-buet"
       },
       {
         id: "b-adm-qb",
@@ -1693,8 +1693,8 @@
         duration: "৫৫ মিনিট",
         badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
         badgeColor: "#10B981",
-        playerUrl: "/player.html",
-        homeUrl: "/dashboard.html#video-classes"
+        playerUrl: "/player",
+        homeUrl: "/dashboard#video-classes"
       },
 
       // SKILL
@@ -1711,8 +1711,8 @@
         totalLessons: 38,
         badge: "স্কিল কোর্স",
         badgeColor: "#14B8A6",
-        playerUrl: "/player.html?course=course-skill-graphic-design",
-        homeUrl: "/course.html?id=course-skill-graphic-design"
+        playerUrl: "/player?course=course-skill-graphic-design",
+        homeUrl: "/course?id=course-skill-graphic-design"
       },
       {
         id: "eb-skill-shortcuts",
@@ -1729,7 +1729,7 @@
         badge: "📱 ডিজিটাল ই-বুক PDF",
         badgeColor: "#14B8A6",
         playerUrl: "/shop",
-        homeUrl: "/dashboard.html#notes"
+        homeUrl: "/dashboard#notes"
       },
       {
         id: "free-skill-vid",
@@ -1743,8 +1743,8 @@
         duration: "৪০ মিনিট",
         badge: "১০০% সম্পূর্ণ ফ্রি 🎁",
         badgeColor: "#10B981",
-        playerUrl: "/player.html",
-        homeUrl: "/dashboard.html#video-classes"
+        playerUrl: "/player",
+        homeUrl: "/dashboard#video-classes"
       }
     ];
 
@@ -1917,8 +1917,8 @@
                   totalLessons: 30,
                   badge: "এনরোল করা",
                   badgeColor: "#10B981",
-                  playerUrl: `/player.html?course=${encodeURIComponent(slug)}`,
-                  homeUrl: `/course-home.html?course=${encodeURIComponent(slug)}`
+                  playerUrl: `/player?course=${encodeURIComponent(slug)}`,
+                  homeUrl: `/course-home?course=${encodeURIComponent(slug)}`
                 });
               }
             });
@@ -1969,17 +1969,28 @@
         const isFree = item.type === 'free' || item.isFree;
 
         const courseSlug = item.slug || item.id;
-        const playerLink = item.playerUrl || `/player.html?course=${encodeURIComponent(courseSlug)}`;
-        const courseHomeLink = item.homeUrl || `/course-home.html?course=${encodeURIComponent(courseSlug)}`;
+        const isEnrolled = isCourse ? userEnrolledSlugs.includes(courseSlug) : true;
+        const buyPageLink = `/course?slug=${encodeURIComponent(courseSlug)}`;
+        const playerLink = item.playerUrl || `/player?course=${encodeURIComponent(courseSlug)}`;
+        const courseHomeLink = item.homeUrl || `/course-home?course=${encodeURIComponent(courseSlug)}`;
+
+        const cardTargetLink = isCourse ? (isEnrolled ? courseHomeLink : buyPageLink) : (item.type === 'book' ? `/book-shop` : playerLink);
 
         const isStarted = (item.progress || 0) > 0;
-        const mainBtnText = isCourse 
-          ? (isStarted ? 'চালিয়ে যান' : 'শুরু করুন')
-          : isFree 
-          ? 'এখনই ফ্রি দেখুন' 
-          : isBook 
-          ? 'অর্ডার করুন' 
-          : 'ডাউনলোড করুন';
+        let mainBtnText;
+        if (isCourse) {
+          if (!isEnrolled) {
+            mainBtnText = 'কোর্সটি কিনুন';
+          } else {
+            mainBtnText = isStarted ? 'চালিয়ে যান' : 'শুরু করুন';
+          }
+        } else if (isFree) {
+          mainBtnText = 'এখনই ফ্রি দেখুন';
+        } else if (isBook) {
+          mainBtnText = 'অর্ডার করুন';
+        } else {
+          mainBtnText = 'ডাউনলোড করুন';
+        }
 
         const categoryPillLabel = item.categoryLabel || (item.categoryKey === 'skill' || item.classKey === 'skill' ? 'স্কিলস' : 'একাডেমিক');
 
@@ -1987,27 +1998,27 @@
           <div class="course-card-horizontal">
             <!-- Top Section: Thumbnail + Details + Progress / Price -->
             <div class="card-top-row">
-              <div class="course-thumb-box" onclick="goToVideo('${courseHomeLink}')" style="cursor: pointer; position: relative;" title="${item.title}">
+              <div class="course-thumb-box" onclick="goToVideo('${cardTargetLink}')" style="cursor: pointer; position: relative;" title="${item.title}">
                 <img src="${item.thumbnail}" alt="${item.title}" onerror="this.src='/images/courses/hsc-28-prep.jpg'">
               </div>
 
               <div class="course-details">
-                <h3 class="course-card-title" onclick="goToVideo('${courseHomeLink}')" style="cursor: pointer;">${item.title}</h3>
+                <h3 class="course-card-title" onclick="goToVideo('${cardTargetLink}')" style="cursor: pointer;">${item.title}</h3>
                 
                 <!-- Course Progress Bar with Milestone Knob & Label (Exact Match to Image 2) -->
                 ${isCourse ? `
                   <div class="progress-bar-container">
                     <div class="progress-track">
-                      <div class="progress-fill" style="width: ${item.progress || 0}%;">
+                      <div class="progress-fill" style="width: ${isEnrolled ? (item.progress || 0) : 0}%;">
                         <span class="progress-knob"></span>
                       </div>
                     </div>
                     
-                    <span class="progress-milestone-icon" title="সার্টিফিকেট মাইলস্টোন">
-                      <i class="far fa-circle-check"></i>
+                    <span class="progress-milestone-icon" title="${isEnrolled ? 'সার্টিফিকেট মাইলস্টোন' : 'কোর্স এনরোল প্রয়োজন'}">
+                      <i class="${isEnrolled ? 'far fa-circle-check' : 'fas fa-lock'}" style="${isEnrolled ? '' : 'color: #F59E0B;'}"></i>
                     </span>
 
-                    <span class="progress-pct-label">${item.progress || 0}% সম্পন্ন</span>
+                    <span class="progress-pct-label">${isEnrolled ? `${item.progress || 0}% সম্পন্ন` : 'এখনো কেনা হয়নি'}</span>
                   </div>
 
                   <!-- Category Pill under Progress Bar (Exact Match to Image 2: "স্কিলস") -->
@@ -2049,21 +2060,26 @@
                   <div class="stack-circle circle-blue"><i class="fas fa-book-open" style="font-size: 8px;"></i></div>
                   <div class="stack-circle circle-amber"><i class="fas fa-graduation-cap" style="font-size: 8px;"></i></div>
                 </div>
-                <span class="ready-text">শেখার জন্য প্রস্তুত?</span>
+                <span class="ready-text">${isEnrolled ? 'শেখার জন্য প্রস্তুত?' : 'কোর্সে যুক্ত হতে প্রস্তুত?'}</span>
               </div>
 
-              <!-- Action Buttons: শুরু করুন (Takes to Course Home) & ভিডিও ক্লাস (Player) -->
+              <!-- Action Buttons -->
               <div class="action-btn-group">
-                <a href="${isCourse ? courseHomeLink : playerLink}" class="btn-play-video" title="${mainBtnText}">
+                <a href="${cardTargetLink}" class="btn-play-video" title="${mainBtnText}">
                   <span>${mainBtnText}</span>
                 </a>
                 
-                ${isCourse ? `
+                ${isCourse ? (isEnrolled ? `
                   <a href="${playerLink}" class="btn-course-home" title="ভিডিও ক্লাস প্লেয়ার">
                     <i class="fas fa-circle-play" style="font-size: 13px;"></i>
                     <span>ভিডিও ক্লাস</span>
                   </a>
-                ` : item.homeUrl ? `
+                ` : `
+                  <a href="${buyPageLink}" class="btn-course-home" title="কোর্স বিস্তারিত ও ক্রয় পেজ">
+                    <i class="fas fa-cart-shopping" style="font-size: 13px;"></i>
+                    <span>কোর্স বিস্তারিত</span>
+                  </a>
+                `) : item.homeUrl ? `
                   <a href="${item.homeUrl}" class="btn-course-home">
                     <span>${isBook ? 'বুকশপ' : 'প্রিভিউ'}</span>
                   </a>
@@ -2122,7 +2138,7 @@
         localStorage.removeItem('da_user_name');
         localStorage.removeItem('da_user_phone');
         localStorage.removeItem('dipu_user_profile');
-        window.location.href = '/login.html';
+        window.location.href = '/login';
       }
     }
 
@@ -2158,27 +2174,27 @@
         <i class="fa-solid fa-house"></i>
         <span>হোম</span>
       </a>
-      <a href="/dashboard.html" class="da-drawer-link">
+      <a href="/dashboard" class="da-drawer-link">
         <i class="fa-solid fa-chart-pie"></i>
         <span>ড্যাশবোর্ড</span>
       </a>
-      <a href="/my-courses.html" class="da-drawer-link active">
+      <a href="/my-courses" class="da-drawer-link active">
         <i class="fa-solid fa-graduation-cap"></i>
         <span>আমার কোর্সসমূহ</span>
       </a>
-      <a href="/course.html" class="da-drawer-link">
+      <a href="/#courses" class="da-drawer-link">
         <i class="fa-solid fa-book-open"></i>
         <span>সকল কোর্স</span>
       </a>
-      <a href="/shop.html" class="da-drawer-link">
+      <a href="/shop" class="da-drawer-link">
         <i class="fa-solid fa-store"></i>
         <span>বুকশপ</span>
       </a>
-      <a href="/ai.html" class="da-drawer-link">
+      <a href="/ai" class="da-drawer-link">
         <i class="fa-solid fa-robot"></i>
         <span>এআই অ্যাসিস্ট্যান্ট</span>
       </a>
-      <a href="/profile.html" class="da-drawer-link">
+      <a href="/profile" class="da-drawer-link">
         <i class="fa-solid fa-user-gear"></i>
         <span>প্রোফাইল সেটিংস</span>
       </a>

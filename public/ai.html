@@ -470,7 +470,7 @@ footer a:hover{color:var(--mint)}
           <i class="fas fa-user-lock" style="font-size: 26px; color: #FF7A1A; margin-bottom: 8px; display: block;"></i>
           <div style="font-size: 16px; font-weight: 800; color: #FFFFFF; margin-bottom: 4px;">অ্যাকাউন্টে লগইন করা প্রয়োজন</div>
           <p style="font-size: 13px; color: #CBD5E1; margin-bottom: 14px; line-height: 1.4;">প্ল্যানটি কিনতে এবং আপনার প্রোফাইলে যুক্ত করতে অনুগ্রহ করে প্রথমে অ্যাকাউন্টে লগইন করুন।</p>
-          <a id="aiCheckoutLoginBtn" href="/login.html?redirect=/ai" class="btn" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--mint); color: #0b1a06; font-weight: 800; font-size: 14px; padding: 11px 24px; border-radius: 12px; text-decoration: none; box-shadow: 0 4px 15px rgba(166,247,106,0.35);">
+          <a id="aiCheckoutLoginBtn" href="/login?redirect=/ai" class="btn" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--mint); color: #0b1a06; font-weight: 800; font-size: 14px; padding: 11px 24px; border-radius: 12px; text-decoration: none; box-shadow: 0 4px 15px rgba(166,247,106,0.35);">
             <i class="fas fa-arrow-right-to-bracket"></i> <span>লগইন করুন</span>
           </a>
         </div>
@@ -832,7 +832,7 @@ else {
       sessionStorage.setItem('dipu_redirect_url', '/ai?buy=' + k);
       var wantLogin = confirm('প্ল্যানটি আপনার অ্যাকাউন্টে যুক্ত করতে প্রথমে লগইন করা প্রয়োজন।\n\nআপনি কি এখনই লগইন পেজে যেতে চান?');
       if (wantLogin) {
-        window.location.href = '/login.html?redirect=' + encodeURIComponent('/ai?buy=' + k);
+        window.location.href = '/login?redirect=' + encodeURIComponent('/ai?buy=' + k);
         return;
       }
     }
@@ -889,10 +889,10 @@ else {
     } else {
       if (acctCard) acctCard.style.display = 'none';
       if (loginBanner) loginBanner.style.display = 'block';
-      if (loginBtn) loginBtn.href = '/login.html?redirect=' + encodeURIComponent('/ai?buy=' + k);
+      if (loginBtn) loginBtn.href = '/login?redirect=' + encodeURIComponent('/ai?buy=' + k);
       $('pay').innerHTML = two('লগইন করে কিনুন', 'Login to purchase');
       $('pay').onclick = function() {
-        window.location.href = '/login.html?redirect=' + encodeURIComponent('/ai?buy=' + k);
+        window.location.href = '/login?redirect=' + encodeURIComponent('/ai?buy=' + k);
       };
     }
 

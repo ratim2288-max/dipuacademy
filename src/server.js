@@ -160,6 +160,17 @@ app.use((req, res, next) => {
   next();
 });
 
+// Clean URL Redirect Middleware: 301 redirect any URL ending in .html to clean extensionless URL (preserving queries)
+app.use((req, res, next) => {
+  if (req.method === 'GET' && req.path.endsWith('.html')) {
+    let cleanPath = req.path.slice(0, -5);
+    if (cleanPath === '/index') cleanPath = '/';
+    const query = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+    return res.redirect(301, (cleanPath || '/') + query);
+  }
+  next();
+});
+
 // Static assets (Frontend UI) with cache headers for performance
 app.use(express.static(path.join(__dirname, '../public'), {
   maxAge: process.env.NODE_ENV === 'production' ? '7d' : 0,
@@ -384,41 +395,30 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// HTML page routes
-app.get(['/course-home', '/course-home.html', '/course-overview'], (req, res) => res.sendFile(path.join(__dirname, '../public/course-home.html')));
-app.get(['/my-courses', '/my-courses.html', '/user/courses', '/user/courses/'], (req, res) => res.sendFile(path.join(__dirname, '../public/my-courses.html')));
-app.get('/course', (req, res) => res.sendFile(path.join(__dirname, '../public/course.html')));
-app.get('/course/:slug', (req, res) => res.sendFile(path.join(__dirname, '../public/course.html')));
-app.get(['/exam', '/exam/:slug', '/exam.html'], (req, res) => res.redirect('/'));
+// HTML Clean Page Routes
+app.get(['/course-home', '/course-home/:slug', '/course-overview', '/course-overview/:slug', '/classroom', '/classroom/:slug'], (req, res) => res.sendFile(path.join(__dirname, '../public/course-home.html')));
+app.get(['/my-courses', '/courses', '/user/courses', '/user/courses/'], (req, res) => res.sendFile(path.join(__dirname, '../public/my-courses.html')));
+app.get(['/course', '/course/:slug', '/course/overview/:slug'], (req, res) => res.sendFile(path.join(__dirname, '../public/course.html')));
+app.get(['/player', '/player/:lessonId', '/player/:course/:lessonId'], (req, res) => res.sendFile(path.join(__dirname, '../public/player.html')));
+app.get(['/exam', '/exam/:slug'], (req, res) => res.redirect('/'));
 app.get('/login', (req, res) => res.sendFile(path.join(__dirname, '../public/login.html')));
-app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, '../public/dashboard.html')));
-app.get('/profile', (req, res) => res.sendFile(path.join(__dirname, '../public/dashboard.html')));
-app.get(['/admin', '/admin.html'], (req, res) => {
+app.get(['/dashboard', '/profile'], (req, res) => res.sendFile(path.join(__dirname, '../public/dashboard.html')));
+app.get(['/admin'], (req, res) => {
   if (isAdminHost(req)) {
     return res.sendFile(path.join(__dirname, '../public/admin.html'));
   }
   return res.status(404).sendFile(path.join(__dirname, '../public/404.html'));
 });
-app.get(['/notes', '/notes.html', '/notes/:classLevel/:subject'], (req, res) => res.redirect('/'));
-app.get('/player', (req, res) => res.sendFile(path.join(__dirname, '../public/player.html')));
-app.get('/player/:lessonId', (req, res) => res.sendFile(path.join(__dirname, '../public/player.html')));
-app.get('/otp', (req, res) => res.sendFile(path.join(__dirname, '../public/otp-component.html')));
-app.get('/otp-component', (req, res) => res.sendFile(path.join(__dirname, '../public/otp-component.html')));
-app.get('/components/ui', (req, res) => res.sendFile(path.join(__dirname, '../public/otp-component.html')));
-app.get('/skeleton-demo', (req, res) => res.sendFile(path.join(__dirname, '../public/otp-component.html')));
+app.get(['/notes', '/notes/:classLevel/:subject'], (req, res) => res.redirect('/'));
+app.get(['/otp', '/otp-component', '/components/ui', '/skeleton-demo'], (req, res) => res.sendFile(path.join(__dirname, '../public/otp-component.html')));
+app.get(['/shop', '/shop/:slug', '/store', '/books', '/ebooks'], (req, res) => res.sendFile(path.join(__dirname, '../public/shop.html')));
+app.get(['/book', '/book/:slug', '/book-details'], (req, res) => res.sendFile(path.join(__dirname, '../public/book.html')));
+app.get(['/ai', '/dipus-ai'], (req, res) => res.sendFile(path.join(__dirname, '../public/ai.html')));
+app.get('/payment-success', (req, res) => res.sendFile(path.join(__dirname, '../public/payment-success.html')));
+app.get('/onboarding', (req, res) => res.sendFile(path.join(__dirname, '../public/onboarding.html')));
+app.get('/report', (req, res) => res.redirect('/dashboard'));
 app.get('/404', (req, res) => res.status(404).sendFile(path.join(__dirname, '../public/404.html')));
 app.get('/offline', (req, res) => res.sendFile(path.join(__dirname, '../public/offline.html')));
-app.get('/shop', (req, res) => res.sendFile(path.join(__dirname, '../public/shop.html')));
-app.get('/shop/:slug', (req, res) => res.sendFile(path.join(__dirname, '../public/shop.html')));
-app.get('/store', (req, res) => res.sendFile(path.join(__dirname, '../public/shop.html')));
-app.get('/books', (req, res) => res.sendFile(path.join(__dirname, '../public/shop.html')));
-app.get('/ebooks', (req, res) => res.sendFile(path.join(__dirname, '../public/shop.html')));
-app.get('/book', (req, res) => res.sendFile(path.join(__dirname, '../public/book.html')));
-app.get('/book/:slug', (req, res) => res.sendFile(path.join(__dirname, '../public/book.html')));
-app.get('/book-details', (req, res) => res.sendFile(path.join(__dirname, '../public/book.html')));
-app.get('/ai', (req, res) => res.sendFile(path.join(__dirname, '../public/ai.html')));
-app.get('/dipus-ai', (req, res) => res.sendFile(path.join(__dirname, '../public/ai.html')));
-app.get('/report', (req, res) => res.redirect('/dashboard'));
 
 // Public Shop Catalog API
 app.get('/api/shop/catalog', (req, res) => {

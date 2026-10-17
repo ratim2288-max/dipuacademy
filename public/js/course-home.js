@@ -602,7 +602,27 @@ function applyTheme(theme) {
 // Resolve Course by Slug or MongoDB ID
 async function resolveAndLoadCourse() {
   const params = new URLSearchParams(window.location.search);
-  const courseParam = (params.get('course') || params.get('id') || '').trim();
+  const justEnrolled = params.get('justEnrolled') === '1';
+  let courseParam = (params.get('course') || params.get('id') || params.get('slug') || '').trim();
+
+  // Extract from clean URL pathname: /course-home/:slug or /course-overview/:slug or /classroom/:slug
+  if (!courseParam) {
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    if (parts.length >= 2 && (parts[0] === 'course-home' || parts[0] === 'course-overview' || parts[0] === 'classroom')) {
+      courseParam = decodeURIComponent(parts[1]).trim();
+    }
+  }
+
+  // If no courseParam provided, check user's enrolled courses or redirect to my-courses
+  if (!courseParam) {
+    const enrolledCache = JSON.parse(localStorage.getItem('da_enrolled_courses') || '[]');
+    if (enrolledCache.length > 0) {
+      courseParam = enrolledCache[0];
+    } else {
+      window.location.replace('/my-courses');
+      return;
+    }
+  }
 
   let resolved = null;
   if (courseParam) {
@@ -648,8 +668,17 @@ async function resolveAndLoadCourse() {
   }
 
   currentCourse = resolved || COURSE_CATALOG["graphic-design-photoshop"];
+
+  // STRICT ACCESS GUARD:
+  // If the user has NOT bought this course, immediately redirect them to the Course Buy page!
+  const hasAccess = await verifyCourseAccess(currentCourse.slug, justEnrolled);
+  if (!hasAccess) {
+    window.location.replace(`/course?slug=${encodeURIComponent(currentCourse.slug)}`);
+    return;
+  }
+
   renderCourseHome(currentCourse);
-  checkUserProgress(currentCourse.slug);
+  updateCourseProgressDisplay(currentCourse.slug);
 }
 
 // Render Course Overview Components
@@ -671,7 +700,7 @@ function renderCourseHome(course) {
   // Action Button: "▶ কোর্স শুরু করুন"
   const startBtn = document.getElementById("startCourseBtn");
   if (startBtn) {
-    startBtn.href = `/player.html?course=${encodeURIComponent(course.slug)}`;
+    startBtn.href = `/player?course=${encodeURIComponent(course.slug)}`;
   }
 
   // 3. Card 2: Syllabus Accordion
@@ -729,7 +758,7 @@ function renderSyllabusAccordion(chapters) {
     const isActive = idx === 0 ? "active" : ""; // Open first chapter by default
 
     const lessonsHtml = (ch.lessons && ch.lessons.length > 0) ? ch.lessons.map(l => `
-      <a href="/player.html?course=${encodeURIComponent(currentCourse.slug)}&lessonId=${encodeURIComponent(l.id)}" class="ch-lesson-row" title="ক্লাসটি শুরু করুন">
+      <a href="/player?course=${encodeURIComponent(currentCourse.slug)}&lessonId=${encodeURIComponent(l.id)}" class="ch-lesson-row" title="ক্লাসটি শুরু করুন">
         <div class="ch-lesson-left">
           <div class="ch-lesson-play-icon">
             <i class="${ch.isResource ? 'fas fa-file-arrow-down' : 'fas fa-play'}"></i>
@@ -789,17 +818,67 @@ function renderOutcomes(outcomes) {
   `).join("");
 }
 
-// Check User Progress in Database & Update Live Bar
-async function checkUserProgress(courseSlug) {
+// Verify Course Access Status (MongoDB + Token + Local Cache)
+async function verifyCourseAccess(courseSlug, justEnrolled) {
+  // If user just enrolled via checkout/payment success
+  if (justEnrolled) {
+    try {
+      const enrolledCache = JSON.parse(localStorage.getItem('da_enrolled_courses') || '[]');
+      if (!enrolledCache.includes(courseSlug)) {
+        enrolledCache.push(courseSlug);
+        localStorage.setItem('da_enrolled_courses', JSON.stringify(enrolledCache));
+      }
+    } catch (e) {}
+    return true;
+  }
+
+  // Check Local Cache First for instant rendering
+  try {
+    const enrolledCache = JSON.parse(localStorage.getItem('da_enrolled_courses') || '[]');
+    if (enrolledCache.includes(courseSlug)) {
+      return true;
+    }
+  } catch (e) {}
+
+  // Check Database / Server Access Status
+  try {
+    const token = localStorage.getItem('da_token') || localStorage.getItem('auth_token') || localStorage.getItem('dipu_auth_token');
+    const phone = localStorage.getItem('da_user_phone') || localStorage.getItem('user_phone') || localStorage.getItem('dipu_user_phone') || '';
+
+    const res = await fetch(`/api/courses/${encodeURIComponent(courseSlug)}/access-status?phone=${encodeURIComponent(phone)}`, {
+      headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && (data.enrolled || data.enrollment)) {
+        try {
+          const enrolledCache = JSON.parse(localStorage.getItem('da_enrolled_courses') || '[]');
+          if (!enrolledCache.includes(courseSlug)) {
+            enrolledCache.push(courseSlug);
+            localStorage.setItem('da_enrolled_courses', JSON.stringify(enrolledCache));
+          }
+        } catch (e) {}
+        return true;
+      }
+    }
+  } catch (err) {
+    console.warn('[Access verification error]:', err);
+  }
+
+  // Not enrolled / Not purchased
+  return false;
+}
+
+// Update User Progress Bar in Classroom
+async function updateCourseProgressDisplay(courseSlug) {
   const progressFill = document.getElementById("courseProgressFill");
   const progressPctText = document.getElementById("courseProgressPct");
-  const progressKnob = document.getElementById("courseProgressKnob");
-
   let progressPct = 0;
 
   try {
-    const token = localStorage.getItem('da_token') || localStorage.getItem('auth_token');
-    const phone = localStorage.getItem('da_user_phone') || localStorage.getItem('user_phone') || '01712345678';
+    const token = localStorage.getItem('da_token') || localStorage.getItem('auth_token') || localStorage.getItem('dipu_auth_token');
+    const phone = localStorage.getItem('da_user_phone') || localStorage.getItem('user_phone') || localStorage.getItem('dipu_user_phone') || '';
 
     const res = await fetch(`/api/courses/${encodeURIComponent(courseSlug)}/access-status?phone=${encodeURIComponent(phone)}`, {
       headers: token ? { 'Authorization': `Bearer ${token}` } : {}

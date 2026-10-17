@@ -557,11 +557,11 @@ let studentData = {
 // Back navigation handler
 window.handlePlayerBack = function() {
   if (COURSE_DATA && COURSE_DATA.courseId) {
-    window.location.href = `/course-home.html?course=${encodeURIComponent(COURSE_DATA.courseId)}`;
+    window.location.href = `/course-home?course=${encodeURIComponent(COURSE_DATA.courseId)}`;
   } else if (window.history.length > 1) {
     window.history.back();
   } else {
-    window.location.href = '/my-courses.html';
+    window.location.href = '/my-courses';
   }
 };
 
@@ -571,10 +571,25 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function initPlayerStudio() {
-  // Resolve course from URL parameter (?course=...)
+  // Resolve course and lesson from URL parameters or clean pathname
   try {
     const params = new URLSearchParams(window.location.search);
-    const courseParam = (params.get('course') || params.get('id') || '').trim();
+    let courseParam = (params.get('course') || params.get('id') || params.get('slug') || '').trim();
+    let lessonParam = (params.get('lessonId') || params.get('lesson') || '').trim();
+
+    // Support clean URL path routing: /player/:course/:lessonId or /player/:lessonId
+    const pathParts = window.location.pathname.split('/').filter(Boolean);
+    if (pathParts.length >= 3 && pathParts[0] === 'player') {
+      courseParam = decodeURIComponent(pathParts[1]).trim();
+      lessonParam = decodeURIComponent(pathParts[2]).trim();
+    } else if (pathParts.length === 2 && pathParts[0] === 'player') {
+      const seg = decodeURIComponent(pathParts[1]).trim();
+      if (COURSES_DATABASE[seg]) {
+        courseParam = seg;
+      } else {
+        lessonParam = seg;
+      }
+    }
 
     if (courseParam && COURSES_DATABASE[courseParam]) {
       COURSE_DATA = COURSES_DATABASE[courseParam];
@@ -620,6 +635,15 @@ function initPlayerStudio() {
       COURSE_DATA = COURSES_DATABASE["graphic-design-photoshop"];
     }
     currentLesson = COURSE_DATA.chapters[0].lessons[0];
+    if (lessonParam && COURSE_DATA && COURSE_DATA.chapters) {
+      for (const ch of COURSE_DATA.chapters) {
+        const found = ch.lessons?.find(l => l.id === lessonParam || l.number === lessonParam);
+        if (found) {
+          currentLesson = found;
+          break;
+        }
+      }
+    }
   } catch (e) {
     COURSE_DATA = COURSES_DATABASE["graphic-design-photoshop"];
     currentLesson = COURSE_DATA.chapters[0].lessons[0];
@@ -818,7 +842,7 @@ function loadLesson(lessonId, restart = true) {
       }
       const buyBtn = document.getElementById("paywallBuyCourseBtn");
       if (buyBtn) {
-        buyBtn.href = `/course.html?id=${encodeURIComponent(COURSE_DATA.courseId)}`;
+        buyBtn.href = `/course?slug=${encodeURIComponent(COURSE_DATA.courseId)}`;
       }
     }
     if (simCanvas) simCanvas.style.display = "none";
@@ -842,12 +866,12 @@ function loadLesson(lessonId, restart = true) {
   const bcCourse = document.getElementById("bcCourseTitle");
   if (bcCourse) {
     bcCourse.textContent = COURSE_DATA.title[currentLang] || COURSE_DATA.title.bn || COURSE_DATA.title.en;
-    bcCourse.href = `/course-home.html?course=${encodeURIComponent(COURSE_DATA.courseId)}`;
+    bcCourse.href = `/course-home?course=${encodeURIComponent(COURSE_DATA.courseId)}`;
   }
 
   const backBtn = document.getElementById("playerCourseHomeBackBtn") || document.querySelector(".player-header-right a[title='কোর্সে ফিরুন']");
   if (backBtn) {
-    backBtn.href = `/course-home.html?course=${encodeURIComponent(COURSE_DATA.courseId)}`;
+    backBtn.href = `/course-home?course=${encodeURIComponent(COURSE_DATA.courseId)}`;
   }
 
   const bcLesson = document.getElementById("bcLessonTitle");

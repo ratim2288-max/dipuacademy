@@ -526,7 +526,7 @@ export const CourseExplorer: React.FC = () => {
           {filteredCourses.map((course, idx) => (
             <a
               key={course.id}
-              href={`/course.html?slug=${course.slug}`}
+              href={`/course?slug=${course.slug}`}
               className="course-card da-course-card"
               style={{
                 textDecoration: "none",

@@ -2398,10 +2398,10 @@
           </a>
         </li>
         <li class="da-nav-item">
-          <a href="/login.html"><i class="fa-solid fa-headset" style="color: #10B981;"></i> যোগাযোগ</a>
+          <a href="/login"><i class="fa-solid fa-headset" style="color: #10B981;"></i> যোগাযোগ</a>
         </li>
         <li class="da-nav-item">
-          <a href="/my-courses.html"><i class="fa-solid fa-graduation-cap" style="color: #10B981;"></i> আমার কোর্স</a>
+          <a href="/my-courses"><i class="fa-solid fa-graduation-cap" style="color: #10B981;"></i> আমার কোর্স</a>
         </li>
       </ul>
 
@@ -2412,7 +2412,7 @@
         </div>
         <!-- Dynamic User Auth Account Area -->
         <div class="da-nav-auth-wrap" id="navAuthArea">
-          <a href="/login.html" class="da-nav-login-btn" title="লগইন করুন">
+          <a href="/login" class="da-nav-login-btn" title="লগইন করুন">
             <i class="fa-solid fa-arrow-right-to-bracket"></i>
             <span>লগইন</span>
           </a>
@@ -2930,21 +2930,21 @@
               '<div class="da-user-dropdown-divider"></div>' +
               
               '<div class="da-user-dropdown-links">' +
-                '<a href="/dashboard.html" class="da-dropdown-link">' +
+                '<a href="/dashboard" class="da-dropdown-link">' +
                   '<div class="da-dd-icon da-dd-icon-blue"><i class="fa-solid fa-chart-pie" style="color: #0284C7;"></i></div>' +
                   '<div class="da-dd-text">' +
                     '<span class="da-dd-title">ড্যাশবোর্ড</span>' +
                     '<span class="da-dd-desc">লার্নিং পোর্টাল ও প্রগ্রেস</span>' +
                   '</div>' +
                 '</a>' +
-                '<a href="/my-courses.html" class="da-dropdown-link">' +
+                '<a href="/my-courses" class="da-dropdown-link">' +
                   '<div class="da-dd-icon da-dd-icon-green"><i class="fa-solid fa-graduation-cap" style="color: #10B981;"></i></div>' +
                   '<div class="da-dd-text">' +
                     '<span class="da-dd-title">আমার কোর্সসমূহ</span>' +
                     '<span class="da-dd-desc">চলমান ভিডিও ক্লাস ও লেকচার</span>' +
                   '</div>' +
                 '</a>' +
-                '<a href="/profile.html" class="da-dropdown-link">' +
+                '<a href="/profile" class="da-dropdown-link">' +
                   '<div class="da-dd-icon da-dd-icon-purple"><i class="fa-solid fa-user-gear" style="color: #8B5CF6;"></i></div>' +
                   '<div class="da-dd-text">' +
                     '<span class="da-dd-title">প্রোফাইল সেটিংস</span>' +
@@ -3004,7 +3004,7 @@
           }
         } else {
           authContainer.innerHTML = 
-            '<a href="/login.html" class="da-nav-login-btn" title="লগইন করুন">' +
+            '<a href="/login" class="da-nav-login-btn" title="লগইন করুন">' +
               '<i class="fa-solid fa-arrow-right-to-bracket"></i>' +
               '<span>লগইন</span>' +
             '</a>';
@@ -3243,7 +3243,7 @@
 
         var html = '';
         filtered.forEach(function(c) {
-          html += '<a href="/course.html?slug=' + c.slug + '" class="da-ccard" data-id="' + c.id + '">' +
+          html += '<a href="/course?slug=' + c.slug + '" class="da-ccard" data-id="' + c.id + '">' +
             '<div class="da-ccard-thumb">' +
               '<img src="' + c.thumb + '" alt="' + c.title + '" loading="lazy" onerror="this.src=\'/images/courses/routine-banner.jpg\'">' +
               '<span class="da-batch-badge" style="background: ' + c.batchBg + ';">' + c.batchLabel + '</span>' +
@@ -3565,7 +3565,7 @@
 
         if (!isLoggedIn) {
           authWrap.innerHTML = 
-            '<a href="/login.html" class="da-nav-login-btn" title="লগইন করুন">' +
+            '<a href="/login" class="da-nav-login-btn" title="লগইন করুন">' +
               '<i class="fa-solid fa-arrow-right-to-bracket"></i>' +
               '<span>লগইন</span>' +
             '</a>';
@@ -3598,21 +3598,21 @@
             '</div>' +
             '<div class="da-user-dropdown-divider"></div>' +
             '<div class="da-user-dropdown-links">' +
-              '<a href="/dashboard.html" class="da-dropdown-link">' +
+              '<a href="/dashboard" class="da-dropdown-link">' +
                 '<div class="da-dd-icon da-dd-icon-blue"><i class="fa-solid fa-gauge-high" style="color:#0284C7;"></i></div>' +
                 '<div class="da-dd-text">' +
                   '<span class="da-dd-title">আমার ড্যাশবোর্ড</span>' +
                   '<span class="da-dd-desc">কোর্স ও পড়াশোনার অগ্রগতি</span>' +
                 '</div>' +
               '</a>' +
-              '<a href="/my-courses.html" class="da-dropdown-link">' +
+              '<a href="/my-courses" class="da-dropdown-link">' +
                 '<div class="da-dd-icon da-dd-icon-green"><i class="fa-solid fa-book-open" style="color:#16A34A;"></i></div>' +
                 '<div class="da-dd-text">' +
                   '<span class="da-dd-title">আমার কোর্সসমূহ</span>' +
                   '<span class="da-dd-desc">ভর্তিকৃত ক্লাস ও পরীক্ষা</span>' +
                 '</div>' +
               '</a>' +
-              '<a href="/profile.html" class="da-dropdown-link">' +
+              '<a href="/profile" class="da-dropdown-link">' +
                 '<div class="da-dd-icon da-dd-icon-purple"><i class="fa-solid fa-user-pen" style="color:#7C3AED;"></i></div>' +
                 '<div class="da-dd-text">' +
                   '<span class="da-dd-title">প্রোফাইল সেটিংস</span>' +

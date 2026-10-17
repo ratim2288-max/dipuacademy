@@ -710,13 +710,13 @@ router.post('/zinipay/create', async (req, res) => {
       const bTitle = bookTitle || bookId || 'বই অর্ডার';
       itemTitle = bTitle;
       amount = amount || 450;
-      redirect_url = `${brandBaseUrl}/payment-success.html?type=${orderType}&item=${encodeURIComponent(bTitle)}&id=${encodeURIComponent(bookId || '')}&phone=${encodeURIComponent(phone)}${originParam}`;
-      cancel_url = `${brandBaseUrl}/book.html?id=${encodeURIComponent(bookId || '')}&payment_cancelled=1${originParam}`;
+      redirect_url = `${brandBaseUrl}/payment-success?type=${orderType}&item=${encodeURIComponent(bTitle)}&id=${encodeURIComponent(bookId || '')}&phone=${encodeURIComponent(phone)}${originParam}`;
+      cancel_url = `${brandBaseUrl}/book?id=${encodeURIComponent(bookId || '')}&payment_cancelled=1${originParam}`;
     } else if (orderType === 'ai_subscription') {
       const pTitle = planName || planId || 'AI সাবস্ক্রিপশন';
       itemTitle = pTitle;
       amount = amount || 490;
-      redirect_url = `${brandBaseUrl}/payment-success.html?type=ai_subscription&item=${encodeURIComponent(pTitle)}&phone=${encodeURIComponent(phone)}${originParam}`;
+      redirect_url = `${brandBaseUrl}/payment-success?type=ai_subscription&item=${encodeURIComponent(pTitle)}&phone=${encodeURIComponent(phone)}${originParam}`;
       cancel_url = `${brandBaseUrl}/ai?payment_cancelled=1${originParam}`;
     } else {
       // Default: Course
@@ -737,8 +737,8 @@ router.post('/zinipay/create', async (req, res) => {
       amount = amount || (course ? (course.discountPrice || course.price) : 850);
       cSlug = course ? course.slug : (courseSlug || courseId || 'hsc-27-full-prep');
       itemTitle = course ? (course.title?.bn || course.title?.en || course.slug) : cSlug;
-      redirect_url = `${brandBaseUrl}/payment-success.html?type=course&course=${encodeURIComponent(cSlug)}&phone=${encodeURIComponent(phone)}${originParam}`;
-      cancel_url = `${brandBaseUrl}/course.html?slug=${encodeURIComponent(cSlug)}&payment_cancelled=1${originParam}`;
+      redirect_url = `${brandBaseUrl}/payment-success?type=course&course=${encodeURIComponent(cSlug)}&phone=${encodeURIComponent(phone)}${originParam}`;
+      cancel_url = `${brandBaseUrl}/course?slug=${encodeURIComponent(cSlug)}&payment_cancelled=1${originParam}`;
     }
 
     if (couponCode) {

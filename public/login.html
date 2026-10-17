@@ -934,16 +934,16 @@ input::placeholder {
     <a href="/" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; text-decoration:none; color:#0F172A; font-weight:700; font-size:13.5px; transition:background 0.2s;" onmouseenter="this.style.background='#F0F9FF'" onmouseleave="this.style.background='transparent'">
       <i class="fas fa-home" style="color:#0084FF; width:20px; text-align:center;"></i> <span>মূল হোম পেজ</span>
     </a>
-    <a href="/course.html" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; text-decoration:none; color:#0F172A; font-weight:700; font-size:13.5px; transition:background 0.2s;" onmouseenter="this.style.background='#F0F9FF'" onmouseleave="this.style.background='transparent'">
+    <a href="/#courses" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; text-decoration:none; color:#0F172A; font-weight:700; font-size:13.5px; transition:background 0.2s;" onmouseenter="this.style.background='#F0F9FF'" onmouseleave="this.style.background='transparent'">
       <i class="fas fa-graduation-cap" style="color:#10B981; width:20px; text-align:center;"></i> <span>কোর্সসমূহ</span>
     </a>
-    <a href="/dashboard.html" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; text-decoration:none; color:#0F172A; font-weight:700; font-size:13.5px; transition:background 0.2s;" onmouseenter="this.style.background='#F0F9FF'" onmouseleave="this.style.background='transparent'">
+    <a href="/dashboard" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; text-decoration:none; color:#0F172A; font-weight:700; font-size:13.5px; transition:background 0.2s;" onmouseenter="this.style.background='#F0F9FF'" onmouseleave="this.style.background='transparent'">
       <i class="fas fa-gauge-high" style="color:#8B5CF6; width:20px; text-align:center;"></i> <span>ড্যাশবোর্ড</span>
     </a>
-    <a href="/shop.html" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; text-decoration:none; color:#0F172A; font-weight:700; font-size:13.5px; transition:background 0.2s;" onmouseenter="this.style.background='#F0F9FF'" onmouseleave="this.style.background='transparent'">
+    <a href="/shop" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; text-decoration:none; color:#0F172A; font-weight:700; font-size:13.5px; transition:background 0.2s;" onmouseenter="this.style.background='#F0F9FF'" onmouseleave="this.style.background='transparent'">
       <i class="fas fa-store" style="color:#F59E0B; width:20px; text-align:center;"></i> <span>বই ও শপ</span>
     </a>
-    <a href="/ai.html" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; text-decoration:none; color:#0F172A; font-weight:700; font-size:13.5px; transition:background 0.2s;" onmouseenter="this.style.background='#F0F9FF'" onmouseleave="this.style.background='transparent'">
+    <a href="/ai" style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; text-decoration:none; color:#0F172A; font-weight:700; font-size:13.5px; transition:background 0.2s;" onmouseenter="this.style.background='#F0F9FF'" onmouseleave="this.style.background='transparent'">
       <i class="fas fa-robot" style="color:#0284C7; width:20px; text-align:center;"></i> <span>AI শিক্ষক (dipusedo)</span>
     </a>
   </div>
@@ -1032,7 +1032,7 @@ input::placeholder {
       <h1>You're in!</h1>
       <p id="who"></p>
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <a href="/dashboard.html" class="btn" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;">
+        <a href="/dashboard" class="btn" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;">
           <span>প্রোফাইল ও ড্যাশবোর্ডে প্রবেশ করুন</span>
           <i class="fas fa-arrow-right text-xs"></i>
         </a>
@@ -1340,12 +1340,11 @@ function finish(btn, authData) {
         return;
       }
 
-      // If user has not completed 3-step onboarding, take them to onboarding.html
       var hasOnboarded = (authData && authData.isOnboarded === true) || (existingProfile && existingProfile.isOnboarded === true);
       if (hasOnboarded) {
-        window.location.href = '/dashboard.html';
+        window.location.href = '/dashboard';
       } else {
-        window.location.href = '/onboarding.html';
+        window.location.href = '/onboarding';
       }
     }, 1000);
   }, 600);

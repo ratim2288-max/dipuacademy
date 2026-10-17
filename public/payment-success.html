@@ -208,7 +208,7 @@
     </div>
 
     <!-- Dynamic Action Button -->
-    <a href="/my-courses.html" class="btn-enter-course" id="enterCourseBtn">
+    <a href="/my-courses" class="btn-enter-course" id="enterCourseBtn">
       <span id="enterBtnText">কোর্স হোমে প্রবেশ করুন</span>
       <i class="fas fa-arrow-right" id="enterBtnIcon"></i>
     </a>
@@ -278,7 +278,7 @@
         subEl.textContent = 'আপনার কোর্সটি সক্রিয় করা হয়েছে এবং অ্যাকাউন্টে এক্সেস যুক্ত হয়েছে।';
         itemLabelEl.textContent = 'কোর্স:';
         itemTitleEl.textContent = itemTitle;
-        targetUrl = `/course-home.html?course=${encodeURIComponent(courseSlug)}&justEnrolled=1`;
+        targetUrl = `/course-home?course=${encodeURIComponent(courseSlug)}&justEnrolled=1`;
         btnTextEl.textContent = 'কোর্স হোমে প্রবেশ করুন';
         btnEl.href = targetUrl;
 
