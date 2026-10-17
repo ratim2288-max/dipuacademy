@@ -2462,24 +2462,38 @@
 
       if (!slug) slug = "hsc-27-full-prep";
 
-      // Automatic Redirect: If student already purchased this course, take them to Course Home
+      // Non-blocking enrollment check: show classroom access option without forceful redirection
       try {
         const enrolledSlugs = JSON.parse(localStorage.getItem('da_enrolled_courses') || '[]');
-        if (enrolledSlugs.includes(slug)) {
-          window.location.replace(`/course-home.html?course=${encodeURIComponent(slug)}`);
-          return;
-        }
         const studentPhone = localStorage.getItem('da_user_phone') || localStorage.getItem('user_phone') || localStorage.getItem('dipu_user_phone');
-        if (studentPhone) {
+
+        function showEnrolledNotice() {
+          const buyBtn = document.getElementById("openCheckoutBtn");
+          if (buyBtn && !document.getElementById("alreadyEnrolledBanner")) {
+            const notice = document.createElement("div");
+            notice.id = "alreadyEnrolledBanner";
+            notice.style.cssText = "background: rgba(16, 185, 129, 0.12); border: 1.5px solid rgba(16, 185, 129, 0.4); border-radius: 14px; padding: 14px 16px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13.5px; color: #10B981; font-weight: 700;";
+            notice.innerHTML = `
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-circle-check" style="font-size: 18px;"></i>
+                <span>আপনি এই কোর্সে যুক্ত আছেন!</span>
+              </div>
+              <a href="/course-home.html?course=${encodeURIComponent(slug)}" style="background: linear-gradient(135deg, #10B981, #059669); color: #FFFFFF; padding: 7px 14px; border-radius: 10px; font-size: 12.5px; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(16,185,129,0.3); white-space: nowrap;">
+                <span>ক্লাসরুমে যান</span> <i class="fas fa-arrow-right"></i>
+              </a>
+            `;
+            buyBtn.parentNode.insertBefore(notice, buyBtn);
+          }
+        }
+
+        if (enrolledSlugs.includes(slug)) {
+          showEnrolledNotice();
+        } else if (studentPhone) {
           fetch(`/api/courses/${encodeURIComponent(slug)}/access-status?phone=${encodeURIComponent(studentPhone)}`)
             .then(r => r.json())
             .then(data => {
               if (data && data.success && data.enrolled) {
-                if (!enrolledSlugs.includes(slug)) {
-                  enrolledSlugs.push(slug);
-                  localStorage.setItem('da_enrolled_courses', JSON.stringify(enrolledSlugs));
-                }
-                window.location.replace(`/course-home.html?course=${encodeURIComponent(slug)}`);
+                showEnrolledNotice();
               }
             })
             .catch(() => {});
