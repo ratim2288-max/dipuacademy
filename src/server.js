@@ -405,6 +405,7 @@ app.get('/api/health', (req, res) => {
 app.get(['/course-home', '/course-home/:slug', '/course-overview', '/course-overview/:slug', '/classroom', '/classroom/:slug'], (req, res) => res.sendFile(path.join(__dirname, '../public/course-home.html')));
 app.get(['/my-courses', '/courses', '/user/courses', '/user/courses/'], (req, res) => res.sendFile(path.join(__dirname, '../public/my-courses.html')));
 app.get(['/course', '/course/:slug', '/course/overview/:slug'], (req, res) => res.sendFile(path.join(__dirname, '../public/course.html')));
+app.get(['/checkout', '/checkout/:slug', '/payment/checkout'], (req, res) => res.sendFile(path.join(__dirname, '../public/checkout.html')));
 app.get(['/player', '/player/:lessonId', '/player/:course/:lessonId'], (req, res) => res.sendFile(path.join(__dirname, '../public/player.html')));
 app.get(['/exam', '/exam/:slug'], (req, res) => res.redirect('/'));
 app.get('/login', (req, res) => res.sendFile(path.join(__dirname, '../public/login.html')));

@@ -2210,8 +2210,10 @@
       if (openBtn) {
         openBtn.addEventListener("click", () => {
           if (!currentCourse) return;
-          populateModal();
-          modal.classList.add("active");
+          const targetSlug = currentCourse.slug || currentCourse._id || 'course';
+          window.location.href = `/checkout?courseSlug=${encodeURIComponent(targetSlug)}&courseId=${encodeURIComponent(currentCourse._id || '')}`;
+          return;
+
         });
       }
 

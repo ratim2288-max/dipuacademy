@@ -1985,8 +1985,9 @@
     // Modal Controller
     function openOrderModal() {
       if (!currentBook) return;
-      document.getElementById("orderStepForm").style.display = "block";
-      document.getElementById("orderStepSuccess").style.display = "none";
+      const type = currentBook.category === 'ebook' || (currentBook.id && currentBook.id.startsWith('ebook')) ? 'ebook' : 'book';
+      window.location.href = `/checkout?type=${type}&bookId=${encodeURIComponent(currentBook.id)}&title=${encodeURIComponent(currentBook.title)}&price=${encodeURIComponent(currentBook.discountPrice || currentBook.price)}`;
+      return;
       
       const modalCover = document.getElementById("modalThumbCover");
       const modalImg = document.getElementById("modalThumbImg");

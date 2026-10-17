@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">চেকআউট — Dipu Academy</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/dipu-logo.png?v=6">
+  <link rel="shortcut icon" href="/favicon.ico?v=6">
+  <link rel="apple-touch-icon" href="/images/dipu-logo.png?v=6">
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css?v=2.5">
+
+  <style>
+    :root {
+      --co-bg: #F4F8FD;
+      --co-surface: #FFFFFF;
+      --co-primary: #1665D8;
+      --co-primary-hover: #0F52B3;
+      --co-primary-light: #EFF6FF;
+      --co-text-navy: #0D1B36;
+      --co-text-body: #334155;
+      --co-text-muted: #64748B;
+      --co-border: #E2E8F0;
+      --co-border-active: #2563EB;
+      --co-green: #10B981;
+      --co-radius-lg: 16px;
+      --co-radius-md: 12px;
+      --co-radius-sm: 8px;
+      --co-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+      --co-shadow-hover: 0 10px 30px rgba(22, 101, 216, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--co-bg);
+      color: var(--co-text-body);
+      font-family: 'Hind Siliguri', 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 1. TOP UTILITY BAR */
+    .checkout-topbar {
+      background: #0B192C;
+      color: #94A3B8;
+      font-size: 13px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .checkout-topbar .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .topbar-left, .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .topbar-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #CBD5E1;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .topbar-item:hover {
+      color: #FFFFFF;
+    }
+    .topbar-divider {
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 2. MAIN NAVBAR */
+    .checkout-navbar {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--co-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+    .checkout-navbar .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .checkout-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .checkout-brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(22, 101, 216, 0.2);
+    }
+    .brand-text-wrap {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+    .brand-title-main {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--co-text-navy);
+      letter-spacing: -0.02em;
+    }
+    .brand-title-main span {
+      color: var(--co-primary);
+    }
+    .checkout-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    .checkout-nav-links a {
+      text-decoration: none;
+      font-weight: 600;
+      color: #475569;
+      font-size: 15px;
+      transition: color 0.2s;
+    }
+    .checkout-nav-links a:hover {
+      color: var(--co-primary);
+    }
+    .nav-user-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .btn-user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #EFF6FF;
+      color: var(--co-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid #BFDBFE;
+      font-size: 15px;
+      text-decoration: none;
+    }
+    .btn-see-courses {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--co-primary);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 9px 18px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-see-courses:hover {
+      background: var(--co-primary-hover);
+      transform: translateY(-1px);
+    }
+
+    /* 3. HERO PROMO BANNER */
+    .checkout-hero-banner {
+      max-width: 1200px;
+      margin: 24px auto 0;
+      padding: 0 20px;
+    }
+    .promo-banner-card {
+      background: linear-gradient(135deg, #EBF4FF 0%, #F0F7FF 100%);
+      border: 1.5px solid #DCE9FE;
+      border-radius: 18px;
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      box-shadow: 0 4px 18px rgba(37, 99, 235, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+    .promo-banner-card::after {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: 220px;
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(0, 194, 255, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .banner-text-side {
+      max-width: 640px;
+      z-index: 2;
+    }
+    .banner-title {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--co-text-navy);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .banner-desc {
+      font-size: 0.95rem;
+      color: #475569;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .banner-visual-side {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      z-index: 2;
+    }
+    .banner-mockup-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .banner-mockup-img {
+      height: 100px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 20px rgba(22, 101, 216, 0.15));
+    }
+    .banner-badge-bubble {
+      background: #FFFFFF;
+      border: 1.5px solid #BFDBFE;
+      box-shadow: 0 4px 12px rgba(22, 101, 216, 0.12);
+      border-radius: 12px;
+      padding: 8px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--co-primary);
+      text-align: center;
+      line-height: 1.25;
+    }
+
+    /* 4. MAIN CHECKOUT SECTION */
+    .checkout-main-content {
+      max-width: 1200px;
+      margin: 28px auto 60px;
+      padding: 0 20px;
+      flex: 1;
+    }
+    .checkout-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--co-text-muted);
+      margin-bottom: 12px;
+    }
+    .checkout-breadcrumb a {
+      color: var(--co-primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .checkout-page-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--co-text-navy);
+      margin: 0 0 4px;
+      letter-spacing: -0.01em;
+    }
+    .checkout-page-subtitle {
+      font-size: 0.95rem;
+      color: var(--co-text-muted);
+      margin: 0 0 28px;
+    }
+
+    /* 2-COLUMN LAYOUT */
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(360px, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* CARDS */
+    .co-card {
+      background: var(--co-surface);
+      border: 1.5px solid var(--co-border);
+      border-radius: var(--co-radius-lg);
+      padding: 26px;
+      box-shadow: var(--co-shadow);
+      margin-bottom: 24px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .co-card:hover {
+      border-color: #CBD5E1;
+    }
+    .co-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #F1F5F9;
+    }
+    .co-card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--co-primary-light);
+      color: var(--co-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .co-card-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--co-text-navy);
+      margin: 0;
+    }
+
+    /* FORM STYLES */
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+    .co-label {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--co-text-navy);
+      margin-bottom: 8px;
+    }
+    .co-label .req {
+      color: #EF4444;
+      margin-left: 2px;
+    }
+    .input-icon-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-icon-wrap i {
+      position: absolute;
+      left: 14px;
+      color: #94A3B8;
+      font-size: 14.5px;
+      pointer-events: none;
+      transition: color 0.2s;
+    }
+    .co-input {
+      width: 100%;
+      height: 48px;
+      padding: 0 16px 0 42px;
+      border-radius: var(--co-radius-md);
+      border: 1.5px solid var(--co-border);
+      font-size: 14.5px;
+      font-family: inherit;
+      color: var(--co-text-navy);
+      background: #FFFFFF;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+    .co-input:focus {
+      border-color: var(--co-primary);
+      box-shadow: 0 0 0 3px rgba(22, 101, 216, 0.12);
+    }
+    .co-input:focus + i, .input-icon-wrap:focus-within i {
+      color: var(--co-primary);
+    }
+    .co-card-foot-notice {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid #F1F5F9;
+      font-size: 12.5px;
+      color: var(--co-text-muted);
+    }
+    .co-card-foot-notice i {
+      color: #10B981;
+      font-size: 14px;
+    }
+
+    /* PAYMENT METHOD SELECTION */
+    .gateway-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .gateway-card {
+      background: #FFFFFF;
+      border: 2px solid var(--co-border);
+      border-radius: var(--co-radius-md);
+      padding: 16px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      transition: all 0.2s ease;
+      position: relative;
+      user-select: none;
+    }
+    .gateway-card:hover {
+      border-color: #93C5FD;
+      background: #FAFCFF;
+      transform: translateY(-2px);
+    }
+    .gateway-card.active {
+      border-color: var(--co-primary);
+      background: #EFF6FF;
+      box-shadow: 0 4px 16px rgba(22, 101, 216, 0.15);
+    }
+    .gateway-left-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .gateway-logo-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      flex-shrink: 0;
+      padding: 4px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .gateway-meta {
+      display: flex;
+      flex-direction: column;
+    }
+    .gateway-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--co-text-navy);
+      line-height: 1.2;
+    }
+    .gateway-sub {
+      font-size: 11.5px;
+      color: var(--co-text-muted);
+      margin-top: 3px;
+    }
+    .gateway-radio {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid #CBD5E1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .gateway-card.active .gateway-radio {
+      border-color: var(--co-primary);
+      background: var(--co-primary);
+    }
+    .gateway-radio::after {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .gateway-card.active .gateway-radio::after {
+      opacity: 1;
+    }
+
+    /* RIGHT COLUMN: STICKY ORDER SUMMARY */
+    .checkout-sticky-col {
+      position: sticky;
+      top: 92px;
+    }
+    .summary-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--co-border);
+      border-radius: var(--co-radius-lg);
+      padding: 24px;
+      box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+    }
+    .summary-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--co-primary);
+      margin-bottom: 20px;
+    }
+    .summary-header i {
+      font-size: 1.15rem;
+    }
+
+    /* ITEM PREVIEW BOX */
+    .order-item-box {
+      background: #F8FAFD;
+      border: 1.5px solid #E2E8F0;
+      border-radius: var(--co-radius-md);
+      padding: 16px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .item-thumbnail-wrap {
+      width: 78px;
+      height: 78px;
+      border-radius: 12px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    }
+    .item-thumbnail-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .item-meta-wrap {
+      flex: 1;
+      min-width: 0;
+    }
+    .item-title-text {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--co-text-navy);
+      line-height: 1.3;
+      margin-bottom: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .item-features-tag {
+      font-size: 11.5px;
+      color: #64748B;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    /* QUANTITY SELECTOR */
+    .item-qty-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #E2E8F0;
+      margin-bottom: 20px;
+    }
+    .qty-label {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--co-text-navy);
+    }
+    .qty-stepper {
+      display: inline-flex;
+      align-items: center;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 8px;
+      background: #FFFFFF;
+      overflow: hidden;
+    }
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: transparent;
+      color: var(--co-text-navy);
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .qty-btn:hover {
+      background: #F1F5F9;
+    }
+    .qty-value {
+      width: 34px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--co-primary);
+      border-left: 1px solid #E2E8F0;
+      border-right: 1px solid #E2E8F0;
+      height: 32px;
+      line-height: 32px;
+    }
+
+    /* PRICE BREAKDOWN TABLE */
+    .summary-calc-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .calc-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      color: var(--co-text-body);
+    }
+    .calc-line.discount {
+      color: #059669;
+      font-weight: 700;
+    }
+    .calc-divider {
+      height: 1px;
+      background: #E2E8F0;
+      margin: 4px 0;
+    }
+    .calc-total-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 4px;
+    }
+    .calc-total-label {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--co-text-navy);
+    }
+    .calc-total-amount {
+      font-size: 1.65rem;
+      font-weight: 900;
+      color: var(--co-primary);
+      letter-spacing: -0.01em;
+    }
+
+    /* PROMOCODE ACCORDION */
+    .promo-accordion-wrap {
+      border: 1.5px solid #CBD5E1;
+      border-radius: var(--co-radius-md);
+      margin-bottom: 22px;
+      background: #FFFFFF;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .promo-accordion-wrap:hover {
+      border-color: #93C5FD;
+    }
+    .promo-accordion-btn {
+      width: 100%;
+      background: #F8FAFD;
+      border: none;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .promo-btn-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--co-primary);
+    }
+    .promo-btn-left i {
+      font-size: 14px;
+    }
+    .promo-btn-arrow {
+      color: var(--co-primary);
+      font-size: 12px;
+      transition: transform 0.25s ease;
+    }
+    .promo-accordion-btn.open .promo-btn-arrow {
+      transform: rotate(180deg);
+    }
+    .promo-accordion-content {
+      padding: 14px 16px;
+      border-top: 1px solid #E2E8F0;
+      display: none;
+      background: #FFFFFF;
+    }
+    .promo-input-row {
+      display: flex;
+      gap: 8px;
+    }
+    .promo-input {
+      flex: 1;
+      height: 42px;
+      padding: 0 14px;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      outline: none;
+      font-family: inherit;
+      color: var(--co-text-navy);
+    }
+    .promo-input:focus {
+      border-color: var(--co-primary);
+    }
+    .btn-apply-promo {
+      height: 42px;
+      padding: 0 18px;
+      background: var(--co-primary);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 13.5px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .btn-apply-promo:hover {
+      background: var(--co-primary-hover);
+    }
+    .promo-helper-text {
+      font-size: 11.5px;
+      color: var(--co-text-muted);
+      margin-top: 6px;
+      display: block;
+    }
+    .applied-promo-chip {
+      margin-top: 10px;
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      color: #065F46;
+      border-radius: 8px;
+      padding: 8px 12px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .btn-remove-promo {
+      background: none;
+      border: none;
+      color: #DC2626;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    /* CTA BUTTON */
+    .btn-pay-now {
+      width: 100%;
+      height: 52px;
+      background: linear-gradient(135deg, #1665D8 0%, #0084FF 100%);
+      color: #FFFFFF;
+      border: none;
+      border-radius: var(--co-radius-md);
+      font-size: 16px;
+      font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(22, 101, 216, 0.3);
+      transition: all 0.25s ease;
+      letter-spacing: 0.2px;
+    }
+    .btn-pay-now:hover {
+      background: linear-gradient(135deg, #0F52B3 0%, #0073E6 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(22, 101, 216, 0.4);
+    }
+    .btn-pay-now:active {
+      transform: translateY(0);
+    }
+    .btn-pay-now i {
+      font-size: 15px;
+    }
+    .summary-trust-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #059669;
+      margin-top: 14px;
+      text-align: center;
+    }
+    .summary-trust-badge i {
+      font-size: 13px;
+    }
+
+    /* FOOTER */
+    .checkout-footer {
+      background: #0B192C;
+      color: #94A3B8;
+      padding: 40px 0 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: auto;
+    }
+    .checkout-footer .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 30px;
+    }
+    .footer-brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .footer-brand-wrap img {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+    }
+    .footer-brand-wrap h4 {
+      color: #FFFFFF;
+      font-size: 1.2rem;
+      margin: 0;
+    }
+    .footer-brand-wrap h4 span {
+      color: #00C2FF;
+    }
+    .footer-col h5 {
+      color: #FFFFFF;
+      font-size: 15px;
+      margin-bottom: 14px;
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .footer-col a {
+      color: #94A3B8;
+      text-decoration: none;
+      font-size: 13.5px;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover {
+      color: #FFFFFF;
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 992px) {
+      .checkout-grid {
+        grid-template-columns: 1fr;
+      }
+      .checkout-sticky-col {
+        position: static;
+        order: -1;
+      }
+      .promo-banner-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+      }
+      .banner-visual-side {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .checkout-topbar {
+        display: none;
+      }
+      .form-row-2 {
+        grid-template-columns: 1fr;
+      }
+      .gateway-cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .checkout-nav-links {
+        display: none;
+      }
+      .banner-title {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. TOP UTILITY BAR (হেল্পলাইন, ইমেইল ও শিক্ষার্থী আস্থা)
+       ========================================================================= -->
+  <div class="checkout-topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <a href="mailto:support@dipuacademy.com" class="topbar-item">
+          <i class="far fa-envelope"></i>
+          <span>support@dipuacademy.com</span>
+        </a>
+        <a href="tel:+8801712345678" class="topbar-item">
+          <i class="fas fa-phone-alt"></i>
+          <span>+880 1712-345678</span>
+        </a>
+        <span class="topbar-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>বাংলাদেশ</span>
+        </span>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-item">
+          <i class="fas fa-shield-alt" style="color: #10B981;"></i>
+          <span>নির্ভরযোগ্য শিক্ষা | হাজারো শিক্ষার্থীর আস্থা</span>
+        </span>
+        <span class="topbar-divider">|</span>
+        <a href="/login" class="topbar-item" title="লগইন বা প্রোফাইল">
+          <i class="far fa-user-circle"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       2. DIPU ACADEMY BRAND NAVBAR
+       ========================================================================= -->
+  <header class="checkout-navbar">
+    <div class="container">
+      <a href="/" class="checkout-brand">
+        <img src="/images/dipu-logo.png" alt="Dipu Academy Logo">
+        <div class="brand-text-wrap">
+          <div class="brand-title-main">Dipu <span>Academy</span></div>
+        </div>
+      </a>
+
+      <ul class="checkout-nav-links">
+        <li><a href="/">হোম</a></li>
+        <li><a href="/#courses">কোর্সসমূহ</a></li>
+        <li><a href="/shop">বুকশপ</a></li>
+        <li><a href="/#about">আমাদের সম্পর্কে</a></li>
+      </ul>
+
+      <div class="nav-user-actions">
+        <a href="/my-courses" class="btn-user-avatar" id="navAvatarBtn" title="আমার অ্যাকাউন্ট">
+          <i class="fas fa-user"></i>
+        </a>
+        <a href="/#courses" class="btn-see-courses">
+          <i class="fas fa-graduation-cap"></i>
+          <span>কোর্স দেখুন</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       3. HERO PROMOTIONAL BANNER (স্বপ্নকে বাস্তবে রূপ দিতে শুরু হোক আজই ✨)
+       ========================================================================= -->
+  <div class="checkout-hero-banner">
+    <div class="promo-banner-card">
+      <div class="banner-text-side">
+        <h2 class="banner-title">স্বপ্নকে বাস্তবে রূপ দিতে শুরু হোক আজই ✨</h2>
+        <p class="banner-desc">
+          অনলাইন কোর্সে শিখুন, অভিজ্ঞ শিক্ষকদের সাথে, স্মার্ট লার্নিংয়ের মাধ্যমে। SSC এবং HSC এর জন্য বাছাইকৃত কোর্সগুলো এখন এক প্ল্যাটফর্মে।
+        </p>
+      </div>
+      <div class="banner-visual-side">
+        <div class="banner-mockup-wrap">
+          <img src="/images/hero-students.png" alt="Dipu Academy Student" class="banner-mockup-img" onerror="this.src='/images/dipu-logo.png'">
+        </div>
+        <div class="banner-badge-bubble">
+          <span>Better<br>Learn</span>
+          <span style="color: #00C2FF; font-size: 13px;">Bigger</span>
+          <span>Dreams</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       4. MAIN CHECKOUT SECTION (2-COLUMN GRID)
+       ========================================================================= -->
+  <main class="checkout-main-content">
+    
+    <div class="checkout-breadcrumb">
+      <a href="/">হোম</a>
+      <span>/</span>
+      <span>চেকআউট</span>
+    </div>
+
+    <h1 class="checkout-page-title" id="checkoutMainHeading">আপনার কোর্স নিশ্চিত করুন</h1>
+    <p class="checkout-page-subtitle">পেমেন্টের আগে আপনার অর্ডারের তথ্য দেখে নিন</p>
+
+    <div class="checkout-grid">
+      
+      <!-- =====================================================================
+           LEFT COLUMN: STUDENT INFO + PAYMENT METHOD
+           ===================================================================== -->
+      <div class="checkout-left-col">
+        
+        <!-- CARD 1: শিক্ষার্থীর তথ্য -->
+        <div class="co-card">
+          <div class="co-card-header">
+            <div class="co-card-icon">
+              <i class="fas fa-user-graduate"></i>
+            </div>
+            <h3 class="co-card-title">শিক্ষার্থীর তথ্য</h3>
+          </div>
+
+          <form id="checkoutForm" onsubmit="handleProceedToPayment(event)">
+            
+            <div class="form-row-2">
+              <div>
+                <label class="co-label">পুরো নাম <span class="req">*</span></label>
+                <div class="input-icon-wrap">
+                  <i class="far fa-user"></i>
+                  <input type="text" id="custName" class="co-input" placeholder="আপনার পুরো নাম লিখুন" required>
+                </div>
+              </div>
+
+              <div>
+                <label class="co-label">মোবাইল নম্বর <span class="req">*</span></label>
+                <div class="input-icon-wrap">
+                  <i class="fas fa-phone-alt"></i>
+                  <input type="tel" id="custPhone" class="co-input" placeholder="01XXXXXXXXX" pattern="01[3-9][0-9]{8}" maxlength="11" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="co-label">ইমেইল (ঐচ্ছিক)</label>
+              <div class="input-icon-wrap">
+                <i class="far fa-envelope"></i>
+                <input type="email" id="custEmail" class="co-input" placeholder="example@gmail.com">
+              </div>
+            </div>
+
+            <!-- Optional Delivery Address (Physical Books) -->
+            <div class="form-group" id="deliveryAddressWrap" style="display: none;">
+              <label class="co-label">সম্পূর্ণ ডেলিভারি ঠিকানা <span class="req">*</span></label>
+              <div class="input-icon-wrap">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" id="custAddress" class="co-input" placeholder="বাড়ি/বাসা নং, রোড, থানা, জেলা">
+              </div>
+            </div>
+
+            <div class="co-card-foot-notice">
+              <i class="fas fa-shield-alt"></i>
+              <span>আপনার তথ্য সম্পূর্ণ নিরাপদ এবং শুধুমাত্র কোর্স প্রদান এর জন্য ব্যবহার করা হবে।</span>
+            </div>
+          </form>
+        </div>
+
+        <!-- CARD 2: পেমেন্ট পদ্ধতি -->
+        <div class="co-card">
+          <div class="co-card-header">
+            <div class="co-card-icon">
+              <i class="fas fa-credit-card"></i>
+            </div>
+            <h3 class="co-card-title">পেমেন্ট পদ্ধতি</h3>
+          </div>
+
+          <div class="gateway-cards-grid">
+            
+            <!-- 1. bKash Card -->
+            <div class="gateway-card active" data-gateway="bkash" onclick="selectPaymentGateway('bkash')">
+              <div class="gateway-left-info">
+                <div class="gateway-logo-box">
+                  <!-- Real bKash Vector SVG -->
+                  <svg width="32" height="32" viewBox="0 0 256 256">
+                    <polygon points="128,16 16,140 100,140 128,240 240,116 156,116" fill="#E2136E"/>
+                  </svg>
+                </div>
+                <div class="gateway-meta">
+                  <span class="gateway-title" style="color: #E2136E;">bKash</span>
+                  <span class="gateway-sub">মোবাইল ব্যাংকিং</span>
+                </div>
+              </div>
+              <div class="gateway-radio"></div>
+            </div>
+
+            <!-- 2. Nagad Card -->
+            <div class="gateway-card" data-gateway="nagad" onclick="selectPaymentGateway('nagad')">
+              <div class="gateway-left-info">
+                <div class="gateway-logo-box">
+                  <!-- Real Nagad Vector SVG -->
+                  <svg width="32" height="32" viewBox="0 0 256 256">
+                    <path d="M128,16 C100,60 70,110 70,160 C70,200 95,240 128,240 C161,240 186,200 186,160 C186,110 156,60 128,16 Z" fill="#F7921E"/>
+                    <path d="M128,80 C110,110 95,140 95,170 C95,195 110,215 128,215 C146,215 161,195 161,170 C161,140 146,110 128,80 Z" fill="#EE2C24"/>
+                  </svg>
+                </div>
+                <div class="gateway-meta">
+                  <span class="gateway-title" style="color: #F7921E;">Nagad</span>
+                  <span class="gateway-sub">মোবাইল ব্যাংকিং</span>
+                </div>
+              </div>
+              <div class="gateway-radio"></div>
+            </div>
+
+            <!-- 3. Card / Online Payment Card -->
+            <div class="gateway-card" data-gateway="card" onclick="selectPaymentGateway('card')">
+              <div class="gateway-left-info">
+                <div class="gateway-logo-box" style="color: #1665D8; font-size: 20px;">
+                  <i class="fas fa-credit-card"></i>
+                </div>
+                <div class="gateway-meta">
+                  <span class="gateway-title" style="color: #1665D8;">কার্ড / অনলাইন</span>
+                  <span class="gateway-sub">ভিসা, মাস্টারকার্ড, অন্যান্য</span>
+                </div>
+              </div>
+              <div class="gateway-radio"></div>
+            </div>
+
+          </div>
+
+          <div class="co-card-foot-notice">
+            <i class="fas fa-lock"></i>
+            <span>নিরাপদ পেমেন্ট গেটওয়ে (ZiniPay Automated System) দ্বারা আপনার পেমেন্ট প্রক্রিয়াকরণ করা হবে।</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- =====================================================================
+           RIGHT COLUMN: STICKY ORDER SUMMARY
+           ===================================================================== -->
+      <div class="checkout-sticky-col">
+        <div class="summary-card">
+          
+          <div class="summary-header">
+            <i class="fas fa-shopping-cart"></i>
+            <span>আপনার অর্ডার</span>
+          </div>
+
+          <!-- Product Preview Box -->
+          <div class="order-item-box">
+            <div class="item-thumbnail-wrap">
+              <img id="summaryItemThumb" src="/images/dipu-logo.png" alt="Item Thumbnail">
+            </div>
+            <div class="item-meta-wrap">
+              <h4 class="item-title-text" id="summaryItemTitle">SSC '27 সম্পূর্ণ প্রস্তুতি কোর্স</h4>
+              <div class="item-features-tag" id="summaryItemFeatures">ভিডিও ক্লাস • ডিজিটাল বুক • মডেল টেস্ট</div>
+            </div>
+          </div>
+
+          <!-- Quantity Stepper -->
+          <div class="item-qty-row">
+            <span class="qty-label">পরিমাণ</span>
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" onclick="updateItemQuantity(-1)" title="কমান">-</button>
+              <div class="qty-value" id="summaryItemQty">1</div>
+              <button type="button" class="qty-btn" onclick="updateItemQuantity(1)" title="বাড়ান">+</button>
+            </div>
+          </div>
+
+          <!-- Pricing Table -->
+          <div class="summary-calc-list">
+            <div class="calc-line">
+              <span id="summaryPriceLabel">কোর্সের মূল্য</span>
+              <span id="summaryBasePrice">৳১,৫০০</span>
+            </div>
+            
+            <div class="calc-line discount">
+              <span>ছাড়</span>
+              <span id="summaryRegularDiscount">- ৳৩০০</span>
+            </div>
+
+            <!-- Dynamic Promocode Saving Line (hidden if no coupon) -->
+            <div class="calc-line discount" id="summaryPromoDiscountRow" style="display: none;">
+              <span>প্রোমোকোড ছাড় (<span id="summaryAppliedPromoCode">CODE</span>)</span>
+              <span id="summaryPromoDiscountAmount">- ৳০</span>
+            </div>
+
+            <div class="calc-divider"></div>
+
+            <div class="calc-total-line">
+              <span class="calc-total-label">সর্বমোট</span>
+              <span class="calc-total-amount" id="summaryGrandTotal">৳১,২০০</span>
+            </div>
+          </div>
+
+          <!-- Interactive Promocode Accordion (প্রমো কোড আছে? ^) -->
+          <div class="promo-accordion-wrap">
+            <button type="button" class="promo-accordion-btn" id="promoToggleBtn" onclick="toggleCheckoutPromoAccordion()">
+              <span class="promo-btn-left">
+                <i class="fas fa-tag"></i>
+                <span>প্রোমো কোড আছে?</span>
+              </span>
+              <i class="fas fa-chevron-down promo-btn-arrow" id="promoArrowIcon"></i>
+            </button>
+
+            <div class="promo-accordion-content" id="promoContent">
+              <div class="promo-input-row">
+                <input type="text" id="checkoutPromoInput" class="promo-input" placeholder="প্রোমো কোড লিখুন" autocomplete="off">
+                <button type="button" class="btn-apply-promo" id="checkoutApplyPromoBtn" onclick="applyPromoCode()">প্রয়োগ করুন</button>
+              </div>
+              <small class="promo-helper-text" id="promoStatusMessage">কোড দিলে ছাড় প্রযোজ্য হবে</small>
+
+              <!-- Applied Badge -->
+              <div class="applied-promo-chip" id="appliedPromoChip">
+                <span><i class="fas fa-circle-check mr-1" style="color: #059669;"></i> <strong id="appliedChipCode"></strong> প্রয়োগ হয়েছে</span>
+                <button type="button" class="btn-remove-promo" onclick="removePromoCode()">মুছে ফেলুন</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA Pay Button -->
+          <button type="button" class="btn-pay-now" id="checkoutPayBtn" onclick="triggerCheckoutPayment()">
+            <i class="fas fa-lock"></i>
+            <span id="payBtnLabel">নিরাপদে পেমেন্ট করুন</span>
+          </button>
+
+          <!-- Trust Sub-badge -->
+          <div class="summary-trust-badge">
+            <i class="fas fa-shield-check"></i>
+            <span>নিরাপদ পেমেন্ট • তাৎক্ষণিক কোর্স অ্যাক্সেস</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       5. MASTER FOOTER
+       ========================================================================= -->
+  <footer class="checkout-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-wrap">
+            <img src="/images/dipu-logo.png" alt="Dipu Academy">
+            <h4>Dipu <span>Academy</span></h4>
+          </div>
+          <p style="font-size: 13.5px; line-height: 1.6; max-width: 480px; margin: 0 0 16px;">
+            বাংলাদেশের অন্যতম শীর্ষস্থানীয় ডিজিটাল লার্নিং প্ল্যাটফর্ম। SSC ও HSC শিক্ষার্থীদের জন্য নির্ভরযোগ্য ও স্মার্ট এডটেক অভিজ্ঞতা।
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h5>দ্রুত লিংক</h5>
+          <ul>
+            <li><a href="/">হোম পেজ</a></li>
+            <li><a href="/#courses">সকল কোর্সসমূহ</a></li>
+            <li><a href="/shop">বুকশপ ও ই-বুক</a></li>
+            <li><a href="/login">লগইন করুন</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>যোগাযোগ ও হেল্পলাইন</h5>
+          <ul>
+            <li><a href="tel:+8801712345678"><i class="fas fa-phone mr-1"></i> +880 1712-345678</a></li>
+            <li><a href="mailto:support@dipuacademy.com"><i class="fas fa-envelope mr-1"></i> support@dipuacademy.com</a></li>
+            <li><a href="#"><i class="fas fa-clock mr-1"></i> সকাল ৯টা - রাত ১০টা</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 Dipu Academy. All rights reserved. Secure Automated Payments via ZiniPay.</div>
+        <div>Designed with luxury educational excellence.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       CHECKOUT JAVASCRIPT LOGIC
+       ========================================================================= -->
+  <script>
+    // Global Checkout State
+    let currentItem = {
+      orderType: 'course', // 'course' | 'book' | 'ebook'
+      id: '',
+      slug: '',
+      title: "SSC '27 সম্পূর্ণ প্রস্তুতি কোর্স",
+      features: "ভিডিও ক্লাস • ডিজিটাল বুক • মডেল টেস্ট",
+      thumbnail: "/images/hero-students.png",
+      basePrice: 1500,
+      regularDiscount: 300,
+      qty: 1
+    };
+
+    let selectedGateway = 'bkash';
+    let appliedCoupon = null;
+
+    // Initialize on page load
+    document.addEventListener("DOMContentLoaded", async () => {
+      autoFillStudentInfo();
+      await parseQueryParametersAndLoadItem();
+      renderSummaryTotals();
+    });
+
+    // Auto-fill logged-in user profile if available in localStorage
+    function autoFillStudentInfo() {
+      try {
+        const phone = localStorage.getItem("dipu_user_phone");
+        const name = localStorage.getItem("da_user_name") || localStorage.getItem("currentUser");
+        const profile = JSON.parse(localStorage.getItem("dipu_user_profile") || "{}");
+
+        if (name && document.getElementById("custName")) {
+          document.getElementById("custName").value = name;
+        }
+        if (phone && document.getElementById("custPhone")) {
+          document.getElementById("custPhone").value = phone;
+        }
+        if (profile.email && document.getElementById("custEmail")) {
+          document.getElementById("custEmail").value = profile.email;
+        }
+      } catch (e) {
+        console.warn("[AutoFill]:", e);
+      }
+    }
+
+    // Parse Query Parameters from URL
+    async function parseQueryParametersAndLoadItem() {
+      const params = new URLSearchParams(window.location.search);
+      const courseId = params.get("courseId") || params.get("id");
+      const courseSlug = params.get("courseSlug") || params.get("course") || params.get("slug");
+      const bookId = params.get("bookId");
+      const itemType = params.get("type");
+
+      // Check if it's a Book / eBook
+      if (itemType === "book" || itemType === "ebook" || bookId) {
+        currentItem.orderType = itemType || "book";
+        currentItem.id = bookId || "";
+        
+        // Show delivery address field for physical books
+        if (currentItem.orderType === "book") {
+          const addrWrap = document.getElementById("deliveryAddressWrap");
+          if (addrWrap) addrWrap.style.display = "block";
+        }
+
+        // Fetch catalog if available
+        try {
+          const res = await fetch("/api/shop/catalog");
+          const data = await res.json();
+          const booksList = [...(data.books || []), ...(data.ebooks || [])];
+          const found = booksList.find(b => b.id === bookId || b.slug === bookId);
+          if (found) {
+            currentItem.title = found.title;
+            currentItem.basePrice = Number(found.originalPrice || found.price) || 500;
+            const discPrice = Number(found.discountPrice || found.price) || 400;
+            currentItem.regularDiscount = Math.max(0, currentItem.basePrice - discPrice);
+            currentItem.thumbnail = found.coverImage || "/images/dipu-logo.png";
+            currentItem.features = currentItem.orderType === "ebook" ? "পিডিএফ ডাউনলোড • লাইফটাইম এক্সেস" : "হার্ডকপি প্রিন্ট বুক • ক্যাশ অন ডেলিভারি";
+          }
+        } catch (e) {}
+
+        const customTitle = params.get("title");
+        if (customTitle) currentItem.title = customTitle;
+        const customPrice = params.get("price");
+        if (customPrice) currentItem.basePrice = Number(customPrice);
+
+        document.getElementById("checkoutMainHeading").textContent = "আপনার বইয়ের অর্ডার নিশ্চিত করুন";
+        document.getElementById("summaryPriceLabel").textContent = "বইয়ের মূল্য";
+        return;
+      }
+
+      // Check if it's a Course
+      if (courseId || courseSlug) {
+        currentItem.orderType = "course";
+        currentItem.id = courseId || "";
+        currentItem.slug = courseSlug || "";
+
+        try {
+          const target = courseSlug || courseId;
+          const res = await fetch(`/api/courses/${target}`);
+          if (res.ok) {
+            const data = await res.json();
+            const c = data.course || data;
+            if (c) {
+              currentItem.title = (typeof c.title === 'object' && c.title) ? (c.title.bn || c.title.en) : (c.title || "অনলাইন কোর্স");
+              currentItem.basePrice = Number(c.price) || 1500;
+              const discPrice = Number(c.discountPrice) || (currentItem.basePrice * 0.8);
+              currentItem.regularDiscount = Math.max(0, currentItem.basePrice - discPrice);
+              currentItem.thumbnail = c.thumbnail || c.coverImage || "/images/hero-students.png";
+              currentItem.features = `${c.totalClasses || '৪০+'} লাইভ ক্লাস • ${c.totalExams || '১০+'} মডেল টেস্ট • নোট ও বুক`;
+            }
+          }
+        } catch (e) {}
+
+        const customTitle = params.get("title");
+        if (customTitle) currentItem.title = customTitle;
+        const customPrice = params.get("price");
+        if (customPrice) currentItem.basePrice = Number(customPrice);
+      }
+    }
+
+    // Payment Gateway Card Selector
+    function selectPaymentGateway(gw) {
+      selectedGateway = gw;
+      document.querySelectorAll(".gateway-card").forEach(card => {
+        if (card.dataset.gateway === gw) {
+          card.classList.add("active");
+        } else {
+          card.classList.remove("active");
+        }
+      });
+    }
+
+    // Quantity Stepper
+    function updateItemQuantity(delta) {
+      const newQty = currentItem.qty + delta;
+      if (newQty < 1 || newQty > 10) return;
+      currentItem.qty = newQty;
+      document.getElementById("summaryItemQty").textContent = currentItem.qty;
+      renderSummaryTotals();
+    }
+
+    // Toggle Promocode Accordion
+    function toggleCheckoutPromoAccordion() {
+      const btn = document.getElementById("promoToggleBtn");
+      const content = document.getElementById("promoContent");
+      btn.classList.toggle("open");
+      content.style.display = content.style.display === "block" ? "none" : "block";
+    }
+
+    // Render Order Summary Totals
+    function renderSummaryTotals() {
+      document.getElementById("summaryItemTitle").textContent = currentItem.title;
+      document.getElementById("summaryItemFeatures").textContent = currentItem.features;
+      document.getElementById("summaryItemThumb").src = currentItem.thumbnail;
+
+      const totalBase = currentItem.basePrice * currentItem.qty;
+      const totalRegDiscount = currentItem.regularDiscount * currentItem.qty;
+      const subtotalAfterRegDisc = Math.max(0, totalBase - totalRegDiscount);
+
+      let couponSaving = 0;
+      if (appliedCoupon) {
+        if (appliedCoupon.discountType === "percentage") {
+          couponSaving = Math.round(subtotalAfterRegDisc * (appliedCoupon.discountValue / 100));
+          if (appliedCoupon.maxDiscountBDT) {
+            couponSaving = Math.min(couponSaving, appliedCoupon.maxDiscountBDT);
+          }
+        } else {
+          couponSaving = Number(appliedCoupon.discountValue) || 0;
+        }
+      }
+
+      const grandTotal = Math.max(0, subtotalAfterRegDisc - couponSaving);
+
+      document.getElementById("summaryBasePrice").textContent = "৳" + totalBase.toLocaleString("bn-BD");
+      document.getElementById("summaryRegularDiscount").textContent = "- ৳" + totalRegDiscount.toLocaleString("bn-BD");
+
+      const promoRow = document.getElementById("summaryPromoDiscountRow");
+      if (appliedCoupon && couponSaving > 0) {
+        promoRow.style.display = "flex";
+        document.getElementById("summaryAppliedPromoCode").textContent = appliedCoupon.code;
+        document.getElementById("summaryPromoDiscountAmount").textContent = "- ৳" + couponSaving.toLocaleString("bn-BD");
+      } else {
+        promoRow.style.display = "none";
+      }
+
+      document.getElementById("summaryGrandTotal").textContent = "৳" + grandTotal.toLocaleString("bn-BD");
+      document.getElementById("payBtnLabel").textContent = `নিরাপদে পেমেন্ট করুন (৳${grandTotal.toLocaleString("bn-BD")})`;
+    }
+
+    // Apply Coupon Code
+    async function applyPromoCode() {
+      const input = document.getElementById("checkoutPromoInput");
+      const code = (input?.value || "").trim().toUpperCase();
+      const statusMsg = document.getElementById("promoStatusMessage");
+      const btn = document.getElementById("checkoutApplyPromoBtn");
+
+      if (!code) {
+        statusMsg.style.color = "#EF4444";
+        statusMsg.textContent = "অনুগ্রহ করে একটি কুপন কোড লিখুন।";
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+      try {
+        const subtotal = (currentItem.basePrice - currentItem.regularDiscount) * currentItem.qty;
+        const res = await fetch("/api/payment/validate-coupon", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code, coursePrice: subtotal })
+        });
+        const data = await res.json();
+
+        if (data.success && data.coupon) {
+          appliedCoupon = data.coupon;
+          statusMsg.style.color = "#059669";
+          statusMsg.textContent = `অভিনন্দন! কুপন "${code}" সফলভাবে যুক্ত হয়েছে।`;
+          
+          document.getElementById("appliedChipCode").textContent = code;
+          document.getElementById("appliedPromoChip").style.display = "flex";
+          renderSummaryTotals();
+        } else {
+          statusMsg.style.color = "#DC2626";
+          statusMsg.textContent = data.message || "প্রদত্ত কুপন কোডটি সঠিক নয় বা মেয়াদ শেষ।";
+        }
+      } catch (err) {
+        statusMsg.style.color = "#DC2626";
+        statusMsg.textContent = "সার্ভারে ত্রুটি হয়েছে। আবার চেষ্টা করুন।";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "প্রয়োগ করুন";
+      }
+    }
+
+    // Remove Applied Coupon
+    function removePromoCode() {
+      appliedCoupon = null;
+      document.getElementById("appliedPromoChip").style.display = "none";
+      const input = document.getElementById("checkoutPromoInput");
+      if (input) input.value = "";
+      const statusMsg = document.getElementById("promoStatusMessage");
+      if (statusMsg) {
+        statusMsg.style.color = "var(--co-text-muted)";
+        statusMsg.textContent = "কোড দিলে ছাড় প্রযোজ্য হবে";
+      }
+      renderSummaryTotals();
+    }
+
+    // Trigger Final Payment
+    function triggerCheckoutPayment() {
+      const form = document.getElementById("checkoutForm");
+      if (form) {
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+      }
+      handleProceedToPayment(new Event("submit"));
+    }
+
+    // Proceed to Payment via ZiniPay Automated Gateway
+    async function handleProceedToPayment(event) {
+      if (event) event.preventDefault();
+
+      const name = document.getElementById("custName")?.value.trim();
+      const phone = document.getElementById("custPhone")?.value.trim();
+      const email = document.getElementById("custEmail")?.value.trim();
+      const address = document.getElementById("custAddress")?.value.trim();
+
+      if (!name || !phone) {
+        alert("দয়া করে আপনার নাম এবং সঠিক মোবাইল নম্বর পূরণ করুন।");
+        return;
+      }
+
+      if (currentItem.orderType === "book" && !address) {
+        alert("দয়া করে বইটি ডেলিভারির জন্য আপনার সম্পূর্ণ ঠিকানা লিখুন।");
+        return;
+      }
+
+      const totalBase = currentItem.basePrice * currentItem.qty;
+      const totalRegDiscount = currentItem.regularDiscount * currentItem.qty;
+      let finalAmount = Math.max(0, totalBase - totalRegDiscount);
+
+      if (appliedCoupon) {
+        if (appliedCoupon.discountType === "percentage") {
+          let disc = Math.round(finalAmount * (appliedCoupon.discountValue / 100));
+          if (appliedCoupon.maxDiscountBDT) disc = Math.min(disc, appliedCoupon.maxDiscountBDT);
+          finalAmount = Math.max(0, finalAmount - disc);
+        } else {
+          finalAmount = Math.max(0, finalAmount - (Number(appliedCoupon.discountValue) || 0));
+        }
+      }
+
+      const payBtn = document.getElementById("checkoutPayBtn");
+      if (payBtn) {
+        payBtn.disabled = true;
+        payBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> পেমেন্ট প্রসেসিং হচ্ছে...';
+      }
+
+      try {
+        const payload = {
+          orderType: currentItem.orderType,
+          courseId: currentItem.id || undefined,
+          courseSlug: currentItem.slug || undefined,
+          bookId: currentItem.id || undefined,
+          bookTitle: currentItem.title,
+          deliveryAddress: address || undefined,
+          studentName: name,
+          studentPhone: phone,
+          studentEmail: email || undefined,
+          amount: finalAmount,
+          couponCode: appliedCoupon ? appliedCoupon.code : undefined,
+          gateway: selectedGateway
+        };
+
+        const res = await fetch("/api/payment/zinipay/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (data.success && data.payment_url) {
+          window.location.href = data.payment_url;
+        } else if (data.success && data.redirectUrl) {
+          window.location.href = data.redirectUrl;
+        } else {
+          alert(data.message || "পেমেন্ট গেটওয়ে সংযোগ করতে ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।");
+          if (payBtn) {
+            payBtn.disabled = false;
+            payBtn.innerHTML = `<i class="fas fa-lock"></i> <span>নিরাপদে পেমেন্ট করুন (৳${finalAmount.toLocaleString('bn-BD')})</span>`;
+          }
+        }
+      } catch (err) {
+        console.error("[Checkout Payment Error]:", err);
+        alert("সার্ভারের সাথে সংযোগ স্থাপন করা যায়নি। আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন।");
+        if (payBtn) {
+          payBtn.disabled = false;
+          payBtn.innerHTML = `<i class="fas fa-lock"></i> <span>নিরাপদে পেমেন্ট করুন</span>`;
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
